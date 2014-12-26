@@ -61,7 +61,7 @@ class Version < ActiveRecord::Base
     end
 
     def visible_to(user)
-      scoped.delete_if do |version|
+      all.delete_if do |version|
         if item = version.item || version.reify
           if item.respond_to?(:access) # NOTE: Tasks don't have :access as of yet.
             # Delete from scope if it shouldn't be visible

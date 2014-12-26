@@ -344,7 +344,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, :id => nil, :name => nil, :user => current_user)
         Campaign.stub(:new).and_return(@campaign)
 
-        xhr :post, :create, :campaign => nil
+        xhr :post, :create, :campaign => {}
         assigns(:campaign).should == @campaign
         response.should render_template("campaigns/create")
       end

@@ -108,8 +108,8 @@ class CampaignsController < EntitiesController
   def update
     respond_with(@campaign) do |format|
       # Must set access before user_ids, because user_ids= method depends on access value.
-      @campaign.access = params[:campaign][:access] if params[:campaign][:access]
-      get_data_for_sidebar if @campaign.update_attributes(params[:campaign]) and called_from_index_page?
+      @campaign.access = resource_params[:access] if resource_params[:access]
+      get_data_for_sidebar if @campaign.update_attributes(resource_params) and called_from_index_page?
     end
   end
 
@@ -184,7 +184,10 @@ private
 
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
-    @campaign_status_total = { :all => Campaign.my.count, :other => 0 }
+    @campaign_status_total = HashWithIndifferentAccess[
+      :all => Campaign.my.count,
+      :other => 0
+    ]
     Setting.campaign_status.each do |key|
       @campaign_status_total[key] = Campaign.my.where(:status => key.to_s).count
       @campaign_status_total[:other] -= @campaign_status_total[key]

@@ -1,12 +1,11 @@
 GIT
   remote: git://github.com/activerecord-hackery/ransack.git
-  revision: d1fc95b3c21c8294e69c70e3995459d11dabfd67
-  branch: rails-4
+  revision: 9b0f7ccf0189239e039e3a4c1e73b996e1859f70
   specs:
-    ransack (1.2.3)
-      actionpack (>= 4.0)
-      activerecord (>= 4.0)
-      activesupport (>= 4.0)
+    ransack (1.5.1)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
       i18n
       polyamorous (~> 1.1)
 
@@ -57,7 +56,7 @@ GEM
     acts_as_fu (0.0.9)
       activerecord
       sqlite3
-    acts_as_list (0.5.0)
+    acts_as_list (0.6.0)
       activerecord (>= 3.0)
     addressable (2.3.6)
     arel (4.0.2)
@@ -71,7 +70,7 @@ GEM
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
-    cancan (1.6.10)
+    cancancan (1.9.2)
     capistrano (3.3.5)
       capistrano-stats (~> 1.1.0)
       i18n
@@ -167,7 +166,7 @@ GEM
     headless (1.0.2)
     hike (1.2.3)
     hitimes (1.2.2)
-    htmlentities (4.3.2)
+    htmlentities (4.3.3)
     i18n (0.7.0)
     jquery-rails (2.1.4)
       railties (>= 3.0, < 5.0)
@@ -364,7 +363,7 @@ DEPENDENCIES
   acts_as_list
   authlogic
   byebug
-  cancan
+  cancancan
   capistrano
   capistrano-bundler
   capistrano-rails

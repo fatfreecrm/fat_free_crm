@@ -45,7 +45,7 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def create
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
-    @user = User.new(resource_params)
+    @user = User.new(user_params)
     @user.save_without_session_maintenance
 
     respond_with(@user)
@@ -57,7 +57,7 @@ class Admin::UsersController < Admin::ApplicationController
   def update
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.find(params[:id])
-    @user.attributes = resource_params
+    @user.attributes = user_params
     @user.save_without_session_maintenance
 
     respond_with(@user)
@@ -100,6 +100,27 @@ class Admin::UsersController < Admin::ApplicationController
     respond_with(@user)
   end
 
+protected
+
+  def user_params
+    params[:user].permit(
+      :admin,
+      :username,
+      :email,
+      :first_name,
+      :last_name,
+      :title,
+      :company,
+      :alt_email,
+      :phone,
+      :mobile,
+      :aim,
+      :yahoo,
+      :google,
+      :skype
+    )
+  end
+
 private
 
   #----------------------------------------------------------------------------
@@ -116,24 +137,5 @@ private
     scope = scope.text_search(current_query)      if current_query.present?
     scope = scope.paginate(:page => current_page) if wants.html? || wants.js? || wants.xml?
     scope
-  end
-
-  def resource_params
-    params.require(:user).permit(
-      :admin,
-      :username,
-      :email,
-      :first_name,
-      :last_name,
-      :title,
-      :company,
-      :alt_email,
-      :phone,
-      :mobile,
-      :aim,
-      :yahoo,
-      :google,
-      :skype
-    )
   end
 end

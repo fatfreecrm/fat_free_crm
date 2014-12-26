@@ -356,14 +356,14 @@ describe UsersController do
     it "should require valid current password" do
       xhr :put, :change_password, :id => @user.id, :current_password => "what?!", :user => { :password => @new_password, :password_confirmation => @new_password }
       current_user.password.should == @user.password # password stays the same
-      current_user.should have(1).error # .error_on(:current_password)
+      current_user.errors.size.should == 1 # .error_on(:current_password)
       response.should render_template("users/change_password")
     end
 
     it "should require new password and password confirmation to match" do
       xhr :put, :change_password, :id => @user.id, :current_password => @user.password, :user => { :password => @new_password, :password_confirmation => "none" }
       current_user.password.should == @user.password # password stays the same
-      current_user.should have(1).error # .error_on(:current_password)
+      current_user.errors.size.should == 1 # .error_on(:current_password)
       response.should render_template("users/change_password")
     end
 

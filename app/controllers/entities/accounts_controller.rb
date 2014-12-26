@@ -71,7 +71,7 @@ class AccountsController < EntitiesController
     respond_with(@account) do |format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @account.access = params[:account][:access] if params[:account][:access]
-      get_data_for_sidebar if @account.update_attributes(params[:account])
+      get_data_for_sidebar if @account.update_attributes(resource_params)
     end
   end
 
@@ -146,7 +146,7 @@ private
 
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
-    @account_category_total = Hash[
+    @account_category_total = HashWithIndifferentAccess[
       Setting.account_category.map do |key|
         [ key, Account.my.where(:category => key.to_s).count ]
       end

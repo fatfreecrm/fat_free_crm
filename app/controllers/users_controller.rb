@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   # PUT /users/1.js
   #----------------------------------------------------------------------------
   def update
-    @user.update_attributes(resource_params)
+    @user.update_attributes(user_params)
     respond_with(@user)
   end
 
@@ -132,10 +132,10 @@ class UsersController < ApplicationController
     @unassigned_opportunities = Opportunity.my.unassigned.pipeline.order(:stage)
   end
 
-  private
+protected
 
-  def resource_params
-    params.require(:user).permit(
+  def user_params
+    params[:user].permit(
       :username,
       :email,
       :first_name,
@@ -153,7 +153,7 @@ class UsersController < ApplicationController
   end
 
   def avatar_params
-    params.require(:avatar)
+    params[:avatar]
       .permit(:image)
       .merge(entity: @user)
   end

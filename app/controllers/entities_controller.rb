@@ -120,6 +120,10 @@ protected
     end
   end
 
+  def resource_params
+    params[controller_name.singularize].permit!
+  end
+
 private
 
   def ransack_search
