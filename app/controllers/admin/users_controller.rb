@@ -45,9 +45,7 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def create
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
-    admin = params[:user].delete(:admin)
-    @user = User.new(params[:user])
-    @user.admin = (admin == "1") unless admin.nil?
+    @user = User.new(resource_params)
     @user.save_without_session_maintenance
 
     respond_with(@user)
@@ -58,10 +56,8 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def update
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
-    admin = params[:user].delete(:admin)
     @user = User.find(params[:id])
-    @user.attributes = params[:user]
-    @user.admin = (admin == "1") unless admin.nil?
+    @user.attributes = resource_params
     @user.save_without_session_maintenance
 
     respond_with(@user)
@@ -120,5 +116,24 @@ private
     scope = scope.text_search(current_query)      if current_query.present?
     scope = scope.paginate(:page => current_page) if wants.html? || wants.js? || wants.xml?
     scope
+  end
+
+  def resource_params
+    params.require(:user).permit(
+      :admin,
+      :username,
+      :email,
+      :first_name,
+      :last_name,
+      :title,
+      :company,
+      :alt_email,
+      :phone,
+      :mobile,
+      :aim,
+      :yahoo,
+      :google,
+      :skype
+    )
   end
 end
