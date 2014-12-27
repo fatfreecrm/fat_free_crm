@@ -61,7 +61,7 @@ class ContactsController < EntitiesController
   def create
     @comment_body = params[:comment_body]
     respond_with(@contact) do |format|
-      if @contact.save_with_account_and_permissions(params)
+      if @contact.save_with_account_and_permissions(params.permit!)
         @contact.add_comment_by_user(@comment_body, current_user)
         @contacts = get_contacts if called_from_index_page?
       else
@@ -83,7 +83,7 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@contact) do |format|
-      unless @contact.update_with_account_and_permissions(params)
+      unless @contact.update_with_account_and_permissions(params.permit!)
         if @contact.account
           @account = Account.find(@contact.account.id)
         else

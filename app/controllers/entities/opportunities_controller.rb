@@ -67,7 +67,7 @@ class OpportunitiesController < EntitiesController
   def create
     @comment_body = params[:comment_body]
     respond_with(@opportunity) do |format|
-      if @opportunity.save_with_account_and_permissions(params)
+      if @opportunity.save_with_account_and_permissions(params.permit!)
         @opportunity.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
           @opportunities = get_opportunities
@@ -98,7 +98,7 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@opportunity) do |format|
-      if @opportunity.update_with_account_and_permissions(params)
+      if @opportunity.update_with_account_and_permissions(params.permit!)
         if called_from_index_page?
           get_data_for_sidebar
         elsif called_from_landing_page?(:accounts)

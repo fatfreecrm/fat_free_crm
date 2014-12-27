@@ -126,7 +126,7 @@ class Contact < ActiveRecord::Base
     save_account(params)
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:contact][:access] if params[:contact][:access]
-    self.attributes = params[:contact].permit!
+    self.attributes = params[:contact]
     self.save
   end
 
@@ -198,7 +198,7 @@ class Contact < ActiveRecord::Base
   # Handles the saving of related accounts
   #----------------------------------------------------------------------------
   def save_account(params)
-    account_params = params[:account].permit!
+    account_params = params[:account]
     if account_params[:id] == "" || account_params[:name] == ""
       self.account = nil
     else

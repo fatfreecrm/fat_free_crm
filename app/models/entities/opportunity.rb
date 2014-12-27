@@ -102,7 +102,7 @@ class Opportunity < ActiveRecord::Base
   def save_with_account_and_permissions(params)
     # Quick sanitization, makes sure Account will not search for blank id.
     params[:account].delete(:id) if params[:account][:id].blank?
-    account = Account.create_or_select_for(self, params[:account].permit!)
+    account = Account.create_or_select_for(self, params[:account])
     self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
     self.account = account
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
@@ -117,7 +117,7 @@ class Opportunity < ActiveRecord::Base
     if params[:account] && (params[:account][:id] == "" || params[:account][:name] == "")
       self.account = nil # Opportunity is not associated with the account anymore.
     elsif params[:account]
-      account = Account.create_or_select_for(self, params[:account].permit!)
+      account = Account.create_or_select_for(self, params[:account])
       if self.account != account and account.id.present?
         self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self)
       end
@@ -125,7 +125,7 @@ class Opportunity < ActiveRecord::Base
     self.reload
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:opportunity][:access] if params[:opportunity][:access]
-    self.attributes = params[:opportunity].permit!
+    self.attributes = params[:opportunity]
     self.save
   end
 

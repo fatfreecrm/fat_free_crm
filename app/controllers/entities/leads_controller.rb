@@ -64,7 +64,7 @@ class LeadsController < EntitiesController
     @comment_body = params[:comment_body]
 
     respond_with(@lead) do |format|
-      if @lead.save_with_permissions(params)
+      if @lead.save_with_permissions(params.permit!)
         @lead.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
           @leads = get_leads
@@ -118,7 +118,7 @@ class LeadsController < EntitiesController
   # PUT /leads/1/promote
   #----------------------------------------------------------------------------
   def promote
-    @account, @opportunity, @contact = @lead.promote(params)
+    @account, @opportunity, @contact = @lead.promote(params.permit!)
     @accounts = Account.my.order('name')
     @stage = Setting.unroll(:opportunity_stage)
 
