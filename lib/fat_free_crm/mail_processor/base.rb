@@ -159,7 +159,9 @@ module FatFreeCRM
 
       #------------------------------------------------------------------------------
       def find_sender(email_address)
-        if @sender = User.first(:conditions => [ "(lower(email) = ? OR lower(alt_email) = ?) AND suspended_at IS NULL", email_address.downcase, email_address.downcase ])
+        if @sender = User.find_by(
+            '(lower(email) = :email OR lower(alt_email) = :email) AND suspended_at IS NULL',
+            email: email_address.downcase)
           # Set the PaperTrail user for versions (if user is found)
           PaperTrail.whodunnit = @sender.id.to_s
         end
@@ -169,7 +171,7 @@ module FatFreeCRM
       def sender_has_permissions_for?(asset)
         return true if asset.access == "Public"
         return true if asset.user_id == @sender.id || asset.assigned_to == @sender.id
-        return true if asset.access == "Shared" && Permission.where('user_id = ? AND asset_id = ? AND asset_type = ?', @sender.id, asset.id, asset.class.to_s).count > 0
+        return true if asset.access == "Shared" && Permission.exists('user_id = ? AND asset_id = ? AND asset_type = ?', @sender.id, asset.id, asset.class.to_s)
 
         false
       end

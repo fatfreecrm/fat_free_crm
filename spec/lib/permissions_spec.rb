@@ -32,7 +32,7 @@ describe FatFreeCRM::Permissions do
     it "should assign permissions to the object" do
       @entity.permissions.size.should == 0
       @entity.update_attribute(:user_ids, ['1','2','3'])
-      @entity.permissions.find_all_by_user_id([1,2,3]).size.should == 3
+      @entity.permissions.where(user_id: [1,2,3]).size.should == 3
     end
 
     it "should handle [] permissions" do
@@ -45,9 +45,9 @@ describe FatFreeCRM::Permissions do
       @entity.permissions << FactoryGirl.create(:permission, :user_id => 2, :asset => @entity)
       @entity.update_attribute(:user_ids, ['2','3'])
       @entity.permissions.size.should == 2
-      @entity.permissions.find_all_by_user_id([1]).size.should == 0
-      @entity.permissions.find_all_by_user_id([2]).size.should == 1
-      @entity.permissions.find_all_by_user_id([3]).size.should == 1
+      @entity.permissions.where(user_id: [1]).size.should == 0
+      @entity.permissions.where(user_id: [2]).size.should == 1
+      @entity.permissions.where(user_id: [3]).size.should == 1
     end
 
   end
@@ -59,7 +59,7 @@ describe FatFreeCRM::Permissions do
     it "should assign permissions to the object" do
       @entity.permissions.size.should == 0
       @entity.update_attribute(:group_ids, ['1','2','3'])
-      @entity.permissions.find_all_by_group_id([1,2,3]).size.should == 3
+      @entity.permissions.where(group_id: [1,2,3]).size.should == 3
     end
 
     it "should handle [] permissions" do
@@ -73,8 +73,8 @@ describe FatFreeCRM::Permissions do
       @entity.permissions.size.should == 2
       @entity.update_attribute(:group_ids, ['3'])
       @entity.permissions.size.should == 1
-      @entity.permissions.find_all_by_group_id([1,2]).size.should == 0
-      @entity.permissions.find_all_by_group_id([3]).size.should == 1
+      @entity.permissions.where(group_id: [1,2]).size.should == 0
+      @entity.permissions.where(group_id: [3]).size.should == 1
     end
   end
 
@@ -85,13 +85,13 @@ describe FatFreeCRM::Permissions do
     it "should delete all permissions if access is set to Public" do
       perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
       perm.should_receive(:destroy)
-      Permission.should_receive(:find_all_by_asset_id_and_asset_type).with(@entity.id, @entity.class).and_return([perm])
+      Permission.should_receive(:where).with(asset_id: @entity.id, asset_type: @entity.class).and_return([perm])
       @entity.update_attribute(:access, 'Public')
     end
     it "should delete all permissions if access is set to Private" do
       perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
       perm.should_receive(:destroy)
-      Permission.should_receive(:find_all_by_asset_id_and_asset_type).with(@entity.id, @entity.class).and_return([perm])
+      Permission.should_receive(:where).with(asset_id: @entity.id, asset_type: @entity.class).and_return([perm])
       @entity.update_attribute(:access, 'Private')
     end
     it "should not remove permissions if access is set to Shared" do

@@ -41,11 +41,15 @@ module FatFreeCRM
         class_eval %Q{
 
           def #{model}_ids=(value)
-            if access != "Shared"
+            if access != 'Shared'
               remove_permissions
             else
               value = value.flatten.reject(&:blank?).uniq.map(&:to_i)
-              permissions_to_remove = Permission.find_all_by_#{model}_id_and_asset_id_and_asset_type(self.#{model}_ids - value, self.id, self.class)
+              permissions_to_remove = Permission.where(
+                #{model}_id: self.#{model}_ids - value,
+                asset_id: self.id,
+                asset_type: self.class
+              )
               permissions_to_remove.each {|p| (permissions.delete(p); p.destroy)}
               (value - self.#{model}_ids).each {|id| permissions.build(:#{model}_id => id)}
             end
