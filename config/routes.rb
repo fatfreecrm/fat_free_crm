@@ -133,6 +133,7 @@ Rails.application.routes.draw do
     end
     member do
       patch :complete
+      patch :uncomplete
     end
   end
 
