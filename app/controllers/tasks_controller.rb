@@ -68,7 +68,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     @view = view
-    @task = Task.new(params[:task]) # NOTE: we don't display validation messages for tasks.
+    @task = Task.new(task_params) # NOTE: we don't display validation messages for tasks.
 
     respond_with(@task) do |format|
       if @task.save
@@ -91,7 +91,7 @@ class TasksController < ApplicationController
     end
 
     respond_with(@task) do |format|
-      if @task.update_attributes(params[:task])
+      if @task.update_attributes(task_params)
         @task.bucket = @task.computed_bucket
         if called_from_index_page?
           if Task.bucket_empty?(@task_before_update.bucket, current_user, @view)
@@ -165,6 +165,12 @@ class TasksController < ApplicationController
         filters.delete(params[:filter])
       end
     end
+  end
+
+protected
+
+  def task_params
+    params[:task].permit!
   end
 
 private
