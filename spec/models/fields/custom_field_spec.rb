@@ -81,7 +81,7 @@ describe CustomField do
                 with("contacts", "cf_test_field", 'text', {})
     Contact.should_receive(:reset_column_information).twice
     Contact.should_receive(:serialize_custom_fields!).twice
-    
+
     field_group = FactoryGirl.create(:field_group, :klass_name => "Contact")
     c = FactoryGirl.create(:custom_field,
                            :label => "Test Field",
@@ -109,7 +109,7 @@ describe CustomField do
   end
 
   describe "validation" do
-  
+
     it "should have errors if custom field is required" do
       event = CustomField.new(:name => 'cf_event', :required => true)
       foo = double(:cf_event => nil)
@@ -117,7 +117,7 @@ describe CustomField do
       foo.should_receive(:errors).and_return(err)
       event.custom_validator(foo)
     end
-    
+
     it "should have errors if custom field is longer than maxlength" do
       event = CustomField.new(:name => 'cf_event', :maxlength => 5)
       foo = double(:cf_event => "This is too long")
@@ -125,7 +125,7 @@ describe CustomField do
       foo.should_receive(:errors).and_return(err)
       event.custom_validator(foo)
     end
-    
+
   end
-  
+
 end
