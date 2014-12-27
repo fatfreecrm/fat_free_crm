@@ -40,6 +40,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'psych', '~> 1'        if RUBY_VERSION.to_f < 2.0
   gem.add_dependency 'thor'
   gem.add_dependency 'rails_autolink'
+  gem.add_dependency 'country_select'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
