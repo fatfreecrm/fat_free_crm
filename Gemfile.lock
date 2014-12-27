@@ -17,6 +17,15 @@ GIT
       rails (>= 3.0)
 
 GIT
+  remote: git://github.com/fatfreecrm/ransack_ui.git
+  revision: 3e268ae2381c25fb2005403125c13933d6840272
+  branch: fix/ransack_1_2
+  specs:
+    ransack_ui (1.2.2)
+      ransack
+      ransack_chronic (>= 1.1.0)
+
+GIT
   remote: git://github.com/rails/prototype-rails.git
   revision: c548aa41feca27055c3fc4d70ed4791dd7fee758
   specs:
@@ -244,9 +253,6 @@ GEM
     rake (10.4.2)
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
-    ransack_ui (1.2.2)
-      ransack
-      ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.9.4)
@@ -400,7 +406,7 @@ DEPENDENCIES
   rails_12factor
   rails_autolink
   ransack!
-  ransack_ui (>= 1.1.0)
+  ransack_ui!
   rb-fchange
   rb-fsevent
   rb-inotify
