@@ -94,7 +94,7 @@ describe HomeController do
       assigns[:asset].should == "tasks"
       assigns[:user].should == "Billy Bones"
       assigns[:duration].should == "two days"
-      assigns[:all_users].should == User.order("first_name, last_name").all
+      assigns[:all_users].should == User.order(:first_name, :last_name).to_a
     end
 
     it "should not assign instance variables when hiding options" do
