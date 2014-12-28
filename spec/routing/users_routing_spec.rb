@@ -25,7 +25,7 @@ describe UsersController do
     end
 
     it "doesn't recognize #edit with non-numeric id" do
-      { :get => "/opportunities/aaron/edit" }.should_not be_routable
+      { :get => "/users/aaron/edit" }.should_not be_routable
     end
 
     it "recognizes and generates #create" do
@@ -37,7 +37,7 @@ describe UsersController do
     end
 
     it "doesn't recognize #update with non-numeric id" do
-      { :put => "/opportunities/aaron" }.should_not be_routable
+      { :put => "/users/aaron" }.should_not be_routable
     end
 
     it "doesn't recognize #destroy" do
@@ -45,7 +45,7 @@ describe UsersController do
     end
 
     it "doesn't recognize #destroy with non-numeric id" do
-      { :delete => "/opportunities/aaron" }.should_not be_routable
+      { :delete => "/users/aaron" }.should_not be_routable
     end
 
     it "should generate params for #avatar" do
@@ -53,15 +53,15 @@ describe UsersController do
     end
 
     it "doesn't recognize #avatar with non-numeric id" do
-      { :get => "/opportunities/aaron/avatar" }.should_not be_routable
+      { :get => "/users/aaron/avatar" }.should_not be_routable
     end
 
     it "should generate params for #upload_avatar" do
-      { :put => "/users/1/upload_avatar" }.should route_to( :controller => "users", :action => "upload_avatar", :id => "1" )
+      { :patch => "/users/1/upload_avatar" }.should route_to( :controller => "users", :action => "upload_avatar", :id => "1" )
     end
 
     it "doesn't recognize #upload_avatar with non-numeric id" do
-      { :put => "/opportunities/aaron/upload_avatar" }.should_not be_routable
+      { :patch => "/users/aaron/upload_avatar" }.should_not be_routable
     end
 
     it "should generate params for #password" do
@@ -69,15 +69,15 @@ describe UsersController do
     end
 
     it "doesn't recognize #password with non-numeric id" do
-      { :get => "/opportunities/aaron/password" }.should_not be_routable
+      { :get => "/users/aaron/password" }.should_not be_routable
     end
 
     it "should generate params for #change_password" do
-      { :put => "/users/1/change_password" }.should route_to( :controller => "users", :action => "change_password", :id => "1" )
+      { :patch => "/users/1/change_password" }.should route_to( :controller => "users", :action => "change_password", :id => "1" )
     end
 
     it "doesn't recognize #change_password with non-numeric id" do
-      { :put => "/opportunities/aaron/change_password" }.should_not be_routable
+      { :patch => "/users/aaron/change_password" }.should_not be_routable
     end
   end
 end

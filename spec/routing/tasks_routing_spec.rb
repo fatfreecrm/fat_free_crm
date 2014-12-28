@@ -29,7 +29,7 @@ describe TasksController do
     end
 
     it "doesn't recognize #edit with non-numeric id" do
-      { :get => "/opportunities/aaron/edit" }.should_not be_routable
+      { :get => "/tasks/aaron/edit" }.should_not be_routable
     end
 
     it "recognizes and generates #create" do
@@ -41,7 +41,7 @@ describe TasksController do
     end
 
     it "doesn't recognize #update with non-numeric id" do
-      { :put => "/opportunities/aaron" }.should_not be_routable
+      { :put => "/tasks/aaron" }.should_not be_routable
     end
 
     it "recognizes and generates #destroy" do
@@ -49,7 +49,7 @@ describe TasksController do
     end
 
     it "doesn't recognize #destroy with non-numeric id" do
-      { :delete => "/opportunities/aaron" }.should_not be_routable
+      { :delete => "/tasks/aaron" }.should_not be_routable
     end
 
     it "recognizes and generates #filter" do
@@ -57,11 +57,11 @@ describe TasksController do
     end
 
     it "should generate params for #complete" do
-      { :put => "/tasks/1/complete" }.should route_to( :controller => "tasks", :action => "complete", :id => "1" )
+      { :patch => "/tasks/1/complete" }.should route_to( :controller => "tasks", :action => "complete", :id => "1" )
     end
 
     it "doesn't recognize #complete with non-numeric id" do
-      { :put => "/opportunities/aaron/complete" }.should_not be_routable
+      { :patch => "/tasks/aaron/complete" }.should_not be_routable
     end
   end
 end
