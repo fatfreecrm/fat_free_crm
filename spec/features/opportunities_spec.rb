@@ -26,23 +26,25 @@ feature 'Opportunities', %q{
 
   scenario 'should create a new opportunity', :js => true do
     FactoryGirl.create(:account, :name => 'Example Account')
-    visit opportunities_page
-    click_link 'Create Opportunity'
-    page.should have_selector('#opportunity_name', :visible => true)
-    fill_in 'opportunity_name', :with => 'My Awesome Opportunity'
-    fill_in 'account_name', :with => 'Example Account'
-    select 'Prospecting', :from => 'opportunity_stage'
-    click_link 'Comment'
-    fill_in 'comment_body', :with => 'This is a very important opportunity.'
-    click_button 'Create Opportunity'
-    page.should have_content('My Awesome Opportunity')
+    with_versioning do
+      visit opportunities_page
+      click_link 'Create Opportunity'
+      page.should have_selector('#opportunity_name', :visible => true)
+      fill_in 'opportunity_name', :with => 'My Awesome Opportunity'
+      fill_in 'account_name', :with => 'Example Account'
+      select 'Prospecting', :from => 'opportunity_stage'
+      click_link 'Comment'
+      fill_in 'comment_body', :with => 'This is a very important opportunity.'
+      click_button 'Create Opportunity'
+      page.should have_content('My Awesome Opportunity')
 
-    find('div#opportunities').click_link('My Awesome Opportunity')
-    page.should have_content('This is a very important opportunity.')
+      find('div#opportunities').click_link('My Awesome Opportunity')
+      page.should have_content('This is a very important opportunity.')
 
-    click_link "Dashboard"
-    page.should have_content("Bill Murray created opportunity My Awesome Opportunity")
-    page.should have_content("Bill Murray created comment on My Awesome Opportunity")
+      click_link "Dashboard"
+      page.should have_content("Bill Murray created opportunity My Awesome Opportunity")
+      page.should have_content("Bill Murray created comment on My Awesome Opportunity")
+    end
   end
 
   scenario "remembers the comment field when the creation was unsuccessful", :js => true do
@@ -61,16 +63,18 @@ feature 'Opportunities', %q{
     FactoryGirl.create(:account, :name => 'Example Account')
     FactoryGirl.create(:account, :name => 'Other Example Account')
     FactoryGirl.create(:opportunity, :name => 'A Cool Opportunity')
-    visit opportunities_page
-    click_link 'A Cool Opportunity'
-    click_link 'Edit'
-    fill_in 'opportunity_name', :with => 'An Even Cooler Opportunity'
-    chosen_select('Other Example Account', :from => 'account_id')
-    select 'Analysis', :from => 'opportunity_stage'
-    click_button 'Save Opportunity'
-    page.should have_content('An Even Cooler Opportunity')
-    click_link "Dashboard"
-    page.should have_content("Bill Murray updated opportunity An Even Cooler Opportunity")
+    with_versioning do
+      visit opportunities_page
+      click_link 'A Cool Opportunity'
+      click_link 'Edit'
+      fill_in 'opportunity_name', :with => 'An Even Cooler Opportunity'
+      chosen_select('Other Example Account', :from => 'account_id')
+      select 'Analysis', :from => 'opportunity_stage'
+      click_button 'Save Opportunity'
+      page.should have_content('An Even Cooler Opportunity')
+      click_link "Dashboard"
+      page.should have_content("Bill Murray updated opportunity An Even Cooler Opportunity")
+    end
   end
 
   scenario 'should delete an opportunity', :js => true do

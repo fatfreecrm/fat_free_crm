@@ -117,7 +117,8 @@ protected
       :aim,
       :yahoo,
       :google,
-      :skype
+      :skype,
+      group_ids: []
     )
   end
 

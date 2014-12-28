@@ -25,24 +25,26 @@ feature 'Campaigns', %q{
   end
 
   scenario 'should create a campaign', :js => true do
-    visit campaigns_page
-    click_link 'Create Campaign'
-    page.should have_selector('#campaign_name', :visible => true)
-    fill_in 'campaign_name', :with => 'Cool Campaign'
-    select 'On Hold', :from => 'campaign_status'
-    click_link 'Comment'
-    fill_in 'comment_body', :with => 'This campaign is very important'
-    click_button 'Create Campaign'
+    with_versioning do
+      visit campaigns_page
+      click_link 'Create Campaign'
+      page.should have_selector('#campaign_name', :visible => true)
+      fill_in 'campaign_name', :with => 'Cool Campaign'
+      select 'On Hold', :from => 'campaign_status'
+      click_link 'Comment'
+      fill_in 'comment_body', :with => 'This campaign is very important'
+      click_button 'Create Campaign'
 
-    page.should have_content('Cool Campaign')
-    page.should have_content('On Hold')
+      page.should have_content('Cool Campaign')
+      page.should have_content('On Hold')
 
-    find('div#campaigns').click_link 'Cool Campaign'
-    page.should have_content('This campaign is very important')
+      find('div#campaigns').click_link 'Cool Campaign'
+      page.should have_content('This campaign is very important')
 
-    click_link "Dashboard"
-    page.should have_content("Bill Murray created campaign Cool Campaign")
-    page.should have_content("Bill Murray created comment on Cool Campaign")
+      click_link "Dashboard"
+      page.should have_content("Bill Murray created campaign Cool Campaign")
+      page.should have_content("Bill Murray created comment on Cool Campaign")
+    end
   end
 
   scenario "remembers the comment field when the creation was unsuccessful", :js => true do
@@ -58,16 +60,18 @@ feature 'Campaigns', %q{
 
   scenario 'should view and edit a campaign', :js => true do
     FactoryGirl.create(:campaign, :name => "My Cool Campaign")
-    visit campaigns_page
-    click_link 'My Cool Campaign'
-    click_link 'Edit'
-    fill_in 'campaign_name', :with => 'My Even Cooler Campaign'
-    select 'Started', :from => 'campaign_status'
-    click_button 'Save Campaign'
+    with_versioning do
+      visit campaigns_page
+      click_link 'My Cool Campaign'
+      click_link 'Edit'
+      fill_in 'campaign_name', :with => 'My Even Cooler Campaign'
+      select 'Started', :from => 'campaign_status'
+      click_button 'Save Campaign'
+      page.should have_content('My Even Cooler Campaign')
     page.should have_content('My Even Cooler Campaign')
-  page.should have_content('My Even Cooler Campaign')
-    click_link 'Dashboard'
-    page.should have_content("Bill Murray updated campaign My Even Cooler Campaign")
+      click_link 'Dashboard'
+      page.should have_content("Bill Murray updated campaign My Even Cooler Campaign")
+    end
   end
 
   scenario 'should delete a campaign', :js => true do

@@ -24,27 +24,29 @@ feature 'Accounts', %q{
   end
 
   scenario 'should create a new account', :js => true do
-    visit accounts_page
-    page.should have_content('Create Account')
-    click_link 'Create Account'
-    page.should have_selector('#account_name', :visible => true)
-    fill_in 'account_name', :with => 'My new account'
-    click_link 'Contact Information'
-    fill_in 'account_phone', :with => '+1 2345 6789'
-    fill_in 'account_website', :with => 'http://www.example.com'
-    click_link 'Comment'
-    fill_in 'comment_body', :with => 'This account is very important'
-    click_button 'Create Account'
+    with_versioning do
+      visit accounts_page
+      page.should have_content('Create Account')
+      click_link 'Create Account'
+      page.should have_selector('#account_name', :visible => true)
+      fill_in 'account_name', :with => 'My new account'
+      click_link 'Contact Information'
+      fill_in 'account_phone', :with => '+1 2345 6789'
+      fill_in 'account_website', :with => 'http://www.example.com'
+      click_link 'Comment'
+      fill_in 'comment_body', :with => 'This account is very important'
+      click_button 'Create Account'
 
-    find('div#accounts').should have_content('My new account')
-    find('div#accounts').click_link('My new account') # avoid recent items link
-    page.should have_content('+1 2345 6789')
-    page.should have_content('http://www.example.com')
-    page.should have_content('This account is very important')
+      find('div#accounts').should have_content('My new account')
+      find('div#accounts').click_link('My new account') # avoid recent items link
+      page.should have_content('+1 2345 6789')
+      page.should have_content('http://www.example.com')
+      page.should have_content('This account is very important')
 
-    click_link "Dashboard"
-    page.should have_content("Bill Murray created account My new account")
-    page.should have_content("Bill Murray created comment on My new account")
+      click_link "Dashboard"
+      page.should have_content("Bill Murray created account My new account")
+      page.should have_content("Bill Murray created comment on My new account")
+    end
   end
 
   scenario "remembers the comment field when the creation was unsuccessful", :js => true do
@@ -65,16 +67,18 @@ feature 'Accounts', %q{
 
   scenario 'should view and edit an account', :js => true, :versioning => true do
     FactoryGirl.create(:account, :name => "A new account")
-    visit accounts_page
-    find('div#accounts').click_link('A new account')
-    page.should have_content('A new account')
-    click_link 'Edit'
-    fill_in 'account_name', :with => 'A new account *editted*'
-    click_button 'Save Account'
-    page.should have_content('A new account *editted*')
+    with_versioning do
+      visit accounts_page
+      find('div#accounts').click_link('A new account')
+      page.should have_content('A new account')
+      click_link 'Edit'
+      fill_in 'account_name', :with => 'A new account *editted*'
+      click_button 'Save Account'
+      page.should have_content('A new account *editted*')
 
-    click_link "Dashboard"
-    page.should have_content("Bill Murray updated account A new account *editted*")
+      click_link "Dashboard"
+      page.should have_content("Bill Murray updated account A new account *editted*")
+    end
   end
 
   scenario 'should delete an account', :js => true do

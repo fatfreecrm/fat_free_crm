@@ -26,29 +26,31 @@ feature 'Leads', %q{
   end
 
   scenario 'should create a new lead', :js => true do
-    visit leads_page
-    click_link 'Create Lead'
-    page.should have_selector('#lead_first_name', :visible => true)
-    fill_in 'lead_first_name', :with => 'Mr'
-    fill_in 'lead_last_name', :with => 'Lead'
-    fill_in 'lead_email', :with => 'mr_lead@example.com'
-    fill_in 'lead_phone', :with => '+44 1234 567890'
-    click_link 'Comment'
-    fill_in 'comment_body', :with => 'This is an important lead.'
-    click_link('Status')
-    select 'Contacted', :from => 'lead_status'
-    click_button 'Create Lead'
-    page.should have_content('Mr Lead')
+    with_versioning do
+      visit leads_page
+      click_link 'Create Lead'
+      page.should have_selector('#lead_first_name', :visible => true)
+      fill_in 'lead_first_name', :with => 'Mr'
+      fill_in 'lead_last_name', :with => 'Lead'
+      fill_in 'lead_email', :with => 'mr_lead@example.com'
+      fill_in 'lead_phone', :with => '+44 1234 567890'
+      click_link 'Comment'
+      fill_in 'comment_body', :with => 'This is an important lead.'
+      click_link('Status')
+      select 'Contacted', :from => 'lead_status'
+      click_button 'Create Lead'
+      page.should have_content('Mr Lead')
 
-    find('#leads').click_link('Mr Lead')
-    page.should have_content('Contacted')
-    page.should have_content('mr_lead@example.com')
-    page.should have_content('+44 1234 567890')
-    page.should have_content('This is an important lead.')
+      find('#leads').click_link('Mr Lead')
+      page.should have_content('Contacted')
+      page.should have_content('mr_lead@example.com')
+      page.should have_content('+44 1234 567890')
+      page.should have_content('This is an important lead.')
 
-    click_link "Dashboard"
-    page.should have_content("Bill Murray created lead Mr Lead")
-    page.should have_content("Bill Murray created comment on Mr Lead")
+      click_link "Dashboard"
+      page.should have_content("Bill Murray created lead Mr Lead")
+      page.should have_content("Bill Murray created comment on Mr Lead")
+    end
   end
 
   scenario "remembers the comment field when the creation was unsuccessful", :js => true do
@@ -64,18 +66,20 @@ feature 'Leads', %q{
 
   scenario 'should view and edit a lead', :js => true do
     FactoryGirl.create(:lead, :first_name => "Mr", :last_name => "Lead", :email => "mr_lead@example.com")
-    visit leads_page
-    click_link 'Mr Lead'
-    page.should have_content('Mr Lead')
-    click_link('Edit')
-    fill_in 'lead_first_name', :with => 'Mrs'
-    fill_in 'lead_phone', :with => '+44 0987 654321'
-    click_link('Status')
-    select 'Rejected', :from => 'lead_status'
-    click_button 'Save Lead'
-    find('#title').should have_content('Mrs Lead')
-    click_link "Dashboard"
-    page.should have_content("Bill Murray updated lead Mrs Lead")
+    with_versioning do
+      visit leads_page
+      click_link 'Mr Lead'
+      page.should have_content('Mr Lead')
+      click_link('Edit')
+      fill_in 'lead_first_name', :with => 'Mrs'
+      fill_in 'lead_phone', :with => '+44 0987 654321'
+      click_link('Status')
+      select 'Rejected', :from => 'lead_status'
+      click_button 'Save Lead'
+      find('#title').should have_content('Mrs Lead')
+      click_link "Dashboard"
+      page.should have_content("Bill Murray updated lead Mrs Lead")
+    end
   end
 
   scenario 'should delete a lead', :js => true do

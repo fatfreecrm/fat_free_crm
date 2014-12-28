@@ -35,7 +35,7 @@ class Admin::GroupsController < Admin::ApplicationController
   # POST /groups
   #----------------------------------------------------------------------------
   def create
-    @group.attributes = params[:group]
+    @group.attributes = group_params
     @group.save
 
     respond_with(@group)
@@ -44,7 +44,7 @@ class Admin::GroupsController < Admin::ApplicationController
   # PUT /groups/1
   #----------------------------------------------------------------------------
   def update
-    @group.update_attributes(params[:group])
+    @group.update_attributes(group_params)
 
     respond_with(@group)
   end
@@ -55,5 +55,11 @@ class Admin::GroupsController < Admin::ApplicationController
     @group.destroy
 
     respond_with(@group)
+  end
+
+protected
+
+  def group_params
+    params[:group].permit!
   end
 end

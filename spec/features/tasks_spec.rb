@@ -26,55 +26,61 @@ feature 'Tasks', %q{
   end
 
   scenario 'should create a new task', :js => true do
-    visit tasks_page
-    page.should have_content('Create Task')
-    click_link 'Create Task'
-    page.should have_selector('#task_name', :visible => true)
-    fill_in 'task_name', :with => 'Task I Need To Do'
-    chosen_select('Tomorrow', :from => 'task_bucket')
-    chosen_select('Myself', :from => 'task_assigned_to')
-    chosen_select('Call', :from => 'task_category')
-    click_button 'Create Task'
-    page.should have_content('Task I Need To Do')
+    with_versioning do
+      visit tasks_page
+      page.should have_content('Create Task')
+      click_link 'Create Task'
+      page.should have_selector('#task_name', :visible => true)
+      fill_in 'task_name', :with => 'Task I Need To Do'
+      chosen_select('Tomorrow', :from => 'task_bucket')
+      chosen_select('Myself', :from => 'task_assigned_to')
+      chosen_select('Call', :from => 'task_category')
+      click_button 'Create Task'
+      page.should have_content('Task I Need To Do')
 
-    click_link 'Dashboard'
-    page.should have_content('Bill Murray created task Task I Need To Do')
+      click_link 'Dashboard'
+      page.should have_content('Bill Murray created task Task I Need To Do')
+    end
   end
 
   scenario 'creating a task for another user', :js => true do
     FactoryGirl.create(:user, :first_name => 'Another', :last_name => 'User')
-    visit tasks_page
-    click_link 'Create Task'
-    page.should have_selector('#task_name', :visible => true)
-    fill_in 'task_name', :with => 'Task For Someone Else'
-    chosen_select('Tomorrow', :from => 'task_bucket')
-    chosen_select('Another User', :from => 'task_assigned_to')
-    chosen_select('Call', :from => 'task_category')
-    click_button 'Create Task'
-    page.should have_content('The task has been created and assigned to Another User')
+    with_versioning do
+      visit tasks_page
+      click_link 'Create Task'
+      page.should have_selector('#task_name', :visible => true)
+      fill_in 'task_name', :with => 'Task For Someone Else'
+      chosen_select('Tomorrow', :from => 'task_bucket')
+      chosen_select('Another User', :from => 'task_assigned_to')
+      chosen_select('Call', :from => 'task_category')
+      click_button 'Create Task'
+      page.should have_content('The task has been created and assigned to Another User')
 
-    click_link 'Tasks'
-    page.uncheck('filters_due_tomorrow')
-    page.should_not have_content('Task For Someone Else')
+      click_link 'Tasks'
+      page.uncheck('filters_due_tomorrow')
+      page.should_not have_content('Task For Someone Else')
 
-    click_filter_tab('Assigned')
-    page.check('filters_due_tomorrow')
-    find('#main').should have_content('Task For Someone Else')
-    find('#main').should have_content('Another User')
+      click_filter_tab('Assigned')
+      page.check('filters_due_tomorrow')
+      find('#main').should have_content('Task For Someone Else')
+      find('#main').should have_content('Another User')
 
-    click_link 'Dashboard'
-    page.should have_content('Bill Murray created task Task For Someone Else')
+      click_link 'Dashboard'
+      page.should have_content('Bill Murray created task Task For Someone Else')
+    end
   end
 
   scenario 'should view and edit a task', :js => true do
     FactoryGirl.create(:task, :id => 42, :name => 'Example Task', :user => @user)
-    visit tasks_page
-    click_edit_for_task_id(42)
-    fill_in 'task_name', :with => 'Updated Task'
-    click_button 'Save Task'
-    page.should have_content('Updated Task')
-    click_link 'Dashboard'
-    page.should have_content('Bill Murray updated task Updated Task')
+    with_versioning do
+      visit tasks_page
+      click_edit_for_task_id(42)
+      fill_in 'task_name', :with => 'Updated Task'
+      click_button 'Save Task'
+      page.should have_content('Updated Task')
+      click_link 'Dashboard'
+      page.should have_content('Bill Murray updated task Updated Task')
+    end
   end
 
   scenario 'should delete a task', :js => true do
