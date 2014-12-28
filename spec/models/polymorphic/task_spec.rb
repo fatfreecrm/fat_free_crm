@@ -267,7 +267,9 @@ describe Task do
       subject { described_class.new(:due_at => Time.zone.now.next_week, :bucket => "specific_time") }
 
       it "returns a sensible value" do
-        subject.computed_bucket.should == "due_next_week"
+        Timecop.freeze(Time.local(2014, 1, 1, 16, 14)) do
+          subject.computed_bucket.should == "due_next_week"
+        end
       end
     end
 
