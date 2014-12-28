@@ -32,6 +32,7 @@ I18n.locale = 'en-US'
 Paperclip.options[:log] = false
 
 RSpec.configure do |config|
+  config.treat_symbols_as_metadata_keys_with_true_values = true
 
   config.infer_spec_type_from_file_location!
 
@@ -54,21 +55,28 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = false
-  config.before :suite do
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
     DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
   end
-  config.before :all, :type => :feature do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-  config.around :each, :type => :feature do |example|
+
+  config.before(:each, :js) do
     DatabaseCleaner.strategy = :truncation
-    example.run
-    DatabaseCleaner.strategy = :transaction
   end
-  config.around :each do |example|
+
+  config.before(:each, :truncate => true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
     DatabaseCleaner.start
-    example.run
+  end
+
+  config.append_after(:each) do
     DatabaseCleaner.clean
   end
 
