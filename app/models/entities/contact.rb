@@ -127,7 +127,9 @@ class Contact < ActiveRecord::Base
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:contact][:access] if params[:contact][:access]
     self.attributes = params[:contact]
-    self.save
+    result = self.save
+    reload
+    result
   end
 
   # Attach given attachment to the contact if it hasn't been attached already.
