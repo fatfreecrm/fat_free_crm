@@ -1,3 +1,4 @@
+sudo: false
 language: ruby
 rvm:
   - 1.9.3
@@ -12,6 +13,8 @@ env:
 gemfile: Gemfile.ci
 
 bundler_args: --path=vendor/bundle --without heroku
+
+cache: bundler
 
 before_install:
   - "export DISPLAY=:99.0"
