@@ -558,7 +558,6 @@ describe OpportunitiesController do
 
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello" }, :account => { :name => "new account" }
         assigns[:opportunity].should == @opportunity
-        @opportunity.reload
         @opportunity.account.should_not be_nil
         @opportunity.account.name.should == "new account"
       end

@@ -91,7 +91,7 @@ class Lead < ActiveRecord::Base
     if params[:lead][:access] == "Campaign" && self.campaign # Copy campaign permissions.
       save_with_model_permissions(Campaign.find(self.campaign_id))
     else
-      self.attributes = params[:leads]
+      self.attributes = params[:lead]
       save
     end
   end

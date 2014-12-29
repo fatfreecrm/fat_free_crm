@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 1.9'
   gem.license = 'MIT'
 
-  gem.add_dependency 'rails',               '~> 4.0.0'
+  gem.add_dependency 'rails',               '~> 4.1.0'
   gem.add_dependency 'jquery-rails',        '~> 2.1.4' # pegs us to jQuery 1.8
   gem.add_dependency 'select2-rails'
   gem.add_dependency 'simple_form'
