@@ -558,8 +558,8 @@ describe OpportunitiesController do
 
         xhr :put, :update, :id => 42, :opportunity => { :name => "Hello" }, :account => { :name => "new account" }
         assigns[:opportunity].should == @opportunity
-        @opportunity.account.should_not be_nil
-        @opportunity.account.name.should == "new account"
+        assigns[:opportunity].account.should_not be_nil
+        assigns[:opportunity].account.name.should == "new account"
       end
 
       it "should be able to create an account and associate it with updated opportunity" do
