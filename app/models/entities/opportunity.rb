@@ -122,11 +122,12 @@ class Opportunity < ActiveRecord::Base
         self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self)
       end
     end
-    self.reload
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:opportunity][:access] if params[:opportunity][:access]
     self.attributes = params[:opportunity]
-    self.save
+    result = save
+    reload
+    result
   end
 
   # Attach given attachment to the opportunity if it hasn't been attached already.

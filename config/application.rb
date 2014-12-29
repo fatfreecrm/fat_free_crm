@@ -16,7 +16,7 @@ require "sprockets/railtie"
 #
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env)
+Bundler.require(*Rails.groups)
 
 
 # Override Rails Engines so that plugins have higher priority than the Application
@@ -46,9 +46,9 @@ module FatFreeCRM
     end
 
     # Add migrations from all engines
-    Railties.engines.each do |engine|
-      # config.paths['db/migrate'] += engine.paths['db/migrate'].existent
-    end
+    # Railties.engines.each do |engine|
+    #   # config.paths['db/migrate'] += engine.paths['db/migrate'].existent
+    # end
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -67,11 +67,6 @@ module FatFreeCRM
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password, :password_hash, :password_salt, :password_confirmation]
-
-    # Use SQL instead of Active Record's schema dumper when creating the database.
-    # This is necessary if your schema can't be completely dumped by the schema dumper,
-    # like if you have constraints or database-specific column types
-    # config.active_record.schema_format = :sql
 
     # Enable the asset pipeline
     config.assets.enabled = true

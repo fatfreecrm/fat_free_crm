@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   has_paper_trail :class_name => 'Version', :ignore => [:last_request_at, :perishable_token]
 
   scope :by_id, -> { order('id DESC') }
-  scope :except, ->(user) { where('id != ?', user.id).by_name }
+  scope :without, ->(user) { where('id != ?', user.id).by_name }
   scope :by_name, -> { order('first_name, last_name, email') }
 
   scope :text_search, ->(query) {

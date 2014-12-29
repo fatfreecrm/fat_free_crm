@@ -262,7 +262,7 @@ describe UsersController do
       @avatar = FactoryGirl.create(:avatar, :user => @user, :entity => @user)
 
       xhr :put, :upload_avatar, :id => @user.id, :gravatar => 1
-      @user.avatar.should == nil
+      @user.reload.avatar.should == nil
       response.should render_template("users/upload_avatar")
     end
 
