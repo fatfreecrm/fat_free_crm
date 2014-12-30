@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "account_contacts", force: true do |t|
+  create_table "account_contacts", force: :cascade do |t|
     t.integer  "account_id"
     t.integer  "contact_id"
     t.datetime "deleted_at"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.datetime "updated_at"
   end
 
-  create_table "account_opportunities", force: true do |t|
+  create_table "account_opportunities", force: :cascade do |t|
     t.integer  "account_id"
     t.integer  "opportunity_id"
     t.datetime "deleted_at"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
 
   add_index "account_opportunities", ["account_id", "opportunity_id"], name: "index_account_opportunities_on_account_id_and_opportunity_id", using: :btree
 
-  create_table "accounts", force: true do |t|
+  create_table "accounts", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
     t.string   "name",             limit: 64,  default: "",       null: false
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email",            limit: 254
-    t.string   "background_info"
+    t.string   "background_info",  limit: 255
     t.integer  "rating",                       default: 0,        null: false
     t.string   "category",         limit: 32
     t.text     "subscribed_users"
@@ -56,13 +56,13 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "accounts", ["assigned_to"], name: "index_accounts_on_assigned_to", using: :btree
   add_index "accounts", ["user_id", "name", "deleted_at"], name: "index_accounts_on_user_id_and_name_and_deleted_at", unique: true, using: :btree
 
-  create_table "activities", force: true do |t|
+  create_table "activities", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "subject_id"
-    t.string   "subject_type"
-    t.string   "action",       limit: 32, default: "created"
-    t.string   "info",                    default: ""
-    t.boolean  "private",                 default: false
+    t.string   "subject_type", limit: 255
+    t.string   "action",       limit: 32,  default: "created"
+    t.string   "info",         limit: 255, default: ""
+    t.boolean  "private",                  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -70,17 +70,17 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "activities", ["created_at"], name: "index_activities_on_created_at", using: :btree
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
-  create_table "addresses", force: true do |t|
-    t.string   "street1"
-    t.string   "street2"
+  create_table "addresses", force: :cascade do |t|
+    t.string   "street1",          limit: 255
+    t.string   "street2",          limit: 255
     t.string   "city",             limit: 64
     t.string   "state",            limit: 64
     t.string   "zipcode",          limit: 16
     t.string   "country",          limit: 64
-    t.string   "full_address"
+    t.string   "full_address",     limit: 255
     t.string   "address_type",     limit: 16
     t.integer  "addressable_id"
-    t.string   "addressable_type"
+    t.string   "addressable_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
@@ -88,56 +88,56 @@ ActiveRecord::Schema.define(version: 20141230205455) do
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
 
-  create_table "avatars", force: true do |t|
+  create_table "avatars", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "entity_id"
-    t.string   "entity_type"
+    t.string   "entity_type",        limit: 255
     t.integer  "image_file_size"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "campaigns", force: true do |t|
+  create_table "campaigns", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
-    t.string   "name",                limit: 64,                          default: "",       null: false
-    t.string   "access",              limit: 8,                           default: "Public"
+    t.string   "name",                limit: 64,                           default: "",       null: false
+    t.string   "access",              limit: 8,                            default: "Public"
     t.string   "status",              limit: 64
-    t.decimal  "budget",                         precision: 12, scale: 2
+    t.decimal  "budget",                          precision: 12, scale: 2
     t.integer  "target_leads"
     t.float    "target_conversion"
-    t.decimal  "target_revenue",                 precision: 12, scale: 2
+    t.decimal  "target_revenue",                  precision: 12, scale: 2
     t.integer  "leads_count"
     t.integer  "opportunities_count"
-    t.decimal  "revenue",                        precision: 12, scale: 2
+    t.decimal  "revenue",                         precision: 12, scale: 2
     t.date     "starts_on"
     t.date     "ends_on"
     t.text     "objectives"
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "background_info"
+    t.string   "background_info",     limit: 255
     t.text     "subscribed_users"
   end
 
   add_index "campaigns", ["assigned_to"], name: "index_campaigns_on_assigned_to", using: :btree
   add_index "campaigns", ["user_id", "name", "deleted_at"], name: "index_campaigns_on_user_id_and_name_and_deleted_at", unique: true, using: :btree
 
-  create_table "comments", force: true do |t|
+  create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "commentable_id"
-    t.string   "commentable_type"
+    t.string   "commentable_type", limit: 255
     t.boolean  "private"
-    t.string   "title",                       default: ""
+    t.string   "title",            limit: 255, default: ""
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",            limit: 16, default: "Expanded", null: false
+    t.string   "state",            limit: 16,  default: "Expanded", null: false
   end
 
-  create_table "contact_opportunities", force: true do |t|
+  create_table "contact_opportunities", force: :cascade do |t|
     t.integer  "contact_id"
     t.integer  "opportunity_id"
     t.string   "role",           limit: 32
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
 
   add_index "contact_opportunities", ["contact_id", "opportunity_id"], name: "index_contact_opportunities_on_contact_id_and_opportunity_id", using: :btree
 
-  create_table "contacts", force: true do |t|
+  create_table "contacts", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "lead_id"
     t.integer  "assigned_to"
@@ -173,7 +173,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "background_info"
+    t.string   "background_info",  limit: 255
     t.string   "skype",            limit: 128
     t.text     "subscribed_users"
   end
@@ -181,16 +181,16 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "contacts", ["assigned_to"], name: "index_contacts_on_assigned_to", using: :btree
   add_index "contacts", ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true, using: :btree
 
-  create_table "emails", force: true do |t|
-    t.string   "imap_message_id",                                 null: false
+  create_table "emails", force: :cascade do |t|
+    t.string   "imap_message_id", limit: 255,                      null: false
     t.integer  "user_id"
     t.integer  "mediator_id"
-    t.string   "mediator_type"
-    t.string   "sent_from",                                       null: false
-    t.string   "sent_to",                                         null: false
-    t.string   "cc"
-    t.string   "bcc"
-    t.string   "subject"
+    t.string   "mediator_type",   limit: 255
+    t.string   "sent_from",       limit: 255,                      null: false
+    t.string   "sent_to",         limit: 255,                      null: false
+    t.string   "cc",              limit: 255
+    t.string   "bcc",             limit: 255
+    t.string   "subject",         limit: 255
     t.text     "body"
     t.text     "header"
     t.datetime "sent_at"
@@ -198,30 +198,30 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",           limit: 16, default: "Expanded", null: false
+    t.string   "state",           limit: 16,  default: "Expanded", null: false
   end
 
   add_index "emails", ["mediator_id", "mediator_type"], name: "index_emails_on_mediator_id_and_mediator_type", using: :btree
 
-  create_table "field_groups", force: true do |t|
+  create_table "field_groups", force: :cascade do |t|
     t.string   "name",       limit: 64
     t.string   "label",      limit: 128
     t.integer  "position"
-    t.string   "hint"
+    t.string   "hint",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tag_id"
     t.string   "klass_name", limit: 32
   end
 
-  create_table "fields", force: true do |t|
-    t.string   "type"
+  create_table "fields", force: :cascade do |t|
+    t.string   "type",           limit: 255
     t.integer  "field_group_id"
     t.integer  "position"
     t.string   "name",           limit: 64
     t.string   "label",          limit: 128
-    t.string   "hint"
-    t.string   "placeholder"
+    t.string   "hint",           limit: 255
+    t.string   "placeholder",    limit: 255
     t.string   "as",             limit: 32
     t.text     "collection"
     t.boolean  "disabled"
@@ -236,13 +236,13 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "fields", ["field_group_id"], name: "index_fields_on_field_group_id", using: :btree
   add_index "fields", ["name"], name: "index_fields_on_name", using: :btree
 
-  create_table "groups", force: true do |t|
-    t.string   "name"
+  create_table "groups", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "groups_users", id: false, force: true do |t|
+  create_table "groups_users", id: false, force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
   end
@@ -251,7 +251,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "groups_users", ["group_id"], name: "index_groups_users_on_group_id", using: :btree
   add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id", using: :btree
 
-  create_table "leads", force: true do |t|
+  create_table "leads", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "campaign_id"
     t.integer  "assigned_to"
@@ -276,7 +276,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "background_info"
+    t.string   "background_info",  limit: 255
     t.string   "skype",            limit: 128
     t.text     "subscribed_users"
   end
@@ -284,8 +284,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "leads", ["assigned_to"], name: "index_leads_on_assigned_to", using: :btree
   add_index "leads", ["user_id", "last_name", "deleted_at"], name: "index_leads_on_user_id_and_last_name_and_deleted_at", unique: true, using: :btree
 
-  create_table "lists", force: true do |t|
-    t.string   "name"
+  create_table "lists", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.text     "url"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -294,32 +294,32 @@ ActiveRecord::Schema.define(version: 20141230205455) do
 
   add_index "lists", ["user_id"], name: "index_lists_on_user_id", using: :btree
 
-  create_table "opportunities", force: true do |t|
+  create_table "opportunities", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "campaign_id"
     t.integer  "assigned_to"
-    t.string   "name",             limit: 64,                          default: "",       null: false
-    t.string   "access",           limit: 8,                           default: "Public"
+    t.string   "name",             limit: 64,                           default: "",       null: false
+    t.string   "access",           limit: 8,                            default: "Public"
     t.string   "source",           limit: 32
     t.string   "stage",            limit: 32
     t.integer  "probability"
-    t.decimal  "amount",                      precision: 12, scale: 2
-    t.decimal  "discount",                    precision: 12, scale: 2
+    t.decimal  "amount",                       precision: 12, scale: 2
+    t.decimal  "discount",                     precision: 12, scale: 2
     t.date     "closes_on"
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "background_info"
+    t.string   "background_info",  limit: 255
     t.text     "subscribed_users"
   end
 
   add_index "opportunities", ["assigned_to"], name: "index_opportunities_on_assigned_to", using: :btree
   add_index "opportunities", ["user_id", "name", "deleted_at"], name: "id_name_deleted", unique: true, using: :btree
 
-  create_table "permissions", force: true do |t|
+  create_table "permissions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "asset_id"
-    t.string   "asset_type"
+    t.string   "asset_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
@@ -329,7 +329,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "permissions", ["group_id"], name: "index_permissions_on_group_id", using: :btree
   add_index "permissions", ["user_id"], name: "index_permissions_on_user_id", using: :btree
 
-  create_table "preferences", force: true do |t|
+  create_table "preferences", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name",       limit: 32, default: "", null: false
     t.text     "value"
@@ -339,8 +339,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
 
   add_index "preferences", ["user_id", "name"], name: "index_preferences_on_user_id_and_name", using: :btree
 
-  create_table "sessions", force: true do |t|
-    t.string   "session_id", null: false
+  create_table "sessions", force: :cascade do |t|
+    t.string   "session_id", limit: 255, null: false
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -349,7 +349,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
-  create_table "settings", force: true do |t|
+  create_table "settings", force: :cascade do |t|
     t.string   "name",       limit: 32, default: "", null: false
     t.text     "value"
     t.datetime "created_at"
@@ -358,11 +358,11 @@ ActiveRecord::Schema.define(version: 20141230205455) do
 
   add_index "settings", ["name"], name: "index_settings_on_name", using: :btree
 
-  create_table "taggings", force: true do |t|
+  create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
     t.integer  "tagger_id"
-    t.string   "tagger_type"
+    t.string   "tagger_type",   limit: 255
     t.string   "taggable_type", limit: 50
     t.string   "context",       limit: 50
     t.datetime "created_at"
@@ -371,20 +371,20 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
-  create_table "tags", force: true do |t|
-    t.string  "name"
-    t.integer "taggings_count", default: 0
+  create_table "tags", force: :cascade do |t|
+    t.string  "name",           limit: 255
+    t.integer "taggings_count",             default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
-  create_table "tasks", force: true do |t|
+  create_table "tasks", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "assigned_to"
     t.integer  "completed_by"
-    t.string   "name",                        default: "", null: false
+    t.string   "name",             limit: 255, default: "", null: false
     t.integer  "asset_id"
-    t.string   "asset_type"
+    t.string   "asset_type",       limit: 255
     t.string   "priority",         limit: 32
     t.string   "category",         limit: 32
     t.string   "bucket",           limit: 32
@@ -393,14 +393,14 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "background_info"
+    t.string   "background_info",  limit: 255
     t.text     "subscribed_users"
   end
 
   add_index "tasks", ["assigned_to"], name: "index_tasks_on_assigned_to", using: :btree
   add_index "tasks", ["user_id", "name", "deleted_at"], name: "index_tasks_on_user_id_and_name_and_deleted_at", unique: true, using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "username",            limit: 32,  default: "",    null: false
     t.string   "email",               limit: 254, default: "",    null: false
     t.string   "first_name",          limit: 32
@@ -414,22 +414,22 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.string   "yahoo",               limit: 32
     t.string   "google",              limit: 32
     t.string   "skype",               limit: 32
-    t.string   "password_hash",                   default: "",    null: false
-    t.string   "password_salt",                   default: "",    null: false
-    t.string   "persistence_token",               default: "",    null: false
-    t.string   "perishable_token",                default: "",    null: false
+    t.string   "password_hash",       limit: 255, default: "",    null: false
+    t.string   "password_salt",       limit: 255, default: "",    null: false
+    t.string   "persistence_token",   limit: 255, default: "",    null: false
+    t.string   "perishable_token",    limit: 255, default: "",    null: false
     t.datetime "last_request_at"
     t.datetime "last_login_at"
     t.datetime "current_login_at"
-    t.string   "last_login_ip"
-    t.string   "current_login_ip"
+    t.string   "last_login_ip",       limit: 255
+    t.string   "current_login_ip",    limit: 255
     t.integer  "login_count",                     default: 0,     null: false
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin",                           default: false, null: false
     t.datetime "suspended_at"
-    t.string   "single_access_token"
+    t.string   "single_access_token", limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
@@ -438,20 +438,31 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "users", ["persistence_token"], name: "index_users_on_persistence_token", using: :btree
   add_index "users", ["username", "deleted_at"], name: "index_users_on_username_and_deleted_at", unique: true, using: :btree
 
-  create_table "versions", force: true do |t|
-    t.string   "item_type",                  null: false
+  create_table "version_associations", force: :cascade do |t|
+    t.integer "version_id"
+    t.string  "foreign_key_name", null: false
+    t.integer "foreign_key_id"
+  end
+
+  add_index "version_associations", ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key", using: :btree
+  add_index "version_associations", ["version_id"], name: "index_version_associations_on_version_id", using: :btree
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "item_type",      limit: 255, null: false
     t.integer  "item_id",                    null: false
     t.string   "event",          limit: 512, null: false
-    t.string   "whodunnit"
+    t.string   "whodunnit",      limit: 255
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
     t.integer  "related_id"
-    t.string   "related_type"
+    t.string   "related_type",   limit: 255
+    t.integer  "transaction_id"
   end
 
   add_index "versions", ["created_at"], name: "index_versions_on_created_at", using: :btree
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+  add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
   add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit", using: :btree
 
 end

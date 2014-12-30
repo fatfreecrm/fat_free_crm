@@ -19,7 +19,7 @@ class AccountContact < ActiveRecord::Base
   belongs_to :account
   belongs_to :contact
 
-  has_paper_trail class_name: 'Version', meta: { related: :contact }, ignore: [ :id, :created_at, :updated_at, :contact_id ]
+  has_paper_trail class_name: 'Version', ignore: [ :id, :created_at, :updated_at, :contact_id ]
 
   validates_presence_of :account_id
 

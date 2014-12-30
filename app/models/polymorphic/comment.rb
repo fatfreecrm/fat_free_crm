@@ -26,8 +26,7 @@ class Comment < ActiveRecord::Base
   scope :created_by, lambda { |user| where(user_id: user.id) }
 
   validates_presence_of :user, :commentable, :comment
-  has_paper_trail class_name: 'Version', meta: { related: :commentable },
-                  ignore: [:state]
+  has_paper_trail class_name: 'Version', ignore: [ :state ]
 
   before_create :subscribe_mentioned_users
   after_create  :subscribe_user_to_entity, :notify_subscribers

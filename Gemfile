@@ -81,3 +81,6 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer', :platform => :ruby unless ENV["CI"]
+
+gem 'authlogic', github: 'drhenner/authlogic', branch: 'rails4.2'
+gem 'paper_trail', github: 'airblade/paper_trail'
