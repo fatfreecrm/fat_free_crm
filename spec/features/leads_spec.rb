@@ -18,10 +18,10 @@ feature 'Leads', %q{
   scenario 'should view a list of leads' do
     4.times { |i| FactoryGirl.create(:lead, first_name: "L", last_name: "Ead #{i}") }
     visit leads_page
-    expect(page).to have_content('L Ead 0')
-    expect(page).to have_content('L Ead 1')
-    expect(page).to have_content('L Ead 2')
-    expect(page).to have_content('L Ead 3')
+    expect(leads_element).to have_content('L Ead 0')
+    expect(leads_element).to have_content('L Ead 1')
+    expect(leads_element).to have_content('L Ead 2')
+    expect(leads_element).to have_content('L Ead 3')
     expect(page).to have_content('Create Lead')
   end
 
@@ -39,17 +39,17 @@ feature 'Leads', %q{
       click_link('Status')
       select 'Contacted', from: 'lead_status'
       click_button 'Create Lead'
-      expect(page).to have_content('Mr Lead')
+      expect(leads_element).to have_content('Mr Lead')
 
-      find('#leads').click_link('Mr Lead')
+      leads_element.click_link('Mr Lead')
       expect(page).to have_content('Contacted')
       expect(page).to have_content('mr_lead@example.com')
       expect(page).to have_content('+44 1234 567890')
       expect(page).to have_content('This is an important lead.')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray created lead Mr Lead")
-      expect(page).to have_content("Bill Murray created comment on Mr Lead")
+      expect(activities_element).to have_content("Bill Murray created lead Mr Lead")
+      expect(activities_element).to have_content("Bill Murray created comment on Mr Lead")
     end
   end
 
@@ -77,8 +77,9 @@ feature 'Leads', %q{
       select 'Rejected', from: 'lead_status'
       click_button 'Save Lead'
       expect(find('#title')).to have_content('Mrs Lead')
+
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray updated lead Mrs Lead")
+      expect(activities_element).to have_content("Bill Murray updated lead Mrs Lead")
     end
   end
 
@@ -97,16 +98,24 @@ feature 'Leads', %q{
   scenario 'should search for a lead', js: true do
     2.times { |i| FactoryGirl.create(:lead, first_name: "Lead", last_name: "\##{i}", email: "lead#{i}@example.com") }
     visit leads_page
-    expect(find('#leads')).to have_content('Lead #0')
-    expect(find('#leads')).to have_content('Lead #1')
+    expect(leads_element).to have_content('Lead #0')
+    expect(leads_element).to have_content('Lead #1')
     fill_in 'query', with: 'Lead #0'
-    expect(find('#leads')).to have_content('Lead #0')
-    expect(find('#leads')).not_to have_content('Lead #1')
+    expect(leads_element).to have_content('Lead #0')
+    expect(leads_element).not_to have_content('Lead #1')
     fill_in 'query', with: 'Lead'
-    expect(find('#leads')).to have_content('Lead #0')
-    expect(find('#leads')).to have_content('Lead #1')
+    expect(leads_element).to have_content('Lead #0')
+    expect(leads_element).to have_content('Lead #1')
     fill_in 'query', with: 'Non-existant lead'
-    expect(find('#leads')).not_to have_content('Lead #0')
-    expect(find('#leads')).not_to have_content('Lead #1')
+    expect(leads_element).not_to have_content('Lead #0')
+    expect(leads_element).not_to have_content('Lead #1')
+  end
+
+  def leads_element
+    find('#leads')
+  end
+
+  def activities_element
+    find('#activities')
   end
 end

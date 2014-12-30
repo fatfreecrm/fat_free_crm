@@ -40,6 +40,7 @@ feature 'Contacts', %q{
       expect(contacts_element).to have_content('Testy McTest')
       contacts_element.click_link 'Testy McTest'
       expect(page).to have_content('This is a very important person.')
+
       click_link "Dashboard"
       expect(activities_element).to have_content('Bill Murray created contact Testy McTest')
       expect(activities_element).to have_content('Bill Murray created comment on Testy McTest')
@@ -68,6 +69,7 @@ feature 'Contacts', %q{
       fill_in 'contact_email', with: "test.subject@example.com"
       click_button 'Save Contact'
       expect(find('#edit_contact_title')).to have_content('Test Subject')
+
       click_link 'Dashboard'
       expect(activities_element).to have_content("Bill Murray updated contact Test Subject")
     end
