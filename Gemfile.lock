@@ -17,9 +17,8 @@ GIT
       rails (>= 3.0)
 
 GIT
-  remote: git://github.com/fatfreecrm/ransack_ui.git
-  revision: 3e268ae2381c25fb2005403125c13933d6840272
-  branch: fix/ransack_1_2
+  remote: git://github.com/ndbroadbent/ransack_ui.git
+  revision: b8e606548c4af18b425328495ced9b956878ddc7
   specs:
     ransack_ui (1.2.2)
       ransack
