@@ -18,13 +18,13 @@ describe "/leads/_edit" do
 
   it "should render [edit lead] form" do
     render
-    view.should render_template(:partial => "leads/_top_section")
-    view.should render_template(:partial => "leads/_status")
-    view.should render_template(:partial => "leads/_contact")
-    view.should render_template(:partial => "leads/_web")
-    view.should render_template(:partial => "entities/_permissions")
+    expect(view).to render_template(:partial => "leads/_top_section")
+    expect(view).to render_template(:partial => "leads/_status")
+    expect(view).to render_template(:partial => "leads/_contact")
+    expect(view).to render_template(:partial => "leads/_web")
+    expect(view).to render_template(:partial => "entities/_permissions")
 
-    rendered.should have_tag("form[class=edit_lead]") do
+    expect(rendered).to have_tag("form[class=edit_lead]") do
       with_tag "input[type=hidden][id=lead_user_id][value=#{@lead.user_id}]"
     end
   end
@@ -33,13 +33,13 @@ describe "/leads/_edit" do
     Setting.background_info = [ :lead ]
 
     render
-    rendered.should have_tag("textarea[id=lead_background_info]")
+    expect(rendered).to have_tag("textarea[id=lead_background_info]")
   end
 
   it "should not render background info field if settings do not require so" do
     Setting.background_info = []
 
     render
-    rendered.should_not have_tag("textarea[id=lead_background_info]")
+    expect(rendered).not_to have_tag("textarea[id=lead_background_info]")
   end
 end

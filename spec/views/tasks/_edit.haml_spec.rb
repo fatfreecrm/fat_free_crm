@@ -19,16 +19,16 @@ describe "/tasks/_edit" do
   it "should render [edit task] form" do
     render
 
-    view.should render_template(:partial => "tasks/_top_section")
+    expect(view).to render_template(:partial => "tasks/_top_section")
 
-    rendered.should have_tag("form[class=edit_task]")
+    expect(rendered).to have_tag("form[class=edit_task]")
   end
 
   [ "As Soon As Possible", "Today", "Tomorrow", "This Week", "Next Week", "Sometime Later" ].each do |day|
     it "should render move to [#{day}] link" do
       render
 
-      rendered.should have_tag("a[onclick^=crm.reschedule]", :text => day)
+      expect(rendered).to have_tag("a[onclick^=crm.reschedule]", :text => day)
     end
   end
 
@@ -36,13 +36,13 @@ describe "/tasks/_edit" do
     Setting.background_info = [ :task ]
     render
 
-    rendered.should have_tag("textarea[id=task_background_info]")
+    expect(rendered).to have_tag("textarea[id=task_background_info]")
   end
 
   it "should not render background info if Settings do not request so" do
     Setting.background_info = []
     render
 
-    rendered.should_not have_tag("textarea[id=task_background_info]")
+    expect(rendered).not_to have_tag("textarea[id=task_background_info]")
   end
 end

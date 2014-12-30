@@ -17,8 +17,8 @@ describe "/accounts/index" do
 
     render :template => 'accounts/index', :formats => [:js]
 
-    rendered.should include("$('#accounts').html")
-    rendered.should include("$('#paginate').html")
+    expect(rendered).to include("$('#accounts').html")
+    expect(rendered).to include("$('#paginate').html")
   end
 
   it "should render [empty] template if @accounts collection if there are no accounts" do
@@ -26,8 +26,8 @@ describe "/accounts/index" do
 
     render :template => 'accounts/index', :formats => [:js]
 
-    rendered.should include("$('#accounts').html('<div id=\\'empty\\'")
-    rendered.should include("$('#paginate').html")
+    expect(rendered).to include("$('#accounts').html('<div id=\\'empty\\'")
+    expect(rendered).to include("$('#paginate').html")
   end
 
 end

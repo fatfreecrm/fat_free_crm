@@ -23,7 +23,7 @@ feature 'Opportunities Overview', %q{
       click_link "Team"
     end
 
-    current_path.should == opportunity_overview_page
+    expect(current_path).to eq(opportunity_overview_page)
   end
 
   scenario "Viewing Opportunity Overview when all opportunities have been assigned" do
@@ -43,20 +43,20 @@ feature 'Opportunities Overview', %q{
     visit opportunity_overview_page
 
     within "#user_#{user1.id}" do
-      page.should have_selector('.title', :text => 'Brian Doyle-Murray')
-      page.should have_content('Acting')
-      page.should_not have_content('Directing')
+      expect(page).to have_selector('.title', :text => 'Brian Doyle-Murray')
+      expect(page).to have_content('Acting')
+      expect(page).not_to have_content('Directing')
     end
 
     within "#user_#{user2.id}" do
-      page.should have_selector('.title', :text => 'Dean Stockwell')
-      page.should have_content('Leaping from Quantum Leap')
-      page.should have_content('Return Home from Quantum Leap')
+      expect(page).to have_selector('.title', :text => 'Dean Stockwell')
+      expect(page).to have_content('Leaping from Quantum Leap')
+      expect(page).to have_content('Return Home from Quantum Leap')
     end
 
-    page.should_not have_selector("#user_#{user3.id}")
+    expect(page).not_to have_selector("#user_#{user3.id}")
 
-    page.should_not have_selector('#unassigned')
+    expect(page).not_to have_selector('#unassigned')
   end
 
   scenario "Viewing Opportunity Overview when all opportunities are unassigned" do
@@ -66,9 +66,9 @@ feature 'Opportunities Overview', %q{
     visit opportunity_overview_page
 
     within "#unassigned" do
-      page.should have_selector('.title', :text => 'Unassigned Opportunities')
-      page.should have_content('Acting')
-      page.should_not have_content('Presenting')
+      expect(page).to have_selector('.title', :text => 'Unassigned Opportunities')
+      expect(page).to have_content('Acting')
+      expect(page).not_to have_content('Presenting')
     end
   end
 
@@ -78,10 +78,10 @@ feature 'Opportunities Overview', %q{
 
     visit opportunity_overview_page
 
-    page.should have_content('There are currently no outstanding opportunities.')
+    expect(page).to have_content('There are currently no outstanding opportunities.')
     within "#main" do
-      page.should_not have_content("Presenting")
-      page.should_not have_content("Eating")
+      expect(page).not_to have_content("Presenting")
+      expect(page).not_to have_content("Eating")
     end
   end
 end

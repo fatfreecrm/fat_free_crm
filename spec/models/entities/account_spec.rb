@@ -47,9 +47,9 @@ describe Account do
       @opportunity = FactoryGirl.create(:opportunity)
       @account.opportunities << @opportunity
 
-      @account.attach!(@task).should == nil
-      @account.attach!(@contact).should == nil
-      @account.attach!(@opportunity).should == nil
+      expect(@account.attach!(@task)).to eq(nil)
+      expect(@account.attach!(@contact)).to eq(nil)
+      expect(@account.attach!(@opportunity)).to eq(nil)
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
@@ -57,9 +57,9 @@ describe Account do
       @contact = FactoryGirl.create(:contact)
       @opportunity = FactoryGirl.create(:opportunity)
 
-      @account.attach!(@task).should == [ @task ]
-      @account.attach!(@contact).should == [ @contact ]
-      @account.attach!(@opportunity).should == [ @opportunity ]
+      expect(@account.attach!(@task)).to eq([ @task ])
+      expect(@account.attach!(@contact)).to eq([ @contact ])
+      expect(@account.attach!(@opportunity)).to eq([ @opportunity ])
     end
   end
 
@@ -70,21 +70,21 @@ describe Account do
 
     it "should discard a task" do
       @task = FactoryGirl.create(:task, :asset => @account, :user => current_user)
-      @account.tasks.count.should == 1
+      expect(@account.tasks.count).to eq(1)
 
       @account.discard!(@task)
-      @account.reload.tasks.should == []
-      @account.tasks.count.should == 0
+      expect(@account.reload.tasks).to eq([])
+      expect(@account.tasks.count).to eq(0)
     end
 
     it "should discard a contact" do
       @contact = FactoryGirl.create(:contact)
       @account.contacts << @contact
-      @account.contacts.count.should == 1
+      expect(@account.contacts.count).to eq(1)
 
       @account.discard!(@contact)
-      @account.contacts.should == []
-      @account.contacts.count.should == 0
+      expect(@account.contacts).to eq([])
+      expect(@account.contacts.count).to eq(0)
     end
 
 # Commented out this test. "super from singleton method that is defined to multiple classes is not supported;"
@@ -128,13 +128,13 @@ describe Account do
     it "create new: should replace empty category string with nil" do
       account = FactoryGirl.build(:account, :category => '')
       account.save
-      account.category.should == nil
+      expect(account.category).to eq(nil)
     end
 
     it "update existing: should replace empty category string with nil" do
       account = FactoryGirl.create(:account, :category => '')
       account.save
-      account.category.should == nil
+      expect(account.category).to eq(nil)
     end
   end
 
@@ -154,19 +154,19 @@ describe Account do
       end
 
       it "should show accounts which have been created by the user and are unassigned" do
-        Account.visible_on_dashboard(@user).should include(@a1)
+        expect(Account.visible_on_dashboard(@user)).to include(@a1)
       end
 
       it "should show accounts which are assigned to the user" do
-        Account.visible_on_dashboard(@user).should include(@a3, @a5)
+        expect(Account.visible_on_dashboard(@user)).to include(@a3, @a5)
       end
 
       it "should not show accounts which are not assigned to the user" do
-        Account.visible_on_dashboard(@user).should_not include(@a4)
+        expect(Account.visible_on_dashboard(@user)).not_to include(@a4)
       end
 
       it "should not show accounts which are created by the user but assigned" do
-        Account.visible_on_dashboard(@user).should_not include(@a2)
+        expect(Account.visible_on_dashboard(@user)).not_to include(@a2)
       end
     end
 
@@ -178,7 +178,7 @@ describe Account do
         @a4 = FactoryGirl.create(:account, :name => "Account X")
         @a5 = FactoryGirl.create(:account, :name => "Account L")
 
-        Account.by_name.should == [@a1, @a3, @a5, @a4, @a2]
+        expect(Account.by_name).to eq([@a1, @a3, @a5, @a4, @a2])
       end
     end
   end

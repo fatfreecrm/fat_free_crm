@@ -17,8 +17,8 @@ describe "/contacts/index" do
 
     render :template => 'contacts/index', :formats => [:js]
 
-    rendered.should include("$('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
+    expect(rendered).to include("#paginate")
   end
 
   it "should render [empty] template if @contacts collection if there are no contacts" do
@@ -26,8 +26,8 @@ describe "/contacts/index" do
 
     render :template => 'contacts/index', :formats => [:js]
 
-    rendered.should include("$('#contacts').html('<div id=\\'empty\\'>")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#contacts').html('<div id=\\'empty\\'>")
+    expect(rendered).to include("#paginate")
   end
 
 end

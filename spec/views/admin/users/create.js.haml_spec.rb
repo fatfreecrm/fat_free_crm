@@ -18,8 +18,8 @@ describe "admin/users/create" do
 
     it "should hide [Create User] form and insert user partial" do
       render
-      rendered.should include(@user.username)
-      rendered.should include(%Q/$('#user_#{@user.id}').effect("highlight"/)
+      expect(rendered).to include(@user.username)
+      expect(rendered).to include(%Q/$('#user_#{@user.id}').effect("highlight"/)
     end
 
     # it "should update pagination" do
@@ -33,8 +33,8 @@ describe "admin/users/create" do
       assign(:users, [ current_user ])
       render
 
-      rendered.should include('Please specify username')
-      rendered.should include(%Q/$('#create_user').effect("shake"/)
+      expect(rendered).to include('Please specify username')
+      expect(rendered).to include(%Q/$('#create_user').effect("shake"/)
     end
   end
 

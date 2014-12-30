@@ -19,18 +19,18 @@ describe "/campaigns/create" do
     end
 
     it "should hide [Create Campaign] form and insert campaign partial" do
-      rendered.should include("$('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
-      rendered.should include(%Q/$('#campaign_#{@campaign.id}').effect("highlight"/)
+      expect(rendered).to include("$('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+      expect(rendered).to include(%Q/$('#campaign_#{@campaign.id}').effect("highlight"/)
     end
 
     it "should update pagination" do
-      rendered.should include("#paginate")
+      expect(rendered).to include("#paginate")
     end
 
     it "should update Campaigns sidebar filters" do
-      rendered.should include("#sidebar")
-      rendered.should have_text("Campaign Statuses")
-      rendered.should have_text("Recent Items")
+      expect(rendered).to include("#sidebar")
+      expect(rendered).to have_text("Campaign Statuses")
+      expect(rendered).to have_text("Recent Items")
     end
   end
 
@@ -41,8 +41,8 @@ describe "/campaigns/create" do
 
       render
 
-      rendered.should include("$('#create_campaign').html")
-      rendered.should include(%Q/$('#create_campaign').effect("shake"/)
+      expect(rendered).to include("$('#create_campaign').html")
+      expect(rendered).to include(%Q/$('#create_campaign').effect("shake"/)
     end
   end
 

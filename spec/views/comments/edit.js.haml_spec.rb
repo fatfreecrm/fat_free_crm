@@ -23,7 +23,7 @@ describe "/comments/edit" do
   it "should render edit form" do
     render
 
-    rendered.should include("textarea")
-    rendered.should include("123")
+    expect(rendered).to include("textarea")
+    expect(rendered).to include("123")
   end
 end

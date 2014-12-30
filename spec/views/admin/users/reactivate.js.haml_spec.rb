@@ -14,7 +14,7 @@ describe "admin/users/reactivate" do
   it "reloads the requested user partial" do
     render
 
-    rendered.should include("user_#{@user.id}")
-    rendered.should include(%Q/$('#user_#{@user.id}').effect("highlight"/)
+    expect(rendered).to include("user_#{@user.id}")
+    expect(rendered).to include(%Q/$('#user_#{@user.id}').effect("highlight"/)
   end
 end

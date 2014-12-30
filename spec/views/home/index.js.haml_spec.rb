@@ -17,8 +17,8 @@ describe "/home/index" do
 
     render :template => 'home/index', :formats => [:js]
 
-    rendered.should include("$('#activities').html")
-    rendered.should include("li class=\\'version\\' id=\\'version_42\\'")
+    expect(rendered).to include("$('#activities').html")
+    expect(rendered).to include("li class=\\'version\\' id=\\'version_42\\'")
   end
 
   it "should render a message if there're no activities" do
@@ -26,7 +26,7 @@ describe "/home/index" do
 
     render :template => 'home/index', :formats => [:js]
 
-    rendered.should include("No activity records found.")
+    expect(rendered).to include("No activity records found.")
   end
 
 end

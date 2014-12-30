@@ -26,8 +26,8 @@ describe "/tasks/index" do
 
       render
 
-      view.should render_template(:partial => "_" << status, :count => 1)
-      view.should_not render_template(:partial => "_empty")
+      expect(view).to render_template(:partial => "_" << status, :count => 1)
+      expect(view).not_to render_template(:partial => "_empty")
     end
   end
 
@@ -38,7 +38,7 @@ describe "/tasks/index" do
 
       render
 
-      view.should render_template(:partial => "_empty")
+      expect(view).to render_template(:partial => "_empty")
     end
   end
 end

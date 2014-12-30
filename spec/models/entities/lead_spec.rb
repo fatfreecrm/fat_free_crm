@@ -54,13 +54,13 @@ describe Lead do
     it "should return nil when attaching existing task" do
       @task = FactoryGirl.create(:task, :asset => @lead, :user => current_user)
 
-      @lead.attach!(@task).should == nil
+      expect(@lead.attach!(@task)).to eq(nil)
     end
 
     it "should return non-empty list of tasks when attaching new task" do
       @task = FactoryGirl.create(:task, :user => current_user)
 
-      @lead.attach!(@task).should == [ @task ]
+      expect(@lead.attach!(@task)).to eq([ @task ])
     end
   end
 
@@ -71,11 +71,11 @@ describe Lead do
 
     it "should discard a task" do
       @task = FactoryGirl.create(:task, :asset => @lead, :user => current_user)
-      @lead.tasks.count.should == 1
+      expect(@lead.tasks.count).to eq(1)
 
       @lead.discard!(@task)
-      @lead.reload.tasks.should == []
-      @lead.tasks.count.should == 0
+      expect(@lead.reload.tasks).to eq([])
+      expect(@lead.tasks.count).to eq(0)
     end
   end
 

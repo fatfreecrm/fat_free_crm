@@ -14,8 +14,8 @@ describe "/admin/users/index" do
     assign(:users, [ FactoryGirl.create(:user) ].paginate)
 
     render
-    view.should render_template(:partial => "_user")
-    view.should render_template(:partial => "shared/_paginate")
+    expect(view).to render_template(:partial => "_user")
+    expect(view).to render_template(:partial => "shared/_paginate")
   end
 end
 

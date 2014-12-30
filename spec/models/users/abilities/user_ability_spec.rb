@@ -13,7 +13,7 @@ describe "User abilities" do
   context "when site manager, I" do
     let(:user)  { create :user, admin: true}
     all_actions.each do |do_action|
-      it{ should be_able_to(do_action, subject_user) }
+      it{ is_expected.to be_able_to(do_action, subject_user) }
     end
   end
 
@@ -21,7 +21,7 @@ describe "User abilities" do
     let(:user) { create :user }
     let(:subject_user) { user }
     all_actions.each do |do_action|
-      it{ should be_able_to(do_action, subject_user) }
+      it{ is_expected.to be_able_to(do_action, subject_user) }
     end
   end
 
@@ -30,10 +30,10 @@ describe "User abilities" do
     let(:can)    { [] }
     let(:cannot) { [:show, :create, :update, :index, :destroy, :manage] }
     it{ can.each do |do_action|
-      should be_able_to(do_action, subject_user)
+      is_expected.to be_able_to(do_action, subject_user)
     end}
     it{ cannot.each do |do_action|
-      should_not be_able_to(do_action, subject_user)
+      is_expected.not_to be_able_to(do_action, subject_user)
     end}
   end
 
@@ -42,15 +42,15 @@ describe "User abilities" do
     let(:can)    { [] }
     let(:cannot) { [:show, :create, :update, :index, :destroy, :manage] }
     it{ can.each do |do_action|
-      should be_able_to(do_action, subject_user)
+      is_expected.to be_able_to(do_action, subject_user)
     end}
     it{ cannot.each do |do_action|
-      should_not be_able_to(do_action, subject_user)
+      is_expected.not_to be_able_to(do_action, subject_user)
     end}
 
     it "and signup enabled" do
-      User.stub(:can_signup?).and_return(true)
-      should be_able_to(:create, User)
+      allow(User).to receive(:can_signup?).and_return(true)
+      is_expected.to be_able_to(:create, User)
     end
 
   end

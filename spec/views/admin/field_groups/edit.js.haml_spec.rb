@@ -16,9 +16,9 @@ describe "admin/field_groups/edit" do
 
   it "renders javascript" do
     render
-    view.should render_template("admin/field_groups/edit")
-    rendered.should have_text("crm.show_form('#{dom_id(field_group, :edit)}')")
-    rendered.should have_text("$('##{dom_id(field_group, :edit)}').html")
+    expect(view).to render_template("admin/field_groups/edit")
+    expect(rendered).to have_text("crm.show_form('#{dom_id(field_group, :edit)}')")
+    expect(rendered).to have_text("$('##{dom_id(field_group, :edit)}').html")
   end
 
 end

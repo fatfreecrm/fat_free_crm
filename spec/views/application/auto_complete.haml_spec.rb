@@ -24,11 +24,11 @@ describe "/application/_auto_complete" do
       assign(:auto_complete, [ @auto_complete ])
 
       render
-      rendered.should have_tag("ul", :count => 1) do |list|
+      expect(rendered).to have_tag("ul", :count => 1) do |list|
         unless model == :lead
-          list.should have_tag("li", :id => @auto_complete.id.to_s, :text => @auto_complete.name)
+          expect(list).to have_tag("li", :id => @auto_complete.id.to_s, :text => @auto_complete.name)
         else
-          list.should have_tag("li", :id => @auto_complete.id.to_s, :text => "#{@auto_complete.name} (#{@auto_complete.company})")
+          expect(list).to have_tag("li", :id => @auto_complete.id.to_s, :text => "#{@auto_complete.name} (#{@auto_complete.company})")
         end
       end
     end
@@ -38,7 +38,7 @@ describe "/application/_auto_complete" do
       assign(:auto_complete, [])
 
       render
-      rendered.should have_tag("ul", :count => 1) do |list|
+      expect(rendered).to have_tag("ul", :count => 1) do |list|
         with_tag("li", :id => nil, :count => 1, :text => /^No/)
       end
     end

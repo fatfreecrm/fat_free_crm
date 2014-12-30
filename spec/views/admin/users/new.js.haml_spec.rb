@@ -16,7 +16,7 @@ describe "admin/users/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("$('#create_user').html")
+      expect(rendered).to include("$('#create_user').html")
     end
   end
 
@@ -25,8 +25,8 @@ describe "admin/users/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should include("crm.set_title('create_user', 'Users');")
-      rendered.should include("crm.flip_form('create_user');")
+      expect(rendered).to include("crm.set_title('create_user', 'Users');")
+      expect(rendered).to include("crm.flip_form('create_user');")
     end
   end
 

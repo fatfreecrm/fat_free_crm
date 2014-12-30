@@ -9,7 +9,7 @@ describe TasksController do
 
   def update_sidebar
     @task_total = { :key => :value, :pairs => :etc }
-    Task.stub(:totals).and_return(@task_total)
+    allow(Task).to receive(:totals).and_return(@task_total)
   end
 
   def produce_tasks(user, view)
@@ -71,25 +71,25 @@ describe TasksController do
 
         get :index, :view => view
 
-        (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
-        (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
-        assigns[:task_total].symbolize_keys.should == @task_total
-        response.should render_template("tasks/index")
+        expect(assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).to eq([])
+        expect(assigns[:tasks].values.flatten - @tasks.values.flatten).to eq([])
+        expect(assigns[:task_total].symbolize_keys).to eq(@task_total)
+        expect(response).to render_template("tasks/index")
       end
 
       it "should render all tasks as JSON for #{view} view" do
         @tasks = produce_tasks(current_user, view)
         get :index, :view => view, :format => :json
 
-        (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
-        (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
+        expect(assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).to eq([])
+        expect(assigns[:tasks].values.flatten - @tasks.values.flatten).to eq([])
         hash = ActiveSupport::JSON.decode(response.body)
 
         hash.keys.each do |key|
           hash[key].each do |attr|
             task = Task.new(attr["task"])
-            task.should be_instance_of(Task)
-            task.valid?.should == true
+            expect(task).to be_instance_of(Task)
+            expect(task.valid?).to eq(true)
           end
         end
       end
@@ -98,14 +98,14 @@ describe TasksController do
         @tasks = produce_tasks(current_user, view)
         get :index, :view => view, :format => :xml
 
-        (assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).should == []
-        (assigns[:tasks].values.flatten - @tasks.values.flatten).should == []
+        expect(assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).to eq([])
+        expect(assigns[:tasks].values.flatten - @tasks.values.flatten).to eq([])
         hash = Hash.from_xml(response.body)
         hash["hash"].keys.each do |key|
           hash["hash"][key].each do |attr|
             task = Task.new(attr)
-            task.should be_instance_of(Task)
-            task.valid?.should == true
+            expect(task).to be_instance_of(Task)
+            expect(task.valid?).to eq(true)
           end
         end
       end
@@ -121,20 +121,20 @@ describe TasksController do
 
       it "should render the requested task as JSON for #{view} view" do
         Task.stub_chain(:tracked_by, :find).and_return(task = double("Task"))
-        task.should_receive(:to_json).and_return("generated JSON")
+        expect(task).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42, :view => "pending"
-        response.body.should == "generated JSON"
+        expect(response.body).to eq("generated JSON")
       end
 
       it "should render the requested task as xml for #{view} view" do
         Task.stub_chain(:tracked_by, :find).and_return(task = double("Task"))
-        task.should_receive(:to_xml).and_return("generated XML")
+        expect(task).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42, :view => "pending"
-        response.body.should == "generated XML"
+        expect(response.body).to eq("generated XML")
       end
     end
   end
@@ -147,23 +147,23 @@ describe TasksController do
     it "should expose a new task as @task and render [new] template" do
       account = FactoryGirl.create(:account, :user => current_user)
       @task = FactoryGirl.build(:task, :user => current_user, :asset => account)
-      Task.stub(:new).and_return(@task)
+      allow(Task).to receive(:new).and_return(@task)
       @bucket = Setting.unroll(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
       @category = Setting.unroll(:task_category)
 
       xhr :get, :new
-      assigns[:task].should == @task
-      assigns[:bucket].should == @bucket
-      assigns[:category].should == @category
-      response.should render_template("tasks/new")
+      expect(assigns[:task]).to eq(@task)
+      expect(assigns[:bucket]).to eq(@bucket)
+      expect(assigns[:category]).to eq(@category)
+      expect(response).to render_template("tasks/new")
     end
 
     it "should find related asset when necessary" do
       @asset = FactoryGirl.create(:account, :id => 42)
 
       xhr :get, :new, :related => "account_42"
-      assigns[:asset].should == @asset
-      response.should render_template("tasks/new")
+      expect(assigns[:asset]).to eq(@asset)
+      expect(response).to render_template("tasks/new")
     end
 
     describe "(when creating related task)" do
@@ -172,16 +172,16 @@ describe TasksController do
         @account.destroy
 
         xhr :get, :new, :related => "account_#{@account.id}"
-        flash[:warning].should_not == nil
-        response.body.should == 'window.location.href = "/accounts";'
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq('window.location.href = "/accounts";')
       end
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
         @account = FactoryGirl.create(:account, :access => "Private")
 
         xhr :get, :new, :related => "account_#{@account.id}"
-        flash[:warning].should_not == nil
-        response.body.should == 'window.location.href = "/accounts";'
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq('window.location.href = "/accounts";')
       end
     end
   end
@@ -197,11 +197,11 @@ describe TasksController do
       @category = Setting.unroll(:task_category)
 
       xhr :get, :edit, :id => @task.id
-      assigns[:task].should == @task
-      assigns[:bucket].should == @bucket
-      assigns[:category].should == @category
-      assigns[:asset].should == @asset
-      response.should render_template("tasks/edit")
+      expect(assigns[:task]).to eq(@task)
+      expect(assigns[:bucket]).to eq(@bucket)
+      expect(assigns[:category]).to eq(@category)
+      expect(assigns[:asset]).to eq(@asset)
+      expect(response).to render_template("tasks/edit")
     end
 
     it "should find previously open task when necessary" do
@@ -209,9 +209,9 @@ describe TasksController do
       @previous = FactoryGirl.create(:task, :id => 999, :user => current_user)
 
       xhr :get, :edit, :id => @task.id, :previous => 999
-      assigns[:task].should == @task
-      assigns[:previous].should == @previous
-      response.should render_template("tasks/edit")
+      expect(assigns[:task]).to eq(@task)
+      expect(assigns[:previous]).to eq(@previous)
+      expect(response).to render_template("tasks/edit")
     end
 
     describe "(task got deleted or reassigned)" do
@@ -220,16 +220,16 @@ describe TasksController do
         @task.destroy
 
         xhr :get, :edit, :id => @task.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
 
       it "should reload current page with the flash message if the task got reassigned" do
         @task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
 
         xhr :get, :edit, :id => @task.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
     end
 
@@ -243,18 +243,18 @@ describe TasksController do
         @previous.destroy
 
         xhr :get, :edit, :id => @task.id, :previous => @previous.id
-        flash[:warning].should == nil # no warning, just silently remove the div
-        assigns[:previous].should == @previous.id
-        response.should render_template("tasks/edit")
+        expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
+        expect(assigns[:previous]).to eq(@previous.id)
+        expect(response).to render_template("tasks/edit")
       end
 
       it "should notify the view if previous task got reassigned" do
         @previous.update_attribute(:assignee, FactoryGirl.create(:user))
 
         xhr :get, :edit, :id => @task.id, :previous => @previous.id
-        flash[:warning].should == nil
-        assigns[:previous].should == @previous.id
-        response.should render_template("tasks/edit")
+        expect(flash[:warning]).to eq(nil)
+        expect(assigns[:previous]).to eq(@previous.id)
+        expect(response).to render_template("tasks/edit")
       end
     end
   end
@@ -268,23 +268,23 @@ describe TasksController do
 
       it "should expose a newly created task as @task and render [create] template" do
         @task = FactoryGirl.build(:task, :user => current_user)
-        Task.stub(:new).and_return(@task)
+        allow(Task).to receive(:new).and_return(@task)
 
         xhr :post, :create, :task => { :name => "Hello world" }
-        assigns(:task).should == @task
-        assigns(:view).should == "pending"
-        assigns[:task_total].should == nil
-        response.should render_template("tasks/create")
+        expect(assigns(:task)).to eq(@task)
+        expect(assigns(:view)).to eq("pending")
+        expect(assigns[:task_total]).to eq(nil)
+        expect(response).to render_template("tasks/create")
       end
 
       [ "", "?view=pending", "?view=assigned", "?view=completed" ].each do |view|
         it "should update tasks sidebar when [create] is being called from [/tasks#{view}] page" do
           @task = FactoryGirl.build(:task, :user => current_user)
-          Task.stub(:new).and_return(@task)
+          allow(Task).to receive(:new).and_return(@task)
 
           request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
           xhr :post, :create, :task => { :name => "Hello world" }
-          assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
+          expect(assigns[:task_total]).to be_an_instance_of(HashWithIndifferentAccess)
         end
       end
     end
@@ -293,13 +293,13 @@ describe TasksController do
 
       it "should expose a newly created but unsaved task as @lead and still render [create] template" do
         @task = FactoryGirl.build(:task, :name => nil, :user => current_user)
-        Task.stub(:new).and_return(@task)
+        allow(Task).to receive(:new).and_return(@task)
 
         xhr :post, :create, :task => {}
-        assigns(:task).should == @task
-        assigns(:view).should == "pending"
-        assigns[:task_total].should == nil
-        response.should render_template("tasks/create")
+        expect(assigns(:task)).to eq(@task)
+        expect(assigns(:view)).to eq("pending")
+        expect(assigns[:task_total]).to eq(nil)
+        expect(response).to render_template("tasks/create")
       end
     end
   end
@@ -314,11 +314,11 @@ describe TasksController do
         @task = FactoryGirl.create(:task, :name => "Hi", :user => current_user)
 
         xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
-        @task.reload.name.should == "Hello"
-        assigns(:task).should == @task
-        assigns(:view).should == "pending"
-        assigns[:task_total].should == nil
-        response.should render_template("tasks/update")
+        expect(@task.reload.name).to eq("Hello")
+        expect(assigns(:task)).to eq(@task)
+        expect(assigns(:view)).to eq("pending")
+        expect(assigns[:task_total]).to eq(nil)
+        expect(response).to render_template("tasks/update")
       end
 
       [ "", "?view=pending", "?view=assigned", "?view=completed" ].each do |view|
@@ -327,7 +327,7 @@ describe TasksController do
 
           request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
           xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
-          assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
+          expect(assigns[:task_total]).to be_an_instance_of(HashWithIndifferentAccess)
         end
       end
     end
@@ -337,11 +337,11 @@ describe TasksController do
         @task = FactoryGirl.create(:task, :name => "Hi", :user => current_user)
 
         xhr :put, :update, :id => @task.id, :task => { :name => nil }
-        @task.reload.name.should == "Hi"
-        assigns(:task).should == @task
-        assigns(:view).should == "pending"
-        assigns[:task_total].should == nil
-        response.should render_template("tasks/update")
+        expect(@task.reload.name).to eq("Hi")
+        expect(assigns(:task)).to eq(@task)
+        expect(assigns(:view)).to eq("pending")
+        expect(assigns[:task_total]).to eq(nil)
+        expect(response).to render_template("tasks/update")
       end
     end
 
@@ -351,16 +351,16 @@ describe TasksController do
         @task.destroy
 
         xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
 
       it "should reload current page with the flash message if the task got reassigned" do
         @task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
 
         xhr :put, :update, :id => @task.id, :task => { :name => "Hello" }
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
     end
   end
@@ -374,10 +374,10 @@ describe TasksController do
       @task = FactoryGirl.create(:task, :user => current_user)
 
       xhr :delete, :destroy, :id => @task.id, :bucket => "due_asap"
-      assigns(:task).should == @task
-      assigns(:view).should == "pending"
-      assigns[:task_total].should == nil
-      response.should render_template("tasks/destroy")
+      expect(assigns(:task)).to eq(@task)
+      expect(assigns(:view)).to eq("pending")
+      expect(assigns[:task_total]).to eq(nil)
+      expect(response).to render_template("tasks/destroy")
     end
 
     [ "", "?view=pending", "?view=assigned", "?view=completed" ].each do |view|
@@ -386,7 +386,7 @@ describe TasksController do
 
         request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
         xhr :delete, :destroy, :id => @task.id, :bucket => "due_asap"
-        assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
+        expect(assigns[:task_total]).to be_an_instance_of(HashWithIndifferentAccess)
       end
     end
 
@@ -394,7 +394,7 @@ describe TasksController do
       @task = FactoryGirl.create(:task, :user => current_user)
 
       xhr :delete, :destroy, :id => @task.id
-      assigns[:task_total].should == nil
+      expect(assigns[:task_total]).to eq(nil)
     end
 
     describe "task got deleted or reassigned" do
@@ -403,16 +403,16 @@ describe TasksController do
         @task.destroy
 
         xhr :delete, :destroy, :id => @task.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
 
       it "should reload current page with the flash message if the task got reassigned" do
         @task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
 
         xhr :delete, :destroy, :id => @task.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
     end
   end
@@ -426,27 +426,27 @@ describe TasksController do
       @task = FactoryGirl.create(:task, :completed_at => nil, :user => current_user)
 
       xhr :put, :complete, :id => @task.id
-      @task.reload.completed_at.should_not == nil
-      assigns[:task].should == @task
-      assigns[:task_total].should == nil
-      response.should render_template("tasks/complete")
+      expect(@task.reload.completed_at).not_to eq(nil)
+      expect(assigns[:task]).to eq(@task)
+      expect(assigns[:task_total]).to eq(nil)
+      expect(response).to render_template("tasks/complete")
     end
 
     it "should change task status, expose task as @task, and render [complete] template where task.bucket = 'specific_time'" do
       @task = FactoryGirl.create(:task, :completed_at => nil, :user => current_user, :bucket => "specific_time", :calendar => "01/01/2010 1:00 AM")
 
       xhr :put, :complete, :id => @task.id
-      @task.reload.completed_at.should_not == nil
-      assigns[:task].should == @task
-      assigns[:task_total].should == nil
-      response.should render_template("tasks/complete")
+      expect(@task.reload.completed_at).not_to eq(nil)
+      expect(assigns[:task]).to eq(@task)
+      expect(assigns[:task_total]).to eq(nil)
+      expect(response).to render_template("tasks/complete")
     end
 
     it "should change update tasks sidebar if bucket is not empty" do
       @task = FactoryGirl.create(:task, :completed_at => nil, :user => current_user)
 
       xhr :put, :complete, :id => @task.id, :bucket => "due_asap"
-      assigns[:task_total].should be_an_instance_of(HashWithIndifferentAccess)
+      expect(assigns[:task_total]).to be_an_instance_of(HashWithIndifferentAccess)
     end
 
     describe "task got deleted or reassigned" do
@@ -455,16 +455,16 @@ describe TasksController do
         @task.destroy
 
         xhr :put, :complete, :id => @task.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
 
       it "should reload current page with the flash message if the task got reassigned" do
         @task = FactoryGirl.create(:task, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
 
         xhr :put, :complete, :id => @task.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
     end
   end
@@ -478,10 +478,10 @@ describe TasksController do
       @task = FactoryGirl.create(:task, :completed_at => Time.now, :user => current_user)
 
       xhr :put, :uncomplete, :id => @task.id
-      @task.reload.completed_at.should == nil
-      assigns[:task].should == @task
-      assigns[:task_total].should_not == nil
-      response.should render_template("tasks/uncomplete")
+      expect(@task.reload.completed_at).to eq(nil)
+      expect(assigns[:task]).to eq(@task)
+      expect(assigns[:task_total]).not_to eq(nil)
+      expect(response).to render_template("tasks/uncomplete")
     end
 
 
@@ -491,8 +491,8 @@ describe TasksController do
         @task.destroy
 
         xhr :put, :uncomplete, :id => @task.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
 
     end
@@ -508,10 +508,10 @@ describe TasksController do
         session[name] = "due_asap,due_today,due_tomorrow"
 
         xhr :get, :filter, :filter => "due_asap", :view => view
-        session[name].should_not include("due_asap")
-        session[name].should include("due_today")
-        session[name].should include("due_tomorrow")
-        response.should render_template("tasks/filter")
+        expect(session[name]).not_to include("due_asap")
+        expect(session[name]).to include("due_today")
+        expect(session[name]).to include("due_tomorrow")
+        expect(response).to render_template("tasks/filter")
       end
 
       it "should add a filter from session and render [filter] template for #{view} view" do
@@ -519,10 +519,10 @@ describe TasksController do
         session[name] = "due_today,due_tomorrow"
 
         xhr :get, :filter, :checked => "true", :filter => "due_asap", :view => view
-        session[name].should include("due_asap")
-        session[name].should include("due_today")
-        session[name].should include("due_tomorrow")
-        response.should render_template("tasks/filter")
+        expect(session[name]).to include("due_asap")
+        expect(session[name]).to include("due_today")
+        expect(session[name]).to include("due_tomorrow")
+        expect(response).to render_template("tasks/filter")
       end
     end
   end

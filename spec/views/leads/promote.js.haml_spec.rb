@@ -28,16 +28,16 @@ describe "/leads/promote" do
 
       it "should flip [Convert Lead] form" do
         render
-        rendered.should_not include("lead_#{@lead.id}")
-        rendered.should include("crm.flip_form('convert_lead'")
+        expect(rendered).not_to include("lead_#{@lead.id}")
+        expect(rendered).to include("crm.flip_form('convert_lead'")
       end
 
       it "should update sidebar" do
         render
-        rendered.should include("#sidebar")
-        rendered.should have_text("Lead Summary")
-        rendered.should have_text("Recent Items")
-        rendered.should include("$('#summary').effect('shake'")
+        expect(rendered).to include("#sidebar")
+        expect(rendered).to have_text("Lead Summary")
+        expect(rendered).to have_text("Recent Items")
+        expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
 
@@ -48,16 +48,16 @@ describe "/leads/promote" do
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
-        rendered.should include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-        rendered.should include("$('#filters').effect('shake'")
+        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        expect(rendered).to include("$('#filters').effect('shake'")
       end
 
       it "should update sidebar" do
         render
-        rendered.should include("#sidebar")
-        rendered.should have_text("Lead Status")
-        rendered.should have_text("Recent Items")
-        rendered.should include("$('#filters').effect('shake'")
+        expect(rendered).to include("#sidebar")
+        expect(rendered).to have_text("Lead Status")
+        expect(rendered).to have_text("Recent Items")
+        expect(rendered).to include("$('#filters').effect('shake'")
       end
     end
 
@@ -71,22 +71,22 @@ describe "/leads/promote" do
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
-        rendered.should include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-        rendered.should include(%Q/$('#lead_#{@lead.id}').effect("highlight"/)
+        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("highlight"/)
       end
 
       it "should update campaign sidebar" do
         render
 
-        rendered.should include("#sidebar")
-        rendered.should have_text("Summary")
-        rendered.should have_text("Recent Items")
+        expect(rendered).to include("#sidebar")
+        expect(rendered).to have_text("Summary")
+        expect(rendered).to have_text("Recent Items")
       end
 
       it "should insert new opportunity if any" do
         render
 
-        rendered.should include("$('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}")
+        expect(rendered).to include("$('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}")
       end
 
     end
@@ -104,8 +104,8 @@ describe "/leads/promote" do
 
       it "should redraw the [Convert Lead] form and shake it" do
         render
-        rendered.should include("$('#convert_lead').html")
-        rendered.should include(%Q/$('#convert_lead').effect("shake"/)
+        expect(rendered).to include("$('#convert_lead').html")
+        expect(rendered).to include(%Q/$('#convert_lead').effect("shake"/)
       end
     end
 
@@ -116,8 +116,8 @@ describe "/leads/promote" do
 
       it "should redraw the [Convert Lead] form and shake it" do
         render
-        rendered.should include("$('#lead_#{@lead.id}').html")
-        rendered.should include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
+        expect(rendered).to include("$('#lead_#{@lead.id}').html")
+        expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 
@@ -128,15 +128,15 @@ describe "/leads/promote" do
 
       it "should redraw the [Convert Lead] form and shake it" do
         render
-        rendered.should include("$('#lead_#{@lead.id}').html")
-        rendered.should include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
+        expect(rendered).to include("$('#lead_#{@lead.id}').html")
+        expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 
     it "should handle new or existing account and set up calendar field" do
       render
-      rendered.should include("crm.create_or_select_account")
-      rendered.should include('focus()')
+      expect(rendered).to include("crm.create_or_select_account")
+      expect(rendered).to include('focus()')
     end
   end # errors
 end

@@ -18,8 +18,8 @@ describe "/opportunities/index" do
 
     render :template => 'opportunities/index', :formats => [:js]
 
-    rendered.should include("$('#opportunities').html")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#opportunities').html")
+    expect(rendered).to include("#paginate")
   end
 
   it "should render [empty] template if @opportunities collection if there are no opportunities" do
@@ -27,8 +27,8 @@ describe "/opportunities/index" do
 
     render :template => 'opportunities/index', :formats => [:js]
 
-    rendered.should include("$('#opportunities').html('<div id=\\'empty\\'>")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#opportunities').html('<div id=\\'empty\\'>")
+    expect(rendered).to include("#paginate")
   end
 
 end

@@ -17,9 +17,9 @@ describe "admin/users/index" do
 
     render :template => 'admin/users/index', :formats => [:js]
     
-    rendered.should include("id=\\'user_#{amy.id}\\'")
-    rendered.should include("id=\\'user_#{bob.id}\\'")
-    rendered.should include("$('#paginate')")
+    expect(rendered).to include("id=\\'user_#{amy.id}\\'")
+    expect(rendered).to include("id=\\'user_#{bob.id}\\'")
+    expect(rendered).to include("$('#paginate')")
   end
 
 end

@@ -53,40 +53,40 @@ describe Contact do
     end
 
     it "should create new account if requested so" do
-      lambda { @contact.update_with_account_and_permissions({
+      expect { @contact.update_with_account_and_permissions({
         :account => { :name => "New account" },
         :contact => { :first_name => "Billy" }
-      })}.should change(Account, :count).by(1)
-      Account.last.name.should == "New account"
-      @contact.first_name.should == "Billy"
+      })}.to change(Account, :count).by(1)
+      expect(Account.last.name).to eq("New account")
+      expect(@contact.first_name).to eq("Billy")
     end
 
     it "should change account if another account was selected" do
       @another_account = FactoryGirl.create(:account)
-      lambda { @contact.update_with_account_and_permissions({
+      expect { @contact.update_with_account_and_permissions({
         :account => { :id => @another_account.id },
         :contact => { :first_name => "Billy" }
-      })}.should_not change(Account, :count)
-      @contact.account.should == @another_account
-      @contact.first_name.should == "Billy"
+      })}.not_to change(Account, :count)
+      expect(@contact.account).to eq(@another_account)
+      expect(@contact.first_name).to eq("Billy")
     end
 
     it "should drop existing Account if [create new account] is blank" do
-      lambda { @contact.update_with_account_and_permissions({
+      expect { @contact.update_with_account_and_permissions({
         :account => { :name => "" },
         :contact => { :first_name => "Billy" }
-      })}.should_not change(Account, :count)
-      @contact.account.should == nil
-      @contact.first_name.should == "Billy"
+      })}.not_to change(Account, :count)
+      expect(@contact.account).to eq(nil)
+      expect(@contact.first_name).to eq("Billy")
     end
 
     it "should drop existing Account if [-- None --] is selected from list of accounts" do
-      lambda { @contact.update_with_account_and_permissions({
+      expect { @contact.update_with_account_and_permissions({
         :account => { :id => "" },
         :contact => { :first_name => "Billy" }
-      })}.should_not change(Account, :count)
-      @contact.account.should == nil
-      @contact.first_name.should == "Billy"
+      })}.not_to change(Account, :count)
+      expect(@contact.account).to eq(nil)
+      expect(@contact.first_name).to eq("Billy")
     end
   end
 
@@ -100,16 +100,16 @@ describe Contact do
       @opportunity = FactoryGirl.create(:opportunity)
       @contact.opportunities << @opportunity
 
-      @contact.attach!(@task).should == nil
-      @contact.attach!(@opportunity).should == nil
+      expect(@contact.attach!(@task)).to eq(nil)
+      expect(@contact.attach!(@opportunity)).to eq(nil)
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
       @task = FactoryGirl.create(:task, :user => current_user)
       @opportunity = FactoryGirl.create(:opportunity)
 
-      @contact.attach!(@task).should == [ @task ]
-      @contact.attach!(@opportunity).should == [ @opportunity ]
+      expect(@contact.attach!(@task)).to eq([ @task ])
+      expect(@contact.attach!(@opportunity)).to eq([ @opportunity ])
     end
   end
 
@@ -120,21 +120,21 @@ describe Contact do
 
     it "should discard a task" do
       @task = FactoryGirl.create(:task, :asset => @contact, :user => current_user)
-      @contact.tasks.count.should == 1
+      expect(@contact.tasks.count).to eq(1)
 
       @contact.discard!(@task)
-      @contact.reload.tasks.should == []
-      @contact.tasks.count.should == 0
+      expect(@contact.reload.tasks).to eq([])
+      expect(@contact.tasks.count).to eq(0)
     end
 
     it "should discard an opportunity" do
       @opportunity = FactoryGirl.create(:opportunity)
       @contact.opportunities << @opportunity
-      @contact.opportunities.count.should == 1
+      expect(@contact.opportunities.count).to eq(1)
 
       @contact.discard!(@opportunity)
-      @contact.opportunities.should == []
-      @contact.opportunities.count.should == 0
+      expect(@contact.opportunities).to eq([])
+      expect(@contact.opportunities.count).to eq(0)
     end
   end
 
@@ -173,36 +173,36 @@ describe Contact do
     end
 
     it "should search first_name" do
-      Contact.text_search('Bob').should == [@contact]
+      expect(Contact.text_search('Bob')).to eq([@contact])
     end
 
     it "should search last_name" do
-      Contact.text_search('Dillion').should == [@contact]
+      expect(Contact.text_search('Dillion')).to eq([@contact])
     end
 
     it "should search whole name" do
-      Contact.text_search('Bob Dillion').should == [@contact]
+      expect(Contact.text_search('Bob Dillion')).to eq([@contact])
     end
 
     it "should search whole name reversed" do
-      Contact.text_search('Dillion Bob').should == [@contact]
+      expect(Contact.text_search('Dillion Bob')).to eq([@contact])
     end
 
     it "should search email" do
-      Contact.text_search('example').should == [@contact]
+      expect(Contact.text_search('example')).to eq([@contact])
     end
 
     it "should search phone" do
-      Contact.text_search('123').should == [@contact]
+      expect(Contact.text_search('123')).to eq([@contact])
     end
 
     it "should not break with a single quote" do
       contact2 = FactoryGirl.create(:contact, :first_name => "Shamus", :last_name => "O'Connell", :email => 'bob_dillion@example.com', :phone => '+1 123 456 789')
-      Contact.text_search("O'Connell").should == [contact2]
+      expect(Contact.text_search("O'Connell")).to eq([contact2])
     end
 
     it "should not break on special characters" do
-      Contact.text_search('@$%#^@!').should == []
+      expect(Contact.text_search('@$%#^@!')).to eq([])
     end
 
   end

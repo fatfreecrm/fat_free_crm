@@ -18,7 +18,7 @@ describe "/home/index" do
     assign(:my_opportunities, [])
     assign(:my_accounts, [])
     render
-    view.should render_template(:partial => "_activity")
+    expect(view).to render_template(:partial => "_activity")
   end
 
   it "should render a message if there're no activities" do
@@ -27,9 +27,9 @@ describe "/home/index" do
     assign(:my_opportunities, [])
     assign(:my_accounts, [])
     render
-    view.should_not render_template(:partial => "_activity")
+    expect(view).not_to render_template(:partial => "_activity")
 
-    rendered.should include("No activity records found.")
+    expect(rendered).to include("No activity records found.")
   end
 end
 

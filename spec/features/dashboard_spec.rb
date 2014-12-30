@@ -25,17 +25,17 @@ feature 'Dashboard', %q{
 
     #My Tasks
     within "#tasks" do
-      page.should have_content("Do your homework!")
+      expect(page).to have_content("Do your homework!")
     end
 
     #My Opportunities
     within "#opportunities" do
-      page.should have_content("Work with the Dolphins")
+      expect(page).to have_content("Work with the Dolphins")
     end
 
     #My Accounts
     within "#accounts" do
-      page.should have_content("Dolphin Manufacturer")
+      expect(page).to have_content("Dolphin Manufacturer")
     end
   end
 
@@ -50,17 +50,17 @@ feature 'Dashboard', %q{
 
     #My Tasks
     within "#tasks" do
-      page.should have_content("Not showing 1 hidden task.")
+      expect(page).to have_content("Not showing 1 hidden task.")
     end
 
     #My Opportunities
     within "#opportunities" do
-      page.should have_content("Not showing 1 hidden opportunity.")
+      expect(page).to have_content("Not showing 1 hidden opportunity.")
     end
 
     #My Accounts
     within "#accounts" do
-      page.should have_content("Not showing 1 hidden account.")
+      expect(page).to have_content("Not showing 1 hidden account.")
     end
 
   end

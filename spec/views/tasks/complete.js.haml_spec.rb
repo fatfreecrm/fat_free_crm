@@ -26,8 +26,8 @@ describe "/tasks/complete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include("$('#task_#{@task.id}').fadeOut")
-      rendered.should include("$('#list_due_asap').fadeOut")
+      expect(rendered).to include("$('#task_#{@task.id}').fadeOut")
+      expect(rendered).to include("$('#list_due_asap').fadeOut")
     end
 
     it "should update tasks sidebar" do
@@ -37,10 +37,10 @@ describe "/tasks/complete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include("$('#sidebar').html")
-      rendered.should have_text("Assigned")
-      rendered.should have_text("Recent Items")
-      rendered.should include("$('#filters').effect('shake'")
+      expect(rendered).to include("$('#sidebar').html")
+      expect(rendered).to have_text("Assigned")
+      expect(rendered).to have_text("Recent Items")
+      expect(rendered).to include("$('#filters').effect('shake'")
     end
   end
 
@@ -50,8 +50,8 @@ describe "/tasks/complete" do
       assign(:task, @task)
 
       render
-      rendered.should include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
-      rendered.should include('<strike>')
+      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include('<strike>')
     end
 
     it "should update recently viewed items" do
@@ -60,7 +60,7 @@ describe "/tasks/complete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 
       render
-      rendered.should have_text("Recent Items")
+      expect(rendered).to have_text("Recent Items")
     end
   end
 

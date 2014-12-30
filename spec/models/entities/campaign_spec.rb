@@ -49,9 +49,9 @@ describe Campaign do
       @lead = FactoryGirl.create(:lead, :campaign => @campaign)
       @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign)
 
-      @campaign.attach!(@task).should == nil
-      @campaign.attach!(@lead).should == nil
-      @campaign.attach!(@opportunity).should == nil
+      expect(@campaign.attach!(@task)).to eq(nil)
+      expect(@campaign.attach!(@lead)).to eq(nil)
+      expect(@campaign.attach!(@opportunity)).to eq(nil)
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
@@ -59,9 +59,9 @@ describe Campaign do
       @lead = FactoryGirl.create(:lead)
       @opportunity = FactoryGirl.create(:opportunity)
 
-      @campaign.attach!(@task).should == [ @task ]
-      @campaign.attach!(@lead).should == [ @lead ]
-      @campaign.attach!(@opportunity).should == [ @opportunity ]
+      expect(@campaign.attach!(@task)).to eq([ @task ])
+      expect(@campaign.attach!(@lead)).to eq([ @lead ])
+      expect(@campaign.attach!(@opportunity)).to eq([ @opportunity ])
     end
 
     it "should increment leads count when attaching a new lead" do
@@ -69,14 +69,14 @@ describe Campaign do
       @lead = FactoryGirl.create(:lead)
 
       @campaign.attach!(@lead)
-      @campaign.reload.leads_count.should == @leads_count + 1
+      expect(@campaign.reload.leads_count).to eq(@leads_count + 1)
     end
 
     it "should increment opportunities count when attaching new opportunity" do
       @opportunities_count = @campaign.opportunities_count
       @opportunity = FactoryGirl.create(:opportunity)
       @campaign.attach!(@opportunity)
-      @campaign.reload.opportunities_count.should == @opportunities_count + 1
+      expect(@campaign.reload.opportunities_count).to eq(@opportunities_count + 1)
     end
   end
 
@@ -87,29 +87,29 @@ describe Campaign do
 
     it "should discard a task" do
       @task = FactoryGirl.create(:task, :asset => @campaign, :user => current_user)
-      @campaign.tasks.count.should == 1
+      expect(@campaign.tasks.count).to eq(1)
 
       @campaign.discard!(@task)
-      @campaign.reload.tasks.should == []
-      @campaign.tasks.count.should == 0
+      expect(@campaign.reload.tasks).to eq([])
+      expect(@campaign.tasks.count).to eq(0)
     end
 
     it "should discard a lead" do
       @lead = FactoryGirl.create(:lead, :campaign => @campaign)
-      @campaign.reload.leads_count.should == 43
+      expect(@campaign.reload.leads_count).to eq(43)
 
       @campaign.discard!(@lead)
-      @campaign.leads.should == []
-      @campaign.reload.leads_count.should == 42
+      expect(@campaign.leads).to eq([])
+      expect(@campaign.reload.leads_count).to eq(42)
     end
 
     it "should discard an opportunity" do
       @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign)
-      @campaign.reload.opportunities_count.should == 43
+      expect(@campaign.reload.opportunities_count).to eq(43)
 
       @campaign.discard!(@opportunity)
-      @campaign.opportunities.should == []
-      @campaign.reload.opportunities_count.should == 42
+      expect(@campaign.opportunities).to eq([])
+      expect(@campaign.reload.opportunities_count).to eq(42)
     end
   end
 

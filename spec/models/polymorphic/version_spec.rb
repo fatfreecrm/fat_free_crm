@@ -43,29 +43,29 @@ describe Version, :versioning => true do
 
     it "should not include view events" do
       @versions = Version.for(current_user).exclude_events(:view)
-      @versions.map(&:event).sort.should_not include('view')
+      expect(@versions.map(&:event).sort).not_to include('view')
     end
 
     it "should exclude create, update and destroy events" do
       @versions = Version.for(current_user).exclude_events(:create, :update, :destroy)
-      @versions.map(&:event).should_not include('create')
-      @versions.map(&:event).should_not include('update')
-      @versions.map(&:event).should_not include('destroy')
+      expect(@versions.map(&:event)).not_to include('create')
+      expect(@versions.map(&:event)).not_to include('update')
+      expect(@versions.map(&:event)).not_to include('destroy')
     end
 
     it "should include only destroy events" do
       @versions = Version.for(current_user).include_events(:destroy)
-      @versions.map(&:event).uniq.should == %w(destroy)
+      expect(@versions.map(&:event).uniq).to eq(%w(destroy))
     end
 
     it "should include create and update events" do
       @versions = Version.for(current_user).include_events(:create, :update)
-      @versions.map(&:event).uniq.sort.should == %w(create update)
+      expect(@versions.map(&:event).uniq.sort).to eq(%w(create update))
     end
 
     it "should select all versions for a given user" do
       @versions = Version.for(current_user)
-      @versions.map(&:whodunnit).uniq.should == [current_user.id.to_s]
+      expect(@versions.map(&:whodunnit).uniq).to eq([current_user.id.to_s])
     end
   end
 
@@ -78,7 +78,7 @@ describe Version, :versioning => true do
 
       it "should add a version when creating new #{item}" do
         @version = Version.where(@conditions.merge(:event => 'create')).first
-        @version.should_not == nil
+        expect(@version).not_to eq(nil)
       end
 
       it "should add a version when updating existing #{item}" do
@@ -89,21 +89,21 @@ describe Version, :versioning => true do
         end
         @version = Version.where(@conditions.merge(:event => 'update')).first
 
-        @version.should_not == nil
+        expect(@version).not_to eq(nil)
       end
 
       it "should add a version when deleting #{item}" do
         @item.destroy
         @version = Version.where(@conditions.merge(:event => 'destroy')).first
 
-        @version.should_not == nil
+        expect(@version).not_to eq(nil)
       end
 
       it "should add a version when commenting on a #{item}" do
         @comment = FactoryGirl.create(:comment, :commentable => @item, :user => current_user)
 
         @version = Version.where({:related_id => @item.id, :related_type => @item.class.name, :whodunnit => PaperTrail.whodunnit, :event => 'create'}).first
-        @version.should_not == nil
+        expect(@version).not_to eq(nil)
       end
     end
   end
@@ -117,14 +117,14 @@ describe Version, :versioning => true do
     it "creating a new task should not add it to recently viewed items list" do
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).should include('create') # but not view
+      expect(@versions.map(&:event)).to include('create') # but not view
     end
 
     it "updating a new task should not add it to recently viewed items list" do
       @task.update_attribute(:updated_at, 1.second.ago)
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).sort.should == %w(create update) # but not view
+      expect(@versions.map(&:event).sort).to eq(%w(create update)) # but not view
     end
   end
 
@@ -138,21 +138,21 @@ describe Version, :versioning => true do
       @task.update_attribute(:completed_at, 1.second.ago)
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).should include('complete')
+      expect(@versions.map(&:event)).to include('complete')
     end
 
     it "should create 'reassigned' task event" do
       @task.update_attribute(:assigned_to, current_user.id + 1)
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).should include('reassign')
+      expect(@versions.map(&:event)).to include('reassign')
     end
 
     it "should create 'rescheduled' task event" do
       @task.update_attribute(:bucket, "due_tomorrow") # FactoryGirl creates :due_asap task
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).should include('reschedule')
+      expect(@versions.map(&:event)).to include('reschedule')
     end
   end
 
@@ -166,7 +166,7 @@ describe Version, :versioning => true do
       @lead.update_attribute(:status, "rejected")
       @versions = Version.where(@conditions)
 
-      @versions.map(&:event).should include('reject')
+      expect(@versions.map(&:event)).to include('reject')
     end
   end
 
@@ -181,9 +181,9 @@ describe Version, :versioning => true do
       @item.update_attribute(:updated_at,  1.second.ago)
 
       @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create update)
+      expect(@versions.map(&:event).sort).to eq(%w(create update))
       @versions = Version.latest.visible_to(@user)
-      @versions.should == []
+      expect(@versions).to eq([])
     end
 
     it "should not show the destroy version if the item is private" do
@@ -191,9 +191,9 @@ describe Version, :versioning => true do
       @item.destroy
 
       @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create destroy)
+      expect(@versions.map(&:event).sort).to eq(%w(create destroy))
       @versions = Version.latest.visible_to(@user)
-      @versions.should == []
+      expect(@versions).to eq([])
     end
 
     it "should not show create/update versions if the item was not shared with the user" do
@@ -205,9 +205,9 @@ describe Version, :versioning => true do
       @item.update_attribute(:updated_at, 1.second.ago)
 
       @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create update)
+      expect(@versions.map(&:event).sort).to eq(%w(create update))
       @versions = Version.latest.visible_to(@user)
-      @versions.should == []
+      expect(@versions).to eq([])
     end
 
     it "should not show the destroy version if the item was not shared with the user" do
@@ -219,9 +219,9 @@ describe Version, :versioning => true do
       @item.destroy
 
       @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create destroy)
+      expect(@versions.map(&:event).sort).to eq(%w(create destroy))
       @versions = Version.latest.visible_to(@user)
-      @versions.should == []
+      expect(@versions).to eq([])
     end
 
     it "should show create/update versions if the item was shared with the user" do
@@ -233,9 +233,9 @@ describe Version, :versioning => true do
       @item.update_attribute(:updated_at, 1.second.ago)
 
       @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create update)
+      expect(@versions.map(&:event).sort).to eq(%w(create update))
       @versions = Version.latest.visible_to(@user)
-      @versions.map(&:event).sort.should == %w(create update)
+      expect(@versions.map(&:event).sort).to eq(%w(create update))
     end
   end
 end

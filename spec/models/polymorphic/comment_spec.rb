@@ -42,7 +42,7 @@ describe Comment do
                     :commentable => entity)
 
     expected_users.each do |user|
-      entity.subscribed_users.should include(user.id)
+      expect(entity.subscribed_users).to include(user.id)
     end
   end
 end

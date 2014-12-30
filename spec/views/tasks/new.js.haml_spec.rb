@@ -19,7 +19,7 @@ describe "/tasks/new" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include("crm.flick('empty', 'toggle')")
+    expect(rendered).to include("crm.flick('empty', 'toggle')")
   end
 
   describe "new task" do
@@ -30,8 +30,8 @@ describe "/tasks/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("$('#create_task').html")
-      rendered.should include("crm.flip_form('create_task');")
+      expect(rendered).to include("$('#create_task').html")
+      expect(rendered).to include("crm.flip_form('create_task');")
     end
   end
 
@@ -40,8 +40,8 @@ describe "/tasks/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not include("$('#create_task').html")
-      rendered.should include("crm.flip_form('create_task');")
+      expect(rendered).not_to include("$('#create_task').html")
+      expect(rendered).to include("crm.flip_form('create_task');")
     end
   end
 

@@ -18,32 +18,32 @@ feature 'Campaigns', %q{
   scenario 'should view a list of campaigns' do
     3.times { |i| FactoryGirl.create(:campaign, :name => "Campaign #{i}") }
     visit campaigns_page
-    page.should have_content('Campaign 0')
-    page.should have_content('Campaign 1')
-    page.should have_content('Campaign 2')
-    page.should have_content('Create Campaign')
+    expect(page).to have_content('Campaign 0')
+    expect(page).to have_content('Campaign 1')
+    expect(page).to have_content('Campaign 2')
+    expect(page).to have_content('Create Campaign')
   end
 
   scenario 'should create a campaign', :js => true do
     with_versioning do
       visit campaigns_page
       click_link 'Create Campaign'
-      page.should have_selector('#campaign_name', :visible => true)
+      expect(page).to have_selector('#campaign_name', :visible => true)
       fill_in 'campaign_name', :with => 'Cool Campaign'
       select 'On Hold', :from => 'campaign_status'
       click_link 'Comment'
       fill_in 'comment_body', :with => 'This campaign is very important'
       click_button 'Create Campaign'
 
-      page.should have_content('Cool Campaign')
-      page.should have_content('On Hold')
+      expect(page).to have_content('Cool Campaign')
+      expect(page).to have_content('On Hold')
 
       find('div#campaigns').click_link 'Cool Campaign'
-      page.should have_content('This campaign is very important')
+      expect(page).to have_content('This campaign is very important')
 
       click_link "Dashboard"
-      page.should have_content("Bill Murray created campaign Cool Campaign")
-      page.should have_content("Bill Murray created comment on Cool Campaign")
+      expect(page).to have_content("Bill Murray created campaign Cool Campaign")
+      expect(page).to have_content("Bill Murray created comment on Cool Campaign")
     end
   end
 
@@ -55,7 +55,7 @@ feature 'Campaigns', %q{
     fill_in 'comment_body', :with => 'This campaign is very important'
     click_button 'Create Campaign'
 
-    find('#comment_body').should have_content('This campaign is very important')
+    expect(find('#comment_body')).to have_content('This campaign is very important')
   end
 
   scenario 'should view and edit a campaign', :js => true do
@@ -67,10 +67,10 @@ feature 'Campaigns', %q{
       fill_in 'campaign_name', :with => 'My Even Cooler Campaign'
       select 'Started', :from => 'campaign_status'
       click_button 'Save Campaign'
-      page.should have_content('My Even Cooler Campaign')
-    page.should have_content('My Even Cooler Campaign')
+      expect(page).to have_content('My Even Cooler Campaign')
+    expect(page).to have_content('My Even Cooler Campaign')
       click_link 'Dashboard'
-      page.should have_content("Bill Murray updated campaign My Even Cooler Campaign")
+      expect(page).to have_content("Bill Murray updated campaign My Even Cooler Campaign")
     end
   end
 
@@ -79,25 +79,25 @@ feature 'Campaigns', %q{
     visit campaigns_page
     click_link 'Old Campaign'
     click_link 'Delete?'
-    page.should have_content('Are you sure you want to delete this campaign?')
+    expect(page).to have_content('Are you sure you want to delete this campaign?')
     click_link 'Yes'
-    page.should have_content('Old Campaign has been deleted.')
-    find('div#campaigns').should_not have_content('Old Campaign')
+    expect(page).to have_content('Old Campaign has been deleted.')
+    expect(find('div#campaigns')).not_to have_content('Old Campaign')
   end
 
   scenario 'should search for a campaign', :js => true do
     2.times { |i| FactoryGirl.create(:campaign, :name => "Campaign #{i}") }
     visit campaigns_page
-    find('#campaigns').should have_content("Campaign 0")
-    find('#campaigns').should have_content("Campaign 1")
+    expect(find('#campaigns')).to have_content("Campaign 0")
+    expect(find('#campaigns')).to have_content("Campaign 1")
     fill_in 'query', :with => "Campaign 0"
-    find('#campaigns').should have_content("Campaign 0")
-    find('#campaigns').should_not have_content("Campaign 1")
+    expect(find('#campaigns')).to have_content("Campaign 0")
+    expect(find('#campaigns')).not_to have_content("Campaign 1")
     fill_in 'query', :with => "Campaign"
-    find('#campaigns').should have_content("Campaign 0")
-    find('#campaigns').should have_content("Campaign 1")
+    expect(find('#campaigns')).to have_content("Campaign 0")
+    expect(find('#campaigns')).to have_content("Campaign 1")
     fill_in 'query', :with => "False"
-    find('#campaigns').should_not have_content("Campaign 0")
-    find('#campaigns').should_not have_content("Campaign 1")
+    expect(find('#campaigns')).not_to have_content("Campaign 0")
+    expect(find('#campaigns')).not_to have_content("Campaign 1")
   end
 end

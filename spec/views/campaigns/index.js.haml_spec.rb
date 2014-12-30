@@ -17,8 +17,8 @@ describe "/campaigns/index" do
 
     render :template => 'campaigns/index', :formats => [:js]
     
-    rendered.should include("$('#campaigns').html('<li class=\\'campaign highlight\\' id=\\'campaign_42\\'")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#campaigns').html('<li class=\\'campaign highlight\\' id=\\'campaign_42\\'")
+    expect(rendered).to include("#paginate")
   end
 
   it "should render [empty] template if @campaigns collection if there are no campaigns" do
@@ -26,8 +26,8 @@ describe "/campaigns/index" do
 
     render :template => 'campaigns/index', :formats => [:js]
     
-    rendered.should include("$('#campaigns').html('<div id=\\'empty\\'>")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#campaigns').html('<div id=\\'empty\\'>")
+    expect(rendered).to include("#paginate")
   end
 
 end

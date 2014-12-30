@@ -19,7 +19,7 @@ feature 'Users tab', %q{
     FactoryGirl.create(:group, :name => "Superheroes")
     visit admin_users_path
     click_link 'Create User'
-    page.should have_selector('#user_username', :visible => true)
+    expect(page).to have_selector('#user_username', :visible => true)
     fill_in 'user_username', :with => 'captainthunder'
     fill_in 'user_email', :with => 'lightning@example.com'
     fill_in 'user_first_name', :with => 'Captain'
@@ -29,10 +29,10 @@ feature 'Users tab', %q{
     chosen_select('Superheroes', :from => 'user_group_ids')
 
     click_button 'Create User'
-    find('#users').should have_content('Captain Thunder')
-    find('#users').should have_content('Weather Inc.')
-    find('#users').should have_content('Superheroes')
-    find('#users').should have_content('lightning@example.com')
+    expect(find('#users')).to have_content('Captain Thunder')
+    expect(find('#users')).to have_content('Weather Inc.')
+    expect(find('#users')).to have_content('Superheroes')
+    expect(find('#users')).to have_content('lightning@example.com')
 
   end
 

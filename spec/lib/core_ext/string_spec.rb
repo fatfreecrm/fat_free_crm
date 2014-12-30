@@ -16,6 +16,6 @@ describe "String" do
       ["Man Chi Lo", "Stephanie"]
     ]
     result = "Stephanie Man Chi Lo".name_permutations
-    result.sort.should == expected.sort
+    expect(result.sort).to eq(expected.sort)
   end
 end

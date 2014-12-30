@@ -17,18 +17,18 @@ describe "/campaigns/show" do
     assign(:users, [ current_user ])
     assign(:comment, Comment.new)
     assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @campaign) ])
-    view.stub(:params) { {:id => 123} }
+    allow(view).to receive(:params) { {:id => 123} }
   end
 
   it "should render campaign landing page" do
     render
-    view.should render_template(:partial => "comments/_new")
-    view.should render_template(:partial => "shared/_timeline")
-    view.should render_template(:partial => "shared/_tasks")
-    view.should render_template(:partial => "leads/_leads")
-    view.should render_template(:partial => "opportunities/_opportunities")
+    expect(view).to render_template(:partial => "comments/_new")
+    expect(view).to render_template(:partial => "shared/_timeline")
+    expect(view).to render_template(:partial => "shared/_tasks")
+    expect(view).to render_template(:partial => "leads/_leads")
+    expect(view).to render_template(:partial => "opportunities/_opportunities")
 
-    rendered.should have_tag("div[id=edit_campaign]")
+    expect(rendered).to have_tag("div[id=edit_campaign]")
   end
 
 end

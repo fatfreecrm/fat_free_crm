@@ -20,7 +20,7 @@ describe "/opportunities/_edit" do
     assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign = FactoryGirl.create(:campaign)))
     render
 
-    rendered.should have_tag("form[class=edit_opportunity]") do
+    expect(rendered).to have_tag("form[class=edit_opportunity]") do
       with_tag "input[type=hidden][id=opportunity_user_id][value=#{@opportunity.user_id}]"
       with_tag "input[type=hidden][id=opportunity_campaign_id][value=#{@opportunity.campaign_id}]"
     end
@@ -31,8 +31,8 @@ describe "/opportunities/_edit" do
     assign(:opportunity, FactoryGirl.create(:opportunity, :assignee => nil))
     render
 
-    rendered.should have_tag("select[id=opportunity_assigned_to]") do |options|
-      options.to_s.should_not include(%Q/selected="selected"/)
+    expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|
+      expect(options.to_s).not_to include(%Q/selected="selected"/)
     end
   end
 
@@ -42,7 +42,7 @@ describe "/opportunities/_edit" do
     assign(:opportunity, FactoryGirl.create(:opportunity, :assignee => @user))
     render
 
-    rendered.should have_tag("select[id=opportunity_assigned_to]") do |options|
+    expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|
       with_tag "option[selected=selected]"
       with_tag "option[value=#{@user.id}]"
     end
@@ -54,7 +54,7 @@ describe "/opportunities/_edit" do
     Setting.background_info = [ :opportunity ]
 
     render
-    rendered.should have_tag("textarea[id=opportunity_background_info]")
+    expect(rendered).to have_tag("textarea[id=opportunity_background_info]")
   end
 
   it "should not render background info field if settings do not require so" do
@@ -63,6 +63,6 @@ describe "/opportunities/_edit" do
     Setting.background_info = []
 
     render
-    rendered.should_not have_tag("textarea[id=opportunity_background_info]")
+    expect(rendered).not_to have_tag("textarea[id=opportunity_background_info]")
   end
 end

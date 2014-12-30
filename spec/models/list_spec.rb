@@ -9,9 +9,9 @@ describe List do
   it "should parse the controller from the url" do
     ["/controller/action", "controller/action?utf8=%E2%9C%93"].each do |url|
       list = FactoryGirl.build(:list, :url => url)
-      list.controller.should == "controller"
+      expect(list.controller).to eq("controller")
     end
     list = FactoryGirl.build(:list, :url => nil)
-    list.controller.should == nil
+    expect(list.controller).to eq(nil)
   end
 end

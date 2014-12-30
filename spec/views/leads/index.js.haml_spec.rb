@@ -17,8 +17,8 @@ describe "/leads/index" do
 
     render :template => 'leads/index', :formats => [:js]
     
-    rendered.should include("$('#leads').html('<li class=\\'highlight lead\\' id=\\'lead_42\\'")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#leads').html('<li class=\\'highlight lead\\' id=\\'lead_42\\'")
+    expect(rendered).to include("#paginate")
   end
 
   it "should render [empty] template if @leads collection if there are no leads" do
@@ -26,8 +26,8 @@ describe "/leads/index" do
 
     render :template => 'leads/index', :formats => [:js]
     
-    rendered.should include("$('#leads').html('<div id=\\'empty\\'>")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#leads').html('<div id=\\'empty\\'>")
+    expect(rendered).to include("#paginate")
   end
 
 end

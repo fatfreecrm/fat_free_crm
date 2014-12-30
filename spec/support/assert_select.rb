@@ -104,7 +104,7 @@ module RSpec # :nodoc:
       # see documentation for assert_select at http://api.rubyonrails.org/
       def with_tag(*args, &block)
         args = prepare_args(args, @__current_scope_for_assert_select)
-        @__current_scope_for_assert_select.should have_tag(*args, &block)
+        expect(@__current_scope_for_assert_select).to have_tag(*args, &block)
       end
 
       # wrapper for a nested assert_select with false
@@ -116,7 +116,7 @@ module RSpec # :nodoc:
       # see documentation for assert_select at http://api.rubyonrails.org/
       def without_tag(*args, &block)
         args = prepare_args(args, @__current_scope_for_assert_select)
-        @__current_scope_for_assert_select.should_not have_tag(*args, &block)
+        expect(@__current_scope_for_assert_select).not_to have_tag(*args, &block)
       end
 
       # :call-seq:
@@ -143,7 +143,7 @@ module RSpec # :nodoc:
       #
       # see documentation for assert_select_encoded at http://api.rubyonrails.org/
       def with_encoded(*args, &block)
-        should AssertSelect.new(:assert_select_encoded, self, *args, &block)
+        is_expected.to AssertSelect.new(:assert_select_encoded, self, *args, &block)
       end
 
     private

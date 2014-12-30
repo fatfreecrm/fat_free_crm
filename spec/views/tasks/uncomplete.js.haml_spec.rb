@@ -26,8 +26,8 @@ describe "/tasks/uncomplete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include("$('#task_#{@task.id}').slideUp")
-      rendered.should include("$('#list_due_asap').fadeOut")
+      expect(rendered).to include("$('#task_#{@task.id}').slideUp")
+      expect(rendered).to include("$('#list_due_asap').fadeOut")
     end
 
     it "should update tasks sidebar" do
@@ -35,10 +35,10 @@ describe "/tasks/uncomplete" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include("$('#sidebar').html")
-      rendered.should have_text("Assigned")
-      rendered.should have_text("Recent Items")
-      rendered.should include("$('#filters').effect('shake'")
+      expect(rendered).to include("$('#sidebar').html")
+      expect(rendered).to have_text("Assigned")
+      expect(rendered).to have_text("Recent Items")
+      expect(rendered).to include("$('#filters').effect('shake'")
     end
   end
 end

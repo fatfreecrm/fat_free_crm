@@ -29,15 +29,15 @@ describe CampaignsController do
       @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
       get :index
-      assigns[:campaigns].should == @campaigns
-      response.should render_template("campaigns/index")
+      expect(assigns[:campaigns]).to eq(@campaigns)
+      expect(response).to render_template("campaigns/index")
     end
 
     it "should collect the data for the opportunities sidebar" do
       @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
 
       get :index
-      (assigns[:campaign_status_total].keys.map(&:to_sym) - (@status << :all << :other)).should == []
+      expect(assigns[:campaign_status_total].keys.map(&:to_sym) - (@status << :all << :other)).to eq([])
     end
 
     it "should filter out campaigns by status" do
@@ -52,8 +52,8 @@ describe CampaignsController do
 
       get :index
       # Note: can't compare campaigns directly because of BigDecimal objects.
-      assigns[:campaigns].size.should == 2
-      assigns[:campaigns].map(&:status).sort.should == %w(planned started)
+      expect(assigns[:campaigns].size).to eq(2)
+      expect(assigns[:campaigns].map(&:status).sort).to eq(%w(planned started))
     end
 
     it "should perform lookup using query string" do
@@ -61,9 +61,9 @@ describe CampaignsController do
       @second = FactoryGirl.create(:campaign, :user => current_user, :name => "Hello again")
 
       get :index, :query => "again"
-      assigns[:campaigns].should == [ @second ]
-      assigns[:current_query].should == "again"
-      session[:campaigns_current_query].should == "again"
+      expect(assigns[:campaigns]).to eq([ @second ])
+      expect(assigns[:current_query]).to eq("again")
+      expect(session[:campaigns_current_query]).to eq("again")
     end
 
     describe "AJAX pagination" do
@@ -71,10 +71,10 @@ describe CampaignsController do
         @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
         xhr :get, :index, :page => 42
 
-        assigns[:current_page].to_i.should == 42
-        assigns[:campaigns].should == [] # page #42 should be empty if there's only one campaign ;-)
-        session[:campaigns_current_page].to_i.should == 42
-        response.should render_template("campaigns/index")
+        expect(assigns[:current_page].to_i).to eq(42)
+        expect(assigns[:campaigns]).to eq([]) # page #42 should be empty if there's only one campaign ;-)
+        expect(session[:campaigns_current_page].to_i).to eq(42)
+        expect(response).to render_template("campaigns/index")
       end
 
       it "should pick up saved page number from session" do
@@ -82,9 +82,9 @@ describe CampaignsController do
         @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
         xhr :get, :index
 
-        assigns[:current_page].should == 42
-        assigns[:campaigns].should == []
-        response.should render_template("campaigns/index")
+        expect(assigns[:current_page]).to eq(42)
+        expect(assigns[:campaigns]).to eq([])
+        expect(response).to render_template("campaigns/index")
       end
 
       it "should reset current_page when query is altered" do
@@ -93,31 +93,31 @@ describe CampaignsController do
         @campaigns = [ FactoryGirl.create(:campaign, :user => current_user) ]
         xhr :get, :index
 
-        assigns[:current_page].should == 1
-        assigns[:campaigns].should == @campaigns
-        response.should render_template("campaigns/index")
+        expect(assigns[:current_page]).to eq(1)
+        expect(assigns[:campaigns]).to eq(@campaigns)
+        expect(response).to render_template("campaigns/index")
       end
     end
 
     describe "with mime type of JSON" do
       it "should render all campaigns as JSON" do
-        @controller.should_receive(:get_campaigns).and_return(@campaigns = [])
-        @campaigns.should_receive(:to_json).and_return("generated JSON")
+        expect(@controller).to receive(:get_campaigns).and_return(@campaigns = [])
+        expect(@campaigns).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :index
-        response.body.should == "generated JSON"
+        expect(response.body).to eq("generated JSON")
       end
     end
 
     describe "with mime type of XML" do
       it "should render all campaigns as xml" do
-        @controller.should_receive(:get_campaigns).and_return(@campaigns = [])
-        @campaigns.should_receive(:to_xml).and_return("generated XML")
+        expect(@controller).to receive(:get_campaigns).and_return(@campaigns = [])
+        expect(@campaigns).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :index
-        response.body.should == "generated XML"
+        expect(response.body).to eq("generated XML")
       end
     end
   end
@@ -136,39 +136,39 @@ describe CampaignsController do
 
       it "should expose the requested campaign as @campaign and render [show] template" do
         get :show, :id => 42
-        assigns[:campaign].should == @campaign
-        assigns[:stage].should == @stage
-        assigns[:comment].attributes.should == @comment.attributes
-        response.should render_template("campaigns/show")
+        expect(assigns[:campaign]).to eq(@campaign)
+        expect(assigns[:stage]).to eq(@stage)
+        expect(assigns[:comment].attributes).to eq(@comment.attributes)
+        expect(response).to render_template("campaigns/show")
       end
 
       it "should update an activity when viewing the campaign" do
         get :show, :id => @campaign.id
-        @campaign.versions.last.event.should == 'view'
+        expect(@campaign.versions.last.event).to eq('view')
       end
     end
 
     describe "with mime type of JSON" do
       it "should render the requested campaign as JSON" do
         @campaign = FactoryGirl.create(:campaign, :id => 42, :user => current_user)
-        Campaign.should_receive(:find).and_return(@campaign)
-        @campaign.should_receive(:to_json).and_return("generated JSON")
+        expect(Campaign).to receive(:find).and_return(@campaign)
+        expect(@campaign).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :show, :id => 42
-        response.body.should == "generated JSON"
+        expect(response.body).to eq("generated JSON")
       end
     end
 
     describe "with mime type of XML" do
       it "should render the requested campaign as XML" do
         @campaign = FactoryGirl.create(:campaign, :id => 42, :user => current_user)
-        Campaign.should_receive(:find).and_return(@campaign)
-        @campaign.should_receive(:to_xml).and_return("generated XML")
+        expect(Campaign).to receive(:find).and_return(@campaign)
+        expect(@campaign).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, :id => 42
-        response.body.should == "generated XML"
+        expect(response.body).to eq("generated XML")
       end
     end
 
@@ -178,16 +178,16 @@ describe CampaignsController do
         @campaign.destroy
 
         get :show, :id => @campaign.id
-        flash[:warning].should_not == nil
-        response.should redirect_to(campaigns_path)
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response).to redirect_to(campaigns_path)
       end
 
       it "should redirect to campaign index if the campaign is protected" do
         @campaign = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
         get :show, :id => @campaign.id
-        flash[:warning].should_not == nil
-        response.should redirect_to(campaigns_path)
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response).to redirect_to(campaigns_path)
       end
 
       it "should return 404 (Not Found) JSON error" do
@@ -196,7 +196,7 @@ describe CampaignsController do
         request.env["HTTP_ACCEPT"] = "application/json"
 
         get :show, :id => @campaign.id
-        response.code.should == "404" # :not_found
+        expect(response.code).to eq("404") # :not_found
       end
 
       it "should return 404 (Not Found) XML error" do
@@ -205,7 +205,7 @@ describe CampaignsController do
         request.env["HTTP_ACCEPT"] = "application/xml"
 
         get :show, :id => @campaign.id
-        response.code.should == "404" # :not_found
+        expect(response.code).to eq("404") # :not_found
       end
     end
   end
@@ -219,15 +219,15 @@ describe CampaignsController do
       @campaign = Campaign.new(:user => current_user,
                                :access => Setting.default_access)
       xhr :get, :new
-      assigns[:campaign].attributes.should == @campaign.attributes
-      response.should render_template("campaigns/new")
+      expect(assigns[:campaign].attributes).to eq(@campaign.attributes)
+      expect(response).to render_template("campaigns/new")
     end
 
     it "should create related object when necessary" do
       @lead = FactoryGirl.create(:lead, :id => 42)
 
       xhr :get, :new, :related => "lead_42"
-      assigns[:lead].should == @lead
+      expect(assigns[:lead]).to eq(@lead)
     end
   end
 
@@ -239,8 +239,8 @@ describe CampaignsController do
       @campaign = FactoryGirl.create(:campaign, :id => 42, :user => current_user)
 
       xhr :get, :edit, :id => 42
-      assigns[:campaign].should == @campaign
-      response.should render_template("campaigns/edit")
+      expect(assigns[:campaign]).to eq(@campaign)
+      expect(response).to render_template("campaigns/edit")
     end
 
     it "should find previous campaign as necessary" do
@@ -248,8 +248,8 @@ describe CampaignsController do
       @previous = FactoryGirl.create(:campaign, :id => 99)
 
       xhr :get, :edit, :id => 42, :previous => 99
-      assigns[:campaign].should == @campaign
-      assigns[:previous].should == @previous
+      expect(assigns[:campaign]).to eq(@campaign)
+      expect(assigns[:previous]).to eq(@previous)
     end
 
     describe "(campaign got deleted or is otherwise unavailable)" do
@@ -258,16 +258,16 @@ describe CampaignsController do
         @campaign.destroy
 
         xhr :get, :edit, :id => @campaign.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
 
       it "should reload current page with the flash message if the campaign is protected" do
         @private = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
         xhr :get, :edit, :id => @private.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
     end
 
@@ -281,18 +281,18 @@ describe CampaignsController do
         @previous.destroy
 
         xhr :get, :edit, :id => @campaign.id, :previous => @previous.id
-        flash[:warning].should == nil # no warning, just silently remove the div
-        assigns[:previous].should == @previous.id
-        response.should render_template("campaigns/edit")
+        expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
+        expect(assigns[:previous]).to eq(@previous.id)
+        expect(response).to render_template("campaigns/edit")
       end
 
       it "should notify the view if previous campaign got protected" do
         @previous.update_attribute(:access, "Private")
 
         xhr :get, :edit, :id => @campaign.id, :previous => @previous.id
-        flash[:warning].should == nil
-        assigns[:previous].should == @previous.id
-        response.should render_template("campaigns/edit")
+        expect(flash[:warning]).to eq(nil)
+        expect(assigns[:previous]).to eq(@previous.id)
+        expect(response).to render_template("campaigns/edit")
       end
     end
   end
@@ -306,35 +306,35 @@ describe CampaignsController do
 
       it "should expose a newly created campaign as @campaign and render [create] template" do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => current_user)
-        Campaign.stub(:new).and_return(@campaign)
+        allow(Campaign).to receive(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => { :name => "Hello" }
-        assigns(:campaign).should == @campaign
-        response.should render_template("campaigns/create")
+        expect(assigns(:campaign)).to eq(@campaign)
+        expect(response).to render_template("campaigns/create")
       end
 
       it "should get data to update campaign sidebar" do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello", :user => current_user)
-        Campaign.stub(:new).and_return(@campaign)
+        allow(Campaign).to receive(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => { :name => "Hello" }
-        assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
+        expect(assigns[:campaign_status_total]).to be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should reload campaigns to update pagination" do
         @campaign = FactoryGirl.build(:campaign, :user => current_user)
-        Campaign.stub(:new).and_return(@campaign)
+        allow(Campaign).to receive(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => { :name => "Hello" }
-        assigns[:campaigns].should == [ @campaign ]
+        expect(assigns[:campaigns]).to eq([ @campaign ])
       end
 
       it "should add a new comment to the newly created campaign when specified" do
         @campaign = FactoryGirl.build(:campaign, :name => "Hello world", :user => current_user)
-        Campaign.stub(:new).and_return(@campaign)
+        allow(Campaign).to receive(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
-        @campaign.reload.comments.map(&:comment).should include("Awesome comment is awesome")
+        expect(@campaign.reload.comments.map(&:comment)).to include("Awesome comment is awesome")
       end
     end
 
@@ -342,11 +342,11 @@ describe CampaignsController do
 
       it "should expose a newly created but unsaved campaign as @campaign and still render [create] template" do
         @campaign = FactoryGirl.build(:campaign, :id => nil, :name => nil, :user => current_user)
-        Campaign.stub(:new).and_return(@campaign)
+        allow(Campaign).to receive(:new).and_return(@campaign)
 
         xhr :post, :create, :campaign => {}
-        assigns(:campaign).should == @campaign
-        response.should render_template("campaigns/create")
+        expect(assigns(:campaign)).to eq(@campaign)
+        expect(response).to render_template("campaigns/create")
       end
     end
   end
@@ -362,9 +362,9 @@ describe CampaignsController do
         @campaign = FactoryGirl.create(:campaign, :id => 42, :name => "Bye")
 
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }
-        @campaign.reload.name.should == "Hello"
-        assigns(:campaign).should == @campaign
-        response.should render_template("campaigns/update")
+        expect(@campaign.reload.name).to eq("Hello")
+        expect(assigns(:campaign)).to eq(@campaign)
+        expect(response).to render_template("campaigns/update")
       end
 
       it "should get data for campaigns sidebar when called from Campaigns index" do
@@ -372,8 +372,8 @@ describe CampaignsController do
         request.env["HTTP_REFERER"] = "http://localhost/campaigns"
 
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello" }
-        assigns(:campaign).should == @campaign
-        assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
+        expect(assigns(:campaign)).to eq(@campaign)
+        expect(assigns[:campaign_status_total]).to be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should update campaign permissions when sharing with specific users" do
@@ -382,8 +382,8 @@ describe CampaignsController do
         she = FactoryGirl.create(:user, :id => 8)
 
         xhr :put, :update, :id => 42, :campaign => { :name => "Hello", :access => "Shared", :user_ids => %w(7 8) }
-        assigns[:campaign].access.should == "Shared"
-        assigns[:campaign].user_ids.sort.should == [ 7, 8 ]
+        expect(assigns[:campaign].access).to eq("Shared")
+        expect(assigns[:campaign].user_ids.sort).to eq([ 7, 8 ])
       end
 
       describe "campaign got deleted or otherwise unavailable" do
@@ -392,16 +392,16 @@ describe CampaignsController do
           @campaign.destroy
 
           xhr :put, :update, :id => @campaign.id
-          flash[:warning].should_not == nil
-          response.body.should == "window.location.reload();"
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.body).to eq("window.location.reload();")
         end
 
         it "should reload current page with the flash message if the campaign is protected" do
           @private = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
           xhr :put, :update, :id => @private.id
-          flash[:warning].should_not == nil
-          response.body.should == "window.location.reload();"
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.body).to eq("window.location.reload();")
         end
       end
     end
@@ -412,9 +412,9 @@ describe CampaignsController do
         @campaign = FactoryGirl.create(:campaign, :id => 42, :name => "Hello", :user => current_user)
 
         xhr :put, :update, :id => 42, :campaign => { :name => nil }
-        @campaign.reload.name.should == "Hello"
-        assigns(:campaign).should == @campaign
-        response.should render_template("campaigns/update")
+        expect(@campaign.reload.name).to eq("Hello")
+        expect(assigns(:campaign)).to eq(@campaign)
+        expect(response).to render_template("campaigns/update")
       end
     end
   end
@@ -432,31 +432,31 @@ describe CampaignsController do
         @another_campaign = FactoryGirl.create(:campaign, :user => current_user)
         xhr :delete, :destroy, :id => @campaign.id
 
-        assigns[:campaigns].should == [ @another_campaign ]
-        lambda { Campaign.find(@campaign) }.should raise_error(ActiveRecord::RecordNotFound)
-        response.should render_template("campaigns/destroy")
+        expect(assigns[:campaigns]).to eq([ @another_campaign ])
+        expect { Campaign.find(@campaign) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect(response).to render_template("campaigns/destroy")
       end
 
       it "should get data for campaigns sidebar" do
         xhr :delete, :destroy, :id => @campaign.id
 
-        assigns[:campaign_status_total].should be_instance_of(HashWithIndifferentAccess)
+        expect(assigns[:campaign_status_total]).to be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should try previous page and render index action if current page has no campaigns" do
         session[:campaigns_current_page] = 42
 
         xhr :delete, :destroy, :id => @campaign.id
-        session[:campaigns_current_page].should == 41
-        response.should render_template("campaigns/index")
+        expect(session[:campaigns_current_page]).to eq(41)
+        expect(response).to render_template("campaigns/index")
       end
 
       it "should render index action when deleting last campaign" do
         session[:campaigns_current_page] = 1
 
         xhr :delete, :destroy, :id => @campaign.id
-        session[:campaigns_current_page].should == 1
-        response.should render_template("campaigns/index")
+        expect(session[:campaigns_current_page]).to eq(1)
+        expect(response).to render_template("campaigns/index")
       end
 
       describe "campaign got deleted or otherwise unavailable" do
@@ -465,16 +465,16 @@ describe CampaignsController do
           @campaign.destroy
 
           xhr :delete, :destroy, :id => @campaign.id
-          flash[:warning].should_not == nil
-          response.body.should == "window.location.reload();"
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.body).to eq("window.location.reload();")
         end
 
         it "should reload current page with the flash message if the campaign is protected" do
           @private = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
           xhr :delete, :destroy, :id => @private.id
-          flash[:warning].should_not == nil
-          response.body.should == "window.location.reload();"
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.body).to eq("window.location.reload();")
         end
       end
     end
@@ -483,8 +483,8 @@ describe CampaignsController do
       it "should redirect to Campaigns index when a campaign gets deleted from its landing page" do
         delete :destroy, :id => @campaign.id
 
-        flash[:notice].should_not == nil
-        response.should redirect_to(campaigns_path)
+        expect(flash[:notice]).not_to eq(nil)
+        expect(response).to redirect_to(campaigns_path)
       end
 
       it "should redirect to campaign index with the flash message is the campaign got deleted" do
@@ -492,16 +492,16 @@ describe CampaignsController do
         @campaign.destroy
 
         delete :destroy, :id => @campaign.id
-        flash[:warning].should_not == nil
-        response.should redirect_to(campaigns_path)
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response).to redirect_to(campaigns_path)
       end
 
       it "should redirect to campaign index with the flash message if the campaign is protected" do
         @private = FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :access => "Private")
 
         delete :destroy, :id => @private.id
-        flash[:warning].should_not == nil
-        response.should redirect_to(campaigns_path)
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response).to redirect_to(campaigns_path)
       end
     end
   end
@@ -610,14 +610,14 @@ describe CampaignsController do
   describe "responding to GET redraw" do
     it "should save user selected campaign preference" do
       xhr :get, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
-      current_user.preference[:campaigns_per_page].should == "42"
-      current_user.preference[:campaigns_index_view].should  == "brief"
-      current_user.preference[:campaigns_sort_by].should  == "campaigns.name ASC"
+      expect(current_user.preference[:campaigns_per_page]).to eq("42")
+      expect(current_user.preference[:campaigns_index_view]).to  eq("brief")
+      expect(current_user.preference[:campaigns_sort_by]).to  eq("campaigns.name ASC")
     end
 
     it "should reset current page to 1" do
       xhr :get, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
-      session[:campaigns_current_page].should == 1
+      expect(session[:campaigns_current_page]).to eq(1)
     end
 
     it "should select @campaigns and render [index] template" do
@@ -627,8 +627,8 @@ describe CampaignsController do
       ]
 
       xhr :get, :redraw, :per_page => 1, :sort_by => "name"
-      assigns(:campaigns).should == [ @campaigns.first ]
-      response.should render_template("campaigns/index")
+      expect(assigns(:campaigns)).to eq([ @campaigns.first ])
+      expect(response).to render_template("campaigns/index")
     end
   end
 
@@ -641,15 +641,15 @@ describe CampaignsController do
       @campaigns = [ FactoryGirl.create(:campaign, :status => "completed", :user => current_user) ]
 
       xhr :post, :filter, :status => "completed"
-      assigns(:campaigns).should == @campaigns
-      response.should render_template("campaigns/index")
+      expect(assigns(:campaigns)).to eq(@campaigns)
+      expect(response).to render_template("campaigns/index")
     end
 
     it "should reset current page to 1" do
       @campaigns = []
       xhr :post, :filter, :status => "completed"
 
-      session[:campaigns_current_page].should == 1
+      expect(session[:campaigns_current_page]).to eq(1)
     end
 
   end

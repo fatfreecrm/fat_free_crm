@@ -24,35 +24,35 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
       render
 
-      rendered.should include(%Q/$('#task_#{@task.id}').remove();/)
-      rendered.should include(%Q/$('#list_due_asap').fadeOut/)
+      expect(rendered).to include(%Q/$('#task_#{@task.id}').remove();/)
+      expect(rendered).to include(%Q/$('#list_due_asap').fadeOut/)
     end
 
     it "from Tasks tab: should show updated task in a new bucket" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
       render
-      rendered.should include("$('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
-      rendered.should include("$('#task_#{@task.id}').effect('highlight'")
+      expect(rendered).to include("$('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#task_#{@task.id}').effect('highlight'")
     end
 
     it "from Tasks tab: should update tasks sidebar" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
       render
 
-      rendered.should include("$('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
-      rendered.should have_text("Assigned")
-      rendered.should have_text("Recent Items")
-      rendered.should include("$('#filters').effect('shake'")
+      expect(rendered).to include("$('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to have_text("Assigned")
+      expect(rendered).to have_text("Recent Items")
+      expect(rendered).to include("$('#filters').effect('shake'")
     end
 
     it "from asset page: should update task partial in place" do
       render
-      rendered.should include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
     end
 
     it "from asset page: should update recently viewed items" do
       render
-      rendered.should have_text("Recent Items")
+      expect(rendered).to have_text("Recent Items")
     end
 
   end
@@ -70,10 +70,10 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render
-      rendered.should include("$('#task_#{@task.id}').remove();")
-      rendered.should have_text("view assigned tasks")
-      rendered.should include("$('#flash').html")
-      rendered.should include("crm.flash('notice', true)")
+      expect(rendered).to include("$('#task_#{@task.id}').remove();")
+      expect(rendered).to have_text("view assigned tasks")
+      expect(rendered).to include("$('#flash').html")
+      expect(rendered).to include("crm.flash('notice', true)")
     end
 
     it "assigned tasks to me from Tasks tab: should remove the task and show flash message (pending)" do
@@ -84,10 +84,10 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
       render
-      rendered.should include("$('#task_#{@task.id}').remove();")
-      rendered.should have_text("view pending tasks")
-      rendered.should include("$('#flash').html")
-      rendered.should include("crm.flash('notice', true)")
+      expect(rendered).to include("$('#task_#{@task.id}').remove();")
+      expect(rendered).to have_text("view pending tasks")
+      expect(rendered).to include("$('#flash').html")
+      expect(rendered).to include("crm.flash('notice', true)")
     end
 
     it "assigned tasks to somebody else from Tasks tab: should re-render task partial" do
@@ -97,7 +97,7 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
       render
-      rendered.should include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
     end
 
     it "from Tasks tab: should update tasks sidebar" do
@@ -107,10 +107,10 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
       render
 
-      rendered.should include("$('#sidebar').html")
-      rendered.should have_text("Recent Items")
-      rendered.should have_text("Assigned")
-      rendered.should include("$('#filters').effect('shake'")
+      expect(rendered).to include("$('#sidebar').html")
+      expect(rendered).to have_text("Recent Items")
+      expect(rendered).to have_text("Assigned")
+      expect(rendered).to include("$('#filters').effect('shake'")
     end
 
     it "from asset page: should should re-render task partial" do
@@ -118,7 +118,7 @@ describe "/tasks/update" do
       assign(:task, @task       = FactoryGirl.create(:task, :assignee => FactoryGirl.create(:user)))
       render
 
-      rendered.should include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
     end
 
     it "from asset page: should update recently viewed items" do
@@ -126,7 +126,7 @@ describe "/tasks/update" do
       assign(:task, @task       = FactoryGirl.create(:task, :assignee => FactoryGirl.create(:user)))
       render
 
-      rendered.should have_text("Recent Items")
+      expect(rendered).to have_text("Recent Items")
     end
 
   end
@@ -137,8 +137,8 @@ describe "/tasks/update" do
     @task.errors.add(:name)
 
     render
-    rendered.should include(%/$('#task_#{@task.id}').effect("shake"/)
-    rendered.should include("$('#task_submit').enable()")
+    expect(rendered).to include(%/$('#task_#{@task.id}').effect("shake"/)
+    expect(rendered).to include("$('#task_submit').enable()")
   end
 
 end

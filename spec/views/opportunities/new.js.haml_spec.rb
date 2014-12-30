@@ -21,7 +21,7 @@ describe "/opportunities/new" do
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include("crm.flick('empty', 'toggle')")
+    expect(rendered).to include("crm.flick('empty', 'toggle')")
   end
 
   describe "new opportunity" do
@@ -29,14 +29,14 @@ describe "/opportunities/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("#create_opportunity")
+      expect(rendered).to include("#create_opportunity")
     end
 
     it "should call JavaScript functions to load Calendar popup" do
       params[:cancel] = nil
       render
 
-      rendered.should include("crm.flip_form('create_opportunity')")
+      expect(rendered).to include("crm.flip_form('create_opportunity')")
     end
   end
 
@@ -45,8 +45,8 @@ describe "/opportunities/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not include("#create_opportunity")
-      rendered.should include("crm.flip_form('create_opportunity')")
+      expect(rendered).not_to include("#create_opportunity")
+      expect(rendered).to include("crm.flip_form('create_opportunity')")
     end
   end
 

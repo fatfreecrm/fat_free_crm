@@ -23,18 +23,18 @@ describe "/accounts/create" do
     end
 
     it "should hide [Create Account] form and insert account partial" do
-      rendered.should include("$('#accounts').prepend('<li class=\\'account highlight\\' id=\\'account_#{@account.id}\\'")
-      rendered.should include(%Q/$('#account_#{@account.id}').effect("highlight"/)
+      expect(rendered).to include("$('#accounts').prepend('<li class=\\'account highlight\\' id=\\'account_#{@account.id}\\'")
+      expect(rendered).to include(%Q/$('#account_#{@account.id}').effect("highlight"/)
     end
 
     it "should update pagination" do
-      rendered.should include("#paginate")
+      expect(rendered).to include("#paginate")
     end
 
     it "should refresh accounts sidebar" do
-      rendered.should include("#sidebar")
-      rendered.should have_text("Account Categories")
-      rendered.should have_text("Recent Items")
+      expect(rendered).to include("#sidebar")
+      expect(rendered).to have_text("Account Categories")
+      expect(rendered).to have_text("Recent Items")
     end
   end
 
@@ -44,8 +44,8 @@ describe "/accounts/create" do
       assign(:users, [ current_user ])
       render
 
-      rendered.should include("#create_account")
-      rendered.should include(%Q/$('#create_account').effect("shake"/)
+      expect(rendered).to include("#create_account")
+      expect(rendered).to include(%Q/$('#create_account').effect("shake"/)
     end
   end
 

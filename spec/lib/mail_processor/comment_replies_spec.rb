@@ -39,12 +39,12 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
                       :body    => comment_reply
       mock_message mail.to_s
 
-      @crawler.should_receive(:archive).once
-      @crawler.should_not_receive(:with_recipients)
+      expect(@crawler).to receive(:archive).once
+      expect(@crawler).not_to receive(:with_recipients)
       @crawler.run
 
-      @contact.comments.size.should == 1
-      @contact.comments.first.comment.should == comment_reply
+      expect(@contact.comments.size).to eq(1)
+      expect(@contact.comments.first.comment).to eq(comment_reply)
     end
 
     it "should attach a new comment to an opportunity, using the 'op' shortcut in subject" do
@@ -57,12 +57,12 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
                       :body    => comment_reply
       mock_message mail.to_s
 
-      @crawler.should_receive(:archive).once
-      @crawler.should_not_receive(:with_recipients)
+      expect(@crawler).to receive(:archive).once
+      expect(@crawler).not_to receive(:with_recipients)
       @crawler.run
 
-      @opportunity.comments.size.should == 1
-      @opportunity.comments.first.comment.should == comment_reply
+      expect(@opportunity.comments.size).to eq(1)
+      expect(@opportunity.comments.first.comment).to eq(comment_reply)
     end
   end
 end

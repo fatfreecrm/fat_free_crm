@@ -65,14 +65,14 @@ describe User do
         FactoryGirl.create(asset, :user => @user)
         @user.destroy
         expect { User.find(@user.id) }.to_not raise_error()
-        @user.destroyed?.should == false
+        expect(@user.destroyed?).to eq(false)
       end
 
       it "should not destroy the user if she has #{asset} assigned" do
         FactoryGirl.create(asset, :assignee => @user)
         @user.destroy
         expect { User.find(@user.id) }.to_not raise_error()
-        @user.destroyed?.should == false
+        expect(@user.destroyed?).to eq(false)
       end
     end
 
@@ -82,49 +82,49 @@ describe User do
       FactoryGirl.create(:comment, :user => @user, :commentable => account)
       @user.destroy
       expect { User.find(@user.id) }.to_not raise_error()
-      @user.destroyed?.should == false
+      expect(@user.destroyed?).to eq(false)
     end
 
     it "should not destroy the current user" do
       login
       current_user.destroy
       expect { current_user.reload }.to_not raise_error()
-      current_user.should_not be_destroyed
+      expect(current_user).not_to be_destroyed
     end
 
     it "should destroy the user" do
       @user.destroy
       expect { User.find(@user.id) }.to raise_error(ActiveRecord::RecordNotFound)
-      @user.should be_destroyed
+      expect(@user).to be_destroyed
     end
 
     it "once the user gets deleted all her permissions must be deleted too" do
       FactoryGirl.create(:permission, :user => @user, :asset => FactoryGirl.create(:account))
       FactoryGirl.create(:permission, :user => @user, :asset => FactoryGirl.create(:contact))
-      @user.permissions.count.should == 2
+      expect(@user.permissions.count).to eq(2)
       @user.destroy
-      @user.permissions.count.should == 0
+      expect(@user.permissions.count).to eq(0)
     end
 
     it "once the user gets deleted all her preferences must be deleted too" do
       FactoryGirl.create(:preference, :user => @user, :name => "Hello", :value => "World")
       FactoryGirl.create(:preference, :user => @user, :name => "World", :value => "Hello")
-      @user.preferences.count.should == 2
+      expect(@user.preferences.count).to eq(2)
       @user.destroy
-      @user.preferences.count.should == 0
+      expect(@user.preferences.count).to eq(0)
     end
   end
 
   it "should set suspended timestamp upon creation if signups need approval and the user is not an admin" do
-    Setting.stub(:user_signup).and_return(:needs_approval)
+    allow(Setting).to receive(:user_signup).and_return(:needs_approval)
     @user = FactoryGirl.create(:user, :suspended_at => nil)
-    @user.should be_suspended
+    expect(@user).to be_suspended
   end
 
   it "should not set suspended timestamp upon creation if signups need approval and the user is an admin" do
-    Setting.stub(:user_signup).and_return(:needs_approval)
+    allow(Setting).to receive(:user_signup).and_return(:needs_approval)
     @user = FactoryGirl.create(:user, :admin => true, :suspended_at => nil)
-    @user.should_not be_suspended
+    expect(@user).not_to be_suspended
   end
 
   context "scopes" do
@@ -143,16 +143,16 @@ describe User do
       end
 
       it "includes users with assigned opportunities" do
-        User.have_assigned_opportunities.should include(@user1)
+        expect(User.have_assigned_opportunities).to include(@user1)
       end
 
       it "excludes users without any assigned opportunities" do
-        User.have_assigned_opportunities.should_not include(@user2)
+        expect(User.have_assigned_opportunities).not_to include(@user2)
       end
 
       it "excludes users with opportunities that have been won or lost" do
-        User.have_assigned_opportunities.should_not include(@user3)
-        User.have_assigned_opportunities.should_not include(@user4)
+        expect(User.have_assigned_opportunities).not_to include(@user3)
+        expect(User.have_assigned_opportunities).not_to include(@user4)
       end
     end
   end
@@ -166,11 +166,11 @@ describe User do
       end
 
       it "includes opportunities assigned to user" do
-        @user.assigned_opportunities.should include(@opportunity1)
+        expect(@user.assigned_opportunities).to include(@opportunity1)
       end
 
       it "does not include opportunities assigned to another user" do
-        @user.assigned_opportunities.should_not include(@opportunity2)
+        expect(@user.assigned_opportunities).not_to include(@opportunity2)
       end
     end
   end
@@ -188,13 +188,13 @@ describe User do
     it "should update I18n.locale if proference[:locale] is set" do
       @user.preference[:locale] = :es
       @user.set_individual_locale
-      I18n.locale.should == :es
+      expect(I18n.locale).to eq(:es)
     end
 
     it "should not update I18n.locale if proference[:locale] is not set" do
       @user.preference[:locale] = nil
       @user.set_individual_locale
-      I18n.locale.should == @locale
+      expect(I18n.locale).to eq(@locale)
     end
   end
 
@@ -203,14 +203,14 @@ describe User do
       @user = FactoryGirl.create(:user, :single_access_token => nil)
 
       @user.set_single_access_token
-      @user.single_access_token.should_not == nil
+      expect(@user.single_access_token).not_to eq(nil)
     end
 
     it "should not update single_access_token attribute if it is set already" do
       @user = FactoryGirl.create(:user, :single_access_token => "token")
 
       @user.set_single_access_token
-      @user.single_access_token.should == "token"
+      expect(@user.single_access_token).to eq("token")
     end
   end
 

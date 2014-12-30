@@ -20,9 +20,9 @@ describe Admin::UsersController do
       @users = [ current_user, FactoryGirl.create(:user) ]
 
       get :index
-      assigns[:users].first.should == @users.last # get_users() sorts by id DESC
-      assigns[:users].last.should == @users.first
-      response.should render_template("admin/users/index")
+      expect(assigns[:users].first).to eq(@users.last) # get_users() sorts by id DESC
+      expect(assigns[:users].last).to eq(@users.first)
+      expect(response).to render_template("admin/users/index")
     end
 
     it "performs lookup using query string" do
@@ -30,9 +30,9 @@ describe Admin::UsersController do
       @bob = FactoryGirl.create(:user, :username => "bob_builder")
 
       get :index, :query => "amy_anderson"
-      assigns[:users].should == [ @amy ]
-      assigns[:current_query].should == "amy_anderson"
-      session[:users_current_query].should == "amy_anderson"
+      expect(assigns[:users]).to eq([ @amy ])
+      expect(assigns[:current_query]).to eq("amy_anderson")
+      expect(session[:users_current_query]).to eq("amy_anderson")
     end
   end
 
@@ -44,8 +44,8 @@ describe Admin::UsersController do
       @user = FactoryGirl.create(:user)
 
       get :show, :id => @user.id
-      assigns[:user].should == @user
-      response.should render_template("admin/users/show")
+      expect(assigns[:user]).to eq(@user)
+      expect(response).to render_template("admin/users/show")
     end
   end
 
@@ -56,7 +56,7 @@ describe Admin::UsersController do
     it "assigns a new user as @user and renders [new] template" do
       xhr :get, :new
       expect(assigns[:user]).to be_new_record
-      response.should render_template("admin/users/new")
+      expect(response).to render_template("admin/users/new")
     end
   end
 
@@ -67,9 +67,9 @@ describe Admin::UsersController do
       @user = FactoryGirl.create(:user)
 
       xhr :get, :edit, :id => @user.id
-      assigns[:user].should == @user
-      assigns[:previous].should == nil
-      response.should render_template("admin/users/edit")
+      expect(assigns[:user]).to eq(@user)
+      expect(assigns[:previous]).to eq(nil)
+      expect(response).to render_template("admin/users/edit")
     end
 
     it "assigns the previous user as @previous when necessary" do
@@ -77,7 +77,7 @@ describe Admin::UsersController do
       @previous = FactoryGirl.create(:user)
 
       xhr :get, :edit, :id => @user.id, :previous => @previous.id
-      assigns[:previous].should == @previous
+      expect(assigns[:previous]).to eq(@previous)
     end
 
     it "reloads current page with the flash message if user got deleted" do
@@ -85,8 +85,8 @@ describe Admin::UsersController do
       @user.destroy
 
       xhr :get, :edit, :id => @user.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
+      expect(flash[:warning]).not_to eq(nil)
+      expect(response.body).to eq("window.location.reload();")
     end
 
     it "notifies the view if previous user got deleted" do
@@ -95,9 +95,9 @@ describe Admin::UsersController do
       @previous.destroy
 
       xhr :get, :edit, :id => @user.id, :previous => @previous.id
-      flash[:warning].should == nil # no warning, just silently remove the div
-      assigns[:previous].should == @previous.id
-      response.should render_template("admin/users/edit")
+      expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
+      expect(assigns[:previous]).to eq(@previous.id)
+      expect(response).to render_template("admin/users/edit")
     end
   end
 
@@ -115,34 +115,34 @@ describe Admin::UsersController do
 
       it "assigns a newly created user as @user and renders [create] template" do
         @user = FactoryGirl.build(:user, :username => @username, :email => @email)
-        User.stub(:new).and_return(@user)
+        allow(User).to receive(:new).and_return(@user)
 
         xhr :post, :create, :user => { :username => @username, :email => @email, :password => @password, :password_confirmation => @password }
-        assigns[:user].should == @user
-        response.should render_template("admin/users/create")
+        expect(assigns[:user]).to eq(@user)
+        expect(response).to render_template("admin/users/create")
       end
 
       it "creates admin user when requested so" do
         xhr :post, :create, :user => { :username => @username, :email => @email, :admin => "1", :password => @password, :password_confirmation => @password }
-        assigns[:user].admin.should == true
-        response.should render_template("admin/users/create")
+        expect(assigns[:user].admin).to eq(true)
+        expect(response).to render_template("admin/users/create")
       end
 
       it "doesn't create admin user unless requested so" do
         xhr :post, :create, :user => { :username => @username, :email => @email, :admin => "0", :password => @password, :password_confirmation => @password }
-        assigns[:user].admin.should == false
-        response.should render_template("admin/users/create")
+        expect(assigns[:user].admin).to eq(false)
+        expect(response).to render_template("admin/users/create")
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and re-renders [create] template" do
         @user = FactoryGirl.build(:user, :username => "", :email => "")
-        User.stub(:new).and_return(@user)
+        allow(User).to receive(:new).and_return(@user)
 
         xhr :post, :create, :user => {}
-        assigns[:user].should == @user
-        response.should render_template("admin/users/create")
+        expect(assigns[:user]).to eq(@user)
+        expect(response).to render_template("admin/users/create")
       end
     end
   end
@@ -157,9 +157,9 @@ describe Admin::UsersController do
         @user = FactoryGirl.create(:user, :username => "flip", :email => "flip@example.com")
 
         xhr :put, :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
-        assigns[:user].should == @user.reload
-        assigns[:user].username.should == "flop"
-        response.should render_template("admin/users/update")
+        expect(assigns[:user]).to eq(@user.reload)
+        expect(assigns[:user].username).to eq("flop")
+        expect(response).to render_template("admin/users/update")
       end
 
       it "reloads current page is the user got deleted" do
@@ -167,24 +167,24 @@ describe Admin::UsersController do
         @user.destroy
 
         xhr :put, :update, :id => @user.id, :user => { :username => "flop", :email => "flop@example.com" }
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
 
       it "assigns admin rights when requested so" do
         @user = FactoryGirl.create(:user, :admin => false)
         xhr :put, :update, :id => @user.id, :user => { :admin => "1", :username => @user.username, :email => @user.email }
-        assigns[:user].should == @user.reload
-        assigns[:user].admin.should == true
-        response.should render_template("admin/users/update")
+        expect(assigns[:user]).to eq(@user.reload)
+        expect(assigns[:user].admin).to eq(true)
+        expect(response).to render_template("admin/users/update")
       end
 
       it "revokes admin rights when requested so" do
         @user = FactoryGirl.create(:user, :admin => true)
         xhr :put, :update, :id => @user.id, :user => { :admin => "0", :username => @user.username, :email => @user.email }
-        assigns[:user].should == @user.reload
-        assigns[:user].admin.should == false
-        response.should render_template("admin/users/update")
+        expect(assigns[:user]).to eq(@user.reload)
+        expect(assigns[:user].admin).to eq(false)
+        expect(response).to render_template("admin/users/update")
       end
     end
 
@@ -193,9 +193,9 @@ describe Admin::UsersController do
         @user = FactoryGirl.create(:user, :username => "flip", :email => "flip@example.com")
 
         xhr :put, :update, :id => @user.id, :user => {}
-        assigns[:user].should == @user.reload
-        assigns[:user].username.should == "flip"
-        response.should render_template("admin/users/update")
+        expect(assigns[:user]).to eq(@user.reload)
+        expect(assigns[:user].username).to eq("flip")
+        expect(response).to render_template("admin/users/update")
       end
     end
   end
@@ -207,8 +207,8 @@ describe Admin::UsersController do
       @user = FactoryGirl.create(:user)
 
       xhr :get, :confirm, :id => @user.id
-      assigns[:user].should == @user
-      response.should render_template("admin/users/confirm")
+      expect(assigns[:user]).to eq(@user)
+      expect(response).to render_template("admin/users/confirm")
     end
 
     it "reloads current page is the user got deleted" do
@@ -216,8 +216,8 @@ describe Admin::UsersController do
       @user.destroy
 
       xhr :get, :confirm, :id => @user.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
+      expect(flash[:warning]).not_to eq(nil)
+      expect(response.body).to eq("window.location.reload();")
     end
   end
 
@@ -229,8 +229,8 @@ describe Admin::UsersController do
       @user = FactoryGirl.create(:user)
 
       xhr :delete, :destroy, :id => @user.id
-      lambda { User.find(@user.id) }.should raise_error(ActiveRecord::RecordNotFound)
-      response.should render_template("admin/users/destroy")
+      expect { User.find(@user.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(response).to render_template("admin/users/destroy")
     end
 
     it "handles the case when the requested user can't be deleted" do
@@ -238,9 +238,9 @@ describe Admin::UsersController do
       @account = FactoryGirl.create(:account, :user => @user) # Plant artifact to prevent the user from being deleted.
 
       xhr :delete, :destroy, :id => @user.id
-      flash[:warning].should_not == nil
+      expect(flash[:warning]).not_to eq(nil)
       expect { User.find(@user.id) }.not_to raise_error()
-      response.should render_template("admin/users/destroy")
+      expect(response).to render_template("admin/users/destroy")
     end
   end
 
@@ -262,16 +262,16 @@ describe Admin::UsersController do
       @user = FactoryGirl.create(:user)
 
       xhr :put, :suspend, :id => @user.id
-      assigns[:user].suspended?.should == true
-      response.should render_template("admin/users/suspend")
+      expect(assigns[:user].suspended?).to eq(true)
+      expect(response).to render_template("admin/users/suspend")
     end
 
     it "doesn't suspend current user" do
       @user = current_user
 
       xhr :put, :suspend, :id => @user.id
-      assigns[:user].suspended?.should == false
-      response.should render_template("admin/users/suspend")
+      expect(assigns[:user].suspended?).to eq(false)
+      expect(response).to render_template("admin/users/suspend")
     end
 
     it "reloads current page is the user got deleted" do
@@ -279,8 +279,8 @@ describe Admin::UsersController do
       @user.destroy
 
       xhr :put, :suspend, :id => @user.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
+      expect(flash[:warning]).not_to eq(nil)
+      expect(response.body).to eq("window.location.reload();")
     end
   end
 
@@ -292,8 +292,8 @@ describe Admin::UsersController do
       @user = FactoryGirl.create(:user, :suspended_at => Time.now.yesterday)
 
       xhr :put, :reactivate, :id => @user.id
-      assigns[:user].suspended?.should == false
-      response.should render_template("admin/users/reactivate")
+      expect(assigns[:user].suspended?).to eq(false)
+      expect(response).to render_template("admin/users/reactivate")
     end
 
     it "reloads current page is the user got deleted" do
@@ -301,8 +301,8 @@ describe Admin::UsersController do
       @user.destroy
 
       xhr :put, :reactivate, :id => @user.id
-      flash[:warning].should_not == nil
-      response.body.should == "window.location.reload();"
+      expect(flash[:warning]).not_to eq(nil)
+      expect(response.body).to eq("window.location.reload();")
     end
   end
 

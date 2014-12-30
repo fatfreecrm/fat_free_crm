@@ -21,9 +21,9 @@ describe "/leads/_sidebar_show" do
 
   it "should render working web presence links whether a protocol is provided or not" do
     render
-    rendered.should have_tag("a[href='http://www.blogger.com/home']")
-    rendered.should have_tag("a[href='http://www.linkedin.com']")
-    rendered.should have_tag("a[href='http://twitter.com/account']")
-    rendered.should_not have_tag("a[href='http://www.facebook/profile']")
+    expect(rendered).to have_tag("a[href='http://www.blogger.com/home']")
+    expect(rendered).to have_tag("a[href='http://www.linkedin.com']")
+    expect(rendered).to have_tag("a[href='http://twitter.com/account']")
+    expect(rendered).not_to have_tag("a[href='http://www.facebook/profile']")
   end
 end

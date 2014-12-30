@@ -40,11 +40,11 @@ describe Field do
 
 
   it "should return a list of field types" do
-    Field.field_types['string'].should == {'klass' => 'CustomField', 'type' => 'string'}
+    expect(Field.field_types['string']).to eq({'klass' => 'CustomField', 'type' => 'string'})
   end
 
   it "should return a hash of input options" do
-    Field.new.input_options.should be_a(Hash)
+    expect(Field.new.input_options).to be_a(Hash)
   end
 
   it "should be able to display a empty multi_select value" do
@@ -60,8 +60,8 @@ describe Field do
      ["checkbox",    1,                       "yes"],
      ["date",        DateTime.new(2011,4,19), DateTime.new(2011,4,19).strftime(I18n.t("date.formats.mmddyy")) ]].each do |as, value, expected|
       field.as = as
-      object.stub(field.name).and_return(value)
-      field.render_value(object).should == expected
+      allow(object).to receive(field.name).and_return(value)
+      expect(field.render_value(object)).to eq(expected)
     end
   end
 end

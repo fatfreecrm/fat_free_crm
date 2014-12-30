@@ -15,8 +15,8 @@ describe "admin/users/update" do
     it "replaces [Edit User] form with user partial and highlights it" do
       render
 
-      rendered.should include("user_#{@user.id}")
-      rendered.should include(%Q/$('#user_#{@user.id}').effect("highlight"/)
+      expect(rendered).to include("user_#{@user.id}")
+      expect(rendered).to include(%Q/$('#user_#{@user.id}').effect("highlight"/)
     end
   end # no errors
 
@@ -28,9 +28,9 @@ describe "admin/users/update" do
     it "redraws [Edit User] form and shakes it" do
       render
 
-      rendered.should include("user_#{@user.id}")
-      rendered.should include(%Q/$('#user_#{@user.id}').effect("shake"/)
-      rendered.should include(%Q/$('#user_username').focus()/)
+      expect(rendered).to include("user_#{@user.id}")
+      expect(rendered).to include(%Q/$('#user_#{@user.id}').effect("shake"/)
+      expect(rendered).to include(%Q/$('#user_username').focus()/)
     end
   end # errors
 end

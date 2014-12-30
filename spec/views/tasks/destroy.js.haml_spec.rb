@@ -26,18 +26,18 @@ describe "/tasks/destroy" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
         render
-        rendered.should include("slideUp")
-        rendered.should include("$('#list_due_asap').fadeOut")
+        expect(rendered).to include("slideUp")
+        expect(rendered).to include("$('#list_due_asap').fadeOut")
       end
 
       it "should update tasks sidebar" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
         render
-        rendered.should include("$('#sidebar').html")
-        rendered.should have_text("Recent Items")
-        rendered.should have_text("Completed")
-        rendered.should include("$('#filters').effect('shake'")
+        expect(rendered).to include("$('#sidebar').html")
+        expect(rendered).to have_text("Recent Items")
+        expect(rendered).to have_text("Completed")
+        expect(rendered).to include("$('#filters').effect('shake'")
       end
     end
   end
@@ -49,8 +49,8 @@ describe "/tasks/destroy" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 
       render
-      rendered.should include("slideUp")
-      rendered.should_not include("fadeOut") # bucket is not empty
+      expect(rendered).to include("slideUp")
+      expect(rendered).not_to include("fadeOut") # bucket is not empty
     end
   end
 end

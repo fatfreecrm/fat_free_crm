@@ -14,8 +14,8 @@ describe "admin/users/_new" do
 
   it "renders [Create User] form" do
     render
-    view.should render_template(:partial => "admin/users/_profile")
+    expect(view).to render_template(:partial => "admin/users/_profile")
 
-    rendered.should have_tag("form[class=new_user]")
+    expect(rendered).to have_tag("form[class=new_user]")
   end
 end

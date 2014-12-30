@@ -25,13 +25,13 @@ describe CommentsController do
 
         it "should redirect to the asset landing page if the asset is found" do
           get :index, :"#{asset}_id" => @asset.id
-          response.should redirect_to(:controller => asset.to_s.pluralize, :action => :show, :id => @asset.id)
+          expect(response).to redirect_to(:controller => asset.to_s.pluralize, :action => :show, :id => @asset.id)
         end
 
         it "should redirect to root url with warning if the asset is not found" do
           get :index, :"#{asset}_id" => @asset.id + 42
-          flash[:warning].should_not == nil
-          response.should redirect_to(root_path)
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response).to redirect_to(root_path)
         end
       end # HTML
 
@@ -44,13 +44,13 @@ describe CommentsController do
 
         it "should render all comments as JSON if the asset is found found" do
           get :index, :"#{asset}_id" => @asset.id
-          response.body.should == assigns[:comments].to_json
+          expect(response.body).to eq(assigns[:comments].to_json)
         end
 
         it "JSON: should return 404 (Not Found) JSON error if the asset is not found" do
           get :index, :"#{asset}_id" => @asset.id + 42
-          flash[:warning].should_not == nil
-          response.code.should == "404"
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.code).to eq("404")
         end
       end # JSON
 
@@ -63,13 +63,13 @@ describe CommentsController do
 
         it "should render all comments as XML if the asset is found found" do
           get :index, :"#{asset}_id" => @asset.id
-          response.body.should == assigns[:comments].to_xml
+          expect(response.body).to eq(assigns[:comments].to_xml)
         end
 
         it "XML: should return 404 (Not Found) XML error if the asset is not found" do
           get :index, :"#{asset}_id" => @asset.id + 42
-          flash[:warning].should_not == nil
-          response.code.should == "404"
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.code).to eq("404")
         end
       end # XML
     end # COMMENTABLE.each
@@ -84,11 +84,11 @@ describe CommentsController do
       it "should expose the requested comment as @commment and render [edit] template" do
         @asset = FactoryGirl.create(asset)
         @comment = FactoryGirl.create(:comment, :id => 42, :commentable => @asset, :user => current_user)
-        Comment.stub(:new).and_return(@comment)
+        allow(Comment).to receive(:new).and_return(@comment)
 
         xhr :get, :edit, :id => 42
-        assigns[:comment].should == @comment
-        response.should render_template("comments/edit")
+        expect(assigns[:comment]).to eq(@comment)
+        expect(response).to render_template("comments/edit")
       end
     end
 
@@ -104,11 +104,11 @@ describe CommentsController do
         it "should expose a newly created comment as @comment for the #{asset}" do
           @asset = FactoryGirl.create(asset)
           @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => current_user)
-          Comment.stub(:new).and_return(@comment)
+          allow(Comment).to receive(:new).and_return(@comment)
 
           xhr :post, :create, :comment => { :commentable_type => asset.to_s.classify, :commentable_id => @asset.id, :user_id => current_user.id, :comment => "Hello" }
-          assigns[:comment].should == @comment
-          response.should render_template("comments/create")
+          expect(assigns[:comment]).to eq(@comment)
+          expect(response).to render_template("comments/create")
         end
       end
     end
@@ -118,11 +118,11 @@ describe CommentsController do
         it "should expose a newly created but unsaved comment as @comment for #{asset}" do
           @asset = FactoryGirl.create(asset)
           @comment = FactoryGirl.build(:comment, :commentable => @asset, :user => current_user)
-          Comment.stub(:new).and_return(@comment)
+          allow(Comment).to receive(:new).and_return(@comment)
 
           xhr :post, :create, :comment => {}
-          assigns[:comment].should == @comment
-          response.should render_template("comments/create")
+          expect(assigns[:comment]).to eq(@comment)
+          expect(response).to render_template("comments/create")
         end
       end
     end
@@ -186,11 +186,11 @@ describe CommentsController do
           it "should destroy the requested comment and render [destroy] template" do
             @asset = FactoryGirl.create(asset)
             @comment = FactoryGirl.create(:comment, :commentable => @asset, :user => current_user)
-            Comment.stub(:new).and_return(@comment)
+            allow(Comment).to receive(:new).and_return(@comment)
 
             xhr :delete, :destroy, :id => @comment.id
-            lambda { Comment.find(@comment) }.should raise_error(ActiveRecord::RecordNotFound)
-            response.should render_template("comments/destroy")
+            expect { Comment.find(@comment) }.to raise_error(ActiveRecord::RecordNotFound)
+            expect(response).to render_template("comments/destroy")
           end
         end
       end
