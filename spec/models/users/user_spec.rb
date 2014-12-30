@@ -64,14 +64,14 @@ describe User do
       it "should not destroy the user if she owns #{asset}" do
         FactoryGirl.create(asset, :user => @user)
         @user.destroy
-        expect { User.find(@user) }.to_not raise_error()
+        expect { User.find(@user.id) }.to_not raise_error()
         @user.destroyed?.should == false
       end
 
       it "should not destroy the user if she has #{asset} assigned" do
         FactoryGirl.create(asset, :assignee => @user)
         @user.destroy
-        expect { User.find(@user) }.to_not raise_error()
+        expect { User.find(@user.id) }.to_not raise_error()
         @user.destroyed?.should == false
       end
     end
@@ -81,7 +81,7 @@ describe User do
       account = FactoryGirl.create(:account, :user => current_user)
       FactoryGirl.create(:comment, :user => @user, :commentable => account)
       @user.destroy
-      expect { User.find(@user) }.to_not raise_error()
+      expect { User.find(@user.id) }.to_not raise_error()
       @user.destroyed?.should == false
     end
 
@@ -94,7 +94,7 @@ describe User do
 
     it "should destroy the user" do
       @user.destroy
-      expect { User.find(@user) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { User.find(@user.id) }.to raise_error(ActiveRecord::RecordNotFound)
       @user.should be_destroyed
     end
 

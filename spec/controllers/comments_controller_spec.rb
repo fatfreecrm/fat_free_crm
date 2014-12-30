@@ -44,7 +44,7 @@ describe CommentsController do
 
         it "should render all comments as JSON if the asset is found found" do
           get :index, :"#{asset}_id" => @asset.id
-          response.body.should == @asset.comments.to_json
+          response.body.should == assigns[:comments].to_json
         end
 
         it "JSON: should return 404 (Not Found) JSON error if the asset is not found" do
@@ -63,7 +63,7 @@ describe CommentsController do
 
         it "should render all comments as XML if the asset is found found" do
           get :index, :"#{asset}_id" => @asset.id
-          response.body.should == @asset.comments.to_xml
+          response.body.should == assigns[:comments].to_xml
         end
 
         it "XML: should return 404 (Not Found) XML error if the asset is not found" do
