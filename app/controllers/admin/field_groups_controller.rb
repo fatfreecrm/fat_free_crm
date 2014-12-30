@@ -32,7 +32,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   # POST /admin/field_groups.xml                                           AJAX
   #----------------------------------------------------------------------------
   def create
-    @field_group = FieldGroup.create(params[:field_group])
+    @field_group = FieldGroup.create(field_group_params)
 
     respond_with(@field_group)
   end
@@ -42,7 +42,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def update
     @field_group = FieldGroup.find(params[:id])
-    @field_group.update_attributes(params[:field_group])
+    @field_group.update_attributes(field_group_params)
 
     respond_with(@field_group)
   end
@@ -74,5 +74,11 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def confirm
     @field_group = FieldGroup.find(params[:id])
+  end
+
+protected
+
+  def field_group_params
+    params[:field_group].permit!
   end
 end
