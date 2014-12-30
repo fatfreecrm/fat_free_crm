@@ -10,7 +10,7 @@ describe "/tasks/_edit" do
 
   before do
     login_and_assign
-    assign(:task, FactoryGirl.create(:task, :asset => FactoryGirl.create(:account), :bucket => "due_asap"))
+    assign(:task, FactoryGirl.create(:task, asset: FactoryGirl.create(:account), bucket: "due_asap"))
     assign(:users, [ current_user ])
     assign(:bucket, %w(due_asap due_today))
     assign(:category, %w(meeting money))
@@ -19,7 +19,7 @@ describe "/tasks/_edit" do
   it "should render [edit task] form" do
     render
 
-    expect(view).to render_template(:partial => "tasks/_top_section")
+    expect(view).to render_template(partial: "tasks/_top_section")
 
     expect(rendered).to have_tag("form[class=edit_task]")
   end
@@ -28,7 +28,7 @@ describe "/tasks/_edit" do
     it "should render move to [#{day}] link" do
       render
 
-      expect(rendered).to have_tag("a[onclick^=crm.reschedule]", :text => day)
+      expect(rendered).to have_tag("a[onclick^=crm.reschedule]", text: day)
     end
   end
 

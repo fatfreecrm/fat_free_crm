@@ -32,7 +32,7 @@ describe Account do
   before { login }
 
   it "should create a new instance given valid attributes" do
-    Account.create!(:name => "Test Account", :user => FactoryGirl.create(:user))
+    Account.create!(name: "Test Account", user: FactoryGirl.create(:user))
   end
 
   describe "Attach" do
@@ -41,7 +41,7 @@ describe Account do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, :asset => @account, :user => current_user)
+      @task = FactoryGirl.create(:task, asset: @account, user: current_user)
       @contact = FactoryGirl.create(:contact)
       @account.contacts << @contact
       @opportunity = FactoryGirl.create(:opportunity)
@@ -53,7 +53,7 @@ describe Account do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, :user => current_user)
+      @task = FactoryGirl.create(:task, user: current_user)
       @contact = FactoryGirl.create(:contact)
       @opportunity = FactoryGirl.create(:opportunity)
 
@@ -69,7 +69,7 @@ describe Account do
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @account, :user => current_user)
+      @task = FactoryGirl.create(:task, asset: @account, user: current_user)
       expect(@account.tasks.count).to eq(1)
 
       @account.discard!(@task)
@@ -104,8 +104,8 @@ describe Account do
     describe "assigned account" do
       before do
         Account.delete_all
-        FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
-        FactoryGirl.create(:account, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
+        FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
+        FactoryGirl.create(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil))
       end
       it_should_behave_like("exportable") do
         let(:exported) { Account.all }
@@ -115,8 +115,8 @@ describe Account do
     describe "unassigned account" do
       before do
         Account.delete_all
-        FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => nil)
-        FactoryGirl.create(:account, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+        FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: nil)
+        FactoryGirl.create(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil)
       end
       it_should_behave_like("exportable") do
         let(:exported) { Account.all }
@@ -126,13 +126,13 @@ describe Account do
 
   describe "Before save" do
     it "create new: should replace empty category string with nil" do
-      account = FactoryGirl.build(:account, :category => '')
+      account = FactoryGirl.build(:account, category: '')
       account.save
       expect(account.category).to eq(nil)
     end
 
     it "update existing: should replace empty category string with nil" do
-      account = FactoryGirl.create(:account, :category => '')
+      account = FactoryGirl.create(:account, category: '')
       account.save
       expect(account.category).to eq(nil)
     end
@@ -146,11 +146,11 @@ describe Account do
     context "visible_on_dashboard" do
       before :each do
         @user = FactoryGirl.create(:user)
-        @a1 = FactoryGirl.create(:account, :user => @user)
-        @a2 = FactoryGirl.create(:account, :user => @user, :assignee => FactoryGirl.create(:user))
-        @a3 = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => @user)
-        @a4 = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
-        @a5 = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :assignee => @user)
+        @a1 = FactoryGirl.create(:account, user: @user)
+        @a2 = FactoryGirl.create(:account, user: @user, assignee: FactoryGirl.create(:user))
+        @a3 = FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: @user)
+        @a4 = FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
+        @a5 = FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: @user)
       end
 
       it "should show accounts which have been created by the user and are unassigned" do
@@ -172,11 +172,11 @@ describe Account do
 
     context "by_name" do
       it "should show accounts ordered by name" do
-        @a1 = FactoryGirl.create(:account, :name => "Account A")
-        @a2 = FactoryGirl.create(:account, :name => "Account Z")
-        @a3 = FactoryGirl.create(:account, :name => "Account J")
-        @a4 = FactoryGirl.create(:account, :name => "Account X")
-        @a5 = FactoryGirl.create(:account, :name => "Account L")
+        @a1 = FactoryGirl.create(:account, name: "Account A")
+        @a2 = FactoryGirl.create(:account, name: "Account Z")
+        @a3 = FactoryGirl.create(:account, name: "Account J")
+        @a4 = FactoryGirl.create(:account, name: "Account X")
+        @a5 = FactoryGirl.create(:account, name: "Account L")
 
         expect(Account.by_name).to eq([@a1, @a3, @a5, @a4, @a2])
       end

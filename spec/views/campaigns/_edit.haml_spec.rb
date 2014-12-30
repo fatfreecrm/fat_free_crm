@@ -17,9 +17,9 @@ describe "/campaigns/_edit" do
   it "should render [edit campaign] form" do
     render
 
-    expect(view).to render_template(:partial => "campaigns/_top_section")
-    expect(view).to render_template(:partial => "campaigns/_objectives")
-    expect(view).to render_template(:partial => "_permissions")
+    expect(view).to render_template(partial: "campaigns/_top_section")
+    expect(view).to render_template(partial: "campaigns/_objectives")
+    expect(view).to render_template(partial: "_permissions")
 
     expect(view).to have_tag("form[class=edit_campaign]") do
       with_tag "input[type=hidden][id=campaign_user_id][value=#{@campaign.user_id}]"

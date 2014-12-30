@@ -17,7 +17,7 @@ describe "/opportunities/_edit" do
 
   it "should render [edit opportunity] form" do
     assign(:users, [ current_user ])
-    assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign = FactoryGirl.create(:campaign)))
+    assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign = FactoryGirl.create(:campaign)))
     render
 
     expect(rendered).to have_tag("form[class=edit_opportunity]") do
@@ -28,7 +28,7 @@ describe "/opportunities/_edit" do
 
   it "should pick default assignee (Myself)" do
     assign(:users, [ current_user ])
-    assign(:opportunity, FactoryGirl.create(:opportunity, :assignee => nil))
+    assign(:opportunity, FactoryGirl.create(:opportunity, assignee: nil))
     render
 
     expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|
@@ -39,7 +39,7 @@ describe "/opportunities/_edit" do
   it "should show correct assignee" do
     @user = FactoryGirl.create(:user)
     assign(:users, [ current_user, @user ])
-    assign(:opportunity, FactoryGirl.create(:opportunity, :assignee => @user))
+    assign(:opportunity, FactoryGirl.create(:opportunity, assignee: @user))
     render
 
     expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|

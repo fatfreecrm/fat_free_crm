@@ -26,9 +26,9 @@ class Ability
       can :manage, Task, completed_by: user.id
 
       # Entities
-      can :manage, entities, :access => 'Public'
-      can :manage, entities + [Task], :user_id => user.id
-      can :manage, entities + [Task], :assigned_to => user.id
+      can :manage, entities, access: 'Public'
+      can :manage, entities + [Task], user_id: user.id
+      can :manage, entities + [Task], assigned_to: user.id
 
       #
       # Due to an obscure bug (see https://github.com/ryanb/cancan/issues/213)
@@ -48,7 +48,7 @@ class Ability
 
         entities.each do |klass|
           if (asset_ids = Permission.where(scope.and(t[:asset_type].eq(klass.name))).pluck(:asset_id)).any?
-            can :manage, klass, :id => asset_ids
+            can :manage, klass, id: asset_ids
           end
         end
       end # if user.admin?

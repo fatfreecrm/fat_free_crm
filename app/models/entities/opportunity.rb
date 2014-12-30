@@ -28,13 +28,13 @@
 class Opportunity < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :campaign
-  belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_one     :account_opportunity, :dependent => :destroy
-  has_one     :account, :through => :account_opportunity
-  has_many    :contact_opportunities, :dependent => :destroy
-  has_many    :contacts, -> { order("contacts.id DESC").distinct }, :through => :contact_opportunities
-  has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
-  has_many    :emails, :as => :mediator
+  belongs_to  :assignee, class_name: "User", foreign_key: :assigned_to
+  has_one     :account_opportunity, dependent: :destroy
+  has_one     :account, through: :account_opportunity
+  has_many    :contact_opportunities, dependent: :destroy
+  has_many    :contacts, -> { order("contacts.id DESC").distinct }, through: :contact_opportunities
+  has_many    :tasks, as: :asset, dependent: :destroy#, :order => 'created_at DESC'
+  has_many    :emails, as: :mediator
 
   serialize :subscribed_users, Set
 
@@ -52,7 +52,7 @@ class Opportunity < ActiveRecord::Base
   # Search by name OR id
   scope :text_search, ->(query) {
     if query =~ /\A\d+\z/
-      where('upper(name) LIKE upper(:name) OR opportunities.id = :id', :name => "%#{query}%", :id => query)
+      where('upper(name) LIKE upper(:name) OR opportunities.id = :id', name: "%#{query}%", id: query)
     else
       search('name_cont' => query).result
     end
@@ -60,7 +60,7 @@ class Opportunity < ActiveRecord::Base
 
   scope :visible_on_dashboard, ->(user) {
     # Show opportunities which either belong to the user and are unassigned, or are assigned to the user and haven't been closed (won/lost)
-    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id).where("opportunities.stage != 'won'").where("opportunities.stage != 'lost'")
+    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where("opportunities.stage != 'won'").where("opportunities.stage != 'lost'")
   }
 
   scope :by_closes_on, -> { order(:closes_on) }
@@ -70,18 +70,18 @@ class Opportunity < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail :class_name => 'Version', :ignore => [ :subscribed_users ]
+  has_paper_trail class_name: 'Version', ignore: [ :subscribed_users ]
   has_fields
   exportable
-  sortable :by => [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  sortable by: [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], default: "created_at DESC"
 
   has_ransackable_associations %w(account contacts tags campaign activities emails comments)
   ransack_can_autocomplete
 
-  validates :stage, :inclusion => { :in => Proc.new { Setting.unroll(:opportunity_stage).map{|s| s.last.to_s } } }
+  validates :stage, inclusion: { in: Proc.new { Setting.unroll(:opportunity_stage).map{|s| s.last.to_s } } }
 
-  validates_presence_of :name, :message => :missing_opportunity_name
-  validates_numericality_of [ :probability, :amount, :discount ], :allow_nil => true
+  validates_presence_of :name, message: :missing_opportunity_name
+  validates_numericality_of [ :probability, :amount, :discount ], allow_nil: true
   validate :users_for_shared_access
 
   after_create  :increment_opportunities_count
@@ -103,7 +103,7 @@ class Opportunity < ActiveRecord::Base
     # Quick sanitization, makes sure Account will not search for blank id.
     params[:account].delete(:id) if params[:account][:id].blank?
     account = Account.create_or_select_for(self, params[:account])
-    self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self) unless account.id.blank?
+    self.account_opportunity = AccountOpportunity.new(account: account, opportunity: self) unless account.id.blank?
     self.account = account
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
     result = self.save
@@ -151,7 +151,7 @@ class Opportunity < ActiveRecord::Base
     # Save the opportunity if its name was specified and account has no errors.
     if opportunity.name? && account.errors.empty?
       # Note: opportunity.account = account doesn't seem to work here.
-      opportunity.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => opportunity) unless account.id.blank?
+      opportunity.account_opportunity = AccountOpportunity.new(account: account, opportunity: opportunity) unless account.id.blank?
       if opportunity.access != "Lead" || model.nil?
         opportunity.save
       else

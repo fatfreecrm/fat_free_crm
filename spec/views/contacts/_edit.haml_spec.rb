@@ -19,10 +19,10 @@ describe "/contacts/_edit" do
     assign(:users, [ current_user ])
 
     render
-    expect(view).to render_template(:partial => "contacts/_top_section")
-    expect(view).to render_template(:partial => "contacts/_extra")
-    expect(view).to render_template(:partial => "contacts/_web")
-    expect(view).to render_template(:partial => "_permissions")
+    expect(view).to render_template(partial: "contacts/_top_section")
+    expect(view).to render_template(partial: "contacts/_extra")
+    expect(view).to render_template(partial: "contacts/_web")
+    expect(view).to render_template(partial: "_permissions")
 
     expect(rendered).to have_tag("form[class=edit_contact]") do
       with_tag "input[type=hidden][id=contact_user_id][value=#{@contact.user_id}]"
@@ -31,7 +31,7 @@ describe "/contacts/_edit" do
 
   it "should pick default assignee (Myself)" do
     assign(:users, [ current_user ])
-    assign(:contact, FactoryGirl.create(:contact, :assignee => nil))
+    assign(:contact, FactoryGirl.create(:contact, assignee: nil))
 
     render
     expect(rendered).to have_tag("select[id=contact_assigned_to]") do |options|
@@ -42,7 +42,7 @@ describe "/contacts/_edit" do
   it "should show correct assignee" do
     @user = FactoryGirl.create(:user)
     assign(:users, [ current_user, @user ])
-    assign(:contact, FactoryGirl.create(:contact, :assignee => @user))
+    assign(:contact, FactoryGirl.create(:contact, assignee: @user))
 
     render
     expect(rendered).to have_tag("select[id=contact_assigned_to]") do |options|

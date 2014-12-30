@@ -33,11 +33,11 @@ module GravatarImageTag
   def self.gravatar_url(email, overrides = {})
     overrides ||= {}
     gravatar_params = {
-      :default     => GravatarImageTag.configuration.default_image,
-      :filetype    => GravatarImageTag.configuration.filetype,
-      :rating      => GravatarImageTag.configuration.rating,
-      :secure      => GravatarImageTag.configuration.secure,
-      :size        => GravatarImageTag.configuration.size
+      default:     GravatarImageTag.configuration.default_image,
+      filetype:    GravatarImageTag.configuration.filetype,
+      rating:      GravatarImageTag.configuration.rating,
+      secure:      GravatarImageTag.configuration.secure,
+      size:        GravatarImageTag.configuration.size
     }.merge(overrides).delete_if { |key, value| value.nil? }
     "#{gravatar_url_base(gravatar_params.delete(:secure))}/#{gravatar_id(email, gravatar_params.delete(:filetype))}#{url_params(gravatar_params)}"
   end

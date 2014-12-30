@@ -18,11 +18,11 @@ describe "/leads/_edit" do
 
   it "should render [edit lead] form" do
     render
-    expect(view).to render_template(:partial => "leads/_top_section")
-    expect(view).to render_template(:partial => "leads/_status")
-    expect(view).to render_template(:partial => "leads/_contact")
-    expect(view).to render_template(:partial => "leads/_web")
-    expect(view).to render_template(:partial => "entities/_permissions")
+    expect(view).to render_template(partial: "leads/_top_section")
+    expect(view).to render_template(partial: "leads/_status")
+    expect(view).to render_template(partial: "leads/_contact")
+    expect(view).to render_template(partial: "leads/_web")
+    expect(view).to render_template(partial: "entities/_permissions")
 
     expect(rendered).to have_tag("form[class=edit_lead]") do
       with_tag "input[type=hidden][id=lead_user_id][value=#{@lead.user_id}]"

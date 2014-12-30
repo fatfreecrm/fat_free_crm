@@ -12,11 +12,11 @@ feature 'Leads', %q{
 } do
 
   before(:each) do
-   do_login_if_not_already(:first_name => 'Bill', :last_name => 'Murray')
+   do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
   end
 
   scenario 'should view a list of leads' do
-    4.times { |i| FactoryGirl.create(:lead, :first_name => "L", :last_name => "Ead #{i}") }
+    4.times { |i| FactoryGirl.create(:lead, first_name: "L", last_name: "Ead #{i}") }
     visit leads_page
     expect(page).to have_content('L Ead 0')
     expect(page).to have_content('L Ead 1')
@@ -25,19 +25,19 @@ feature 'Leads', %q{
     expect(page).to have_content('Create Lead')
   end
 
-  scenario 'should create a new lead', :js => true do
+  scenario 'should create a new lead', js: true do
     with_versioning do
       visit leads_page
       click_link 'Create Lead'
-      expect(page).to have_selector('#lead_first_name', :visible => true)
-      fill_in 'lead_first_name', :with => 'Mr'
-      fill_in 'lead_last_name', :with => 'Lead'
-      fill_in 'lead_email', :with => 'mr_lead@example.com'
-      fill_in 'lead_phone', :with => '+44 1234 567890'
+      expect(page).to have_selector('#lead_first_name', visible: true)
+      fill_in 'lead_first_name', with: 'Mr'
+      fill_in 'lead_last_name', with: 'Lead'
+      fill_in 'lead_email', with: 'mr_lead@example.com'
+      fill_in 'lead_phone', with: '+44 1234 567890'
       click_link 'Comment'
-      fill_in 'comment_body', :with => 'This is an important lead.'
+      fill_in 'comment_body', with: 'This is an important lead.'
       click_link('Status')
-      select 'Contacted', :from => 'lead_status'
+      select 'Contacted', from: 'lead_status'
       click_button 'Create Lead'
       expect(page).to have_content('Mr Lead')
 
@@ -53,28 +53,28 @@ feature 'Leads', %q{
     end
   end
 
-  scenario "remembers the comment field when the creation was unsuccessful", :js => true do
+  scenario "remembers the comment field when the creation was unsuccessful", js: true do
     visit leads_page
     click_link 'Create Lead'
 
     click_link 'Comment'
-    fill_in 'comment_body', :with => 'This is an important lead.'
+    fill_in 'comment_body', with: 'This is an important lead.'
     click_button 'Create Lead'
 
-    expect(page).to have_field('comment_body', :with => 'This is an important lead.')
+    expect(page).to have_field('comment_body', with: 'This is an important lead.')
   end
 
-  scenario 'should view and edit a lead', :js => true do
-    FactoryGirl.create(:lead, :first_name => "Mr", :last_name => "Lead", :email => "mr_lead@example.com")
+  scenario 'should view and edit a lead', js: true do
+    FactoryGirl.create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
     with_versioning do
       visit leads_page
       click_link 'Mr Lead'
       expect(page).to have_content('Mr Lead')
       click_link('Edit')
-      fill_in 'lead_first_name', :with => 'Mrs'
-      fill_in 'lead_phone', :with => '+44 0987 654321'
+      fill_in 'lead_first_name', with: 'Mrs'
+      fill_in 'lead_phone', with: '+44 0987 654321'
       click_link('Status')
-      select 'Rejected', :from => 'lead_status'
+      select 'Rejected', from: 'lead_status'
       click_button 'Save Lead'
       expect(find('#title')).to have_content('Mrs Lead')
       click_link "Dashboard"
@@ -82,8 +82,8 @@ feature 'Leads', %q{
     end
   end
 
-  scenario 'should delete a lead', :js => true do
-    FactoryGirl.create(:lead, :first_name => "Mr", :last_name => "Lead", :email => "mr_lead@example.com")
+  scenario 'should delete a lead', js: true do
+    FactoryGirl.create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
     visit leads_page
     click_link 'Mr Lead'
     click_link 'Delete?'
@@ -94,18 +94,18 @@ feature 'Leads', %q{
     expect(page).not_to have_content('mr_lead@example.com')
   end
 
-  scenario 'should search for a lead', :js => true do
-    2.times { |i| FactoryGirl.create(:lead, :first_name => "Lead", :last_name => "\##{i}", :email => "lead#{i}@example.com") }
+  scenario 'should search for a lead', js: true do
+    2.times { |i| FactoryGirl.create(:lead, first_name: "Lead", last_name: "\##{i}", email: "lead#{i}@example.com") }
     visit leads_page
     expect(find('#leads')).to have_content('Lead #0')
     expect(find('#leads')).to have_content('Lead #1')
-    fill_in 'query', :with => 'Lead #0'
+    fill_in 'query', with: 'Lead #0'
     expect(find('#leads')).to have_content('Lead #0')
     expect(find('#leads')).not_to have_content('Lead #1')
-    fill_in 'query', :with => 'Lead'
+    fill_in 'query', with: 'Lead'
     expect(find('#leads')).to have_content('Lead #0')
     expect(find('#leads')).to have_content('Lead #1')
-    fill_in 'query', :with => 'Non-existant lead'
+    fill_in 'query', with: 'Non-existant lead'
     expect(find('#leads')).not_to have_content('Lead #0')
     expect(find('#leads')).not_to have_content('Lead #1')
   end

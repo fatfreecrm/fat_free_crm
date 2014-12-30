@@ -39,16 +39,16 @@
 class Lead < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :campaign
-  belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_one     :contact, :dependent => :nullify # On destroy keep the contact, but nullify its lead_id
-  has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
-  has_one     :business_address, -> { where "address_type='Business'"}, :dependent => :destroy, :as => :addressable, :class_name => "Address"
-  has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
-  has_many    :emails, :as => :mediator
+  belongs_to  :assignee, class_name: "User", foreign_key: :assigned_to
+  has_one     :contact, dependent: :nullify # On destroy keep the contact, but nullify its lead_id
+  has_many    :tasks, as: :asset, dependent: :destroy#, :order => 'created_at DESC'
+  has_one     :business_address, -> { where "address_type='Business'"}, dependent: :destroy, as: :addressable, class_name: "Address"
+  has_many    :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
+  has_many    :emails, as: :mediator
 
   serialize :subscribed_users, Set
 
-  accepts_nested_attributes_for :business_address, :allow_destroy => true
+  accepts_nested_attributes_for :business_address, allow_destroy: true
 
   scope :state, ->(filters) {
     where([ 'status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters ])
@@ -64,16 +64,16 @@ class Lead < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail :class_name => 'Version', :ignore => [ :subscribed_users ]
+  has_paper_trail class_name: 'Version', ignore: [ :subscribed_users ]
   has_fields
   exportable
-  sortable :by => [ "first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  sortable by: [ "first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC" ], default: "created_at DESC"
 
   has_ransackable_associations %w(contact campaign tasks tags activities emails addresses comments)
   ransack_can_autocomplete
 
-  validates_presence_of :first_name, :message => :missing_first_name, :if => -> { Setting.require_first_names }
-  validates_presence_of :last_name,  :message => :missing_last_name,  :if => -> { Setting.require_last_names  }
+  validates_presence_of :first_name, message: :missing_first_name, if: -> { Setting.require_first_names }
+  validates_presence_of :last_name,  message: :missing_last_name,  if: -> { Setting.require_last_names  }
   validate :users_for_shared_access
 
   after_create  :increment_leads_count

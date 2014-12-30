@@ -44,4 +44,4 @@ module NavigationHelpers
 
 end
 
-RSpec.configuration.include NavigationHelpers, :type => :feature
+RSpec.configuration.include NavigationHelpers, type: :feature

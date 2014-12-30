@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 class CustomFieldPair < CustomField
 
-  has_one :pair, :class_name => CustomFieldPair, :foreign_key => 'pair_id', :dependent => :destroy # points to 'end'
+  has_one :pair, class_name: CustomFieldPair, foreign_key: 'pair_id', dependent: :destroy # points to 'end'
 
   # Helper to create a pair. Used in fields_controller
   #------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ class CustomFieldPair < CustomField
   # Returns the field that this field is paired with
   #------------------------------------------------------------------------------
   def paired_with
-    pair || CustomFieldPair.where(:pair_id => id).first
+    pair || CustomFieldPair.where(pair_id: id).first
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_custom_field_pair, self)

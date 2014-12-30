@@ -8,7 +8,7 @@ require 'spec_helper'
 describe "admin/field_groups/destroy" do
 
   before do
-    login_and_assign(:admin => true)
+    login_and_assign(admin: true)
     assign(:field_group, field_group)
   end
 

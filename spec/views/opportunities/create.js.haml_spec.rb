@@ -70,7 +70,7 @@ describe "/opportunities/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_opportunity div" do
-      assign(:opportunity, FactoryGirl.build(:opportunity, :name => nil)) # make it invalid
+      assign(:opportunity, FactoryGirl.build(:opportunity, name: nil)) # make it invalid
       @account = FactoryGirl.create(:account)
       assign(:users, [ FactoryGirl.create(:user) ])
       assign(:account, @account)

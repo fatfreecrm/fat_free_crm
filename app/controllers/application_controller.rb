@@ -16,13 +16,13 @@ class ApplicationController < ActionController::Base
   helper_method :called_from_index_page?, :called_from_landing_page?
   helper_method :klass
 
-  respond_to :html, :only => [ :index, :show, :auto_complete ]
+  respond_to :html, only: [ :index, :show, :auto_complete ]
   respond_to :js
-  respond_to :json, :xml, :except => :edit
-  respond_to :atom, :csv, :rss, :xls, :only => :index
+  respond_to :json, :xml, except: :edit
+  respond_to :atom, :csv, :rss, :xls, only: :index
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :respond_to_not_found
-  rescue_from CanCan::AccessDenied,         :with => :respond_to_access_denied
+  rescue_from ActiveRecord::RecordNotFound, with: :respond_to_not_found
+  rescue_from CanCan::AccessDenied,         with: :respond_to_access_denied
 
   include ERB::Util # to give us h and j methods
 
@@ -30,18 +30,18 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query] || ''
-    @auto_complete = hook(:auto_complete, self, :query => @query, :user => current_user)
+    @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
-      @auto_complete = klass.my.text_search(@query).search(:id_not_in => exclude_ids).result.limit(10)
+      @auto_complete = klass.my.text_search(@query).search(id_not_in: exclude_ids).result.limit(10)
     else
       @auto_complete = @auto_complete.last
     end
 
     session[:auto_complete] = controller_name.to_sym
     respond_to do |format|
-      format.any(:js, :html)   { render :partial => 'auto_complete' }
-      format.json { render :json => @auto_complete.inject({}){|h,a|
+      format.any(:js, :html)   { render partial: 'auto_complete' }
+      format.json { render json: @auto_complete.inject({}){|h,a|
         h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
       }}
     end
@@ -120,7 +120,7 @@ private
       flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
       respond_to do |format|
         format.html { redirect_to login_url }
-        format.js   { render :text => "window.location = '#{login_url}';" }
+        format.js   { render text: "window.location = '#{login_url}';" }
       end
     end
   end
@@ -202,23 +202,23 @@ private
 
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
-      format.js   { render :text => 'window.location.reload();' }
-      format.json { render :text => flash[:warning],  :status => :not_found }
-      format.xml  { render :xml => [flash[:warning]], :status => :not_found }
+      format.js   { render text: 'window.location.reload();' }
+      format.json { render text: flash[:warning],  status: :not_found }
+      format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
 
   #----------------------------------------------------------------------------
   def respond_to_related_not_found(related, *types)
     asset = "note" if asset == "comment"
-    flash[:warning] = t(:msg_cant_create_related, :asset => asset, :related => related)
+    flash[:warning] = t(:msg_cant_create_related, asset: asset, related: related)
 
     url = send("#{related.pluralize}_path")
     respond_to do |format|
       format.html { redirect_to(url) }
-      format.js   { render :text => %Q{window.location.href = "#{url}";} }
-      format.json { render :text => flash[:warning],  :status => :not_found }
-      format.xml  { render :xml => [flash[:warning]], :status => :not_found }
+      format.js   { render text: %Q{window.location.href = "#{url}";} }
+      format.json { render text: flash[:warning],  status: :not_found }
+      format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
 
@@ -227,9 +227,9 @@ private
     flash[:warning] = t(:msg_not_authorized, default: 'You are not authorized to take this action.')
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
-      format.js   { render :text => 'window.location.reload();' }
-      format.json { render :text => flash[:warning],  :status => :unauthorized }
-      format.xml  { render :xml => [flash[:warning]], :status => :unauthorized }
+      format.js   { render text: 'window.location.reload();' }
+      format.json { render text: flash[:warning],  status: :unauthorized }
+      format.xml  { render xml: [flash[:warning]], status: :unauthorized }
     end
   end
 

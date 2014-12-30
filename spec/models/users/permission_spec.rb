@@ -20,8 +20,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Permission do
   before(:each) do
     @valid_attributes = {
-      :user => mock_model(User),
-      :asset => mock_model(Account)
+      user: mock_model(User),
+      asset: mock_model(Account)
     }
   end
 
@@ -30,12 +30,12 @@ describe Permission do
   end
   
   it "should validate with group_ids" do
-    p = Permission.new :group_id => 1
+    p = Permission.new group_id: 1
     expect(p).to be_valid
   end
   
   it "should validate with user_ids" do
-    p = Permission.new :user_id => 2
+    p = Permission.new user_id: 2
     expect(p).to be_valid
   end
   

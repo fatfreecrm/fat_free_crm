@@ -47,13 +47,13 @@
 #
 
 class CustomField < Field
-  after_validation :update_column, :on => :update
+  after_validation :update_column, on: :update
   before_create    :add_column
   after_create     :add_ransack_translation
 
   SAFE_DB_TRANSITIONS = {
-    :any => [['date', 'time', 'timestamp'], ['integer', 'float']],
-    :one => {'string' => 'text'}
+    any: [['date', 'time', 'timestamp'], ['integer', 'float']],
+    one: {'string' => 'text'}
   }
 
   def available_as
@@ -67,8 +67,8 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def custom_validator(obj)
     attr = name.to_sym
-    obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.required', :field => label)) if required? and obj.send(attr).blank?
-    obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.maxlength', :field => label)) if (maxlength.to_i > 0) and (obj.send(attr).to_s.length > maxlength.to_i)
+    obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.required', field: label)) if required? and obj.send(attr).blank?
+    obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.maxlength', field: label)) if (maxlength.to_i > 0) and (obj.send(attr).to_s.length > maxlength.to_i)
   end
 
   protected

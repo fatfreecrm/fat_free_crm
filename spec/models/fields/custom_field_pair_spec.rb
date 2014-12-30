@@ -25,10 +25,10 @@ describe CustomFieldPair do
 
     it "should create the pair" do
       params1 = @field.merge(@pair1)
-      foo1 = double(:id => 3, :required => true, :disabled => 'false')
+      foo1 = double(id: 3, required: true, disabled: 'false')
       expect(CustomFieldFooPair).to receive(:create).with( params1 ).and_return(foo1)
       params2 = @field.merge(@pair2).merge('pair_id' => 3, 'required' => true, 'disabled' => 'false')
-      foo2 = double(:id => 5)
+      foo2 = double(id: 5)
       expect(CustomFieldFooPair).to receive(:create).with( params2 ).and_return(foo2)
 
       expect(CustomFieldPair.create_pair(@params)).to eq([foo1, foo2])
@@ -46,7 +46,7 @@ describe CustomFieldPair do
     end
 
     it "should update the pair" do
-      foo1 = double(:required => true, :disabled => 'false')
+      foo1 = double(required: true, disabled: 'false')
       expect(foo1).to receive(:update_attributes).with( @field.merge(@pair1) )
       foo2 = double
       expect(foo2).to receive(:update_attributes).with( @field.merge(@pair2).merge('required' => true, 'disabled' => 'false') )
@@ -61,8 +61,8 @@ describe CustomFieldPair do
   describe "paired_with" do
 
     before(:each) do
-      @field1 = CustomFieldDatePair.new(:name => 'cf_event_from')
-      @field2 = CustomFieldDatePair.new(:name => 'cf_event_to')
+      @field1 = CustomFieldDatePair.new(name: 'cf_event_from')
+      @field2 = CustomFieldDatePair.new(name: 'cf_event_to')
     end
 
     it "should return the 2nd field" do
@@ -73,7 +73,7 @@ describe CustomFieldPair do
     it "should return the 1st field" do
       expect(@field2).to receive(:pair).and_return(nil)
       expect(@field2).to receive(:id).and_return(1)
-      expect(CustomFieldPair).to receive(:where).with(:pair_id => 1).and_return([@field1])
+      expect(CustomFieldPair).to receive(:where).with(pair_id: 1).and_return([@field1])
       expect(@field2.paired_with).to eq(@field1)
     end
 

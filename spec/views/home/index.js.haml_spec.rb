@@ -13,9 +13,9 @@ describe "/home/index" do
   end
 
   it "should render [activity] template with @activities collection" do
-    assign(:activities, [ FactoryGirl.create(:version, :id => 42, :event => "update", :item => FactoryGirl.create(:account), :whodunnit => current_user.id.to_s) ])
+    assign(:activities, [ FactoryGirl.create(:version, id: 42, event: "update", item: FactoryGirl.create(:account), whodunnit: current_user.id.to_s) ])
 
-    render :template => 'home/index', :formats => [:js]
+    render template: 'home/index', formats: [:js]
 
     expect(rendered).to include("$('#activities').html")
     expect(rendered).to include("li class=\\'version\\' id=\\'version_42\\'")
@@ -24,7 +24,7 @@ describe "/home/index" do
   it "should render a message if there're no activities" do
     assign(:activities, [])
 
-    render :template => 'home/index', :formats => [:js]
+    render template: 'home/index', formats: [:js]
 
     expect(rendered).to include("No activity records found.")
   end

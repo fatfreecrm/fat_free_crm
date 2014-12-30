@@ -37,8 +37,8 @@ module RSpec # :nodoc:
 
         def description
           {
-            :assert_select => "have tag#{format_args(*@args)}",
-            :assert_select_email => "send email#{format_args(*@args)}",
+            assert_select: "have tag#{format_args(*@args)}",
+            assert_select_email: "send email#{format_args(*@args)}",
           }[@selector_assertion]
         end
 
@@ -55,7 +55,7 @@ module RSpec # :nodoc:
         end
 
         def args_and_options(args)
-          opts = {:xml => false, :strict => false}
+          opts = {xml: false, strict: false}
           if args.last.is_a?(::Hash)
             opts[:strict] = args.last.delete(:strict) unless args.last[:strict].nil?
             opts[:xml]    = args.last.delete(:xml)    unless args.last[:xml].nil?
@@ -150,7 +150,7 @@ module RSpec # :nodoc:
 
       def prepare_args(args, current_scope = nil)
         return args if current_scope.nil?
-        defaults = current_scope.options || {:strict => false, :xml => false}
+        defaults = current_scope.options || {strict: false, xml: false}
         args << {} unless args.last.is_a?(::Hash)
         args.last[:strict] = defaults[:strict] if args.last[:strict].nil?
         args.last[:xml] = defaults[:xml] if args.last[:xml].nil?

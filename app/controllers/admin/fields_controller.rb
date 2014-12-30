@@ -4,9 +4,9 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::FieldsController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/fields')", :only => [ :index ]
+  before_filter "set_current_tab('admin/fields')", only: [ :index ]
 
-  load_resource :except => [:create, :subform]
+  load_resource except: [:create, :subform]
 
   # GET /fields
   # GET /fields.xml                                                      HTML
@@ -86,10 +86,10 @@ class Admin::FieldsController < Admin::ApplicationController
     field_ids = params["fields_field_group_#{field_group_id}"] || []
 
     field_ids.each_with_index do |id, index|
-      Field.update_all({:position => index+1, :field_group_id => field_group_id}, {:id => id})
+      Field.update_all({position: index+1, field_group_id: field_group_id}, {id: id})
     end
 
-    render :nothing => true
+    render nothing: true
   end
 
   # GET /fields/subform
@@ -103,11 +103,11 @@ class Admin::FieldsController < Admin::ApplicationController
       else
         field_group_id = field[:field_group_id]
         klass = Field.lookup_class(as).classify.constantize
-        klass.new(:field_group_id => field_group_id, :as => as)
+        klass.new(field_group_id: field_group_id, as: as)
       end
 
     respond_with(@field) do |format|
-      format.html { render :partial => 'admin/fields/subform' }
+      format.html { render partial: 'admin/fields/subform' }
     end
   end
 

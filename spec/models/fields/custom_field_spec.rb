@@ -36,15 +36,15 @@ describe CustomField do
     expect(Contact).to receive(:serialize_custom_fields!)
 
     FactoryGirl.create(:custom_field,
-                       :as => "string",
-                       :name => "cf_test_field",
-                       :label => "Test Field",
-                       :field_group => FactoryGirl.create(:field_group, :klass_name => "Contact"))
+                       as: "string",
+                       name: "cf_test_field",
+                       label: "Test Field",
+                       field_group: FactoryGirl.create(:field_group, klass_name: "Contact"))
   end
 
   it "should generate a unique column name for a custom field" do
-    field_group = FactoryGirl.build(:field_group, :klass_name => "Contact")
-    c = FactoryGirl.build(:custom_field, :label => "Test Field", :field_group => field_group)
+    field_group = FactoryGirl.build(:field_group, klass_name: "Contact")
+    c = FactoryGirl.build(:custom_field, label: "Test Field", field_group: field_group)
 
     columns = []
     %w(cf_test_field cf_test_field_2 cf_test_field_3 cf_test_field_4).each do |field|
@@ -55,12 +55,12 @@ describe CustomField do
   end
 
   it "should evaluate the safety of database transitions" do
-    c = FactoryGirl.build(:custom_field, :as => "string")
+    c = FactoryGirl.build(:custom_field, as: "string")
     expect(c.send(:db_transition_safety, c.as, "email")).to eq(:null)
     expect(c.send(:db_transition_safety, c.as, "text")).to eq(:safe)
     expect(c.send(:db_transition_safety, c.as, "datetime")).to eq(:unsafe)
 
-    c = FactoryGirl.build(:custom_field, :as => "datetime")
+    c = FactoryGirl.build(:custom_field, as: "datetime")
     expect(c.send(:db_transition_safety, c.as, "date")).to eq(:safe)
     expect(c.send(:db_transition_safety, c.as, "url")).to eq(:unsafe)
   end
@@ -68,7 +68,7 @@ describe CustomField do
   it "should return a safe list of types for the 'as' select options" do
     {"email"   => %w(check_boxes text string email url tel select radio),
      "integer" => %w(integer float)}.each do |type, expected_arr|
-      c = FactoryGirl.build(:custom_field, :as => type)
+      c = FactoryGirl.build(:custom_field, as: type)
       opts = c.available_as
       expect(opts.map(&:first)).to match_array(expected_arr)
     end
@@ -82,12 +82,12 @@ describe CustomField do
     expect(Contact).to receive(:reset_column_information).twice
     expect(Contact).to receive(:serialize_custom_fields!).twice
 
-    field_group = FactoryGirl.create(:field_group, :klass_name => "Contact")
+    field_group = FactoryGirl.create(:field_group, klass_name: "Contact")
     c = FactoryGirl.create(:custom_field,
-                           :label => "Test Field",
-                           :name => nil,
-                           :as => "email",
-                           :field_group => field_group)
+                           label: "Test Field",
+                           name: nil,
+                           as: "email",
+                           field_group: field_group)
     c.as = "text"
     c.save
   end
@@ -96,7 +96,7 @@ describe CustomField do
     it "should refresh column info and retry on assignment error" do
       expect(Contact).to receive(:reset_column_information)
 
-      expect { Contact.new :cf_unknown_field => 123 }.to raise_error(ActiveRecord::UnknownAttributeError)
+      expect { Contact.new cf_unknown_field: 123 }.to raise_error(ActiveRecord::UnknownAttributeError)
     end
 
     it "should refresh column info and retry on attribute error" do
@@ -111,16 +111,16 @@ describe CustomField do
   describe "validation" do
 
     it "should have errors if custom field is required" do
-      event = CustomField.new(:name => 'cf_event', :required => true)
-      foo = double(:cf_event => nil)
+      event = CustomField.new(name: 'cf_event', required: true)
+      foo = double(cf_event: nil)
       err = double(:errors); allow(err).to receive(:add)
       expect(foo).to receive(:errors).and_return(err)
       event.custom_validator(foo)
     end
 
     it "should have errors if custom field is longer than maxlength" do
-      event = CustomField.new(:name => 'cf_event', :maxlength => 5)
-      foo = double(:cf_event => "This is too long")
+      event = CustomField.new(name: 'cf_event', maxlength: 5)
+      foo = double(cf_event: "This is too long")
       err = double(:errors); allow(err).to receive(:add)
       expect(foo).to receive(:errors).and_return(err)
       event.custom_validator(foo)

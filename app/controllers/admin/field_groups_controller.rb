@@ -11,7 +11,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   # GET /admin/field_groups/new.xml                                        AJAX
   #----------------------------------------------------------------------------
   def new
-    @field_group = FieldGroup.new(:klass_name => params[:klass_name])
+    @field_group = FieldGroup.new(klass_name: params[:klass_name])
 
     respond_with(@field_group)
   end
@@ -64,10 +64,10 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     field_group_ids = params["#{asset}_field_groups"]
 
     field_group_ids.each_with_index do |id, index|
-      FieldGroup.update_all({:position => index+1}, {:id => id})
+      FieldGroup.update_all({position: index+1}, {id: id})
     end
 
-    render :nothing => true
+    render nothing: true
   end
 
   # GET /admin/field_groups/1/confirm                                      AJAX

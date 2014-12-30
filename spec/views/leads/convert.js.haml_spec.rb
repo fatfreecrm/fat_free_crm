@@ -11,7 +11,7 @@ describe "/leads/convert" do
   before do
     login_and_assign
 
-    assign(:lead, @lead = FactoryGirl.create(:lead, :user => current_user))
+    assign(:lead, @lead = FactoryGirl.create(:lead, user: current_user))
     assign(:users, [ current_user ])
     assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ])
@@ -35,7 +35,7 @@ describe "/leads/convert" do
 
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
     params[:cancel] = nil
-    assign(:previous, previous = FactoryGirl.create(:lead, :user => current_user))
+    assign(:previous, previous = FactoryGirl.create(:lead, user: current_user))
 
     render
     expect(rendered).to include("$('#lead_#{previous.id}').replaceWith")

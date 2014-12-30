@@ -24,8 +24,8 @@ class CommentsController < ApplicationController
     flash[:warning] = t(:msg_assets_not_available, "notes")
     respond_to do |format|
       format.html { redirect_to root_url }
-      format.json { render :text => flash[:warning], :status => :not_found }
-      format.xml  { render :text => flash[:warning], :status => :not_found }
+      format.json { render text: flash[:warning], status: :not_found }
+      format.xml  { render text: flash[:warning], status: :not_found }
     end
   end
 
@@ -46,7 +46,7 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     attributes = params[:comment] || {}
-    attributes.merge!(:user_id => current_user.id)
+    attributes.merge!(user_id: current_user.id)
     @comment = Comment.new(attributes)
 
     # Make sure commentable object exists and is accessible to the current user.

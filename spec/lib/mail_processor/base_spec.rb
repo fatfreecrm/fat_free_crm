@@ -19,12 +19,12 @@ describe FatFreeCRM::MailProcessor::Base do
     @crawler = FatFreeCRM::MailProcessor::Base.new
     # MailProcessor::Base doesn't load any settings by default
     @crawler.instance_variable_set "@settings", {
-      :server   => "example.com",
-      :port     => "123",
-      :ssl      => true,
-      :address  => "test@example.com",
-      :user     => "test@example.com",
-      :password => "123"
+      server:   "example.com",
+      port:     "123",
+      ssl:      true,
+      address:  "test@example.com",
+      user:     "test@example.com",
+      password: "123"
     }
   end
 
@@ -41,7 +41,7 @@ describe FatFreeCRM::MailProcessor::Base do
       mock_imap
       expect(@imap).to receive(:login).once.with(@settings[:user], @settings[:password])
       expect(@imap).not_to receive(:select).with(@settings[:scan_folder])
-      @crawler.send(:connect!, :setup => true)
+      @crawler.send(:connect!, setup: true)
     end
 
     it "should raise the error if connection fails" do
@@ -135,19 +135,19 @@ describe FatFreeCRM::MailProcessor::Base do
     end
 
     it "should find non-suspended user that matches From: field" do
-      @user = FactoryGirl.create(:user, :email => @from.first, :suspended_at => nil)
+      @user = FactoryGirl.create(:user, email: @from.first, suspended_at: nil)
       expect(@crawler.send(:sent_from_known_user?, @email)).to eq(true)
       expect(@crawler.instance_variable_get("@sender")).to eq(@user)
     end
 
     it "should not find user if his email doesn't match From: field" do
-      FactoryGirl.create(:user, :email => "nobody@example.com")
+      FactoryGirl.create(:user, email: "nobody@example.com")
       expect(@crawler.send(:sent_from_known_user?, @email)).to eq(false)
       expect(@crawler.instance_variable_get("@sender")).to eq(nil)
     end
 
     it "should not find user if his email matches From: field but is suspended" do
-      FactoryGirl.create(:user, :email => @from.first, :suspended_at => Time.now)
+      FactoryGirl.create(:user, email: @from.first, suspended_at: Time.now)
       expect(@crawler.send(:sent_from_known_user?, @email)).to eq(false)
       expect(@crawler.instance_variable_get("@sender")).to eq(nil)
     end

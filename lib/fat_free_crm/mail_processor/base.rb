@@ -23,7 +23,7 @@ module FatFreeCRM
       #--------------------------------------------------------------------------------------
       def setup
         log "connecting to #{@settings[:server]}..."
-        connect!(:setup => true) or return nil
+        connect!(setup: true) or return nil
         log "logged in to #{@settings[:server]}, checking folders..."
         folders = [ @settings[:scan_folder] ]
         folders << @settings[:move_to_folder] unless @settings[:move_to_folder].blank?
@@ -205,7 +205,7 @@ module FatFreeCRM
           charset = text_part.charset if email.multipart?
         else
           html_part = parts.detect {|p| p.content_type.include?('text/html')} || email
-          text_body = Premailer.new(html_part.body.to_s, :with_html_string => true).to_plain_text
+          text_body = Premailer.new(html_part.body.to_s, with_html_string: true).to_plain_text
           charset = html_part.charset if email.multipart?
         end
 

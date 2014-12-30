@@ -78,8 +78,8 @@ module FatFreeCRM
         attr_accessor :view_hooks
 
         def add_view_hook(hook, proc, position)
-          @view_hooks[hook] += [{:proc => proc,
-                                 :position => position}]
+          @view_hooks[hook] += [{proc: proc,
+                                 position: position}]
         end
 
         def insert_before(hook, &block); add_view_hook(hook, block,        :before);  end

@@ -21,10 +21,10 @@ describe EmailsController, "handling GET /emails" do
         MEDIATOR.each do |asset|
           it "should destroy the requested email and render [destroy] template" do
             @asset = FactoryGirl.create(asset)
-            @email = FactoryGirl.create(:email, :mediator => @asset, :user => current_user)
+            @email = FactoryGirl.create(:email, mediator: @asset, user: current_user)
             allow(Email).to receive(:new).and_return(@email)
 
-            xhr :delete, :destroy, :id => @email.id
+            xhr :delete, :destroy, id: @email.id
             expect { Email.find(@email) }.to raise_error(ActiveRecord::RecordNotFound)
             expect(response).to render_template("emails/destroy")
           end

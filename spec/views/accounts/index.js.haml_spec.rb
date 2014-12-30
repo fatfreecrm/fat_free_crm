@@ -13,9 +13,9 @@ describe "/accounts/index" do
   end
 
   it "should render [account] template with @accounts collection if there are accounts" do
-    assign(:accounts, [ FactoryGirl.create(:account, :id => 42) ].paginate)
+    assign(:accounts, [ FactoryGirl.create(:account, id: 42) ].paginate)
 
-    render :template => 'accounts/index', :formats => [:js]
+    render template: 'accounts/index', formats: [:js]
 
     expect(rendered).to include("$('#accounts').html")
     expect(rendered).to include("$('#paginate').html")
@@ -24,7 +24,7 @@ describe "/accounts/index" do
   it "should render [empty] template if @accounts collection if there are no accounts" do
     assign(:accounts, [].paginate)
 
-    render :template => 'accounts/index', :formats => [:js]
+    render template: 'accounts/index', formats: [:js]
 
     expect(rendered).to include("$('#accounts').html('<div id=\\'empty\\'")
     expect(rendered).to include("$('#paginate').html")

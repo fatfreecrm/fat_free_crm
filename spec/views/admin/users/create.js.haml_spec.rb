@@ -7,7 +7,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/users/create" do
   before do
-    login_and_assign(:admin => true)
+    login_and_assign(admin: true)
   end
 
   describe "create success" do
@@ -29,7 +29,7 @@ describe "admin/users/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_user div" do
-      assign(:user, FactoryGirl.build(:user, :username => nil)) # make it invalid
+      assign(:user, FactoryGirl.build(:user, username: nil)) # make it invalid
       assign(:users, [ current_user ])
       render
 

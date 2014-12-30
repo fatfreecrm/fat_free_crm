@@ -33,34 +33,34 @@ class Field < ActiveRecord::Base
 
   belongs_to :field_group
 
-  scope :core_fields,   -> { where(:type => 'CoreField') }
+  scope :core_fields,   -> { where(type: 'CoreField') }
   scope :custom_fields, -> { where("type != 'CoreField'") }
-  scope :without_pairs, -> { where(:pair_id => nil) }
+  scope :without_pairs, -> { where(pair_id: nil) }
 
-  delegate :klass, :klass_name, :klass_name=, :to => :field_group
+  delegate :klass, :klass_name, :klass_name=, to: :field_group
 
   BASE_FIELD_TYPES = {
-    'string'      => {:klass => 'CustomField', :type => 'string'},
-    'text'        => {:klass => 'CustomField', :type => 'text'},
-    'email'       => {:klass => 'CustomField', :type => 'string'},
-    'url'         => {:klass => 'CustomField', :type => 'string'},
-    'tel'         => {:klass => 'CustomField', :type => 'string'},
-    'select'      => {:klass => 'CustomField', :type => 'string'},
-    'radio'       => {:klass => 'CustomField', :type => 'string'},
-    'check_boxes' => {:klass => 'CustomField', :type => 'text'},
-    'boolean'     => {:klass => 'CustomField', :type => 'boolean'},
-    'date'        => {:klass => 'CustomField', :type => 'date'},
-    'datetime'    => {:klass => 'CustomField', :type => 'timestamp'},
-    'decimal'     => {:klass => 'CustomField', :type => 'decimal', :column_options => {:precision => 15, :scale => 2} },
-    'integer'     => {:klass => 'CustomField', :type => 'integer'},
-    'float'       => {:klass => 'CustomField', :type => 'float'}
+    'string'      => {klass: 'CustomField', type: 'string'},
+    'text'        => {klass: 'CustomField', type: 'text'},
+    'email'       => {klass: 'CustomField', type: 'string'},
+    'url'         => {klass: 'CustomField', type: 'string'},
+    'tel'         => {klass: 'CustomField', type: 'string'},
+    'select'      => {klass: 'CustomField', type: 'string'},
+    'radio'       => {klass: 'CustomField', type: 'string'},
+    'check_boxes' => {klass: 'CustomField', type: 'text'},
+    'boolean'     => {klass: 'CustomField', type: 'boolean'},
+    'date'        => {klass: 'CustomField', type: 'date'},
+    'datetime'    => {klass: 'CustomField', type: 'timestamp'},
+    'decimal'     => {klass: 'CustomField', type: 'decimal', column_options: {precision: 15, scale: 2} },
+    'integer'     => {klass: 'CustomField', type: 'integer'},
+    'float'       => {klass: 'CustomField', type: 'float'}
   }.with_indifferent_access
 
-  validates_presence_of :label, :message => "^Please enter a field label."
-  validates_length_of :label, :maximum => 64, :message => "^The field name must be less than 64 characters in length."
-  validates_numericality_of :maxlength, :only_integer => true, :allow_blank => true, :message => "^Max size can only be whole number."
-  validates_presence_of :as, :message => "^Please specify a field type."
-  validates_inclusion_of :as, :in => Proc.new{self.field_types.keys}, :message => "^Invalid field type.", :allow_blank => true
+  validates_presence_of :label, message: "^Please enter a field label."
+  validates_length_of :label, maximum: 64, message: "^The field name must be less than 64 characters in length."
+  validates_numericality_of :maxlength, only_integer: true, allow_blank: true, message: "^Max size can only be whole number."
+  validates_presence_of :as, message: "^Please specify a field type."
+  validates_inclusion_of :as, in: Proc.new{self.field_types.keys}, message: "^Invalid field type.", allow_blank: true
 
   def column_type(field_type = self.as)
     (opts = Field.field_types[field_type]) ? opts[:type] : raise("Unknown field_type: #{field_type}")

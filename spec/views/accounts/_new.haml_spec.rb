@@ -17,9 +17,9 @@ describe "/accounts/_new" do
   it "should render [create account] form" do
     render
 
-    expect(view).to render_template(:partial => "_top_section")
-    expect(view).to render_template(:partial => "_contact_info")
-    expect(view).to render_template(:partial => "_permissions")
+    expect(view).to render_template(partial: "_top_section")
+    expect(view).to render_template(partial: "_contact_info")
+    expect(view).to render_template(partial: "_permissions")
 
     expect(rendered).to have_tag("form[class=new_account]")
   end

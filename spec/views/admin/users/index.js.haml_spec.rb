@@ -15,7 +15,7 @@ describe "admin/users/index" do
     bob = FactoryGirl.create(:user)
     assign(:users, [ amy, bob ].paginate)
 
-    render :template => 'admin/users/index', :formats => [:js]
+    render template: 'admin/users/index', formats: [:js]
     
     expect(rendered).to include("id=\\'user_#{amy.id}\\'")
     expect(rendered).to include("id=\\'user_#{bob.id}\\'")

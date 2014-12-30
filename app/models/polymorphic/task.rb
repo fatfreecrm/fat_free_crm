@@ -30,9 +30,9 @@ class Task < ActiveRecord::Base
   ALLOWED_VIEWS = %w(pending assigned completed)
 
   belongs_to :user
-  belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
-  belongs_to :completor, :class_name => "User", :foreign_key => :completed_by
-  belongs_to :asset, :polymorphic => true
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
+  belongs_to :completor, class_name: "User", foreign_key: :completed_by
+  belongs_to :asset, polymorphic: true
 
   serialize :subscribed_users, Set
 
@@ -65,7 +65,7 @@ class Task < ActiveRecord::Base
 
   # Show tasks which either belong to the user and are unassigned, or are assigned to the user
   scope :visible_on_dashboard, ->(user) {
-    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id).where('completed_at IS NULL')
+    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where('completed_at IS NULL')
   }
 
   scope :by_due_at, -> {
@@ -104,17 +104,17 @@ class Task < ActiveRecord::Base
   }
 
   acts_as_commentable
-  has_paper_trail :class_name => 'Version', :meta => { :related => :asset }, :ignore => [ :subscribed_users ]
+  has_paper_trail class_name: 'Version', meta: { related: :asset }, ignore: [ :subscribed_users ]
   has_fields
   exportable
 
   validates_presence_of :user
-  validates_presence_of :name, :message => :missing_task_name
-  validates_presence_of :calendar, :if => "self.bucket == 'specific_time' && !self.completed_at"
-  validate              :specific_time, :unless => :completed?
+  validates_presence_of :name, message: :missing_task_name
+  validates_presence_of :calendar, if: "self.bucket == 'specific_time' && !self.completed_at"
+  validate              :specific_time, unless: :completed?
 
   before_create :set_due_date
-  before_update :set_due_date, :unless => :completed?
+  before_update :set_due_date, unless: :completed?
   before_save :notify_assignee
 
   # Matcher for the :my named scope.
@@ -194,7 +194,7 @@ class Task < ActiveRecord::Base
   def self.totals(user, view = "pending")
     return {} unless ALLOWED_VIEWS.include?(view)
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-    settings.inject(HashWithIndifferentAccess[:all => 0]) do |hash, key|
+    settings.inject(HashWithIndifferentAccess[all: 0]) do |hash, key|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)
       hash[:all] += hash[key]
       hash

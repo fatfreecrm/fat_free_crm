@@ -10,7 +10,7 @@ describe "/campaigns/new" do
 
   before do
     login_and_assign
-    assign(:campaign, Campaign.new(:user => current_user))
+    assign(:campaign, Campaign.new(user: current_user))
     assign(:users, [ current_user ])
   end
 

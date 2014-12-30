@@ -42,7 +42,7 @@ class FieldGroup < ActiveRecord::Base
   end
 
   def label_i18n
-    I18n.t(name, :default => label)
+    I18n.t(name, default: label)
   end
 
   private

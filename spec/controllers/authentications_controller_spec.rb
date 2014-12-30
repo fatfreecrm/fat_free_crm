@@ -33,7 +33,7 @@ describe AuthenticationsController do
 
     describe "user must not be logged in" do
       before(:each) do
-        @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
+        @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass")
         allow(@controller).to receive(:current_user).and_return(@user)
       end
 
@@ -48,7 +48,7 @@ describe AuthenticationsController do
 
       describe "POST authentication" do
         it "displays 'must be logged out message' and redirects to profile page" do
-          post :create, :authentication => @login
+          post :create, authentication: @login
           expect(flash[:notice]).not_to eq(nil)
           expect(flash[:notice]).to match(/^You must be logged out/)
           expect(response).to redirect_to(profile_path)
@@ -62,7 +62,7 @@ describe AuthenticationsController do
   #----------------------------------------------------------------------------
   describe "POST authentications" do
     before(:each) do
-      @login = { :username => "user", :password => "pass", :remember_me => "0" }
+      @login = { username: "user", password: "pass", remember_me: "0" }
       @authentication = double(Authentication, @login)
     end
 
@@ -73,20 +73,20 @@ describe AuthenticationsController do
       end
 
       it "displays welcome message and redirects to the home page" do
-        @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :login_count => 0)
+        @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", login_count: 0)
         allow(@authentication).to receive(:user).and_return(@user)
 
-        post :create, :authentication => @login
+        post :create, authentication: @login
         expect(flash[:notice]).not_to eq(nil)
         expect(flash[:notice]).not_to match(/last login/)
         expect(response).to redirect_to(root_path)
       end
 
       it "displays last login time if it's not the first login" do
-        @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :login_count => 42)
+        @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", login_count: 42)
         allow(@authentication).to receive(:user).and_return(@user)
 
-        post :create, :authentication => @login
+        post :create, authentication: @login
         expect(flash[:notice]).to match(/last login/)
         expect(response).to redirect_to(root_path)
       end
@@ -95,14 +95,14 @@ describe AuthenticationsController do
     describe "authenticaion failure" do
       describe "user is not suspended" do
         it "redirects to login page if username or password are invalid" do
-          @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass")
+          @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass")
           allow(@authentication).to receive(:user).and_return(@user)
           allow(@authentication).to receive(:save).and_return(false) # <--- Authentication failure.
           allow(Authentication).to receive(:new).and_return(@authentication)
 
-          post :create, :authentication => @login
+          post :create, authentication: @login
           expect(flash[:warning]).not_to eq(nil)
-          expect(response).to redirect_to(:action => :new)
+          expect(response).to redirect_to(action: :new)
         end
       end
 
@@ -114,34 +114,34 @@ describe AuthenticationsController do
 
         # This tests :before_save update_info callback in Authentication model.
         it "keeps user login attributes intact" do
-          @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday, :login_count => 0, :last_login_at => nil, :last_login_ip => nil)
+          @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", suspended_at: Date.yesterday, login_count: 0, last_login_at: nil, last_login_ip: nil)
           allow(@authentication).to receive(:user).and_return(@user)
 
-          post :create, :authentication => @login
+          post :create, authentication: @login
           expect(@authentication.user.login_count).to eq(0)
           expect(@authentication.user.last_login_at).to be_nil
           expect(@authentication.user.last_login_ip).to be_nil
         end
 
         it "redirects to login page if user is suspended" do
-          @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday)
+          @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", suspended_at: Date.yesterday)
           allow(@authentication).to receive(:user).and_return(@user)
 
-          post :create, :authentication => @login
+          post :create, authentication: @login
           expect(flash[:warning]).not_to eq(nil) # Invalid username/password.
           expect(flash[:notice]).to eq(nil)      # Not approved yet.
-          expect(response).to redirect_to(:action => :new)
+          expect(response).to redirect_to(action: :new)
         end
 
         it "redirects to login page with the message if signup needs approval and user hasn't been activated yet" do
           allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-          @user = FactoryGirl.create(:user, :username => "user", :password => "pass", :password_confirmation => "pass", :suspended_at => Date.yesterday, :login_count => 0)
+          @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", suspended_at: Date.yesterday, login_count: 0)
           allow(@authentication).to receive(:user).and_return(@user)
 
-          post :create, :authentication => @login
+          post :create, authentication: @login
           expect(flash[:warning]).to eq(nil)     # Invalid username/password.
           expect(flash[:notice]).not_to eq(nil)  # Not approved yet.
-          expect(response).to redirect_to(:action => :new)
+          expect(response).to redirect_to(action: :new)
         end
       end
 

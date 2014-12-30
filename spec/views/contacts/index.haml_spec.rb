@@ -20,17 +20,17 @@ describe "/contacts/index" do
     assign(:contacts, [ FactoryGirl.create(:contact) ].paginate)
 
     render
-    expect(view).to render_template(:partial => "_contact")
-    expect(view).to render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "_contact")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no contacts" do
     assign(:contacts, [].paginate)
 
     render
-    expect(view).not_to render_template(:partial => "_contact")
-    expect(view).to render_template(:partial => "shared/_empty")
-    expect(view).to render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).not_to render_template(partial: "_contact")
+    expect(view).to render_template(partial: "shared/_empty")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 
 end

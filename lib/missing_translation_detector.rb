@@ -19,8 +19,8 @@ class MissingTranslationDetector
       if h[key].is_a?(Hash)
         detect h[key], key_path 
       elsif blank?(key_path)
-        missing_translations << OpenStruct.new(:key_path => key_path,
-                                               :value => h[key]) 
+        missing_translations << OpenStruct.new(key_path: key_path,
+                                               value: h[key]) 
       end 
     end
   end

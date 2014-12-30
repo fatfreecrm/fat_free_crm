@@ -15,7 +15,7 @@ describe FatFreeCRM::ViewFactory do
   describe "initialization" do
 
     before(:each) do
-      @view_params = {:name => 'brief', :title => 'Brief View', :icon => 'fa-bars', :controllers => ['contacts'], :actions => ['show', 'index']}
+      @view_params = {name: 'brief', title: 'Brief View', icon: 'fa-bars', controllers: ['contacts'], actions: ['show', 'index']}
     end
 
     it "should initialize with required parameters" do
@@ -45,27 +45,27 @@ describe FatFreeCRM::ViewFactory do
   describe "views_for" do
 
     before(:each) do
-      @v1 = FatFreeCRM::ViewFactory.new :name => 'brief', :title => 'Brief View', :controllers => ['contacts'], :actions => ['show', 'index']
-      @v2 = FatFreeCRM::ViewFactory.new :name => 'long', :title => 'Long View', :controllers => ['contacts'], :actions => ['show']
-      @v3 = FatFreeCRM::ViewFactory.new :name => 'full', :title => 'Full View', :controllers => ['accounts'], :actions => ['show']
+      @v1 = FatFreeCRM::ViewFactory.new name: 'brief', title: 'Brief View', controllers: ['contacts'], actions: ['show', 'index']
+      @v2 = FatFreeCRM::ViewFactory.new name: 'long', title: 'Long View', controllers: ['contacts'], actions: ['show']
+      @v3 = FatFreeCRM::ViewFactory.new name: 'full', title: 'Full View', controllers: ['accounts'], actions: ['show']
     end
 
     it "should return 'brief' view for ContactsController#index" do
-      expect(FatFreeCRM::ViewFactory.views_for(:controller => 'contacts', :action => 'index')).to eq([@v1])
+      expect(FatFreeCRM::ViewFactory.views_for(controller: 'contacts', action: 'index')).to eq([@v1])
     end
 
     it "should return 'brief' and 'long' view for ContactsController#show" do
-      views = FatFreeCRM::ViewFactory.views_for(:controller => 'contacts', :action => 'show')
+      views = FatFreeCRM::ViewFactory.views_for(controller: 'contacts', action: 'show')
       expect(views).to include(@v1)
       expect(views).to include(@v2)
     end
 
     it "should return 'full' view for AccountsController#show" do
-      expect(FatFreeCRM::ViewFactory.views_for(:controller => 'accounts', :action => 'show')).to eq([@v3])
+      expect(FatFreeCRM::ViewFactory.views_for(controller: 'accounts', action: 'show')).to eq([@v3])
     end
 
     it "should return no views for TasksController#show" do
-      expect(FatFreeCRM::ViewFactory.views_for(:controller => 'tasks', :action => 'show')).to eq([])
+      expect(FatFreeCRM::ViewFactory.views_for(controller: 'tasks', action: 'show')).to eq([])
     end
 
   end

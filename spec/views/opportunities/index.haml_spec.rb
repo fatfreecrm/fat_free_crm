@@ -21,17 +21,17 @@ describe "/opportunities/index" do
     assign(:opportunities, [ FactoryGirl.create(:opportunity) ].paginate)
 
     render
-    expect(view).to render_template(:partial => "_opportunity")
-    expect(view).to render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "_opportunity")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no opportunities" do
     assign(:opportunities, [].paginate)
 
     render
-    expect(view).not_to render_template(:partial => "_opportunities")
-    expect(view).to render_template(:partial => "shared/_empty")
-    expect(view).to render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).not_to render_template(partial: "_opportunities")
+    expect(view).to render_template(partial: "shared/_empty")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 
 end

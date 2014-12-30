@@ -49,7 +49,7 @@ describe "/contacts/create" do
 
   describe "create failure" do
     it "create (failure): should re-render [create] template in :create_contact div" do
-      assign(:contact, FactoryGirl.build(:contact, :first_name => nil)) # make it invalid
+      assign(:contact, FactoryGirl.build(:contact, first_name: nil)) # make it invalid
       @account = FactoryGirl.create(:account)
       assign(:users, [ FactoryGirl.create(:user) ])
       assign(:account, @account)

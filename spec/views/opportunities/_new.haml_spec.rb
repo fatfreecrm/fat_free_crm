@@ -20,8 +20,8 @@ describe "/opportunities/_new" do
 
   it "should render [create opportunity] form" do
     render
-    expect(view).to render_template(:partial => "opportunities/_top_section")
-    expect(view).to render_template(:partial => "entities/_permissions")
+    expect(view).to render_template(partial: "opportunities/_top_section")
+    expect(view).to render_template(partial: "entities/_permissions")
 
     expect(rendered).to have_tag("form[class=new_opportunity]")
   end

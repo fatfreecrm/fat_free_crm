@@ -75,7 +75,7 @@ class Setting < ActiveRecord::Base
     #-------------------------------------------------------------------
     def []=(name, value)
       return nil unless database_and_table_exists?
-      setting = self.find_by_name(name.to_s) || self.new(:name => name)
+      setting = self.find_by_name(name.to_s) || self.new(name: name)
       setting.value = value
       setting.save
       cache[name] = value

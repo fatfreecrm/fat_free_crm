@@ -10,7 +10,7 @@ describe "/accounts/new" do
 
   before do
     login_and_assign
-    assign(:account, Account.new(:user => current_user))
+    assign(:account, Account.new(user: current_user))
     assign(:users, [ current_user ])
   end
 

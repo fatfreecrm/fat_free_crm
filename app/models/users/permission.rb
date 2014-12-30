@@ -18,10 +18,10 @@
 class Permission < ActiveRecord::Base
   belongs_to :user
   belongs_to :group
-  belongs_to :asset, :polymorphic => true
+  belongs_to :asset, polymorphic: true
 
-  validates_presence_of :user_id, :unless => :group_id?
-  validates_presence_of :group_id, :unless => :user_id?
+  validates_presence_of :user_id, unless: :group_id?
+  validates_presence_of :group_id, unless: :user_id?
 
   ActiveSupport.run_load_hooks(:fat_free_crm_permission, self)
 end

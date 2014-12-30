@@ -4,16 +4,16 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CampaignsController < EntitiesController
-  before_filter :get_data_for_sidebar, :only => :index
+  before_filter :get_data_for_sidebar, only: :index
 
   # GET /campaigns
   #----------------------------------------------------------------------------
   def index
-    @campaigns = get_campaigns(:page => params[:page], :per_page => params[:per_page])
+    @campaigns = get_campaigns(page: params[:page], per_page: params[:per_page])
 
     respond_with @campaigns do |format|
-      format.xls { render :layout => 'header' }
-      format.csv { render :csv => @campaigns }
+      format.xls { render layout: 'header' }
+      format.csv { render csv: @campaigns }
     end
   end
 
@@ -41,11 +41,11 @@ class CampaignsController < EntitiesController
 
       format.xls do
         @leads = @campaign.leads
-        render '/leads/index', :layout => 'header'
+        render '/leads/index', layout: 'header'
       end
 
       format.csv do
-        render :csv => @campaign.leads
+        render csv: @campaign.leads
       end
 
       format.rss do
@@ -65,7 +65,7 @@ class CampaignsController < EntitiesController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    @campaign.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
+    @campaign.attributes = {user: current_user, access: Setting.default_access, assigned_to: nil}
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -141,7 +141,7 @@ class CampaignsController < EntitiesController
   def redraw
     current_user.pref[:campaigns_per_page] = params[:per_page] if params[:per_page]
     current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
-    @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
+    @campaigns = get_campaigns(page: 1, per_page: params[:per_page])
     set_options # Refresh options
 
     respond_with(@campaigns) do |format|
@@ -153,7 +153,7 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:campaigns_filter] = params[:status]
-    @campaigns = get_campaigns(:page => 1, :per_page => params[:per_page])
+    @campaigns = get_campaigns(page: 1, per_page: params[:per_page])
 
     respond_with(@campaigns) do |format|
       format.js { render :index }
@@ -171,7 +171,7 @@ private
       get_data_for_sidebar
       @campaigns = get_campaigns
       if @campaigns.blank?
-        @campaigns = get_campaigns(:page => current_page - 1) if current_page > 1
+        @campaigns = get_campaigns(page: current_page - 1) if current_page > 1
         render :index and return
       end
       # At this point render destroy.js
@@ -185,11 +185,11 @@ private
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @campaign_status_total = HashWithIndifferentAccess[
-      :all => Campaign.my.count,
-      :other => 0
+      all: Campaign.my.count,
+      other: 0
     ]
     Setting.campaign_status.each do |key|
-      @campaign_status_total[key] = Campaign.my.where(:status => key.to_s).count
+      @campaign_status_total[key] = Campaign.my.where(status: key.to_s).count
       @campaign_status_total[:other] -= @campaign_status_total[key]
     end
     @campaign_status_total[:other] += @campaign_status_total[:all]

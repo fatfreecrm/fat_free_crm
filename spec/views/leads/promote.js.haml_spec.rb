@@ -18,7 +18,7 @@ describe "/leads/promote" do
 
   describe "no errors :" do
     before do
-      assign(:lead, @lead = FactoryGirl.create(:lead, :status => "converted", :user => current_user, :assignee => current_user))
+      assign(:lead, @lead = FactoryGirl.create(:lead, status: "converted", user: current_user, assignee: current_user))
     end
 
     describe "from lead landing page -" do
@@ -94,7 +94,7 @@ describe "/leads/promote" do
 
   describe "validation errors:" do
     before do
-      assign(:lead, @lead = FactoryGirl.create(:lead, :status => "new", :user => current_user, :assignee => current_user))
+      assign(:lead, @lead = FactoryGirl.create(:lead, status: "new", user: current_user, assignee: current_user))
     end
 
     describe "from lead landing page -" do

@@ -4,15 +4,15 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::UsersController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/users')", :only => [ :index, :show ]
+  before_filter "set_current_tab('admin/users')", only: [ :index, :show ]
 
-  load_resource :except => [:create]
+  load_resource except: [:create]
 
   # GET /admin/users
   # GET /admin/users.xml                                                   HTML
   #----------------------------------------------------------------------------
   def index
-    @users = get_users(:page => params[:page])
+    @users = get_users(page: params[:page])
     respond_with(@users)
   end
 
@@ -136,7 +136,7 @@ private
     scope = User.by_id
     scope = scope.merge(@search.result)
     scope = scope.text_search(current_query)      if current_query.present?
-    scope = scope.paginate(:page => current_page) if wants.html? || wants.js? || wants.xml?
+    scope = scope.paginate(page: current_page) if wants.html? || wants.js? || wants.xml?
     scope
   end
 end

@@ -17,20 +17,20 @@ describe "/leads/index" do
   end
 
   it "should render list of accounts if list of leads is not empty" do
-    assign(:leads, [ FactoryGirl.create(:lead) ].paginate(:page => 1, :per_page => 20))
+    assign(:leads, [ FactoryGirl.create(:lead) ].paginate(page: 1, per_page: 20))
 
     render
-    expect(view).to render_template(:partial => "_lead")
-    expect(view).to render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "_lead")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no leads" do
-    assign(:leads, [].paginate(:page => 1, :per_page => 20))
+    assign(:leads, [].paginate(page: 1, per_page: 20))
 
     render
-    expect(view).not_to render_template(:partial => "_leads")
-    expect(view).to render_template(:partial => "shared/_empty")
-    expect(view).to render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).not_to render_template(partial: "_leads")
+    expect(view).to render_template(partial: "shared/_empty")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 
 end

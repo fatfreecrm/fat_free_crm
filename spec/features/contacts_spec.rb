@@ -12,11 +12,11 @@ feature 'Contacts', %q{
 } do
 
   before :each do
-    do_login_if_not_already(:first_name => "Bill", :last_name => "Murray")
+    do_login_if_not_already(first_name: "Bill", last_name: "Murray")
   end
 
   scenario 'should view a list of contacts' do
-    4.times { |i| FactoryGirl.create(:contact, :first_name => "Test", :last_name => "Subject \##{i}") }
+    4.times { |i| FactoryGirl.create(:contact, first_name: "Test", last_name: "Subject \##{i}") }
     visit contacts_page
     expect(contacts_element).to have_content('Test Subject #0')
     expect(contacts_element).to have_content('Test Subject #1')
@@ -25,17 +25,17 @@ feature 'Contacts', %q{
     expect(find('.title_tools')).to have_content('Create Contact')
   end
 
-  scenario 'should create a contact', :js => true do
+  scenario 'should create a contact', js: true do
     with_versioning do
       visit contacts_page
       click_link 'Create Contact'
-      expect(page).to have_selector('#contact_first_name', :visible => true)
-      fill_in 'contact_first_name', :with => 'Testy'
-      fill_in 'contact_last_name', :with => 'McTest'
-      fill_in 'contact_email', :with => "testy.mctest@example.com"
-      fill_in 'contact_phone', :with => '+44 1234 567890'
+      expect(page).to have_selector('#contact_first_name', visible: true)
+      fill_in 'contact_first_name', with: 'Testy'
+      fill_in 'contact_last_name', with: 'McTest'
+      fill_in 'contact_email', with: "testy.mctest@example.com"
+      fill_in 'contact_phone', with: '+44 1234 567890'
       click_link 'Comment'
-      fill_in 'comment_body', :with => 'This is a very important person.'
+      fill_in 'comment_body', with: 'This is a very important person.'
       click_button 'Create Contact'
       expect(contacts_element).to have_content('Testy McTest')
       contacts_element.click_link 'Testy McTest'
@@ -46,26 +46,26 @@ feature 'Contacts', %q{
     end
   end
 
-  scenario "remembers the comment field when the creation was unsuccessful", :js => true do
+  scenario "remembers the comment field when the creation was unsuccessful", js: true do
     visit contacts_page
     click_link 'Create Contact'
 
     click_link 'Comment'
-    fill_in 'comment_body', :with => 'This is a very important person.'
+    fill_in 'comment_body', with: 'This is a very important person.'
     click_button 'Create Contact'
 
-    expect(page).to have_field("comment_body", :with => 'This is a very important person.')
+    expect(page).to have_field("comment_body", with: 'This is a very important person.')
   end
 
-  scenario 'should view and edit a contact', :js => true do
-    FactoryGirl.create(:contact, :first_name => "Testy", :last_name => "McTest")
+  scenario 'should view and edit a contact', js: true do
+    FactoryGirl.create(:contact, first_name: "Testy", last_name: "McTest")
     with_versioning do
       visit contacts_page
       click_link 'Testy McTest'
       click_link 'Edit'
-      fill_in 'contact_first_name', :with => 'Test'
-      fill_in 'contact_last_name', :with => 'Subject'
-      fill_in 'contact_email', :with => "test.subject@example.com"
+      fill_in 'contact_first_name', with: 'Test'
+      fill_in 'contact_last_name', with: 'Subject'
+      fill_in 'contact_email', with: "test.subject@example.com"
       click_button 'Save Contact'
       expect(find('#edit_contact_title')).to have_content('Test Subject')
       click_link 'Dashboard'
@@ -73,8 +73,8 @@ feature 'Contacts', %q{
     end
   end
 
-  scenario 'should delete a contact', :js => true do
-    FactoryGirl.create(:contact, :first_name => "Test", :last_name => "Subject")
+  scenario 'should delete a contact', js: true do
+    FactoryGirl.create(:contact, first_name: "Test", last_name: "Subject")
     visit contacts_page
     click_link 'Test Subject'
     click_link 'Delete?'
@@ -84,18 +84,18 @@ feature 'Contacts', %q{
     expect(page).not_to have_content('Test Subject')
   end
 
-  scenario 'should search for a contact', :js => true do
-    2.times { |i| FactoryGirl.create(:contact, :first_name => "Test", :last_name => "Subject \##{i}") }
+  scenario 'should search for a contact', js: true do
+    2.times { |i| FactoryGirl.create(:contact, first_name: "Test", last_name: "Subject \##{i}") }
     visit contacts_page
     expect(contacts_element).to have_content('Test Subject #0')
     expect(contacts_element).to have_content('Test Subject #1')
-    fill_in 'query', :with => 'Test Subject #1'
+    fill_in 'query', with: 'Test Subject #1'
     expect(contacts_element).to have_content('Test Subject #1')
     expect(contacts_element).not_to have_content('Test Subject #0')
-    fill_in 'query', :with => 'Test Subject'
+    fill_in 'query', with: 'Test Subject'
     expect(contacts_element).to have_content('Test Subject #0')
     expect(contacts_element).to have_content('Test Subject #1')
-    fill_in 'query', :with => "Fake contact"
+    fill_in 'query', with: "Fake contact"
     expect(contacts_element).not_to have_content('Test Subject #0')
     expect(contacts_element).not_to have_content('Test Subject #1')
   end

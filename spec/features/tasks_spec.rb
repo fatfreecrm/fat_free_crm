@@ -12,11 +12,11 @@ feature 'Tasks', %q{
 } do
 
   before :each do
-    do_login_if_not_already(:first_name => 'Bill', :last_name => 'Murray')
+    do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
   end
 
   scenario 'should view a list of tasks which are assigned to the logged in user' do
-    4.times { |i| FactoryGirl.create(:task, :name => "Task #{i}", :user => @user) }
+    4.times { |i| FactoryGirl.create(:task, name: "Task #{i}", user: @user) }
     visit tasks_page
     expect(page).to have_content('Task 0')
     expect(page).to have_content('Task 1')
@@ -25,16 +25,16 @@ feature 'Tasks', %q{
     expect(page).to have_content('Create Task')
   end
 
-  scenario 'should create a new task', :js => true do
+  scenario 'should create a new task', js: true do
     with_versioning do
       visit tasks_page
       expect(page).to have_content('Create Task')
       click_link 'Create Task'
-      expect(page).to have_selector('#task_name', :visible => true)
-      fill_in 'task_name', :with => 'Task I Need To Do'
-      chosen_select('Tomorrow', :from => 'task_bucket')
-      chosen_select('Myself', :from => 'task_assigned_to')
-      chosen_select('Call', :from => 'task_category')
+      expect(page).to have_selector('#task_name', visible: true)
+      fill_in 'task_name', with: 'Task I Need To Do'
+      chosen_select('Tomorrow', from: 'task_bucket')
+      chosen_select('Myself', from: 'task_assigned_to')
+      chosen_select('Call', from: 'task_category')
       click_button 'Create Task'
       expect(page).to have_content('Task I Need To Do')
 
@@ -43,16 +43,16 @@ feature 'Tasks', %q{
     end
   end
 
-  scenario 'creating a task for another user', :js => true do
-    FactoryGirl.create(:user, :first_name => 'Another', :last_name => 'User')
+  scenario 'creating a task for another user', js: true do
+    FactoryGirl.create(:user, first_name: 'Another', last_name: 'User')
     with_versioning do
       visit tasks_page
       click_link 'Create Task'
-      expect(page).to have_selector('#task_name', :visible => true)
-      fill_in 'task_name', :with => 'Task For Someone Else'
-      chosen_select('Tomorrow', :from => 'task_bucket')
-      chosen_select('Another User', :from => 'task_assigned_to')
-      chosen_select('Call', :from => 'task_category')
+      expect(page).to have_selector('#task_name', visible: true)
+      fill_in 'task_name', with: 'Task For Someone Else'
+      chosen_select('Tomorrow', from: 'task_bucket')
+      chosen_select('Another User', from: 'task_assigned_to')
+      chosen_select('Call', from: 'task_category')
       click_button 'Create Task'
       expect(page).to have_content('The task has been created and assigned to Another User')
 
@@ -70,12 +70,12 @@ feature 'Tasks', %q{
     end
   end
 
-  scenario 'should view and edit a task', :js => true do
-    FactoryGirl.create(:task, :id => 42, :name => 'Example Task', :user => @user)
+  scenario 'should view and edit a task', js: true do
+    FactoryGirl.create(:task, id: 42, name: 'Example Task', user: @user)
     with_versioning do
       visit tasks_page
       click_edit_for_task_id(42)
-      fill_in 'task_name', :with => 'Updated Task'
+      fill_in 'task_name', with: 'Updated Task'
       click_button 'Save Task'
       expect(page).to have_content('Updated Task')
       click_link 'Dashboard'
@@ -83,8 +83,8 @@ feature 'Tasks', %q{
     end
   end
 
-  scenario 'should delete a task', :js => true do
-    FactoryGirl.create(:task, :id => 42, :name => 'Outdated Task', :user => @user)
+  scenario 'should delete a task', js: true do
+    FactoryGirl.create(:task, id: 42, name: 'Outdated Task', user: @user)
     visit tasks_page
     click_delete_for_task_id(42)
     click_link 'Tasks'

@@ -36,7 +36,7 @@ describe Campaign do
   before { login }
 
   it "should create a new instance given valid attributes" do
-    Campaign.create!(:name => "Campaign", :user => FactoryGirl.create(:user))
+    Campaign.create!(name: "Campaign", user: FactoryGirl.create(:user))
   end
 
   describe "Attach" do
@@ -45,9 +45,9 @@ describe Campaign do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, :asset => @campaign, :user => current_user)
-      @lead = FactoryGirl.create(:lead, :campaign => @campaign)
-      @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign)
+      @task = FactoryGirl.create(:task, asset: @campaign, user: current_user)
+      @lead = FactoryGirl.create(:lead, campaign: @campaign)
+      @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign)
 
       expect(@campaign.attach!(@task)).to eq(nil)
       expect(@campaign.attach!(@lead)).to eq(nil)
@@ -55,7 +55,7 @@ describe Campaign do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, :user => current_user)
+      @task = FactoryGirl.create(:task, user: current_user)
       @lead = FactoryGirl.create(:lead)
       @opportunity = FactoryGirl.create(:opportunity)
 
@@ -82,11 +82,11 @@ describe Campaign do
 
   describe "Detach" do
     before do
-      @campaign = FactoryGirl.create(:campaign, :leads_count => 42, :opportunities_count => 42)
+      @campaign = FactoryGirl.create(:campaign, leads_count: 42, opportunities_count: 42)
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @campaign, :user => current_user)
+      @task = FactoryGirl.create(:task, asset: @campaign, user: current_user)
       expect(@campaign.tasks.count).to eq(1)
 
       @campaign.discard!(@task)
@@ -95,7 +95,7 @@ describe Campaign do
     end
 
     it "should discard a lead" do
-      @lead = FactoryGirl.create(:lead, :campaign => @campaign)
+      @lead = FactoryGirl.create(:lead, campaign: @campaign)
       expect(@campaign.reload.leads_count).to eq(43)
 
       @campaign.discard!(@lead)
@@ -104,7 +104,7 @@ describe Campaign do
     end
 
     it "should discard an opportunity" do
-      @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign)
+      @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign)
       expect(@campaign.reload.opportunities_count).to eq(43)
 
       @campaign.discard!(@opportunity)
@@ -117,8 +117,8 @@ describe Campaign do
     describe "assigned campaign" do
       before do
         Campaign.delete_all
-        FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user, :first_name => "John", :last_name => "Smith"), :assignee => FactoryGirl.create(:user))
-        FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
+        FactoryGirl.create(:campaign, user: FactoryGirl.create(:user, first_name: "John", last_name: "Smith"), assignee: FactoryGirl.create(:user))
+        FactoryGirl.create(:campaign, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil))
       end
       it_should_behave_like("exportable") do
         let(:exported) { Campaign.all }
@@ -128,8 +128,8 @@ describe Campaign do
     describe "unassigned campaign" do
       before do
         Campaign.delete_all
-        FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :assignee => nil)
-        FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
+        FactoryGirl.create(:campaign, user: FactoryGirl.create(:user), assignee: nil)
+        FactoryGirl.create(:campaign, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil)
       end
       it_should_behave_like("exportable") do
         let(:exported) { Campaign.all }

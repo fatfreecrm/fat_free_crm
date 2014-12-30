@@ -31,11 +31,11 @@
 
 class Campaign < ActiveRecord::Base
   belongs_to  :user
-  belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
-  has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
-  has_many    :leads, -> { order "id DESC" }, :dependent => :destroy
-  has_many    :opportunities, -> { order "id DESC" }, :dependent => :destroy
-  has_many    :emails, :as => :mediator
+  belongs_to  :assignee, class_name: "User", foreign_key: :assigned_to
+  has_many    :tasks, as: :asset, dependent: :destroy#, :order => 'created_at DESC'
+  has_many    :leads, -> { order "id DESC" }, dependent: :destroy
+  has_many    :opportunities, -> { order "id DESC" }, dependent: :destroy
+  has_many    :emails, as: :mediator
 
   serialize :subscribed_users, Set
 
@@ -51,16 +51,16 @@ class Campaign < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail :class_name => 'Version', :ignore => [ :subscribed_users ]
+  has_paper_trail class_name: 'Version', ignore: [ :subscribed_users ]
   has_fields
   exportable
-  sortable :by => [ "name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  sortable by: [ "name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC" ], default: "created_at DESC"
 
   has_ransackable_associations %w(leads opportunities tags activities emails comments tasks)
   ransack_can_autocomplete
 
-  validates_presence_of :name, :message => :missing_campaign_name
-  validates_uniqueness_of :name, :scope => [ :user_id, :deleted_at ]
+  validates_presence_of :name, message: :missing_campaign_name
+  validates_uniqueness_of :name, scope: [ :user_id, :deleted_at ]
   validate :start_and_end_dates
   validate :users_for_shared_access
 

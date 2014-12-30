@@ -37,7 +37,7 @@ class Preference < ActiveRecord::Base
     if pref = Preference.find_by(name: name.to_s, user_id: self.user.id)
       pref.update_attribute(:value, encoded)
     else
-      Preference.create(:user => self.user, :name => name.to_s, :value => encoded)
+      Preference.create(user: self.user, name: name.to_s, value: encoded)
     end
     cached_prefs[name.to_s] = value
   end

@@ -61,9 +61,9 @@ module FatFreeCRM
           # Create comment if sender has permissions for entity
           if sender_has_permissions_for?(entity)
             parsed_reply = EmailReplyParser.parse_reply(plain_text_body(email))
-            Comment.create :user        => @sender,
-                           :commentable => entity,
-                           :comment     => parsed_reply
+            Comment.create user:        @sender,
+                           commentable: entity,
+                           comment:     parsed_reply
           end
         end
       end

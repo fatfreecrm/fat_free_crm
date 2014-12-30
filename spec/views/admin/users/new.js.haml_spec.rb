@@ -7,7 +7,7 @@ require 'spec_helper'
 
 describe "admin/users/new" do
   before do
-    login_and_assign(:admin => true)
+    login_and_assign(admin: true)
     assign(:user, User.new)
   end
 

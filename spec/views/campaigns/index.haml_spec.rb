@@ -20,17 +20,17 @@ describe "/campaigns/index" do
     assign(:campaigns, [ FactoryGirl.create(:campaign) ].paginate)
 
     render
-    expect(view).to render_template(:partial => "_campaign")
-    expect(view).to render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "_campaign")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no campaigns" do
     assign(:campaigns, [].paginate)
 
     render
-    expect(view).not_to render_template(:partial => "_campaigns")
-    expect(view).to render_template(:partial => "shared/_empty")
-    expect(view).to render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).not_to render_template(partial: "_campaigns")
+    expect(view).to render_template(partial: "shared/_empty")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 
 end

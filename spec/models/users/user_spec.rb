@@ -44,10 +44,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe User do
   it "should create a new instance given valid attributes" do
     User.create!(
-      :username => "username",
-      :email    => "user@example.com",
-      :password => "password",
-      :password_confirmation => "password"
+      username: "username",
+      email:    "user@example.com",
+      password: "password",
+      password_confirmation: "password"
     )
   end
 
@@ -62,14 +62,14 @@ describe User do
 
     %w(account campaign lead contact opportunity).each do |asset|
       it "should not destroy the user if she owns #{asset}" do
-        FactoryGirl.create(asset, :user => @user)
+        FactoryGirl.create(asset, user: @user)
         @user.destroy
         expect { User.find(@user.id) }.to_not raise_error()
         expect(@user.destroyed?).to eq(false)
       end
 
       it "should not destroy the user if she has #{asset} assigned" do
-        FactoryGirl.create(asset, :assignee => @user)
+        FactoryGirl.create(asset, assignee: @user)
         @user.destroy
         expect { User.find(@user.id) }.to_not raise_error()
         expect(@user.destroyed?).to eq(false)
@@ -78,8 +78,8 @@ describe User do
 
     it "should not destroy the user if she owns a comment" do
       login
-      account = FactoryGirl.create(:account, :user => current_user)
-      FactoryGirl.create(:comment, :user => @user, :commentable => account)
+      account = FactoryGirl.create(:account, user: current_user)
+      FactoryGirl.create(:comment, user: @user, commentable: account)
       @user.destroy
       expect { User.find(@user.id) }.to_not raise_error()
       expect(@user.destroyed?).to eq(false)
@@ -99,16 +99,16 @@ describe User do
     end
 
     it "once the user gets deleted all her permissions must be deleted too" do
-      FactoryGirl.create(:permission, :user => @user, :asset => FactoryGirl.create(:account))
-      FactoryGirl.create(:permission, :user => @user, :asset => FactoryGirl.create(:contact))
+      FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:account))
+      FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:contact))
       expect(@user.permissions.count).to eq(2)
       @user.destroy
       expect(@user.permissions.count).to eq(0)
     end
 
     it "once the user gets deleted all her preferences must be deleted too" do
-      FactoryGirl.create(:preference, :user => @user, :name => "Hello", :value => "World")
-      FactoryGirl.create(:preference, :user => @user, :name => "World", :value => "Hello")
+      FactoryGirl.create(:preference, user: @user, name: "Hello", value: "World")
+      FactoryGirl.create(:preference, user: @user, name: "World", value: "Hello")
       expect(@user.preferences.count).to eq(2)
       @user.destroy
       expect(@user.preferences.count).to eq(0)
@@ -117,13 +117,13 @@ describe User do
 
   it "should set suspended timestamp upon creation if signups need approval and the user is not an admin" do
     allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-    @user = FactoryGirl.create(:user, :suspended_at => nil)
+    @user = FactoryGirl.create(:user, suspended_at: nil)
     expect(@user).to be_suspended
   end
 
   it "should not set suspended timestamp upon creation if signups need approval and the user is an admin" do
     allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-    @user = FactoryGirl.create(:user, :admin => true, :suspended_at => nil)
+    @user = FactoryGirl.create(:user, admin: true, suspended_at: nil)
     expect(@user).not_to be_suspended
   end
 
@@ -131,15 +131,15 @@ describe User do
     describe "have_assigned_opportunities" do
       before :each do
         @user1 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, :assignee => @user1, :stage => 'analysis')
+        FactoryGirl.create(:opportunity, assignee: @user1, stage: 'analysis')
 
         @user2 = FactoryGirl.create(:user)
 
         @user3 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, :assignee => @user3, :stage => 'won')
+        FactoryGirl.create(:opportunity, assignee: @user3, stage: 'won')
 
         @user4 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, :assignee => @user4, :stage => 'lost')
+        FactoryGirl.create(:opportunity, assignee: @user4, stage: 'lost')
       end
 
       it "includes users with assigned opportunities" do
@@ -161,8 +161,8 @@ describe User do
     describe "assigned_opportunities" do
       before :each do
         @user = FactoryGirl.create(:user)
-        @opportunity1 = FactoryGirl.create(:opportunity, :assignee => @user)
-        @opportunity2 = FactoryGirl.create(:opportunity, :assignee => FactoryGirl.create(:user))
+        @opportunity1 = FactoryGirl.create(:opportunity, assignee: @user)
+        @opportunity2 = FactoryGirl.create(:opportunity, assignee: FactoryGirl.create(:user))
       end
 
       it "includes opportunities assigned to user" do
@@ -200,14 +200,14 @@ describe User do
 
   describe "Setting single access token" do
     it "should update single_access_token attribute if it is not set already" do
-      @user = FactoryGirl.create(:user, :single_access_token => nil)
+      @user = FactoryGirl.create(:user, single_access_token: nil)
 
       @user.set_single_access_token
       expect(@user.single_access_token).not_to eq(nil)
     end
 
     it "should not update single_access_token attribute if it is set already" do
-      @user = FactoryGirl.create(:user, :single_access_token => "token")
+      @user = FactoryGirl.create(:user, single_access_token: "token")
 
       @user.set_single_access_token
       expect(@user.single_access_token).to eq("token")

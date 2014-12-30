@@ -23,7 +23,7 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
     if attempted_record.blank?
       generalize_credentials_error_messages? ?
         add_general_credentials_error :
-        errors.add(login_field, I18n.t('error_messages.login_not_found', :default => "is not valid"))
+        errors.add(login_field, I18n.t('error_messages.login_not_found', default: "is not valid"))
       return
     end
 
@@ -31,7 +31,7 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
       self.invalid_password = true
       generalize_credentials_error_messages? ?
         add_general_credentials_error :
-        errors.add(password_field, I18n.t('error_messages.password_invalid', :default => "is not valid"))
+        errors.add(password_field, I18n.t('error_messages.password_invalid', default: "is not valid"))
       return
     end
   end

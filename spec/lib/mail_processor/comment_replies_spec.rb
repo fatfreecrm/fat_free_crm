@@ -21,7 +21,7 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
   #------------------------------------------------------------------------------
   describe "Processing new emails" do
     before do
-      FactoryGirl.create(:user, :email => "aaron@example.com")
+      FactoryGirl.create(:user, email: "aaron@example.com")
     end
 
     before(:each) do
@@ -33,10 +33,10 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
       @contact = FactoryGirl.create(:contact)
       comment_reply = "This is a new comment reply via email"
 
-      mail = Mail.new :from    => "Aaron Assembler <aaron@example.com>",
-                      :to      => "FFCRM Comments <crm-commment@example.com>",
-                      :subject => "[contact:#{@contact.id}] Test Contact",
-                      :body    => comment_reply
+      mail = Mail.new from:    "Aaron Assembler <aaron@example.com>",
+                      to:      "FFCRM Comments <crm-commment@example.com>",
+                      subject: "[contact:#{@contact.id}] Test Contact",
+                      body:    comment_reply
       mock_message mail.to_s
 
       expect(@crawler).to receive(:archive).once
@@ -51,10 +51,10 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
       @opportunity = FactoryGirl.create(:opportunity)
       comment_reply = "This is a new comment reply via email"
 
-      mail = Mail.new :from    => "Aaron Assembler <aaron@example.com>",
-                      :to      => "FFCRM Comments <crm-commment@example.com>",
-                      :subject => "[op:#{@opportunity.id}] Test Opportunity",
-                      :body    => comment_reply
+      mail = Mail.new from:    "Aaron Assembler <aaron@example.com>",
+                      to:      "FFCRM Comments <crm-commment@example.com>",
+                      subject: "[op:#{@opportunity.id}] Test Opportunity",
+                      body:    comment_reply
       mock_message mail.to_s
 
       expect(@crawler).to receive(:archive).once

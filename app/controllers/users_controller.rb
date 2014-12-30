@@ -5,12 +5,12 @@
 #------------------------------------------------------------------------------
 class UsersController < ApplicationController
 
-  before_filter :set_current_tab, :only => [ :show, :opportunities_overview ] # Don't hightlight any tabs.
+  before_filter :set_current_tab, only: [ :show, :opportunities_overview ] # Don't hightlight any tabs.
 
   check_authorization
   load_and_authorize_resource # handles all security
 
-  respond_to :html, :only => [ :show, :new ]
+  respond_to :html, only: [ :show, :new ]
 
   # GET /users/1
   # GET /users/1.js
@@ -122,7 +122,7 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def redraw
     current_user.preference[:locale] = params[:locale]
-    render :js => %Q{window.location.href = "#{user_path(current_user)}";}
+    render js: %Q{window.location.href = "#{user_path(current_user)}";}
   end
 
   # GET /users/opportunities_overview

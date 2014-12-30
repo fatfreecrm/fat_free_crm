@@ -14,22 +14,22 @@ describe ApplicationHelper do
 
   describe "link_to_emails" do
     it "should add Bcc: if dropbox address is set" do
-      allow(Setting).to receive(:email_dropbox).and_return({ :address => "drop@example.com" })
+      allow(Setting).to receive(:email_dropbox).and_return({ address: "drop@example.com" })
       expect(helper.link_to_email("hello@example.com")).to eq('<a href="mailto:hello@example.com?bcc=drop@example.com" title="hello@example.com">hello@example.com</a>')
     end
 
     it "should not add Bcc: if dropbox address is not set" do
-      allow(Setting).to receive(:email_dropbox).and_return({ :address => nil })
+      allow(Setting).to receive(:email_dropbox).and_return({ address: nil })
       expect(helper.link_to_email("hello@example.com")).to eq('<a href="mailto:hello@example.com" title="hello@example.com">hello@example.com</a>')
     end
 
     it "should truncate long emails" do
-      allow(Setting).to receive(:email_dropbox).and_return({ :address => nil })
+      allow(Setting).to receive(:email_dropbox).and_return({ address: nil })
       expect(helper.link_to_email("hello@example.com", 5)).to eq('<a href="mailto:hello@example.com" title="hello@example.com">he...</a>')
     end
 
     it "should escape HTML entities" do
-      allow(Setting).to receive(:email_dropbox).and_return({ :address => 'dr&op@example.com' })
+      allow(Setting).to receive(:email_dropbox).and_return({ address: 'dr&op@example.com' })
       expect(helper.link_to_email("hell&o@example.com")).to eq('<a href="mailto:hell&amp;o@example.com?bcc=dr&amp;op@example.com" title="hell&amp;o@example.com">hell&amp;o@example.com</a>')
     end
   end
@@ -78,7 +78,7 @@ describe ApplicationHelper do
     end
   
     it "should return the contact 'show' outline stored in the user preferences" do
-      expect(@user).to receive(:pref).and_return({:contacts_show_view => 'long'})
+      expect(@user).to receive(:pref).and_return({contacts_show_view: 'long'})
       expect(helper.current_view_name).to eq('long')
     end
   

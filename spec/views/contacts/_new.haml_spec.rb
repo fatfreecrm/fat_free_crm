@@ -19,10 +19,10 @@ describe "/contacts/_new" do
 
   it "should render [create contact] form" do
     render
-    expect(view).to render_template(:partial => "contacts/_top_section")
-    expect(view).to render_template(:partial => "contacts/_extra")
-    expect(view).to render_template(:partial => "contacts/_web")
-    expect(view).to render_template(:partial => "entities/_permissions")
+    expect(view).to render_template(partial: "contacts/_top_section")
+    expect(view).to render_template(partial: "contacts/_extra")
+    expect(view).to render_template(partial: "contacts/_web")
+    expect(view).to render_template(partial: "entities/_permissions")
 
     expect(rendered).to have_tag("form[class=new_contact]")
   end

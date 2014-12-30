@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 class PasswordsController < ApplicationController
 
-  before_filter :load_user_using_perishable_token, :only => [ :edit, :update ]
+  before_filter :load_user_using_perishable_token, only: [ :edit, :update ]
   before_filter :require_no_user
 
   #----------------------------------------------------------------------------
@@ -22,7 +22,7 @@ class PasswordsController < ApplicationController
       redirect_to root_url
     else
       flash[:notice] = t(:msg_email_not_found)
-      redirect_to :action => :new
+      redirect_to action: :new
     end
   end
 

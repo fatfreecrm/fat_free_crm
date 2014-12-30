@@ -12,21 +12,21 @@ feature 'Users tab', %q{
 } do
 
   before(:each) do
-   do_login(:first_name => 'Captain', :last_name => 'Kirk', :admin => true)
+   do_login(first_name: 'Captain', last_name: 'Kirk', admin: true)
   end
 
-  scenario 'should create a new user', :js => true  do
-    FactoryGirl.create(:group, :name => "Superheroes")
+  scenario 'should create a new user', js: true  do
+    FactoryGirl.create(:group, name: "Superheroes")
     visit admin_users_path
     click_link 'Create User'
-    expect(page).to have_selector('#user_username', :visible => true)
-    fill_in 'user_username', :with => 'captainthunder'
-    fill_in 'user_email', :with => 'lightning@example.com'
-    fill_in 'user_first_name', :with => 'Captain'
-    fill_in 'user_last_name', :with => 'Thunder'
-    fill_in 'user_title', :with => 'Chief'
-    fill_in 'user_company', :with => 'Weather Inc.'
-    chosen_select('Superheroes', :from => 'user_group_ids')
+    expect(page).to have_selector('#user_username', visible: true)
+    fill_in 'user_username', with: 'captainthunder'
+    fill_in 'user_email', with: 'lightning@example.com'
+    fill_in 'user_first_name', with: 'Captain'
+    fill_in 'user_last_name', with: 'Thunder'
+    fill_in 'user_title', with: 'Chief'
+    fill_in 'user_company', with: 'Weather Inc.'
+    chosen_select('Superheroes', from: 'user_group_ids')
 
     click_button 'Create User'
     expect(find('#users')).to have_content('Captain Thunder')

@@ -8,7 +8,7 @@ require 'spec_helper'
 describe "/leads/reject" do
   before do
     login_and_assign
-    assign(:lead, @lead = FactoryGirl.create(:lead, :status => "new"))
+    assign(:lead, @lead = FactoryGirl.create(:lead, status: "new"))
     assign(:lead_status_total, Hash.new(1))
   end
 

@@ -43,21 +43,21 @@ class User < ActiveRecord::Base
   before_create  :check_if_needs_approval
   before_destroy :check_if_current_user, :check_if_has_related_assets
 
-  has_one     :avatar, :as => :entity, :dependent => :destroy  # Personal avatar.
+  has_one     :avatar, as: :entity, dependent: :destroy  # Personal avatar.
   has_many    :avatars                                         # As owner who uploaded it, ex. Contact avatar.
-  has_many    :comments, :as => :commentable                   # As owner who created a comment.
+  has_many    :comments, as: :commentable                   # As owner who created a comment.
   has_many    :accounts
   has_many    :campaigns
   has_many    :leads
   has_many    :contacts
   has_many    :opportunities
-  has_many    :assigned_opportunities, :class_name => 'Opportunity', :foreign_key => 'assigned_to'
-  has_many    :permissions, :dependent => :destroy
-  has_many    :preferences, :dependent => :destroy
+  has_many    :assigned_opportunities, class_name: 'Opportunity', foreign_key: 'assigned_to'
+  has_many    :permissions, dependent: :destroy
+  has_many    :preferences, dependent: :destroy
   has_many    :lists
   has_and_belongs_to_many :groups
 
-  has_paper_trail :class_name => 'Version', :ignore => [:last_request_at, :perishable_token]
+  has_paper_trail class_name: 'Version', ignore: [:last_request_at, :perishable_token]
 
   scope :by_id, -> { order('id DESC') }
   scope :without, ->(user) { where('id != ?', user.id).by_name }
@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
 
   scope :text_search, ->(query) {
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
-    where('upper(username) LIKE upper(:s) OR upper(email) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', :s => "%#{query}%")
+    where('upper(username) LIKE upper(:s) OR upper(email) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', s: "%#{query}%")
   }
 
   scope :my, -> { accessible_by(User.current_ability) }
@@ -78,10 +78,10 @@ class User < ActiveRecord::Base
 
   acts_as_authentic do |c|
     c.session_class = Authentication
-    c.validates_uniqueness_of_login_field_options = { :message => :username_taken }
-    c.validates_length_of_login_field_options     = { :minimum => 1, :message => :missing_username }
-    c.validates_uniqueness_of_email_field_options = { :message => :email_in_use }
-    c.validates_length_of_password_field_options  = { :minimum => 0, :allow_blank => true, :if => :require_password? }
+    c.validates_uniqueness_of_login_field_options = { message: :username_taken }
+    c.validates_length_of_login_field_options     = { minimum: 1, message: :missing_username }
+    c.validates_uniqueness_of_email_field_options = { message: :email_in_use }
+    c.validates_length_of_password_field_options  = { minimum: 0, allow_blank: true, if: :require_password? }
     c.ignore_blank_passwords = true
     c.crypto_provider = Authlogic::CryptoProviders::Sha512
   end
@@ -90,7 +90,7 @@ class User < ActiveRecord::Base
   # observer without extra authentication query.
   cattr_accessor :current_user
 
-  validates_presence_of :email, :message => :missing_email
+  validates_presence_of :email, message: :missing_email
 
   #----------------------------------------------------------------------------
   def name

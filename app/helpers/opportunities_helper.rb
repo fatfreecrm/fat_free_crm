@@ -16,15 +16,15 @@ module OpportunitiesHelper
   def opportunity_summary(opportunity)
     summary, amount = [], []
     summary << (opportunity.stage ? t(opportunity.stage) : t(:other))
-    summary << number_to_currency(opportunity.weighted_amount, :precision => 0)
+    summary << number_to_currency(opportunity.weighted_amount, precision: 0)
     unless %w(won lost).include?(opportunity.stage)
-      amount << number_to_currency(opportunity.amount || 0, :precision => 0)
-      amount << (opportunity.discount ? t(:discount_number, number_to_currency(opportunity.discount, :precision => 0)) : t(:no_discount))
+      amount << number_to_currency(opportunity.amount || 0, precision: 0)
+      amount << (opportunity.discount ? t(:discount_number, number_to_currency(opportunity.discount, precision: 0)) : t(:no_discount))
       amount << t(:probability_number, (opportunity.probability || 0).to_s + '%')
       summary << amount.join(' ')
     end
     if opportunity.closes_on
-      summary << t(:closing_date, l(opportunity.closes_on, :format => :mmddyy))
+      summary << t(:closing_date, l(opportunity.closes_on, format: :mmddyy))
     else
       summary << t(:no_closing_date)
     end
@@ -41,8 +41,8 @@ module OpportunitiesHelper
     collection_select :opportunity, :campaign_id, campaigns, :id, :name, options,
                       {:"data-placeholder" => t(:select_a_campaign),
                        :"data-url" => auto_complete_campaigns_path(format: 'json'),
-                       :style => "width:330px; display:none;",
-                       :class => 'ajax_chosen' }
+                       style: "width:330px; display:none;",
+                       class: 'ajax_chosen' }
   end
 
 end

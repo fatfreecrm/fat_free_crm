@@ -30,11 +30,11 @@ describe Field do
 
   it "should create a new instance given valid attributes" do
     Field.create!(
-      :name      => 'skype_address',
-      :label     => 'Skype address',
-      :as        => 'string',
-      :maxlength => 220,
-      :position  => 10
+      name:      'skype_address',
+      label:     'Skype address',
+      as:        'string',
+      maxlength: 220,
+      position:  10
     )
   end
 
@@ -49,8 +49,8 @@ describe Field do
 
   it "should be able to display a empty multi_select value" do
     field = Field.new(
-      :label => "Availability",
-      :name  => "availability"
+      label: "Availability",
+      name:  "availability"
     )
     object = double('Object')
 

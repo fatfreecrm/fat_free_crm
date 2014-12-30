@@ -19,11 +19,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Setting do
 
   it "should create a new instance given valid attributes" do
-    Setting.create!(:name => "name", :value => "value")
+    Setting.create!(name: "name", value: "value")
   end
 
   it "should find existing setting by its name using [] or method notations, and cache settings" do
-    @setting = FactoryGirl.create(:setting, :name => "thingymabob", :value => "magoody")
+    @setting = FactoryGirl.create(:setting, name: "thingymabob", value: "magoody")
     expect(Setting.cache.has_key?("thingymabob")).to eq(false)
     expect(Setting[:thingymabob]).to eq("magoody")
     expect(Setting.cache.has_key?("thingymabob")).to eq(true)
@@ -31,8 +31,8 @@ describe Setting do
   end
 
   it "should use value from YAML if setting is missing from database" do
-    @setting = FactoryGirl.create(:setting, :name => "magoody", :value => nil)
-    Setting.yaml_settings.merge!(:magoody => "thingymabob")
+    @setting = FactoryGirl.create(:setting, name: "magoody", value: nil)
+    Setting.yaml_settings.merge!(magoody: "thingymabob")
     expect(Setting[:magoody]).to eq("thingymabob")
     expect(Setting.magoody).to eq("thingymabob")
   end

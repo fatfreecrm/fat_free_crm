@@ -8,7 +8,7 @@ class DateTimeInput < SimpleForm::Inputs::DateTimeInput
   def input
     add_autocomplete!
     input_html_options.merge(input_options)
-    input_html_options.merge!(:value => value)
+    input_html_options.merge!(value: value)
     @builder.text_field(attribute_name, input_html_options)
   end
 

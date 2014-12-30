@@ -21,7 +21,7 @@ FactoryGirl.define do
     created_at          { FactoryGirl.generate(:time) }
   end
 
-  factory :completed_task, :parent => :task do
+  factory :completed_task, parent: :task do
     completed_at { Date.yesterday }
   end
 end

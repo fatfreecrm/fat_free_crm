@@ -24,7 +24,7 @@ class TaskObserver < ActiveRecord::Observer
   private
 
   def log_activity(item, event)
-    item.send(item.class.versions_association_name).create(:event => event, :whodunnit => PaperTrail.whodunnit)
+    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.whodunnit)
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_task_observer, self)

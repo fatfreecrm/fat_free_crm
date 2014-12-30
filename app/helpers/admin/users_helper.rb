@@ -6,18 +6,18 @@
 module Admin::UsersHelper
 
   def link_to_suspend(user)
-    link_to(t(:suspend) + "!", suspend_admin_user_path(user), :method => :put, :remote => true)
+    link_to(t(:suspend) + "!", suspend_admin_user_path(user), method: :put, remote: true)
   end
 
   #----------------------------------------------------------------------------
   def link_to_reactivate(user)
     name = user.awaits_approval? ? t(:approve) + "!" : t(:reactivate) + "!"
-    link_to(name, reactivate_admin_user_path(user), :method => :put, :remote => true)
+    link_to(name, reactivate_admin_user_path(user), method: :put, remote: true)
   end
 
   #----------------------------------------------------------------------------
   def link_to_confirm(user)
-    link_to(t(:delete) + "?", confirm_admin_user_path(user), :method => :get, :remote => true)
+    link_to(t(:delete) + "?", confirm_admin_user_path(user), method: :get, remote: true)
   end
 
   # User summary info for RSS/ATOM feeds.
@@ -32,11 +32,11 @@ module Admin::UsersHelper
     summary << "#{t :phone_small}: #{user.phone}" unless user.phone.blank?
     summary << "#{t :mobile_small}: #{user.mobile}" unless user.mobile.blank?
     summary << if !user.suspended?
-      t(:user_since, l(user.created_at.to_date, :format => :mmddyy))
+      t(:user_since, l(user.created_at.to_date, format: :mmddyy))
     elsif user.awaits_approval?
-      t(:user_signed_up_on, l(user.created_at, :format => :mmddhhss))
+      t(:user_signed_up_on, l(user.created_at, format: :mmddhhss))
     else
-      t(:user_suspended_on, l(user.created_at.to_date, :format => :mmddyy))
+      t(:user_suspended_on, l(user.created_at.to_date, format: :mmddyy))
     end
     summary << if user.awaits_approval?
       t(:user_signed_up)

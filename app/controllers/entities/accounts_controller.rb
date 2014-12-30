@@ -4,16 +4,16 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class AccountsController < EntitiesController
-  before_filter :get_data_for_sidebar, :only => :index
+  before_filter :get_data_for_sidebar, only: :index
 
   # GET /accounts
   #----------------------------------------------------------------------------
   def index
-    @accounts = get_accounts(:page => params[:page], :per_page => params[:per_page])
+    @accounts = get_accounts(page: params[:page], per_page: params[:per_page])
 
     respond_with @accounts do |format|
-      format.xls { render :layout => 'header' }
-      format.csv { render :csv => @accounts }
+      format.xls { render layout: 'header' }
+      format.csv { render csv: @accounts }
     end
   end
 
@@ -30,7 +30,7 @@ class AccountsController < EntitiesController
   # GET /accounts/new
   #----------------------------------------------------------------------------
   def new
-    @account.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
+    @account.attributes = {user: current_user, access: Setting.default_access, assigned_to: nil}
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -103,7 +103,7 @@ class AccountsController < EntitiesController
   def redraw
     current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
     current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
-    @accounts = get_accounts(:page => 1, :per_page => params[:per_page])
+    @accounts = get_accounts(page: 1, per_page: params[:per_page])
     set_options # Refresh options
 
     respond_with(@accounts) do |format|
@@ -115,7 +115,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:accounts_filter] = params[:category]
-    @accounts = get_accounts(:page => 1, :per_page => params[:per_page])
+    @accounts = get_accounts(page: 1, per_page: params[:per_page])
 
     respond_with(@accounts) do |format|
       format.js { render :index }
@@ -133,7 +133,7 @@ private
       @accounts = get_accounts
       get_data_for_sidebar
       if @accounts.empty?
-        @accounts = get_accounts(:page => current_page - 1) if current_page > 1
+        @accounts = get_accounts(page: current_page - 1) if current_page > 1
         render :index and return
       end
       # At this point render default destroy.js
@@ -148,7 +148,7 @@ private
   def get_data_for_sidebar
     @account_category_total = HashWithIndifferentAccess[
       Setting.account_category.map do |key|
-        [ key, Account.my.where(:category => key.to_s).count ]
+        [ key, Account.my.where(category: key.to_s).count ]
       end
     ]
     categorized = @account_category_total.values.sum

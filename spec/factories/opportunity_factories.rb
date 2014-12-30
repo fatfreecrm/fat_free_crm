@@ -32,7 +32,7 @@ FactoryGirl.define do
     created_at          { FactoryGirl.generate(:time) }
   end
 
-  factory :opportunity_in_pipeline, :parent => :opportunity do
+  factory :opportunity_in_pipeline, parent: :opportunity do
     stage               { FactoryGirl.generate(:opportunity_open_status) }
   end
 

@@ -23,7 +23,7 @@ describe ApplicationController do
     
     it "should return [6, 9] when related is 'campaigns/7'" do
       allow(controller).to receive(:controller_name).and_return('opportunities')
-      campaign = double(Campaign, :opportunities => [double(:id => 6), double(:id => 9)])
+      campaign = double(Campaign, opportunities: [double(id: 6), double(id: 9)])
       expect(Campaign).to receive(:find_by_id).with('7').and_return(campaign)
       expect(controller.send(:auto_complete_ids_to_exclude, 'campaigns/7').sort).to eq([6, 9])
     end

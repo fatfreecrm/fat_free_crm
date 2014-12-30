@@ -14,9 +14,9 @@ describe "/opportunities/index" do
   end
 
   it "should render [opportunity] template with @opportunities collection if there are opportunities" do
-    assign(:opportunities, [ FactoryGirl.create(:opportunity, :id => 42) ].paginate)
+    assign(:opportunities, [ FactoryGirl.create(:opportunity, id: 42) ].paginate)
 
-    render :template => 'opportunities/index', :formats => [:js]
+    render template: 'opportunities/index', formats: [:js]
 
     expect(rendered).to include("$('#opportunities').html")
     expect(rendered).to include("#paginate")
@@ -25,7 +25,7 @@ describe "/opportunities/index" do
   it "should render [empty] template if @opportunities collection if there are no opportunities" do
     assign(:opportunities, [].paginate)
 
-    render :template => 'opportunities/index', :formats => [:js]
+    render template: 'opportunities/index', formats: [:js]
 
     expect(rendered).to include("$('#opportunities').html('<div id=\\'empty\\'>")
     expect(rendered).to include("#paginate")

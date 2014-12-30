@@ -10,13 +10,13 @@ class Version < PaperTrail::Version
   EVENTS = %w(all_events create view update destroy)
   DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
 
-  belongs_to :related, :polymorphic => true
-  belongs_to :user, :foreign_key => :whodunnit
+  belongs_to :related, polymorphic: true
+  belongs_to :user, foreign_key: :whodunnit
 
   scope :default_order,  lambda { order('created_at DESC') }
-  scope :include_events, lambda { |*events| where(:event => events) }
+  scope :include_events, lambda { |*events| where(event: events) }
   scope :exclude_events, lambda { |*events| where('event NOT IN (?)', events) }
-  scope :for,            lambda { |user| where(:whodunnit => user.id.to_s) }
+  scope :for,            lambda { |user| where(whodunnit: user.id.to_s) }
 
   class << self
 
@@ -27,8 +27,8 @@ class Version < PaperTrail::Version
       offset = 0
       while versions.size < limit
         query = includes(:item).
-                where(:whodunnit => user.id.to_s).
-                where(:item_type => ENTITIES).
+                where(whodunnit: user.id.to_s).
+                where(item_type: ENTITIES).
                 limit(limit * 2).
                 offset(offset).
                 default_order
@@ -43,9 +43,9 @@ class Version < PaperTrail::Version
 
     def latest(options = {})
       includes(:item, :related, :user).
-      where(({:item_type => options[:asset]} if options[:asset])).
-      where(({:event     => options[:event]} if options[:event])).
-      where(({:whodunnit => options[:user].to_s}  if options[:user])).
+      where(({item_type: options[:asset]} if options[:asset])).
+      where(({event:     options[:event]} if options[:event])).
+      where(({whodunnit: options[:user].to_s}  if options[:user])).
       where('versions.created_at >= ?', Time.zone.now - (options[:duration] || 2.days)).
       limit(options[:max]).
       default_order
@@ -53,7 +53,7 @@ class Version < PaperTrail::Version
 
     def related_to(object)
       where('(item_id = :id AND item_type = :type) OR (related_id = :id AND related_type = :type)',
-        :id => object.id, :type => object.class.name)
+        id: object.id, type: object.class.name)
     end
 
     def history(object)

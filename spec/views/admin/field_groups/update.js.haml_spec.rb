@@ -8,11 +8,11 @@ require 'spec_helper'
 describe "admin/field_groups/update" do
 
   before do
-    login_and_assign(:admin => true)
+    login_and_assign(admin: true)
     assign(:field_group, field_group)
   end
 
-  let(:field_group) { FactoryGirl.create(:field_group, :label => 'test') }
+  let(:field_group) { FactoryGirl.create(:field_group, label: 'test') }
 
   it "renders javascript" do
     render

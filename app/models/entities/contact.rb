@@ -39,25 +39,25 @@
 class Contact < ActiveRecord::Base
   belongs_to  :user
   belongs_to  :lead
-  belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
-  belongs_to  :reporting_user, :class_name => "User", :foreign_key => :reports_to
-  has_one     :account_contact, :dependent => :destroy
-  has_one     :account, :through => :account_contact
-  has_many    :contact_opportunities, :dependent => :destroy
-  has_many    :opportunities, -> { order("opportunities.id DESC").distinct }, :through => :contact_opportunities
-  has_many    :tasks, :as => :asset, :dependent => :destroy#, :order => 'created_at DESC'
-  has_one     :business_address, -> { where(address_type: "Business") }, :dependent => :destroy, :as => :addressable, :class_name => "Address"
-  has_many    :addresses, :dependent => :destroy, :as => :addressable, :class_name => "Address" # advanced search uses this
-  has_many    :emails, :as => :mediator
+  belongs_to  :assignee, class_name: "User", foreign_key: :assigned_to
+  belongs_to  :reporting_user, class_name: "User", foreign_key: :reports_to
+  has_one     :account_contact, dependent: :destroy
+  has_one     :account, through: :account_contact
+  has_many    :contact_opportunities, dependent: :destroy
+  has_many    :opportunities, -> { order("opportunities.id DESC").distinct }, through: :contact_opportunities
+  has_many    :tasks, as: :asset, dependent: :destroy#, :order => 'created_at DESC'
+  has_one     :business_address, -> { where(address_type: "Business") }, dependent: :destroy, as: :addressable, class_name: "Address"
+  has_many    :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
+  has_many    :emails, as: :mediator
 
-  delegate :campaign, :to => :lead, :allow_nil => true
+  delegate :campaign, to: :lead, allow_nil: true
 
   has_ransackable_associations %w(account opportunities tags activities emails addresses comments tasks)
   ransack_can_autocomplete
 
   serialize :subscribed_users, Set
 
-  accepts_nested_attributes_for :business_address, :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
+  accepts_nested_attributes_for :business_address, allow_destroy: true, reject_if: proc {|attributes| Address.reject_address(attributes)}
 
   scope :created_by,  ->(user) { where( user_id: user.id ) }
   scope :assigned_to, ->(user) { where( assigned_to: user.id ) }
@@ -86,14 +86,14 @@ class Contact < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail :class_name => 'Version', :ignore => [ :subscribed_users ]
+  has_paper_trail class_name: 'Version', ignore: [ :subscribed_users ]
 
   has_fields
   exportable
-  sortable :by => [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], :default => "created_at DESC"
+  sortable by: [ "first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC" ], default: "created_at DESC"
 
-  validates_presence_of :first_name, :message => :missing_first_name, :if => -> { Setting.require_first_names }
-  validates_presence_of :last_name,  :message => :missing_last_name,  :if => -> { Setting.require_last_names  }
+  validates_presence_of :first_name, message: :missing_first_name, if: -> { Setting.require_first_names }
+  validates_presence_of :last_name,  message: :missing_last_name,  if: -> { Setting.require_last_names  }
   validate :users_for_shared_access
 
   # Default values provided through class methods.
@@ -152,10 +152,10 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.create_for(model, account, opportunity, params)
     attributes = {
-      :lead_id     => model.id,
-      :user_id     => params[:account][:user_id],
-      :assigned_to => params[:account][:assigned_to],
-      :access      => params[:access]
+      lead_id:     model.id,
+      user_id:     params[:account][:user_id],
+      assigned_to: params[:account][:assigned_to],
+      access:      params[:access]
     }
     %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info).each do |name|
       attributes[name] = model.send(name.intern)
@@ -172,12 +172,12 @@ class Contact < ActiveRecord::Base
       end
     end
 
-    contact.business_address = Address.new(:street1 => model.business_address.street1, :street2 => model.business_address.street2, :city => model.business_address.city, :state => model.business_address.state, :zipcode => model.business_address.zipcode, :country => model.business_address.country, :full_address => model.business_address.full_address, :address_type => "Business") unless model.business_address.nil?
+    contact.business_address = Address.new(street1: model.business_address.street1, street2: model.business_address.street2, city: model.business_address.city, state: model.business_address.state, zipcode: model.business_address.zipcode, country: model.business_address.country, full_address: model.business_address.full_address, address_type: "Business") unless model.business_address.nil?
 
     # Save the contact only if the account and the opportunity have no errors.
     if account.errors.empty? && opportunity.errors.empty?
       # Note: contact.account = account doesn't seem to work here.
-      contact.account_contact = AccountContact.new(:account => account, :contact => contact) unless account.id.blank?
+      contact.account_contact = AccountContact.new(account: account, contact: contact) unless account.id.blank?
       if contact.access != "Lead" || model.nil?
         contact.save
       else

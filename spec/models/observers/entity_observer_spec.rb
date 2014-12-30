@@ -16,8 +16,8 @@ describe EntityObserver do
     describe "on creation of #{entity_type}" do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
-      let!(:entity)  { FactoryGirl.build(entity_type, :user => assigner, :assignee => assignee) }
-      let(:mail) { double('mail', :deliver => true) }
+      let!(:entity)  { FactoryGirl.build(entity_type, user: assigner, assignee: assignee) }
+      let(:mail) { double('mail', deliver: true) }
 
       after :each do
         entity.save
@@ -47,12 +47,12 @@ describe EntityObserver do
     describe "on update of #{entity_type}" do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
-      let!(:entity)  { FactoryGirl.create(entity_type, :user => FactoryGirl.create(:user)) }
-      let(:mail) { double('mail', :deliver => true) }
+      let!(:entity)  { FactoryGirl.create(entity_type, user: FactoryGirl.create(:user)) }
+      let(:mail) { double('mail', deliver: true) }
 
       it "notifies the new owner if the entity is re-assigned" do
         expect(UserMailer).to receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
-        entity.update_attributes(:assignee => assignee)
+        entity.update_attributes(assignee: assignee)
       end
 
       it "does not notify the owner if the entity is not re-assigned" do
@@ -62,12 +62,12 @@ describe EntityObserver do
 
       it "does not notify anyone if the entity becomes unassigned" do
         expect(UserMailer).not_to receive(:assigned_entity_notification)
-        entity.update_attributes(:assignee => nil)
+        entity.update_attributes(assignee: nil)
       end
 
       it "does not notify me if I re-assign an entity to myself" do
         expect(UserMailer).not_to receive(:assigned_entity_notification)
-        entity.update_attributes(:assignee => assigner)
+        entity.update_attributes(assignee: assigner)
       end
     end
 

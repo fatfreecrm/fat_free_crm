@@ -58,7 +58,7 @@ describe 'FatFreeCRM::Fields' do
       @f1 = double(Field)
       @f2 = double(Field)
       @f3 = double(Field)
-      @field_groups = [double(FieldGroup, :fields => [@f1, @f2]), double(FieldGroup, :fields => [@f3])]
+      @field_groups = [double(FieldGroup, fields: [@f1, @f2]), double(FieldGroup, fields: [@f3])]
     end
 
     it "should convert field_groups into a flattened list of fields" do
@@ -71,12 +71,12 @@ describe 'FatFreeCRM::Fields' do
   describe "serialize_custom_fields!" do
 
     before(:each) do
-      @f1 = double(Field, :as => 'check_boxes', :name => 'field1')
-      @f2 = double(Field, :as => 'date', :name => 'field2')
+      @f1 = double(Field, as: 'check_boxes', name: 'field1')
+      @f2 = double(Field, as: 'date', name: 'field2')
     end
 
     it "should serialize checkbox fields as Array" do
-      allow(Foo).to receive(:serialized_attributes).and_return( {:field1 => @f1, :field2 => @f2} )
+      allow(Foo).to receive(:serialized_attributes).and_return( {field1: @f1, field2: @f2} )
       expect(Foo).to receive(:fields).and_return([@f1, @f2])
       expect(Foo).to receive(:serialize).with(:field1, Array)
       Foo.serialize_custom_fields!
@@ -94,7 +94,7 @@ describe 'FatFreeCRM::Fields' do
 
     before(:each) do
       @f1 = double(Field)
-      @field_groups = [ double(FieldGroup, :fields => [@f1]) ]
+      @field_groups = [ double(FieldGroup, fields: [@f1]) ]
     end
 
     it "should call custom_validator on each custom field" do

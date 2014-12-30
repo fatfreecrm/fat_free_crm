@@ -36,7 +36,7 @@ describe "/campaigns/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_campaign div" do
-      assign(:campaign, FactoryGirl.build(:campaign, :name => nil)) # make it invalid
+      assign(:campaign, FactoryGirl.build(:campaign, name: nil)) # make it invalid
       assign(:users, [ FactoryGirl.create(:user) ])
 
       render

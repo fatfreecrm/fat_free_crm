@@ -20,8 +20,8 @@ describe "/leads/_convert" do
 
   it "should render [convert lead] form" do
     render
-    expect(view).to render_template(:partial => "leads/_opportunity")
-    expect(view).to render_template(:partial => "leads/_convert_permissions")
+    expect(view).to render_template(partial: "leads/_opportunity")
+    expect(view).to render_template(partial: "leads/_convert_permissions")
 
     expect(rendered).to have_tag("form[class=edit_lead]")
   end

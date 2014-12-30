@@ -162,16 +162,16 @@ module FatFreeCRM
         end
 
         Email.create(
-          :imap_message_id => email.message_id,
-          :user            => @sender,
-          :mediator        => asset,
-          :sent_from       => email.from.first,
-          :sent_to         => to,
-          :cc              => cc,
-          :subject         => email.subject,
-          :body            => email_body,
-          :received_at     => email.date,
-          :sent_at         => email.date
+          imap_message_id: email.message_id,
+          user:            @sender,
+          mediator:        asset,
+          sent_from:       email.from.first,
+          sent_to:         to,
+          cc:              cc,
+          subject:         email.subject,
+          body:            email_body,
+          received_at:     email.date,
+          sent_at:         email.date
         )
         asset.touch
 
@@ -181,16 +181,16 @@ module FatFreeCRM
 
         if @settings[:attach_to_account] && asset.respond_to?(:account) && asset.account
           Email.create(
-            :imap_message_id => email.message_id,
-            :user            => @sender,
-            :mediator        => asset.account,
-            :sent_from       => email.from.first,
-            :sent_to         => to,
-            :cc              => cc,
-            :subject         => email.subject,
-            :body            => email_body,
-            :received_at     => email.date,
-            :sent_at         => email.date
+            imap_message_id: email.message_id,
+            user:            @sender,
+            mediator:        asset.account,
+            sent_from:       email.from.first,
+            sent_to:         to,
+            cc:              cc,
+            subject:         email.subject,
+            body:            email_body,
+            received_at:     email.date,
+            sent_at:         email.date
           )
           asset.account.touch
         end
@@ -202,8 +202,8 @@ module FatFreeCRM
         keyword = data.delete("Type").capitalize
 
         defaults = {
-          :user   => @sender,
-          :access => default_access
+          user:   @sender,
+          access: default_access
         }
 
         case keyword
@@ -231,11 +231,11 @@ module FatFreeCRM
         recipient_local, recipient_domain = recipient.split('@')
 
         defaults = {
-          :user       => @sender,
-          :first_name => recipient_local.capitalize,
-          :last_name  => "(unknown)",
-          :email      => recipient,
-          :access     => default_access
+          user:       @sender,
+          first_name: recipient_local.capitalize,
+          last_name:  "(unknown)",
+          email:      recipient,
+          access:     default_access
         }
 
         # Search for domain name in Accounts.
@@ -246,10 +246,10 @@ module FatFreeCRM
         else
           log "creating new account #{recipient_domain.capitalize} for the contact #{recipient}"
           defaults[:account] = Account.create!(
-            :user   => @sender,
-            :email  => recipient,
-            :name   => recipient_domain.capitalize,
-            :access => default_access
+            user:   @sender,
+            email:  recipient,
+            name:   recipient_domain.capitalize,
+            access: default_access
           )
         end
         defaults

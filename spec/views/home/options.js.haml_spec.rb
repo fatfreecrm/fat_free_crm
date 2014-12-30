@@ -37,7 +37,7 @@ describe "/home/options" do
 
     render
 
-    expect(view).to render_template(:partial => "_options")
+    expect(view).to render_template(partial: "_options")
   end
 
   it "should hide options form on Cancel" do

@@ -11,7 +11,7 @@ describe "/contacts/update" do
   before do
     login_and_assign
 
-    assign(:contact, @contact = FactoryGirl.create(:contact, :user => current_user))
+    assign(:contact, @contact = FactoryGirl.create(:contact, user: current_user))
     assign(:users, [ current_user ])
     assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [ @account ])

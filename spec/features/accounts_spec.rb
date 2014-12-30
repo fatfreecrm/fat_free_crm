@@ -12,29 +12,29 @@ feature 'Accounts', %q{
 } do
 
   before(:each) do
-   do_login_if_not_already(:first_name => 'Bill', :last_name => 'Murray')
+   do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
   end
 
   scenario 'should view a list of accounts' do
-    2.times { |i| FactoryGirl.create(:account, :name => "Account #{i}") }
+    2.times { |i| FactoryGirl.create(:account, name: "Account #{i}") }
     visit accounts_page
     expect(page).to have_content('Account 0')
     expect(page).to have_content('Account 1')
     expect(page).to have_content('Create Account')
   end
 
-  scenario 'should create a new account', :js => true do
+  scenario 'should create a new account', js: true do
     with_versioning do
       visit accounts_page
       expect(page).to have_content('Create Account')
       click_link 'Create Account'
-      expect(page).to have_selector('#account_name', :visible => true)
-      fill_in 'account_name', :with => 'My new account'
+      expect(page).to have_selector('#account_name', visible: true)
+      fill_in 'account_name', with: 'My new account'
       click_link 'Contact Information'
-      fill_in 'account_phone', :with => '+1 2345 6789'
-      fill_in 'account_website', :with => 'http://www.example.com'
+      fill_in 'account_phone', with: '+1 2345 6789'
+      fill_in 'account_website', with: 'http://www.example.com'
       click_link 'Comment'
-      fill_in 'comment_body', :with => 'This account is very important'
+      fill_in 'comment_body', with: 'This account is very important'
       click_button 'Create Account'
 
       expect(find('div#accounts')).to have_content('My new account')
@@ -49,30 +49,30 @@ feature 'Accounts', %q{
     end
   end
 
-  scenario "remembers the comment field when the creation was unsuccessful", :js => true do
+  scenario "remembers the comment field when the creation was unsuccessful", js: true do
     visit accounts_page
     expect(page).to have_content('Create Account')
     click_link 'Create Account'
 
     click_link 'Contact Information'
-    fill_in 'account_phone', :with => '+1 2345 6789'
+    fill_in 'account_phone', with: '+1 2345 6789'
 
     click_link 'Comment'
-    fill_in 'comment_body', :with => 'This account is very important'
+    fill_in 'comment_body', with: 'This account is very important'
     click_button "Create Account"
 
-    expect(page).to have_field("account_phone", :with => '+1 2345 6789')
-    expect(page).to have_field("comment_body", :with => 'This account is very important')
+    expect(page).to have_field("account_phone", with: '+1 2345 6789')
+    expect(page).to have_field("comment_body", with: 'This account is very important')
   end
 
-  scenario 'should view and edit an account', :js => true, :versioning => true do
-    FactoryGirl.create(:account, :name => "A new account")
+  scenario 'should view and edit an account', js: true, versioning: true do
+    FactoryGirl.create(:account, name: "A new account")
     with_versioning do
       visit accounts_page
       find('div#accounts').click_link('A new account')
       expect(page).to have_content('A new account')
       click_link 'Edit'
-      fill_in 'account_name', :with => 'A new account *editted*'
+      fill_in 'account_name', with: 'A new account *editted*'
       click_button 'Save Account'
       expect(page).to have_content('A new account *editted*')
 
@@ -81,8 +81,8 @@ feature 'Accounts', %q{
     end
   end
 
-  scenario 'should delete an account', :js => true do
-    FactoryGirl.create(:account, :name => "My new account")
+  scenario 'should delete an account', js: true do
+    FactoryGirl.create(:account, name: "My new account")
     visit accounts_page
     find('div#accounts').click_link('My new account')
     click_link 'Delete?'
@@ -91,18 +91,18 @@ feature 'Accounts', %q{
     expect(page).to have_content('My new account has been deleted')
   end
 
-  scenario 'should search for an account', :js => true do
-    2.times { |i| FactoryGirl.create(:account, :name => "Account #{i}") }
+  scenario 'should search for an account', js: true do
+    2.times { |i| FactoryGirl.create(:account, name: "Account #{i}") }
     visit accounts_page
     expect(find('#accounts')).to have_content("Account 0")
     expect(find('#accounts')).to have_content("Account 1")
-    fill_in 'query', :with => "Account 0"
+    fill_in 'query', with: "Account 0"
     expect(find('#accounts')).to have_content("Account 0")
     expect(find('#accounts')).not_to have_content("Account 1")
-    fill_in 'query', :with => "Account"
+    fill_in 'query', with: "Account"
     expect(find('#accounts')).to have_content("Account 0")
     expect(find('#accounts')).to have_content("Account 1")
-    fill_in 'query', :with => "Contact"
+    fill_in 'query', with: "Contact"
     expect(find('#accounts')).not_to have_content("Account 0")
     expect(find('#accounts')).not_to have_content("Account 1")
   end

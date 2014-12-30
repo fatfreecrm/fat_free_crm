@@ -16,7 +16,7 @@ class ListsController < ApplicationController
     end
 
     # Find any existing list with the same name (case insensitive)
-    if @list = List.where("lower(name) = ?", params[:list][:name].downcase).where({:user_id => params[:list][:user_id]}).first
+    if @list = List.where("lower(name) = ?", params[:list][:name].downcase).where({user_id: params[:list][:user_id]}).first
       @list.update_attributes(params[:list])
     else
       @list = List.create(params[:list])
