@@ -18,11 +18,11 @@ feature 'Contacts', %q{
   scenario 'should view a list of contacts' do
     4.times { |i| FactoryGirl.create(:contact, :first_name => "Test", :last_name => "Subject \##{i}") }
     visit contacts_page
-    expect(page).to have_content('Test Subject #0')
-    expect(page).to have_content('Test Subject #1')
-    expect(page).to have_content('Test Subject #2')
-    expect(page).to have_content('Test Subject #3')
-    expect(page).to have_content('Create Contact')
+    expect(contacts_element).to have_content('Test Subject #0')
+    expect(contacts_element).to have_content('Test Subject #1')
+    expect(contacts_element).to have_content('Test Subject #2')
+    expect(contacts_element).to have_content('Test Subject #3')
+    expect(find('.title_tools')).to have_content('Create Contact')
   end
 
   scenario 'should create a contact', :js => true do
@@ -37,12 +37,12 @@ feature 'Contacts', %q{
       click_link 'Comment'
       fill_in 'comment_body', :with => 'This is a very important person.'
       click_button 'Create Contact'
-      expect(find('div#contacts')).to have_content('Testy McTest')
-      find('div#contacts').click_link 'Testy McTest'
+      expect(contacts_element).to have_content('Testy McTest')
+      contacts_element.click_link 'Testy McTest'
       expect(page).to have_content('This is a very important person.')
       click_link "Dashboard"
-      expect(page).to have_content('Bill Murray created contact Testy McTest')
-      expect(page).to have_content('Bill Murray created comment on Testy McTest')
+      expect(activities_element).to have_content('Bill Murray created contact Testy McTest')
+      expect(activities_element).to have_content('Bill Murray created comment on Testy McTest')
     end
   end
 
@@ -67,38 +67,44 @@ feature 'Contacts', %q{
       fill_in 'contact_last_name', :with => 'Subject'
       fill_in 'contact_email', :with => "test.subject@example.com"
       click_button 'Save Contact'
-      expect(page).to have_content('Test Subject')
+      expect(find('#edit_contact_title')).to have_content('Test Subject')
       click_link 'Dashboard'
-      expect(page).to have_content("Bill Murray updated contact Test Subject")
+      expect(activities_element).to have_content("Bill Murray updated contact Test Subject")
     end
   end
 
   scenario 'should delete a contact', :js => true do
     FactoryGirl.create(:contact, :first_name => "Test", :last_name => "Subject")
-    with_versioning do
-      visit contacts_page
-      click_link 'Test Subject'
-      click_link 'Delete?'
-      expect(page).to have_content('Are you sure you want to delete this contact?')
-      click_link 'Yes'
-      expect(page).to have_content('Test Subject has been deleted.')
-      expect(page).not_to have_content('Test Subject')
-    end
+    visit contacts_page
+    click_link 'Test Subject'
+    click_link 'Delete?'
+    expect(page).to have_content('Are you sure you want to delete this contact?')
+    click_link 'Yes'
+    expect(page).to have_content('Test Subject has been deleted.')
+    expect(page).not_to have_content('Test Subject')
   end
 
   scenario 'should search for a contact', :js => true do
     2.times { |i| FactoryGirl.create(:contact, :first_name => "Test", :last_name => "Subject \##{i}") }
     visit contacts_page
-    expect(find('#contacts')).to have_content('Test Subject #0')
-    expect(find('#contacts')).to have_content('Test Subject #1')
+    expect(contacts_element).to have_content('Test Subject #0')
+    expect(contacts_element).to have_content('Test Subject #1')
     fill_in 'query', :with => 'Test Subject #1'
-    expect(find('#contacts')).to have_content('Test Subject #1')
-    expect(find('#contacts')).not_to have_content('Test Subject #0')
+    expect(contacts_element).to have_content('Test Subject #1')
+    expect(contacts_element).not_to have_content('Test Subject #0')
     fill_in 'query', :with => 'Test Subject'
-    expect(find('#contacts')).to have_content('Test Subject #0')
-    expect(find('#contacts')).to have_content('Test Subject #1')
+    expect(contacts_element).to have_content('Test Subject #0')
+    expect(contacts_element).to have_content('Test Subject #1')
     fill_in 'query', :with => "Fake contact"
-    expect(find('#contacts')).not_to have_content('Test Subject #0')
-    expect(find('#contacts')).not_to have_content('Test Subject #1')
+    expect(contacts_element).not_to have_content('Test Subject #0')
+    expect(contacts_element).not_to have_content('Test Subject #1')
+  end
+
+  def contacts_element
+    find('#contacts')
+  end
+
+  def activities_element
+    find('#activities')
   end
 end
