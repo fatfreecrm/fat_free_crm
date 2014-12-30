@@ -32,8 +32,6 @@ I18n.locale = 'en-US'
 Paperclip.options[:log] = false
 
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
-
   config.infer_spec_type_from_file_location!
 
   config.mock_with :rspec
@@ -68,7 +66,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation
   end
 
-  config.before(:each, :truncate => true) do
+  config.before(:each, :truncate) do
     DatabaseCleaner.strategy = :truncation
   end
 

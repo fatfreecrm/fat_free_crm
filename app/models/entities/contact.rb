@@ -127,9 +127,7 @@ class Contact < ActiveRecord::Base
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:contact][:access] if params[:contact][:access]
     self.attributes = params[:contact]
-    result = self.save
-    reload
-    result
+    self.save
   end
 
   # Attach given attachment to the contact if it hasn't been attached already.
@@ -204,12 +202,8 @@ class Contact < ActiveRecord::Base
     if account_params[:id] == "" || account_params[:name] == ""
       self.account = nil
     else
-      account = Account.create_or_select_for(self, account_params)
-      if self.account != account and account.id.present?
-        self.account_contact = AccountContact.new(:account => account, :contact => self)
-      end
+      self.account = Account.create_or_select_for(self, account_params)
     end
-    self.reload unless self.new_record? # ensure the account association is updated
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_contact, self)

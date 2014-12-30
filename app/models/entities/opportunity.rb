@@ -117,17 +117,12 @@ class Opportunity < ActiveRecord::Base
     if params[:account] && (params[:account][:id] == "" || params[:account][:name] == "")
       self.account = nil # Opportunity is not associated with the account anymore.
     elsif params[:account]
-      account = Account.create_or_select_for(self, params[:account])
-      if self.account != account and account.id.present?
-        self.account_opportunity = AccountOpportunity.new(:account => account, :opportunity => self)
-      end
+      self.account = Account.create_or_select_for(self, params[:account])
     end
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:opportunity][:access] if params[:opportunity][:access]
     self.attributes = params[:opportunity]
-    result = save
-    reload
-    result
+    self.save
   end
 
   # Attach given attachment to the opportunity if it hasn't been attached already.

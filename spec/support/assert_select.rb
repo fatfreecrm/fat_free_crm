@@ -32,8 +32,8 @@ module RSpec # :nodoc:
           end
         end
 
-        def failure_message_for_should; @error.message; end
-        def failure_message_for_should_not; "should not #{description}, but did"; end
+        def failure_message; @error.message; end
+        def failure_message_when_negated; "should not #{description}, but did"; end
 
         def description
           {
