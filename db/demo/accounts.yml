@@ -24,7 +24,6 @@
   require "ffaker"
   puts "Loading accounts..."
 
-  Faker::PhoneNumber::Formats = ["(###)###-####"]
   category = %w(affiliate competitor customer partner reseller vendor) << nil
 
   for i in (1 .. rand(20) + 100) do
@@ -37,8 +36,8 @@ account<%= i %>:
   access           : Public
   website          : http://www.<%= company.downcase.gsub(/\W/, "") %>.com
   toll_free_phone  : 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
-  phone            : <%= Faker::PhoneNumber.phone_number %>
-  fax              : <%= Faker::PhoneNumber.phone_number %>
+  phone            : <%= Faker::PhoneNumber.short_phone_number %>
+  fax              : <%= Faker::PhoneNumber.short_phone_number %>
   email            : info@<%= company.downcase.gsub(/\W/, "") %>.com
   background_info  : <%= Faker::Company.catch_phrase << " " << Faker::Company.bs %>
   rating           : <%= rand(5) %>
