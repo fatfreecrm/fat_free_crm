@@ -57,11 +57,11 @@ describe TasksController do
     end
 
     it "should generate params for #complete" do
-      { :patch => "/tasks/1/complete" }.should route_to( :controller => "tasks", :action => "complete", :id => "1" )
+      { :put => "/tasks/1/complete" }.should route_to( :controller => "tasks", :action => "complete", :id => "1" )
     end
 
     it "doesn't recognize #complete with non-numeric id" do
-      { :patch => "/tasks/aaron/complete" }.should_not be_routable
+      { :put => "/tasks/aaron/complete" }.should_not be_routable
     end
   end
 end

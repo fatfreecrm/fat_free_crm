@@ -57,11 +57,11 @@ describe UsersController do
     end
 
     it "should generate params for #upload_avatar" do
-      { :patch => "/users/1/upload_avatar" }.should route_to( :controller => "users", :action => "upload_avatar", :id => "1" )
+      { :put => "/users/1/upload_avatar" }.should route_to( :controller => "users", :action => "upload_avatar", :id => "1" )
     end
 
     it "doesn't recognize #upload_avatar with non-numeric id" do
-      { :patch => "/users/aaron/upload_avatar" }.should_not be_routable
+      { :put => "/users/aaron/upload_avatar" }.should_not be_routable
     end
 
     it "should generate params for #password" do
@@ -73,11 +73,11 @@ describe UsersController do
     end
 
     it "should generate params for #change_password" do
-      { :patch => "/users/1/change_password" }.should route_to( :controller => "users", :action => "change_password", :id => "1" )
+      { :put => "/users/1/change_password" }.should route_to( :controller => "users", :action => "change_password", :id => "1" )
     end
 
     it "doesn't recognize #change_password with non-numeric id" do
-      { :patch => "/users/aaron/change_password" }.should_not be_routable
+      { :put => "/users/aaron/change_password" }.should_not be_routable
     end
   end
 end

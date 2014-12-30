@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   get '/home/options',  :as => :options
   get '/home/toggle',   :as => :toggle
-  patch '/home/timeline', :as => :timeline
+  put '/home/timeline', :as => :timeline
   match '/home/timezone', :as => :timezone, :via => [:get, :post]
   post '/home/redraw',   :as => :redraw
 
@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       get :versions
     end
     member do
-      patch  :attach
+      put  :attach
       post :discard
       post :subscribe
       post :unsubscribe
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       get  :versions
     end
     member do
-      patch  :attach
+      put  :attach
       post :discard
       post :subscribe
       post :unsubscribe
@@ -77,7 +77,7 @@ Rails.application.routes.draw do
       get  :versions
     end
     member do
-      patch  :attach
+      put  :attach
       post :discard
       post :subscribe
       post :unsubscribe
@@ -101,9 +101,9 @@ Rails.application.routes.draw do
       post :discard
       post :subscribe
       post :unsubscribe
-      patch  :attach
-      patch  :promote
-      patch  :reject
+      put  :attach
+      put  :promote
+      put  :reject
     end
   end
 
@@ -118,7 +118,7 @@ Rails.application.routes.draw do
       get  :versions
     end
     member do
-      patch  :attach
+      put  :attach
       post :discard
       post :subscribe
       post :unsubscribe
@@ -132,8 +132,8 @@ Rails.application.routes.draw do
       match :auto_complete, via: [:get, :post]
     end
     member do
-      patch :complete
-      patch :uncomplete
+      put :complete
+      put :uncomplete
     end
   end
 
@@ -141,8 +141,8 @@ Rails.application.routes.draw do
     member do
       get :avatar
       get :password
-      patch :upload_avatar
-      patch :change_password
+      put :upload_avatar
+      put :change_password
       post :redraw
     end
     collection do
@@ -160,8 +160,8 @@ Rails.application.routes.draw do
       end
       member do
         get :confirm
-        patch :suspend
-        patch :reactivate
+        put :suspend
+        put :reactivate
       end
     end
 

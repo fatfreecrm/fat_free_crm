@@ -69,19 +69,19 @@ describe LeadsController do
     end
 
     it "should generate params for #promote" do
-      { :patch => "/leads/1/promote" }.should route_to( :controller => "leads", :action => "promote", :id => "1" )
+      { :put => "/leads/1/promote" }.should route_to( :controller => "leads", :action => "promote", :id => "1" )
     end
 
     it "doesn't recognize #promote with non-numeric id" do
-      { :patch => "/leads/aaron/promote" }.should_not be_routable
+      { :put => "/leads/aaron/promote" }.should_not be_routable
     end
 
     it "should generate params for #reject" do
-      { :patch => "/leads/1/reject" }.should route_to( :controller => "leads", :action => "reject", :id => "1" )
+      { :put => "/leads/1/reject" }.should route_to( :controller => "leads", :action => "reject", :id => "1" )
     end
 
     it "doesn't recognize #reject with non-numeric id" do
-      { :patch => "/leads/aaron/reject" }.should_not be_routable
+      { :put => "/leads/aaron/reject" }.should_not be_routable
     end
 
   end
