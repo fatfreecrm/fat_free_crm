@@ -8,9 +8,9 @@ class AddFieldGroupsKlassName < ActiveRecord::Migration
       field_group = FieldGroup.new
       field_group.label, field_group.klass_name = 'Custom Fields', klass.name
       field_group.save!
-      Field.update_all({:field_group_id => field_group.id}, {:field_group_id => nil, :klass_name => klass.name})
+      Field.where(:field_group_id => nil, :klass_name => klass.name).update_all(:field_group_id => field_group.id)
     end
-    FieldGroup.update_all('klass_name = (SELECT MAX(klass_name) FROM fields WHERE field_group_id = field_groups.id)', {:klass_name => nil})
+    FieldGroup.where(:klass_name => nil).update_all('klass_name = (SELECT MAX(klass_name) FROM fields WHERE field_group_id = field_groups.id)')
 
     remove_column :fields, :klass_name
     Field.reset_column_information
