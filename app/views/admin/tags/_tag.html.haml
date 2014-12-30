@@ -1,4 +1,4 @@
-- tag_field_groups = FieldGroup.find_all_by_tag_id(tag)
+- tag_field_groups = FieldGroup.where(tag_id: tag.id)
 - model_tagging_counts = tag.model_tagging_counts
 
 %li.highlight[tag]
