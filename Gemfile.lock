@@ -414,7 +414,7 @@ DEPENDENCIES
   rb-inotify
   responds_to_parent
   rspec-activemodel-mocks
-  rspec-rails (~> 2)
+  rspec-rails (= 2.99)
   sass
   sass-rails
   select2-rails
