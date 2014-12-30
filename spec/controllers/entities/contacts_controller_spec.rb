@@ -495,12 +495,10 @@ describe ContactsController do
 
       it "should not update the contact, but still expose it as @contact and render [update] template" do
         @contact = FactoryGirl.create(:contact, :id => 42, :user => current_user, :first_name => "Billy", :lead => nil)
-        @account = Account.new(:user => current_user)
 
         xhr :put, :update, :id => 42, :contact => { :first_name => nil }, :account => {}
         expect(assigns[:contact].reload.first_name).to eq("Billy")
         expect(assigns[:contact]).to eq(@contact)
-        expect(assigns[:account].attributes).to eq(@account.attributes)
         expect(response).to render_template("contacts/update")
       end
 

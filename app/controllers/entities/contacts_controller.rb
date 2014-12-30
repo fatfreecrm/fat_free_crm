@@ -85,7 +85,7 @@ class ContactsController < EntitiesController
     respond_with(@contact) do |format|
       unless @contact.update_with_account_and_permissions(params.permit!)
         if @contact.account
-          @account = Account.find(@contact.account.id)
+          @account = @contact.account
         else
           @account = Account.new(:user => current_user)
         end
