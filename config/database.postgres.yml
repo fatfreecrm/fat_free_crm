@@ -1,3 +1,4 @@
+---
 development: &development
   adapter: postgresql
   database: fat_free_crm_development
