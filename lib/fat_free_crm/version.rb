@@ -6,8 +6,8 @@
 module FatFreeCRM
   module VERSION #:nodoc:
     MAJOR = 0
-    MINOR = 13
-    TINY  = 4
+    MINOR = 14
+    TINY  = 0
     PRE   = nil
 
     STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
