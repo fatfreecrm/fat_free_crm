@@ -160,4 +160,3 @@ module RSpec # :nodoc:
     end
   end
 end
-
