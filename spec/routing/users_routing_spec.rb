@@ -73,11 +73,11 @@ describe UsersController do
     end
 
     it "should generate params for #change_password" do
-      expect({ put: "/users/1/change_password" }).to route_to( controller: "users", action: "change_password", id: "1" )
+      expect({ patch: "/users/1/change_password" }).to route_to( controller: "users", action: "change_password", id: "1" )
     end
 
     it "doesn't recognize #change_password with non-numeric id" do
-      expect({ put: "/users/aaron/change_password" }).not_to be_routable
+      expect({ patch: "/users/aaron/change_password" }).not_to be_routable
     end
   end
 end
