@@ -310,35 +310,26 @@ describe Task do
 
   describe "Exportable" do
     describe "unassigned tasks" do
-      before do
-        Task.delete_all
-        FactoryGirl.create(:task, user: FactoryGirl.create(:user), assignee: nil)
-        FactoryGirl.create(:task, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil)
-      end
+      let(:task1) { FactoryGirl.build(:task, user: FactoryGirl.create(:user), assignee: nil) }
+      let(:task2) { FactoryGirl.build(:task, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
-        let(:exported) { Task.all }
+        let(:exported) { [task1, task2] }
       end
     end
 
     describe "assigned tasks" do
-      before do
-        Task.delete_all
-        FactoryGirl.create(:task, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
-        FactoryGirl.create(:task, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil))
-      end
+      let(:task1) { FactoryGirl.build(:task, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user)) }
+      let(:task2) { FactoryGirl.build(:task, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
-        let(:exported) { Task.all }
+        let(:exported) { [task1, task2] }
       end
     end
 
     describe "completed tasks" do
-      before do
-        Task.delete_all
-        FactoryGirl.create(:task, user: FactoryGirl.create(:user), completor: FactoryGirl.create(:user), completed_at: 1.day.ago)
-        FactoryGirl.create(:task, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), completor: FactoryGirl.create(:user, first_name: nil, last_name: nil), completed_at: 1.day.ago)
-      end
+      let(:task1) { FactoryGirl.build(:task, user: FactoryGirl.create(:user), completor: FactoryGirl.create(:user), completed_at: 1.day.ago) }
+      let(:task2) { FactoryGirl.build(:task, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), completor: FactoryGirl.create(:user, first_name: nil, last_name: nil), completed_at: 1.day.ago) }
       it_should_behave_like("exportable") do
-        let(:exported) { Task.all }
+        let(:exported) { [task1, task2] }
       end
     end
   end

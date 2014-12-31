@@ -102,24 +102,18 @@ describe Account do
 
   describe "Exportable" do
     describe "assigned account" do
-      before do
-        Account.delete_all
-        FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
-        FactoryGirl.create(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil))
-      end
+      let(:account1) { FactoryGirl.build(:account, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user)) }
+      let(:account2) { FactoryGirl.build(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
-        let(:exported) { Account.all }
+        let(:exported) { [account1, account2] }
       end
     end
 
     describe "unassigned account" do
-      before do
-        Account.delete_all
-        FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: nil)
-        FactoryGirl.create(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil)
-      end
+      let(:account1) { FactoryGirl.build(:account, user: FactoryGirl.create(:user), assignee: nil) }
+      let(:account2) { FactoryGirl.build(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
-        let(:exported) { Account.all }
+        let(:exported) { [account1, account2] }
       end
     end
   end

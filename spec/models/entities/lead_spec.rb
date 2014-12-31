@@ -81,24 +81,18 @@ describe Lead do
 
   describe "Exportable" do
     describe "assigned lead" do
-      before do
-        Lead.delete_all
-        FactoryGirl.create(:lead, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
-        FactoryGirl.create(:lead, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil))
-      end
+      let(:lead1) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user)) }
+      let(:lead2) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
-        let(:exported) { Lead.all }
+        let(:exported) { [lead1, lead2] }
       end
     end
 
     describe "unassigned lead" do
-      before do
-        Lead.delete_all
-        FactoryGirl.create(:lead, user: FactoryGirl.create(:user), assignee: nil)
-        FactoryGirl.create(:lead, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil)
-      end
+      let(:lead1) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user), assignee: nil) }
+      let(:lead2) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
-        let(:exported) { Lead.all }
+        let(:exported) { [lead1, lead2] }
       end
     end
   end

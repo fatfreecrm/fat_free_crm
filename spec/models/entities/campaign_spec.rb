@@ -115,24 +115,18 @@ describe Campaign do
 
   describe "Exportable" do
     describe "assigned campaign" do
-      before do
-        Campaign.delete_all
-        FactoryGirl.create(:campaign, user: FactoryGirl.create(:user, first_name: "John", last_name: "Smith"), assignee: FactoryGirl.create(:user))
-        FactoryGirl.create(:campaign, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil))
-      end
+      let(:campaign1) { FactoryGirl.build(:campaign, user: FactoryGirl.create(:user, first_name: "John", last_name: "Smith"), assignee: FactoryGirl.create(:user)) }
+      let(:campaign2) { FactoryGirl.build(:campaign, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
-        let(:exported) { Campaign.all }
+        let(:exported) { [campaign1, campaign2] }
       end
     end
 
     describe "unassigned campaign" do
-      before do
-        Campaign.delete_all
-        FactoryGirl.create(:campaign, user: FactoryGirl.create(:user), assignee: nil)
-        FactoryGirl.create(:campaign, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil)
-      end
+      let(:campaign1) { FactoryGirl.build(:campaign, user: FactoryGirl.create(:user), assignee: nil) }
+      let(:campaign2) { FactoryGirl.build(:campaign, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
-        let(:exported) { Campaign.all }
+        let(:exported) { [campaign1, campaign2] }
       end
     end
   end

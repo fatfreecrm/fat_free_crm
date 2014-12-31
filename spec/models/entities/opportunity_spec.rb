@@ -188,24 +188,18 @@ describe Opportunity do
 
   describe "Exportable" do
     describe "assigned opportunity" do
-      before do
-        Opportunity.delete_all
-        FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
-        FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil))
-      end
+      let(:opportunity1) { FactoryGirl.build(:opportunity, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user)) }
+      let(:opportunity2) { FactoryGirl.build(:opportunity, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
-        let(:exported) { Opportunity.all }
+        let(:exported) { [opportunity1, opportunity2] }
       end
     end
 
     describe "unassigned opportunity" do
-      before do
-        Opportunity.delete_all
-        FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), assignee: nil)
-        FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil)
-      end
+      let(:opportunity1) { FactoryGirl.build(:opportunity, user: FactoryGirl.create(:user), assignee: nil) }
+      let(:opportunity2) { FactoryGirl.build(:opportunity, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
-        let(:exported) { Opportunity.all }
+        let(:exported) { [opportunity1, opportunity2] }
       end
     end
   end

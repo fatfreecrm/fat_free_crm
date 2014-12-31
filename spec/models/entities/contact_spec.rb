@@ -140,24 +140,18 @@ describe Contact do
 
   describe "Exportable" do
     describe "assigned contact" do
-      before do
-        Contact.delete_all
-        FactoryGirl.create(:contact, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
-        FactoryGirl.create(:contact, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil))
-      end
+      let(:contact1) { FactoryGirl.build(:contact, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user)) }
+      let(:contact2) { FactoryGirl.build(:contact, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
-        let(:exported) { Contact.all }
+        let(:exported) { [contact1, contact2] }
       end
     end
 
     describe "unassigned contact" do
-      before do
-        Contact.delete_all
-        FactoryGirl.create(:contact, user: FactoryGirl.create(:user), assignee: nil)
-        FactoryGirl.create(:contact, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil)
-      end
-      it_should_behave_like("exportable") do
-        let(:exported) { Contact.all }
+      let(:contact1) { FactoryGirl.build(:contact, user: FactoryGirl.create(:user), assignee: nil) }
+      let(:contact2) { FactoryGirl.build(:contact, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
+       it_should_behave_like("exportable") do
+        let(:exported) { [contact1, contact2] }
       end
     end
   end
