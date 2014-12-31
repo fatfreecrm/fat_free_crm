@@ -63,6 +63,7 @@ class Campaign < ActiveRecord::Base
   validates_uniqueness_of :name, scope: [ :user_id, :deleted_at ]
   validate :start_and_end_dates
   validate :users_for_shared_access
+  validates :status, inclusion: { in: Proc.new { Setting.unroll(:campaign_status).map{|s| s.last.to_s } } }, allow_blank: true
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------

@@ -78,11 +78,10 @@ class Opportunity < ActiveRecord::Base
   has_ransackable_associations %w(account contacts tags campaign activities emails comments)
   ransack_can_autocomplete
 
-  validates :stage, inclusion: { in: Proc.new { Setting.unroll(:opportunity_stage).map{|s| s.last.to_s } } }
-
   validates_presence_of :name, message: :missing_opportunity_name
   validates_numericality_of [ :probability, :amount, :discount ], allow_nil: true
   validate :users_for_shared_access
+  validates :stage, inclusion: { in: Proc.new { Setting.unroll(:opportunity_stage).map{|s| s.last.to_s } } }, allow_blank: true
 
   after_create  :increment_opportunities_count
   after_destroy :decrement_opportunities_count

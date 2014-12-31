@@ -75,6 +75,7 @@ class Lead < ActiveRecord::Base
   validates_presence_of :first_name, message: :missing_first_name, if: -> { Setting.require_first_names }
   validates_presence_of :last_name,  message: :missing_last_name,  if: -> { Setting.require_last_names  }
   validate :users_for_shared_access
+  validates :status, inclusion: { in: Proc.new { Setting.unroll(:lead_status).map{|s| s.last.to_s } } }, allow_blank: true
 
   after_create  :increment_leads_count
   after_destroy :decrement_leads_count
