@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'activities' => 'home#index'
   get 'admin'      => 'admin/users#index',       :as => :admin
   get 'login'      => 'authentications#new',     :as => :login
-  delete 'logout'     => 'authentications#destroy', :as => :logout
+  delete 'logout'  => 'authentications#destroy', :as => :logout
   get 'profile'    => 'users#show',              :as => :profile
   get 'signup'     => 'users#new',               :as => :signup
 
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get '/home/toggle',   :as => :toggle
   match '/home/timeline', :as => :timeline, :via => [:get, :put, :post]
   match '/home/timezone', :as => :timezone, :via => [:get, :put, :post]
-  match '/home/redraw',   :as => :redraw, :via => [:get, :post]
+  post '/home/redraw',   :as => :redraw
 
   resource  :authentication, :except => [:index, :edit]
   resources :comments,       :except => [:new, :show]
@@ -33,8 +33,8 @@ Rails.application.routes.draw do
       get  :options
       get  :field_group
       match :auto_complete, via: [:get, :post]
-      post :redraw
-      get :versions
+      get  :redraw
+      get  :versions
     end
     member do
       put  :attach
