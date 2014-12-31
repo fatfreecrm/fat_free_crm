@@ -1,6 +1,10 @@
 ---
 en-GB:
   language: English (UK)
+
+  # Generic terms.
+  #----------------------------------------------------------------------------
+  id: Id
   all: All
   at: at
   here: here
@@ -10,6 +14,10 @@ en-GB:
   select_none: -- None --
   select_blank: -- Select --
   yes_button: 'Yes'
+
+
+  # Settings.
+  #----------------------------------------------------------------------------
   tab_dashboard: Dashboard
   tab_tasks: Tasks
   tab_campaigns: Campaigns
@@ -75,12 +83,18 @@ en-GB:
   completed_last_week: Last week
   completed_this_month: This month
   completed_last_month: Last month
+
+  # Models/Activity.
+  #----------------------------------------------------------------------------
   one_hour: One Hour
   one_day: One Day
   two_days: Two Days
   one_week: One Week
   two_weeks: Two Weeks
   one_month: One Month
+
+  # Model Validations.
+  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
@@ -141,14 +155,41 @@ en-GB:
             email:
               missing_email: ^Please specify email address.
               email_in_use: ^There is another user with the same email.
+        custom_field:
+          required: ^%{field} is required.
+          maxlength: ^%{field} is too long.
+          endbeforestart: ^%{field} cannot end before it begins.
+    attribute_options:
+      opportunity:
+        stage:
+          prospecting: Prospecting
+          analysis: Analysis
+          presentation: Presentation
+          proposal: Proposal
+          negotiation: Negotiation
+          final_review: Final Review
+          won: Closed/Won
+          lost: Closed/Lost
+      account:
+        rating:
+          "0": "-"
+          "1": "★"
+          "2": "★★"
+          "3": "★★★"
+          "4": "★★★★"
+          "5": "★★★★★"
+
   msg_account_suspended: User account has been suspended.
   password_reset_instruction: password reset instructions
+
+  # Controllers.
+  #----------------------------------------------------------------------------
   msg_account_created: Your account has been created and is awaiting approval by the
     system administrator.
   msg_account_not_approved: Your account has not been approved yet.
   msg_asset_deleted: ! '%{value} has been deleted.'
   msg_asset_not_available: This %{value} is no longer available.
-  msg_asset_not_authorized: You are not authorized to view this %{value}.
+  msg_not_authorized: You are not authorized to take this action.
   msg_assets_not_available: The %{value} are not available.
   msg_asset_rejected: ! '%{value} has been rejected.'
   msg_bad_image_file: ^Could't upload or resize the image file you specified.
@@ -173,6 +214,9 @@ en-GB:
   msg_require_admin: You must be Administrator to access this page.
   msg_successful_signup: Successful signup, welcome to Fat Free CRM!
   msg_welcome: Welcome to Fat Free CRM!
+
+  # Options.
+  #----------------------------------------------------------------------------
   option_amount*probability: weighted amount
   activity_options: Show %{models} %{action_type} performed by %{user} in the past
     %{period}.
@@ -200,9 +244,20 @@ en-GB:
   option_target_revenue: target revenue
   option_updated_at: date updated
   show_per_page: Show %{number} %{models} per page using %{fmt} format.
-  sort_by: Sort by %{field}.
+  sort_by: Sort by %{field}
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position}
     last name.
+  entities_per_page: ! '%{entity} per page:'
+  contacts_index_long: Long format
+  contacts_index_brief: Brief format
+  contacts_index_full: Full format
+  opportunities_index_normal: Normal format
+  accounts_index_normal: Normal format
+  leads_index_normal: Normal format
+  campaigns_index_normal: Normal format
+
+  # Views -> Profile.
+  #----------------------------------------------------------------------------
   aim: AOL IM
   already_signed_up: Already signed up?
   alt_email: Alternative email
@@ -241,16 +296,23 @@ en-GB:
   born_on: Born on
   reports_to: Reports to
   access: Access
-  contacts_account: Contact's account
+
+  # Views -> Authenticate.
+  #----------------------------------------------------------------------------
   forgot_password: Forgot Password
   login: Login
   no_account: Do not have an account?
   remember_me: Remember Me
   sign_up_now: Sign Up Now!
+
+  # Views -> Accounts.
+  #----------------------------------------------------------------------------
   account: Account
+  account_id: Account
   select_an_account: Select an Account
   account_small: account
   account_summary: Account Summary
+  account_categories: Account Categories
   accounts: Accounts
   accounts_options: Accounts Options
   accounts_small: accounts
@@ -275,6 +337,11 @@ en-GB:
   shipping_address: Shipping address
   total_accounts: Total Accounts
   website: Website
+  account_with_title_department: ! '%{title}, %{department} at %{account}'
+  account_with_title: ! '%{title} at %{account}'
+
+  # Views -> Campaigns.
+  #----------------------------------------------------------------------------
   actual: Actual
   actual_performance: Actual Performance
   budget: Budget
@@ -284,12 +351,14 @@ en-GB:
   campaign_small: campaign
   campaign_summary: Campaign Summary
   campaign_targets: Campaign Targets
+  campaign_statuses: Campaign Statuses
   campaigns: Campaigns
   campaigns_options: Campaigns Options
   campaigns_small: campaigns
   conversion: Conversion
   conversion_label: Conversion (%)
   conversion_number: ! '%{value} conversion'
+  target_conversion: Target conversion
   create_campaign: Create Campaign
   end_date: End date
   finished_on: completed on %{value}
@@ -314,6 +383,10 @@ en-GB:
   was_supposed_to_finish: was supposed to finish on %{value}
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
   was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
+  select_a_campaign: Select a campaign
+
+  # Views -> Contacts.
+  #----------------------------------------------------------------------------
   alt_email_small: Other
   blog: Website/Blog
   contact: Contact
@@ -321,6 +394,7 @@ en-GB:
   contacts: Contacts
   contacts_options: Contacts Options
   contacts_small: contacts
+  contact_summary: Contact Summary
   create_contact: Create Contact
   department: Department
   department_small: ! '%{value} department'
@@ -344,6 +418,17 @@ en-GB:
   web_presence: Web Presence
   web_presence_small: web presence
   works_at: ! '%{job_title} at %{company}'
+  general_info: General Information
+  show_general_info_small: Show general information for this contact.
+  show_extra_info_small: Show extra information for this contact.
+  tag_details: ! '%{tag} Details'
+  show_tag_info_small: Show %{tag} information for this contact.
+  shared_with_everyone: Shared with everyone
+  title: Title
+  subscriptions: Subscriptions
+
+  # Views -> Leads.
+  #----------------------------------------------------------------------------
   convert: Convert
   convert_lead: Convert Lead
   convert_lead_permissions_intro: Contact permissions will be copied from the lead
@@ -366,6 +451,7 @@ en-GB:
   lead_small: lead
   lead_status_small: lead status
   lead_summary: Lead Summary
+  lead_statuses: Lead Statuses
   leads: Leads
   leads_options: Leads Options
   leads_small: leads
@@ -377,8 +463,14 @@ en-GB:
   source: Source
   status: Status
   total_leads: Total Leads
+  show_status_info_small: Show status information for this lead.
+  show_contact_info_small: Show contact information for this lead.
+
+  # Views -> Opportunities.
+  #----------------------------------------------------------------------------
   amount: Amount
   close_date: Close date
+  closes_on: Closes on
   closed_ago_on: closed %{time_ago} ago on %{date}
   closes_today: expected to close today!
   closing_date: closing date is %{value}
@@ -397,6 +489,7 @@ en-GB:
   opportunities_small: opportunities
   opportunity: Opportunity
   opportunity_small: opportunity
+  opportunity_stages: Opportunity Stages
   opportunity_summary: Opportunity At a Glance
   opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability}
     probability'
@@ -407,6 +500,9 @@ en-GB:
   stage: Stage
   total_opportunities: Total Opportunities
   weighted_amount: Weighted amount
+
+  # Views -> Tasks.
+  #----------------------------------------------------------------------------
   task: Task
   task_small: task
   tasks: Tasks
@@ -447,8 +543,14 @@ en-GB:
   total_tasks: Total %{value}
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
+
+  # Views -> Team.
+  #----------------------------------------------------------------------------
   unassigned_opportunities: Unassigned Opportunities
   no_opportunities_found: There are currently no outstanding opportunities.
+
+  # Views -> Home.
+  #----------------------------------------------------------------------------
   action_completed: completed
   action_create: created
   action_destroy: deleted
@@ -472,11 +574,13 @@ en-GB:
   subject_opportunity: opportunity
   subject_task: task
   subject_user: user
+  tag_list: Tags
   create_past_participle: Record Creations
   view_past_participle: Views
   update_past_participle: Updates
   destroy_past_participle: Deletions
   all_events_past_participle: Activities
+  action_create_comment: ! '- &quot;%{comment}&quot;'
   my_tasks: My Tasks
   no_task_records: You have no tasks.
   my_opportunities: My Opportunities
@@ -484,6 +588,9 @@ en-GB:
   my_accounts: My Accounts
   no_account_records: You have no accounts
   not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
+
+  # Views -> Common.
+  #----------------------------------------------------------------------------
   add_note: Add Note
   save_note: Save Note
   add_note_help: Add a new note...
@@ -535,6 +642,9 @@ en-GB:
   collapse_all: Collapse all
   expanded: Expanded
   collapsed: Collapsed
+
+  # Views -> Layout.
+  #----------------------------------------------------------------------------
   about: About
   about_dev_group: Discussion group for developers
   about_features: Features and bugs
@@ -551,28 +661,17 @@ en-GB:
   logout: Logout
   quick_find: Quick find
   welcome: Welcome
+
+  # Advanced search
   accounts_advanced_search: Accounts Advanced search
   advanced_search: Advanced search
-  advanced_search_submit: Search
-  advanced_search_add_group: Add a group of filters
-  advanced_search_group_first: Show results where %{combinator} of the following match
-  advanced_search_group_rest: ! '...and where %{combinator} of the following match'
-  advanced_search_add_condition: Add a filter
-  advanced_search_remove_condition: Remove filter
-  ransack:
-    predicates:
-      eq: is
-      not_eq: is not
-      lt: is less than
-      gt: is greater than
-      matches: matches
-      does_not_match: doesn't match
-      cont: contains
-      not_cont: doesn't contain
-      blank: is blank
-      present: is present
-      'null': is null
-      not_null: is not null
+  basic_search: Basic search
+  search_results_count:
+    one: Search found %{count} result.
+    other: Search found %{count} results.
+
+  # Views -> Comments.
+  #----------------------------------------------------------------------------
   comment: Comment
   edit_comment: Editing comment
   show: Show
@@ -582,19 +681,34 @@ en-GB:
   subscribe_via_email: Subscribe via email
   disable_email_subscriptions: Disable email subscription
   added_note: added note %{value}
+
+  # Views -> Emails.
+  #----------------------------------------------------------------------------
+
+  # Views -> Passwords.
+  #----------------------------------------------------------------------------
   confirm_password_intro: Please type your new password and then confirm it.
   password_intro: Please specify your email address, and the instructions to reset
     your password will be sent to you.
   reset_password: Reset Password
   update_password_and_login: Update Password and Login
+
+  # Views -> Admin
+  #----------------------------------------------------------------------------
   back_to_crm: Back to Fat Free CRM
   crm_admin_page: Fat Free CRM Administration
+
+  # Views -> Admin -> Groups
+  #----------------------------------------------------------------------------
   create_group: Create Group
   save_group: Save Group
   group_members: members
   groups: Groups
   groups_small: groups
   group_small: group
+
+  # Views -> Admin -> Users
+  #----------------------------------------------------------------------------
   confirm_group_delete: Are you sure you wish to delete this group? There are %{count}
     items that still reference it.
   approve: Approve
@@ -602,6 +716,7 @@ en-GB:
   last_seen: last seen %{value} ago
   last_seen2: last seen %{value}
   personal_information: Personal Information
+  group_memberships: Group Memberships
   reactivate: Reactivate
   save_user: Save User
   suspend: Suspend
@@ -618,6 +733,9 @@ en-GB:
   user_suspended_on: suspended on %{value}
   users: Users
   users_small: users
+
+  # Views -> Versions
+  #----------------------------------------------------------------------------
   versions: History
   version:
     create: ! '%{item} created by %{by}'
@@ -627,27 +745,47 @@ en-GB:
     unset_html: ! '%{attr} unset'
     change_html: ! '%{attr} changed from %{from} to %{to}'
     anonymous: anonymous
+  account_contact_id: Account id
+  account_contact_name: Account name
+  user_id: User id
+  created_at: Created at
+  updated_at: Updated at
+
+  # Export.
+  #----------------------------------------------------------------------------
   to_xls: Export to Excel
   to_csv: Export to comma-delimited file format (including deleted records)
   to_rss: RSS feed
   to_atom: Atom feed
+  to_perm: Permalink
+
+  # Dropbox.
+  #----------------------------------------------------------------------------
   dropbox_notification_subject: dropbox - Added email - %{subject}
   dropbox_notification_intro: Succesfully added the email you sent to dropbox
   dropbox_notification_to: Added to
   subject: Subject
   body: Body
+
+  # Comment Inbox
+  #----------------------------------------------------------------------------
   comment_notification:
     intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
     reply_instructions: Reply to this email directly to add a new comment, or view
       the %{entity} online
-  lists: Lists
-  list: List
+
+  # Lists
+  #----------------------------------------------------------------------------
   global_lists: Global lists
   personal_lists: My lists
+  list: List
   no_saved_lists: No saved lists
   make_current_view_list: Make current view a list
   list_name_info: If you use the name of an existing list, you will overwrite that
     list with your current settings
+
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     comment:
       one: 1 comment
@@ -667,6 +805,9 @@ en-GB:
     login:
       one: 1 login
       other: ! '%{count} logins'
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
   date:
     formats:
       mmddyyyy: ! '%Y-%m-%d'
@@ -676,6 +817,9 @@ en-GB:
     formats:
       mmddhhss: ! '%e %b at %l:%M%p'
       mmddyyyy_hhmm: ! '%e %b %Y at %l:%M%p'
+
+  # will_paginate translations copied for 'en-US'
+  #----------------------------------------------------------------------------
   will_paginate:
     previous_label: ! '&#8592; Previous'
     next_label: Next &#8594;
@@ -686,6 +830,9 @@ en-GB:
         one: Displaying 1 %{name}
         other: Displaying all %{count} %{plural}
       multi_page: Displaying %{plural} %{from} - %{to} of %{total} in total
+
+  # Views -> Admin -> Custom Fields
+  #----------------------------------------------------------------------------
   label: Label
   custom_fields: Custom Fields
   custom_field_options: Custom Field Options
@@ -696,8 +843,8 @@ en-GB:
   save_field_group: Save field group
   field_group_empty: There are no fields in this group.
   select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
-  restrict_by_tag: Restrict by Tag
-  restrict_by_tag_info: Only show fields for %{assets} that are tagged with
+  restrict_by_tag: ! 'Restrict by Tag:'
+  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
   field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
   field_group_unrestricted: This field group applies to all %{assets}
   field_group_confirm_delete: If a field group is deleted, any fields will be moved
@@ -707,12 +854,21 @@ en-GB:
     Create a new field group, or add fields to one of the groups below.
     You can drag and drop fields to change their display order or move them between
     field groups.'
+  # Views -> Admin -> Tags
+  #----------------------------------------------------------------------------
+  admin_fields_info2: ! 'It is strongly recommended you restart your server after
+    adding or removing any custom field.
+
+'
   tags: Tags
   tag_small: tag
   tagged: Tagged
   create_tag: Create Tag
   save_tag: Save Tag
   field_group_tags: Field Groups shown for this Tag
+
+  # Views -> Admin -> Plugins
+  #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from
     %{value} records.
   msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
@@ -722,14 +878,23 @@ en-GB:
         author: Author
         version: Version
         description: Description
+
+  # Simple Form translations
+  #----------------------------------------------------------------------------
   simple_form:
-    'yes': 'Yes'
-    'no': 'No'
+    yes: 'Yes'
+    no: 'No'
     required:
       text: required
       mark: ! '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: ! 'Some errors were found, please take a look:'
+
+  # Form field types
+  #----------------------------------------------------------------------------
   field_types:
     string:
       title: Short Answer
@@ -765,3 +930,9 @@ en-GB:
       title: Number (Integer)
     float:
       title: Number (Floating Point)
+  pair:
+    start: Start
+    end: End
+    from_to: From %{from} to %{to}
+    from_only: From %{from}
+    to_only: Until %{to}
