@@ -45,10 +45,9 @@ class CommentsController < ApplicationController
   # POST /comments.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    attributes = params[:comment] || {}
-    attributes.merge!(user_id: current_user.id)
-    @comment = Comment.new(attributes)
-
+    @comment = Comment.new(
+      comment_params.merge(user_id: current_user.id)
+    )
     # Make sure commentable object exists and is accessible to the current user.
     model, id = @comment.commentable_type, @comment.commentable_id
     unless model.constantize.my.find_by_id(id)
@@ -65,7 +64,7 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @comment = Comment.find(params[:id])
-    @comment.update_attributes(params[:comment])
+    @comment.update_attributes(comment_params)
     respond_with(@comment)
   end
 
@@ -77,6 +76,12 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.destroy
     respond_with(@comment)
+  end
+
+protected
+
+  def comment_params
+    params[:comment].permit!
   end
 
 private
