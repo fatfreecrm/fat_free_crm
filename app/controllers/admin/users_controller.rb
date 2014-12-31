@@ -118,6 +118,8 @@ protected
       :yahoo,
       :google,
       :skype,
+      :password,
+      :password_confirmation,
       group_ids: []
     )
   end
