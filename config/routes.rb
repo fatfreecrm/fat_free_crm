@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   get '/home/options',  :as => :options
   get '/home/toggle',   :as => :toggle
-  put '/home/timeline', :as => :timeline
+  match '/home/timeline', :as => :timeline, :via => [:get, :put]
   match '/home/timezone', :as => :timezone, :via => [:get, :post]
   post '/home/redraw',   :as => :redraw
 
