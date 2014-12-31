@@ -22,7 +22,7 @@ feature 'Contacts', %q{
     expect(contacts_element).to have_content('Test Subject #1')
     expect(contacts_element).to have_content('Test Subject #2')
     expect(contacts_element).to have_content('Test Subject #3')
-    expect(find('.title_tools')).to have_content('Create Contact')
+    expect(page).to have_content('Create Contact')
   end
 
   scenario 'should create a contact', js: true do
@@ -38,8 +38,9 @@ feature 'Contacts', %q{
       fill_in 'comment_body', with: 'This is a very important person.'
       click_button 'Create Contact'
       expect(contacts_element).to have_content('Testy McTest')
+
       contacts_element.click_link 'Testy McTest'
-      expect(page).to have_content('This is a very important person.')
+      expect(main_element).to have_content('This is a very important person.')
 
       click_link "Dashboard"
       expect(activities_element).to have_content('Bill Murray created contact Testy McTest')
@@ -80,10 +81,10 @@ feature 'Contacts', %q{
     visit contacts_page
     click_link 'Test Subject'
     click_link 'Delete?'
-    expect(page).to have_content('Are you sure you want to delete this contact?')
+    expect(menu_element).to have_content('Are you sure you want to delete this contact?')
     click_link 'Yes'
-    expect(page).to have_content('Test Subject has been deleted.')
-    expect(page).not_to have_content('Test Subject')
+    expect(flash_element).to have_content('Test Subject has been deleted.')
+    expect(contacts_element).not_to have_content('Test Subject')
   end
 
   scenario 'should search for a contact', js: true do
@@ -100,6 +101,18 @@ feature 'Contacts', %q{
     fill_in 'query', with: "Fake contact"
     expect(contacts_element).not_to have_content('Test Subject #0')
     expect(contacts_element).not_to have_content('Test Subject #1')
+  end
+
+  def main_element
+    find('#main')
+  end
+
+  def menu_element
+    find('#menu')
+  end
+
+  def flash_element
+    find('#flash')
   end
 
   def contacts_element

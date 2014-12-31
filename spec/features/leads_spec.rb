@@ -42,10 +42,10 @@ feature 'Leads', %q{
       expect(leads_element).to have_content('Mr Lead')
 
       leads_element.click_link('Mr Lead')
-      expect(page).to have_content('Contacted')
-      expect(page).to have_content('mr_lead@example.com')
-      expect(page).to have_content('+44 1234 567890')
-      expect(page).to have_content('This is an important lead.')
+      expect(summary_element).to have_content('Contacted')
+      expect(summary_element).to have_content('mr_lead@example.com')
+      expect(summary_element).to have_content('+44 1234 567890')
+      expect(main_element).to have_content('This is an important lead.')
 
       click_link "Dashboard"
       expect(activities_element).to have_content("Bill Murray created lead Mr Lead")
@@ -109,6 +109,14 @@ feature 'Leads', %q{
     fill_in 'query', with: 'Non-existant lead'
     expect(leads_element).not_to have_content('Lead #0')
     expect(leads_element).not_to have_content('Lead #1')
+  end
+
+  def main_element
+    find('#main')
+  end
+
+  def summary_element
+    find('#summary')
   end
 
   def leads_element
