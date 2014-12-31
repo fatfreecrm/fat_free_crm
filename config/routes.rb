@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       post :filter
       get  :options
       get  :field_group
-      get :auto_complete
+      match :auto_complete, via: [:get, :post]
       post :redraw
       get :versions
     end
@@ -146,7 +146,7 @@ Rails.application.routes.draw do
       post :redraw
     end
     collection do
-      get :auto_complete
+      match :auto_complete, via: [:get, :post]
       get :opportunities_overview
     end
   end
