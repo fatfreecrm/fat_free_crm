@@ -141,7 +141,7 @@ Rails.application.routes.draw do
     member do
       get :avatar
       get :password
-      put :upload_avatar
+      patch :upload_avatar
       put :change_password
       post :redraw
     end
