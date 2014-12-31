@@ -17,9 +17,9 @@ Rails.application.routes.draw do
 
   get '/home/options',  :as => :options
   get '/home/toggle',   :as => :toggle
-  match '/home/timeline', :as => :timeline, :via => [:get, :put]
-  match '/home/timezone', :as => :timezone, :via => [:get, :post]
-  post '/home/redraw',   :as => :redraw
+  match '/home/timeline', :as => :timeline, :via => [:get, :put, :post]
+  match '/home/timezone', :as => :timezone, :via => [:get, :put, :post]
+  match '/home/redraw',   :as => :redraw, :via => [:get, :post]
 
   resource  :authentication, :except => [:index, :edit]
   resources :comments,       :except => [:new, :show]
@@ -102,7 +102,7 @@ Rails.application.routes.draw do
       post :subscribe
       post :unsubscribe
       put  :attach
-      put  :promote
+      match :promote, via: [:patch, :put]
       put  :reject
     end
   end
