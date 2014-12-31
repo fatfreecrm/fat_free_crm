@@ -84,7 +84,7 @@ gem 'therubyracer', :platform => :ruby unless ENV["CI"]
 gem 'rails3-jquery-autocomplete', github: 'crowdint/rails3-jquery-autocomplete'
 
 gem 'ransack', github: 'activerecord-hackery/ransack'
-gem 'ransack_ui', github: 'ndbroadbent/ransack_ui'
+gem 'ransack_ui', github: 'fatfreecrm/ransack_ui', branch: 'fix/ransortable_attributes'
 
 # this is because observers are deprecated
 gem 'rails-observers'
