@@ -642,6 +642,8 @@ en-GB:
       the %{entity} online
   lists: Lists
   list: List
+  global_lists: Global lists
+  personal_lists: My lists
   no_saved_lists: No saved lists
   make_current_view_list: Make current view a list
   list_name_info: If you use the name of an existing list, you will overwrite that
