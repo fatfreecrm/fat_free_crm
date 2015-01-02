@@ -44,12 +44,13 @@ contact lists, and opportunity tracking.
   </tr>
 </table>
 
-Active development started in November 2008.
-New features, enhancements, and updates appear on regular basis.
-
 Pull requests and bug reports are always welcome!
 
 Visit our website at http://www.fatfreecrm.com/
+
+## Rails 4 support
+
+Currently, the master branch and gem releases of Fat Free CRM run on Rails 3.2 However, we are in the midst of upgrading to Rails 4.2, please see the [rails4](https://github.com/fatfreecrm/fat_free_crm/tree/rails4) branch. If you're a developer, you're welcome to check that code out, search for bugs and file them in the issue tracker using the [rails4](https://github.com/fatfreecrm/fat_free_crm/labels/rails4) label.
 
 ## Important security note
 
@@ -58,6 +59,7 @@ Please note that several severe vulnerabilities have been fixed recently. You sh
 ## System Requirements
 
 * Ruby 2.1 (or 2.0) recommended (it's much faster!)
+  * Ruby 2.2 is not yet supported
   * Ruby 1.9.3 is also compatible
   * Ruby 1.9.2 should be compatible but is not longer supported
   * Ruby v1.8.7 was supported until v0.11.4 (see https://github.com/fatfreecrm/fat_free_crm/tree/ruby1.8)
