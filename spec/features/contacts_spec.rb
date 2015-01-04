@@ -69,7 +69,7 @@ feature 'Contacts', %q{
       fill_in 'contact_last_name', with: 'Subject'
       fill_in 'contact_email', with: "test.subject@example.com"
       click_button 'Save Contact'
-      expect(find('#edit_contact_title')).to have_content('Test Subject')
+      expect(summary_element).to have_content('Test Subject')
 
       click_link 'Dashboard'
       expect(activities_element).to have_content("Bill Murray updated contact Test Subject")
@@ -105,6 +105,10 @@ feature 'Contacts', %q{
 
   def main_element
     find('#main')
+  end
+
+  def summary_element
+    find('#summary')
   end
 
   def menu_element
