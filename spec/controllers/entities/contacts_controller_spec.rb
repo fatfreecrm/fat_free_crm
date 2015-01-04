@@ -29,10 +29,10 @@ describe ContactsController do
       @billy_bones   = FactoryGirl.create(:contact, user: current_user, first_name: "Billy",   last_name: "Bones")
       @captain_flint = FactoryGirl.create(:contact, user: current_user, first_name: "Captain", last_name: "Flint")
 
-      get :index, query: "bill"
+      get :index, query: @billy_bones.email
       expect(assigns[:contacts]).to eq([ @billy_bones ])
-      expect(assigns[:current_query]).to eq("bill")
-      expect(session[:contacts_current_query]).to eq("bill")
+      expect(assigns[:current_query]).to eq(@billy_bones.email)
+      expect(session[:contacts_current_query]).to eq(@billy_bones.email)
     end
 
     describe "AJAX pagination" do
