@@ -102,7 +102,7 @@ describe Version, versioning: true do
       it "should add a version when commenting on a #{item}" do
         @comment = FactoryGirl.create(:comment, commentable: @item, user: current_user)
 
-        @version = Version.where({related_id: @item.id, related_type: @item.class.name, whodunnit: PaperTrail.whodunnit, event: 'create'}).first
+        @version = Version.where(related_id: @item.id, related_type: @item.class.name, whodunnit: PaperTrail.whodunnit, event: 'create').first
         expect(@version).not_to eq(nil)
       end
     end
@@ -232,10 +232,11 @@ describe Version, versioning: true do
       )
       @item.update(name: 'New Name')
 
-      @versions = Version.where({item_id: @item.id, item_type: @item.class.name})
-      expect(@versions.map(&:event).sort).to eq(%w(create update))
-      @versions = Version.latest.visible_to(@user)
-      expect(@versions.map(&:event).sort).to eq(%w(create update))
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.map(&:event).sort).to eq(%w(create update))
+
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions.map(&:event).sort).to eq(%w(create update))
     end
   end
 end
