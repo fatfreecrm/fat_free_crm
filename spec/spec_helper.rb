@@ -9,6 +9,7 @@ ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
+require 'paper_trail/frameworks/rspec'
 
 require 'acts_as_fu'
 require 'factory_girl_rails'
@@ -40,7 +41,7 @@ RSpec.configure do |config|
 
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers
-  config.include(FactoryGirl::Syntax::Methods)
+  config.include FactoryGirl::Syntax::Methods
 
   config.before(:each) do
     # Overwrite locale settings within "config/settings.yml" if necessary.
