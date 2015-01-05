@@ -28,7 +28,7 @@ describe "/tasks/_edit" do
     it "should render move to [#{day}] link" do
       render
 
-      expect(rendered).to have_tag("a[onclick^=crm.reschedule]", text: day)
+      expect(rendered).to have_tag("a[onclick^='crm.reschedule']", text: day)
     end
   end
 
