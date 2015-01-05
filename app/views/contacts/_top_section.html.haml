@@ -5,7 +5,7 @@
       %tr
         %td
           .label.top.req{ :class => "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
-          = f.text_field :first_name
+          = f.text_field :first_name, :autofocus => true
         %td= spacer
         %td
           .label.top{ :class => "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:

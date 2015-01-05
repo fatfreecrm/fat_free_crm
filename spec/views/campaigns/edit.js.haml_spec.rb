@@ -62,11 +62,4 @@ describe "/campaigns/edit" do
     expect(rendered).to include("crm.flip_form('edit_campaign')")
   end
 
-  it "should call JavaScript to set up popup Calendar" do
-    params[:cancel] = nil
-
-    render
-    expect(rendered).to include('focus()')
-  end
-
 end

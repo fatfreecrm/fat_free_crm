@@ -46,7 +46,9 @@
       arrow = $("#arrow") unless arrow.length
       arrow.html(@EXPANDED)
       $("#" + id).slideDown(250)
-      $("#" + id).find(":input[type=text]:first").focus()
+      setTimeout ->
+        $("#" + id).find("input[autofocus]").focus()
+        0
 
 
     #----------------------------------------------------------------------------
