@@ -526,7 +526,7 @@ describe ContactsController do
       it "should destroy the requested contact and render [destroy] template" do
         xhr :delete, :destroy, id: @contact.id
 
-        expect { Contact.find(@contact) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Contact.find(@contact.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect(response).to render_template("contacts/destroy")
       end
 

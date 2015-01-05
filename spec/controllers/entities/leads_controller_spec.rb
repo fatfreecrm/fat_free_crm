@@ -551,7 +551,7 @@ describe LeadsController do
         xhr :delete, :destroy, id: @lead.id
 
         expect(assigns[:leads]).to eq(nil) # @lead got deleted
-        expect { Lead.find(@lead) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Lead.find(@lead.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect(response).to render_template("leads/destroy")
       end
 

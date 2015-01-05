@@ -189,7 +189,7 @@ describe CommentsController do
             allow(Comment).to receive(:new).and_return(@comment)
 
             xhr :delete, :destroy, id: @comment.id
-            expect { Comment.find(@comment) }.to raise_error(ActiveRecord::RecordNotFound)
+            expect { Comment.find(@comment.id) }.to raise_error(ActiveRecord::RecordNotFound)
             expect(response).to render_template("comments/destroy")
           end
         end

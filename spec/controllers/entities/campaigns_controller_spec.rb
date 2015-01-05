@@ -433,7 +433,7 @@ describe CampaignsController do
         xhr :delete, :destroy, id: @campaign.id
 
         expect(assigns[:campaigns]).to eq([ @another_campaign ])
-        expect { Campaign.find(@campaign) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Campaign.find(@campaign.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect(response).to render_template("campaigns/destroy")
       end
 

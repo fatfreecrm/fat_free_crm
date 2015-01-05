@@ -427,7 +427,7 @@ describe AccountsController do
         @another_account = FactoryGirl.create(:account, user: current_user)
         xhr :delete, :destroy, id: @account.id
 
-        expect { Account.find(@account) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Account.find(@account.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect(assigns[:accounts]).to eq([ @another_account ]) # @account got deleted
         expect(response).to render_template("accounts/destroy")
       end

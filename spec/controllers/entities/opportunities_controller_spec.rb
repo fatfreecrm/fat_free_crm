@@ -702,7 +702,7 @@ describe OpportunitiesController do
       it "should destroy the requested opportunity and render [destroy] template" do
         xhr :delete, :destroy, id: @opportunity.id
 
-        expect { Opportunity.find(@opportunity) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Opportunity.find(@opportunity.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect(assigns(:opportunity_stage_total)).to eq(nil)
         expect(response).to render_template("opportunities/destroy")
       end
