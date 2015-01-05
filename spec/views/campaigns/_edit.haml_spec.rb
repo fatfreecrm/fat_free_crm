@@ -22,7 +22,7 @@ describe "/campaigns/_edit" do
     expect(view).to render_template(partial: "_permissions")
 
     expect(view).to have_tag("form[class=edit_campaign]") do
-      with_tag "input[type=hidden][id=campaign_user_id][value=#{@campaign.user_id}]"
+      with_tag "input[type=hidden][id=campaign_user_id][value='#{@campaign.user_id}']"
     end
   end
 

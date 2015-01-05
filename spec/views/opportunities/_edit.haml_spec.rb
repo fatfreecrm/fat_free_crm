@@ -21,8 +21,8 @@ describe "/opportunities/_edit" do
     render
 
     expect(rendered).to have_tag("form[class=edit_opportunity]") do
-      with_tag "input[type=hidden][id=opportunity_user_id][value=#{@opportunity.user_id}]"
-      with_tag "input[type=hidden][id=opportunity_campaign_id][value=#{@opportunity.campaign_id}]"
+      with_tag "input[type=hidden][id=opportunity_user_id][value='#{@opportunity.user_id}']"
+      with_tag "input[type=hidden][id=opportunity_campaign_id][value='#{@opportunity.campaign_id}']"
     end
   end
 
@@ -44,7 +44,7 @@ describe "/opportunities/_edit" do
 
     expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|
       with_tag "option[selected=selected]"
-      with_tag "option[value=#{@user.id}]"
+      with_tag "option[value='#{@user.id}']"
     end
   end
 

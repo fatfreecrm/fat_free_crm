@@ -25,7 +25,7 @@ describe "/contacts/_edit" do
     expect(view).to render_template(partial: "_permissions")
 
     expect(rendered).to have_tag("form[class=edit_contact]") do
-      with_tag "input[type=hidden][id=contact_user_id][value=#{@contact.user_id}]"
+      with_tag "input[type=hidden][id=contact_user_id][value='#{@contact.user_id}']"
     end
   end
 
@@ -47,7 +47,7 @@ describe "/contacts/_edit" do
     render
     expect(rendered).to have_tag("select[id=contact_assigned_to]") do |options|
       with_tag "option[selected=selected]"
-      with_tag "option[value=#{@user.id}]"
+      with_tag "option[value='#{@user.id}']"
     end
   end
 

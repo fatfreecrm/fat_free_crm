@@ -25,7 +25,7 @@ describe "/leads/_edit" do
     expect(view).to render_template(partial: "entities/_permissions")
 
     expect(rendered).to have_tag("form[class=edit_lead]") do
-      with_tag "input[type=hidden][id=lead_user_id][value=#{@lead.user_id}]"
+      with_tag "input[type=hidden][id=lead_user_id][value='#{@lead.user_id}']"
     end
   end
 
