@@ -45,7 +45,7 @@ class Comment < ActiveRecord::Base
   def notify_subscribers
     commentable.subscribed_users.reject{|user_id| user_id == user.id}.each do |subscriber_id|
       if subscriber = User.find_by_id(subscriber_id)
-        SubscriptionMailer.comment_notification(subscriber, self).deliver
+        SubscriptionMailer.comment_notification(subscriber, self).deliver_now
       end
     end
   end

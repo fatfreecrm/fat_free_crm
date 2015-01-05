@@ -20,7 +20,7 @@ class EntityObserver < ActiveRecord::Observer
 
   def send_notification_to_assignee(item)
     if item.assignee.present? && current_user.present? && can_send_email?
-      UserMailer.assigned_entity_notification(item, current_user).deliver
+      UserMailer.assigned_entity_notification(item, current_user).deliver_now
     end
   end
 

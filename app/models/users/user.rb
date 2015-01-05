@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    UserMailer.password_reset_instructions(self).deliver
+    UserMailer.password_reset_instructions(self).deliver_now
   end
 
   # Override global I18n.locale if the user has individual local preference.
