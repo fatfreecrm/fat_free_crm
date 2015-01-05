@@ -45,11 +45,8 @@
       arrow = $("#" + id + "_arrow")
       arrow = $("#arrow") unless arrow.length
       arrow.html(@EXPANDED)
-      $("#" + id).slideDown(
-        250
-        ->
-          $("#" + id).find(":input[type=text]:first").focus()
-      )
+      $("#" + id).slideDown(250)
+      $("#" + id).find(":input[type=text]:first").focus()
 
 
     #----------------------------------------------------------------------------
@@ -398,12 +395,12 @@
                 $("#auto_complete_query").val ""
             else
               window.location.href = @base_url + "/" + controller + "/" + ui.item.value
-        
+
         focus: (event, ui) =>
           event.preventDefault()
           $("#auto_complete_query").val(ui.item.label)
       )
-      
+
       $.extend $.ui.autocomplete::,
         _renderItem: (ul, item) ->
           term = new RegExp( "(" + @element.val() + ")", "gi" )
