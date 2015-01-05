@@ -43,24 +43,24 @@ describe Version, versioning: true do
 
     it "should not include view events" do
       @versions = Version.for(current_user).exclude_events(:view)
-      expect(@versions.map(&:event).sort).not_to include('view')
+      expect(@versions.pluck(:event).sort).not_to include('view')
     end
 
     it "should exclude create, update and destroy events" do
       @versions = Version.for(current_user).exclude_events(:create, :update, :destroy)
-      expect(@versions.map(&:event)).not_to include('create')
-      expect(@versions.map(&:event)).not_to include('update')
-      expect(@versions.map(&:event)).not_to include('destroy')
+      expect(@versions.pluck(:event)).not_to include('create')
+      expect(@versions.pluck(:event)).not_to include('update')
+      expect(@versions.pluck(:event)).not_to include('destroy')
     end
 
     it "should include only destroy events" do
       @versions = Version.for(current_user).include_events(:destroy)
-      expect(@versions.map(&:event).uniq).to eq(%w(destroy))
+      expect(@versions.pluck(:event).uniq).to eq(%w(destroy))
     end
 
     it "should include create and update events" do
       @versions = Version.for(current_user).include_events(:create, :update)
-      expect(@versions.map(&:event).uniq.sort).to eq(%w(create update))
+      expect(@versions.pluck(:event).uniq.sort).to eq(%w(create update))
     end
 
     it "should select all versions for a given user" do
@@ -115,16 +115,15 @@ describe Version, versioning: true do
     end
 
     it "creating a new task should not add it to recently viewed items list" do
-      @versions = Version.where(@conditions)
-
-      expect(@versions.map(&:event)).to include('create') # but not view
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('create') # but not view
     end
 
     it "updating a new task should not add it to recently viewed items list" do
       @task.update(name: 'New Name')
-      @versions = Version.where(@conditions)
 
-      expect(@versions.map(&:event).sort).to eq(%w(create update)) # but not view
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event).sort).to eq(%w(create update)) # but not view
     end
   end
 
@@ -135,24 +134,24 @@ describe Version, versioning: true do
     end
 
     it "should create 'completed' task event" do
-      @task.update_attribute(:completed_at, 1.second.ago)
-      @versions = Version.where(@conditions)
+      @task.update(completed_at: 1.second.ago)
 
-      expect(@versions.map(&:event)).to include('complete')
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('complete')
     end
 
     it "should create 'reassigned' task event" do
-      @task.update_attribute(:assigned_to, current_user.id + 1)
-      @versions = Version.where(@conditions)
+      @task.update(assigned_to: current_user.id + 1)
 
-      expect(@versions.map(&:event)).to include('reassign')
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('reassign')
     end
 
     it "should create 'rescheduled' task event" do
-      @task.update_attribute(:bucket, "due_tomorrow") # FactoryGirl creates :due_asap task
-      @versions = Version.where(@conditions)
+      @task.update(bucket: "due_tomorrow") # FactoryGirl creates :due_asap task
 
-      expect(@versions.map(&:event)).to include('reschedule')
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('reschedule')
     end
   end
 
@@ -163,10 +162,10 @@ describe Version, versioning: true do
     end
 
     it "should create 'rejected' lead event" do
-      @lead.update_attribute(:status, "rejected")
-      @versions = Version.where(@conditions)
+      @lead.update(status: "rejected")
 
-      expect(@versions.map(&:event)).to include('reject')
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('reject')
     end
   end
 
@@ -180,20 +179,22 @@ describe Version, versioning: true do
       @item = FactoryGirl.create(:account, user: current_user, access: "Private")
       @item.update(name: 'New Name')
 
-      @versions = Version.where({item_id: @item.id, item_type: @item.class.name})
-      expect(@versions.map(&:event).sort).to eq(%w(create update))
-      @versions = Version.latest.visible_to(@user)
-      expect(@versions).to eq([])
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.pluck(:event).sort).to eq(%w(create update))
+
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions).to eq([])
     end
 
     it "should not show the destroy version if the item is private" do
       @item = FactoryGirl.create(:account, user: current_user, access: "Private")
       @item.destroy
 
-      @versions = Version.where({item_id: @item.id, item_type: @item.class.name})
-      expect(@versions.map(&:event).sort).to eq(%w(create destroy))
-      @versions = Version.latest.visible_to(@user)
-      expect(@versions).to eq([])
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.pluck(:event).sort).to eq(%w(create destroy))
+
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions).to eq([])
     end
 
     it "should not show create/update versions if the item was not shared with the user" do
@@ -204,10 +205,11 @@ describe Version, versioning: true do
       )
       @item.update(name: 'New Name')
 
-      @versions = Version.where({item_id: @item.id, item_type: @item.class.name})
-      expect(@versions.map(&:event).sort).to eq(%w(create update))
-      @versions = Version.latest.visible_to(@user)
-      expect(@versions).to eq([])
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.pluck(:event).sort).to eq(%w(create update))
+
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions).to eq([])
     end
 
     it "should not show the destroy version if the item was not shared with the user" do
@@ -218,10 +220,11 @@ describe Version, versioning: true do
       )
       @item.destroy
 
-      @versions = Version.where({item_id: @item.id, item_type: @item.class.name})
-      expect(@versions.map(&:event).sort).to eq(%w(create destroy))
-      @versions = Version.latest.visible_to(@user)
-      expect(@versions).to eq([])
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.pluck(:event).sort).to eq(%w(create destroy))
+
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions).to eq([])
     end
 
     it "should show create/update versions if the item was shared with the user" do
@@ -233,7 +236,7 @@ describe Version, versioning: true do
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
-      expect(versions.map(&:event).sort).to eq(%w(create update))
+      expect(versions.pluck(:event).sort).to eq(%w(create update))
 
       visible_versions = Version.visible_to(@user)
       expect(visible_versions.map(&:event).sort).to eq(%w(create update))
