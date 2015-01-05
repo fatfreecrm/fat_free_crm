@@ -121,7 +121,7 @@ describe Version, versioning: true do
     end
 
     it "updating a new task should not add it to recently viewed items list" do
-      @task.update_attribute(:updated_at, 1.second.ago)
+      @task.update(name: 'New Name')
       @versions = Version.where(@conditions)
 
       expect(@versions.map(&:event).sort).to eq(%w(create update)) # but not view
@@ -178,7 +178,7 @@ describe Version, versioning: true do
 
     it "should not show the create/update versions if the item is private" do
       @item = FactoryGirl.create(:account, user: current_user, access: "Private")
-      @item.update_attribute(:updated_at,  1.second.ago)
+      @item.update(name: 'New Name')
 
       @versions = Version.where({item_id: @item.id, item_type: @item.class.name})
       expect(@versions.map(&:event).sort).to eq(%w(create update))
@@ -202,7 +202,7 @@ describe Version, versioning: true do
         access: "Shared",
         permissions: [ FactoryGirl.build(:permission, user: current_user, asset: @item) ]
       )
-      @item.update_attribute(:updated_at, 1.second.ago)
+      @item.update(name: 'New Name')
 
       @versions = Version.where({item_id: @item.id, item_type: @item.class.name})
       expect(@versions.map(&:event).sort).to eq(%w(create update))
@@ -230,7 +230,7 @@ describe Version, versioning: true do
         access: "Shared",
         permissions: [ FactoryGirl.build(:permission, user: @user, asset: @item) ]
       )
-      @item.update_attribute(:updated_at, 1.second.ago)
+      @item.update(name: 'New Name')
 
       @versions = Version.where({item_id: @item.id, item_type: @item.class.name})
       expect(@versions.map(&:event).sort).to eq(%w(create update))
