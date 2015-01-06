@@ -65,30 +65,6 @@ module FatFreeCRM
       def custom_fields_validator
         self.field_groups.map(&:fields).flatten.each{|f| f.custom_validator(self) }
       end
-
-      def assign_attributes(new_attributes)
-        super
-      # If attribute is unknown, a new custom field may have been added.
-      # Refresh columns and try again.
-      rescue ActiveRecord::UnknownAttributeError
-        self.class.reset_column_information
-        super
-      end
-
-      def method_missing(method_id, *args, &block)
-        if method_id.to_s =~ /\Acf_.*[^=]\Z/
-          # Refresh columns and try again.
-          self.class.reset_column_information
-          # If new record, create new object from class, else reload class
-          object = self.new_record? ? self.class.new : (self.reload && self)
-          # ensure serialization is setup if needed
-          self.class.serialize_custom_fields!
-          # Try again if object now responds to method, else return nil
-          object.respond_to?(method_id) ? object.send(method_id, *args) : nil
-        else
-          super
-        end
-      end
     end
   end
 end
