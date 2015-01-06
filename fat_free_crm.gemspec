@@ -47,6 +47,6 @@ Gem::Specification.new do |gem|
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
   gem.add_dependency 'ransack_ui',          '>= 1.1.0'
-  gem.add_dependency 'ransack',             '1.1.0' # not compatible with 1.2.X yet
+  gem.add_dependency 'ransack',             '>= 1.5.1'
   gem.add_dependency 'email_reply_parser_ffcrm'
 end

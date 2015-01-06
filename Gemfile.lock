@@ -1,15 +1,4 @@
 GIT
-  remote: git://github.com/activerecord-hackery/ransack.git
-  revision: 059310d7099af3e7f4d59a93784c1b9788751b8f
-  specs:
-    ransack (1.5.1)
-      actionpack (>= 3.0)
-      activerecord (>= 3.0)
-      activesupport (>= 3.0)
-      i18n
-      polyamorous (~> 1.1)
-
-GIT
   remote: git://github.com/fatfreecrm/ransack_ui.git
   revision: cd63e78aa267b236d61b3e899b10aa97368b5bcb
   branch: fix/ransortable_attributes
@@ -256,6 +245,12 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.4.2)
+    ransack (1.5.1)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      i18n
+      polyamorous (~> 1.1)
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
     rb-fchange (0.0.6)
@@ -414,7 +409,7 @@ DEPENDENCIES
   rails3-jquery-autocomplete
   rails_12factor
   rails_autolink
-  ransack!
+  ransack (>= 1.5.1)
   ransack_ui!
   rb-fchange
   rb-fsevent
