@@ -81,7 +81,6 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer', :platform => :ruby unless ENV["CI"]
-gem 'rails3-jquery-autocomplete', github: 'crowdint/rails3-jquery-autocomplete'
 
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'ransack_ui', github: 'fatfreecrm/ransack_ui', branch: 'fix/ransortable_attributes'

@@ -10,13 +10,6 @@ GIT
       polyamorous (~> 1.1)
 
 GIT
-  remote: git://github.com/crowdint/rails3-jquery-autocomplete.git
-  revision: 65b428a1611a1661e691913663c7db9132e1201a
-  specs:
-    rails3-jquery-autocomplete (1.0.14)
-      rails (>= 3.0)
-
-GIT
   remote: git://github.com/fatfreecrm/ransack_ui.git
   revision: cd63e78aa267b236d61b3e899b10aa97368b5bcb
   branch: fix/ransortable_attributes
@@ -242,6 +235,8 @@ GEM
       sprockets-rails (~> 2.0)
     rails-observers (0.1.2)
       activemodel (~> 4.0)
+    rails3-jquery-autocomplete (1.0.14)
+      rails (>= 3.0)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -411,7 +406,7 @@ DEPENDENCIES
   quiet_assets
   rails (~> 4.1.0)
   rails-observers
-  rails3-jquery-autocomplete!
+  rails3-jquery-autocomplete
   rails_12factor
   rails_autolink
   ransack!
