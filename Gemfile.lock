@@ -18,6 +18,13 @@ GIT
       ransack
       ransack_chronic (>= 1.1.0)
 
+GIT
+  remote: git://github.com/mbleigh/acts-as-taggable-on.git
+  revision: a59338057ebd5466911872dd18b98e170c4d8dd8
+  specs:
+    acts-as-taggable-on (3.4.2)
+      activerecord (>= 3.2, < 5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -47,8 +54,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    acts-as-taggable-on (3.4.2)
-      activerecord (>= 3.2, < 5)
     acts_as_commentable (4.0.2)
     acts_as_fu (0.0.9)
       activerecord
@@ -365,7 +370,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts-as-taggable-on
+  acts-as-taggable-on!
   acts_as_commentable
   acts_as_fu
   acts_as_list

@@ -84,6 +84,7 @@ gem 'therubyracer', :platform => :ruby unless ENV["CI"]
 
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'ransack_ui', github: 'fatfreecrm/ransack_ui', branch: 'fix/ransortable_attributes'
+gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on'
 
 # this is because observers are deprecated
 gem 'rails-observers'
