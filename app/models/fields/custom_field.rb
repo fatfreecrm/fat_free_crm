@@ -47,6 +47,8 @@
 #
 
 class CustomField < Field
+  delegate :table_name, to: :klass
+
   after_validation :update_column, on: :update
   before_create    :add_column
   after_create     :add_ransack_translation
@@ -93,14 +95,6 @@ class CustomField < Field
     :unsafe # Else, unsafe.
   end
 
-  def table_name
-    klass.table_name
-  end
-
-  def klass_column_names
-    klass.columns.map(&:name)
-  end
-
   # Generate column name for custom field.
   # If column name is already taken, a numeric suffix is appended.
   # Example column sequence: cf_custom, cf_custom_2, cf_custom_3, ...
@@ -109,7 +103,7 @@ class CustomField < Field
     suffix = nil
     field_name = 'cf_' + label.downcase.gsub(/[^a-z0-9]+/, '_')
     while (final_name = [field_name, suffix].compact.join('_')) &&
-          klass_column_names.include?(final_name) do
+          klass.column_names.include?(final_name) do
       suffix = (suffix || 1) + 1
     end
     final_name
@@ -126,6 +120,7 @@ class CustomField < Field
   def add_column
     self.name = generate_column_name if name.blank?
     klass.connection.add_column(table_name, name, column_type, column_options)
+    klass.instance_variable_set(:@acts_as_taggable_on_cache_columns, nil)
     klass.reset_column_information
     klass.serialize_custom_fields!
   end
@@ -145,6 +140,7 @@ class CustomField < Field
   def update_column
     if self.errors.empty? && db_transition_safety(as_was) == :safe
       klass.connection.change_column(table_name, name, column_type, column_options)
+      klass.instance_variable_set(:@acts_as_taggable_on_cache_columns, nil)
       klass.reset_column_information
       klass.serialize_custom_fields!
     end
