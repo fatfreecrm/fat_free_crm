@@ -49,7 +49,7 @@ describe CustomField do
     columns = []
     %w(cf_test_field cf_test_field_2 cf_test_field_3 cf_test_field_4).each do |field|
       expect(c.send(:generate_column_name)).to eq(field)
-      allow(c).to receive(:klass_column_names).and_return( columns << field )
+      allow(Contact).to receive(:column_names).and_return( columns << field )
     end
 
   end
