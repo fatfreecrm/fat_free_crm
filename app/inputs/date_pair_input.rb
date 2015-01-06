@@ -7,7 +7,7 @@ class DatePairInput < SimpleForm::Inputs::Base
 
   # Output two date fields: start and end
   #------------------------------------------------------------------------------
-  def input
+  def input(wrapper_options)
     add_autocomplete!
     out = "<br />".html_safe
 
@@ -20,7 +20,7 @@ class DatePairInput < SimpleForm::Inputs::Base
       input_html_options.merge!(field.input_options)
       input_html_options.merge!(value: value(field))
       out << "<label#{' class="req"' if input_html_options[:required]}>#{label}</label>".html_safe
-      text = @builder.text_field(field.name, input_html_options)
+      text = @builder.text_field(field.name, merge_wrapper_options(input_html_options, wrapper_options))
       out << text << '</div>'.html_safe
     end
 
