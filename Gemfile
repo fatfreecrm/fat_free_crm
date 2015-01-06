@@ -83,7 +83,7 @@ gem 'execjs'
 gem 'therubyracer', :platform => :ruby unless ENV["CI"]
 
 gem 'ransack_ui', github: 'fatfreecrm/ransack_ui', branch: 'fix/ransortable_attributes'
-gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on'
+gem 'acts-as-taggable-on', github: 'fatfreecrm/acts-as-taggable-on', branch: 'fix/clear_column_cache_on_reset_column_information'
 
 # this is because observers are deprecated
 gem 'rails-observers'

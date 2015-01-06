@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/fatfreecrm/acts-as-taggable-on.git
+  revision: 56975352b893f0dd5ee5ed8e081c487b94521092
+  branch: fix/clear_column_cache_on_reset_column_information
+  specs:
+    acts-as-taggable-on (3.4.2)
+      activerecord (>= 3.2, < 5)
+
+GIT
   remote: git://github.com/fatfreecrm/ransack_ui.git
   revision: cd63e78aa267b236d61b3e899b10aa97368b5bcb
   branch: fix/ransortable_attributes
@@ -6,13 +14,6 @@ GIT
     ransack_ui (1.2.2)
       ransack
       ransack_chronic (>= 1.1.0)
-
-GIT
-  remote: git://github.com/mbleigh/acts-as-taggable-on.git
-  revision: a59338057ebd5466911872dd18b98e170c4d8dd8
-  specs:
-    acts-as-taggable-on (3.4.2)
-      activerecord (>= 3.2, < 5)
 
 GEM
   remote: https://rubygems.org/
