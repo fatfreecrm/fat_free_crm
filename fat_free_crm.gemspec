@@ -27,7 +27,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'paper_trail'
   gem.add_dependency 'authlogic'
   gem.add_dependency 'acts_as_commentable'
-  gem.add_dependency 'acts-as-taggable-on'
+  gem.add_dependency 'acts-as-taggable-on', '>= 3.4.3'
   gem.add_dependency 'dynamic_form'
   gem.add_dependency 'haml'
   gem.add_dependency 'sass'
