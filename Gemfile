@@ -81,5 +81,3 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer', :platform => :ruby unless ENV["CI"]
-
-gem 'ransack_ui', github: 'fatfreecrm/ransack_ui', branch: 'fix/ransortable_attributes'
