@@ -4,7 +4,10 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 require 'rails/all'
+require 'rails-observers'
 require 'jquery-rails'
+require 'jquery-migrate-rails'
+require 'jquery-ui-rails'
 require 'select2-rails'
 require 'haml'
 require 'sass'
