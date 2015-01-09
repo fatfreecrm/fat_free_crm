@@ -59,7 +59,7 @@ Please note that several severe vulnerabilities have been fixed recently. You sh
 ## System Requirements
 
 * Ruby 2.1 (or 2.0) recommended (it's much faster!)
-  * Ruby 2.2 is not yet supported
+  * Ruby 2.2 is not officially supported, but [reported to work for MySQL users](https://github.com/fatfreecrm/fat_free_crm/issues/362)
   * Ruby 1.9.3 is also compatible
   * Ruby 1.9.2 should be compatible but is not longer supported
   * Ruby v1.8.7 was supported until v0.11.4 (see https://github.com/fatfreecrm/fat_free_crm/tree/ruby1.8)
