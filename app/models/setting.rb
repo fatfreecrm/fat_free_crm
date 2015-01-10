@@ -98,7 +98,7 @@ class Setting < ActiveRecord::Base
 
     # Loads settings from YAML files
     def load_settings_from_yaml(file)
-      settings = YAML.load_file(file)
+      settings = YAML.load(ERB.new(File.read(file)).result)
       @@yaml_settings.deep_merge!(settings)
     end
 
