@@ -17,7 +17,7 @@ describe EntityObserver do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
       let!(:entity)  { FactoryGirl.build(entity_type, user: assigner, assignee: assignee) }
-      let(:mail) { double('mail', deliver: true) }
+      let(:mail) { double('mail', deliver_now: true) }
 
       after :each do
         entity.save
@@ -48,7 +48,7 @@ describe EntityObserver do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
       let!(:entity)  { FactoryGirl.create(entity_type, user: FactoryGirl.create(:user)) }
-      let(:mail) { double('mail', deliver: true) }
+      let(:mail) { double('mail', deliver_now: true) }
 
       it "notifies the new owner if the entity is re-assigned" do
         expect(UserMailer).to receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)

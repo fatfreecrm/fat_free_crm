@@ -32,7 +32,7 @@ class Email < ActiveRecord::Base
   belongs_to :user
 
   has_paper_trail class_name: 'Version', meta: { related: :mediator },
-                  ignore: [:state]
+    ignore: [ :state ]
 
   def expanded?;  self.state == "Expanded";  end
   def collapsed?; self.state == "Collapsed"; end

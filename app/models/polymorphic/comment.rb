@@ -27,7 +27,7 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :user, :commentable, :comment
   has_paper_trail class_name: 'Version', meta: { related: :commentable },
-                  ignore: [:state]
+    ignore: [ :state ]
 
   before_create :subscribe_mentioned_users
   after_create  :subscribe_user_to_entity, :notify_subscribers
@@ -46,7 +46,7 @@ class Comment < ActiveRecord::Base
   def notify_subscribers
     commentable.subscribed_users.reject{|user_id| user_id == user.id}.each do |subscriber_id|
       if subscriber = User.find_by_id(subscriber_id)
-        SubscriptionMailer.comment_notification(subscriber, self).deliver
+        SubscriptionMailer.comment_notification(subscriber, self).deliver_now
       end
     end
   end

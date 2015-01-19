@@ -5,6 +5,7 @@
 #------------------------------------------------------------------------------
 require 'rails/all'
 require 'rails-observers'
+require 'responders'
 require 'jquery-rails'
 require 'jquery-migrate-rails'
 require 'jquery-ui-rails'
