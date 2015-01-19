@@ -6,7 +6,6 @@
 require 'spec_helper'
 
 describe "admin/field_groups/create" do
-
   before do
     login_and_assign(admin: true)
     assign(:field_group, field_group)
@@ -27,5 +26,4 @@ describe "admin/field_groups/create" do
     expect(view).to render_template("admin/field_groups/create")
     expect(rendered).to have_text("effect(\"shake\", { duration:250, distance: 6 });")
   end
-
 end

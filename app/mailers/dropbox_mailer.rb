@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class DropboxMailer < ActionMailer::Base
-
   def dropbox_notification(user, from, email, mediator_links)
     I18n.locale = Setting.locale
     @mediator_links = mediator_links.join("\n")
@@ -16,6 +15,4 @@ class DropboxMailer < ActionMailer::Base
          from: from,
          date: Time.now
   end
-  
 end
-

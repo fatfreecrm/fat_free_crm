@@ -6,7 +6,6 @@
 require 'spec_helper'
 
 describe UsersController do
-
   # GET /users/1
   # GET /users/1.xml                                                       HTML
   #----------------------------------------------------------------------------
@@ -88,7 +87,6 @@ describe UsersController do
   # GET /users/new.xml                                                     HTML
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
-
     describe "if user is allowed to sign up" do
       it "should expose a new user as @user and render [new] template" do
         expect(User).to receive(:can_signup?).and_return(true)
@@ -114,7 +112,6 @@ describe UsersController do
   # GET /users/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-
     it "should expose current user as @user and render [edit] template" do
       require_user
       @user = current_user
@@ -137,14 +134,12 @@ describe UsersController do
       expect(assigns[:user]).to eq(@user)
       expect(response).to render_template("users/edit")
     end
-
   end
 
   # POST /users
   # POST /users.xml                                                        HTML
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
-
     describe "with valid params" do
       before(:each) do
         @username = "none"
@@ -195,7 +190,6 @@ describe UsersController do
     end
 
     describe "with valid params" do
-
       it "should update user information and render [update] template" do
         xhr :put, :update, id: @user.id, user: { first_name: "Billy", last_name: "Bones" }
         @user.reload
@@ -207,7 +201,6 @@ describe UsersController do
     end
 
     describe "with invalid params" do
-
       it "should not update the user information and redraw [update] template" do
         xhr :put, :update, id: @user.id, user: { first_name: nil }
         expect(@user.reload.first_name).to eq(current_user.first_name)
@@ -230,7 +223,6 @@ describe UsersController do
 
     it "should redirect to the users list" do
     end
-
   end
 
   # GET /users/1/avatar
@@ -285,16 +277,16 @@ describe UsersController do
       expect(response).to render_template("users/upload_avatar")
     end
 
-# -------------------------- Fix later --------------------------------
-#    it "should return errors if the avatar failed to get uploaded and resized" do
-#      @image = fixture_file_upload("spec/fixtures/rails.png", "image/png")
-#      @user.stub(:save).and_return(false) # make it fail
+    # -------------------------- Fix later --------------------------------
+    #    it "should return errors if the avatar failed to get uploaded and resized" do
+    #      @image = fixture_file_upload("spec/fixtures/rails.png", "image/png")
+    #      @user.stub(:save).and_return(false) # make it fail
 
-#      xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
-#      @user.avatar.errors.should_not be_empty
-#      @user.avatar.should have(1).error # .error_on(:image)
-#      response.should render_template("users/upload_avatar")
-#    end
+    #      xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
+    #      @user.avatar.errors.should_not be_empty
+    #      @user.avatar.should have(1).error # .error_on(:image)
+    #      response.should render_template("users/upload_avatar")
+    #    end
   end
 
   # GET /users/1/password
@@ -366,7 +358,6 @@ describe UsersController do
       expect(current_user.errors.size).to eq(1) # .error_on(:current_password)
       expect(response).to render_template("users/change_password")
     end
-
   end
 
   # GET /users/opportunities

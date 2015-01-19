@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe OpportunitiesController do
-
   def get_data_for_sidebar
     @stage = Setting.unroll(:opportunity_stage)
   end
@@ -20,13 +19,12 @@ describe OpportunitiesController do
   # GET /opportunities.xml
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
-
     before do
       get_data_for_sidebar
     end
 
     it "should expose all opportunities as @opportunities and render [index] template" do
-      @opportunities = [ FactoryGirl.create(:opportunity, user: current_user) ]
+      @opportunities = [FactoryGirl.create(:opportunity, user: current_user)]
 
       get :index
       expect(assigns[:opportunities]).to eq(@opportunities)
@@ -59,14 +57,14 @@ describe OpportunitiesController do
       @second = FactoryGirl.create(:opportunity, user: current_user, name: "The second one")
 
       get :index, query: "second"
-      expect(assigns[:opportunities]).to eq([ @second ])
+      expect(assigns[:opportunities]).to eq([@second])
       expect(assigns[:current_query]).to eq("second")
       expect(session[:opportunities_current_query]).to eq("second")
     end
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @opportunities = [ FactoryGirl.create(:opportunity, user: current_user) ]
+        @opportunities = [FactoryGirl.create(:opportunity, user: current_user)]
         xhr :get, :index, page: 42
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -77,7 +75,7 @@ describe OpportunitiesController do
 
       it "should pick up saved page number from session" do
         session[:opportunities_current_page] = 42
-        @opportunities = [ FactoryGirl.create(:opportunity, user: current_user) ]
+        @opportunities = [FactoryGirl.create(:opportunity, user: current_user)]
         xhr :get, :index
 
         expect(assigns[:current_page]).to eq(42)
@@ -88,7 +86,7 @@ describe OpportunitiesController do
       it "should reset current_page when query is altered" do
         session[:opportunities_current_page] = 42
         session[:opportunities_current_query] = "bill"
-        @opportunities = [ FactoryGirl.create(:opportunity, user: current_user) ]
+        @opportunities = [FactoryGirl.create(:opportunity, user: current_user)]
         xhr :get, :index
 
         expect(assigns[:current_page]).to eq(1)
@@ -135,7 +133,6 @@ describe OpportunitiesController do
   # GET /opportunities/1.xml                                               HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
-
     describe "with mime type of HTML" do
       before do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
@@ -223,11 +220,10 @@ describe OpportunitiesController do
   # GET /opportunities/new.xml                                             AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
-
     it "should expose a new opportunity as @opportunity and render [new] template" do
       @opportunity = Opportunity.new(user: current_user, access: Setting.default_access, stage: "prospecting")
       @account = Account.new(user: current_user, access: Setting.default_access)
-      @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+      @accounts = [FactoryGirl.create(:account, user: current_user)]
 
       xhr :get, :new
       expect(assigns[:opportunity].attributes).to eq(@opportunity.attributes)
@@ -266,15 +262,14 @@ describe OpportunitiesController do
   # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-
     it "should expose the requested opportunity as @opportunity and render [edit] template" do
       # Note: campaign => nil makes sure campaign factory is not invoked which has a side
       # effect of creating an extra (campaign) user.
       @account = FactoryGirl.create(:account, user: current_user)
       @opportunity = FactoryGirl.create(:opportunity, id: 42, user: current_user, campaign: nil,
-                             account: @account)
+                                                      account: @account)
       @stage = Setting.unroll(:opportunity_stage)
-      @accounts = [ @account ]
+      @accounts = [@account]
 
       xhr :get, :edit, id: 42
       @opportunity.reload
@@ -343,9 +338,7 @@ describe OpportunitiesController do
   # POST /opportunities.xml                                                AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
-
     describe "with valid params" do
-
       before do
         @opportunity = FactoryGirl.build(:opportunity, user: current_user)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
@@ -385,7 +378,7 @@ describe OpportunitiesController do
       it "should reload opportunities to update pagination if called from opportunities index" do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
         xhr :post, :create, opportunity: { name: "Hello" }, account: { name: "Hello again" }
-        expect(assigns[:opportunities]).to eq([ @opportunity ])
+        expect(assigns[:opportunities]).to eq([@opportunity])
       end
 
       it "should associate opportunity with the campaign when called from campaign landing page" do
@@ -444,14 +437,13 @@ describe OpportunitiesController do
     end
 
     describe "with invalid params" do
-
       it "should expose a newly created but unsaved opportunity as @opportunity with blank @account and render [create] template" do
         @account = Account.new(user: current_user)
         @opportunity = FactoryGirl.build(:opportunity, name: nil, campaign: nil, user: current_user,
-                                     account: @account)
+                                                       account: @account)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
-        @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+        @accounts = [FactoryGirl.create(:account, user: current_user)]
 
         # Expect to redraw [create] form with blank account.
         xhr :post, :create, opportunity: {}, account: { user_id: current_user.id }
@@ -464,7 +456,7 @@ describe OpportunitiesController do
       it "should expose a newly created but unsaved opportunity as @opportunity with existing @account and render [create] template" do
         @account = FactoryGirl.create(:account, id: 42, user: current_user)
         @opportunity = FactoryGirl.build(:opportunity, name: nil, campaign: nil, user: current_user,
-                                     account: @account)
+                                                       account: @account)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
 
@@ -472,7 +464,7 @@ describe OpportunitiesController do
         xhr :post, :create, opportunity: {}, account: { id: 42, user_id: current_user.id }
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:account)).to eq(@account)
-        expect(assigns(:accounts)).to eq([ @account ])
+        expect(assigns(:accounts)).to eq([@account])
         expect(response).to render_template("opportunities/create")
       end
 
@@ -493,18 +485,14 @@ describe OpportunitiesController do
         expect(assigns(:contact)).to eq(@contact)
         expect(response).to render_template("opportunities/create")
       end
-
     end
-
   end
 
   # PUT /opportunities/1
   # PUT /opportunities/1.xml                                               AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT update" do
-
     describe "with valid params" do
-
       it "should update the requested opportunity, expose it as @opportunity, and render [update] template" do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
         @stage = Setting.unroll(:opportunity_stage)
@@ -577,7 +565,7 @@ describe OpportunitiesController do
 
         xhr :put, :update, id: 42, opportunity: { name: "Hello", access: "Shared", user_ids: [7, 8] }, account: { name: "Test Account" }
         expect(assigns[:opportunity].access).to eq("Shared")
-        expect(assigns[:opportunity].user_ids.sort).to eq([ 7, 8 ])
+        expect(assigns[:opportunity].user_ids.sort).to eq([7, 8])
       end
 
       it "should reload opportunity campaign if called from campaign landing page" do
@@ -668,7 +656,6 @@ describe OpportunitiesController do
     end
 
     describe "with invalid params" do
-
       it "should not update the requested opportunity but still expose it as @opportunity, and render [update] template" do
         @opportunity = FactoryGirl.create(:opportunity, id: 42, name: "Hello people")
 
@@ -857,7 +844,7 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before do
-      @auto_complete_matches = [ FactoryGirl.create(:opportunity, name: "Hello World", user: current_user) ]
+      @auto_complete_matches = [FactoryGirl.create(:opportunity, name: "Hello World", user: current_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -869,8 +856,8 @@ describe OpportunitiesController do
     it "should save user selected opportunity preference" do
       xhr :get, :redraw, per_page: 42, view: "brief", sort_by: "name"
       expect(current_user.preference[:opportunities_per_page]).to eq("42")
-      expect(current_user.preference[:opportunities_index_view]).to  eq("brief")
-      expect(current_user.preference[:opportunities_sort_by]).to  eq("opportunities.name ASC")
+      expect(current_user.preference[:opportunities_index_view]).to eq("brief")
+      expect(current_user.preference[:opportunities_sort_by]).to eq("opportunities.name ASC")
     end
 
     it "should reset current page to 1" do
@@ -885,7 +872,7 @@ describe OpportunitiesController do
       ]
 
       xhr :get, :redraw, per_page: 1, sort_by: "name"
-      expect(assigns(:opportunities)).to eq([ @opportunities.first ])
+      expect(assigns(:opportunities)).to eq([@opportunities.first])
       expect(response).to render_template("opportunities/index")
     end
   end
@@ -893,10 +880,9 @@ describe OpportunitiesController do
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do
-
     it "should expose filtered opportunities as @opportunity and render [filter] template" do
       session[:opportunities_filter] = "negotiation,analysis"
-      @opportunities = [ FactoryGirl.create(:opportunity, stage: "prospecting", user: current_user) ]
+      @opportunities = [FactoryGirl.create(:opportunity, stage: "prospecting", user: current_user)]
       @stage = Setting.unroll(:opportunity_stage)
 
       xhr :get, :filter, stage: "prospecting"

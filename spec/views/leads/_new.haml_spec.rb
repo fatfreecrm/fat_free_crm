@@ -11,9 +11,9 @@ describe "/leads/_new" do
   before do
     login_and_assign
     assign(:lead, FactoryGirl.build(:lead))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:campaign, @campaign = FactoryGirl.create(:campaign))
-    assign(:campaigns, [ @campaign ])
+    assign(:campaigns, [@campaign])
   end
 
   it "should render [create lead] form" do
@@ -28,7 +28,7 @@ describe "/leads/_new" do
   end
 
   it "should render background info field if settings require so" do
-    Setting.background_info = [ :lead ]
+    Setting.background_info = [:lead]
 
     render
     expect(rendered).to have_tag("textarea[id=lead_background_info]")

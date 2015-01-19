@@ -6,7 +6,6 @@
 require 'spec_helper'
 
 describe "admin/field_groups/update" do
-
   before do
     login_and_assign(admin: true)
     assign(:field_group, field_group)
@@ -26,5 +25,4 @@ describe "admin/field_groups/update" do
     render
     expect(rendered).to have_text("$('##{dom_id(field_group, :edit)}').effect('shake', { distance:5 }, 250);")
   end
-
 end

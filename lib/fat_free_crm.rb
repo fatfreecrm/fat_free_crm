@@ -12,9 +12,7 @@ module FatFreeCRM
       engine? ? Engine : Application
     end
 
-    def root
-      application.root
-    end
+    delegate :root, to: :application
 
     # Are we running as an engine?
     def engine?
@@ -24,7 +22,6 @@ module FatFreeCRM
     def application?
       !engine?
     end
-
   end
 end
 

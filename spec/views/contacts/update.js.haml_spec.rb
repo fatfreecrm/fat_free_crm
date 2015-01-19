@@ -12,9 +12,9 @@ describe "/contacts/update" do
     login_and_assign
 
     assign(:contact, @contact = FactoryGirl.create(:contact, user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
   end
 
   describe "no errors:" do
@@ -46,7 +46,7 @@ describe "/contacts/update" do
 
         render
         expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
-        expect(rendered).to include(%Q/$('#contact_#{@contact.id}').effect("highlight"/)
+        expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -66,7 +66,7 @@ describe "/contacts/update" do
 
         render
         expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
-        expect(rendered).to include(%Q/$('#contact_#{@contact.id}').effect("highlight"/)
+        expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
       it "should update recently viewed items" do
@@ -90,7 +90,7 @@ describe "/contacts/update" do
         render
         expect(rendered).to include("$('#edit_contact').html")
         expect(rendered).to include('crm.create_or_select_account(false)')
-        expect(rendered).to include(%Q/$('#edit_contact').effect("shake"/)
+        expect(rendered).to include(%/$('#edit_contact').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -104,7 +104,7 @@ describe "/contacts/update" do
         render
         expect(rendered).to include("$('#contact_#{@contact.id}').html")
         expect(rendered).to include('crm.create_or_select_account(false)')
-        expect(rendered).to include(%Q/$('#contact_#{@contact.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -122,7 +122,7 @@ describe "/contacts/update" do
       it "should redraw the [edit_contact] form and shake it" do
         render
         expect(rendered).to include("$('#contact_#{@contact.id}').html")
-        expect(rendered).to include(%Q/$('#contact_#{@contact.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

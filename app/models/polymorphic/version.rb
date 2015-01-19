@@ -19,41 +19,40 @@ class Version < PaperTrail::Version
   scope :for,            lambda { |user| where(whodunnit: user.id.to_s) }
 
   class << self
-
     def recent_for_user(user, limit = 10)
       # Hybrid SQL/Ruby to build a unique list of the most recent entities that the
       # user has interacted with
       versions = []
       offset = 0
       while versions.size < limit
-        query = includes(:item).
-                where(whodunnit: user.id.to_s).
-                where(item_type: ENTITIES).
-                limit(limit * 2).
-                offset(offset).
-                default_order
+        query = includes(:item)
+                .where(whodunnit: user.id.to_s)
+                .where(item_type: ENTITIES)
+                .limit(limit * 2)
+                .offset(offset)
+                .default_order
 
         break if query.size == 0
-        versions += query.select {|v| v.item.present? }
-        versions.uniq! {|v| [v.item_id, v.item_type]}
+        versions += query.select { |v| v.item.present? }
+        versions.uniq! { |v| [v.item_id, v.item_type] }
         offset += limit * 2
       end
       versions[0...10]
     end
 
     def latest(options = {})
-      includes(:item, :related, :user).
-      where(({item_type: options[:asset]} if options[:asset])).
-      where(({event:     options[:event]} if options[:event])).
-      where(({whodunnit: options[:user].to_s}  if options[:user])).
-      where('versions.created_at >= ?', Time.zone.now - (options[:duration] || 2.days)).
-      limit(options[:max]).
-      default_order
+      includes(:item, :related, :user)
+        .where(({ item_type: options[:asset] } if options[:asset]))
+        .where(({ event:     options[:event] } if options[:event]))
+        .where(({ whodunnit: options[:user].to_s }  if options[:user]))
+        .where('versions.created_at >= ?', Time.zone.now - (options[:duration] || 2.days))
+        .limit(options[:max])
+        .default_order
     end
 
     def related_to(object)
       where('(item_id = :id AND item_type = :type) OR (related_id = :id AND related_type = :type)',
-        id: object.id, type: object.class.name)
+            id: object.id, type: object.class.name)
     end
 
     def history(object)
@@ -77,8 +76,6 @@ class Version < PaperTrail::Version
         # Delete from scope if no object can be found or reified (e.g. from 'show' events)
         true
       end
-
     end
-
   end
 end

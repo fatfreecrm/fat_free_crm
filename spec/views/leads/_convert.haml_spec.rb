@@ -12,9 +12,9 @@ describe "/leads/_convert" do
     login_and_assign
     @account = FactoryGirl.create(:account)
     assign(:lead, FactoryGirl.create(:lead))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account, @account)
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
     assign(:opportunity, FactoryGirl.create(:opportunity))
   end
 
@@ -25,5 +25,4 @@ describe "/leads/_convert" do
 
     expect(rendered).to have_tag("form[class=edit_lead]")
   end
-
 end

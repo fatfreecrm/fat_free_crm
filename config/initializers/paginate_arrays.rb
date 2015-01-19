@@ -9,4 +9,3 @@
 #    If you need to paginate static arrays, first require it in your code:
 #
 require 'will_paginate/array'
-

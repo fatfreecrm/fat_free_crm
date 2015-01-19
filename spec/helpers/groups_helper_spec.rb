@@ -16,5 +16,4 @@ require 'spec_helper'
 #   end
 # end
 describe GroupsHelper do
-  
 end

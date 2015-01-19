@@ -12,7 +12,7 @@ describe "/accounts/update" do
     login_and_assign
 
     assign(:account, @account = FactoryGirl.create(:account, user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account_category_total, Hash.new(1))
   end
 
@@ -53,7 +53,7 @@ describe "/accounts/update" do
         render
 
         expect(rendered).to include("#account_#{@account.id}")
-        expect(rendered).to include(%Q/$('#account_#{@account.id}').effect("highlight"/)
+        expect(rendered).to include(%/$('#account_#{@account.id}').effect("highlight"/)
       end
     end
   end # no errors
@@ -72,7 +72,7 @@ describe "/accounts/update" do
         render
 
         expect(rendered).to include("#edit_account")
-        expect(rendered).to include(%Q/$('#edit_account').effect("shake"/)
+        expect(rendered).to include(%/$('#edit_account').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -86,7 +86,7 @@ describe "/accounts/update" do
         render
 
         expect(rendered).to include("account_#{@account.id}")
-        expect(rendered).to include(%Q/$('#account_#{@account.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#account_#{@account.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

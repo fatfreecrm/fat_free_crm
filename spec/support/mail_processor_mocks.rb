@@ -26,8 +26,8 @@ module MockIMAP
   def mock_message(body)
     @fetch_data = double
     allow(@fetch_data).to receive(:attr).and_return("RFC822" => body)
-    allow(@imap).to receive(:uid_search).and_return([ :uid ])
-    allow(@imap).to receive(:uid_fetch).and_return([ @fetch_data ])
+    allow(@imap).to receive(:uid_search).and_return([:uid])
+    allow(@imap).to receive(:uid_fetch).and_return([@fetch_data])
     allow(@imap).to receive(:uid_copy).and_return(true)
     allow(@imap).to receive(:uid_store).and_return(true)
     body

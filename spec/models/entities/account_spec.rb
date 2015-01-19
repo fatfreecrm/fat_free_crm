@@ -28,7 +28,6 @@
 require 'spec_helper'
 
 describe Account do
-
   before { login }
 
   it "should create a new instance given valid attributes" do
@@ -57,9 +56,9 @@ describe Account do
       @contact = FactoryGirl.create(:contact)
       @opportunity = FactoryGirl.create(:opportunity)
 
-      expect(@account.attach!(@task)).to eq([ @task ])
-      expect(@account.attach!(@contact)).to eq([ @contact ])
-      expect(@account.attach!(@opportunity)).to eq([ @opportunity ])
+      expect(@account.attach!(@task)).to eq([@task])
+      expect(@account.attach!(@contact)).to eq([@contact])
+      expect(@account.attach!(@opportunity)).to eq([@opportunity])
     end
   end
 
@@ -87,17 +86,17 @@ describe Account do
       expect(@account.contacts.count).to eq(0)
     end
 
-# Commented out this test. "super from singleton method that is defined to multiple classes is not supported;"
-# ------------------------------------------------------
-#    it "should discard an opportunity" do
-#      @opportunity = FactoryGirl.create(:opportunity)
-#      @account.opportunities << @opportunity
-#      @account.opportunities.count.should == 1
+    # Commented out this test. "super from singleton method that is defined to multiple classes is not supported;"
+    # ------------------------------------------------------
+    #    it "should discard an opportunity" do
+    #      @opportunity = FactoryGirl.create(:opportunity)
+    #      @account.opportunities << @opportunity
+    #      @account.opportunities.count.should == 1
 
-#      @account.discard!(@opportunity)
-#      @account.opportunities.should == []
-#      @account.opportunities.count.should == 0
-#    end
+    #      @account.discard!(@opportunity)
+    #      @account.opportunities.should == []
+    #      @account.opportunities.count.should == 0
+    #    end
   end
 
   describe "Exportable" do

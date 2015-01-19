@@ -12,9 +12,9 @@ describe "/contacts/new" do
     login_and_assign
     @account = FactoryGirl.create(:account)
     assign(:contact, Contact.new(user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account, @account)
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
   end
 
   it "should toggle empty message div if it exists" do
@@ -42,5 +42,4 @@ describe "/contacts/new" do
       expect(rendered).to include("crm.flip_form('create_contact');")
     end
   end
-
 end

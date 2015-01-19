@@ -5,12 +5,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path("../acceptance_helper.rb", __FILE__)
 
-feature 'Contacts', %q{
+feature 'Contacts', '
   In order to increase customer satisfaction
   As a user
   I want to manage contacts
-} do
 
+' do
   before :each do
     do_login_if_not_already(first_name: "Bill", last_name: "Murray")
   end

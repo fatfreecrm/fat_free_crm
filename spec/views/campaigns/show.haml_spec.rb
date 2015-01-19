@@ -11,13 +11,13 @@ describe "/campaigns/show" do
   before do
     login_and_assign
     @campaign = FactoryGirl.create(:campaign, id: 42,
-      leads: [ FactoryGirl.create(:lead) ],
-      opportunities: [ FactoryGirl.create(:opportunity) ])
+                                              leads: [FactoryGirl.create(:lead)],
+                                              opportunities: [FactoryGirl.create(:opportunity)])
     assign(:campaign, @campaign)
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [ FactoryGirl.create(:comment, commentable: @campaign) ])
-    allow(view).to receive(:params) { {id: 123} }
+    assign(:timeline, [FactoryGirl.create(:comment, commentable: @campaign)])
+    allow(view).to receive(:params) { { id: 123 } }
   end
 
   it "should render campaign landing page" do
@@ -30,5 +30,4 @@ describe "/campaigns/show" do
 
     expect(rendered).to have_tag("div[id=edit_campaign]")
   end
-
 end

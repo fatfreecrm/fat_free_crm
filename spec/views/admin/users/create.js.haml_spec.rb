@@ -13,13 +13,13 @@ describe "admin/users/create" do
   describe "create success" do
     before do
       assign(:user, @user = FactoryGirl.create(:user))
-      assign(:users, [ @user ]) # .paginate
+      assign(:users, [@user]) # .paginate
     end
 
     it "should hide [Create User] form and insert user partial" do
       render
       expect(rendered).to include(@user.username)
-      expect(rendered).to include(%Q/$('#user_#{@user.id}').effect("highlight"/)
+      expect(rendered).to include(%/$('#user_#{@user.id}').effect("highlight"/)
     end
 
     # it "should update pagination" do
@@ -30,12 +30,11 @@ describe "admin/users/create" do
   describe "create failure" do
     it "should re-render [create] template in :create_user div" do
       assign(:user, FactoryGirl.build(:user, username: nil)) # make it invalid
-      assign(:users, [ current_user ])
+      assign(:users, [current_user])
       render
 
       expect(rendered).to include('Please specify username')
-      expect(rendered).to include(%Q/$('#create_user').effect("shake"/)
+      expect(rendered).to include(%/$('#create_user').effect("shake"/)
     end
   end
-
 end

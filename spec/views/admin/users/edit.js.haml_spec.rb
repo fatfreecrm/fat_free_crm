@@ -29,16 +29,14 @@ describe "admin/users/edit" do
     assign(:previous, previous = 41)
     render
 
-    expect(rendered).to include(%Q/crm.flick('user_#{previous}', 'remove');/)
+    expect(rendered).to include(%/crm.flick('user_#{previous}', 'remove');/)
   end
 
   it "edit turns off highlight, hides [Create User] form, and replaces current user with [Edit User] form" do
     render
 
-    expect(rendered).to include(%Q/crm.highlight_off('user_#{@user.id}');/)
-    expect(rendered).to include(%Q/crm.hide_form('create_user')/)
+    expect(rendered).to include(%/crm.highlight_off('user_#{@user.id}');/)
+    expect(rendered).to include(%/crm.hide_form('create_user')/)
     expect(rendered).to include("user_#{@user.id}")
   end
-
 end
-

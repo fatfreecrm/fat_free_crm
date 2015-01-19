@@ -38,9 +38,8 @@ describe "/users/update" do
     it "should redraw the [Edit Profile] form and shake it" do
       render
       expect(rendered).to include("$('#edit_profile').html")
-      expect(rendered).to include(%Q/$('#edit_profile').effect("shake"/)
+      expect(rendered).to include(%/$('#edit_profile').effect("shake"/)
       expect(rendered).to include("$('#user_email').focus();")
     end
-
   end # errors
 end

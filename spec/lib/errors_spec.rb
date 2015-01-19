@@ -13,7 +13,7 @@ describe 'ActiveModel Validation Errors' do
 
     adam = Adam.create(username: 'adam', email: 'adam@example.com')
     expect(adam.valid?).to eq(false)
-    expect(adam.errors[:title]).to eq([ '^Missing title' ])
+    expect(adam.errors[:title]).to eq(['^Missing title'])
     expect(adam.errors.full_messages[0]).to eq('Missing title')
   end
 
@@ -24,7 +24,7 @@ describe 'ActiveModel Validation Errors' do
 
     eve = Eve.create(username: 'eve', email: 'eve@example.com')
     expect(eve.valid?).to eq(false)
-    expect(eve.errors[:title]).to eq([ 'missing' ])
+    expect(eve.errors[:title]).to eq(['missing'])
     expect(eve.errors.full_messages[0]).to eq('Title missing')
   end
 end

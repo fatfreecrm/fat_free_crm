@@ -8,7 +8,6 @@
 module RSpec # :nodoc:
   module Rails
     module Matchers
-
       class AssertSelect #:nodoc:
         attr_reader :options
 
@@ -19,7 +18,7 @@ module RSpec # :nodoc:
           @block = block
         end
 
-        def matches?(response_or_text, &block)
+        def matches?(_response_or_text, &block)
           @block = block if block
 
           begin
@@ -32,17 +31,22 @@ module RSpec # :nodoc:
           end
         end
 
-        def failure_message; @error.message; end
-        def failure_message_when_negated; "should not #{description}, but did"; end
+        def failure_message
+          @error.message
+        end
+
+        def failure_message_when_negated
+          "should not #{description}, but did"
+        end
 
         def description
           {
             assert_select: "have tag#{format_args(*@args)}",
-            assert_select_email: "send email#{format_args(*@args)}",
+            assert_select_email: "send email#{format_args(*@args)}"
           }[@selector_assertion]
         end
 
-      private
+        private
 
         def format_args(*args)
           args.empty? ? "" : "(#{arg_list(*args)})"
@@ -55,15 +59,14 @@ module RSpec # :nodoc:
         end
 
         def args_and_options(args)
-          opts = {xml: false, strict: false}
+          opts = { xml: false, strict: false }
           if args.last.is_a?(::Hash)
             opts[:strict] = args.last.delete(:strict) unless args.last[:strict].nil?
             opts[:xml]    = args.last.delete(:xml)    unless args.last[:xml].nil?
             args.pop if args.last.empty?
           end
-          return [args, opts]
+          [args, opts]
         end
-
       end
 
       # :call-seq:
@@ -146,17 +149,16 @@ module RSpec # :nodoc:
         is_expected.to AssertSelect.new(:assert_select_encoded, self, *args, &block)
       end
 
-    private
+      private
 
       def prepare_args(args, current_scope = nil)
         return args if current_scope.nil?
-        defaults = current_scope.options || {strict: false, xml: false}
+        defaults = current_scope.options || { strict: false, xml: false }
         args << {} unless args.last.is_a?(::Hash)
         args.last[:strict] = defaults[:strict] if args.last[:strict].nil?
         args.last[:xml] = defaults[:xml] if args.last[:xml].nil?
         args
       end
-
     end
   end
 end

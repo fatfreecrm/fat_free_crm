@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module OpportunitiesHelper
-
   # Sidebar checkbox control for filtering opportunities by stage.
   #----------------------------------------------------------------------------
   def opportunity_stage_checkbox(stage, count)
@@ -39,10 +38,9 @@ module OpportunitiesHelper
     selected_campaign = Campaign.find_by_id(options[:selected])
     campaigns = ([selected_campaign] + Campaign.my.order(:name).limit(25)).compact.uniq
     collection_select :opportunity, :campaign_id, campaigns, :id, :name, options,
-                      {:"data-placeholder" => t(:select_a_campaign),
-                       :"data-url" => auto_complete_campaigns_path(format: 'json'),
-                       style: "width:330px; display:none;",
-                       class: 'ajax_chosen' }
+                      :"data-placeholder" => t(:select_a_campaign),
+                      :"data-url" => auto_complete_campaigns_path(format: 'json'),
+                      style: "width:330px; display:none;",
+                      class: 'ajax_chosen'
   end
-
 end

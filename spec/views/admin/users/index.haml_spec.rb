@@ -11,11 +11,10 @@ describe "/admin/users/index" do
   end
 
   it "renders a list of users" do
-    assign(:users, [ FactoryGirl.create(:user) ].paginate)
+    assign(:users, [FactoryGirl.create(:user)].paginate)
 
     render
     expect(view).to render_template(partial: "_user")
     expect(view).to render_template(partial: "shared/_paginate")
   end
 end
-

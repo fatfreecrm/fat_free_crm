@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::TagsController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/tags')", only: [ :index, :show ]
+  before_action "set_current_tab('admin/tags')", only: [:index, :show]
 
   load_resource
 
@@ -27,7 +27,7 @@ class Admin::TagsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def edit
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Tag.find_by_id($1) || $1.to_i
+      @previous = Tag.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
   end
 
@@ -63,7 +63,7 @@ class Admin::TagsController < Admin::ApplicationController
   def confirm
   end
 
-protected
+  protected
 
   def tag_params
     params[:tag].permit!

@@ -25,4 +25,3 @@ describe FieldGroup do
     expect(FieldGroup.new).to respond_to(:fields)
   end
 end
-

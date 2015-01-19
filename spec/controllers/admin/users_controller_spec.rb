@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::UsersController do
-
   before(:each) do
     require_user(admin: true)
     set_current_tab(:users)
@@ -17,7 +16,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "GET index" do
     it "assigns all users as @users and renders [index] template" do
-      @users = [ current_user, FactoryGirl.create(:user) ]
+      @users = [current_user, FactoryGirl.create(:user)]
 
       get :index
       expect(assigns[:users].first).to eq(@users.last) # get_users() sorts by id DESC
@@ -30,7 +29,7 @@ describe Admin::UsersController do
       @bob = FactoryGirl.create(:user, username: "bob_builder")
 
       get :index, query: "amy_anderson"
-      expect(assigns[:users]).to eq([ @amy ])
+      expect(assigns[:users]).to eq([@amy])
       expect(assigns[:current_query]).to eq("amy_anderson")
       expect(session[:users_current_query]).to eq("amy_anderson")
     end
@@ -105,7 +104,6 @@ describe Admin::UsersController do
   # POST /admin/users.xml                                                  AJAX
   #----------------------------------------------------------------------------
   describe "POST create" do
-
     describe "with valid params" do
       before(:each) do
         @username = "none"
@@ -151,7 +149,6 @@ describe Admin::UsersController do
   # PUT /admin/users/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   describe "PUT update" do
-
     describe "with valid params" do
       it "updates the requested user, assigns it to @user, and renders [update] template" do
         @user = FactoryGirl.create(:user, username: "flip", email: "flip@example.com")
@@ -239,7 +236,7 @@ describe Admin::UsersController do
 
       xhr :delete, :destroy, id: @user.id
       expect(flash[:warning]).not_to eq(nil)
-      expect { User.find(@user.id) }.not_to raise_error()
+      expect { User.find(@user.id) }.not_to raise_error
       expect(response).to render_template("admin/users/destroy")
     end
   end
@@ -248,7 +245,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [ FactoryGirl.create(:user, first_name: "Hello") ]
+      @auto_complete_matches = [FactoryGirl.create(:user, first_name: "Hello")]
     end
 
     it_should_behave_like("auto complete")
@@ -305,5 +302,4 @@ describe Admin::UsersController do
       expect(response.body).to eq("window.location.reload();")
     end
   end
-
 end

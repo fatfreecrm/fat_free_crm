@@ -8,7 +8,7 @@
 module SimpleForm
   module ActionViewExtensions
     module FormHelper
-      def simple_form_for(record, options={}, &block)
+      def simple_form_for(record, options = {}, &block)
         options[:builder] ||= SimpleForm::FormBuilder
         options[:html] ||= {}
         unless options[:html].key?(:novalidate)
@@ -22,4 +22,3 @@ module SimpleForm
     end
   end
 end
-

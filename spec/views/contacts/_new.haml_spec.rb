@@ -12,9 +12,9 @@ describe "/contacts/_new" do
     login_and_assign
     @account = FactoryGirl.create(:account)
     assign(:contact, Contact.new)
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account, @account)
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
   end
 
   it "should render [create contact] form" do
@@ -30,12 +30,12 @@ describe "/contacts/_new" do
   it "should pick default assignee (Myself)" do
     render
     expect(rendered).to have_tag("select[id=contact_assigned_to]") do |options|
-      expect(options.to_s).not_to include(%Q/selected="selected"/)
+      expect(options.to_s).not_to include(%(selected="selected"))
     end
   end
 
   it "should render background info field if settings require so" do
-    Setting.background_info = [ :contact ]
+    Setting.background_info = [:contact]
 
     render
     expect(rendered).to have_tag("textarea[id=contact_background_info]")
@@ -47,5 +47,4 @@ describe "/contacts/_new" do
     render
     expect(rendered).not_to have_tag("textarea[id=contact_background_info]")
   end
-
 end

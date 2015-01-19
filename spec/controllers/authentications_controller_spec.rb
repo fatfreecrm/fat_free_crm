@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe AuthenticationsController do
-
   before(:each) do
     activate_authlogic
     logout
@@ -144,9 +143,6 @@ describe AuthenticationsController do
           expect(response).to redirect_to(action: :new)
         end
       end
-
     end # authentication failure
   end # POST authenticate
-
 end
-

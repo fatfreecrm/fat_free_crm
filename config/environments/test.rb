@@ -36,7 +36,7 @@ if defined?(FatFreeCRM::Application)
     config.action_mailer.delivery_method = :test
 
     # Set default host for mailer specs
-    config.action_mailer.default_url_options = { :host => "www.example.com" }
+    config.action_mailer.default_url_options = { host: "www.example.com" }
 
     # Randomize the order test cases are executed.
     config.active_support.test_order = :random

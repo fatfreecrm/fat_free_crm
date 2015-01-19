@@ -6,7 +6,6 @@
 require 'spec_helper'
 
 describe EntityObserver do
-
   before do
     allow(Setting).to receive(:host).and_return('http://www.example.com')
     allow(PaperTrail).to receive(:whodunnit).and_return(assigner)
@@ -41,7 +40,6 @@ describe EntityObserver do
         allow(Setting).to receive(:host).and_return('')
         expect(UserMailer).not_to receive(:assigned_entity_notification)
       end
-
     end
 
     describe "on update of #{entity_type}" do
@@ -70,6 +68,5 @@ describe EntityObserver do
         entity.update_attributes(assignee: assigner)
       end
     end
-
   end
 end

@@ -4,11 +4,9 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class ListsController < ApplicationController
-
   # POST /lists
   #----------------------------------------------------------------------------
   def create
-
     if params[:is_global].to_i.zero?
       list_params[:user_id] = current_user.id
     else
@@ -34,7 +32,7 @@ class ListsController < ApplicationController
     respond_with(@list)
   end
 
-protected
+  protected
 
   def list_params
     params[:list].permit!

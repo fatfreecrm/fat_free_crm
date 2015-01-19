@@ -41,6 +41,4 @@ describe Avatar do
     ]
     expect(@user.avatars).to eq(avatars)
   end
-
 end
-

@@ -22,7 +22,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Comment do
-
   before(:each) do
     login
   end
@@ -46,4 +45,3 @@ describe Comment do
     end
   end
 end
-

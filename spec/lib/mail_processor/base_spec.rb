@@ -18,14 +18,13 @@ describe FatFreeCRM::MailProcessor::Base do
   before(:each) do
     @crawler = FatFreeCRM::MailProcessor::Base.new
     # MailProcessor::Base doesn't load any settings by default
-    @crawler.instance_variable_set "@settings", {
-      server:   "example.com",
-      port:     "123",
-      ssl:      true,
-      address:  "test@example.com",
-      user:     "test@example.com",
-      password: "123"
-    }
+    @crawler.instance_variable_set "@settings",
+                                   server:   "example.com",
+                                   port:     "123",
+                                   ssl:      true,
+                                   address:  "test@example.com",
+                                   user:     "test@example.com",
+                                   password: "123"
   end
 
   #------------------------------------------------------------------------------
@@ -129,7 +128,7 @@ describe FatFreeCRM::MailProcessor::Base do
   #------------------------------------------------------------------------------
   describe "Finding email sender among users" do
     before(:each) do
-      @from = [ "Aaron@Example.Com", "Ben@Example.com" ]
+      @from = ["Aaron@Example.Com", "Ben@Example.com"]
       @email = double
       allow(@email).to receive(:from).and_return(@from)
     end
@@ -154,7 +153,6 @@ describe FatFreeCRM::MailProcessor::Base do
 
     #------------------------------------------------------------------------------
     describe "Extracting plain text body" do
-
       it "should extract text from multipart text/plain" do
         text = @crawler.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:plain]))
         expect(text).to be_present

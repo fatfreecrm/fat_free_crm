@@ -40,21 +40,21 @@
 #
 
 class User < ActiveRecord::Base
-  before_create  :check_if_needs_approval
+  before_create :check_if_needs_approval
   before_destroy :check_if_current_user, :check_if_has_related_assets
 
-  has_one     :avatar, as: :entity, dependent: :destroy  # Personal avatar.
-  has_many    :avatars                                         # As owner who uploaded it, ex. Contact avatar.
-  has_many    :comments, as: :commentable                   # As owner who created a comment.
-  has_many    :accounts
-  has_many    :campaigns
-  has_many    :leads
-  has_many    :contacts
-  has_many    :opportunities
-  has_many    :assigned_opportunities, class_name: 'Opportunity', foreign_key: 'assigned_to'
-  has_many    :permissions, dependent: :destroy
-  has_many    :preferences, dependent: :destroy
-  has_many    :lists
+  has_one :avatar, as: :entity, dependent: :destroy  # Personal avatar.
+  has_many :avatars                                         # As owner who uploaded it, ex. Contact avatar.
+  has_many :comments, as: :commentable                   # As owner who created a comment.
+  has_many :accounts
+  has_many :campaigns
+  has_many :leads
+  has_many :contacts
+  has_many :opportunities
+  has_many :assigned_opportunities, class_name: 'Opportunity', foreign_key: 'assigned_to'
+  has_many :permissions, dependent: :destroy
+  has_many :preferences, dependent: :destroy
+  has_many :lists
   has_and_belongs_to_many :groups
 
   has_paper_trail class_name: 'Version', ignore: [:last_request_at, :perishable_token]
@@ -72,8 +72,8 @@ class User < ActiveRecord::Base
 
   scope :have_assigned_opportunities, -> {
     joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to")
-    .where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
-    .select('DISTINCT(users.id), users.*')
+      .where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
+      .select('DISTINCT(users.id), users.*')
   }
 
   acts_as_authentic do |c|
@@ -94,29 +94,29 @@ class User < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def name
-    self.first_name.blank? ? self.username : self.first_name
+    first_name.blank? ? username : first_name
   end
 
   #----------------------------------------------------------------------------
   def full_name
-    self.first_name.blank? && self.last_name.blank? ? self.email : "#{self.first_name} #{self.last_name}".strip
+    first_name.blank? && last_name.blank? ? email : "#{first_name} #{last_name}".strip
   end
 
   #----------------------------------------------------------------------------
   def suspended?
-    self.suspended_at != nil
+    suspended_at != nil
   end
 
   #----------------------------------------------------------------------------
   def awaits_approval?
-    self.suspended? && self.login_count == 0 && Setting.user_signup == :needs_approval
+    self.suspended? && login_count == 0 && Setting.user_signup == :needs_approval
   end
 
   #----------------------------------------------------------------------------
   def preference
-    @preference ||= self.preferences.build
+    @preference ||= preferences.build
   end
-  alias :pref :preference
+  alias_method :pref, :preference
 
   #----------------------------------------------------------------------------
   def deliver_password_reset_instructions!
@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
   # Override global I18n.locale if the user has individual local preference.
   #----------------------------------------------------------------------------
   def set_individual_locale
-    I18n.locale = self.preference[:locale] if self.preference[:locale]
+    I18n.locale = preference[:locale] if preference[:locale]
   end
 
   # Generate the value of single access token if it hasn't been set already.
@@ -136,11 +136,11 @@ class User < ActiveRecord::Base
     self.single_access_token ||= update_attribute(:single_access_token, Authlogic::Random.friendly_token)
   end
 
-  def to_json(options = nil)
+  def to_json(_options = nil)
     [name].to_json
   end
 
-  def to_xml(options = nil)
+  def to_xml(_options = nil)
     [name].to_xml
   end
 
@@ -149,7 +149,7 @@ class User < ActiveRecord::Base
   # Suspend newly created user if signup requires an approval.
   #----------------------------------------------------------------------------
   def check_if_needs_approval
-    self.suspended_at = Time.now if Setting.user_signup == :needs_approval && !self.admin
+    self.suspended_at = Time.now if Setting.user_signup == :needs_approval && !admin
   end
 
   # Prevent current user from deleting herself.
@@ -172,17 +172,14 @@ class User < ActiveRecord::Base
   # Define class methods
   #----------------------------------------------------------------------------
   class << self
-
     def current_ability
       Ability.new(User.current_user)
     end
 
     def can_signup?
-      [ :allowed, :needs_approval ].include? Setting.user_signup
+      [:allowed, :needs_approval].include? Setting.user_signup
     end
-
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_user, self)
-
 end

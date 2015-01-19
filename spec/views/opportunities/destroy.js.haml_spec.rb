@@ -19,7 +19,7 @@ describe "/opportunities/destroy" do
   end
 
   it "should update opportunities sidebar when called from opportunities index" do
-    assign(:opportunities, [ @opportunity ].paginate)
+    assign(:opportunities, [@opportunity].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
     render
 
@@ -29,7 +29,7 @@ describe "/opportunities/destroy" do
   end
 
   it "should update pagination when called from opportunities index" do
-    assign(:opportunities, [ @opportunity ].paginate)
+    assign(:opportunities, [@opportunity].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
     render
 
@@ -62,5 +62,4 @@ describe "/opportunities/destroy" do
 
     expect(rendered).to include("#recently")
   end
-
 end

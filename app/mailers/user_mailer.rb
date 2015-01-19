@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class UserMailer < ActionMailer::Base
-
   def password_reset_instructions(user)
     @edit_password_url = edit_password_url(user.perishable_token)
 
@@ -30,5 +29,4 @@ class UserMailer < ActionMailer::Base
     from = Setting.smtp[:from]
     !from.blank? ? from : "Fat Free CRM <noreply@fatfreecrm.com>"
   end
-
 end

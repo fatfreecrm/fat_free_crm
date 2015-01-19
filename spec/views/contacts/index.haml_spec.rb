@@ -17,7 +17,7 @@ describe "/contacts/index" do
   end
 
   it "should render a list of contacts if it's not empty" do
-    assign(:contacts, [ FactoryGirl.create(:contact) ].paginate)
+    assign(:contacts, [FactoryGirl.create(:contact)].paginate)
 
     render
     expect(view).to render_template(partial: "_contact")
@@ -32,5 +32,4 @@ describe "/contacts/index" do
     expect(view).to render_template(partial: "shared/_empty")
     expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
-
 end

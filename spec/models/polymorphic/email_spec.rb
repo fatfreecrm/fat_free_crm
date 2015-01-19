@@ -38,4 +38,3 @@ describe Email do
     expect(@email).to be_valid
   end
 end
-

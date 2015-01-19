@@ -11,7 +11,7 @@ describe "/accounts/_new" do
   before do
     login_and_assign
     assign(:account, Account.new)
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
   end
 
   it "should render [create account] form" do
@@ -25,7 +25,7 @@ describe "/accounts/_new" do
   end
 
   it "should render background info field if settings require so" do
-    Setting.background_info = [ :account ]
+    Setting.background_info = [:account]
 
     render
     expect(rendered).to have_tag("textarea[id=account_background_info]")
@@ -37,5 +37,4 @@ describe "/accounts/_new" do
     render
     expect(rendered).not_to have_tag("textarea[id=account_background_info]")
   end
-
 end

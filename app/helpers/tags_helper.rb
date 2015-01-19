@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module TagsHelper
-
   # Generate tag links for use on asset index pages.
   #----------------------------------------------------------------------------
   def tags_for_index(model)
@@ -27,5 +26,4 @@ module TagsHelper
       end
     end
   end
-
 end

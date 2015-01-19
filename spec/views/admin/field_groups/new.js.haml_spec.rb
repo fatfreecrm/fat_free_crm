@@ -6,7 +6,6 @@
 require 'spec_helper'
 
 describe "admin/field_groups/new" do
-
   before do
     login_and_assign(admin: true)
     assign(:field_group, field_group)
@@ -21,5 +20,4 @@ describe "admin/field_groups/new" do
     expect(rendered).to have_text("crm.flip_form('#{field_group.klass_name.downcase}_create_field_group')")
     expect(rendered).to have_text("$('##{field_group.klass_name.downcase}_create_field_group').html")
   end
-
 end

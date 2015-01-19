@@ -32,7 +32,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Campaign do
-
   before { login }
 
   it "should create a new instance given valid attributes" do
@@ -59,9 +58,9 @@ describe Campaign do
       @lead = FactoryGirl.create(:lead)
       @opportunity = FactoryGirl.create(:opportunity)
 
-      expect(@campaign.attach!(@task)).to eq([ @task ])
-      expect(@campaign.attach!(@lead)).to eq([ @lead ])
-      expect(@campaign.attach!(@opportunity)).to eq([ @opportunity ])
+      expect(@campaign.attach!(@task)).to eq([@task])
+      expect(@campaign.attach!(@lead)).to eq([@lead])
+      expect(@campaign.attach!(@opportunity)).to eq([@opportunity])
     end
 
     it "should increment leads count when attaching a new lead" do

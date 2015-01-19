@@ -25,7 +25,6 @@ module HelperMethods
   def do_login_if_not_already(options = {})
     do_login(options) unless @user.present?
   end
-
 end
 
 RSpec.configuration.include HelperMethods, type: :feature

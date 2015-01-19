@@ -13,10 +13,10 @@ describe "/leads/index" do
   end
 
   it "should render [lead] template with @leads collection if there are leads" do
-    assign(:leads, [ FactoryGirl.create(:lead, id: 42) ].paginate(page: 1, per_page: 20))
+    assign(:leads, [FactoryGirl.create(:lead, id: 42)].paginate(page: 1, per_page: 20))
 
     render template: 'leads/index', formats: [:js]
-    
+
     expect(rendered).to include("$('#leads').html('<li class=\\'highlight lead\\' id=\\'lead_42\\'")
     expect(rendered).to include("#paginate")
   end
@@ -25,9 +25,8 @@ describe "/leads/index" do
     assign(:leads, [].paginate(page: 1, per_page: 20))
 
     render template: 'leads/index', formats: [:js]
-    
+
     expect(rendered).to include("$('#leads').html('<div id=\\'empty\\'>")
     expect(rendered).to include("#paginate")
   end
-
 end

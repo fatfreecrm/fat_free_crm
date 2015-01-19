@@ -11,7 +11,7 @@ describe "/accounts/destroy" do
   before do
     login_and_assign
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ].paginate)
+    assign(:accounts, [@account].paginate)
     assign(:account_category_total, Hash.new(1))
     render
   end
@@ -29,5 +29,4 @@ describe "/accounts/destroy" do
     expect(rendered).to have_text("Account Categories")
     expect(rendered).to have_text("Recent Items")
   end
-
 end

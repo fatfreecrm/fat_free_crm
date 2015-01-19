@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::FieldsController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/fields')", only: [ :index ]
+  before_action "set_current_tab('admin/fields')", only: [:index]
 
   load_resource except: [:create, :subform]
 
@@ -52,14 +52,13 @@ class Admin::FieldsController < Admin::ApplicationController
       end
 
     respond_with(@field)
-
   end
 
   # PUT /fields/1
   # PUT /fields/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    if (field_params[:as] =~ /pair/)
+    if field_params[:as] =~ /pair/
       @field = CustomFieldPair.update_pair(params).first
     else
       @field = Field.find(params[:id])
@@ -86,7 +85,7 @@ class Admin::FieldsController < Admin::ApplicationController
     field_ids = params["fields_field_group_#{field_group_id}"] || []
 
     field_ids.each_with_index do |id, index|
-      Field.where(id: id).update_all(position: index+1, field_group_id: field_group_id)
+      Field.where(id: id).update_all(position: index + 1, field_group_id: field_group_id)
     end
 
     render nothing: true
@@ -99,11 +98,11 @@ class Admin::FieldsController < Admin::ApplicationController
     as = field[:as]
 
     @field = if (id = field[:id]).present?
-        Field.find(id).tap{|f| f.as = as}
-      else
-        field_group_id = field[:field_group_id]
-        klass = Field.lookup_class(as).classify.constantize
-        klass.new(field_group_id: field_group_id, as: as)
+               Field.find(id).tap { |f| f.as = as }
+             else
+               field_group_id = field[:field_group_id]
+               klass = Field.lookup_class(as).classify.constantize
+               klass.new(field_group_id: field_group_id, as: as)
       end
 
     respond_with(@field) do |format|
@@ -111,7 +110,7 @@ class Admin::FieldsController < Admin::ApplicationController
     end
   end
 
-protected
+  protected
 
   def field_params
     params[:field].permit!

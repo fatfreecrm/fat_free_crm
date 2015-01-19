@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
-
   it "should be included in the object returned by #helper" do
     included_modules = (class << helper; self; end).send :included_modules
     expect(included_modules).to include(ApplicationHelper)
@@ -14,22 +13,22 @@ describe ApplicationHelper do
 
   describe "link_to_emails" do
     it "should add Bcc: if dropbox address is set" do
-      allow(Setting).to receive(:email_dropbox).and_return({ address: "drop@example.com" })
+      allow(Setting).to receive(:email_dropbox).and_return(address: "drop@example.com")
       expect(helper.link_to_email("hello@example.com")).to eq('<a title="hello@example.com" href="mailto:hello@example.com?bcc=drop@example.com">hello@example.com</a>')
     end
 
     it "should not add Bcc: if dropbox address is not set" do
-      allow(Setting).to receive(:email_dropbox).and_return({ address: nil })
+      allow(Setting).to receive(:email_dropbox).and_return(address: nil)
       expect(helper.link_to_email("hello@example.com")).to eq('<a title="hello@example.com" href="mailto:hello@example.com">hello@example.com</a>')
     end
 
     it "should truncate long emails" do
-      allow(Setting).to receive(:email_dropbox).and_return({ address: nil })
+      allow(Setting).to receive(:email_dropbox).and_return(address: nil)
       expect(helper.link_to_email("hello@example.com", 5)).to eq('<a title="hello@example.com" href="mailto:hello@example.com">he...</a>')
     end
 
     it "should escape HTML entities" do
-      allow(Setting).to receive(:email_dropbox).and_return({ address: 'dr&op@example.com' })
+      allow(Setting).to receive(:email_dropbox).and_return(address: 'dr&op@example.com')
       expect(helper.link_to_email("hell&o@example.com")).to eq('<a title="hell&amp;o@example.com" href="mailto:hell&amp;o@example.com?bcc=dr&amp;op@example.com">hell&amp;o@example.com</a>')
     end
   end
@@ -39,8 +38,8 @@ describe ApplicationHelper do
     allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
 
     link = helper.link_to_discard(lead)
-    expect(link).to match(%r|leads/#{lead.id}/discard|)
-    expect(link).to match(%r|attachment=Lead&amp;attachment_id=#{lead.id}|)
+    expect(link).to match(%r{leads/#{lead.id}/discard})
+    expect(link).to match(%r{attachment=Lead&amp;attachment_id=#{lead.id}})
   end
 
   describe "shown_on_landing_page?" do
@@ -70,17 +69,15 @@ describe ApplicationHelper do
   end
 
   describe "current_view_name" do
-
     before(:each) do
       @user = mock_model(User)
       allow(helper).to receive(:current_user).and_return(@user)
-      allow(controller).to receive(:params).and_return({'action' => 'show', 'controller' => 'contacts'})
+      allow(controller).to receive(:params).and_return('action' => 'show', 'controller' => 'contacts')
     end
 
     it "should return the contact 'show' outline stored in the user preferences" do
-      expect(@user).to receive(:pref).and_return({contacts_show_view: 'long'})
+      expect(@user).to receive(:pref).and_return(contacts_show_view: 'long')
       expect(helper.current_view_name).to eq('long')
     end
-
   end
 end

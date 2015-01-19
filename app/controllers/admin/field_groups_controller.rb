@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::FieldGroupsController < Admin::ApplicationController
-
   helper 'admin/fields'
 
   # GET /admin/field_groups/new
@@ -22,7 +21,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     @field_group = FieldGroup.find(params[:id])
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = FieldGroup.find_by_id($1) || $1.to_i
+      @previous = FieldGroup.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@field_group)
@@ -64,7 +63,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     field_group_ids = params["#{asset}_field_groups"]
 
     field_group_ids.each_with_index do |id, index|
-      FieldGroup.update_all({position: index+1}, {id: id})
+      FieldGroup.update_all({ position: index + 1 }, id: id)
     end
 
     render nothing: true
@@ -76,7 +75,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     @field_group = FieldGroup.find(params[:id])
   end
 
-protected
+  protected
 
   def field_group_params
     params[:field_group].permit!

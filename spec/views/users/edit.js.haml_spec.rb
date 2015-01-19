@@ -30,5 +30,4 @@ describe "/users/edit" do
     expect(rendered).to include("crm.flip_form('edit_profile');")
     expect(rendered).to include("crm.set_title('edit_profile', 'Edit Profile');")
   end
-
 end

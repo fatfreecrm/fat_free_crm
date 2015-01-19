@@ -18,7 +18,7 @@ describe "/opportunities/index" do
   end
 
   it "should render list of accounts if list of opportunities is not empty" do
-    assign(:opportunities, [ FactoryGirl.create(:opportunity) ].paginate)
+    assign(:opportunities, [FactoryGirl.create(:opportunity)].paginate)
 
     render
     expect(view).to render_template(partial: "_opportunity")
@@ -33,5 +33,4 @@ describe "/opportunities/index" do
     expect(view).to render_template(partial: "shared/_empty")
     expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
-
 end

@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::GroupsController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/groups')", only: [ :index, :show ]
+  before_action "set_current_tab('admin/groups')", only: [:index, :show]
 
   load_resource
 
@@ -57,7 +57,7 @@ class Admin::GroupsController < Admin::ApplicationController
     respond_with(@group)
   end
 
-protected
+  protected
 
   def group_params
     params[:group].permit!

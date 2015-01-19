@@ -63,5 +63,4 @@ describe "/tasks/complete" do
       expect(rendered).to have_text("Recent Items")
     end
   end
-
 end

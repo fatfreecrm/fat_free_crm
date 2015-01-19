@@ -5,14 +5,14 @@
 #------------------------------------------------------------------------------
 require 'features/acceptance_helper'
 
-feature 'Accounts', %q{
+feature 'Accounts', '
   In order to increase customer satisfaction
   As a user
   I want to manage accounts
-} do
 
+' do
   before(:each) do
-   do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
+    do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
   end
 
   scenario 'should view a list of accounts' do

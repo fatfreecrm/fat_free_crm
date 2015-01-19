@@ -32,12 +32,19 @@ class Email < ActiveRecord::Base
   belongs_to :user
 
   has_paper_trail class_name: 'Version', meta: { related: :mediator },
-    ignore: [ :state ]
+                  ignore: [:state]
 
-  def expanded?;  self.state == "Expanded";  end
-  def collapsed?; self.state == "Collapsed"; end
+  def expanded?
+    state == "Expanded"
+  end
 
-  def body; super; end
+  def collapsed?
+    state == "Collapsed"
+  end
+
+  def body
+    super
+  end
 
   def body_with_textile
     if defined?(RedCloth)

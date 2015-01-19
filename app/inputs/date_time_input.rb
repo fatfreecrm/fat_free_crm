@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class DateTimeInput < SimpleForm::Inputs::DateTimeInput
-
   def input(wrapper_options)
     add_autocomplete!
     input_html_options.merge(input_options)

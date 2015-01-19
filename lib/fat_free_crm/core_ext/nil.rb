@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class NilClass
-
   def true?
     false
   end
@@ -12,6 +11,4 @@ class NilClass
   def false?
     false
   end
-
 end
-

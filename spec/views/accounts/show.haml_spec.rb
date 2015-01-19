@@ -11,12 +11,12 @@ describe "/accounts/show" do
   before do
     login_and_assign
     @account = FactoryGirl.create(:account, id: 42,
-      contacts: [ FactoryGirl.create(:contact) ],
-      opportunities: [ FactoryGirl.create(:opportunity) ])
+                                            contacts: [FactoryGirl.create(:contact)],
+                                            opportunities: [FactoryGirl.create(:opportunity)])
     assign(:account, @account)
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [ FactoryGirl.create(:comment, commentable: @account) ])
+    assign(:timeline, [FactoryGirl.create(:comment, commentable: @account)])
   end
 
   it "should render account landing page" do
@@ -30,5 +30,4 @@ describe "/accounts/show" do
 
     expect(rendered).to have_tag("div[id=edit_account]")
   end
-
 end

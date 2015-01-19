@@ -39,7 +39,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Lead do
-
   before { login }
 
   it "should create a new instance given valid attributes" do
@@ -60,7 +59,7 @@ describe Lead do
     it "should return non-empty list of tasks when attaching new task" do
       @task = FactoryGirl.create(:task, user: current_user)
 
-      expect(@lead.attach!(@task)).to eq([ @task ])
+      expect(@lead.attach!(@task)).to eq([@task])
     end
   end
 

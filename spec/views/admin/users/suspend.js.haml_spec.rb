@@ -15,6 +15,6 @@ describe "admin/users/suspend" do
     render
 
     expect(rendered).to include("user_#{@user.id}")
-    expect(rendered).to include(%Q/$('#user_#{@user.id}').effect("highlight"/)
+    expect(rendered).to include(%/$('#user_#{@user.id}').effect("highlight"/)
   end
 end

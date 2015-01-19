@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class LeadsController < EntitiesController
-  before_filter :get_data_for_sidebar, only: :index
+  before_action :get_data_for_sidebar, only: :index
   autocomplete :account, :name, full: true
 
   # GET /leads
@@ -13,8 +13,8 @@ class LeadsController < EntitiesController
     @leads = get_leads(page: params[:page])
 
     respond_with @leads do |format|
-       format.xls { render layout: 'header' }
-       format.csv { render csv: @leads }
+      format.xls { render layout: 'header' }
+      format.csv { render csv: @leads }
     end
   end
 
@@ -30,7 +30,7 @@ class LeadsController < EntitiesController
   # GET /leads/new
   #----------------------------------------------------------------------------
   def new
-    @lead.attributes = {user: current_user, access: Setting.default_access, assigned_to: nil}
+    @lead.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
     get_campaigns
 
     if params[:related]
@@ -38,7 +38,7 @@ class LeadsController < EntitiesController
       if related = model.classify.constantize.my.find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
-        respond_to_related_not_found(model) and return
+        respond_to_related_not_found(model) && return
       end
     end
 
@@ -51,7 +51,7 @@ class LeadsController < EntitiesController
     get_campaigns
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my.find_by_id($1) || $1.to_i
+      @previous = Lead.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@lead)
@@ -63,7 +63,7 @@ class LeadsController < EntitiesController
     get_campaigns
     @comment_body = params[:comment_body]
 
-    respond_with(@lead) do |format|
+    respond_with(@lead) do |_format|
       if @lead.save_with_permissions(params.permit!)
         @lead.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
@@ -79,7 +79,7 @@ class LeadsController < EntitiesController
   # PUT /leads/1
   #----------------------------------------------------------------------------
   def update
-    respond_with(@lead) do |format|
+    respond_with(@lead) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @lead.access = resource_params[:access] if resource_params[:access]
       if @lead.update_with_lead_counters(resource_params)
@@ -109,7 +109,7 @@ class LeadsController < EntitiesController
     @opportunity = Opportunity.new(user: current_user, access: "Lead", stage: "prospecting", campaign: @lead.campaign, source: @lead.source)
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my.find_by_id($1) || $1.to_i
+      @previous = Lead.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@lead)
@@ -156,7 +156,6 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
-
   # GET /leads/redraw                                                      AJAX
   #----------------------------------------------------------------------------
   def redraw
@@ -164,9 +163,9 @@ class LeadsController < EntitiesController
 
     # Sorting and naming only: set the same option for Contacts if the hasn't been set yet.
     if params[:sort_by]
-      current_user.pref[:leads_sort_by] = Lead::sort_by_map[params[:sort_by]]
-      if Contact::sort_by_fields.include?(params[:sort_by])
-        current_user.pref[:contacts_sort_by] ||= Contact::sort_by_map[params[:sort_by]]
+      current_user.pref[:leads_sort_by] = Lead.sort_by_map[params[:sort_by]]
+      if Contact.sort_by_fields.include?(params[:sort_by])
+        current_user.pref[:contacts_sort_by] ||= Contact.sort_by_map[params[:sort_by]]
       end
     end
     if params[:naming]
@@ -193,10 +192,10 @@ class LeadsController < EntitiesController
     end
   end
 
-private
+  private
 
   #----------------------------------------------------------------------------
-  alias :get_leads :get_list_of_records
+  alias_method :get_leads, :get_list_of_records
 
   #----------------------------------------------------------------------------
   def get_campaigns
@@ -216,7 +215,7 @@ private
         @leads = get_leads                        # Get leads for current page.
         if @leads.blank?                          # If no lead on this page then try the previous one.
           @leads = get_leads(page: current_page - 1) if current_page > 1
-          render :index and return                # And reload the whole list even if it's empty.
+          render(:index) && return                # And reload the whole list even if it's empty.
         end
       else                                        # Called from related asset.
         self.current_page = 1                     # Reset current page to 1 to make sure it stays valid.
@@ -235,8 +234,8 @@ private
       instance_variable_set("@#{related}", @lead.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
       @lead_status_total = HashWithIndifferentAccess[
-        all: Lead.my.count,
-        other: 0
+                           all: Lead.my.count,
+                           other: 0
       ]
       Setting.lead_status.each do |key|
         @lead_status_total[key] = Lead.my.where(status: key.to_s).count

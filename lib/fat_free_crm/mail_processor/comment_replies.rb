@@ -8,7 +8,6 @@ require 'fat_free_crm/mail_processor/base'
 module FatFreeCRM
   module MailProcessor
     class CommentReplies < Base
-
       # Subject line of email can contain full entity, or shortcuts
       # e.g. [contact:1234] OR [co:1234]
       ENTITY_SHORTCUTS = {
@@ -30,18 +29,17 @@ module FatFreeCRM
 
       # Email processing pipeline
       #--------------------------------------------------------------------------------------
-      def process(uid, email)
+      def process(_uid, email)
         with_subject_line(email) do |entity_name, entity_id|
           create_comment email, entity_name, entity_id
         end
       end
 
-
       # Checks the email to detect [entity:id] in the subject.
       #--------------------------------------------------------------------------------------
       def with_subject_line(email)
         if /\[([^:]*):([^\]]*)\]/ =~ email.subject
-          entity_name, entity_id = $1, $2
+          entity_name, entity_id = Regexp.last_match[1], Regexp.last_match[2]
           # Check that entity is a known model
           if ENTITY_SHORTCUTS.values.include?(entity_name)
             yield entity_name, entity_id
@@ -51,7 +49,6 @@ module FatFreeCRM
           end
         end
       end
-
 
       # Creates a new comment on an entity
       #--------------------------------------------------------------------------------------
@@ -67,8 +64,6 @@ module FatFreeCRM
           end
         end
       end
-
     end
   end
 end
-

@@ -4,21 +4,20 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module ApplicationHelper
-
   def tabs(tabs = nil)
     tabs ||= controller_path =~ /admin/ ? FatFreeCRM::Tabs.admin : FatFreeCRM::Tabs.main
     if tabs
       @current_tab ||= tabs.first[:text] # Select first tab by default.
       tabs.each { |tab| tab[:active] = (@current_tab == tab[:text] || @current_tab == tab[:url][:controller]) }
     else
-      raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake ffcrm:setup</b> command."
+      fail FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake ffcrm:setup</b> command."
     end
   end
 
   #----------------------------------------------------------------------------
   def tabless_layout?
     %w(authentications passwords).include?(controller.controller_name) ||
-    ((controller.controller_name == "users") && (%w(create new).include?(controller.action_name)))
+      ((controller.controller_name == "users") && (%w(create new).include?(controller.action_name)))
   end
 
   # Show existing flash or embed hidden paragraph ready for flash[:notice]
@@ -37,11 +36,11 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
     content_tag("div",
-      link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{sanitize text}".html_safe,
-        url_for(controller: :home, action: :toggle, id: id),
-        remote: true,
-        onclick: "crm.flip_subtitle(this)"
-      ), class: "subtitle")
+                link_to("<small>#{ hidden ? '&#9658;' : '&#9660;' }</small> #{sanitize text}".html_safe,
+                        url_for(controller: :home, action: :toggle, id: id),
+                        remote: true,
+                        onclick: "crm.flip_subtitle(this)"
+                ), class: "subtitle")
   end
 
   #----------------------------------------------------------------------------
@@ -76,8 +75,8 @@ module ApplicationHelper
   # We need this because standard Rails [select] turns &#9733; into &amp;#9733;
   #----------------------------------------------------------------------------
   def rating_select(name, options = {})
-    stars = Hash[ (1..5).map { |star| [ star, "&#9733;" * star ] } ].sort
-    options_for_select = %Q(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
+    stars = Hash[(1..5).map { |star| [star, "&#9733;" * star] }].sort
+    options_for_select = %(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
     options_for_select << stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
     select_tag name, options_for_select.html_safe, options
   end
@@ -89,10 +88,10 @@ module ApplicationHelper
     related = (options[:related] ? "&related=#{options[:related]}" : '')
 
     link_to(text,
-      url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
-      remote: true,
-      onclick: "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ ($('##{id}').css('display') != 'none'));",
-      class: options[:class]
+            url + "#{url.include?('?') ? '&' : '?'}cancel=false" + related,
+            remote: true,
+            onclick: "this.href = this.href.replace(/cancel=(true|false)/,'cancel='+ ($('##{id}').css('display') != 'none'));",
+            class: options[:class]
     )
   end
 
@@ -107,9 +106,9 @@ module ApplicationHelper
 
     name = (params[:klass_name] || object.class.name).underscore.downcase
     link_to(t(:edit),
-      options[:url] || polymorphic_url(record, action: :edit),
-      remote:  true,
-      onclick: "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{h name}');".html_safe
+            options[:url] || polymorphic_url(record, action: :edit),
+            remote:  true,
+            onclick: "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{h name}');".html_safe
     )
   end
 
@@ -119,22 +118,22 @@ module ApplicationHelper
     confirm = options[:confirm] || nil
 
     link_to(t(:delete) + "!",
-      options[:url] || url_for(record),
-      method: :delete,
-      remote: true,
-      confirm: confirm
+            options[:url] || url_for(record),
+            method: :delete,
+            remote: true,
+            confirm: confirm
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_discard(object)
     current_url = (request.xhr? ? request.referer : request.fullpath)
-    parent, parent_id = current_url.scan(%r|/(\w+)/(\d+)|).flatten
+    parent, parent_id = current_url.scan(%r{/(\w+)/(\d+)}).flatten
 
     link_to(t(:discard),
-      url_for(controller: parent, action: :discard, id: parent_id, attachment: object.class.name, attachment_id: object.id),
-      method:  :post,
-      remote:  true
+            url_for(controller: parent, action: :discard, id: parent_id, attachment: object.class.name, attachment_id: object.id),
+            method:  :post,
+            remote:  true
     )
   end
 
@@ -142,23 +141,23 @@ module ApplicationHelper
   def link_to_cancel(url, params = {})
     url = params[:url] if params[:url]
     link_to(t(:cancel),
-      url + "#{url.include?('?') ? '&' : '?'}cancel=true",
-      remote: true
+            url + "#{url.include?('?') ? '&' : '?'}cancel=true",
+            remote: true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_close(url)
     link_to("x", url + "#{url.include?('?') ? '&' : '?'}cancel=true",
-      remote: true,
-      class: "close",
-      title: t(:close_form)
+            remote: true,
+            class: "close",
+            title: t(:close_form)
     )
   end
 
   # Bcc: to dropbox address if the dropbox has been set up.
   #----------------------------------------------------------------------------
-  def link_to_email(email, length = nil, &block)
+  def link_to_email(email, length = nil, &_block)
     name = (length ? truncate(email, length: length) : email)
     if Setting.email_dropbox && Setting.email_dropbox[:address].present?
       mailto = "#{email}?bcc=#{Setting.email_dropbox[:address]}"
@@ -176,7 +175,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def jumpbox(current)
-    tabs = [ :campaigns, :accounts, :leads, :contacts, :opportunities ]
+    tabs = [:campaigns, :accounts, :leads, :contacts, :opportunities]
     current = tabs.first unless tabs.include?(current)
     tabs.map do |tab|
       link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", "html-data" => tab, class: (tab == current ? 'selected' : ''))
@@ -189,13 +188,24 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def hidden;    { style: "display:none;"       }; end
-  def exposed;   { style: "display:block;"      }; end
-  def invisible; { style: "visibility:hidden;"  }; end
-  def visible;   { style: "visibility:visible;" }; end
+  def hidden
+    { style: "display:none;"       }
+  end
+
+  def exposed
+    { style: "display:block;"      }
+  end
+
+  def invisible
+    { style: "visibility:hidden;"  }
+  end
+
+  def visible
+    { style: "visibility:visible;" }
+  end
 
   #----------------------------------------------------------------------------
-  def one_submit_only(form='')
+  def one_submit_only(_form = '')
     { onsubmit: "$('#'+this.id+' input[type=submit]').prop('disabled', true)".html_safe }
   end
 
@@ -234,7 +244,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil, shake = nil)
     text = ""
-    text << "$('#sidebar').html('#{ j render(partial: "layouts/sidebar", locals: { view: view, action: action }) }');"
+    text << "$('#sidebar').html('#{ j render(partial: 'layouts/sidebar', locals: { view: view, action: action }) }');"
     text << "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
     text.html_safe
   end
@@ -242,10 +252,10 @@ module ApplicationHelper
   # Display web presence mini-icons for Contact or Lead.
   #----------------------------------------------------------------------------
   def web_presence_icons(person)
-    [ :blog, :linkedin, :facebook, :twitter, :skype ].map do |site|
+    [:blog, :linkedin, :facebook, :twitter, :skype].map do |site|
       url = person.send(site)
       unless url.blank?
-        if site == :skype then
+        if site == :skype
           url = "callto:" << url
         else
           url = "http://" << url unless url.match(/^https?:\/\//)
@@ -261,7 +271,7 @@ module ApplicationHelper
     if value.is_a?(Array)
       param, value = value.first, value.last
     end
-    %Q{
+    %{
       if ($('##{option}').html() != '#{value}') {
         $('##{option}').html('#{value}');
         $('#loading').show();
@@ -276,15 +286,15 @@ module ApplicationHelper
   def options_menu_item(option, key, url = send("redraw_#{controller.controller_name}_path"))
     name = t("option_#{key}")
     "{ name: \"#{name.titleize}\", on_select: function() {" +
-    %Q{
-      if ($('##{option}').html() != '#{name}') {
-        $('##{option}').html('#{name}');
-        $('#loading').show();
-        $.get('#{url}', {#{option}: '#{key}', query: $('#query').val()}, function () {
-          $('#loading').hide();
-        });
-      }
-    } + "}}"
+      %{
+        if ($('##{option}').html() != '#{name}') {
+          $('##{option}').html('#{name}');
+          $('#loading').show();
+          $.get('#{url}', {#{option}: '#{key}', query: $('#query').val()}, function () {
+            $('#loading').hide();
+          });
+        }
+      } + "}}"
   end
 
   # Ajax helper to pass browser timezone offset to the server.
@@ -301,7 +311,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { class: 'gravatar', size: :large }.merge(args)
-    if model.respond_to?(:avatar) and model.avatar.present?
+    if model.respond_to?(:avatar) && model.avatar.present?
       image_tag(model.avatar.image.url(args.delete(:size)), args)
     else
       args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
@@ -325,13 +335,13 @@ module ApplicationHelper
     hint = "#{t(attribute)}..."
     if object.send(attribute).blank?
       form.text_field(attribute,
-        style:   "margin-top: 6px; #{extra_styles}",
-        placeholder: hint
+                      style:   "margin-top: 6px; #{extra_styles}",
+                      placeholder: hint
       )
     else
       form.text_field(attribute,
-        style:   "margin-top: 6px; #{extra_styles}",
-        placeholder: hint
+                      style:   "margin-top: 6px; #{extra_styles}",
+                      placeholder: hint
       )
     end
   end
@@ -342,15 +352,15 @@ module ApplicationHelper
   #   - we're actually showing asset landing page.
   #----------------------------------------------------------------------------
   def shown_on_landing_page?
-    !!((request.xhr? && request.referer =~ %r|/\w+/\d+|) ||
-       (!request.xhr? && request.fullpath =~ %r|/\w+/\d+|))
+    !!((request.xhr? && request.referer =~ %r{/\w+/\d+}) ||
+       (!request.xhr? && request.fullpath =~ %r{/\w+/\d+}))
   end
 
   # Helper to display links to supported data export formats.
   #----------------------------------------------------------------------------
-  def links_to_export(action=:index)
+  def links_to_export(action = :index)
     token = current_user.single_access_token
-    url_params = {action: action}
+    url_params = { action: action }
     url_params.merge!(id: params[:id]) unless params[:id].blank?
     url_params.merge!(query: params[:query]) unless params[:query].blank?
     url_params.merge!(q: params[:q]) unless params[:q].blank?
@@ -365,7 +375,7 @@ module ApplicationHelper
       link_to(format.upcase, url_params.merge(format: format, authentication_credentials: token), title: I18n.t(:"to_#{format}"))
     end
 
-    links = %W(perm).map do |format|
+    links = %w(perm).map do |format|
       link_to(format.upcase, url_params, title: I18n.t(:"to_#{format}"))
     end
 
@@ -373,11 +383,11 @@ module ApplicationHelper
   end
 
   def user_options
-    User.all.map {|u| [u.full_name, u.id]}
+    User.all.map { |u| [u.full_name, u.id] }
   end
 
   def group_options
-    Group.all.map {|g| [g.name, g.id]}
+    Group.all.map { |g| [g.name, g.id] }
   end
 
   def list_of_entities
@@ -387,7 +397,7 @@ module ApplicationHelper
   def entity_filter_checkbox(name, value, count)
     checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
     url = url_for(action: :filter)
-    onclick = %Q{
+    onclick = %{
       var query = $('#query').val(),
           values = [];
       $('input[name=&quot;#{h name}[]&quot;]').filter(':checked').each(function () {
@@ -404,7 +414,7 @@ module ApplicationHelper
   # Create a column in the 'asset_attributes' table.
   # If a block is given, render it inside the td
   #----------------------------------------------------------------------------
-  def col(title, value = nil, last = false, email = false, &block)
+  def col(title, value = nil, last = false, email = false, &_block)
     last_class = (last ? 'last' : nil)
     out = content_tag(:th, title, class: last_class)
     if block_given?
@@ -415,9 +425,9 @@ module ApplicationHelper
       # Parse and format urls as links.
       fmt_value = (value.to_s || "").gsub("\n", "<br />")
       fmt_value = if email
-        link_to_email(fmt_value)
-      else
-        fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
+                    link_to_email(fmt_value)
+                  else
+                    fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
       end
       out << content_tag(:td, fmt_value, class: last_class)
     end
@@ -427,14 +437,14 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   # Combines the 'subtitle' helper with the small info text on the same line.
   def section_title(id, hidden = true, text = nil, info_text = nil)
-    text = id.to_s.split("_").last.capitalize if text == nil
+    text = id.to_s.split("_").last.capitalize if text.nil?
     content_tag("div", class: "subtitle show_attributes") do
-      content = link_to("<small>#{ hidden ? "&#9658;" : "&#9660;" }</small> #{sanitize text}".html_safe,
-        url_for(controller: :home, action: :toggle, id: id),
-        remote:  true,
-        onclick: "crm.flip_subtitle(this)"
+      content = link_to("<small>#{ hidden ? '&#9658;' : '&#9660;' }</small> #{sanitize text}".html_safe,
+                        url_for(controller: :home, action: :toggle, id: id),
+                        remote:  true,
+                        onclick: "crm.flip_subtitle(this)"
       )
-      content << content_tag("small", info_text.to_s, {class: "subtitle_inline_info", id: "#{id}_intro", style: hidden ? "" : "display:none;"})
+      content << content_tag("small", info_text.to_s, class: "subtitle_inline_info", id: "#{id}_intro", style: hidden ? "" : "display:none;")
     end
   end
 
@@ -465,10 +475,10 @@ module ApplicationHelper
     lis = ''.html_safe
     content_tag :ul, class: 'format-buttons' do
       views.collect do |view|
-        classes = if (current_view_name == view.name) or (current_view_name == nil and view.template == nil) # nil indicates default template.
-            "#{h view.name}-button active"
-          else
-            "#{h view.name}-button"
+        classes = if (current_view_name == view.name) || (current_view_name.nil? && view.template.nil?) # nil indicates default template.
+                    "#{h view.name}-button active"
+                  else
+                    "#{h view.name}-button"
           end
         lis << content_tag(:li) do
           url = (action == "index") ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
@@ -487,7 +497,7 @@ module ApplicationHelper
   # <span class="timeago" datetime="2008-07-17T09:24:17Z">July 17, 2008</span>
   def timeago(time, options = {})
     options[:class] ||= "timeago"
-    content_tag(:span, h(time.to_s), options.merge( title: time.getutc.iso8601)) if time
+    content_tag(:span, h(time.to_s), options.merge(title: time.getutc.iso8601)) if time
   end
 
   #----------------------------------------------------------------------------
@@ -513,5 +523,4 @@ module ApplicationHelper
     options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
     will_paginate(collection, options)
   end
-
 end

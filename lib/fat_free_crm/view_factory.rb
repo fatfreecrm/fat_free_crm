@@ -5,7 +5,6 @@
 #------------------------------------------------------------------------------
 
 module FatFreeCRM
-
   # A view factory keeps track of views and the contexts in which they are available.
   #----------------------------------------------------------------------------
   #
@@ -16,7 +15,6 @@ module FatFreeCRM
   # Icon is optional. If specified, it will be passed to asset_path.
   #
   class ViewFactory
-
     include Comparable
 
     @@views = []
@@ -25,7 +23,6 @@ module FatFreeCRM
     # Class methods
     #----------------------------------------------------------------------------
     class << self
-
       # Register with the view factory
       #----------------------------------------------------------------------------
       def register(view)
@@ -37,9 +34,9 @@ module FatFreeCRM
       def views_for(options = {})
         controller = options[:controller]
         action = options[:action]
-        name = options[:name] #optional
+        name = options[:name] # optional
         @@views.select do |view|
-          view.controllers.include?(controller) and view.actions.include?(action) and (name.present? ? view.name == name : true)
+          view.controllers.include?(controller) && view.actions.include?(action) && (name.present? ? view.name == name : true)
         end
       end
 
@@ -50,7 +47,6 @@ module FatFreeCRM
         view = views_for(options).first
         view && view.template
       end
-
     end
 
     # Instance methods
@@ -77,10 +73,9 @@ module FatFreeCRM
     # This defines what it means for one view to be different to another
     #----------------------------------------------------------------------------
     def generate_id
-       [name, controllers.sort, actions.sort].flatten.map(&:to_s).map(&:underscore).join('_')
+      [name, controllers.sort, actions.sort].flatten.map(&:to_s).map(&:underscore).join('_')
     end
 
     ActiveSupport.run_load_hooks(:fat_free_crm_view_factory, self)
-
   end
 end

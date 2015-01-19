@@ -19,4 +19,3 @@ class ActionController::Base
     render layout: false, template: "/layouts/500", format: :html, status: 500, locals: { exception: exception }
   end
 end
-

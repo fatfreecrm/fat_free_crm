@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::UsersController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/users')", only: [ :index, :show ]
+  before_action "set_current_tab('admin/users')", only: [:index, :show]
 
   load_resource except: [:create]
 
@@ -34,7 +34,7 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def edit
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = User.find_by_id($1) || $1.to_i
+      @previous = User.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@user)
@@ -100,7 +100,7 @@ class Admin::UsersController < Admin::ApplicationController
     respond_with(@user)
   end
 
-protected
+  protected
 
   def user_params
     params[:user].permit(
@@ -124,7 +124,7 @@ protected
     )
   end
 
-private
+  private
 
   #----------------------------------------------------------------------------
   def get_users(options = {})

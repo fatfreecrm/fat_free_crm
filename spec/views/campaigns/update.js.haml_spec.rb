@@ -9,7 +9,7 @@ describe "/campaigns/update" do
   before do
     login_and_assign
     assign(:campaign, @campaign = FactoryGirl.create(:campaign, user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:status, Setting.campaign_status)
     assign(:campaign_status_total, Hash.new(1))
   end
@@ -43,7 +43,7 @@ describe "/campaigns/update" do
       it "should replace [Edit Campaign] with campaign partial and highlight it" do
         render
         expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
-        expect(rendered).to include(%Q/$('#campaign_#{@campaign.id}').effect("highlight"/)
+        expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
       end
     end
   end # no errors
@@ -58,7 +58,7 @@ describe "/campaigns/update" do
       it "should redraw the [edit_campaign] form and shake it" do
         render
         expect(rendered).to include("$('#edit_campaign').html")
-        expect(rendered).to include(%Q/$('#edit_campaign').effect("shake"/)
+        expect(rendered).to include(%/$('#edit_campaign').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -72,7 +72,7 @@ describe "/campaigns/update" do
       it "should redraw the [edit_campaign] form and shake it" do
         render
         expect(rendered).to include("$('#campaign_#{@campaign.id}').html")
-        expect(rendered).to include(%Q/$('#campaign_#{@campaign.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

@@ -12,9 +12,9 @@ describe "/leads/convert" do
     login_and_assign
 
     assign(:lead, @lead = FactoryGirl.create(:lead, user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
     assign(:opportunity, FactoryGirl.create(:opportunity))
   end
 
@@ -74,5 +74,4 @@ describe "/leads/convert" do
     expect(rendered).to include("crm.create_or_select_account")
     expect(rendered).to include('focus()')
   end
-
 end

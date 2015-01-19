@@ -9,7 +9,6 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-
     # handle signup
     can(:create, User) if User.can_signup?
 

@@ -16,7 +16,7 @@ describe "admin/users/update" do
       render
 
       expect(rendered).to include("user_#{@user.id}")
-      expect(rendered).to include(%Q/$('#user_#{@user.id}').effect("highlight"/)
+      expect(rendered).to include(%/$('#user_#{@user.id}').effect("highlight"/)
     end
   end # no errors
 
@@ -29,9 +29,8 @@ describe "admin/users/update" do
       render
 
       expect(rendered).to include("user_#{@user.id}")
-      expect(rendered).to include(%Q/$('#user_#{@user.id}').effect("shake"/)
-      expect(rendered).to include(%Q/$('#user_username').focus()/)
+      expect(rendered).to include(%/$('#user_#{@user.id}').effect("shake"/)
+      expect(rendered).to include(%/$('#user_username').focus()/)
     end
   end # errors
 end
-

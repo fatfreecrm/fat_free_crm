@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe HomeController do
-
   # GET /
   #----------------------------------------------------------------------------
   describe "responding to GET /" do
@@ -16,9 +15,9 @@ describe HomeController do
 
     it "should get a list of activities" do
       activity = FactoryGirl.create(:version, item: FactoryGirl.create(:account, user: current_user))
-      expect(controller).to receive(:get_activities).once.and_return([ activity ])
+      expect(controller).to receive(:get_activities).once.and_return([activity])
       get :index
-      expect(assigns[:activities]).to eq([ activity ])
+      expect(assigns[:activities]).to eq([activity])
     end
 
     it "should not include views in the list of activities" do
@@ -75,7 +74,6 @@ describe HomeController do
       get :index
       expect(assigns[:my_accounts]).to eq([account_1, account_4, account_3, account_2])
     end
-
   end
 
   # GET /home/options                                                      AJAX
@@ -122,10 +120,10 @@ describe HomeController do
 
     it "should get a list of activities" do
       @activity = FactoryGirl.create(:version, item: FactoryGirl.create(:account, user: current_user))
-      expect(controller).to receive(:get_activities).once.and_return([ @activity ])
+      expect(controller).to receive(:get_activities).once.and_return([@activity])
 
       get :index
-      expect(assigns[:activities]).to eq([ @activity ])
+      expect(assigns[:activities]).to eq([@activity])
     end
   end
 
@@ -148,7 +146,6 @@ describe HomeController do
   end
 
   describe "activity_user" do
-
     before(:each) do
       @user = double(User, id: 1, is_a?: true)
       @cur_user = double(User)
@@ -183,11 +180,9 @@ describe HomeController do
       expect(User).not_to receive(:where)
       expect(controller.send(:activity_user)).to eq(nil)
     end
-
   end
 
   describe "timeline" do
-
     before(:each) do
       require_user
     end
@@ -232,7 +227,5 @@ describe HomeController do
       expect(Comment).to receive(:where).and_return(where_stub)
       xhr :get, :timeline, id: "1,2,3,4+", state: "Expanded"
     end
-
   end
-
 end

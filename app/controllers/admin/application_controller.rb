@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::ApplicationController < ApplicationController
-  before_filter :require_admin_user
+  before_action :require_admin_user
 
   layout "admin/application"
   helper "admin/field_groups"
@@ -17,7 +17,7 @@ class Admin::ApplicationController < ApplicationController
     render partial: 'auto_complete'
   end
 
-private
+  private
 
   #----------------------------------------------------------------------------
   def require_admin_user

@@ -14,7 +14,7 @@ describe "/opportunities/create" do
   describe "create success" do
     before do
       assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity))
-      assign(:opportunities, [ @opportunities ].paginate)
+      assign(:opportunities, [@opportunities].paginate)
       assign(:opportunity_stage_total, Hash.new(1))
     end
 
@@ -22,7 +22,7 @@ describe "/opportunities/create" do
       render
 
       expect(rendered).to include("$('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}\\'")
-      expect(rendered).to include(%Q/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
+      expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
     end
 
     it "should update sidebar filters and recently viewed items when called from opportunities page" do
@@ -72,16 +72,15 @@ describe "/opportunities/create" do
     it "should re-render [create] template in :create_opportunity div" do
       assign(:opportunity, FactoryGirl.build(:opportunity, name: nil)) # make it invalid
       @account = FactoryGirl.create(:account)
-      assign(:users, [ FactoryGirl.create(:user) ])
+      assign(:users, [FactoryGirl.create(:user)])
       assign(:account, @account)
-      assign(:accounts, [ @account ])
+      assign(:accounts, [@account])
 
       render
 
       expect(rendered).to include("$('#create_opportunity').html")
-      expect(rendered).to include(%Q/$('#create_opportunity').effect("shake"/)
+      expect(rendered).to include(%/$('#create_opportunity').effect("shake"/)
       expect(rendered).to include("crm.create_or_select_account(false)")
     end
   end
-
 end

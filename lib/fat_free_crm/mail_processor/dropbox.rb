@@ -16,7 +16,7 @@ module FatFreeCRM
         # when Dropbox is initialized. This needs to be done so that Rake tasks such as
         # 'assets:precompile' can run on Heroku without depending on a database.
         # See: http://devcenter.heroku.com/articles/rails31_heroku_cedar#troubleshooting
-        @@assets = [ Account, Contact, Lead ].freeze
+        @@assets = [Account, Contact, Lead].freeze
         @settings = Setting.email_dropbox.dup
         super
       end
@@ -25,48 +25,47 @@ module FatFreeCRM
 
       # Email processing pipeline: each steps gets executed if previous one returns false.
       #--------------------------------------------------------------------------------------
-      def process(uid, email)
+      def process(_uid, email)
         with_explicit_keyword(email) do |keyword, name|
-          data = {"Type" => keyword, "Name" => name}
+          data = { "Type" => keyword, "Name" => name }
           find_or_create_and_attach(email, data)
-        end and return
+        end && return
 
         with_recipients(email) do |recipient|
           find_and_attach(email, recipient)
-        end and return
+        end && return
 
         with_forwarded_recipient(email) do |recipient|
           find_and_attach(email, recipient)
-        end and return
+        end && return
 
         with_recipients(email) do |recipient|
           create_and_attach(email, recipient)
-        end and return
+        end && return
 
         with_forwarded_recipient(email) do |recipient|
           create_and_attach(email, recipient)
         end
       end
-
 
       # Checks the email to detect keyword on the first line.
       #--------------------------------------------------------------------------------------
       def with_explicit_keyword(email)
         first_line = plain_text_body(email).split("\n").first
-        if first_line =~ %r|(#{KEYWORDS.join('|')})[^a-zA-Z0-9]+(.+)$|i
-          yield $1.capitalize, $2.strip
+        if first_line =~ %r{(#{KEYWORDS.join('|')})[^a-zA-Z0-9]+(.+)$}i
+          yield Regexp.last_match[1].capitalize, Regexp.last_match[2].strip
         end
       end
 
       # Checks the email to detect assets on to/bcc addresses
       #--------------------------------------------------------------------------------------
-      def with_recipients(email, options = {})
+      def with_recipients(email, _options = {})
         recipients = []
         recipients += email.to_addrs unless email.to.blank?
         recipients += email.cc_addrs unless email.cc.blank?
 
         # Ignore the dropbox email address, and any address aliases
-        ignored_addresses = [ @settings[:address] ]
+        ignored_addresses = [@settings[:address]]
         if @settings[:address_aliases].is_a?(Array)
           ignored_addresses += @settings[:address_aliases]
         end
@@ -81,9 +80,9 @@ module FatFreeCRM
 
       # Checks the email to detect valid email address in body (first email), detect forwarded emails
       #----------------------------------------------------------------------------------------
-      def with_forwarded_recipient(email, options = {})
+      def with_forwarded_recipient(email, _options = {})
         if plain_text_body(email) =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
-          yield $1
+          yield Regexp.last_match[1]
         end
       end
 
@@ -101,12 +100,12 @@ module FatFreeCRM
         elsif klass.new.respond_to?(:first_name)
           first_name, *last_name = data["Name"].split
           conditions = if last_name.empty? # Treat single name as last name.
-            [ 'last_name LIKE ?', "%#{first_name}" ]
-          else
-            [ 'first_name LIKE ? AND last_name LIKE ?', "%#{first_name}", "%#{last_name.join(' ')}" ]
+                         ['last_name LIKE ?', "%#{first_name}"]
+                       else
+                         ['first_name LIKE ? AND last_name LIKE ?', "%#{first_name}", "%#{last_name.join(' ')}"]
           end
         else
-          conditions = ['name LIKE ?', "%#{data["Name"]}%"]
+          conditions = ['name LIKE ?', "%#{data['Name']}%"]
         end
 
         # Find the asset from deduced conditions
@@ -114,10 +113,10 @@ module FatFreeCRM
           if sender_has_permissions_for?(asset)
             attach(email, asset, :strip_first_line)
           else
-            log "Sender does not have permissions to attach email to #{data["Type"]} #{data["Email"]} <#{data["Name"]}>"
+            log "Sender does not have permissions to attach email to #{data['Type']} #{data['Email']} <#{data['Name']}>"
           end
         else
-          log "#{data["Type"]} #{data["Email"]} <#{data["Name"]}> not found, creating new one..."
+          log "#{data['Type']} #{data['Email']} <#{data['Name']}> not found, creating new one..."
           asset = klass.create!(default_values(klass, data))
           attach(email, asset, :strip_first_line)
         end
@@ -150,15 +149,15 @@ module FatFreeCRM
       end
 
       #----------------------------------------------------------------------------------------
-      def attach(email, asset, strip_first_line=false)
+      def attach(email, asset, strip_first_line = false)
         # If 'sent_to' email cannot be found, default to Dropbox email address
         to = email.to.blank? ? @settings[:address] : email.to.join(", ")
         cc = email.cc.blank? ? nil : email.cc.join(", ")
 
         email_body = if strip_first_line
-          plain_text_body(email).split("\n")[1..-1].join("\n").strip
-        else
-          plain_text_body(email)
+                       plain_text_body(email).split("\n")[1..-1].join("\n").strip
+                     else
+                       plain_text_body(email)
         end
 
         Email.create(
@@ -227,7 +226,7 @@ module FatFreeCRM
       end
 
       #----------------------------------------------------------------------------------------
-      def default_values_for_contact(email, recipient)
+      def default_values_for_contact(_email, recipient)
         recipient_local, recipient_domain = recipient.split('@')
 
         defaults = {
@@ -262,7 +261,6 @@ module FatFreeCRM
         Setting.default_access == "Shared" ? 'Private' : Setting.default_access
       end
 
-
       # Notify users with the results of the operations
       #--------------------------------------------------------------------------------------
       def notify(email, mediator_links)
@@ -270,7 +268,6 @@ module FatFreeCRM
           @sender, @settings[:address], email, mediator_links
         ).deliver_now
       end
-
     end
   end
 end

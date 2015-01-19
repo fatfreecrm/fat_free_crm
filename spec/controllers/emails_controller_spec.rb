@@ -6,7 +6,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe EmailsController, "handling GET /emails" do
-  MEDIATOR = [ :account, :campaign, :contact, :lead, :opportunity ].freeze
+  MEDIATOR = [:account, :campaign, :contact, :lead, :opportunity].freeze
 
   before(:each) do
     require_user
@@ -32,5 +32,4 @@ describe EmailsController, "handling GET /emails" do
       end
     end
   end
-
 end

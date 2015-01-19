@@ -26,15 +26,15 @@
 #
 
 class Opportunity < ActiveRecord::Base
-  belongs_to  :user
-  belongs_to  :campaign
-  belongs_to  :assignee, class_name: "User", foreign_key: :assigned_to
-  has_one     :account_opportunity, dependent: :destroy
-  has_one     :account, through: :account_opportunity
-  has_many    :contact_opportunities, dependent: :destroy
-  has_many    :contacts, -> { order("contacts.id DESC").distinct }, through: :contact_opportunities
-  has_many    :tasks, as: :asset, dependent: :destroy#, :order => 'created_at DESC'
-  has_many    :emails, as: :mediator
+  belongs_to :user
+  belongs_to :campaign
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
+  has_one :account_opportunity, dependent: :destroy
+  has_one :account, through: :account_opportunity
+  has_many :contact_opportunities, dependent: :destroy
+  has_many :contacts, -> { order("contacts.id DESC").distinct }, through: :contact_opportunities
+  has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
+  has_many :emails, as: :mediator
 
   serialize :subscribed_users, Set
 
@@ -70,26 +70,30 @@ class Opportunity < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail class_name: 'Version', ignore: [ :subscribed_users ]
+  has_paper_trail class_name: 'Version', ignore: [:subscribed_users]
   has_fields
   exportable
-  sortable by: [ "name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC" ], default: "created_at DESC"
+  sortable by: ["name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
   has_ransackable_associations %w(account contacts tags campaign activities emails comments)
   ransack_can_autocomplete
 
   validates_presence_of :name, message: :missing_opportunity_name
-  validates_numericality_of [ :probability, :amount, :discount ], allow_nil: true
+  validates_numericality_of [:probability, :amount, :discount], allow_nil: true
   validate :users_for_shared_access
-  validates :stage, inclusion: { in: Proc.new { Setting.unroll(:opportunity_stage).map{|s| s.last.to_s } } }, allow_blank: true
+  validates :stage, inclusion: { in: proc { Setting.unroll(:opportunity_stage).map { |s| s.last.to_s } } }, allow_blank: true
 
-  after_create  :increment_opportunities_count
+  after_create :increment_opportunities_count
   after_destroy :decrement_opportunities_count
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
-  def self.per_page ; 20 ; end
-  def self.default_stage; Setting[:opportunity_default_stage].try(:to_s) || 'prospecting'; end
+  def self.per_page
+    20
+  end
+  def self.default_stage
+    Setting[:opportunity_default_stage].try(:to_s) || 'prospecting'
+  end
 
   #----------------------------------------------------------------------------
   def weighted_amount
@@ -105,8 +109,8 @@ class Opportunity < ActiveRecord::Base
     self.account_opportunity = AccountOpportunity.new(account: account, opportunity: self) unless account.id.blank?
     self.account = account
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
-    result = self.save
-    self.contacts << Contact.find(params[:contact]) unless params[:contact].blank?
+    result = save
+    contacts << Contact.find(params[:contact]) unless params[:contact].blank?
     result
   end
 
@@ -121,14 +125,14 @@ class Opportunity < ActiveRecord::Base
     # Must set access before user_ids, because user_ids= method depends on access value.
     self.access = params[:opportunity][:access] if params[:opportunity][:access]
     self.attributes = params[:opportunity]
-    self.save
+    save
   end
 
   # Attach given attachment to the opportunity if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless self.send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      self.send(attachment.class.name.tableize) << attachment
+    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      send(attachment.class.name.tableize) << attachment
     end
   end
 
@@ -138,7 +142,7 @@ class Opportunity < ActiveRecord::Base
     if attachment.is_a?(Task)
       attachment.update_attribute(:asset, nil)
     else # Contacts
-      self.send(attachment.class.name.tableize).delete(attachment)
+      send(attachment.class.name.tableize).delete(attachment)
     end
   end
 
@@ -161,23 +165,24 @@ class Opportunity < ActiveRecord::Base
   end
 
   private
+
   # Make sure at least one user has been selected if the contact is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, :share_opportunity) if self[:access] == "Shared" && !self.permissions.any?
+    errors.add(:access, :share_opportunity) if self[:access] == "Shared" && !permissions.any?
   end
 
   #----------------------------------------------------------------------------
   def increment_opportunities_count
-    if self.campaign_id
-      Campaign.increment_counter(:opportunities_count, self.campaign_id)
+    if campaign_id
+      Campaign.increment_counter(:opportunities_count, campaign_id)
     end
   end
 
   #----------------------------------------------------------------------------
   def decrement_opportunities_count
-    if self.campaign_id
-      Campaign.decrement_counter(:opportunities_count, self.campaign_id)
+    if campaign_id
+      Campaign.decrement_counter(:opportunities_count, campaign_id)
     end
   end
 

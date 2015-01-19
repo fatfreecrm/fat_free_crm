@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class DatetimePairInput < DatePairInput
-
   private
 
   # Tell datepicker this is a datetime

@@ -284,9 +284,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
 
   #------------------------------------------------------------------------------
   describe "Default values" do
-
     describe "'access'" do
-
       it "should be 'Private' if default setting is 'Private'" do
         allow(Setting).to receive(:default_access).and_return('Private')
         expect(@crawler.send(:default_access)).to eq("Private")
@@ -301,7 +299,6 @@ describe FatFreeCRM::MailProcessor::Dropbox do
         allow(Setting).to receive(:default_access).and_return('Shared')
         expect(@crawler.send(:default_access)).to eq("Private")
       end
-
     end
   end
 end

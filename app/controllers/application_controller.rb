@@ -4,19 +4,18 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class ApplicationController < ActionController::Base
-
   protect_from_forgery
 
-  before_filter :set_context
-  before_filter :clear_setting_cache
-  before_filter "hook(:app_before_filter, self)"
-  after_filter  "hook(:app_after_filter,  self)"
+  before_action :set_context
+  before_action :clear_setting_cache
+  before_action "hook(:app_before_filter, self)"
+  after_action "hook(:app_after_filter,  self)"
 
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
   helper_method :klass
 
-  respond_to :html, only: [ :index, :show, :auto_complete ]
+  respond_to :html, only: [:index, :show, :auto_complete]
   respond_to :js
   respond_to :json, :xml, except: :edit
   respond_to :atom, :csv, :rss, :xls, only: :index
@@ -41,13 +40,15 @@ class ApplicationController < ActionController::Base
     session[:auto_complete] = controller_name.to_sym
     respond_to do |format|
       format.any(:js, :html)   { render partial: 'auto_complete' }
-      format.json { render json: @auto_complete.inject({}){|h,a|
-        h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
-      }}
+      format.json do
+        render json: @auto_complete.inject({}){|h, a|
+                       h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
+                     }
+      end
     end
   end
 
-private
+  private
 
   #
   # Takes { :related => 'campaigns/7' } or { :related => '5' }
@@ -59,7 +60,7 @@ private
     return [related.to_i].compact unless related.index('/')
     related_class, id = related.split('/')
     obj = related_class.classify.constantize.find_by_id(id)
-    if obj and obj.respond_to?(controller_name)
+    if obj && obj.respond_to?(controller_name)
       obj.send(controller_name).map(&:id)
     else
       []
@@ -79,7 +80,7 @@ private
   #----------------------------------------------------------------------------
   def set_context
     Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
-    if current_user.present? and (locale = current_user.preference[:locale]).present?
+    if current_user.present? && (locale = current_user.preference[:locale]).present?
       I18n.locale = locale
     elsif Setting.locale.present?
       I18n.locale = Setting.locale
@@ -153,7 +154,7 @@ private
   #----------------------------------------------------------------------------
   def called_from_index_page?(controller = controller_name)
     if controller != "tasks"
-      request.referer =~ %r(/#{controller}$)
+      request.referer =~ %r{/#{controller}$}
     else
       request.referer =~ /tasks\?*/
     end
@@ -161,7 +162,7 @@ private
 
   #----------------------------------------------------------------------------
   def called_from_landing_page?(controller = controller_name)
-    request.referer =~ %r(/#{controller}/\w+)
+    request.referer =~ %r{/#{controller}/\w+}
   end
 
   # Proxy current page for any of the controllers by storing it in a session.
@@ -193,11 +194,11 @@ private
 
   #----------------------------------------------------------------------------
   def asset
-    self.controller_name.singularize
+    controller_name.singularize
   end
 
   #----------------------------------------------------------------------------
-  def respond_to_not_found(*types)
+  def respond_to_not_found(*_types)
     flash[:warning] = t(:msg_asset_not_available, asset)
 
     respond_to do |format|
@@ -209,14 +210,14 @@ private
   end
 
   #----------------------------------------------------------------------------
-  def respond_to_related_not_found(related, *types)
+  def respond_to_related_not_found(related, *_types)
     asset = "note" if asset == "comment"
     flash[:warning] = t(:msg_cant_create_related, asset: asset, related: related)
 
     url = send("#{related.pluralize}_path")
     respond_to do |format|
       format.html { redirect_to(url) }
-      format.js   { render text: %Q{window.location.href = "#{url}";} }
+      format.js   { render text: %(window.location.href = "#{url}";) }
       format.json { render text: flash[:warning],  status: :not_found }
       format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
@@ -237,10 +238,9 @@ private
   def redirection_url
     # Try to redirect somewhere sensible. Note: not all controllers have an index action
     url = if current_user.present?
-      (respond_to?(:index) and self.action_name != 'index') ? { action: 'index' } : root_url
-    else
-      login_url
+            (respond_to?(:index) && action_name != 'index') ? { action: 'index' } : root_url
+          else
+            login_url
     end
   end
-
 end

@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe ContactsController do
-
   before(:each) do
     require_user
     set_current_tab(:contacts)
@@ -16,9 +15,8 @@ describe ContactsController do
   # GET /contacts.xml
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
-
     it "should expose all contacts as @contacts and render [index] template" do
-      @contacts = [ FactoryGirl.create(:contact, user: current_user) ]
+      @contacts = [FactoryGirl.create(:contact, user: current_user)]
       get :index
       expect(assigns[:contacts].count).to eq(@contacts.count)
       expect(assigns[:contacts]).to eq(@contacts)
@@ -30,14 +28,14 @@ describe ContactsController do
       @captain_flint = FactoryGirl.create(:contact, user: current_user, first_name: "Captain", last_name: "Flint")
 
       get :index, query: @billy_bones.email
-      expect(assigns[:contacts]).to eq([ @billy_bones ])
+      expect(assigns[:contacts]).to eq([@billy_bones])
       expect(assigns[:current_query]).to eq(@billy_bones.email)
       expect(session[:contacts_current_query]).to eq(@billy_bones.email)
     end
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @contacts = [ FactoryGirl.create(:contact, user: current_user) ]
+        @contacts = [FactoryGirl.create(:contact, user: current_user)]
         xhr :get, :index, page: 42
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -48,7 +46,7 @@ describe ContactsController do
 
       it "should pick up saved page number from session" do
         session[:contacts_current_page] = 42
-        @contacts = [ FactoryGirl.create(:contact, user: current_user) ]
+        @contacts = [FactoryGirl.create(:contact, user: current_user)]
         xhr :get, :index
 
         expect(assigns[:current_page]).to eq(42)
@@ -59,7 +57,7 @@ describe ContactsController do
       it "should reset current_page when query is altered" do
         session[:contacts_current_page] = 42
         session[:contacts_current_query] = "bill"
-        @contacts = [ FactoryGirl.create(:contact, user: current_user) ]
+        @contacts = [FactoryGirl.create(:contact, user: current_user)]
         xhr :get, :index
 
         expect(assigns[:current_page]).to eq(1)
@@ -95,7 +93,6 @@ describe ContactsController do
   # GET /contacts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
-
     describe "with mime type of HTML" do
       before(:each) do
         @contact = FactoryGirl.create(:contact, id: 42)
@@ -174,12 +171,11 @@ describe ContactsController do
   # GET /contacts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
-
     it "should expose a new contact as @contact and render [new] template" do
       @contact = Contact.new(user: current_user,
                              access: Setting.default_access)
       @account = Account.new(user: current_user)
-      @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+      @accounts = [FactoryGirl.create(:account, user: current_user)]
 
       xhr :get, :new
       expect(assigns[:contact].attributes).to eq(@contact.attributes)
@@ -219,44 +215,40 @@ describe ContactsController do
   # GET /contacts/field_group                                              AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET field_group" do
-
     context "with an existing tag" do
       before :each do
         @tag = FactoryGirl.create(:tag)
       end
 
       it "should return with an existing tag name" do
-        xhr :get, :field_group, {tag: @tag.name}
+        xhr :get, :field_group, tag: @tag.name
         assigns[:tag].name == @tag.name
       end
 
       it "should have the same count of tags" do
-        xhr :get, :field_group, {tag:  @tag.name}
+        xhr :get, :field_group, tag:  @tag.name
         expect(Tag.count).to equal(1)
       end
-
     end
 
     context "without an existing tag" do
       it "should not find a tag" do
         tag_name = "New-Tag"
-        xhr :get, :field_group, {tag: tag_name}
+        xhr :get, :field_group, tag: tag_name
         expect(assigns[:tag]).to eql(nil)
       end
 
       it "should have the same count of tags" do
         tag_name = "New-Tag-1"
-        xhr :get, :field_group, {tag: tag_name}
+        xhr :get, :field_group, tag: tag_name
         expect(Tag.count).to equal(0)
       end
     end
-
   end
 
   # GET /contacts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-
     it "should expose the requested contact as @contact and render [edit] template" do
       @contact = FactoryGirl.create(:contact, id: 42, user: current_user, lead: nil)
       @account = Account.new(user: current_user)
@@ -335,9 +327,7 @@ describe ContactsController do
   # POST /contacts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
-
     describe "with valid params" do
-
       it "should expose a newly created contact as @contact and render [create] template" do
         @contact = FactoryGirl.build(:contact, first_name: "Billy", last_name: "Bones")
         allow(Contact).to receive(:new).and_return(@contact)
@@ -349,11 +339,11 @@ describe ContactsController do
       end
 
       it "should be able to associate newly created contact with the opportunity" do
-        @opportunity = FactoryGirl.create(:opportunity, id: 987);
+        @opportunity = FactoryGirl.create(:opportunity, id: 987)
         @contact = FactoryGirl.build(:contact)
         allow(Contact).to receive(:new).and_return(@contact)
 
-        xhr :post, :create, contact: { first_name: "Billy"}, account: {}, opportunity: 987
+        xhr :post, :create, contact: { first_name: "Billy" }, account: {}, opportunity: 987
         expect(assigns(:contact).opportunities).to include(@opportunity)
         expect(response).to render_template("contacts/create")
       end
@@ -364,7 +354,7 @@ describe ContactsController do
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts"
         xhr :post, :create, contact: { first_name: "Billy", last_name: "Bones" }, account: {}
-        expect(assigns[:contacts]).to eq([ @contact ])
+        expect(assigns[:contacts]).to eq([@contact])
       end
 
       it "should add a new comment to the newly created contact when specified" do
@@ -377,7 +367,6 @@ describe ContactsController do
     end
 
     describe "with invalid params" do
-
       before(:each) do
         @contact = FactoryGirl.build(:contact, first_name: nil, user: current_user, lead: nil)
         allow(Contact).to receive(:new).and_return(@contact)
@@ -391,7 +380,7 @@ describe ContactsController do
         xhr :post, :create, contact: {}, account: { id: 42, user_id: current_user.id }
         expect(assigns(:contact)).to eq(@contact)
         expect(assigns(:account)).to eq(@account)
-        expect(assigns(:accounts)).to eq([ @account ])
+        expect(assigns(:accounts)).to eq([@account])
         expect(response).to render_template("contacts/create")
       end
 
@@ -403,12 +392,12 @@ describe ContactsController do
         xhr :post, :create, contact: { first_name: nil }, account: { name: nil, user_id: current_user.id }
         expect(assigns(:contact)).to eq(@contact)
         expect(assigns(:account)).to eq(@account)
-        expect(assigns(:accounts)).to eq([ @account ])
+        expect(assigns(:accounts)).to eq([@account])
         expect(response).to render_template("contacts/create")
       end
 
       it "should redraw [Create Contact] form with blank account" do
-        @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+        @accounts = [FactoryGirl.create(:account, user: current_user)]
         @account = Account.new(user: current_user)
 
         xhr :post, :create, contact: { first_name: nil }, account: { name: nil, user_id: current_user.id }
@@ -419,7 +408,7 @@ describe ContactsController do
       end
 
       it "should preserve Opportunity when called from Oppotuunity page" do
-        @opportunity = FactoryGirl.create(:opportunity, id: 987);
+        @opportunity = FactoryGirl.create(:opportunity, id: 987)
 
         xhr :post, :create, contact: {}, account: {}, opportunity: 987
         expect(assigns(:opportunity)).to eq(@opportunity)
@@ -432,9 +421,7 @@ describe ContactsController do
   # PUT /contacts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT update" do
-
     describe "with valid params" do
-
       it "should update the requested contact and render [update] template" do
         @contact = FactoryGirl.create(:contact, id: 42, first_name: "Billy")
 
@@ -466,7 +453,7 @@ describe ContactsController do
 
         xhr :put, :update, id: 42, contact: { first_name: "Hello", access: "Shared", user_ids: [7, 8] }, account: {}
         expect(assigns[:contact].access).to eq("Shared")
-        expect(assigns[:contact].user_ids.sort).to eq([ 7, 8 ])
+        expect(assigns[:contact].user_ids.sort).to eq([7, 8])
         expect(assigns[:contact]).to eq(@contact)
       end
 
@@ -488,11 +475,9 @@ describe ContactsController do
           expect(response.body).to eq("window.location.reload();")
         end
       end
-
     end
 
     describe "with invalid params" do
-
       it "should not update the contact, but still expose it as @contact and render [update] template" do
         @contact = FactoryGirl.create(:contact, id: 42, user: current_user, first_name: "Billy", lead: nil)
 
@@ -509,9 +494,7 @@ describe ContactsController do
         xhr :put, :update, id: 42, contact: { first_name: nil }, account: { id: 99 }
         expect(assigns[:account]).to eq(@account)
       end
-
     end
-
   end
 
   # DELETE /contacts/1
@@ -677,7 +660,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [ FactoryGirl.create(:contact, first_name: "Hello", last_name: "World", user: current_user) ]
+      @auto_complete_matches = [FactoryGirl.create(:contact, first_name: "Hello", last_name: "World", user: current_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -689,9 +672,9 @@ describe ContactsController do
     it "should save user selected contact preference" do
       xhr :get, :redraw, per_page: 42, view: "long", sort_by: "first_name", naming: "after"
       expect(current_user.preference[:contacts_per_page].to_i).to eq(42)
-      expect(current_user.preference[:contacts_index_view]).to  eq("long")
-      expect(current_user.preference[:contacts_sort_by]).to  eq("contacts.first_name ASC")
-      expect(current_user.preference[:contacts_naming]).to   eq("after")
+      expect(current_user.preference[:contacts_index_view]).to eq("long")
+      expect(current_user.preference[:contacts_sort_by]).to eq("contacts.first_name ASC")
+      expect(current_user.preference[:contacts_naming]).to eq("after")
     end
 
     it "should set similar options for Leads" do
@@ -712,9 +695,8 @@ describe ContactsController do
       ]
 
       xhr :get, :redraw, per_page: 1, sort_by: "first_name"
-      expect(assigns(:contacts)).to eq([ @contacts.first ])
+      expect(assigns(:contacts)).to eq([@contacts.first])
       expect(response).to render_template("contacts/index")
     end
   end
-
 end

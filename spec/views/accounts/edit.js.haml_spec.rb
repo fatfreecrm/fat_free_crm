@@ -11,7 +11,7 @@ describe "/accounts/edit" do
   before do
     login_and_assign
     assign(:account, @account = FactoryGirl.create(:account, user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
   end
 
   it "cancel from accounts index page: should replace [Edit Account] form with account partial" do
@@ -61,5 +61,4 @@ describe "/accounts/edit" do
     expect(rendered).to include("edit_account")
     expect(rendered).to include("crm.flip_form('edit_account'")
   end
-
 end

@@ -6,7 +6,6 @@
 require 'spec_helper'
 
 describe "admin/field_groups/edit" do
-
   before do
     login_and_assign(admin: true)
     assign(:field_group, field_group)
@@ -20,5 +19,4 @@ describe "admin/field_groups/edit" do
     expect(rendered).to have_text("crm.show_form('#{dom_id(field_group, :edit)}')")
     expect(rendered).to have_text("$('##{dom_id(field_group, :edit)}').html")
   end
-
 end

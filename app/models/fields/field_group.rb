@@ -26,7 +26,7 @@ class FieldGroup < ActiveRecord::Base
   validates_presence_of :label
 
   before_save do
-    self.name = label.downcase.gsub(/[^a-z0-9]+/, '_') if name.blank? and label.present?
+    self.name = label.downcase.gsub(/[^a-z0-9]+/, '_') if name.blank? && label.present?
   end
 
   def key
@@ -56,7 +56,7 @@ class FieldGroup < ActiveRecord::Base
   def move_fields_to_default_field_group
     default_group = FieldGroup.find_by_name_and_klass_name("custom_fields", klass_name)
     default_group.fields << fields if default_group
-    self.reload
+    reload
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_field_group, self)

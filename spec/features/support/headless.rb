@@ -8,7 +8,7 @@
 # Useful for CI and travis tests
 #
 
-if ENV['HEADLESS'] == 'true' or ENV["CI"] == "true"
+if ENV['HEADLESS'] == 'true' || ENV["CI"] == "true"
   require 'headless'
   headless = Headless.new
   headless.start
