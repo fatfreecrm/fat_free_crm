@@ -63,7 +63,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     field_group_ids = params["#{asset}_field_groups"]
 
     field_group_ids.each_with_index do |id, index|
-      FieldGroup.update_all({ position: index + 1 }, id: id)
+      FieldGroup.where(id: id).update_all(position: index + 1)
     end
 
     render nothing: true
