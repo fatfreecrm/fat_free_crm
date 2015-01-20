@@ -5,7 +5,6 @@
 #------------------------------------------------------------------------------
 
 class SubscriptionMailer < ActionMailer::Base
-
   def comment_notification(user, comment)
     @entity = comment.commentable
     @entity_type = @entity.class.to_s

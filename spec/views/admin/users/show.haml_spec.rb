@@ -14,4 +14,3 @@ describe "/admin/users/show" do
     render
   end
 end
-

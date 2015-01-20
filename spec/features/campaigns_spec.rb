@@ -5,12 +5,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path("../acceptance_helper.rb", __FILE__)
 
-feature 'Campaigns', %q{
+feature 'Campaigns', '
   In order to increase customer satisfaction
   As a user
   I want to manage campaigns
-} do
 
+' do
   before :each do
     do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
   end
@@ -68,7 +68,7 @@ feature 'Campaigns', %q{
       select 'Started', from: 'campaign_status'
       click_button 'Save Campaign'
       expect(page).to have_content('My Even Cooler Campaign')
-    expect(page).to have_content('My Even Cooler Campaign')
+      expect(page).to have_content('My Even Cooler Campaign')
       click_link 'Dashboard'
       expect(page).to have_content("Bill Murray updated campaign My Even Cooler Campaign")
     end

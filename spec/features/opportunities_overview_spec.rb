@@ -5,12 +5,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path("../acceptance_helper.rb", __FILE__)
 
-feature 'Opportunities Overview', %q{
+feature 'Opportunities Overview', "
   In order to keep track of my team's responsibilities
   As a user
   I want to see an overview of opportunities broken down by user
-} do
 
+" do
   background do
     @me = FactoryGirl.create(:user)
 

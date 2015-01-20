@@ -11,9 +11,9 @@ describe "/contacts/edit" do
   before do
     login_and_assign
     assign(:contact, @contact = FactoryGirl.create(:contact, user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
   end
 
   it "cancel from contact index page: should replace [Edit Contact] form with contact partial" do
@@ -66,9 +66,7 @@ describe "/contacts/edit" do
   end
 
   it "should show handle new or existing account for the contact" do
-
     render
     expect(rendered).to include("crm.create_or_select_account(false)")
   end
-
 end

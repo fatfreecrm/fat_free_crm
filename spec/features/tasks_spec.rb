@@ -5,12 +5,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path("../acceptance_helper.rb", __FILE__)
 
-feature 'Tasks', %q{
+feature 'Tasks', '
   In order to increase keep track of things
   As a user
   I want to manage tasks
-} do
 
+' do
   before :each do
     do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
   end

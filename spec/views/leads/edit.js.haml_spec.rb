@@ -11,8 +11,8 @@ describe "/leads/edit" do
   before do
     login_and_assign
     assign(:lead, @lead = FactoryGirl.create(:lead, status: "new", user: current_user))
-    assign(:users, [ current_user ])
-    assign(:campaigns, [ FactoryGirl.create(:campaign) ])
+    assign(:users, [current_user])
+    assign(:campaigns, [FactoryGirl.create(:campaign)])
   end
 
   it "cancel from lead index page: should replace [Edit Lead] form with lead partial" do
@@ -71,5 +71,4 @@ describe "/leads/edit" do
     render
     expect(rendered).not_to include("crm.hide_form('convert_lead'")
   end
-
 end

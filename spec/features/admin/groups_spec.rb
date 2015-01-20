@@ -5,14 +5,14 @@
 #------------------------------------------------------------------------------
 require File.expand_path("../../acceptance_helper.rb", __FILE__)
 
-feature 'Groups tab', %q{
+feature 'Groups tab', '
   In order to increase customer satisfaction
   As an administrator
   I want to manage groups
-} do
 
+' do
   before(:each) do
-   do_login(first_name: 'Captain', last_name: 'Kirk', admin: true)
+    do_login(first_name: 'Captain', last_name: 'Kirk', admin: true)
   end
 
   scenario 'should create a new group', js: true  do
@@ -27,5 +27,4 @@ feature 'Groups tab', %q{
     expect(page).to have_content('The Enterprise Bridge')
     expect(page).to have_content('members: Mr Spock')
   end
-
 end

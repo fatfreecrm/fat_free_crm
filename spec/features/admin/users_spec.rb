@@ -5,14 +5,14 @@
 #------------------------------------------------------------------------------
 require File.expand_path("../../acceptance_helper.rb", __FILE__)
 
-feature 'Users tab', %q{
+feature 'Users tab', '
   In order to increase customer satisfaction
   As an administrator
   I want to manage users
-} do
 
+' do
   before(:each) do
-   do_login(first_name: 'Captain', last_name: 'Kirk', admin: true)
+    do_login(first_name: 'Captain', last_name: 'Kirk', admin: true)
   end
 
   scenario 'should create a new user', js: true  do
@@ -33,7 +33,5 @@ feature 'Users tab', %q{
     expect(find('#users')).to have_content('Weather Inc.')
     expect(find('#users')).to have_content('Superheroes')
     expect(find('#users')).to have_content('lightning@example.com')
-
   end
-
 end

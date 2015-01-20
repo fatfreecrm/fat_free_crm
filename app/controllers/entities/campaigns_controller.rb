@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CampaignsController < EntitiesController
-  before_filter :get_data_for_sidebar, only: :index
+  before_action :get_data_for_sidebar, only: :index
 
   # GET /campaigns
   #----------------------------------------------------------------------------
@@ -65,14 +65,14 @@ class CampaignsController < EntitiesController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    @campaign.attributes = {user: current_user, access: Setting.default_access, assigned_to: nil}
+    @campaign.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
 
     if params[:related]
       model, id = params[:related].split('_')
       if related = model.classify.constantize.my.find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
-        respond_to_related_not_found(model) and return
+        respond_to_related_not_found(model) && return
       end
     end
 
@@ -83,7 +83,7 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def edit
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Campaign.my.find_by_id($1) || $1.to_i
+      @previous = Campaign.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@campaign)
@@ -94,7 +94,7 @@ class CampaignsController < EntitiesController
   def create
     @comment_body = params[:comment_body]
 
-    respond_with(@campaign) do |format|
+    respond_with(@campaign) do |_format|
       if @campaign.save
         @campaign.add_comment_by_user(@comment_body, current_user)
         @campaigns = get_campaigns
@@ -106,10 +106,10 @@ class CampaignsController < EntitiesController
   # PUT /campaigns/1
   #----------------------------------------------------------------------------
   def update
-    respond_with(@campaign) do |format|
+    respond_with(@campaign) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @campaign.access = resource_params[:access] if resource_params[:access]
-      get_data_for_sidebar if @campaign.update_attributes(resource_params) and called_from_index_page?
+      get_data_for_sidebar if @campaign.update_attributes(resource_params) && called_from_index_page?
     end
   end
 
@@ -140,7 +140,7 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:campaigns_per_page] = params[:per_page] if params[:per_page]
-    current_user.pref[:campaigns_sort_by]  = Campaign::sort_by_map[params[:sort_by]] if params[:sort_by]
+    current_user.pref[:campaigns_sort_by]  = Campaign.sort_by_map[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(page: 1, per_page: params[:per_page])
     set_options # Refresh options
 
@@ -160,10 +160,10 @@ class CampaignsController < EntitiesController
     end
   end
 
-private
+  private
 
   #----------------------------------------------------------------------------
-  alias :get_campaigns :get_list_of_records
+  alias_method :get_campaigns, :get_list_of_records
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
@@ -172,7 +172,7 @@ private
       @campaigns = get_campaigns
       if @campaigns.blank?
         @campaigns = get_campaigns(page: current_page - 1) if current_page > 1
-        render :index and return
+        render(:index) && return
       end
       # At this point render destroy.js
     else # :html request
@@ -185,8 +185,8 @@ private
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @campaign_status_total = HashWithIndifferentAccess[
-      all: Campaign.my.count,
-      other: 0
+                             all: Campaign.my.count,
+                             other: 0
     ]
     Setting.campaign_status.each do |key|
       @campaign_status_total[key] = Campaign.my.where(status: key.to_s).count

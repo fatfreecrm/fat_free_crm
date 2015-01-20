@@ -1,7 +1,6 @@
 # Copied from prototype-rails which is no longer maintained
 
 module JavascriptHelper
-
   #   link_to_function("Show me more", nil, :id => "more_link") do |page|
   #     page[:details].visual_effect  :toggle_blind
   #     page[:more_link].replace_html "Show me less"

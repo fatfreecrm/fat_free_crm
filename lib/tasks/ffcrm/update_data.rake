@@ -5,7 +5,6 @@
 #------------------------------------------------------------------------------
 namespace :ffcrm do
   namespace :update_data do
-
     #
     # Important note about countries. Please read carefully!
     #
@@ -27,8 +26,7 @@ namespace :ffcrm do
     # If not, it asks you to run this rake task.
     #
     desc "Update country codes to ISO 3166-1"
-    task :fix_countries => :environment do
-    
+    task fix_countries: :environment do
       message = """This task is only designed to run once and we think you've run this before!!!
 
 Please read the following carefully!
@@ -53,192 +51,188 @@ If you really want to run it again, you will have to set Setting.have_run_countr
 in a console and continue. This is strongly discouraged. You have been warned!
 
 """
-      
+
       if Setting.have_run_country_migration == true
         puts message
         exit
       end
-    
+
       convert_table = [
-        #["Aland Islands", "FI", "AX"], # this clashed with FI for Finland. We'll prefer Finland.
-        ["Algeria", "AG", "DZ"],
+        # ["Aland Islands", "FI", "AX"], # this clashed with FI for Finland. We'll prefer Finland.
+        %w(Algeria AG DZ),
         ["American Samoa", "AQ", "AS"],
-        ["Andorra", "AN", "AD"],
-        ["Anguilla", "AV", "AI"],
-        ["Antarctica", "AY", "AQ"],
+        %w(Andorra AN AD),
+        %w(Anguilla AV AI),
+        %w(Antarctica AY AQ),
         ["Antigua and Barbuda", "AC", "AG"],
-        ["Aruba", "AA", "AW"],
-        ["Australia", "AS", "AU"],
-        ["Austria", "AU", "AT"],
-        ["Azerbaijan", "AJ", "AZ"],
-        ["Bahamas", "BF", "BS"],
-        ["Bahrain", "BA", "BH"],
-        ["Bangladesh", "BG", "BD"],
-        ["Belarus", "BO", "BY"],
-        ["Belize", "BH", "BZ"],
-        ["Benin", "BN", "BJ"],
-        ["Bermuda", "BD", "BM"],
+        %w(Aruba AA AW),
+        %w(Australia AS AU),
+        %w(Austria AU AT),
+        %w(Azerbaijan AJ AZ),
+        %w(Bahamas BF BS),
+        %w(Bahrain BA BH),
+        %w(Bangladesh BG BD),
+        %w(Belarus BO BY),
+        %w(Belize BH BZ),
+        %w(Benin BN BJ),
+        %w(Bermuda BD BM),
         ["Bosnia and Herzegovina", "BK", "BA"],
-        ["Botswana", "BC", "BW"],
+        %w(Botswana BC BW),
         ["Brunei Darussalam", "BX", "BN"],
-        ["Bulgaria", "BU", "BG"],
+        %w(Bulgaria BU BG),
         ["Burkina Faso", "UV", "BF"],
-        ["Burundi", "BY", "BI"],
-        ["Cambodia", "CB", "KH"],
+        %w(Burundi BY BI),
+        %w(Cambodia CB KH),
         ["Cayman Islands", "CJ", "KY"],
         ["Central African Republic", "CT", "CF"],
-        ["Chad", "CD", "TD"],
-        ["Chile", "CI", "CL"],
-        ["China", "CH", "CN"],
+        %w(Chad CD TD),
+        %w(Chile CI CL),
+        %w(China CH CN),
         ["Christmas Island", "KT", "CX"],
         ["Cocos (Keeling) Islands", "CK", "CC"],
-        ["Comoros", "CN", "KM"],
+        %w(Comoros CN KM),
         ["Congo, the Democratic Republic of the", "CF", "CD"],
         ["Cook Islands", "CW", "CK"],
         ["Costa Rica", "CS", "CR"],
         ["Czech Republic", "EZ", "CZ"],
-        ["Denmark", "DA", "DK"],
-        ["Dominica", "DO", "DM"],
+        %w(Denmark DA DK),
+        %w(Dominica DO DM),
         ["Dominican Republic", "DR", "DO"],
         ["El Salvador", "ES", "SV"],
         ["Equatorial Guinea", "EK", "GQ"],
-        ["Estonia", "EN", "EE"],
+        %w(Estonia EN EE),
         ["French Guiana", "FG", "GF"],
         ["French Polynesia", "FP", "PF"],
         ["French Southern Territories", "FS", "TF"],
-        ["Gabon", "GB", "GA"],
-        ["Gambia", "GA", "GM"],
-        ["Georgia", "GG", "GE"],
-        ["Germany", "GM", "DE"],
-        ["Grenada", "GJ", "GD"],
-        ["Guam", "GQ", "GU"],
-        ["Guernsey", "GK", "GG"],
-        ["Guinea", "GV", "GN"],
+        %w(Gabon GB GA),
+        %w(Gambia GA GM),
+        %w(Georgia GG GE),
+        %w(Germany GM DE),
+        %w(Grenada GJ GD),
+        %w(Guam GQ GU),
+        %w(Guernsey GK GG),
+        %w(Guinea GV GN),
         ["Guinea-Bissau", "PU", "GW"],
-        ["Haiti", "HA", "HT"],
+        %w(Haiti HA HT),
         ["Holy See (Vatican City State)", "VT", "VA"],
-        ["Honduras", "HO", "HN"],
-        ["Iceland", "IC", "IS"],
-        ["Iraq", "IZ", "IQ"],
-        ["Ireland", "EI", "IE"],
-        ["Israel", "IS", "IL"],
-        ["Japan", "JA", "JP"],
-        ["Kiribati", "KR", "KI"],
+        %w(Honduras HO HN),
+        %w(Iceland IC IS),
+        %w(Iraq IZ IQ),
+        %w(Ireland EI IE),
+        %w(Israel IS IL),
+        %w(Japan JA JP),
+        %w(Kiribati KR KI),
         ["Korea, Democratic People's Republic of", "KN", "KP"],
         ["Korea, Republic of", "KS", "KR"],
-        ["Kuwait", "KU", "KW"],
-        ["Latvia", "LG", "LV"],
-        ["Lebanon", "LE", "LB"],
-        ["Lesotho", "LT", "LS"],
-        ["Liberia", "LI", "LR"],
-        ["Liechtenstein", "LS", "LI"],
-        ["Lithuania", "LH", "LT"],
-        ["Macao", "MC", "MO"],
-        ["Madagascar", "MA", "MG"],
-        ["Malawi", "MI", "MW"],
+        %w(Kuwait KU KW),
+        %w(Latvia LG LV),
+        %w(Lebanon LE LB),
+        %w(Lesotho LT LS),
+        %w(Liberia LI LR),
+        %w(Liechtenstein LS LI),
+        %w(Lithuania LH LT),
+        %w(Macao MC MO),
+        %w(Madagascar MA MG),
+        %w(Malawi MI MW),
         ["Marshall Islands", "RM", "MH"],
-        ["Martinique", "MB", "MQ"],
-        ["Mauritius", "MP", "MU"],
-        ["Mayotte", "MF", "YT"],
-        ["Monaco", "MN", "MC"],
-        ["Mongolia", "MG", "MN"],
-        ["Montenegro", "MJ", "ME"],
-        ["Montserrat", "MH", "MS"],
-        ["Morocco", "MO", "MA"],
-        ["Myanmar", "BM", "MM"],
-        ["Namibia", "WA", "NA"],
-        ["Nicaragua", "NU", "NI"],
-        ["Niger", "NG", "NE"],
-        ["Nigeria", "NI", "NG"],
-        ["Niue", "NE", "NU"],
+        %w(Martinique MB MQ),
+        %w(Mauritius MP MU),
+        %w(Mayotte MF YT),
+        %w(Monaco MN MC),
+        %w(Mongolia MG MN),
+        %w(Montenegro MJ ME),
+        %w(Montserrat MH MS),
+        %w(Morocco MO MA),
+        %w(Myanmar BM MM),
+        %w(Namibia WA NA),
+        %w(Nicaragua NU NI),
+        %w(Niger NG NE),
+        %w(Nigeria NI NG),
+        %w(Niue NE NU),
         ["Northern Mariana Islands", "CQ", "MP"],
-        ["Oman", "MU", "OM"],
-        ["Palau", "PS", "PW"],
+        %w(Oman MU OM),
+        %w(Palau PS PW),
         ["Palestinian Territory, Occupied", "WE", "PS"],
-        ["Panama", "PM", "PA"],
+        %w(Panama PM PA),
         ["Papua New Guinea", "PP", "PG"],
-        ["Paraguay", "PA", "PY"],
-        ["Philippines", "RP", "PH"],
-        ["Pitcairn", "PC", "PN"],
-        ["Portugal", "PO", "PT"],
+        %w(Paraguay PA PY),
+        %w(Philippines RP PH),
+        %w(Pitcairn PC PN),
+        %w(Portugal PO PT),
         ["Puerto Rico", "RQ", "PR"],
         ["Russian Federation", "RS", "RU"],
         ["Saint Kitts and Nevis", "SC", "KN"],
         ["Saint Lucia", "ST", "LC"],
         ["Saint Pierre and Miquelon", "SB", "PM"],
         ["Sao Tome and Principe", "TP", "ST"],
-        ["Senegal", "SG", "SN"],
-        ["Serbia", "RB", "RS"],
-        ["Seychelles", "SE", "SC"],
-        ["Singapore", "SN", "SG"],
-        ["Slovakia", "LO", "SK"],
+        %w(Senegal SG SN),
+        %w(Serbia RB RS),
+        %w(Seychelles SE SC),
+        %w(Singapore SN SG),
+        %w(Slovakia LO SK),
         ["Solomon Islands", "BP", "SB"],
         ["South Africa", "SF", "ZA"],
         ["South Georgia and the South Sandwich Islands", "SX", "GS"],
-        ["Spain", "SP", "ES"],
+        %w(Spain SP ES),
         ["Sri Lanka", "CE", "LK"],
-        ["Sudan", "SU", "SD"],
-        ["Suriname", "NS", "SR"],
+        %w(Sudan SU SD),
+        %w(Suriname NS SR),
         ["Svalbard and Jan Mayen", "SV", "SJ"],
-        ["Swaziland", "WZ", "SZ"],
-        ["Sweden", "SW", "SE"],
-        ["Switzerland", "SZ", "CH"],
-        ["Tajikistan", "TI", "TJ"],
+        %w(Swaziland WZ SZ),
+        %w(Sweden SW SE),
+        %w(Switzerland SZ CH),
+        %w(Tajikistan TI TJ),
         ["Timor-Leste", "TT", "TL"],
-        ["Togo", "TO", "TG"],
-        ["Tokelau", "TL", "TK"],
-        ["Tonga", "TN", "TO"],
+        %w(Togo TO TG),
+        %w(Tokelau TL TK),
+        %w(Tonga TN TO),
         ["Trinidad and Tobago", "TD", "TT"],
-        ["Tunisia", "TS", "TN"],
-        ["Turkey", "TU", "TR"],
-        ["Turkmenistan", "TX", "TM"],
+        %w(Tunisia TS TN),
+        %w(Turkey TU TR),
+        %w(Turkmenistan TX TM),
         ["Turks and Caicos Islands", "TK", "TC"],
-        ["Ukraine", "UP", "UA"],
+        %w(Ukraine UP UA),
         ["United Kingdom", "UK", "GB"],
-        ["Vanuatu", "NH", "VU"],
+        %w(Vanuatu NH VU),
         ["Viet Nam", "VM", "VN"],
         ["Virgin Islands, British", "VI", "VG"],
         ["Virgin Islands, U.S.", "VQ", "VI"],
         ["Western Sahara", "WI", "EH"],
-        ["Yemen", "YM", "YE"],
-        ["Zambia", "ZA", "ZM"],
-        ["Zimbabwe", "ZI", "ZW"],
-        ["United States", "USA", "US"],
+        %w(Yemen YM YE),
+        %w(Zambia ZA ZM),
+        %w(Zimbabwe ZI ZW),
+        ["United States", "USA", "US"]
       ]
 
       addresses_to_update = []
 
       # e.g. convert AS -> AU and Australia -> AU
-      # SELECT "addresses".* FROM "addresses" 
+      # SELECT "addresses".* FROM "addresses"
       #    WHERE (("addresses"."country" = 'AU' OR "addresses"."country" = 'Australia'))
-      convert_table.each { |ct|
-        t=Address.arel_table
+      convert_table.each do |ct|
+        t = Address.arel_table
         scope = t[:country].eq(ct[0]) # Australia
         scope = scope.or(t[:country].eq(ct[1])) # AU
 
         tmp = Address.where(scope)
-        tmp.map{ |t| t.country=ct[2] }
-        
+        tmp.map { |t| t.country = ct[2] }
+
         unless tmp.blank?
           addresses_to_update << tmp
         end
-      }
+      end
 
       Address.transaction do
         begin
-          addresses_to_update.each { |address_arr|
-            address_arr.each { |address|
-              address.save!
-            }
-          }
+          addresses_to_update.each do |address_arr|
+            address_arr.each(&:save!)
+          end
           Setting.have_run_country_migration = true
         rescue Exception => e
           ActiveRecord::Rollback
           puts e
         end
       end
-
     end
   end
-
 end

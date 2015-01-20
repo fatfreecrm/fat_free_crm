@@ -6,7 +6,6 @@
 require 'spec_helper'
 
 describe SubscriptionMailer do
-
   describe "comment notification" do
     let(:user) { FactoryGirl.create(:user, email: 'notify_me@example.com') }
     let(:commentable) { FactoryGirl.create(:opportunity, id: 47, name: 'Opportunity name') }
@@ -44,6 +43,5 @@ describe SubscriptionMailer do
       allow(Setting).to receive(:host).and_return("")
       expect(mail.from).to eql(["no-reply@example.com"])
     end
-
   end
 end

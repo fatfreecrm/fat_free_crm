@@ -18,7 +18,6 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-
 # Override Rails Engines so that plugins have higher priority than the Application
 require 'fat_free_crm/gem_ext/rails/engine'
 
@@ -42,7 +41,7 @@ module FatFreeCRM
 
     # Load development rake tasks (RSpec, Gem packaging, etc.)
     rake_tasks do
-      Dir.glob(Rails.root.join('lib', 'development_tasks', '*.rake')).each {|t| load t }
+      Dir.glob(Rails.root.join('lib', 'development_tasks', '*.rake')).each { |t| load t }
     end
 
     # Add migrations from all engines

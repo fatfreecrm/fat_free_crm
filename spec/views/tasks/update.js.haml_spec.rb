@@ -24,8 +24,8 @@ describe "/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
       render
 
-      expect(rendered).to include(%Q/$('#task_#{@task.id}').remove();/)
-      expect(rendered).to include(%Q/$('#list_due_asap').fadeOut/)
+      expect(rendered).to include(%/$('#task_#{@task.id}').remove();/)
+      expect(rendered).to include(%/$('#list_due_asap').fadeOut/)
     end
 
     it "from Tasks tab: should show updated task in a new bucket" do
@@ -54,7 +54,6 @@ describe "/tasks/update" do
       render
       expect(rendered).to have_text("Recent Items")
     end
-
   end
 
   describe "Reassigning" do
@@ -128,7 +127,6 @@ describe "/tasks/update" do
 
       expect(rendered).to have_text("Recent Items")
     end
-
   end
 
   it "error: should re-disiplay [Edit Task] form and shake it" do
@@ -140,5 +138,4 @@ describe "/tasks/update" do
     expect(rendered).to include(%/$('#task_#{@task.id}').effect("shake"/)
     expect(rendered).to include("$('#task_submit').enable()")
   end
-
 end

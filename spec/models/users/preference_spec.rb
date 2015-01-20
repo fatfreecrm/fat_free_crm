@@ -47,7 +47,7 @@ describe Preference do
       @preference = FactoryGirl.create(:preference, user: FactoryGirl.create(:user), name: "thingymabob", value: @magoody)
       expect(@user.preference[:thingymabob]).to eq(nil)
     end
-    
+
     it "should not fail is user is nil" do
       @preference = FactoryGirl.create(:preference, user: nil, name: "thingymabob", value: @magoody)
       expect(@preference[:thingymabob]).to eq(nil)

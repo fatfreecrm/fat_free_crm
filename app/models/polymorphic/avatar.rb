@@ -19,7 +19,6 @@
 #
 
 class Avatar < ActiveRecord::Base
-
   STYLES = { large: "75x75#", medium: "50x50#", small: "25x25#", thumb: "16x16#" }.freeze
 
   belongs_to :user
@@ -31,13 +30,13 @@ class Avatar < ActiveRecord::Base
   # doesn't seem to care preserving styles hash so we must use STYLES.dup.
   #----------------------------------------------------------------------------
   Paperclip::Interpolations.module_eval do
-    def entity_type(attachment, style_name = nil)
+    def entity_type(attachment, _style_name = nil)
       attachment.instance.entity_type
     end
   end
   has_attached_file :image, styles: STYLES.dup, url: "/avatars/:entity_type/:id/:style_:filename", default_url: "/assets/avatar.jpg"
   validates_attachment :image, presence: true,
-    content_type: { content_type: %w(image/jpeg image/jpg image/png image/gif) }
+                               content_type: { content_type: %w(image/jpeg image/jpg image/png image/gif) }
 
   # Convert STYLE symbols to 'w x h' format for Gravatar and Rails
   # e.g. Avatar.size_from_style(:size => :large) -> '75x75'
@@ -45,9 +44,9 @@ class Avatar < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.size_from_style!(options)
     if options[:width] && options[:height]
-      options[:size] = [:width, :height].map{|d| options[d]}.join("x")
+      options[:size] = [:width, :height].map { |d| options[d] }.join("x")
     elsif Avatar::STYLES.keys.include?(options[:size])
-      options[:size] = Avatar::STYLES[options[:size]].sub(/\#\z/,'')
+      options[:size] = Avatar::STYLES[options[:size]].sub(/\#\z/, '')
     end
     options
   end

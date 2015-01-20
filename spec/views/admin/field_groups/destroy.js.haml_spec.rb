@@ -6,7 +6,6 @@
 require 'spec_helper'
 
 describe "admin/field_groups/destroy" do
-
   before do
     login_and_assign(admin: true)
     assign(:field_group, field_group)
@@ -27,5 +26,4 @@ describe "admin/field_groups/destroy" do
     expect(rendered).to have_text("Field Group could not be deleted")
     expect(rendered).to have_text("crm.flash('warning');")
   end
-
 end

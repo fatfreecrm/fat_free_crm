@@ -10,13 +10,13 @@ describe "/leads/_sidebar_show" do
 
   before do
     login_and_assign
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:comment, Comment.new)
     assign(:lead, FactoryGirl.create(:lead,
-                          blog: 'http://www.blogger.com/home',
-                          linkedin: 'www.linkedin.com',
-                          twitter: 'twitter.com/account',
-                          facebook: ''))
+                                     blog: 'http://www.blogger.com/home',
+                                     linkedin: 'www.linkedin.com',
+                                     twitter: 'twitter.com/account',
+                                     facebook: ''))
   end
 
   it "should render working web presence links whether a protocol is provided or not" do

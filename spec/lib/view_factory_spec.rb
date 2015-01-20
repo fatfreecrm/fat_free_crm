@@ -7,15 +7,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require "fat_free_crm/view_factory"
 
 describe FatFreeCRM::ViewFactory do
-
   before(:each) do
     FatFreeCRM::ViewFactory.send(:class_variable_set, '@@views', [])
   end
 
   describe "initialization" do
-
     before(:each) do
-      @view_params = {name: 'brief', title: 'Brief View', icon: 'fa-bars', controllers: ['contacts'], actions: ['show', 'index']}
+      @view_params = { name: 'brief', title: 'Brief View', icon: 'fa-bars', controllers: ['contacts'], actions: %w(show index) }
     end
 
     it "should initialize with required parameters" do
@@ -39,13 +37,11 @@ describe FatFreeCRM::ViewFactory do
       views = FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views')
       expect(views.size).to eq(1)
     end
-
   end
 
   describe "views_for" do
-
     before(:each) do
-      @v1 = FatFreeCRM::ViewFactory.new name: 'brief', title: 'Brief View', controllers: ['contacts'], actions: ['show', 'index']
+      @v1 = FatFreeCRM::ViewFactory.new name: 'brief', title: 'Brief View', controllers: ['contacts'], actions: %w(show index)
       @v2 = FatFreeCRM::ViewFactory.new name: 'long', title: 'Long View', controllers: ['contacts'], actions: ['show']
       @v3 = FatFreeCRM::ViewFactory.new name: 'full', title: 'Full View', controllers: ['accounts'], actions: ['show']
     end
@@ -67,7 +63,5 @@ describe FatFreeCRM::ViewFactory do
     it "should return no views for TasksController#show" do
       expect(FatFreeCRM::ViewFactory.views_for(controller: 'tasks', action: 'show')).to eq([])
     end
-
   end
-
 end

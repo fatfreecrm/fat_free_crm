@@ -11,11 +11,11 @@ describe "/opportunities/show" do
   before do
     login_and_assign
     @opportunity = FactoryGirl.create(:opportunity, id: 42,
-      contacts: [ FactoryGirl.create(:contact) ])
+                                                    contacts: [FactoryGirl.create(:contact)])
     assign(:opportunity, @opportunity)
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [ FactoryGirl.create(:comment, commentable: @opportunity) ])
+    assign(:timeline, [FactoryGirl.create(:comment, commentable: @opportunity)])
   end
 
   it "should render opportunity landing page" do
@@ -27,5 +27,4 @@ describe "/opportunities/show" do
 
     expect(rendered).to have_tag("div[id=edit_opportunity]")
   end
-
 end

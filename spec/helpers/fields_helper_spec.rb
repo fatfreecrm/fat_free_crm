@@ -8,4 +8,3 @@ include FieldsHelper
 
 describe FieldsHelper do
 end
-

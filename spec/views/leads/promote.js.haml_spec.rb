@@ -8,9 +8,9 @@ require 'spec_helper'
 describe "/leads/promote" do
   before do
     login_and_assign
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
     assign(:contact, FactoryGirl.create(:contact))
     assign(:opportunity, FactoryGirl.create(:opportunity))
     assign(:lead_status_total, Hash.new(1))
@@ -72,7 +72,7 @@ describe "/leads/promote" do
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-        expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("highlight"/)
+        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
       end
 
       it "should update campaign sidebar" do
@@ -88,7 +88,6 @@ describe "/leads/promote" do
 
         expect(rendered).to include("$('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}")
       end
-
     end
   end # no errors
 
@@ -105,7 +104,7 @@ describe "/leads/promote" do
       it "should redraw the [Convert Lead] form and shake it" do
         render
         expect(rendered).to include("$('#convert_lead').html")
-        expect(rendered).to include(%Q/$('#convert_lead').effect("shake"/)
+        expect(rendered).to include(%/$('#convert_lead').effect("shake"/)
       end
     end
 
@@ -117,7 +116,7 @@ describe "/leads/promote" do
       it "should redraw the [Convert Lead] form and shake it" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').html")
-        expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 
@@ -129,7 +128,7 @@ describe "/leads/promote" do
       it "should redraw the [Convert Lead] form and shake it" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').html")
-        expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 

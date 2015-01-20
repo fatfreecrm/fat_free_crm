@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TasksController do
-
   def update_sidebar
     @task_total = { key: :value, pairs: :etc }
     allow(Task).to receive(:totals).and_return(@task_total)
@@ -54,7 +53,6 @@ describe TasksController do
   # GET /tasks.xml
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
-
     before do
       update_sidebar
       @timezone, Time.zone = Time.zone, 'UTC'
@@ -65,7 +63,6 @@ describe TasksController do
     end
 
     TASK_STATUSES.each do |view|
-
       it "should expose all tasks as @tasks and render [index] template for #{view} view" do
         @tasks = produce_tasks(current_user, view)
 
@@ -116,9 +113,7 @@ describe TasksController do
   # GET /tasks/1.xml
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
-
     TASK_STATUSES.each do |view|
-
       it "should render the requested task as JSON for #{view} view" do
         allow(Task).to receive_message_chain(:tracked_by, :find).and_return(task = double("Task"))
         expect(task).to receive(:to_json).and_return("generated JSON")
@@ -143,12 +138,11 @@ describe TasksController do
   # GET /tasks/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
-
     it "should expose a new task as @task and render [new] template" do
       account = FactoryGirl.create(:account, user: current_user)
       @task = FactoryGirl.build(:task, user: current_user, asset: account)
       allow(Task).to receive(:new).and_return(@task)
-      @bucket = Setting.unroll(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
+      @bucket = Setting.unroll(:task_bucket)[1..-1] << ["On Specific Date...", :specific_time]
       @category = Setting.unroll(:task_category)
 
       xhr :get, :new
@@ -189,11 +183,10 @@ describe TasksController do
   # GET /tasks/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-
     it "should expose the requested task as @task and render [edit] template" do
       @asset = FactoryGirl.create(:account, user: current_user)
       @task = FactoryGirl.create(:task, user: current_user, asset: @asset)
-      @bucket = Setting.unroll(:task_bucket)[1..-1] << [ "On Specific Date...", :specific_time ]
+      @bucket = Setting.unroll(:task_bucket)[1..-1] << ["On Specific Date...", :specific_time]
       @category = Setting.unroll(:task_category)
 
       xhr :get, :edit, id: @task.id
@@ -263,9 +256,7 @@ describe TasksController do
   # POST /tasks.xml                                                        AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
-
     describe "with valid params" do
-
       it "should expose a newly created task as @task and render [create] template" do
         @task = FactoryGirl.build(:task, user: current_user)
         allow(Task).to receive(:new).and_return(@task)
@@ -277,7 +268,7 @@ describe TasksController do
         expect(response).to render_template("tasks/create")
       end
 
-      [ "", "?view=pending", "?view=assigned", "?view=completed" ].each do |view|
+      ["", "?view=pending", "?view=assigned", "?view=completed"].each do |view|
         it "should update tasks sidebar when [create] is being called from [/tasks#{view}] page" do
           @task = FactoryGirl.build(:task, user: current_user)
           allow(Task).to receive(:new).and_return(@task)
@@ -290,7 +281,6 @@ describe TasksController do
     end
 
     describe "with invalid params" do
-
       it "should expose a newly created but unsaved task as @lead and still render [create] template" do
         @task = FactoryGirl.build(:task, name: nil, user: current_user)
         allow(Task).to receive(:new).and_return(@task)
@@ -308,7 +298,6 @@ describe TasksController do
   # PUT /tasks/1.xml                                                       AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT update" do
-
     describe "with valid params" do
       it "should update the requested task, expose it as @task, and render [update] template" do
         @task = FactoryGirl.create(:task, name: "Hi", user: current_user)
@@ -321,7 +310,7 @@ describe TasksController do
         expect(response).to render_template("tasks/update")
       end
 
-      [ "", "?view=pending", "?view=assigned", "?view=completed" ].each do |view|
+      ["", "?view=pending", "?view=assigned", "?view=completed"].each do |view|
         it "should update tasks sidebar when [update] is being called from [/tasks#{view}] page" do
           @task = FactoryGirl.create(:task, name: "Hi", user: current_user)
 
@@ -369,7 +358,6 @@ describe TasksController do
   # DELETE /tasks/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-
     it "should destroy the requested task and render [destroy] template" do
       @task = FactoryGirl.create(:task, user: current_user)
 
@@ -380,7 +368,7 @@ describe TasksController do
       expect(response).to render_template("tasks/destroy")
     end
 
-    [ "", "?view=pending", "?view=assigned", "?view=completed" ].each do |view|
+    ["", "?view=pending", "?view=assigned", "?view=completed"].each do |view|
       it "should update sidebar when [destroy] is being called from [/tasks#{view}]" do
         @task = FactoryGirl.create(:task, user: current_user)
 
@@ -421,7 +409,6 @@ describe TasksController do
   # PUT /leads/1/complete.xml                                              AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT complete" do
-
     it "should change task status, expose task as @task, and render [complete] template" do
       @task = FactoryGirl.create(:task, completed_at: nil, user: current_user)
 
@@ -473,7 +460,6 @@ describe TasksController do
   # PUT /leads/1/complete.xml                                              AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT uncomplete" do
-
     it "should change task status, expose task as @task, and render template" do
       @task = FactoryGirl.create(:task, completed_at: Time.now, user: current_user)
 
@@ -484,7 +470,6 @@ describe TasksController do
       expect(response).to render_template("tasks/uncomplete")
     end
 
-
     describe "task got deleted" do
       it "should reload current page with the flash message if the task got deleted" do
         @task = FactoryGirl.create(:task, user: FactoryGirl.create(:user), assignee: current_user, completed_at: Time.now)
@@ -494,14 +479,12 @@ describe TasksController do
         expect(flash[:warning]).not_to eq(nil)
         expect(response.body).to eq("window.location.reload();")
       end
-
     end
   end
 
   # Ajax request to filter out a list of tasks.                            AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET filter" do
-
     TASK_STATUSES.each do |view|
       it "should remove a filter from session and render [filter] template for #{view} view" do
         name = "filter_by_task_#{view}"

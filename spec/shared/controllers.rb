@@ -36,7 +36,7 @@ shared_examples "attach" do
     xhr :put, :attach, id: @model.id, assets: @attachment.class.name.tableize, asset_id: @attachment.id
     expect(@model.send(@attachment.class.name.tableize)).to include(@attachment)
     expect(assigns[:attachment]).to eq(@attachment)
-    expect(assigns[:attached]).to eq([ @attachment ])
+    expect(assigns[:attached]).to eq([@attachment])
     if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
       expect(assigns[:campaign]).to eq(@attachment.reload.campaign)
     end

@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class AccountsController < EntitiesController
-  before_filter :get_data_for_sidebar, only: :index
+  before_action :get_data_for_sidebar, only: :index
 
   # GET /accounts
   #----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ class AccountsController < EntitiesController
   # GET /accounts/new
   #----------------------------------------------------------------------------
   def new
-    @account.attributes = {user: current_user, access: Setting.default_access, assigned_to: nil}
+    @account.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -44,7 +44,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def edit
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Account.my.find_by_id($1) || $1.to_i
+      @previous = Account.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@account)
@@ -54,7 +54,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
-    respond_with(@account) do |format|
+    respond_with(@account) do |_format|
       if @account.save
         @account.add_comment_by_user(@comment_body, current_user)
         # None: account can only be created from the Accounts index page, so we
@@ -68,7 +68,7 @@ class AccountsController < EntitiesController
   # PUT /accounts/1
   #----------------------------------------------------------------------------
   def update
-    respond_with(@account) do |format|
+    respond_with(@account) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @account.access = params[:account][:access] if params[:account][:access]
       get_data_for_sidebar if @account.update_attributes(resource_params)
@@ -102,7 +102,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def redraw
     current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
-    current_user.pref[:accounts_sort_by]  = Account::sort_by_map[params[:sort_by]] if params[:sort_by]
+    current_user.pref[:accounts_sort_by]  = Account.sort_by_map[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(page: 1, per_page: params[:per_page])
     set_options # Refresh options
 
@@ -122,10 +122,10 @@ class AccountsController < EntitiesController
     end
   end
 
-private
+  private
 
   #----------------------------------------------------------------------------
-  alias :get_accounts :get_list_of_records
+  alias_method :get_accounts, :get_list_of_records
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
@@ -134,7 +134,7 @@ private
       get_data_for_sidebar
       if @accounts.empty?
         @accounts = get_accounts(page: current_page - 1) if current_page > 1
-        render :index and return
+        render(:index) && return
       end
       # At this point render default destroy.js
     else # :html request
@@ -147,9 +147,9 @@ private
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @account_category_total = HashWithIndifferentAccess[
-      Setting.account_category.map do |key|
-        [ key, Account.my.where(category: key.to_s).count ]
-      end
+                              Setting.account_category.map do |key|
+                                [key, Account.my.where(category: key.to_s).count]
+                              end
     ]
     categorized = @account_category_total.values.sum
     @account_category_total[:all] = Account.my.count

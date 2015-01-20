@@ -24,14 +24,12 @@
 #  updated_at     :datetime
 #
 
-
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe CustomField do
-
   it "should add a column to the database" do
-    expect(CustomField.connection).to receive(:add_column).
-                with("contacts", "cf_test_field", 'string', {})
+    expect(CustomField.connection).to receive(:add_column)
+      .with("contacts", "cf_test_field", 'string', {})
     expect(Contact).to receive(:reset_column_information)
     expect(Contact).to receive(:serialize_custom_fields!)
 
@@ -49,9 +47,8 @@ describe CustomField do
     columns = []
     %w(cf_test_field cf_test_field_2 cf_test_field_3 cf_test_field_4).each do |field|
       expect(c.send(:generate_column_name)).to eq(field)
-      allow(Contact).to receive(:column_names).and_return( columns << field )
+      allow(Contact).to receive(:column_names).and_return(columns << field)
     end
-
   end
 
   it "should evaluate the safety of database transitions" do
@@ -66,8 +63,8 @@ describe CustomField do
   end
 
   it "should return a safe list of types for the 'as' select options" do
-    {"email"   => %w(check_boxes text string email url tel select radio),
-     "integer" => %w(integer float)}.each do |type, expected_arr|
+    { "email"   => %w(check_boxes text string email url tel select radio),
+      "integer" => %w(integer float) }.each do |type, expected_arr|
       c = FactoryGirl.build(:custom_field, as: type)
       opts = c.available_as
       expect(opts.map(&:first)).to match_array(expected_arr)
@@ -75,10 +72,10 @@ describe CustomField do
   end
 
   it "should change a column's type for safe transitions" do
-    expect(CustomField.connection).to receive(:add_column).
-                with("contacts", "cf_test_field", 'string', {})
-    expect(CustomField.connection).to receive(:change_column).
-                with("contacts", "cf_test_field", 'text', {})
+    expect(CustomField.connection).to receive(:add_column)
+      .with("contacts", "cf_test_field", 'string', {})
+    expect(CustomField.connection).to receive(:change_column)
+      .with("contacts", "cf_test_field", 'text', {})
     expect(Contact).to receive(:reset_column_information).twice
     expect(Contact).to receive(:serialize_custom_fields!).twice
 
@@ -109,7 +106,6 @@ describe CustomField do
   end
 
   describe "validation" do
-
     it "should have errors if custom field is required" do
       event = CustomField.new(name: 'cf_event', required: true)
       foo = double(cf_event: nil)
@@ -125,7 +121,5 @@ describe CustomField do
       expect(foo).to receive(:errors).and_return(err)
       event.custom_validator(foo)
     end
-
   end
-
 end

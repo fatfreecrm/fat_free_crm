@@ -16,7 +16,7 @@ describe "/leads/reject" do
     render
 
     expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-    expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("highlight"/)
+    expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
   end
 
   it "should update sidebar filters when called from index page" do
@@ -43,5 +43,4 @@ describe "/leads/reject" do
     expect(rendered).to have_text("Summary")
     expect(rendered).to have_text("Recent Items")
   end
-
 end

@@ -11,7 +11,7 @@ describe "/campaigns/_new" do
   before do
     login_and_assign
     assign(:campaign, Campaign.new)
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
   end
 
   it "should render [create campaign] form" do
@@ -24,7 +24,7 @@ describe "/campaigns/_new" do
   end
 
   it "should render background info field if settings require so" do
-    Setting.background_info = [ :campaign ]
+    Setting.background_info = [:campaign]
 
     render
     expect(rendered).to have_tag("textarea[id=campaign_background_info]")

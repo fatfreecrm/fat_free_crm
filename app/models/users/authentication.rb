@@ -27,7 +27,7 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
       return
     end
 
-    if !attempted_record.send(verify_password_method, send("protected_#{password_field}"))
+    unless attempted_record.send(verify_password_method, send("protected_#{password_field}"))
       self.invalid_password = true
       generalize_credentials_error_messages? ?
         add_general_credentials_error :
@@ -41,12 +41,12 @@ class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord
   # See vendor/plugin/authlogin/lib/authlogic/session/magic_columns.rb.
   #----------------------------------------------------------------------------
   def update_info
-    super unless self.user.suspended?
+    super unless user.suspended?
   end
 
   #----------------------------------------------------------------------------
   def check_if_suspended
-    self.errors.add(:base, I18n.t(:msg_account_suspended)) if self.user.suspended?
+    errors.add(:base, I18n.t(:msg_account_suspended)) if user.suspended?
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_authentication, self)

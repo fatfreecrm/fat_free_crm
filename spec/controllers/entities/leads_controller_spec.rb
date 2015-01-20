@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe LeadsController do
-
   before(:each) do
     require_user
     set_current_tab(:leads)
@@ -16,9 +15,8 @@ describe LeadsController do
   # GET /leads.xml                                                AJAX and HTML
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
-
     it "should expose all leads as @leads and render [index] template" do
-      @leads = [ FactoryGirl.create(:lead, user: current_user) ]
+      @leads = [FactoryGirl.create(:lead, user: current_user)]
 
       get :index
       expect(assigns[:leads]).to eq(@leads)
@@ -26,7 +24,7 @@ describe LeadsController do
     end
 
     it "should collect the data for the leads sidebar" do
-      @leads = [ FactoryGirl.create(:lead, user: current_user) ]
+      @leads = [FactoryGirl.create(:lead, user: current_user)]
       @status = Setting.lead_status.dup
 
       get :index
@@ -54,14 +52,14 @@ describe LeadsController do
       @captain_flint = FactoryGirl.create(:lead, user: current_user, first_name: "Captain", last_name: "Flint")
 
       get :index, query: "bill"
-      expect(assigns[:leads]).to eq([ @billy_bones ])
+      expect(assigns[:leads]).to eq([@billy_bones])
       expect(assigns[:current_query]).to eq("bill")
       expect(session[:leads_current_query]).to eq("bill")
     end
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @leads = [ FactoryGirl.create(:lead, user: current_user) ]
+        @leads = [FactoryGirl.create(:lead, user: current_user)]
         xhr :get, :index, page: 42
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -73,7 +71,7 @@ describe LeadsController do
       it "should pick up saved page number from session" do
         session[:leads_current_page] = 42
         session[:leads_current_query] = "bill"
-        @leads = [ FactoryGirl.create(:lead, user: current_user) ]
+        @leads = [FactoryGirl.create(:lead, user: current_user)]
         xhr :get, :index, query: "bill"
 
         expect(assigns[:current_page]).to eq(42)
@@ -84,7 +82,7 @@ describe LeadsController do
       it "should reset current_page when query is altered" do
         session[:leads_current_page] = 42
         session[:leads_current_query] = "bill"
-        @leads = [ FactoryGirl.create(:lead, user: current_user) ]
+        @leads = [FactoryGirl.create(:lead, user: current_user)]
         xhr :get, :index
 
         expect(assigns[:current_page]).to eq(1)
@@ -120,7 +118,6 @@ describe LeadsController do
   # GET /leads/1.xml                                                       HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
-
     describe "with mime type of HTML" do
       before(:each) do
         @lead = FactoryGirl.create(:lead, id: 42, user: current_user)
@@ -200,18 +197,16 @@ describe LeadsController do
         expect(response.code).to eq("404") # :not_found
       end
     end
-
   end
 
   # GET /leads/new
   # GET /leads/new.xml                                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
-
     it "should expose a new lead as @lead and render [new] template" do
       @lead = FactoryGirl.build(:lead, user: current_user, campaign: nil)
       allow(Lead).to receive(:new).and_return(@lead)
-      @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+      @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
 
       xhr :get, :new
       expect(assigns[:lead].attributes).to eq(@lead.attributes)
@@ -249,10 +244,9 @@ describe LeadsController do
   # GET /leads/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-
     it "should expose the requested lead as @lead and render [edit] template" do
       @lead = FactoryGirl.create(:lead, id: 42, user: current_user, campaign: nil)
-      @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+      @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
 
       xhr :get, :edit, id: 42
       expect(assigns[:lead]).to eq(@lead)
@@ -317,13 +311,11 @@ describe LeadsController do
   # POST /leads.xml                                                        AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
-
     describe "with valid params" do
-
       it "should expose a newly created lead as @lead and render [create] template" do
         @lead = FactoryGirl.build(:lead, user: current_user, campaign: nil)
         allow(Lead).to receive(:new).and_return(@lead)
-        @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+        @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
 
         xhr :post, :create, lead: { first_name: "Billy", last_name: "Bones" }
         expect(assigns(:lead)).to eq(@lead)
@@ -346,8 +338,8 @@ describe LeadsController do
         xhr :post, :create, lead: { first_name: "Billy", last_name: "Bones", access: "Campaign", user_ids: %w(7 8) }, campaign: @campaign.id
         expect(assigns(:lead)).to eq(@lead)
         expect(@lead.reload.access).to eq("Shared")
-        expect(@lead.permissions.map(&:user_id).sort).to eq([ 7, 8 ])
-        expect(@lead.permissions.map(&:asset_id)).to eq([ @lead.id, @lead.id ])
+        expect(@lead.permissions.map(&:user_id).sort).to eq([7, 8])
+        expect(@lead.permissions.map(&:asset_id)).to eq([@lead.id, @lead.id])
         expect(@lead.permissions.map(&:asset_type)).to eq(%w(Lead Lead))
       end
 
@@ -366,7 +358,7 @@ describe LeadsController do
 
         request.env["HTTP_REFERER"] = "http://localhost/leads"
         xhr :post, :create, lead: { first_name: "Billy", last_name: "Bones" }
-        expect(assigns[:leads]).to eq([ @lead ])
+        expect(assigns[:leads]).to eq([@lead])
       end
 
       it "should reload lead campaign if called from campaign landing page" do
@@ -374,7 +366,7 @@ describe LeadsController do
         @lead = FactoryGirl.build(:lead, user: current_user, campaign: @campaign)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
-        xhr :put, :create, lead: { first_name: "Billy", last_name: "Bones"}, campaign: @campaign.id
+        xhr :put, :create, lead: { first_name: "Billy", last_name: "Bones" }, campaign: @campaign.id
         expect(assigns[:campaign]).to eq(@campaign)
       end
 
@@ -387,11 +379,10 @@ describe LeadsController do
     end
 
     describe "with invalid params" do
-
       it "should expose a newly created but unsaved lead as @lead and still render [create] template" do
         @lead = FactoryGirl.build(:lead, user: current_user, first_name: nil, campaign: nil)
         allow(Lead).to receive(:new).and_return(@lead)
-        @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+        @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
 
         xhr :post, :create, lead: { first_name: nil }
         expect(assigns(:lead)).to eq(@lead)
@@ -399,18 +390,14 @@ describe LeadsController do
         expect(assigns[:lead_status_total]).to eq(nil)
         expect(response).to render_template("leads/create")
       end
-
     end
-
   end
 
   # PUT /leads/1
   # PUT /leads/1.xml
   #----------------------------------------------------------------------------
   describe "responding to PUT update" do
-
     describe "with valid params" do
-
       it "should update the requested lead, expose it as @lead, and render [update] template" do
         @lead = FactoryGirl.create(:lead, first_name: "Billy", user: current_user)
 
@@ -480,7 +467,7 @@ describe LeadsController do
         she = FactoryGirl.create(:user, id: 8)
 
         xhr :put, :update, id: @lead.id, lead: { access: "Shared", user_ids: %w(7 8) }
-        expect(@lead.user_ids.sort).to eq([ 7, 8 ])
+        expect(@lead.user_ids.sort).to eq([7, 8])
       end
 
       it "should get the data for leads sidebar when called from leads index" do
@@ -522,26 +509,22 @@ describe LeadsController do
     end
 
     describe "with invalid params" do
-
       it "should not update the lead, but still expose it as @lead and render [update] template" do
         @lead = FactoryGirl.create(:lead, id: 42, user: current_user, campaign: nil)
-        @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+        @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
 
         xhr :put, :update, id: 42, lead: { first_name: nil }
         expect(assigns[:lead]).to eq(@lead)
         expect(assigns[:campaigns]).to eq(@campaigns)
         expect(response).to render_template("leads/update")
       end
-
     end
-
   end
 
   # DELETE /leads/1
   # DELETE /leads/1.xml                                           AJAX and HTML
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
-
     before(:each) do
       @lead = FactoryGirl.create(:lead, user: current_user)
     end
@@ -564,7 +547,7 @@ describe LeadsController do
           @another_lead = FactoryGirl.create(:lead, user: current_user)
 
           xhr :delete, :destroy, id: @lead.id
-          expect(assigns[:leads]).to eq([ @another_lead ]) # @lead got deleted
+          expect(assigns[:leads]).to eq([@another_lead]) # @lead got deleted
           expect(assigns[:lead_status_total]).not_to be_nil
           expect(assigns[:lead_status_total]).to be_an_instance_of(HashWithIndifferentAccess)
           expect(response).to render_template("leads/destroy")
@@ -658,11 +641,10 @@ describe LeadsController do
   # GET /leads/1/convert.xml                                               AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET convert" do
-
     it "should should collect necessary data and render [convert] template" do
       @campaign = FactoryGirl.create(:campaign, user: current_user)
       @lead = FactoryGirl.create(:lead, user: current_user, campaign: @campaign, source: "cold_call")
-      @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+      @accounts = [FactoryGirl.create(:account, user: current_user)]
       @account = Account.new(user: current_user, name: @lead.company, access: "Lead")
       @opportunity = Opportunity.new(user: current_user, access: "Lead", stage: "prospecting", campaign: @lead.campaign, source: @lead.source)
 
@@ -724,12 +706,11 @@ describe LeadsController do
   # PUT /leads/1/promote.xml                                               AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT promote" do
-
     it "on success: should change lead's status to [converted] and render [promote] template" do
       @lead = FactoryGirl.create(:lead, id: 42, user: current_user, campaign: nil)
       @account = FactoryGirl.create(:account, id: 123, user: current_user)
       @opportunity = FactoryGirl.build(:opportunity, user: current_user, campaign: @lead.campaign,
-                                   account: @account)
+                                                     account: @account)
       allow(Opportunity).to receive(:new).and_return(@opportunity)
       @contact = FactoryGirl.build(:contact, user: current_user, lead: @lead)
       allow(Contact).to receive(:new).and_return(@contact)
@@ -738,7 +719,7 @@ describe LeadsController do
       expect(@lead.reload.status).to eq("converted")
       expect(assigns[:lead]).to eq(@lead)
       expect(assigns[:account]).to eq(@account)
-      expect(assigns[:accounts]).to eq([ @account ])
+      expect(assigns[:accounts]).to eq([@account])
       expect(assigns[:opportunity]).to eq(@opportunity)
       expect(assigns[:contact]).to eq(@contact)
       expect(assigns[:stage]).to be_instance_of(Array)
@@ -763,12 +744,12 @@ describe LeadsController do
 
       xhr :put, :promote, id: @lead.id, access: "Lead", account: { name: "Hello", access: "Lead", user_id: current_user.id }, opportunity: { name: "World", access: "Lead", user_id: current_user.id }
       expect(@account.access).to eq("Shared")
-      expect(@account.permissions.map(&:user_id).sort).to eq([ 7, 8 ])
-      expect(@account.permissions.map(&:asset_id)).to eq([ @account.id, @account.id ])
+      expect(@account.permissions.map(&:user_id).sort).to eq([7, 8])
+      expect(@account.permissions.map(&:asset_id)).to eq([@account.id, @account.id])
       expect(@account.permissions.map(&:asset_type)).to eq(%w(Account Account))
       expect(@opportunity.access).to eq("Shared")
-      expect(@opportunity.permissions.map(&:user_id).sort).to eq([ 7, 8 ])
-      expect(@opportunity.permissions.map(&:asset_id)).to eq([ @opportunity.id, @opportunity.id ])
+      expect(@opportunity.permissions.map(&:user_id).sort).to eq([7, 8])
+      expect(@opportunity.permissions.map(&:asset_id)).to eq([@opportunity.id, @opportunity.id])
       expect(@opportunity.permissions.map(&:asset_type)).to eq(%w(Opportunity Opportunity))
     end
 
@@ -840,7 +821,6 @@ describe LeadsController do
   # PUT /leads/1/reject.xml                                       AJAX and HTML
   #----------------------------------------------------------------------------
   describe "responding to PUT reject" do
-
     before(:each) do
       @lead = FactoryGirl.create(:lead, user: current_user, status: "new")
     end
@@ -964,7 +944,7 @@ describe LeadsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [ FactoryGirl.create(:lead, first_name: "Hello", last_name: "World", user: current_user) ]
+      @auto_complete_matches = [FactoryGirl.create(:lead, first_name: "Hello", last_name: "World", user: current_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -976,9 +956,9 @@ describe LeadsController do
     it "should save user selected lead preference" do
       xhr :get, :redraw, per_page: 42, view: "long", sort_by: "first_name", naming: "after"
       expect(current_user.preference[:leads_per_page]).to eq("42")
-      expect(current_user.preference[:leads_index_view]).to  eq("long")
-      expect(current_user.preference[:leads_sort_by]).to  eq("leads.first_name ASC")
-      expect(current_user.preference[:leads_naming]).to   eq("after")
+      expect(current_user.preference[:leads_index_view]).to eq("long")
+      expect(current_user.preference[:leads_sort_by]).to eq("leads.first_name ASC")
+      expect(current_user.preference[:leads_naming]).to eq("after")
     end
 
     it "should set similar options for Contacts" do
@@ -999,7 +979,7 @@ describe LeadsController do
       ]
 
       xhr :get, :redraw, per_page: 1, sort_by: "first_name"
-      expect(assigns(:leads)).to eq([ @leads.first ])
+      expect(assigns(:leads)).to eq([@leads.first])
       expect(response).to render_template("leads/index")
     end
   end
@@ -1007,11 +987,10 @@ describe LeadsController do
   # POST /leads/filter                                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST filter" do
-
     it "should filter out leads as @leads and render :index action" do
       session[:leads_filter] = "contacted,rejected"
 
-      @leads = [ FactoryGirl.create(:lead, user: current_user, status: "new") ]
+      @leads = [FactoryGirl.create(:lead, user: current_user, status: "new")]
       xhr :post, :filter, status: "new"
       expect(assigns[:leads]).to eq(@leads)
       expect(response).to be_a_success
@@ -1024,7 +1003,5 @@ describe LeadsController do
 
       expect(session[:leads_current_page]).to eq(1)
     end
-
   end
-
 end

@@ -24,14 +24,14 @@ describe AccountsController do
     end
 
     it "should expose all accounts as @accounts and render [index] template" do
-      @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+      @accounts = [FactoryGirl.create(:account, user: current_user)]
       get :index
       expect(assigns[:accounts]).to eq(@accounts)
       expect(response).to render_template("accounts/index")
     end
 
     it "should collect the data for the accounts sidebar" do
-      @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+      @accounts = [FactoryGirl.create(:account, user: current_user)]
 
       get :index
       expect(assigns[:account_category_total].keys.map(&:to_sym) - (@category << :all << :other)).to eq([])
@@ -56,14 +56,14 @@ describe AccountsController do
       @second = FactoryGirl.create(:account, user: current_user, name: "The second one")
 
       get :index, query: "second"
-      expect(assigns[:accounts]).to eq([ @second ])
+      expect(assigns[:accounts]).to eq([@second])
       expect(assigns[:current_query]).to eq("second")
       expect(session[:accounts_current_query]).to eq("second")
     end
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+        @accounts = [FactoryGirl.create(:account, user: current_user)]
         xhr :get, :index, page: 42
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -74,7 +74,7 @@ describe AccountsController do
 
       it "should pick up saved page number from session" do
         session[:accounts_current_page] = 42
-        @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+        @accounts = [FactoryGirl.create(:account, user: current_user)]
         xhr :get, :index
 
         expect(assigns[:current_page]).to eq(42)
@@ -85,7 +85,7 @@ describe AccountsController do
       it "should reset current_page when query is altered" do
         session[:accounts_current_page] = 42
         session[:accounts_current_query] = "bill"
-        @accounts = [ FactoryGirl.create(:account, user: current_user) ]
+        @accounts = [FactoryGirl.create(:account, user: current_user)]
         xhr :get, :index
 
         expect(assigns[:current_page]).to eq(1)
@@ -121,7 +121,6 @@ describe AccountsController do
   # GET /accounts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
-
     describe "with mime type of HTML" do
       before do
         @account = FactoryGirl.create(:account, user: current_user)
@@ -203,14 +202,12 @@ describe AccountsController do
         expect(response.code).to eq("404") # :not_found
       end
     end
-
   end
 
   # GET /accounts/new
   # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
-
     it "should expose a new account as @account and render [new] template" do
       @account = Account.new(user: current_user,
                              access: Setting.default_access)
@@ -226,13 +223,11 @@ describe AccountsController do
       xhr :get, :new, related: "contact_42"
       expect(assigns[:contact]).to eq(@contact)
     end
-
   end
 
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-
     it "should expose the requested account as @account and render [edit] template" do
       @account = FactoryGirl.create(:account, id: 42, user: current_user)
 
@@ -299,9 +294,7 @@ describe AccountsController do
   # POST /accounts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
-
     describe "with valid params" do
-
       it "should expose a newly created account as @account and render [create] template" do
         @account = FactoryGirl.build(:account, name: "Hello world", user: current_user)
         allow(Account).to receive(:new).and_return(@account)
@@ -317,7 +310,7 @@ describe AccountsController do
         allow(Account).to receive(:new).and_return(@account)
 
         xhr :post, :create, account: { name: "Hello" }
-        expect(assigns[:accounts]).to eq([ @account ])
+        expect(assigns[:accounts]).to eq([@account])
       end
 
       it "should get data to update account sidebar" do
@@ -353,7 +346,6 @@ describe AccountsController do
   # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT update" do
-
     describe "with valid params" do
       it "should update the requested account, expose the requested account as @account, and render [update] template" do
         @account = FactoryGirl.create(:account, id: 42, name: "Hello people")
@@ -411,7 +403,6 @@ describe AccountsController do
         expect(response).to render_template("accounts/update")
       end
     end
-
   end
 
   # DELETE /accounts/1
@@ -428,7 +419,7 @@ describe AccountsController do
         xhr :delete, :destroy, id: @account.id
 
         expect { Account.find(@account.id) }.to raise_error(ActiveRecord::RecordNotFound)
-        expect(assigns[:accounts]).to eq([ @another_account ]) # @account got deleted
+        expect(assigns[:accounts]).to eq([@another_account]) # @account got deleted
         expect(response).to render_template("accounts/destroy")
       end
 
@@ -499,7 +490,6 @@ describe AccountsController do
         expect(response).to redirect_to(accounts_path)
       end
     end
-
   end
 
   # PUT /accounts/1/attach
@@ -560,7 +550,7 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before do
-      @auto_complete_matches = [ FactoryGirl.create(:account, name: "Hello World", user: current_user) ]
+      @auto_complete_matches = [FactoryGirl.create(:account, name: "Hello World", user: current_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -572,8 +562,8 @@ describe AccountsController do
     it "should save user selected account preference" do
       xhr :get, :redraw, per_page: 42, view: "brief", sort_by: "name"
       expect(current_user.preference[:accounts_per_page]).to eq("42")
-      expect(current_user.preference[:accounts_index_view]).to  eq("brief")
-      expect(current_user.preference[:accounts_sort_by]).to  eq("accounts.name ASC")
+      expect(current_user.preference[:accounts_index_view]).to eq("brief")
+      expect(current_user.preference[:accounts_sort_by]).to eq("accounts.name ASC")
     end
 
     it "should reset current page to 1" do
@@ -588,7 +578,7 @@ describe AccountsController do
       ]
 
       xhr :get, :redraw, per_page: 1, sort_by: "name"
-      expect(assigns(:accounts)).to eq([ @accounts.first ])
+      expect(assigns(:accounts)).to eq([@accounts.first])
       expect(response).to render_template("accounts/index")
     end
   end
@@ -598,7 +588,7 @@ describe AccountsController do
   describe "responding to POST filter" do
     it "should expose filtered accounts as @accounts and render [index] template" do
       session[:accounts_filter] = "customer,vendor"
-      @accounts = [ FactoryGirl.create(:account, category: "partner", user: current_user) ]
+      @accounts = [FactoryGirl.create(:account, category: "partner", user: current_user)]
 
       xhr :post, :filter, category: "partner"
       expect(assigns(:accounts)).to eq(@accounts)

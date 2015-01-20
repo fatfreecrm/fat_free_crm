@@ -36,7 +36,7 @@ describe "/users/change_password" do
       render
 
       expect(rendered).to include("$('#change_password').html")
-      expect(rendered).to include(%Q/$('#change_password').effect("shake"/)
+      expect(rendered).to include(%/$('#change_password').effect("shake"/)
       expect(rendered).to include("$('#current_password').focus();")
     end
 
@@ -46,6 +46,5 @@ describe "/users/change_password" do
 
       expect(rendered).to include("$('#user_password').focus();")
     end
-
   end # errors
 end

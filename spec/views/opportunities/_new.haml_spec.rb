@@ -13,8 +13,8 @@ describe "/opportunities/_new" do
     assign(:opportunity, FactoryGirl.build(:opportunity))
     @account = FactoryGirl.create(:account)
     assign(:account, @account)
-    assign(:accounts, [ @account ])
-    assign(:users, [ current_user ])
+    assign(:accounts, [@account])
+    assign(:users, [current_user])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
@@ -29,12 +29,12 @@ describe "/opportunities/_new" do
   it "should pick default assignee (Myself)" do
     render
     expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|
-      expect(options.to_s).not_to include(%Q/selected="selected"/)
+      expect(options.to_s).not_to include(%(selected="selected"))
     end
   end
 
   it "should render background info field if settings require so" do
-    Setting.background_info = [ :opportunity ]
+    Setting.background_info = [:opportunity]
 
     render
     expect(rendered).to have_tag("textarea[id=opportunity_background_info]")

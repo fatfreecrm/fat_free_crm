@@ -29,4 +29,3 @@ describe AccountContact do
     AccountContact.create!(@valid_attributes)
   end
 end
-

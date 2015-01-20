@@ -18,7 +18,7 @@ describe "/leads/destroy" do
   end
 
   it "should update leads sidebar when called from leads index" do
-    assign(:leads, [ @lead ].paginate)
+    assign(:leads, [@lead].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
     render
 
@@ -28,7 +28,7 @@ describe "/leads/destroy" do
   end
 
   it "should update pagination when called from leads index" do
-    assign(:leads, [ @lead ].paginate)
+    assign(:leads, [@lead].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
     render
 
@@ -44,5 +44,4 @@ describe "/leads/destroy" do
     expect(rendered).to have_text("Campaign Summary")
     expect(rendered).to have_text("Recent Items")
   end
-
 end

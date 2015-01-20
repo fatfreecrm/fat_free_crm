@@ -5,12 +5,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path("../acceptance_helper.rb", __FILE__)
 
-feature 'Dashboard', %q{
+feature 'Dashboard', '
   In order to monitor activity
   As a user
   I want to see a dashboard
-} do
 
+' do
   background do
     @me = FactoryGirl.create(:user)
     login_as_user(@me)
@@ -23,17 +23,17 @@ feature 'Dashboard', %q{
   scenario "Viewing my dashboard" do
     visit homepage
 
-    #My Tasks
+    # My Tasks
     within "#tasks" do
       expect(page).to have_content("Do your homework!")
     end
 
-    #My Opportunities
+    # My Opportunities
     within "#opportunities" do
       expect(page).to have_content("Work with the Dolphins")
     end
 
-    #My Accounts
+    # My Accounts
     within "#accounts" do
       expect(page).to have_content("Dolphin Manufacturer")
     end
@@ -48,20 +48,19 @@ feature 'Dashboard', %q{
 
     visit homepage
 
-    #My Tasks
+    # My Tasks
     within "#tasks" do
       expect(page).to have_content("Not showing 1 hidden task.")
     end
 
-    #My Opportunities
+    # My Opportunities
     within "#opportunities" do
       expect(page).to have_content("Not showing 1 hidden opportunity.")
     end
 
-    #My Accounts
+    # My Accounts
     within "#accounts" do
       expect(page).to have_content("Not showing 1 hidden account.")
     end
-
   end
 end

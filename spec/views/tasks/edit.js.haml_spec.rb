@@ -10,11 +10,10 @@ describe "/tasks/edit" do
 
   before do
     login_and_assign
-    assign(:users, [ current_user ])
-    assign(:bucket, Setting.task_bucket[1..-1] << [ "On Specific Date...", :specific_time ])
+    assign(:users, [current_user])
+    assign(:bucket, Setting.task_bucket[1..-1] << ["On Specific Date...", :specific_time])
     assign(:category, Setting.unroll(:task_category))
   end
-
 
   %w(pending assigned).each do |view|
     it "cancel for #{view} view: should replace [Edit Task] form with the task partial" do
@@ -71,7 +70,5 @@ describe "/tasks/edit" do
       expect(rendered).to have_text("On Specific Date")
       expect(rendered).to include("$('#task_name').focus();")
     end
-
   end
-
 end

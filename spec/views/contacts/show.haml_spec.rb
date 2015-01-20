@@ -11,11 +11,11 @@ describe "/contacts/show" do
   before do
     login_and_assign
     @contact = FactoryGirl.create(:contact, id: 42,
-      opportunities: [ FactoryGirl.create(:opportunity) ])
+                                            opportunities: [FactoryGirl.create(:opportunity)])
     assign(:contact, @contact)
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [ FactoryGirl.create(:comment, commentable: @contact) ])
+    assign(:timeline, [FactoryGirl.create(:comment, commentable: @contact)])
   end
 
   it "should render contact landing page" do
@@ -27,5 +27,4 @@ describe "/contacts/show" do
 
     expect(rendered).to have_tag("div[id=edit_contact]")
   end
-
 end

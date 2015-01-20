@@ -21,10 +21,10 @@ Coveralls.wear!
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
+Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
 # Load shared behavior modules to be included by Runner config.
-Dir["./spec/shared/**/*.rb"].sort.each {|f| require f}
+Dir["./spec/shared/**/*.rb"].sort.each { |f| require f }
 
 TASK_STATUSES = %w(pending assigned completed).freeze
 
@@ -98,13 +98,13 @@ ActionView::Base.class_eval do
 
   def called_from_index_page?(controller = controller_name)
     if controller != "tasks"
-      request.referer =~ %r(/#{controller}$)
+      request.referer =~ %r{/#{controller}$}
     else
       request.referer =~ /tasks\?*/
     end
   end
 
   def called_from_landing_page?(controller = controller_name)
-    request.referer =~ %r(/#{controller}/\w+)
+    request.referer =~ %r{/#{controller}/\w+}
   end
 end

@@ -6,9 +6,7 @@
 require 'spec_helper'
 
 describe CustomFieldDatePair do
-
   describe "render_value" do
-  
     before(:each) do
       @from = CustomFieldDatePair.new(name: 'cf_event_from')
       @to = CustomFieldDatePair.new(name: 'cf_event_to')
@@ -16,31 +14,29 @@ describe CustomFieldDatePair do
       @today = Date.today
       @today_str = @today.strftime(I18n.t("date.formats.mmddyy"))
     end
-  
+
     it "should be from..." do
       foo = double(cf_event_from: @today, cf_event_to: nil)
       expect(@from.render_value(foo)).to eq("From #{@today_str}")
     end
-    
+
     it "should be until..." do
       foo = double(cf_event_from: nil, cf_event_to: @today)
       expect(@from.render_value(foo)).to eq("Until #{@today_str}")
     end
-    
+
     it "should be from ... to" do
       foo = double(cf_event_from: @today, cf_event_to: @today)
       expect(@from.render_value(foo)).to eq("From #{@today_str} to #{@today_str}")
     end
-    
+
     it "should be empty string" do
       foo = double(cf_event_from: nil, cf_event_to: nil)
       expect(@from.render_value(foo)).to eq("")
     end
-
   end
 
   describe "custom_validator" do
-
     before(:each) do
       @from = CustomFieldDatePair.new(name: 'cf_event_from')
       @to = CustomFieldDatePair.new(name: 'cf_event_to', pair_id: 1)
@@ -48,7 +44,7 @@ describe CustomFieldDatePair do
       @today = Date.today
       @today_str = @today.strftime(I18n.t("date.formats.mmddyy"))
     end
-  
+
     it "when from is nil it should be valid" do
       foo = double(cf_event_from: nil, cf_event_to: @today)
       expect(foo).not_to receive(:errors)
@@ -60,20 +56,20 @@ describe CustomFieldDatePair do
       expect(foo).not_to receive(:errors)
       @to.custom_validator(foo)
     end
-    
+
     it "when from <= to it should be valid" do
       foo = double(cf_event_from: @today, cf_event_to: @today)
       expect(foo).not_to receive(:errors)
       @to.custom_validator(foo)
     end
-    
+
     it "when from > to it should not be valid" do
       foo = double(cf_event_from: @today, cf_event_to: @today - 1.day)
       err = double(:errors); allow(err).to receive(:add)
       expect(foo).to receive(:errors).and_return(err)
       @to.custom_validator(foo)
     end
-    
+
     it "should ignore validation when called on from" do
       foo = double(cf_event_from: @today, cf_event_to: @today - 1.day)
       expect(foo).not_to receive(:errors)
@@ -88,7 +84,5 @@ describe CustomFieldDatePair do
       expect(foo).to receive(:errors).and_return(err)
       from.custom_validator(foo)
     end
-
   end
-
 end

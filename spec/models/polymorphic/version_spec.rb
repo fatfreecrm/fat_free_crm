@@ -21,7 +21,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Version, versioning: true do
-
   before do
     login
     PaperTrail.whodunnit = current_user.id.to_s
@@ -73,7 +72,7 @@ describe Version, versioning: true do
     describe "Create, update, and delete (#{item})" do
       before :each do
         @item = FactoryGirl.create(item.to_sym, user: current_user)
-        @conditions = {item_id: @item.id, item_type: @item.class.name, whodunnit: PaperTrail.whodunnit}
+        @conditions = { item_id: @item.id, item_type: @item.class.name, whodunnit: PaperTrail.whodunnit }
       end
 
       it "should add a version when creating new #{item}" do
@@ -111,7 +110,7 @@ describe Version, versioning: true do
   describe "Recently viewed items (task)" do
     before do
       @task = FactoryGirl.create(:task)
-      @conditions = {item_id: @task.id, item_type: @task.class.name}
+      @conditions = { item_id: @task.id, item_type: @task.class.name }
     end
 
     it "creating a new task should not add it to recently viewed items list" do
@@ -130,7 +129,7 @@ describe Version, versioning: true do
   describe "Action refinements for task updates" do
     before do
       @task = FactoryGirl.create(:task, user: current_user)
-      @conditions = {item_id: @task.id, item_type: @task.class.name, whodunnit: PaperTrail.whodunnit}
+      @conditions = { item_id: @task.id, item_type: @task.class.name, whodunnit: PaperTrail.whodunnit }
     end
 
     it "should create 'completed' task event" do
@@ -158,7 +157,7 @@ describe Version, versioning: true do
   describe "Rejecting a lead" do
     before do
       @lead = FactoryGirl.create(:lead, user: current_user, status: "new")
-      @conditions = {item_id: @lead.id, item_type: @lead.class.name, whodunnit: PaperTrail.whodunnit}
+      @conditions = { item_id: @lead.id, item_type: @lead.class.name, whodunnit: PaperTrail.whodunnit }
     end
 
     it "should create 'rejected' lead event" do
@@ -199,9 +198,9 @@ describe Version, versioning: true do
 
     it "should not show create/update versions if the item was not shared with the user" do
       @item = FactoryGirl.create(:account,
-        user: current_user,
-        access: "Shared",
-        permissions: [ FactoryGirl.build(:permission, user: current_user, asset: @item) ]
+                                 user: current_user,
+                                 access: "Shared",
+                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)]
       )
       @item.update(name: 'New Name')
 
@@ -214,9 +213,9 @@ describe Version, versioning: true do
 
     it "should not show the destroy version if the item was not shared with the user" do
       @item = FactoryGirl.create(:account,
-        user: current_user,
-        access: "Shared",
-        permissions: [ FactoryGirl.build(:permission, user: current_user, asset: @item) ]
+                                 user: current_user,
+                                 access: "Shared",
+                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)]
       )
       @item.destroy
 
@@ -229,9 +228,9 @@ describe Version, versioning: true do
 
     it "should show create/update versions if the item was shared with the user" do
       @item = FactoryGirl.create(:account,
-        user: current_user,
-        access: "Shared",
-        permissions: [ FactoryGirl.build(:permission, user: @user, asset: @item) ]
+                                 user: current_user,
+                                 access: "Shared",
+                                 permissions: [FactoryGirl.build(:permission, user: @user, asset: @item)]
       )
       @item.update(name: 'New Name')
 

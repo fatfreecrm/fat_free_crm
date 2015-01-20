@@ -64,14 +64,14 @@ describe User do
       it "should not destroy the user if she owns #{asset}" do
         FactoryGirl.create(asset, user: @user)
         @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error()
+        expect { User.find(@user.id) }.to_not raise_error
         expect(@user.destroyed?).to eq(false)
       end
 
       it "should not destroy the user if she has #{asset} assigned" do
         FactoryGirl.create(asset, assignee: @user)
         @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error()
+        expect { User.find(@user.id) }.to_not raise_error
         expect(@user.destroyed?).to eq(false)
       end
     end
@@ -81,14 +81,14 @@ describe User do
       account = FactoryGirl.create(:account, user: current_user)
       FactoryGirl.create(:comment, user: @user, commentable: account)
       @user.destroy
-      expect { User.find(@user.id) }.to_not raise_error()
+      expect { User.find(@user.id) }.to_not raise_error
       expect(@user.destroyed?).to eq(false)
     end
 
     it "should not destroy the current user" do
       login
       current_user.destroy
-      expect { current_user.reload }.to_not raise_error()
+      expect { current_user.reload }.to_not raise_error
       expect(current_user).not_to be_destroyed
     end
 
@@ -215,7 +215,6 @@ describe User do
   end
 
   describe "serialization" do
-
     let(:user) { FactoryGirl.build(:user) }
 
     it "to json" do
@@ -225,11 +224,9 @@ describe User do
     it "to xml" do
       expect(user.to_xml).to eql([user.name].to_xml)
     end
-
   end
 
   describe "text_search" do
-
     it "should find user by email" do
       create(:user, email: 'no-reply@example.com')
       user = create(:user, email: 'test@example.com')
@@ -237,7 +234,5 @@ describe User do
       expect(search.size).to eql(1)
       expect(search.first).to eql(user)
     end
-
   end
-
 end

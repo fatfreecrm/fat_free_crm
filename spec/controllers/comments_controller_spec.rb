@@ -6,8 +6,7 @@
 require 'spec_helper'
 
 describe CommentsController do
-
-  COMMENTABLE = [ :account, :campaign, :contact, :lead, :opportunity ].freeze
+  COMMENTABLE = [:account, :campaign, :contact, :lead, :opportunity].freeze
 
   before(:each) do
     require_user
@@ -38,7 +37,7 @@ describe CommentsController do
       describe "(JSON)" do
         before(:each) do
           @asset = FactoryGirl.create(asset)
-          @asset.comments = [ FactoryGirl.create(:comment, commentable: @asset) ]
+          @asset.comments = [FactoryGirl.create(:comment, commentable: @asset)]
           request.env["HTTP_ACCEPT"] = "application/json"
         end
 
@@ -57,7 +56,7 @@ describe CommentsController do
       describe "(XML)" do
         before(:each) do
           @asset = FactoryGirl.create(asset)
-          @asset.comments = [ FactoryGirl.create(:comment, commentable: @asset) ]
+          @asset.comments = [FactoryGirl.create(:comment, commentable: @asset)]
           request.env["HTTP_ACCEPT"] = "application/xml"
         end
 
@@ -73,13 +72,11 @@ describe CommentsController do
         end
       end # XML
     end # COMMENTABLE.each
-
   end
 
   # GET /comments/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-
     COMMENTABLE.each do |asset|
       it "should expose the requested comment as @commment and render [edit] template" do
         @asset = FactoryGirl.create(asset)
@@ -91,14 +88,12 @@ describe CommentsController do
         expect(response).to render_template("comments/edit")
       end
     end
-
   end
 
   # POST /comments
   # POST /comments.xml                                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
-
     describe "with valid params" do
       COMMENTABLE.each do |asset|
         it "should expose a newly created comment as @comment for the #{asset}" do
@@ -126,7 +121,6 @@ describe CommentsController do
         end
       end
     end
-
   end
 
   # PUT /comments/1
@@ -196,5 +190,4 @@ describe CommentsController do
       end
     end
   end
-
 end

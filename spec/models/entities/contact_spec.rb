@@ -39,7 +39,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Contact do
-
   before { login }
 
   it "should create a new instance given valid attributes" do
@@ -53,38 +52,46 @@ describe Contact do
     end
 
     it "should create new account if requested so" do
-      expect { @contact.update_with_account_and_permissions({
+      expect {
+        @contact.update_with_account_and_permissions(
         account: { name: "New account" },
         contact: { first_name: "Billy" }
-      })}.to change(Account, :count).by(1)
+      )
+      }.to change(Account, :count).by(1)
       expect(Account.last.name).to eq("New account")
       expect(@contact.first_name).to eq("Billy")
     end
 
     it "should change account if another account was selected" do
       @another_account = FactoryGirl.create(:account)
-      expect { @contact.update_with_account_and_permissions({
+      expect {
+        @contact.update_with_account_and_permissions(
         account: { id: @another_account.id },
         contact: { first_name: "Billy" }
-      })}.not_to change(Account, :count)
+      )
+      }.not_to change(Account, :count)
       expect(@contact.account).to eq(@another_account)
       expect(@contact.first_name).to eq("Billy")
     end
 
     it "should drop existing Account if [create new account] is blank" do
-      expect { @contact.update_with_account_and_permissions({
+      expect {
+        @contact.update_with_account_and_permissions(
         account: { name: "" },
         contact: { first_name: "Billy" }
-      })}.not_to change(Account, :count)
+      )
+      }.not_to change(Account, :count)
       expect(@contact.account).to eq(nil)
       expect(@contact.first_name).to eq("Billy")
     end
 
     it "should drop existing Account if [-- None --] is selected from list of accounts" do
-      expect { @contact.update_with_account_and_permissions({
+      expect {
+        @contact.update_with_account_and_permissions(
         account: { id: "" },
         contact: { first_name: "Billy" }
-      })}.not_to change(Account, :count)
+      )
+      }.not_to change(Account, :count)
       expect(@contact.account).to eq(nil)
       expect(@contact.first_name).to eq("Billy")
     end
@@ -108,8 +115,8 @@ describe Contact do
       @task = FactoryGirl.create(:task, user: current_user)
       @opportunity = FactoryGirl.create(:opportunity)
 
-      expect(@contact.attach!(@task)).to eq([ @task ])
-      expect(@contact.attach!(@opportunity)).to eq([ @opportunity ])
+      expect(@contact.attach!(@task)).to eq([@task])
+      expect(@contact.attach!(@opportunity)).to eq([@opportunity])
     end
   end
 
@@ -150,7 +157,7 @@ describe Contact do
     describe "unassigned contact" do
       let(:contact1) { FactoryGirl.build(:contact, user: FactoryGirl.create(:user), assignee: nil) }
       let(:contact2) { FactoryGirl.build(:contact, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
-       it_should_behave_like("exportable") do
+      it_should_behave_like("exportable") do
         let(:exported) { [contact1, contact2] }
       end
     end
@@ -161,7 +168,6 @@ describe Contact do
   end
 
   describe "text_search" do
-
     before(:each) do
       @contact = FactoryGirl.create(:contact, first_name: "Bob", last_name: "Dillion", email: 'bob_dillion@example.com', phone: '+1 123 456 789')
     end
@@ -198,6 +204,5 @@ describe Contact do
     it "should not break on special characters" do
       expect(Contact.text_search('@$%#^@!')).to eq([])
     end
-
   end
 end

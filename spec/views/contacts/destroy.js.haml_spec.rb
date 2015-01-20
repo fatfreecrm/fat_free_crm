@@ -11,7 +11,7 @@ describe "/contacts/destroy" do
   before do
     login_and_assign
     assign(:contact, @contact = FactoryGirl.create(:contact))
-    assign(:contacts, [ @contact ].paginate)
+    assign(:contacts, [@contact].paginate)
   end
 
   it "should blind up destroyed contact partial" do
@@ -40,5 +40,4 @@ describe "/contacts/destroy" do
 
     expect(rendered).to include("#recently")
   end
-
 end

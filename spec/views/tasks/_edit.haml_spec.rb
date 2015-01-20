@@ -11,7 +11,7 @@ describe "/tasks/_edit" do
   before do
     login_and_assign
     assign(:task, FactoryGirl.create(:task, asset: FactoryGirl.create(:account), bucket: "due_asap"))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:bucket, %w(due_asap due_today))
     assign(:category, %w(meeting money))
   end
@@ -24,7 +24,7 @@ describe "/tasks/_edit" do
     expect(rendered).to have_tag("form[class=edit_task]")
   end
 
-  [ "As Soon As Possible", "Today", "Tomorrow", "This Week", "Next Week", "Sometime Later" ].each do |day|
+  ["As Soon As Possible", "Today", "Tomorrow", "This Week", "Next Week", "Sometime Later"].each do |day|
     it "should render move to [#{day}] link" do
       render
 
@@ -33,7 +33,7 @@ describe "/tasks/_edit" do
   end
 
   it "should render background info if Settings request so" do
-    Setting.background_info = [ :task ]
+    Setting.background_info = [:task]
     render
 
     expect(rendered).to have_tag("textarea[id=task_background_info]")

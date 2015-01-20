@@ -15,4 +15,3 @@ describe Authentication do
   #   Authentication.create!(@valid_attributes)
   # end
 end
-

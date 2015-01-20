@@ -12,9 +12,9 @@ describe "/opportunities/edit" do
     login_and_assign
 
     assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
@@ -67,9 +67,7 @@ describe "/opportunities/edit" do
   end
 
   it "edit: should handle new or existing account for the opportunity" do
-
     render
     expect(rendered).to include("crm.create_or_select_account")
   end
-
 end

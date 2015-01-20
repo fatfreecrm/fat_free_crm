@@ -9,8 +9,8 @@ describe "/leads/update" do
   before do
     login_and_assign
     assign(:lead, @lead = FactoryGirl.create(:lead, user: current_user, assignee: FactoryGirl.create(:user)))
-    assign(:users, [ current_user ])
-    assign(:campaigns, [ FactoryGirl.create(:campaign) ])
+    assign(:users, [current_user])
+    assign(:campaigns, [FactoryGirl.create(:campaign)])
     assign(:lead_status_total, Hash.new(1))
   end
 
@@ -63,7 +63,7 @@ describe "/leads/update" do
       it "should replace [Edit Lead] with lead partial and highlight it" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-        expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("highlight"/)
+        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
       end
 
       it "should update campaign sidebar" do
@@ -75,7 +75,6 @@ describe "/leads/update" do
         expect(rendered).to have_text("Recent Items")
       end
     end
-
   end # no errors
 
   describe "validation errors :" do
@@ -91,7 +90,7 @@ describe "/leads/update" do
       it "should redraw the [edit_lead] form and shake it" do
         render
         expect(rendered).to include("#edit_lead")
-        expect(rendered).to include(%Q/$('#edit_lead').effect("shake"/)
+        expect(rendered).to include(%/$('#edit_lead').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -104,7 +103,7 @@ describe "/leads/update" do
       it "should redraw the [edit_lead] form and shake it" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').html")
-        expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -117,7 +116,7 @@ describe "/leads/update" do
       it "should redraw the [edit_lead] form and shake it" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').html")
-        expect(rendered).to include(%Q/$('#lead_#{@lead.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

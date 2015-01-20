@@ -11,12 +11,12 @@ describe "/opportunities/_edit" do
   before do
     login_and_assign
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   it "should render [edit opportunity] form" do
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign = FactoryGirl.create(:campaign)))
     render
 
@@ -27,38 +27,38 @@ describe "/opportunities/_edit" do
   end
 
   it "should pick default assignee (Myself)" do
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:opportunity, FactoryGirl.create(:opportunity, assignee: nil))
     render
 
     expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|
-      expect(options.to_s).not_to include(%Q/selected="selected"/)
+      expect(options.to_s).not_to include(%(selected="selected"))
     end
   end
 
   it "should show correct assignee" do
     @user = FactoryGirl.create(:user)
-    assign(:users, [ current_user, @user ])
+    assign(:users, [current_user, @user])
     assign(:opportunity, FactoryGirl.create(:opportunity, assignee: @user))
     render
 
-    expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|
+    expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |_options|
       with_tag "option[selected=selected]"
       with_tag "option[value='#{@user.id}']"
     end
   end
 
   it "should render background info field if settings require so" do
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:opportunity, FactoryGirl.create(:opportunity))
-    Setting.background_info = [ :opportunity ]
+    Setting.background_info = [:opportunity]
 
     render
     expect(rendered).to have_tag("textarea[id=opportunity_background_info]")
   end
 
   it "should not render background info field if settings do not require so" do
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:opportunity, FactoryGirl.create(:opportunity))
     Setting.background_info = []
 

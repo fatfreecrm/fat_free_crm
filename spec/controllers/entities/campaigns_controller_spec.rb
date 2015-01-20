@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe CampaignsController do
-
   def get_data_for_sidebar
     @status = Setting.campaign_status.dup
   end
@@ -20,13 +19,12 @@ describe CampaignsController do
   # GET /campaigns.xml
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
-
     before(:each) do
       get_data_for_sidebar
     end
 
     it "should expose all campaigns as @campaigns and render [index] template" do
-      @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+      @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
 
       get :index
       expect(assigns[:campaigns]).to eq(@campaigns)
@@ -34,7 +32,7 @@ describe CampaignsController do
     end
 
     it "should collect the data for the opportunities sidebar" do
-      @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+      @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
 
       get :index
       expect(assigns[:campaign_status_total].keys.map(&:to_sym) - (@status << :all << :other)).to eq([])
@@ -61,14 +59,14 @@ describe CampaignsController do
       @second = FactoryGirl.create(:campaign, user: current_user, name: "Hello again")
 
       get :index, query: "again"
-      expect(assigns[:campaigns]).to eq([ @second ])
+      expect(assigns[:campaigns]).to eq([@second])
       expect(assigns[:current_query]).to eq("again")
       expect(session[:campaigns_current_query]).to eq("again")
     end
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+        @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
         xhr :get, :index, page: 42
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -79,7 +77,7 @@ describe CampaignsController do
 
       it "should pick up saved page number from session" do
         session[:campaigns_current_page] = 42
-        @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+        @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
         xhr :get, :index
 
         expect(assigns[:current_page]).to eq(42)
@@ -90,7 +88,7 @@ describe CampaignsController do
       it "should reset current_page when query is altered" do
         session[:campaigns_current_page] = 42
         session[:campaigns_current_query] = "bill"
-        @campaigns = [ FactoryGirl.create(:campaign, user: current_user) ]
+        @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
         xhr :get, :index
 
         expect(assigns[:current_page]).to eq(1)
@@ -126,7 +124,6 @@ describe CampaignsController do
   # GET /campaigns/1.xml                                                   HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
-
     describe "with mime type of HTML" do
       before(:each) do
         @campaign = FactoryGirl.create(:campaign, id: 42, user: current_user)
@@ -214,7 +211,6 @@ describe CampaignsController do
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
-
     it "should expose a new campaign as @campaign" do
       @campaign = Campaign.new(user: current_user,
                                access: Setting.default_access)
@@ -234,7 +230,6 @@ describe CampaignsController do
   # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-
     it "should expose the requested campaign as @campaign and render [edit] template" do
       @campaign = FactoryGirl.create(:campaign, id: 42, user: current_user)
 
@@ -301,9 +296,7 @@ describe CampaignsController do
   # POST /campaigns.xml                                                    AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
-
     describe "with valid params" do
-
       it "should expose a newly created campaign as @campaign and render [create] template" do
         @campaign = FactoryGirl.build(:campaign, name: "Hello", user: current_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
@@ -326,7 +319,7 @@ describe CampaignsController do
         allow(Campaign).to receive(:new).and_return(@campaign)
 
         xhr :post, :create, campaign: { name: "Hello" }
-        expect(assigns[:campaigns]).to eq([ @campaign ])
+        expect(assigns[:campaigns]).to eq([@campaign])
       end
 
       it "should add a new comment to the newly created campaign when specified" do
@@ -339,7 +332,6 @@ describe CampaignsController do
     end
 
     describe "with invalid params" do
-
       it "should expose a newly created but unsaved campaign as @campaign and still render [create] template" do
         @campaign = FactoryGirl.build(:campaign, id: nil, name: nil, user: current_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
@@ -355,9 +347,7 @@ describe CampaignsController do
   # PUT /campaigns/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT update" do
-
     describe "with valid params" do
-
       it "should update the requested campaign and render [update] template" do
         @campaign = FactoryGirl.create(:campaign, id: 42, name: "Bye")
 
@@ -383,7 +373,7 @@ describe CampaignsController do
 
         xhr :put, :update, id: 42, campaign: { name: "Hello", access: "Shared", user_ids: %w(7 8) }
         expect(assigns[:campaign].access).to eq("Shared")
-        expect(assigns[:campaign].user_ids.sort).to eq([ 7, 8 ])
+        expect(assigns[:campaign].user_ids.sort).to eq([7, 8])
       end
 
       describe "campaign got deleted or otherwise unavailable" do
@@ -407,7 +397,6 @@ describe CampaignsController do
     end
 
     describe "with invalid params" do
-
       it "should not update the requested campaign, but still expose it as @campaign and still render [update] template" do
         @campaign = FactoryGirl.create(:campaign, id: 42, name: "Hello", user: current_user)
 
@@ -432,7 +421,7 @@ describe CampaignsController do
         @another_campaign = FactoryGirl.create(:campaign, user: current_user)
         xhr :delete, :destroy, id: @campaign.id
 
-        expect(assigns[:campaigns]).to eq([ @another_campaign ])
+        expect(assigns[:campaigns]).to eq([@another_campaign])
         expect { Campaign.find(@campaign.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect(response).to render_template("campaigns/destroy")
       end
@@ -599,7 +588,7 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [ FactoryGirl.create(:campaign, name: "Hello World", user: current_user) ]
+      @auto_complete_matches = [FactoryGirl.create(:campaign, name: "Hello World", user: current_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -611,8 +600,8 @@ describe CampaignsController do
     it "should save user selected campaign preference" do
       xhr :get, :redraw, per_page: 42, view: "brief", sort_by: "name"
       expect(current_user.preference[:campaigns_per_page]).to eq("42")
-      expect(current_user.preference[:campaigns_index_view]).to  eq("brief")
-      expect(current_user.preference[:campaigns_sort_by]).to  eq("campaigns.name ASC")
+      expect(current_user.preference[:campaigns_index_view]).to eq("brief")
+      expect(current_user.preference[:campaigns_sort_by]).to eq("campaigns.name ASC")
     end
 
     it "should reset current page to 1" do
@@ -627,7 +616,7 @@ describe CampaignsController do
       ]
 
       xhr :get, :redraw, per_page: 1, sort_by: "name"
-      expect(assigns(:campaigns)).to eq([ @campaigns.first ])
+      expect(assigns(:campaigns)).to eq([@campaigns.first])
       expect(response).to render_template("campaigns/index")
     end
   end
@@ -635,10 +624,9 @@ describe CampaignsController do
   # POST /campaigns/filter                                                 AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST filter" do
-
     it "should expose filtered campaigns as @campaigns and render [index] template" do
       session[:campaigns_filter] = "planned,started"
-      @campaigns = [ FactoryGirl.create(:campaign, status: "completed", user: current_user) ]
+      @campaigns = [FactoryGirl.create(:campaign, status: "completed", user: current_user)]
 
       xhr :post, :filter, status: "completed"
       expect(assigns(:campaigns)).to eq(@campaigns)
@@ -651,7 +639,5 @@ describe CampaignsController do
 
       expect(session[:campaigns_current_page]).to eq(1)
     end
-
   end
-
 end

@@ -12,9 +12,9 @@ describe "/leads/new" do
     login_and_assign
     @campaign = FactoryGirl.create(:campaign)
     assign(:lead, Lead.new(user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:campaign, @campaign)
-    assign(:campaigns, [ @campaign ])
+    assign(:campaigns, [@campaign])
   end
 
   it "should toggle empty message div if it exists" do
@@ -42,5 +42,4 @@ describe "/leads/new" do
       expect(rendered).to include("crm.flip_form('create_lead');")
     end
   end
-
 end

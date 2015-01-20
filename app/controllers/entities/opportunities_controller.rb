@@ -4,9 +4,9 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class OpportunitiesController < EntitiesController
-  before_filter :load_settings
-  before_filter :get_data_for_sidebar, only: :index
-  before_filter :set_params, only: [ :index, :redraw, :filter ]
+  before_action :load_settings
+  before_action :get_data_for_sidebar, only: :index
+  before_action :set_params, only: [:index, :redraw, :filter]
 
   # GET /opportunities
   #----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities/new
   #----------------------------------------------------------------------------
   def new
-    @opportunity.attributes = {user: current_user, stage: Opportunity.default_stage, access: Setting.default_access, assigned_to: nil}
+    @opportunity.attributes = { user: current_user, stage: Opportunity.default_stage, access: Setting.default_access, assigned_to: nil }
     @account     = Account.new(user: current_user, access: Setting.default_access)
     @accounts    = Account.my.order('name')
 
@@ -42,7 +42,7 @@ class OpportunitiesController < EntitiesController
         @account = related.account if related.respond_to?(:account) && !related.account.nil?
         @campaign = related.campaign if related.respond_to?(:campaign)
       else
-        respond_to_related_not_found(model) and return
+        respond_to_related_not_found(model) && return
       end
     end
 
@@ -56,7 +56,7 @@ class OpportunitiesController < EntitiesController
     @accounts = Account.my.order('name')
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Opportunity.my.find_by_id($1) || $1.to_i
+      @previous = Opportunity.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@opportunity)
@@ -66,7 +66,7 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
-    respond_with(@opportunity) do |format|
+    respond_with(@opportunity) do |_format|
       if @opportunity.save_with_account_and_permissions(params.permit!)
         @opportunity.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
@@ -83,7 +83,7 @@ class OpportunitiesController < EntitiesController
           @account = Account.find(params[:account][:id])
         else
           if request.referer =~ /\/accounts\/(\d+)\z/
-            @account = Account.find($1) # related account
+            @account = Account.find(Regexp.last_match[1]) # related account
           else
             @account = Account.new(user: current_user)
           end
@@ -97,7 +97,7 @@ class OpportunitiesController < EntitiesController
   # PUT /opportunities/1
   #----------------------------------------------------------------------------
   def update
-    respond_with(@opportunity) do |format|
+    respond_with(@opportunity) do |_format|
       if @opportunity.update_with_account_and_permissions(params.permit!)
         if called_from_index_page?
           get_data_for_sidebar
@@ -165,10 +165,10 @@ class OpportunitiesController < EntitiesController
     end
   end
 
-private
+  private
 
   #----------------------------------------------------------------------------
-  alias :get_opportunities :get_list_of_records
+  alias_method :get_opportunities, :get_list_of_records
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
@@ -178,7 +178,7 @@ private
         @opportunities = get_opportunities
         if @opportunities.blank?
           @opportunities = get_opportunities(page: current_page - 1) if current_page > 1
-          render :index and return
+          render(:index) && return
         end
       else # Called from related asset.
         self.current_page = 1
@@ -197,10 +197,10 @@ private
       instance_variable_set("@#{related}", @opportunity.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
       @opportunity_stage_total = HashWithIndifferentAccess[
-        all: Opportunity.my.count,
-        other: 0
+                                 all: Opportunity.my.count,
+                                 other: 0
       ]
-      @stage.each do |value, key|
+      @stage.each do |_value, key|
         @opportunity_stage_total[key] = Opportunity.my.where(stage: key.to_s).count
         @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
       end
@@ -216,7 +216,7 @@ private
   #----------------------------------------------------------------------------
   def set_params
     current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
-    current_user.pref[:opportunities_sort_by]  = Opportunity::sort_by_map[params[:sort_by]] if params[:sort_by]
+    current_user.pref[:opportunities_sort_by]  = Opportunity.sort_by_map[params[:sort_by]] if params[:sort_by]
     session[:opportunities_filter] = params[:stage] if params[:stage]
   end
 end

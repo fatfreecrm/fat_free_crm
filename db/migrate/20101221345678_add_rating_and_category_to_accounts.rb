@@ -1,7 +1,7 @@
 class AddRatingAndCategoryToAccounts < ActiveRecord::Migration
   def self.up
-    add_column :accounts, :rating, :integer, :default => 0, :null => false
-    add_column :accounts, :category, :string, :limit => 32
+    add_column :accounts, :rating, :integer, default: 0, null: false
+    add_column :accounts, :category, :string, limit: 32
   end
 
   def self.down
@@ -9,4 +9,3 @@ class AddRatingAndCategoryToAccounts < ActiveRecord::Migration
     remove_column :accounts, :rating
   end
 end
-

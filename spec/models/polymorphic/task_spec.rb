@@ -29,7 +29,6 @@
 require 'spec_helper'
 
 describe Task do
-
   before { login }
 
   describe "Task/Create" do
@@ -39,7 +38,7 @@ describe Task do
       expect(task.errors).to be_empty
     end
 
-    [ nil, Time.now.utc_offset + 3600 ].each do |offset|
+    [nil, Time.now.utc_offset + 3600].each do |offset|
       before do
         adjust_timezone(offset)
       end
@@ -63,14 +62,14 @@ describe Task do
   describe "Task/Update" do
     it "should update task name" do
       task = FactoryGirl.create(:task, name: "Hello")
-      task.update_attributes({ name: "World"})
+      task.update_attributes(name: "World")
       expect(task.errors).to be_empty
       expect(task.name).to eq("World")
     end
 
     it "should update task category" do
       task = FactoryGirl.create(:task, category: "call")
-      task.update_attributes({ category: "email" })
+      task.update_attributes(category: "email")
       expect(task.errors).to be_empty
       expect(task.category).to eq("email")
     end
@@ -79,7 +78,7 @@ describe Task do
       him = FactoryGirl.create(:user)
       her = FactoryGirl.create(:user)
       task = FactoryGirl.create(:task, assigned_to: him.id)
-      task.update_attributes( { assigned_to: her.id } )
+      task.update_attributes(assigned_to: her.id)
       expect(task.errors).to be_empty
       expect(task.assigned_to).to eq(her.id)
       expect(task.assignee).to eq(her)
@@ -88,20 +87,20 @@ describe Task do
     it "should reassign the task from another person to myself" do
       him = FactoryGirl.create(:user)
       task = FactoryGirl.create(:task, assigned_to: him.id)
-      task.update_attributes( { assigned_to: "" } )
+      task.update_attributes(assigned_to: "")
       expect(task.errors).to be_empty
       expect(task.assigned_to).to eq(nil)
       expect(task.assignee).to eq(nil)
     end
 
-    [ nil, Time.now.utc_offset + 3600 ].each do |offset|
+    [nil, Time.now.utc_offset + 3600].each do |offset|
       before do
         adjust_timezone(offset)
       end
 
       it "should update due date based on selected bucket within #{offset ? 'different' : 'current'} timezone" do
         task = FactoryGirl.create(:task, due_at: Time.now.midnight.tomorrow, bucket: "due_tomorrow")
-        task.update_attributes( { bucket: "due_this_week" } )
+        task.update_attributes(bucket: "due_this_week")
         expect(task.errors).to be_empty
         expect(task.bucket).to eq("due_this_week")
         expect(task.due_at).to eq(Time.zone.now.end_of_week)
@@ -109,13 +108,12 @@ describe Task do
 
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do
         task = FactoryGirl.create(:task, due_at: Time.now.midnight.tomorrow, bucket: "due_tomorrow")
-        task.update_attributes( { bucket: "specific_time", calendar: "2020-03-20" } )
+        task.update_attributes(bucket: "specific_time", calendar: "2020-03-20")
         expect(task.errors).to be_empty
         expect(task.bucket).to eq("specific_time")
         expect(task.due_at.to_i).to eq(Time.parse("2020-03-20").to_i)
       end
     end
-
   end
 
   describe "Task/Complete" do
@@ -156,7 +154,7 @@ describe Task do
     it "completion should preserve original due date" do
       due_at = Time.now - 42.days
       task = FactoryGirl.create(:task, due_at: due_at, bucket: "specific_time",
-                            calendar: due_at.strftime('%Y-%m-%d %H:%M'))
+                                       calendar: due_at.strftime('%Y-%m-%d %H:%M'))
       task.update_attributes(completed_at: Time.now, completed_by: current_user.id, calendar: '')
       expect(task.completed?).to eq(true)
       expect(task.due_at).to eq(due_at.utc.strftime('%Y-%m-%d %H:%M'))
@@ -228,7 +226,6 @@ describe Task do
   end
 
   describe "task.computed_bucket" do
-
     context "when overdue" do
       subject { described_class.new(due_at: 1.days.ago, bucket: "specific_time") }
 
@@ -335,13 +332,11 @@ describe Task do
   end
 
   describe "#parse_calendar_date" do
-
     it "should parse the date" do
       @task = Task.new(calendar: '2020-12-23')
       expect(Time).to receive(:parse).with('2020-12-23')
       @task.send(:parse_calendar_date)
     end
-
   end
 
   describe "scopes" do

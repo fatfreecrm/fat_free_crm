@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CommentsController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
 
   # GET /comments
   # GET /comments.json
@@ -78,17 +78,16 @@ class CommentsController < ApplicationController
     respond_with(@comment)
   end
 
-protected
+  protected
 
   def comment_params
     params[:comment].permit!
   end
 
-private
+  private
 
   #----------------------------------------------------------------------------
   def extract_commentable_name(params)
-    params.keys.detect {|x| x =~ /_id$/ }.try(:sub, /_id$/, '')
+    params.keys.detect { |x| x =~ /_id$/ }.try(:sub, /_id$/, '')
   end
-
 end

@@ -31,5 +31,4 @@ describe "/users/password" do
     expect(rendered).to include("crm.set_title('change_password', 'Change Password');")
     expect(rendered).to include("$('#current_password').focus();")
   end
-
 end

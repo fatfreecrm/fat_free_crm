@@ -30,5 +30,4 @@ describe "/users/avatar" do
     expect(rendered).to include("crm.flip_form('upload_avatar');")
     expect(rendered).to include("crm.set_title('upload_avatar', 'Upload Picture');")
   end
-
 end

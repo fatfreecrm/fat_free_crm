@@ -11,7 +11,7 @@ describe "/campaigns/edit" do
   before do
     login_and_assign
     assign(:campaign, @campaign = FactoryGirl.create(:campaign, user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
   end
 
   it "cancel from campaign index page: should replace [Edit Campaign] form with campaign partial" do
@@ -42,14 +42,14 @@ describe "/campaigns/edit" do
     assign(:previous, previous = 41)
 
     render
-    expect(rendered).to include(%Q/crm.flick('campaign_#{previous}', 'remove');/)
+    expect(rendered).to include(%/crm.flick('campaign_#{previous}', 'remove');/)
   end
 
   it "edit from campaigns index page: should turn off highlight, hide [Create Campaign], and replace current campaign with [Edit Campaign] form" do
     params[:cancel] = nil
 
     render
-    expect(rendered).to include(%Q/crm.highlight_off('campaign_#{@campaign.id}');/)
+    expect(rendered).to include(%/crm.highlight_off('campaign_#{@campaign.id}');/)
     expect(rendered).to include("crm.hide_form('create_campaign')")
     expect(rendered).to include("$('#campaign_#{@campaign.id}').html")
   end
@@ -61,5 +61,4 @@ describe "/campaigns/edit" do
     expect(rendered).to include("$('#edit_campaign').html")
     expect(rendered).to include("crm.flip_form('edit_campaign')")
   end
-
 end

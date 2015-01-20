@@ -10,9 +10,9 @@ describe "/opportunities/update" do
     login_and_assign
 
     assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, user: current_user, assignee: FactoryGirl.create(:user)))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
     assign(:stage, Setting.unroll(:opportunity_stage))
     assign(:opportunity_stage_total, Hash.new(1))
   end
@@ -46,7 +46,7 @@ describe "/opportunities/update" do
       it "should replace [Edit Opportunity] with opportunity partial and highlight it" do
         render
         expect(rendered).to include("$('#opportunity_#{@opportunity.id}').replaceWith")
-        expect(rendered).to include(%Q/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
+        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
       end
 
       it "should update sidebar" do
@@ -90,7 +90,7 @@ describe "/opportunities/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
         render
 
-        expect(rendered).to include(%Q/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
+        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
       end
     end
   end
@@ -109,7 +109,7 @@ describe "/opportunities/update" do
         render
         expect(rendered).to include("$('#edit_opportunity').html")
         expect(rendered).to include('crm.create_or_select_account(false)')
-        expect(rendered).to include(%Q/$('#edit_opportunity').effect("shake"/)
+        expect(rendered).to include(%/$('#edit_opportunity').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -123,7 +123,7 @@ describe "/opportunities/update" do
         render
         expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
         expect(rendered).to include('crm.create_or_select_account(false)')
-        expect(rendered).to include(%Q/$('#opportunity_#{@opportunity.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -141,7 +141,7 @@ describe "/opportunities/update" do
       it "should redraw the [edit_opportunity] form and shake it" do
         render
         expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
-        expect(rendered).to include(%Q/$('#opportunity_#{@opportunity.id}').effect("shake"/)
+        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

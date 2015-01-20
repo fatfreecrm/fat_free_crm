@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe 'FatFreeCRM::Fields' do
-
   class Foo
     include FatFreeCRM::Fields
     include ActiveModel::Validations
@@ -36,7 +35,6 @@ describe 'FatFreeCRM::Fields' do
   end
 
   describe "field_groups" do
-
     it "should call FieldGroup" do
       expect(ActiveRecord::Base.connection).to receive(:table_exists?).with('field_groups').and_return(true)
       dummy_scope = double
@@ -49,11 +47,9 @@ describe 'FatFreeCRM::Fields' do
       expect(ActiveRecord::Base.connection).to receive(:table_exists?).with('field_groups').and_return(false)
       expect(Foo.new.field_groups).to eq([])
     end
-
   end
 
   describe "fields" do
-
     before(:each) do
       @f1 = double(Field)
       @f2 = double(Field)
@@ -65,23 +61,20 @@ describe 'FatFreeCRM::Fields' do
       expect(Foo).to receive(:field_groups).and_return(@field_groups)
       expect(Foo.fields).to eq([@f1, @f2, @f3])
     end
-
   end
 
   describe "serialize_custom_fields!" do
-
     before(:each) do
       @f1 = double(Field, as: 'check_boxes', name: 'field1')
       @f2 = double(Field, as: 'date', name: 'field2')
     end
 
     it "should serialize checkbox fields as Array" do
-      allow(Foo).to receive(:serialized_attributes).and_return( {field1: @f1, field2: @f2} )
+      allow(Foo).to receive(:serialized_attributes).and_return(field1: @f1, field2: @f2)
       expect(Foo).to receive(:fields).and_return([@f1, @f2])
       expect(Foo).to receive(:serialize).with(:field1, Array)
       Foo.serialize_custom_fields!
     end
-
   end
 
   it "should validate custom fields" do
@@ -91,10 +84,9 @@ describe 'FatFreeCRM::Fields' do
   end
 
   describe "custom_fields_validator" do
-
     before(:each) do
       @f1 = double(Field)
-      @field_groups = [ double(FieldGroup, fields: [@f1]) ]
+      @field_groups = [double(FieldGroup, fields: [@f1])]
     end
 
     it "should call custom_validator on each custom field" do
@@ -103,7 +95,5 @@ describe 'FatFreeCRM::Fields' do
       expect(foo).to receive(:field_groups).and_return(@field_groups)
       expect(foo).to be_valid
     end
-
   end
-
 end

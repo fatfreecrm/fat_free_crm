@@ -1,9 +1,9 @@
 class CreateAccountOpportunities < ActiveRecord::Migration
   def self.up
-    create_table :account_opportunities, :force => true do |t|
+    create_table :account_opportunities, force: true do |t|
       t.references :account
       t.references :opportunity
-      t.datetime   :deleted_at
+      t.datetime :deleted_at
       t.timestamps
     end
   end
@@ -12,4 +12,3 @@ class CreateAccountOpportunities < ActiveRecord::Migration
     drop_table :account_opportunities
   end
 end
-

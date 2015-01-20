@@ -29,4 +29,3 @@ describe AccountOpportunity do
     AccountOpportunity.create!(@valid_attributes)
   end
 end
-

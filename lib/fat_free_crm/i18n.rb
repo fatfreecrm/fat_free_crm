@@ -7,7 +7,6 @@ require 'pathname'
 
 module FatFreeCRM
   module I18n
-
     #----------------------------------------------------------------------------
     def t(*args)
       if args.size == 1
@@ -27,14 +26,14 @@ module FatFreeCRM
     # translations too and we only want the locales that Fat Free CRM supports.
     #----------------------------------------------------------------------------
     def locales
-      @@locales ||= ::I18n.load_path.grep(/_fat_free_crm\.yml$/).map{ |path| Pathname.new(path).basename.to_s.match(/(.*)_fat_free_crm\.yml/)[1] }.uniq
+      @@locales ||= ::I18n.load_path.grep(/_fat_free_crm\.yml$/).map { |path| Pathname.new(path).basename.to_s.match(/(.*)_fat_free_crm\.yml/)[1] }.uniq
     end
 
     # Return a hash where the key is locale name, and the value is language name
     # as defined in the locale_fat_free_crm.yml file.
     #----------------------------------------------------------------------------
     def languages
-      @@languages ||= Hash[ locales.map{ |locale| [ locale, t(:language, locale: locale) ] } ]
+      @@languages ||= Hash[locales.map { |locale| [locale, t(:language, locale: locale)] }]
     end
   end
 end

@@ -11,7 +11,7 @@ describe "/accounts/new" do
   before do
     login_and_assign
     assign(:account, Account.new(user: current_user))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
   end
 
   it "should toggle empty message div if it exists" do
@@ -39,5 +39,4 @@ describe "/accounts/new" do
       expect(rendered).to include("crm.flip_form('create_account');")
     end
   end
-
 end

@@ -29,6 +29,4 @@ describe "admin/users/new" do
       expect(rendered).to include("crm.flip_form('create_user');")
     end
   end
-
 end
-
