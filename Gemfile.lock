@@ -259,7 +259,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.4.2)
-    ransack (1.5.1)
+    ransack (1.6.2)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
@@ -429,7 +429,7 @@ DEPENDENCIES
   rails3-jquery-autocomplete
   rails_12factor
   rails_autolink
-  ransack (~> 1.5.1)
+  ransack (~> 1.6.2)
   ransack_ui (>= 1.3.0)
   rb-fchange
   rb-fsevent
