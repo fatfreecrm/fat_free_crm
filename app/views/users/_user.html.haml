@@ -21,8 +21,12 @@
       - if !@user.phone.blank? && !@user.mobile.blank?
         %div #{t :phone}: <b>#{@user.phone}</b>, #{t :mobile}: <b>#{@user.mobile}</b>
       - else
-        = "#{t :phone}: <b>#{@user.phone}</b>" unless @user.phone.blank?
-        = "#{t :mobile}: <b>#{@user.mobile}</b>" unless @user.mobile.blank?
+        - if @user.phone.present?
+          = t(:phone) + ":"
+          = content_tag(:b, @user.phone)
+        - if @user.mobile.present?
+          = t(:mobile) + ":"
+          = content_tag(:b, @user.mobile)
 
 - if Setting.per_user_locale
   %script= render "languages"
