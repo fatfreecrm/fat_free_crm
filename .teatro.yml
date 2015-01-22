@@ -1,0 +1,3 @@
+stage:
+  after_database:
+    - rake ffcrm:demo:load
