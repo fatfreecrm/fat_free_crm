@@ -443,6 +443,7 @@ DEPENDENCIES
   select2-rails
   selenium-webdriver
   simple_form
+  sprockets-rails (= 2.2.2)
   therubyracer
   thin
   thor
