@@ -63,7 +63,7 @@ describe CustomField do
   end
 
   it "should return a safe list of types for the 'as' select options" do
-    { "email"   => %w(check_boxes text string email url tel select radio),
+    { "email"   => %w(check_boxes text string email url tel select radio_buttons),
       "integer" => %w(integer float) }.each do |type, expected_arr|
       c = FactoryGirl.build(:custom_field, as: type)
       opts = c.available_as
