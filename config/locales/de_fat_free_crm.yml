@@ -707,7 +707,7 @@ de:
       title: Auswahlliste
     multiselect:
       title: Mehrfachauswahlliste
-    radio:
+    radio_buttons:
       title: Radio Buttons
     boolean:
       title: Checkbox
