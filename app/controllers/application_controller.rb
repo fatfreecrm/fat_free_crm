@@ -50,6 +50,16 @@ class ApplicationController < ActionController::Base
 private
 
   #
+  # In rails 3, the default behaviour for handle_unverified_request is to delete the session
+  # and continue executing the request. However, we use cookie based authentication and need
+  # to halt proceedings. In Rails 4, use "protect_from_forgery with: :exception"
+  # See http://blog.nvisium.com/2014/09/understanding-protectfromforgery.html for more details.
+  #----------------------------------------------------------------------------
+  def handle_unverified_request
+    raise ActionController::InvalidAuthenticityToken
+  end
+
+  #
   # Takes { :related => 'campaigns/7' } or { :related => '5' }
   #   and returns array of object ids that should be excluded from search
   #   assumes controller_name is a method on 'related' class that returns a collection
