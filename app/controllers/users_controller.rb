@@ -54,6 +54,7 @@ class UsersController < ApplicationController
   # PUT /users/1.js
   #----------------------------------------------------------------------------
   def update
+    params[:user][:email].strip!
     @user.update_attributes(params[:user])
     respond_with(@user)
   end
