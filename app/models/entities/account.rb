@@ -113,8 +113,12 @@ class Account < ActiveRecord::Base
   # Class methods.
   #----------------------------------------------------------------------------
   def self.create_or_select_for(model, params)
+    account_by_name = Account.find_by(name: params[:name])
+
     if params[:id].present?
       account = Account.find(params[:id])
+    elsif account_by_name.present?
+      account = account_by_name
     else
       account = Account.new(params)
       if account.access != "Lead" || model.nil?
