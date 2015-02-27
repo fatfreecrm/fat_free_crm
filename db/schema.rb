@@ -11,22 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141126031837) do
+ActiveRecord::Schema.define(:version => 20150227123054) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
     t.integer  "contact_id"
     t.datetime "deleted_at"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "account_opportunities", :force => true do |t|
     t.integer  "account_id"
     t.integer  "opportunity_id"
     t.datetime "deleted_at"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "account_opportunities", ["account_id", "opportunity_id"], :name => "index_account_opportunities_on_account_id_and_opportunity_id"
@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.string   "phone",            :limit => 32
     t.string   "fax",              :limit => 32
     t.datetime "deleted_at"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "email",            :limit => 254
     t.string   "background_info"
     t.integer  "rating",                          :default => 0,        :null => false
@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.string   "action",       :limit => 32, :default => "created"
     t.string   "info",                       :default => ""
     t.boolean  "private",                    :default => false
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "activities", ["created_at"], :name => "index_activities_on_created_at"
@@ -78,8 +78,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.string   "address_type",     :limit => 16
     t.integer  "addressable_id"
     t.string   "addressable_type"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
   end
 
@@ -92,8 +92,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.integer  "image_file_size"
     t.string   "image_file_name"
     t.string   "image_content_type"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "campaigns", :force => true do |t|
@@ -113,8 +113,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.date     "ends_on"
     t.text     "objectives"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                                             :null => false
-    t.datetime "updated_at",                                                                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
     t.text     "subscribed_users"
   end
@@ -129,8 +129,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.boolean  "private"
     t.string   "title",                          :default => ""
     t.text     "comment"
-    t.datetime "created_at",                                             :null => false
-    t.datetime "updated_at",                                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state",            :limit => 16, :default => "Expanded", :null => false
   end
 
@@ -139,8 +139,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.integer  "opportunity_id"
     t.string   "role",           :limit => 32
     t.datetime "deleted_at"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "contact_opportunities", ["contact_id", "opportunity_id"], :name => "index_contact_opportunities_on_contact_id_and_opportunity_id"
@@ -168,8 +168,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.date     "born_on"
     t.boolean  "do_not_call",                     :default => false,    :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
     t.string   "skype",            :limit => 128
     t.text     "subscribed_users"
@@ -193,8 +193,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.datetime "sent_at"
     t.datetime "received_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "state",           :limit => 16, :default => "Expanded", :null => false
   end
 
@@ -205,8 +205,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.string   "label",      :limit => 128
     t.integer  "position"
     t.string   "hint"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "tag_id"
     t.string   "klass_name", :limit => 32
   end
@@ -224,8 +224,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.boolean  "disabled"
     t.boolean  "required"
     t.integer  "maxlength"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "pair_id"
     t.text     "settings"
   end
@@ -235,8 +235,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
 
   create_table "groups", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "groups_users", :id => false, :force => true do |t|
@@ -271,8 +271,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.integer  "rating",                          :default => 0,        :null => false
     t.boolean  "do_not_call",                     :default => false,    :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
     t.string   "skype",            :limit => 128
     t.text     "subscribed_users"
@@ -284,8 +284,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
   create_table "lists", :force => true do |t|
     t.string   "name"
     t.text     "url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "user_id"
   end
 
@@ -304,8 +304,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.decimal  "discount",                       :precision => 12, :scale => 2
     t.date     "closes_on"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                                          :null => false
-    t.datetime "updated_at",                                                                          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
     t.text     "subscribed_users"
   end
@@ -317,8 +317,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.integer  "user_id"
     t.integer  "asset_id"
     t.string   "asset_type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "group_id"
   end
 
@@ -330,8 +330,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.integer  "user_id"
     t.string   "name",       :limit => 32, :default => "", :null => false
     t.text     "value"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "preferences", ["user_id", "name"], :name => "index_preferences_on_user_id_and_name"
@@ -339,8 +339,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
@@ -349,8 +349,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
   create_table "settings", :force => true do |t|
     t.string   "name",       :limit => 32, :default => "", :null => false
     t.text     "value"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "settings", ["name"], :name => "index_settings_on_name"
@@ -365,12 +365,15 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "taggings_count", :default => 0
   end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
 
   create_table "tasks", :force => true do |t|
     t.integer  "user_id"
@@ -385,8 +388,8 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.datetime "due_at"
     t.datetime "completed_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "background_info"
     t.text     "subscribed_users"
   end
@@ -412,24 +415,22 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.string   "password_salt",                      :default => "",    :null => false
     t.string   "persistence_token",                  :default => "",    :null => false
     t.string   "perishable_token",                   :default => "",    :null => false
-    t.datetime "last_request_at"
     t.datetime "last_login_at"
     t.datetime "current_login_at"
     t.string   "last_login_ip"
     t.string   "current_login_ip"
     t.integer  "login_count",                        :default => 0,     :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "admin",                              :default => false, :null => false
     t.datetime "suspended_at"
     t.string   "single_access_token"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
-  add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
   add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
-  add_index "users", ["persistence_token"], :name => "index_users_on_remember_token"
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
   add_index "users", ["username", "deleted_at"], :name => "index_users_on_username_and_deleted_at", :unique => true
 
   create_table "versions", :force => true do |t|
@@ -442,10 +443,12 @@ ActiveRecord::Schema.define(:version => 20141126031837) do
     t.text     "object_changes"
     t.integer  "related_id"
     t.string   "related_type"
+    t.integer  "transaction_id"
   end
 
   add_index "versions", ["created_at"], :name => "index_versions_on_created_at"
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
+  add_index "versions", ["transaction_id"], :name => "index_versions_on_transaction_id"
   add_index "versions", ["whodunnit"], :name => "index_versions_on_whodunnit"
 
 end
