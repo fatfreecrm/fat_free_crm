@@ -20,7 +20,6 @@
 #  password_salt       :string(255)     default(""), not null
 #  persistence_token   :string(255)     default(""), not null
 #  perishable_token    :string(255)     default(""), not null
-#  last_request_at     :datetime
 #  last_login_at       :datetime
 #  current_login_at    :datetime
 #  last_login_ip       :string(255)
@@ -55,11 +54,11 @@ aaron:
   perishable_token: TarXlrOPfaokNOzls2U8
   single_access_token: TarXlrOPfaokNOzls2U8
   last_login_at: <%= login = Date.today - rand(15).days %>
-  current_login_at: 
+  current_login_at:
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
-  deleted_at: 
+  deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
@@ -81,11 +80,11 @@ ben:
   perishable_token: VyiXHtZ4HsFS62xCnK4I
   single_access_token: VyiXHtZ4HsFS62xCnK4I
   last_login_at: <%= login = Date.today - rand(15).days %>
-  current_login_at: 
+  current_login_at:
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
-  deleted_at: 
+  deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
@@ -107,11 +106,11 @@ cindy:
   perishable_token: eRGJ2agxeuuds5qlJSqY
   single_access_token: eRGJ2agxeuuds5qlJSqY
   last_login_at: <%= login = Date.today - rand(15).days %>
-  current_login_at: 
+  current_login_at:
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
-  deleted_at: 
+  deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
@@ -133,11 +132,11 @@ dan:
   perishable_token: fniVMOjbZLRnKhd2DLIx
   single_access_token: fniVMOjbZLRnKhd2DLIx
   last_login_at: <%= login = Date.today - rand(15).days %>
-  current_login_at: 
+  current_login_at:
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
-  deleted_at: 
+  deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
@@ -159,11 +158,11 @@ elizabeth:
   perishable_token: EtPRtOAiXBm2XDYHtjMC
   single_access_token: EtPRtOAiXBm2XDYHtjMC
   last_login_at: <%= login = Date.today - rand(15).days %>
-  current_login_at: 
+  current_login_at:
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
-  deleted_at: 
+  deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
 
@@ -184,7 +183,6 @@ frank:
   persistence_token: 6158edf71b5cdd674f9d86082f7c580ac27277fcaa9ea6732d2eefdaac09f20fa4554307c028fa294c2f2d4fbb6035f118048dffa351768d8cb9125285d06baf
   perishable_token: SnxgLcY4wRMVKoa1jPLK
   single_access_token: SnxgLcY4wRMVKoa1jPLK
-  last_request_at:
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at:
   last_login_ip: 127.0.0.1
@@ -211,7 +209,6 @@ george:
   persistence_token: 5eaccdebf683a87050df34e45c5e3aa9d884b132be4e1bc1d759924814518fa9d29adfe8556ad6e7223ec692a481d4f96772796ee835f3b14a7e86cba222abd6
   perishable_token: SYFLlZ466jZ04ylTnvXv
   single_access_token: SYFLlZ466jZ04ylTnvXv
-  last_request_at:
   last_login_at: <%= login = Date.today - rand(15).days %>
   current_login_at:
   last_login_ip: 127.0.0.1
@@ -238,12 +235,11 @@ heather:
   persistence_token: 6fd550c1ec1d422c3077f497fb3a886dbd9e24b10d0148ef1d8a0e477395594c7217857906fcab5deedadda246c932e39131837ff023c28d4902cb5990e6c87a
   perishable_token: a0HA6LWqvfc1h0aj0wqG
   single_access_token: a0HA6LWqvfc1h0aj0wqG
-  last_request_at: 
   last_login_at: <%= login = Date.today - rand(15).days %>
-  current_login_at: 
+  current_login_at:
   last_login_ip: 127.0.0.1
   current_login_ip: 127.0.0.1
   login_count: <%= 1 + rand(100) %>
-  deleted_at: 
+  deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
