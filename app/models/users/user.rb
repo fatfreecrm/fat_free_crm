@@ -25,7 +25,6 @@
 #  password_salt       :string(255)     default(""), not null
 #  persistence_token   :string(255)     default(""), not null
 #  perishable_token    :string(255)     default(""), not null
-#  last_request_at     :datetime
 #  last_login_at       :datetime
 #  current_login_at    :datetime
 #  last_login_ip       :string(255)
@@ -59,7 +58,7 @@ class User < ActiveRecord::Base
   has_many    :lists
   has_and_belongs_to_many :groups
 
-  has_paper_trail :ignore => [:last_request_at, :perishable_token]
+  has_paper_trail :ignore => [:perishable_token]
 
   scope :by_id, -> { order('id DESC') }
   scope :except, ->(user) { where('id != ?', user.id).by_name }
