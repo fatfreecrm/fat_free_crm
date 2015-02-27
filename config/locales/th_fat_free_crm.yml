@@ -506,7 +506,7 @@ th:
   crm_admin_page: Fat Free CRM Administration
   approve: อนุมัติ
   create_user: เพิ่มผู้ใช้
-  last_seen: ดูล่าสุด%{value}ที่ผ่านมา
+  last_logged_in: last logged in %{value}
   personal_information: ข้อมูลส่วนตัว
   reactivate: กลับมาทำงานอีกครั้ง
   save_user: บันทึกผู้ใช้

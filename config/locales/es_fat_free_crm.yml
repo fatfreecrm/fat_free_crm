@@ -527,7 +527,7 @@ es:
   crm_admin_page: Fat Free CRM Administration
   approve: Aprobar
   create_user: Crear usuario
-  last_seen: visto por última vez hace %{value}
+  last_logged_in: last logged in %{value}
   personal_information: Información personal
   reactivate: Reactivar
   save_user: Guardar Usuario

@@ -324,7 +324,7 @@ zh-CN:
   fax: 传真
   intro: 可稍后添加%{value}
   keep_private: 保持私有，不与他人分享
-  mail_to: 发邮件给%{value}  
+  mail_to: 发邮件给%{value}
   make_public: 与所有人分享
   mobile_small: 手机
   open_in_window: 在一个新窗口打开%{value}
@@ -713,8 +713,7 @@ zh-CN:
     items that still reference it.
   approve: 批准
   create_user: 创建用户
-  last_seen: 上次 %{value} 之前见到
-  last_seen2: last seen %{value}
+  last_logged_in: last logged in %{value}
   group_memberships: 群组成员关系
   personal_information: 个人信息
   reactivate: 重新激活
@@ -772,7 +771,7 @@ zh-CN:
   comment_notification:
     intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
     reply_instructions: 直接回复邮件添加评论或者
-      在线浏览 %{entity} 
+      在线浏览 %{entity}
 
   # Lists
   #----------------------------------------------------------------------------

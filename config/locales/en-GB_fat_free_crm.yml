@@ -713,8 +713,7 @@ en-GB:
     items that still reference it.
   approve: Approve
   create_user: Create User
-  last_seen: last seen %{value} ago
-  last_seen2: last seen %{value}
+  last_logged_in: last logged in %{value}
   personal_information: Personal Information
   group_memberships: Group Memberships
   reactivate: Reactivate
