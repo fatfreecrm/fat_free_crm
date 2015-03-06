@@ -24,7 +24,7 @@ module RSpec # :nodoc:
           begin
             @spec_scope.__send__(@selector_assertion, *@args, &@block)
             true
-          rescue ::Test::Unit::AssertionFailedError => @error
+          rescue ::ActiveSupport::TestCase::Assertion => @error
             false
           rescue ::MiniTest::Assertion => @error
             false
