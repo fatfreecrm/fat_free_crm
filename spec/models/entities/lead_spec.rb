@@ -39,11 +39,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Lead do
-
   before { login }
 
   it "should create a new instance given valid attributes" do
-    Lead.create!(:first_name => "Billy", :last_name => "Bones")
+    Lead.create!(first_name: "Billy", last_name: "Bones")
   end
 
   describe "Attach" do
@@ -52,15 +51,15 @@ describe Lead do
     end
 
     it "should return nil when attaching existing task" do
-      @task = FactoryGirl.create(:task, :asset => @lead, :user => current_user)
+      @task = FactoryGirl.create(:task, asset: @lead, user: current_user)
 
-      @lead.attach!(@task).should == nil
+      expect(@lead.attach!(@task)).to eq(nil)
     end
 
     it "should return non-empty list of tasks when attaching new task" do
-      @task = FactoryGirl.create(:task, :user => current_user)
+      @task = FactoryGirl.create(:task, user: current_user)
 
-      @lead.attach!(@task).should == [ @task ]
+      expect(@lead.attach!(@task)).to eq([@task])
     end
   end
 
@@ -70,35 +69,29 @@ describe Lead do
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @lead, :user => current_user)
-      @lead.tasks.count.should == 1
+      @task = FactoryGirl.create(:task, asset: @lead, user: current_user)
+      expect(@lead.tasks.count).to eq(1)
 
       @lead.discard!(@task)
-      @lead.reload.tasks.should == []
-      @lead.tasks.count.should == 0
+      expect(@lead.reload.tasks).to eq([])
+      expect(@lead.tasks.count).to eq(0)
     end
   end
 
   describe "Exportable" do
     describe "assigned lead" do
-      before do
-        Lead.delete_all
-        FactoryGirl.create(:lead, :user => FactoryGirl.create(:user), :assignee => FactoryGirl.create(:user))
-        FactoryGirl.create(:lead, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
-      end
+      let(:lead1) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user)) }
+      let(:lead2) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
-        let(:exported) { Lead.all }
+        let(:exported) { [lead1, lead2] }
       end
     end
 
     describe "unassigned lead" do
-      before do
-        Lead.delete_all
-        FactoryGirl.create(:lead, :user => FactoryGirl.create(:user), :assignee => nil)
-        FactoryGirl.create(:lead, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
-      end
+      let(:lead1) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user), assignee: nil) }
+      let(:lead2) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
-        let(:exported) { Lead.all }
+        let(:exported) { [lead1, lead2] }
       end
     end
   end

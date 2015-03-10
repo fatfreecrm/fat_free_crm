@@ -1,8 +1,8 @@
 class CreatePermissions < ActiveRecord::Migration
   def self.up
-    create_table :permissions, :force => true do |t|
+    create_table :permissions, force: true do |t|
       t.references :user                          # User who is allowed to access the asset.
-      t.references :asset, :polymorphic => true   # Creates asset_id and asset_type.
+      t.references :asset, polymorphic: true   # Creates asset_id and asset_type.
       t.timestamps
     end
 
@@ -13,4 +13,3 @@ class CreatePermissions < ActiveRecord::Migration
     drop_table :permissions
   end
 end
-

@@ -47,17 +47,19 @@
 #
 
 class CustomField < Field
-  after_validation :update_column, :on => :update
-  before_create    :add_column
-  after_create     :add_ransack_translation
+  delegate :table_name, to: :klass
+
+  after_validation :update_column, on: :update
+  before_create :add_column
+  after_create :add_ransack_translation
 
   SAFE_DB_TRANSITIONS = {
-    :any => [['date', 'time', 'timestamp'], ['integer', 'float']],
-    :one => {'string' => 'text'}
+    any: [%w(date time timestamp), %w(integer float)],
+    one: { 'string' => 'text' }
   }
 
   def available_as
-    Field.field_types.reject do |new_type, params|
+    Field.field_types.reject do |new_type, _params|
       db_transition_safety(as, new_type) == :unsafe
     end
   end
@@ -67,8 +69,8 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def custom_validator(obj)
     attr = name.to_sym
-    obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.required', :field => label)) if required? and obj.send(attr).blank?
-    obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.maxlength', :field => label)) if (maxlength.to_i > 0) and (obj.send(attr).to_s.length > maxlength.to_i)
+    obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.required', field: label)) if required? && obj.send(attr).blank?
+    obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.maxlength', field: label)) if (maxlength.to_i > 0) && (obj.send(attr).to_s.length > maxlength.to_i)
   end
 
   protected
@@ -81,24 +83,16 @@ class CustomField < Field
   #   :safe   => transition is safe
   #   :unsafe => transition is unsafe
   #------------------------------------------------------------------------------
-  def db_transition_safety(old_type, new_type = self.as)
-    old_col, new_col = [old_type, new_type].map{|t| column_type(t).to_s }
+  def db_transition_safety(old_type, new_type = as)
+    old_col, new_col = [old_type, new_type].map { |t| column_type(t).to_s }
     return :null if old_col == new_col  # no transition needed
     return :safe if SAFE_DB_TRANSITIONS[:one].any? do |start, final|
       old_col == start.to_s && new_col == final.to_s  # one-to-one
     end
     return :safe if SAFE_DB_TRANSITIONS[:any].any? do |col_set|
-      [old_col, new_col].all?{|c| col_set.include?(c.to_s)}  # any-to-any
+      [old_col, new_col].all? { |c| col_set.include?(c.to_s) }  # any-to-any
     end
     :unsafe # Else, unsafe.
-  end
-
-  def table_name
-    klass.table_name
-  end
-
-  def klass_column_names
-    klass.columns.map(&:name)
   end
 
   # Generate column name for custom field.
@@ -109,7 +103,7 @@ class CustomField < Field
     suffix = nil
     field_name = 'cf_' + label.downcase.gsub(/[^a-z0-9]+/, '_')
     while (final_name = [field_name, suffix].compact.join('_')) &&
-          klass_column_names.include?(final_name) do
+          klass.column_names.include?(final_name)
       suffix = (suffix || 1) + 1
     end
     final_name
@@ -118,23 +112,23 @@ class CustomField < Field
   # Returns options for ActiveRecord operations
   #------------------------------------------------------------------------------
   def column_options
-    Field.field_types[self.as][:column_options] || {}
+    Field.field_types[as][:column_options] || {}
   end
 
   # Create a new column to hold the custom field data
   #------------------------------------------------------------------------------
   def add_column
     self.name = generate_column_name if name.blank?
-    connection.add_column(table_name, name, column_type, column_options)
+    klass.connection.add_column(table_name, name, column_type, column_options)
     klass.reset_column_information
     klass.serialize_custom_fields!
   end
 
   # Adds custom field translation for Ransack
   def add_ransack_translation
-    I18n.backend.store_translations(Setting.locale.to_sym, {
-      ransack: {attributes: {klass.model_name.singular => {name => label}}}
-    })
+    I18n.backend.store_translations(Setting.locale.to_sym,
+                                    ransack: { attributes: { klass.model_name.singular => { name => label } } }
+    )
     # Reset Ransack cache
     # Ransack::Helpers::FormBuilder.cached_searchable_attributes_for_base = {}
   end
@@ -143,8 +137,8 @@ class CustomField < Field
   # Note: columns will never be renamed or destroyed
   #------------------------------------------------------------------------------
   def update_column
-    if self.errors.empty? && db_transition_safety(as_was) == :safe
-      connection.change_column(table_name, name, column_type, column_options)
+    if errors.empty? && db_transition_safety(as_was) == :safe
+      klass.connection.change_column(table_name, name, column_type, column_options)
       klass.reset_column_information
       klass.serialize_custom_fields!
     end

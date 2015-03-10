@@ -15,51 +15,50 @@ describe "/contacts/create" do
   describe "create success" do
     before do
       assign(:contact, @contact = FactoryGirl.create(:contact))
-      assign(:contacts, [ @contact ].paginate)
+      assign(:contacts, [@contact].paginate)
     end
 
     it "should hide [Create Contact] form and insert contact partial" do
       render
 
-      rendered.should include("$('#contacts').prepend('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
-      rendered.should include(%Q/$('#contact_#{@contact.id}').effect("highlight"/)
+      expect(rendered).to include("$('#contacts').prepend('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+      expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
     end
 
     it "should refresh sidebar when called from contacts index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
       render
 
-      rendered.should include("#sidebar")
-      rendered.should have_text("Recent Items")
+      expect(rendered).to include("#sidebar")
+      expect(rendered).to have_text("Recent Items")
     end
 
     it "should update pagination when called from contacts index" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
       render
 
-      rendered.should include("#paginate")
+      expect(rendered).to include("#paginate")
     end
 
     it "should update recently viewed items when called from related asset" do
       render
 
-      rendered.should include("#recently")
+      expect(rendered).to include("#recently")
     end
   end
 
   describe "create failure" do
     it "create (failure): should re-render [create] template in :create_contact div" do
-      assign(:contact, FactoryGirl.build(:contact, :first_name => nil)) # make it invalid
+      assign(:contact, FactoryGirl.build(:contact, first_name: nil)) # make it invalid
       @account = FactoryGirl.create(:account)
-      assign(:users, [ FactoryGirl.create(:user) ])
+      assign(:users, [FactoryGirl.create(:user)])
       assign(:account, @account)
-      assign(:accounts, [ @account ])
+      assign(:accounts, [@account])
 
       render
 
-      rendered.should include("$('#create_contact').html")
-      rendered.should include(%Q/$('#create_contact').effect("shake"/)
+      expect(rendered).to include("$('#create_contact').html")
+      expect(rendered).to include(%/$('#create_contact').effect("shake"/)
     end
   end
-
 end

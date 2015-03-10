@@ -14,17 +14,16 @@ describe "/authentications/new" do
   end
 
   it "renders the login form without signup link" do
-    view.should_receive(:can_signup?).and_return(false)
+    expect(view).to receive(:can_signup?).and_return(false)
     render
-    rendered.should have_tag("form[action=#{authentication_path}][class=new_authentication]")
-    rendered.should_not have_tag("a[href=#{signup_path}]")
+    expect(rendered).to have_tag("form[action='#{authentication_path}'][class=new_authentication]")
+    expect(rendered).not_to have_tag("a[href='#{signup_path}']")
   end
 
   it "renders the login form with signup link" do
-    view.should_receive(:can_signup?).and_return(true)
+    expect(view).to receive(:can_signup?).and_return(true)
     render
-    rendered.should have_tag("form[action=#{authentication_path}][class=new_authentication]")
-    rendered.should have_tag("a[href=#{signup_path}]")
+    expect(rendered).to have_tag("form[action='#{authentication_path}'][class=new_authentication]")
+    expect(rendered).to have_tag("a[href='#{signup_path}']")
   end
 end
-

@@ -24,7 +24,6 @@
 # `config/settings.default.yml`, and settings in the database table have the highest priority.
 
 class Setting < ActiveRecord::Base
-
   serialize :value
 
   # Use class variables for cache and yaml settings.
@@ -32,7 +31,6 @@ class Setting < ActiveRecord::Base
   @@cache = @@yaml_settings = {}.with_indifferent_access
 
   class << self
-
     # Cache should be cleared before each request.
     def clear_cache!
       @@cache = {}.with_indifferent_access
@@ -40,15 +38,13 @@ class Setting < ActiveRecord::Base
 
     #-------------------------------------------------------------------
     def method_missing(method, *args)
-      begin
-        super
-      rescue NoMethodError
-        method_name = method.to_s
-        if method_name.last == "="
-          self[method_name.sub("=", "")] = args.first
-        else
-          self[method_name]
-        end
+      super
+    rescue NoMethodError
+      method_name = method.to_s
+      if method_name.last == "="
+        self[method_name.sub("=", "")] = args.first
+      else
+        self[method_name]
       end
     end
 
@@ -56,17 +52,17 @@ class Setting < ActiveRecord::Base
     #-------------------------------------------------------------------
     def [](name)
       # Return value if cached
-      return cache[name] if cache.has_key?(name)
+      return cache[name] if cache.key?(name)
       # Check database
       if database_and_table_exists?
-        if setting = self.find_by_name(name.to_s)
+        if setting = find_by_name(name.to_s)
           unless setting.value.nil?
             return cache[name] = setting.value
           end
         end
       end
       # Check YAML settings
-      if yaml_settings.has_key?(name)
+      if yaml_settings.key?(name)
         return cache[name] = yaml_settings[name]
       end
     end
@@ -75,7 +71,7 @@ class Setting < ActiveRecord::Base
     #-------------------------------------------------------------------
     def []=(name, value)
       return nil unless database_and_table_exists?
-      setting = self.find_by_name(name.to_s) || self.new(:name => name)
+      setting = find_by_name(name.to_s) || new(name: name)
       setting.value = value
       setting.save
       cache[name] = value
@@ -86,7 +82,7 @@ class Setting < ActiveRecord::Base
     # string it gets copied without translation.
     #-------------------------------------------------------------------
     def unroll(setting)
-      send(setting).map { |key| [ key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym ] }
+      send(setting).map { |key| [key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym] }
     end
 
     def database_and_table_exists?
@@ -101,7 +97,6 @@ class Setting < ActiveRecord::Base
       settings = YAML.load(ERB.new(File.read(file)).result)
       @@yaml_settings.deep_merge!(settings)
     end
-
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_setting, self)

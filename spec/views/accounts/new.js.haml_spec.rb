@@ -10,14 +10,14 @@ describe "/accounts/new" do
 
   before do
     login_and_assign
-    assign(:account, Account.new(:user => current_user))
-    assign(:users, [ current_user ])
+    assign(:account, Account.new(user: current_user))
+    assign(:users, [current_user])
   end
 
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include("crm.flick('empty', 'toggle')")
+    expect(rendered).to include("crm.flick('empty', 'toggle')")
   end
 
   describe "new account" do
@@ -25,8 +25,8 @@ describe "/accounts/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("#create_account")
-      rendered.should include("crm.flip_form('create_account');")
+      expect(rendered).to include("#create_account")
+      expect(rendered).to include("crm.flip_form('create_account');")
     end
   end
 
@@ -35,9 +35,8 @@ describe "/accounts/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not include("#create_account")
-      rendered.should include("crm.flip_form('create_account');")
+      expect(rendered).not_to include("#create_account")
+      expect(rendered).to include("crm.flip_form('create_account');")
     end
   end
-
 end

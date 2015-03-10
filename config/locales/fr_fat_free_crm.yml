@@ -711,7 +711,7 @@ fr:
     text: Texte long
     select: Liste de sélection
     multiselect: Liste de sélection (multiple)
-    radio: Boutons radios
+    radio_buttons: Boutons radios
     boolean: Case à cocher
     check_boxes: Liste de cases à cocher
     date: Date

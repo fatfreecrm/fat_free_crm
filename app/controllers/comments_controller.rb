@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CommentsController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
 
   # GET /comments
   # GET /comments.json
@@ -24,8 +24,8 @@ class CommentsController < ApplicationController
     flash[:warning] = t(:msg_assets_not_available, "notes")
     respond_to do |format|
       format.html { redirect_to root_url }
-      format.json { render :text => flash[:warning], :status => :not_found }
-      format.xml  { render :text => flash[:warning], :status => :not_found }
+      format.json { render text: flash[:warning], status: :not_found }
+      format.xml  { render text: flash[:warning], status: :not_found }
     end
   end
 
@@ -45,10 +45,9 @@ class CommentsController < ApplicationController
   # POST /comments.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    attributes = params[:comment] || {}
-    attributes.merge!(:user_id => current_user.id)
-    @comment = Comment.new(attributes)
-
+    @comment = Comment.new(
+      comment_params.merge(user_id: current_user.id)
+    )
     # Make sure commentable object exists and is accessible to the current user.
     model, id = @comment.commentable_type, @comment.commentable_id
     unless model.constantize.my.find_by_id(id)
@@ -65,7 +64,7 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @comment = Comment.find(params[:id])
-    @comment.update_attributes(params[:comment])
+    @comment.update_attributes(comment_params)
     respond_with(@comment)
   end
 
@@ -79,11 +78,16 @@ class CommentsController < ApplicationController
     respond_with(@comment)
   end
 
-private
+  protected
+
+  def comment_params
+    params[:comment].permit!
+  end
+
+  private
 
   #----------------------------------------------------------------------------
   def extract_commentable_name(params)
-    params.keys.detect {|x| x =~ /_id$/ }.try(:sub, /_id$/, '')
+    params.keys.detect { |x| x =~ /_id$/ }.try(:sub, /_id$/, '')
   end
-
 end

@@ -904,7 +904,7 @@ en-GB:
       title: Select List
     multiselect:
       title: Multi Select
-    radio:
+    radio_buttons:
       title: Radio Buttons
     boolean:
       title: Checkbox

@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module TagsHelper
-
   # Generate tag links for use on asset index pages.
   #----------------------------------------------------------------------------
   def tags_for_index(model)
@@ -16,7 +15,7 @@ module TagsHelper
       elsif !query.include?(hashtag)
         query += " #{hashtag}"
       end
-      out << link_to_function(tag, "crm.search_tagged('#{query}', '#{model.class.to_s.tableize}')", :title => tag)
+      out << link_to_function(tag, "crm.search_tagged('#{query}', '#{model.class.to_s.tableize}')", title: tag)
     end
   end
 
@@ -27,5 +26,4 @@ module TagsHelper
       end
     end
   end
-
 end

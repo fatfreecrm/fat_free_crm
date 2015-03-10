@@ -9,4 +9,3 @@ class RenameRememberToken < ActiveRecord::Migration
     rename_column :users, :persistence_token, :remember_token
   end
 end
-

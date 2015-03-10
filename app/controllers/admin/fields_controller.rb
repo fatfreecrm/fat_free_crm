@@ -4,9 +4,9 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::FieldsController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/fields')", :only => [ :index ]
+  before_action "set_current_tab('admin/fields')", only: [:index]
 
-  load_resource :except => [:create, :subform]
+  load_resource except: [:create, :subform]
 
   # GET /fields
   # GET /fields.xml                                                      HTML
@@ -40,30 +40,29 @@ class Admin::FieldsController < Admin::ApplicationController
   # POST /fields.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    as = params[:field][:as]
+    as = field_params[:as]
     @field =
       if as =~ /pair/
         CustomFieldPair.create_pair(params).first
       elsif as.present?
         klass = Field.lookup_class(as).classify.constantize
-        klass.create(params[:field])
+        klass.create(field_params)
       else
-        Field.new(params[:field]).tap(&:valid?)
+        Field.new(field_params).tap(&:valid?)
       end
 
     respond_with(@field)
-
   end
 
   # PUT /fields/1
   # PUT /fields/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    if (params[:field][:as] =~ /pair/)
+    if field_params[:as] =~ /pair/
       @field = CustomFieldPair.update_pair(params).first
     else
       @field = Field.find(params[:id])
-      @field.update_attributes(params[:field])
+      @field.update_attributes(field_params)
     end
 
     respond_with(@field)
@@ -86,29 +85,34 @@ class Admin::FieldsController < Admin::ApplicationController
     field_ids = params["fields_field_group_#{field_group_id}"] || []
 
     field_ids.each_with_index do |id, index|
-      Field.update_all({:position => index+1, :field_group_id => field_group_id}, {:id => id})
+      Field.where(id: id).update_all(position: index + 1, field_group_id: field_group_id)
     end
 
-    render :nothing => true
+    render nothing: true
   end
 
   # GET /fields/subform
   #----------------------------------------------------------------------------
   def subform
-    field = params[:field]
+    field = field_params
     as = field[:as]
 
     @field = if (id = field[:id]).present?
-        Field.find(id).tap{|f| f.as = as}
-      else
-        field_group_id = field[:field_group_id]
-        klass = Field.lookup_class(as).classify.constantize
-        klass.new(:field_group_id => field_group_id, :as => as)
+               Field.find(id).tap { |f| f.as = as }
+             else
+               field_group_id = field[:field_group_id]
+               klass = Field.lookup_class(as).classify.constantize
+               klass.new(field_group_id: field_group_id, as: as)
       end
 
     respond_with(@field) do |format|
-      format.html { render :partial => 'admin/fields/subform' }
+      format.html { render partial: 'admin/fields/subform' }
     end
   end
 
+  protected
+
+  def field_params
+    params[:field].permit!
+  end
 end

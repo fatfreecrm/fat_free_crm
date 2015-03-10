@@ -20,8 +20,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe AccountContact do
   before(:each) do
     @valid_attributes = {
-      :account => mock_model(Account),
-      :contact => mock_model(Contact)
+      account: mock_model(Account),
+      contact: mock_model(Contact)
     }
   end
 
@@ -29,4 +29,3 @@ describe AccountContact do
     AccountContact.create!(@valid_attributes)
   end
 end
-

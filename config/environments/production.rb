@@ -6,12 +6,14 @@
 if defined?(FatFreeCRM::Application)
   FatFreeCRM::Application.configure do
     # Settings specified here will take precedence over those in config/application.rb
+    config.eager_load = true
 
     # Code is not reloaded between requests
     config.cache_classes = true
 
-    # Full error reports are disabled and caching is turned on.
+    # Full error reports are enabled, since this is an internal application.
     config.consider_all_requests_local       = false
+    # Caching is turned on
     config.action_controller.perform_caching = true
 
     # Disable Rails's static asset server (Apache or nginx will already do this)
@@ -52,14 +54,14 @@ if defined?(FatFreeCRM::Application)
     # config.assets.precompile += %w( search.js )
     config.assets.precompile += ['print.css', 'jquery_ui_datepicker/*.js']
 
-    # Enable threaded mode
-    # config.threadsafe!
-
     # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
     # the I18n.default_locale when a translation can not be found)
     config.i18n.fallbacks = true
 
     # Send deprecation notices to registered listeners
     config.active_support.deprecation = :notify
+
+    # Do not dump schema after migrations.
+    config.active_record.dump_schema_after_migration = false
   end
 end

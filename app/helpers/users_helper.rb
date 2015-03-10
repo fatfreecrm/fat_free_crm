@@ -4,17 +4,16 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module UsersHelper
-
   def language_for(user)
     if user.preference[:locale]
-      locale, language = languages.detect{ |locale, language| locale == user.preference[:locale] }
+      locale, language = languages.detect { |locale, _language| locale == user.preference[:locale] }
     end
     language || "English"
   end
 
   def sort_by_language
     languages.sort.map do |locale, language|
-      %Q[{ name: "#{language}", on_select: function() { #{redraw(:locale, [ locale, language ], url_for(:action => :redraw, :id => current_user))} } }]
+      %[{ name: "#{language}", on_select: function() { #{redraw(:locale, [locale, language], url_for(action: :redraw, id: current_user))} } }]
     end
   end
 
@@ -25,12 +24,12 @@ module UsersHelper
   def user_select(asset, users, myself)
     user_options = user_options_for_select(users, myself)
     select(asset, :assigned_to, user_options,
-           { :include_blank => t(:unassigned) },
-           { :style         => "width:160px",
-             :class => 'select2'              })
+           { include_blank: t(:unassigned) },
+           style:         "width:160px",
+           class: 'select2')
   end
 
   def user_options_for_select(users, myself)
-    (users - [myself]).map{|u| [u.full_name, u.id]}.prepend([t(:myself), myself.id])
+    (users - [myself]).map { |u| [u.full_name, u.id] }.prepend([t(:myself), myself.id])
   end
 end

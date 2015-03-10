@@ -10,27 +10,27 @@ module LeadsHelper
   def stars_for(lead)
     star = '&#9733;'
     rating = lead.rating || 0
-    (star * rating).html_safe + content_tag(:font, (star * (RATING_STARS - rating)).html_safe, :color => 'gainsboro')
+    (star * rating).html_safe + content_tag(:font, (star * (RATING_STARS - rating)).html_safe, color: 'gainsboro')
   end
 
   #----------------------------------------------------------------------------
   def link_to_convert(lead)
     link_to(t(:convert), convert_lead_path(lead),
-      :method => :get,
-      :with   => "{ previous: crm.find_form('edit_lead') }",
-      :remote => true
+            method: :get,
+            with:   "{ previous: crm.find_form('edit_lead') }",
+            remote: true
     )
   end
 
   #----------------------------------------------------------------------------
   def link_to_reject(lead)
-    link_to(t(:reject) + "!", reject_lead_path(lead), :method => :put, :remote => true)
+    link_to(t(:reject) + "!", reject_lead_path(lead), method: :put, remote: true)
   end
 
   #----------------------------------------------------------------------------
   def confirm_reject(lead)
     question = %(<span class="warn">#{t(:reject_lead_confirm)}</span>)
-    yes = link_to(t(:yes_button), reject_lead_path(lead), :method => :put)
+    yes = link_to(t(:yes_button), reject_lead_path(lead), method: :put)
     no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
     text = "$('#confirm').html( $('#menu').html() );\n"
     text << "$('#menu').html('#{question} #{yes} : #{no}');"
@@ -71,7 +71,7 @@ module LeadsHelper
     summary << (lead.status ? t(lead.status) : t(:other))
 
     if lead.company? && lead.title?
-      summary << t(:works_at, :job_title => lead.title, :company => lead.company)
+      summary << t(:works_at, job_title: lead.title, company: lead.company)
     else
       summary << lead.company if lead.company?
       summary << lead.title if lead.title?

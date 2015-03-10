@@ -6,7 +6,7 @@ class CreateSessions < ActiveRecord::Migration
     $FFCRM_NEW_DATABASE = true
 
     create_table :sessions do |t|
-      t.string :session_id, :null => false
+      t.string :session_id, null: false
       t.text :data
       t.timestamps
     end
@@ -19,4 +19,3 @@ class CreateSessions < ActiveRecord::Migration
     drop_table :sessions
   end
 end
-

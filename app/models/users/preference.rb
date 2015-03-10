@@ -19,25 +19,25 @@ class Preference < ActiveRecord::Base
   belongs_to :user
 
   #-------------------------------------------------------------------
-  def [] (name)
+  def [](name)
     # Following line is to preserve AR relationships
     return super(name) if name.to_s == "user_id" # get the value of belongs_to
 
-    return cached_prefs[name.to_s] if cached_prefs.has_key?(name.to_s)
-    cached_prefs[name.to_s] = if (self.user.present? && pref = Preference.find_by_name_and_user_id(name.to_s, self.user.id))
-      Marshal.load(Base64.decode64(pref.value))
+    return cached_prefs[name.to_s] if cached_prefs.key?(name.to_s)
+    cached_prefs[name.to_s] = if user.present? && pref = Preference.find_by_name_and_user_id(name.to_s, user.id)
+                                Marshal.load(Base64.decode64(pref.value))
     end
   end
 
   #-------------------------------------------------------------------
-  def []= (name, value)
+  def []=(name, value)
     return super(name, value) if name.to_s == "user_id" # set the value of belongs_to
 
     encoded = Base64.encode64(Marshal.dump(value))
-    if pref = Preference.find_by_name_and_user_id(name.to_s, self.user.id)
+    if pref = Preference.find_by(name: name.to_s, user_id: user.id)
       pref.update_attribute(:value, encoded)
     else
-      Preference.create(:user => self.user, :name => name.to_s, :value => encoded)
+      Preference.create(user: user, name: name.to_s, value: encoded)
     end
     cached_prefs[name.to_s] = value
   end

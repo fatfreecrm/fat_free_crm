@@ -6,14 +6,18 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rubygems'
-require 'rails/all'
 
-if defined?(Bundler)
-  # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
-end
+# Pick the frameworks you want:
+require "active_record/railtie"
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "sprockets/railtie"
+
+# require "rails/test_unit/railtie"
+#
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
 
 # Override Rails Engines so that plugins have higher priority than the Application
 require 'fat_free_crm/gem_ext/rails/engine'
@@ -38,13 +42,13 @@ module FatFreeCRM
 
     # Load development rake tasks (RSpec, Gem packaging, etc.)
     rake_tasks do
-      Dir.glob(Rails.root.join('lib', 'development_tasks', '*.rake')).each {|t| load t }
+      Dir.glob(Rails.root.join('lib', 'development_tasks', '*.rake')).each { |t| load t }
     end
 
     # Add migrations from all engines
-    Railties.engines.each do |engine|
-      config.paths['db/migrate'] += engine.paths['db/migrate'].existent
-    end
+    # Railties.engines.each do |engine|
+    #   # config.paths['db/migrate'] += engine.paths['db/migrate'].existent
+    # end
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -64,28 +68,7 @@ module FatFreeCRM
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password, :password_hash, :password_salt, :password_confirmation]
 
-    # Use SQL instead of Active Record's schema dumper when creating the database.
-    # This is necessary if your schema can't be completely dumped by the schema dumper,
-    # like if you have constraints or database-specific column types
-    # config.active_record.schema_format = :sql
-
-    # Enforce whitelist mode for mass assignment.
-    # This will create an empty whitelist of attributes available for mass-assignment for all models
-    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
-    # parameters by using an attr_accessible or attr_protected declaration.
-    # config.active_record.whitelist_attributes = true
-
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
-    # Don't initialize Rails environment
-    config.assets.initialize_on_precompile = false
-
-    # Which extra assets to precompile
-    config.assets.precompile += %w(print.css)
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
 

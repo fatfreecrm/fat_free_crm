@@ -7,77 +7,76 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersController do
   describe "routing" do
-
     it "doesn't recognize #index" do
-      { :get => "/users" }.should_not be_routable
+      expect(get: "/users").not_to be_routable
     end
 
     it "recognizes and generates #new as /signup" do
-      { :get => "/signup" }.should route_to(:controller => "users", :action => "new")
+      expect(get: "/signup").to route_to(controller: "users", action: "new")
     end
 
     it "recognizes and generates #show as /profile" do
-      { :get => "/profile" }.should route_to(:controller => "users", :action => "show")
+      expect(get: "/profile").to route_to(controller: "users", action: "show")
     end
 
     it "recognizes and generates #edit" do
-      { :get => "/users/1/edit" }.should route_to(:controller => "users", :action => "edit", :id => "1")
+      expect(get: "/users/1/edit").to route_to(controller: "users", action: "edit", id: "1")
     end
 
     it "doesn't recognize #edit with non-numeric id" do
-      { :get => "/opportunities/aaron/edit" }.should_not be_routable
+      expect(get: "/users/aaron/edit").not_to be_routable
     end
 
     it "recognizes and generates #create" do
-      { :post => "/users" }.should route_to(:controller => "users", :action => "create")
+      expect(post: "/users").to route_to(controller: "users", action: "create")
     end
 
     it "recognizes and generates #update" do
-      { :put => "/users/1" }.should route_to(:controller => "users", :action => "update", :id => "1")
+      expect(put: "/users/1").to route_to(controller: "users", action: "update", id: "1")
     end
 
     it "doesn't recognize #update with non-numeric id" do
-      { :put => "/opportunities/aaron" }.should_not be_routable
+      expect(put: "/users/aaron").not_to be_routable
     end
 
     it "doesn't recognize #destroy" do
-      { :delete => "/users/1" }.should_not be_routable
+      expect(delete: "/users/1").not_to be_routable
     end
 
     it "doesn't recognize #destroy with non-numeric id" do
-      { :delete => "/opportunities/aaron" }.should_not be_routable
+      expect(delete: "/users/aaron").not_to be_routable
     end
 
     it "should generate params for #avatar" do
-      { :get => "/users/1/avatar" }.should route_to( :controller => "users", :action => "avatar", :id => "1" )
+      expect(get: "/users/1/avatar").to route_to(controller: "users", action: "avatar", id: "1")
     end
 
     it "doesn't recognize #avatar with non-numeric id" do
-      { :get => "/opportunities/aaron/avatar" }.should_not be_routable
+      expect(get: "/users/aaron/avatar").not_to be_routable
     end
 
     it "should generate params for #upload_avatar" do
-      { :put => "/users/1/upload_avatar" }.should route_to( :controller => "users", :action => "upload_avatar", :id => "1" )
+      expect(put: "/users/1/upload_avatar").to route_to(controller: "users", action: "upload_avatar", id: "1")
     end
 
     it "doesn't recognize #upload_avatar with non-numeric id" do
-      { :put => "/opportunities/aaron/upload_avatar" }.should_not be_routable
+      expect(put: "/users/aaron/upload_avatar").not_to be_routable
     end
 
     it "should generate params for #password" do
-      { :get => "/users/1/password" }.should route_to( :controller => "users", :action => "password", :id => "1" )
+      expect(get: "/users/1/password").to route_to(controller: "users", action: "password", id: "1")
     end
 
     it "doesn't recognize #password with non-numeric id" do
-      { :get => "/opportunities/aaron/password" }.should_not be_routable
+      expect(get: "/users/aaron/password").not_to be_routable
     end
 
     it "should generate params for #change_password" do
-      { :put => "/users/1/change_password" }.should route_to( :controller => "users", :action => "change_password", :id => "1" )
+      expect(patch: "/users/1/change_password").to route_to(controller: "users", action: "change_password", id: "1")
     end
 
     it "doesn't recognize #change_password with non-numeric id" do
-      { :put => "/opportunities/aaron/change_password" }.should_not be_routable
+      expect(patch: "/users/aaron/change_password").not_to be_routable
     end
   end
 end

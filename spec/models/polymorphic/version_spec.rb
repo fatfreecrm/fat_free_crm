@@ -20,15 +20,14 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Version, :versioning => true do
-
+describe Version, versioning: true do
   before do
     login
     PaperTrail.whodunnit = current_user.id.to_s
   end
 
   it "should create a new instance given valid attributes" do
-    FactoryGirl.create(:version, :whodunnit => PaperTrail.whodunnit, :item => FactoryGirl.create(:lead))
+    FactoryGirl.create(:version, whodunnit: PaperTrail.whodunnit, item: FactoryGirl.create(:lead))
   end
 
   describe "with multiple version records" do
@@ -36,74 +35,74 @@ describe Version, :versioning => true do
       @lead = FactoryGirl.create(:lead)
 
       %w(create destroy update view).each do |event|
-        FactoryGirl.create(:version, :event => event, :item => @lead, :whodunnit => PaperTrail.whodunnit)
-        FactoryGirl.create(:version, :event => event, :item => @lead, :whodunnit => "1")
+        FactoryGirl.create(:version, event: event, item: @lead, whodunnit: PaperTrail.whodunnit)
+        FactoryGirl.create(:version, event: event, item: @lead, whodunnit: "1")
       end
     end
 
     it "should not include view events" do
       @versions = Version.for(current_user).exclude_events(:view)
-      @versions.map(&:event).sort.should_not include('view')
+      expect(@versions.pluck(:event).sort).not_to include('view')
     end
 
     it "should exclude create, update and destroy events" do
       @versions = Version.for(current_user).exclude_events(:create, :update, :destroy)
-      @versions.map(&:event).should_not include('create')
-      @versions.map(&:event).should_not include('update')
-      @versions.map(&:event).should_not include('destroy')
+      expect(@versions.pluck(:event)).not_to include('create')
+      expect(@versions.pluck(:event)).not_to include('update')
+      expect(@versions.pluck(:event)).not_to include('destroy')
     end
 
     it "should include only destroy events" do
       @versions = Version.for(current_user).include_events(:destroy)
-      @versions.map(&:event).uniq.should == %w(destroy)
+      expect(@versions.pluck(:event).uniq).to eq(%w(destroy))
     end
 
     it "should include create and update events" do
       @versions = Version.for(current_user).include_events(:create, :update)
-      @versions.map(&:event).uniq.sort.should == %w(create update)
+      expect(@versions.pluck(:event).uniq.sort).to eq(%w(create update))
     end
 
     it "should select all versions for a given user" do
       @versions = Version.for(current_user)
-      @versions.map(&:whodunnit).uniq.should == [current_user.id.to_s]
+      expect(@versions.map(&:whodunnit).uniq).to eq([current_user.id.to_s])
     end
   end
 
   %w(account campaign contact lead opportunity task).each do |item|
     describe "Create, update, and delete (#{item})" do
       before :each do
-        @item = FactoryGirl.create(item.to_sym, :user => current_user)
-        @conditions = {:item_id => @item.id, :item_type => @item.class.name, :whodunnit => PaperTrail.whodunnit}
+        @item = FactoryGirl.create(item.to_sym, user: current_user)
+        @conditions = { item_id: @item.id, item_type: @item.class.name, whodunnit: PaperTrail.whodunnit }
       end
 
       it "should add a version when creating new #{item}" do
-        @version = Version.where(@conditions.merge(:event => 'create')).first
-        @version.should_not == nil
+        @version = Version.where(@conditions.merge(event: 'create')).first
+        expect(@version).not_to eq(nil)
       end
 
       it "should add a version when updating existing #{item}" do
         if @item.respond_to?(:full_name)
-          @item.update_attributes(:first_name => "Billy", :last_name => "Bones")
+          @item.update_attributes(first_name: "Billy", last_name: "Bones")
         else
-          @item.update_attributes(:name => "Billy Bones")
+          @item.update_attributes(name: "Billy Bones")
         end
-        @version = Version.where(@conditions.merge(:event => 'update')).first
+        @version = Version.where(@conditions.merge(event: 'update')).first
 
-        @version.should_not == nil
+        expect(@version).not_to eq(nil)
       end
 
       it "should add a version when deleting #{item}" do
         @item.destroy
-        @version = Version.where(@conditions.merge(:event => 'destroy')).first
+        @version = Version.where(@conditions.merge(event: 'destroy')).first
 
-        @version.should_not == nil
+        expect(@version).not_to eq(nil)
       end
 
       it "should add a version when commenting on a #{item}" do
-        @comment = FactoryGirl.create(:comment, :commentable => @item, :user => current_user)
+        @comment = FactoryGirl.create(:comment, commentable: @item, user: current_user)
 
-        @version = Version.where({:related_id => @item.id, :related_type => @item.class.name, :whodunnit => PaperTrail.whodunnit, :event => 'create'}).first
-        @version.should_not == nil
+        @version = Version.where(related_id: @item.id, related_type: @item.class.name, whodunnit: PaperTrail.whodunnit, event: 'create').first
+        expect(@version).not_to eq(nil)
       end
     end
   end
@@ -111,62 +110,61 @@ describe Version, :versioning => true do
   describe "Recently viewed items (task)" do
     before do
       @task = FactoryGirl.create(:task)
-      @conditions = {:item_id => @task.id, :item_type => @task.class.name}
+      @conditions = { item_id: @task.id, item_type: @task.class.name }
     end
 
     it "creating a new task should not add it to recently viewed items list" do
-      @versions = Version.where(@conditions)
-
-      @versions.map(&:event).should include('create') # but not view
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('create') # but not view
     end
 
     it "updating a new task should not add it to recently viewed items list" do
-      @task.update_attribute(:updated_at, 1.second.ago)
-      @versions = Version.where(@conditions)
+      @task.update(name: 'New Name')
 
-      @versions.map(&:event).sort.should == %w(create update) # but not view
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event).sort).to eq(%w(create update)) # but not view
     end
   end
 
   describe "Action refinements for task updates" do
     before do
-      @task = FactoryGirl.create(:task, :user => current_user)
-      @conditions = {:item_id => @task.id, :item_type => @task.class.name, :whodunnit => PaperTrail.whodunnit}
+      @task = FactoryGirl.create(:task, user: current_user)
+      @conditions = { item_id: @task.id, item_type: @task.class.name, whodunnit: PaperTrail.whodunnit }
     end
 
     it "should create 'completed' task event" do
-      @task.update_attribute(:completed_at, 1.second.ago)
-      @versions = Version.where(@conditions)
+      @task.update(completed_at: 1.second.ago)
 
-      @versions.map(&:event).should include('complete')
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('complete')
     end
 
     it "should create 'reassigned' task event" do
-      @task.update_attribute(:assigned_to, current_user.id + 1)
-      @versions = Version.where(@conditions)
+      @task.update(assigned_to: current_user.id + 1)
 
-      @versions.map(&:event).should include('reassign')
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('reassign')
     end
 
     it "should create 'rescheduled' task event" do
-      @task.update_attribute(:bucket, "due_tomorrow") # FactoryGirl creates :due_asap task
-      @versions = Version.where(@conditions)
+      @task.update(bucket: "due_tomorrow") # FactoryGirl creates :due_asap task
 
-      @versions.map(&:event).should include('reschedule')
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('reschedule')
     end
   end
 
   describe "Rejecting a lead" do
     before do
-      @lead = FactoryGirl.create(:lead, :user => current_user, :status => "new")
-      @conditions = {:item_id => @lead.id, :item_type => @lead.class.name, :whodunnit => PaperTrail.whodunnit}
+      @lead = FactoryGirl.create(:lead, user: current_user, status: "new")
+      @conditions = { item_id: @lead.id, item_type: @lead.class.name, whodunnit: PaperTrail.whodunnit }
     end
 
     it "should create 'rejected' lead event" do
-      @lead.update_attribute(:status, "rejected")
-      @versions = Version.where(@conditions)
+      @lead.update(status: "rejected")
 
-      @versions.map(&:event).should include('reject')
+      versions = Version.where(@conditions)
+      expect(versions.pluck(:event)).to include('reject')
     end
   end
 
@@ -177,75 +175,70 @@ describe Version, :versioning => true do
     end
 
     it "should not show the create/update versions if the item is private" do
-      @item = FactoryGirl.create(:account, :user => current_user, :access => "Private")
-      @item.update_attribute(:updated_at,  1.second.ago)
+      @item = FactoryGirl.create(:account, user: current_user, access: "Private")
+      @item.update(name: 'New Name')
 
-      @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create update)
-      @versions = Version.latest.visible_to(@user)
-      @versions.should == []
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.pluck(:event).sort).to eq(%w(create update))
+
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions).to eq([])
     end
 
     it "should not show the destroy version if the item is private" do
-      @item = FactoryGirl.create(:account, :user => current_user, :access => "Private")
+      @item = FactoryGirl.create(:account, user: current_user, access: "Private")
       @item.destroy
 
-      @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create destroy)
-      @versions = Version.latest.visible_to(@user)
-      @versions.should == []
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.pluck(:event).sort).to eq(%w(create destroy))
+
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions).to eq([])
     end
 
     it "should not show create/update versions if the item was not shared with the user" do
       @item = FactoryGirl.create(:account,
-        :user => current_user,
-        :access => "Shared",
-        :permissions => [ FactoryGirl.build(:permission, :user => current_user, :asset => @item) ]
+                                 user: current_user,
+                                 access: "Shared",
+                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)]
       )
-      @item.update_attribute(:updated_at, 1.second.ago)
+      @item.update(name: 'New Name')
 
-      @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create update)
-      @versions = Version.latest.visible_to(@user)
-      @versions.should == []
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.pluck(:event).sort).to eq(%w(create update))
+
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions).to eq([])
     end
 
     it "should not show the destroy version if the item was not shared with the user" do
       @item = FactoryGirl.create(:account,
-        :user => current_user,
-        :access => "Shared",
-        :permissions => [ FactoryGirl.build(:permission, :user => current_user, :asset => @item) ]
+                                 user: current_user,
+                                 access: "Shared",
+                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)]
       )
       @item.destroy
 
-      @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create destroy)
-      @versions = Version.latest.visible_to(@user)
-      @versions.should == []
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.pluck(:event).sort).to eq(%w(create destroy))
+
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions).to eq([])
     end
 
     it "should show create/update versions if the item was shared with the user" do
       @item = FactoryGirl.create(:account,
-        :user => current_user,
-        :access => "Shared",
-        :permissions => [ FactoryGirl.build(:permission, :user => @user, :asset => @item) ]
+                                 user: current_user,
+                                 access: "Shared",
+                                 permissions: [FactoryGirl.build(:permission, user: @user, asset: @item)]
       )
-      @item.update_attribute(:updated_at, 1.second.ago)
+      @item.update(name: 'New Name')
 
-      @versions = Version.where({:item_id => @item.id, :item_type => @item.class.name})
-      @versions.map(&:event).sort.should == %w(create update)
-      @versions = Version.latest.visible_to(@user)
-      @versions.map(&:event).sort.should == %w(create update)
-    end
-  end
+      versions = Version.where(item_id: @item.id, item_type: @item.class.name)
+      expect(versions.pluck(:event).sort).to eq(%w(create update))
 
-  describe "Exportable" do
-    before do
-    end
-    it_should_behave_like("exportable") do
-      v1 = FactoryGirl.create(:version, :whodunnit => FactoryGirl.create(:user).id, :item => FactoryGirl.create(:account))
-      v2 = FactoryGirl.create(:version, :whodunnit => FactoryGirl.create(:user, :first_name => nil, :last_name => nil).id, :item => FactoryGirl.create(:account))
-      let(:exported) { [v1,v2] }
+      visible_versions = Version.visible_to(@user)
+      expect(visible_versions.map(&:event).sort).to eq(%w(create update))
     end
   end
 end

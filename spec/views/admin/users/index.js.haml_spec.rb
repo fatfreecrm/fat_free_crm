@@ -13,14 +13,12 @@ describe "admin/users/index" do
   it "renders [admin/user] template with @users collection" do
     amy = FactoryGirl.create(:user)
     bob = FactoryGirl.create(:user)
-    assign(:users, [ amy, bob ].paginate)
+    assign(:users, [amy, bob].paginate)
 
-    render :template => 'admin/users/index', :formats => [:js]
-    
-    rendered.should include("id=\\'user_#{amy.id}\\'")
-    rendered.should include("id=\\'user_#{bob.id}\\'")
-    rendered.should include("$('#paginate')")
+    render template: 'admin/users/index', formats: [:js]
+
+    expect(rendered).to include("id=\\'user_#{amy.id}\\'")
+    expect(rendered).to include("id=\\'user_#{bob.id}\\'")
+    expect(rendered).to include("$('#paginate')")
   end
-
 end
-

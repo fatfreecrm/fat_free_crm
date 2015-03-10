@@ -11,10 +11,10 @@ describe "/contacts/update" do
   before do
     login_and_assign
 
-    assign(:contact, @contact = FactoryGirl.create(:contact, :user => current_user))
-    assign(:users, [ current_user ])
+    assign(:contact, @contact = FactoryGirl.create(:contact, user: current_user))
+    assign(:users, [current_user])
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
   end
 
   describe "no errors:" do
@@ -25,14 +25,14 @@ describe "/contacts/update" do
 
       it "should flip [edit_contact] form" do
         render
-        rendered.should_not include("contact_#{@contact.id}")
+        expect(rendered).not_to include("contact_#{@contact.id}")
       end
 
       it "should update sidebar" do
         render
-        rendered.should include("#sidebar")
-        rendered.should have_text("Recent Items")
-        rendered.should include("$('#summary').effect('shake'")
+        expect(rendered).to include("#sidebar")
+        expect(rendered).to have_text("Recent Items")
+        expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
 
@@ -45,14 +45,14 @@ describe "/contacts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
         render
-        rendered.should include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
-        rendered.should include(%Q/$('#contact_#{@contact.id}').effect("highlight"/)
+        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
       it "should update sidebar" do
         render
-        rendered.should include("#sidebar")
-        rendered.should have_text("Recent Items")
+        expect(rendered).to include("#sidebar")
+        expect(rendered).to have_text("Recent Items")
       end
     end
 
@@ -65,13 +65,13 @@ describe "/contacts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
         render
-        rendered.should include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
-        rendered.should include(%Q/$('#contact_#{@contact.id}').effect("highlight"/)
+        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
       it "should update recently viewed items" do
         render
-        rendered.should include("#recently")
+        expect(rendered).to include("#recently")
       end
     end
   end # no errors
@@ -88,10 +88,10 @@ describe "/contacts/update" do
 
       it "should redraw the [edit_contact] form and shake it" do
         render
-        rendered.should include("$('#edit_contact').html")
-        rendered.should include('crm.create_or_select_account(false)')
-        rendered.should include(%Q/$('#edit_contact').effect("shake"/)
-        rendered.should include('focus()')
+        expect(rendered).to include("$('#edit_contact').html")
+        expect(rendered).to include('crm.create_or_select_account(false)')
+        expect(rendered).to include(%/$('#edit_contact').effect("shake"/)
+        expect(rendered).to include('focus()')
       end
     end
 
@@ -102,10 +102,10 @@ describe "/contacts/update" do
 
       it "should redraw the [edit_contact] form and shake it" do
         render
-        rendered.should include("$('#contact_#{@contact.id}').html")
-        rendered.should include('crm.create_or_select_account(false)')
-        rendered.should include(%Q/$('#contact_#{@contact.id}').effect("shake"/)
-        rendered.should include('focus()')
+        expect(rendered).to include("$('#contact_#{@contact.id}').html")
+        expect(rendered).to include('crm.create_or_select_account(false)')
+        expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("shake"/)
+        expect(rendered).to include('focus()')
       end
     end
 
@@ -116,14 +116,14 @@ describe "/contacts/update" do
 
       it "errors: should show disabled accounts dropdown" do
         render
-        rendered.should include("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
+        expect(rendered).to include("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
       end
 
       it "should redraw the [edit_contact] form and shake it" do
         render
-        rendered.should include("$('#contact_#{@contact.id}').html")
-        rendered.should include(%Q/$('#contact_#{@contact.id}').effect("shake"/)
-        rendered.should include('focus()')
+        expect(rendered).to include("$('#contact_#{@contact.id}').html")
+        expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("shake"/)
+        expect(rendered).to include('focus()')
       end
     end
   end # errors

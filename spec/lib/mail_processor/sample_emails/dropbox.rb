@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 DROPBOX_EMAILS = {
-  :plain => <<-END,
+  plain: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -17,7 +17,7 @@ Content-Type: text/plain
 Aaron
 END
 
-  :html => <<-END,
+  html: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -34,7 +34,7 @@ Content-Type: text/html
 </html>
 END
 
-  :first_line => <<-END,
+  first_line: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -48,7 +48,7 @@ Content-Type: text/plain
 Aaron
 END
 
-  :first_line_lead => <<-END,
+  first_line_lead: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -62,7 +62,7 @@ Content-Type: text/plain
 Aaron
 END
 
-  :first_line_contact => <<-END,
+  first_line_contact: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -76,7 +76,7 @@ Content-Type: text/plain
 Aaron
 END
 
-  :forwarded => <<-END,
+  forwarded: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: dropbox@example.com
 Subject: Hi there
@@ -95,7 +95,7 @@ To: Cindy Cluster <cindy@example.com>
 Ben
 END
 
-  :multipart => <<-END,
+  multipart: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -169,4 +169,3 @@ ADpMhSwQ4p2Bz9o8V84oX868ufPn0KNLn64hAgA7
 --_006_200DA2FF7EAFC04BAD979DB9CF293BB365151E88CLEARWATERtesta_--
 END
 }
-

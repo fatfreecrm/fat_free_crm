@@ -62,8 +62,8 @@ lead<%= i %>:
   twitter     : <%= %[http://www.twitter.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
   email       : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
   alt_email   : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) if rand(10) < 3 %>
-  phone       : <%= Faker::PhoneNumber.phone_number if rand(10) < 5 %>
-  mobile      : <%= Faker::PhoneNumber.phone_number if rand(10) < 3 %>
+  phone       : <%= Faker::PhoneNumber.short_phone_number if rand(10) < 5 %>
+  mobile      : <%= Faker::PhoneNumber.short_phone_number if rand(10) < 3 %>
   do_not_call : false
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>

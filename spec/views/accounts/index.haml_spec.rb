@@ -17,25 +17,25 @@ describe "/accounts/index" do
   end
 
   it "should render account name" do
-    assign(:accounts, [ FactoryGirl.create(:account, :name => 'New Media Inc'), FactoryGirl.create(:account) ].paginate)
+    assign(:accounts, [FactoryGirl.create(:account, name: 'New Media Inc'), FactoryGirl.create(:account)].paginate)
     render
-    rendered.should have_tag('a', :text => "New Media Inc")
+    expect(rendered).to have_tag('a', text: "New Media Inc")
   end
 
   it "should render list of accounts if list of accounts is not empty" do
-    assign(:accounts, [ FactoryGirl.create(:account), FactoryGirl.create(:account) ].paginate)
+    assign(:accounts, [FactoryGirl.create(:account), FactoryGirl.create(:account)].paginate)
 
     render
-    view.should render_template(:partial => "_account")
-    view.should render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "_account")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no accounts" do
     assign(:accounts, [].paginate)
 
     render
-    view.should_not render_template(:partial => "_account")
-    view.should render_template(:partial => "shared/_empty")
-    view.should render_template(:partial => "shared/_paginate_with_per_page")
+    expect(view).not_to render_template(partial: "_account")
+    expect(view).to render_template(partial: "shared/_empty")
+    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
   end
 end

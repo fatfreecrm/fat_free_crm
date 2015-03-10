@@ -4,8 +4,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class HomeController < ApplicationController
-  before_filter :require_user, :except => [ :toggle, :timezone ]
-  before_filter :set_current_tab, :only => :index
+  before_action :require_user, except: [:toggle, :timezone]
+  before_action :set_current_tab, only: :index
 
   #----------------------------------------------------------------------------
   def index
@@ -50,7 +50,7 @@ class HomeController < ApplicationController
     else
       session[params[:id].to_sym] = true
     end
-    render :nothing => true
+    render nothing: true
   end
 
   # GET /home/timeline                                                     AJAX
@@ -66,12 +66,12 @@ class HomeController < ApplicationController
         end
       else
         comments, emails = params[:id].split("+")
-        Comment.where(:id => comments.split(',')).update_all(:state => state) unless comments.blank?
-        Email.where(:id => emails.split(',')).update_all(:state => state) unless emails.blank?
+        Comment.where(id: comments.split(',')).update_all(state: state) unless comments.blank?
+        Email.where(id: emails.split(',')).update_all(state: state) unless emails.blank?
       end
     end
 
-    render :nothing => true
+    render nothing: true
   end
 
   # GET /home/timezone                                                     AJAX
@@ -85,10 +85,11 @@ class HomeController < ApplicationController
       session[:timezone_offset] = params[:offset].to_i * -60
       ActiveSupport::TimeZone[session[:timezone_offset]]
     end
-    render :nothing => true
+    render nothing: true
   end
 
   private
+
   #----------------------------------------------------------------------------
   def get_activities(options = {})
     options[:asset]    ||= activity_asset
@@ -128,15 +129,15 @@ class HomeController < ApplicationController
     user = current_user.pref[:activity_user]
     if user && user != "all_users"
       user = if user =~ /@/ # email
-          User.where(:email => user).first
-        else # first_name middle_name last_name any_name
-          name_query = if user.include?(" ")
-            user.name_permutations.map{ |first, last|
-              User.where(:first_name => first, :last_name => last)
-            }.map(&:to_a).flatten.first
-          else
-            [User.where(:first_name => user), User.where(:last_name => user)].map(&:to_a).flatten.first
-          end
+               User.where(email: user).first
+             else # first_name middle_name last_name any_name
+               name_query = if user.include?(" ")
+                              user.name_permutations.map do |first, last|
+                                User.where(first_name: first, last_name: last)
+                              end.map(&:to_a).flatten.first
+                            else
+                              [User.where(first_name: user), User.where(last_name: user)].map(&:to_a).flatten.first
+               end
         end
     end
     user.is_a?(User) ? user.id : nil
@@ -147,10 +148,9 @@ class HomeController < ApplicationController
     duration = current_user.pref[:activity_duration]
     if duration
       words = duration.split("_") # "two_weeks" => 2.weeks
-      if %w(one two).include?(words.first) and %w(hour day days week weeks month).include?(words.last)
+      if %w(one two).include?(words.first) && %w(hour day days week weeks month).include?(words.last)
         %w(zero one two).index(words.first).send(words.last)
       end
     end
   end
-
 end

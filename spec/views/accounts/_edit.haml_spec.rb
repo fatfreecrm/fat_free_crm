@@ -11,32 +11,32 @@ describe "/accounts/_edit" do
   before do
     login_and_assign
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
   end
 
   it "should render [edit account] form" do
     render
 
-    view.should render_template(:partial => "_top_section")
-    view.should render_template(:partial => "_contact_info")
-    view.should render_template(:partial => "_permissions")
+    expect(view).to render_template(partial: "_top_section")
+    expect(view).to render_template(partial: "_contact_info")
+    expect(view).to render_template(partial: "_permissions")
 
-    rendered.should have_tag("form[class=edit_account]") do |form|
-      form.should have_tag "input[type=hidden][id=account_user_id][value='#{@account.user_id}']"
+    expect(rendered).to have_tag("form[class=edit_account]") do |form|
+      expect(form).to have_tag "input[type=hidden][id=account_user_id][value='#{@account.user_id}']"
     end
   end
 
   it "should render background info field if settings require so" do
-    Setting.background_info = [ :account ]
+    Setting.background_info = [:account]
 
     render
-    rendered.should have_tag("textarea[id=account_background_info]")
+    expect(rendered).to have_tag("textarea[id=account_background_info]")
   end
 
   it "should not render background info field if settings do not require so" do
     Setting.background_info = []
 
     render
-    rendered.should_not have_tag("textarea[id=account_background_info]")
+    expect(rendered).not_to have_tag("textarea[id=account_background_info]")
   end
 end

@@ -4,14 +4,13 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::FieldGroupsController < Admin::ApplicationController
-
   helper 'admin/fields'
 
   # GET /admin/field_groups/new
   # GET /admin/field_groups/new.xml                                        AJAX
   #----------------------------------------------------------------------------
   def new
-    @field_group = FieldGroup.new(:klass_name => params[:klass_name])
+    @field_group = FieldGroup.new(klass_name: params[:klass_name])
 
     respond_with(@field_group)
   end
@@ -22,7 +21,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     @field_group = FieldGroup.find(params[:id])
 
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = FieldGroup.find_by_id($1) || $1.to_i
+      @previous = FieldGroup.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@field_group)
@@ -32,7 +31,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   # POST /admin/field_groups.xml                                           AJAX
   #----------------------------------------------------------------------------
   def create
-    @field_group = FieldGroup.create(params[:field_group])
+    @field_group = FieldGroup.create(field_group_params)
 
     respond_with(@field_group)
   end
@@ -42,7 +41,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def update
     @field_group = FieldGroup.find(params[:id])
-    @field_group.update_attributes(params[:field_group])
+    @field_group.update_attributes(field_group_params)
 
     respond_with(@field_group)
   end
@@ -64,15 +63,21 @@ class Admin::FieldGroupsController < Admin::ApplicationController
     field_group_ids = params["#{asset}_field_groups"]
 
     field_group_ids.each_with_index do |id, index|
-      FieldGroup.update_all({:position => index+1}, {:id => id})
+      FieldGroup.where(id: id).update_all(position: index + 1)
     end
 
-    render :nothing => true
+    render nothing: true
   end
 
   # GET /admin/field_groups/1/confirm                                      AJAX
   #----------------------------------------------------------------------------
   def confirm
     @field_group = FieldGroup.find(params[:id])
+  end
+
+  protected
+
+  def field_group_params
+    params[:field_group].permit!
   end
 end

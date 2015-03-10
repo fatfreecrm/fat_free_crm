@@ -943,7 +943,7 @@ ru:
       title: Выберите список
     multiselect:
       title: Множественный выбор
-    radio:
+    radio_buttons:
       title: Radio кнопка
     boolean:
       title: Флажок

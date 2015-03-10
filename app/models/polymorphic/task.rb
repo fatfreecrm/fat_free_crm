@@ -30,51 +30,50 @@ class Task < ActiveRecord::Base
   ALLOWED_VIEWS = %w(pending assigned completed)
 
   belongs_to :user
-  belongs_to :assignee, :class_name => "User", :foreign_key => :assigned_to
-  belongs_to :completor, :class_name => "User", :foreign_key => :completed_by
-  belongs_to :asset, :polymorphic => true
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
+  belongs_to :completor, class_name: "User", foreign_key: :completed_by
+  belongs_to :asset, polymorphic: true
 
-  serialize :subscribed_users, Set
+  serialize :subscribed_users, Array
 
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
   scope :my, ->(*args) {
     options = args[0] || {}
     user_option = (options.is_a?(Hash) ? options[:user] : options) || User.current_user
-    includes(:assignee).
-    where('(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?', user_option, user_option).
-    order(options[:order] || 'name ASC').
-    limit(options[:limit]) # nil selects all records
+    includes(:assignee)
+      .where('(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?', user_option, user_option)
+      .order(options[:order] || 'name ASC')
+      .limit(options[:limit]) # nil selects all records
   }
 
-  scope :created_by,  ->(user) { where( user_id: user.id ) }
-  scope :assigned_to, ->(user) { where( assigned_to: user.id ) }
+  scope :created_by,  ->(user) { where(user_id: user.id) }
+  scope :assigned_to, ->(user) { where(assigned_to: user.id) }
 
   # Tasks assigned by the user to others. That's what we see on Tasks/Assigned.
   scope :assigned_by, ->(user) {
-    includes(:assignee).
-    where('user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?', user.id, user.id)
+    includes(:assignee)
+      .where('user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?', user.id, user.id)
   }
 
   # Tasks created by the user or assigned to the user, i.e. the union of the two
   # scopes above. That's the tasks the user is allowed to see and track.
   scope :tracked_by, ->(user) {
-    includes(:assignee).
-    where('user_id = ? OR assigned_to = ?', user.id, user.id)
+    includes(:assignee)
+      .where('user_id = ? OR assigned_to = ?', user.id, user.id)
   }
 
   # Show tasks which either belong to the user and are unassigned, or are assigned to the user
   scope :visible_on_dashboard, ->(user) {
-    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', :user_id => user.id).where('completed_at IS NULL')
+    where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where('completed_at IS NULL')
   }
 
   scope :by_due_at, -> {
-      order({
+    order({
       "MySQL"      => "due_at NOT NULL, due_at ASC",
       "PostgreSQL" => "due_at ASC NULLS FIRST"
     }[ActiveRecord::Base.connection.adapter_name] || :due_at)
   }
-
 
   # Status based scopes to be combined with the due date and completion time.
   scope :pending,       -> { where('completed_at IS NULL').order('tasks.due_at, tasks.id') }
@@ -93,7 +92,7 @@ class Task < ActiveRecord::Base
   # Completion time scopes.
   scope :completed_today,      -> { where('completed_at >= ? AND completed_at < ?', Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc) }
   scope :completed_yesterday,  -> { where('completed_at >= ? AND completed_at < ?', Time.zone.now.midnight.yesterday.utc, Time.zone.now.midnight.utc) }
-  scope :completed_this_week,  -> { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_week.utc , Time.zone.now.midnight.yesterday.utc) }
+  scope :completed_this_week,  -> { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_week.utc, Time.zone.now.midnight.yesterday.utc) }
   scope :completed_last_week,  -> { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_week.utc - 7.days, Time.zone.now.beginning_of_week.utc) }
   scope :completed_this_month, -> { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days) }
   scope :completed_last_month, -> { where('completed_at >= ? AND completed_at < ?', (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc) }
@@ -104,17 +103,18 @@ class Task < ActiveRecord::Base
   }
 
   acts_as_commentable
-  has_paper_trail :meta => { :related => :asset }, :ignore => [ :subscribed_users ]
+  has_paper_trail class_name: 'Version', meta: { related: :asset },
+                  ignore: [:subscribed_users]
   has_fields
   exportable
 
   validates_presence_of :user
-  validates_presence_of :name, :message => :missing_task_name
-  validates_presence_of :calendar, :if => "self.bucket == 'specific_time' && !self.completed_at"
-  validate              :specific_time, :unless => :completed?
+  validates_presence_of :name, message: :missing_task_name
+  validates_presence_of :calendar, if: "self.bucket == 'specific_time' && !self.completed_at"
+  validate :specific_time, unless: :completed?
 
   before_create :set_due_date
-  before_update :set_due_date, :unless => :completed?
+  before_update :set_due_date, unless: :completed?
   before_save :notify_assignee
 
   # Matcher for the :my named scope.
@@ -131,26 +131,26 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def completed?
-    !!self.completed_at
+    !!completed_at
   end
 
   # Matcher for the :tracked_by? named scope.
   #----------------------------------------------------------------------------
   def tracked_by?(user)
-    self.user == user || self.assignee == user
+    self.user == user || assignee == user
   end
 
   # Check whether the due date has specific time ignoring 23:59:59 timestamp
   # set by Time.now.end_of_week.
   #----------------------------------------------------------------------------
   def at_specific_time?
-    self.due_at.present? && !due_end_of_day? && !due_beginning_of_day?
+    due_at.present? && !due_end_of_day? && !due_beginning_of_day?
   end
 
   # Convert specific due_date to "due_today", "due_tomorrow", etc. bucket name.
   #----------------------------------------------------------------------------
   def computed_bucket
-    return self.bucket if self.bucket != "specific_time"
+    return bucket if bucket != "specific_time"
     case
     when overdue?
       "overdue"
@@ -172,8 +172,8 @@ class Task < ActiveRecord::Base
     return {} unless ALLOWED_VIEWS.include?(view)
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     Hash[
-      settings.map do |key, value|
-        [ key, view == "assigned" ? assigned_by(user).send(key).pending : my(user).send(key).send(view) ]
+      settings.map do |key, _value|
+        [key, view == "assigned" ? assigned_by(user).send(key).pending : my(user).send(key).send(view)]
       end
     ]
   end
@@ -181,7 +181,7 @@ class Task < ActiveRecord::Base
   # Returns bucket if it's empty (i.e. we have to hide it), nil otherwise.
   #----------------------------------------------------------------------------
   def self.bucket_empty?(bucket, user, view = "pending")
-    return false if bucket.blank? or !ALLOWED_VIEWS.include?(view)
+    return false if bucket.blank? || !ALLOWED_VIEWS.include?(view)
     if view == "assigned"
       assigned_by(user).send(bucket).pending.count
     else
@@ -194,7 +194,7 @@ class Task < ActiveRecord::Base
   def self.totals(user, view = "pending")
     return {} unless ALLOWED_VIEWS.include?(view)
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-    settings.inject({ :all => 0 }) do |hash, key|
+    settings.inject(HashWithIndifferentAccess[all: 0]) do |hash, key|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)
       hash[:all] += hash[key]
       hash
@@ -202,11 +202,12 @@ class Task < ActiveRecord::Base
   end
 
   private
+
   #----------------------------------------------------------------------------
   def set_due_date
-    self.due_at = case self.bucket
+    self.due_at = case bucket
     when "overdue"
-      self.due_at || Time.zone.now.midnight.yesterday
+      due_at || Time.zone.now.midnight.yesterday
     when "due_today"
       Time.zone.now.midnight
     when "due_tomorrow"
@@ -218,7 +219,7 @@ class Task < ActiveRecord::Base
     when "due_later"
       Time.zone.now.midnight + 100.years
     when "specific_time"
-      self.calendar ? parse_calendar_date : nil
+      calendar ? parse_calendar_date : nil
     else # due_later or due_asap
       nil
     end
@@ -226,49 +227,49 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def due_end_of_day?
-    self.due_at.present? && (self.due_at == self.due_at.end_of_day)
+    due_at.present? && (due_at == due_at.end_of_day)
   end
 
   #----------------------------------------------------------------------------
   def due_beginning_of_day?
-    self.due_at.present? && (self.due_at == self.due_at.beginning_of_day)
+    due_at.present? && (due_at == due_at.beginning_of_day)
   end
 
   #----------------------------------------------------------------------------
   def overdue?
-    self.due_at < Time.zone.now.midnight
+    due_at < Time.zone.now.midnight
   end
 
   #----------------------------------------------------------------------------
   def due_today?
-    self.due_at.between?(Time.zone.now.midnight, Time.zone.now.end_of_day)
+    due_at.between?(Time.zone.now.midnight, Time.zone.now.end_of_day)
   end
 
   #----------------------------------------------------------------------------
   def due_tomorrow?
-    self.due_at.between?(Time.zone.now.midnight.tomorrow, Time.zone.now.tomorrow.end_of_day)
+    due_at.between?(Time.zone.now.midnight.tomorrow, Time.zone.now.tomorrow.end_of_day)
   end
 
   #----------------------------------------------------------------------------
   def due_this_week?
-    self.due_at.between?(Time.zone.now.beginning_of_week, Time.zone.now.end_of_week)
+    due_at.between?(Time.zone.now.beginning_of_week, Time.zone.now.end_of_week)
   end
 
   #----------------------------------------------------------------------------
   def due_next_week?
-    self.due_at.between?(Time.zone.now.next_week, Time.zone.now.next_week.end_of_week)
+    due_at.between?(Time.zone.now.next_week, Time.zone.now.next_week.end_of_week)
   end
 
   #----------------------------------------------------------------------------
   def notify_assignee
-    if self.assigned_to
+    if assigned_to
       # Notify assignee.
     end
   end
 
   #----------------------------------------------------------------------------
   def specific_time
-    parse_calendar_date if self.bucket == "specific_time"
+    parse_calendar_date if bucket == "specific_time"
   rescue ArgumentError
     errors.add(:calendar, :invalid_date)
   end
@@ -276,9 +277,8 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def parse_calendar_date
     # always in 2012-10-28 06:28 format regardless of language
-    Time.parse(self.calendar)
+    Time.parse(calendar)
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_task, self)
-
 end

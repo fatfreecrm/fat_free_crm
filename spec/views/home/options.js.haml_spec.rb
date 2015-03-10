@@ -17,14 +17,14 @@ describe "/home/options" do
     assign(:user, "all_users")
     assign(:action, "all_actions")
     assign(:duration, "two_days")
-    assign(:all_users, [ FactoryGirl.create(:user) ])
+    assign(:all_users, [FactoryGirl.create(:user)])
 
     render
 
-    rendered.should include("$('#options').html")
-    rendered.should include("$(\\'#asset\\').html(\\'campaign\\')")
-    rendered.should include("crm.flip_form('options')")
-    rendered.should include("crm.set_title('title', 'Recent Activity Options')")
+    expect(rendered).to include("$('#options').html")
+    expect(rendered).to include("$(\\'#asset\\').html(\\'campaign\\')")
+    expect(rendered).to include("crm.flip_form('options')")
+    expect(rendered).to include("crm.set_title('title', 'Recent Activity Options')")
   end
 
   it "should load :options partial with JavaScript code for menus" do
@@ -33,19 +33,19 @@ describe "/home/options" do
     assign(:action, "all_actions")
     assign(:user, "all_users")
     assign(:duration, "two_days")
-    assign(:all_users, [ FactoryGirl.create(:user) ])
+    assign(:all_users, [FactoryGirl.create(:user)])
 
     render
 
-    view.should render_template(:partial => "_options")
+    expect(view).to render_template(partial: "_options")
   end
 
   it "should hide options form on Cancel" do
     params[:cancel] = "true"
     render
 
-    rendered.should_not include("$('#options').html")
-    rendered.should include("crm.flip_form('options')")
-    rendered.should include("crm.set_title('title', 'Recent Activity')")
+    expect(rendered).not_to include("$('#options').html")
+    expect(rendered).to include("crm.flip_form('options')")
+    expect(rendered).to include("crm.set_title('title', 'Recent Activity')")
   end
 end

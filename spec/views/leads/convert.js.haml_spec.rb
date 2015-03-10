@@ -11,10 +11,10 @@ describe "/leads/convert" do
   before do
     login_and_assign
 
-    assign(:lead, @lead = FactoryGirl.create(:lead, :user => current_user))
-    assign(:users, [ current_user ])
+    assign(:lead, @lead = FactoryGirl.create(:lead, user: current_user))
+    assign(:users, [current_user])
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
     assign(:opportunity, FactoryGirl.create(:opportunity))
   end
 
@@ -22,7 +22,7 @@ describe "/leads/convert" do
     params[:cancel] = "true"
 
     render
-    rendered.should include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+    expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
   end
 
   it "cancel from lead landing page: should hide [Convert Lead] form" do
@@ -30,15 +30,15 @@ describe "/leads/convert" do
     params[:cancel] = "true"
 
     render
-    rendered.should include("crm.flip_form('convert_lead'")
+    expect(rendered).to include("crm.flip_form('convert_lead'")
   end
 
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
     params[:cancel] = nil
-    assign(:previous, previous = FactoryGirl.create(:lead, :user => current_user))
+    assign(:previous, previous = FactoryGirl.create(:lead, user: current_user))
 
     render
-    rendered.should include("$('#lead_#{previous.id}').replaceWith")
+    expect(rendered).to include("$('#lead_#{previous.id}').replaceWith")
   end
 
   it "convert: should remove previously open [Convert Lead] if it's no longer available" do
@@ -46,33 +46,32 @@ describe "/leads/convert" do
     assign(:previous, previous = 41)
 
     render
-    rendered.should include("crm.flick('lead_#{previous}', 'remove');")
+    expect(rendered).to include("crm.flick('lead_#{previous}', 'remove');")
   end
 
   it "convert from leads index page: should turn off highlight, hide [Create Lead] form, and replace current lead with [Convert Lead] form" do
     params[:cancel] = nil
 
     render
-    rendered.should include("crm.highlight_off('lead_#{@lead.id}');")
-    rendered.should include("crm.hide_form('create_lead')")
-    rendered.should include("$('#lead_#{@lead.id}').html")
+    expect(rendered).to include("crm.highlight_off('lead_#{@lead.id}');")
+    expect(rendered).to include("crm.hide_form('create_lead')")
+    expect(rendered).to include("$('#lead_#{@lead.id}').html")
   end
 
   it "convert from lead landing page: should hide [Edit Lead] and show [Convert Lead] form" do
     params[:cancel] = "false"
 
     render
-    rendered.should include("#convert_lead")
-    rendered.should include("crm.hide_form('edit_lead'")
-    rendered.should include("crm.flip_form('convert_lead'")
+    expect(rendered).to include("#convert_lead")
+    expect(rendered).to include("crm.hide_form('edit_lead'")
+    expect(rendered).to include("crm.flip_form('convert_lead'")
   end
 
   it "convert: should handle new or existing account and set up calendar field" do
     params[:cancel] = "false"
 
     render
-    rendered.should include("crm.create_or_select_account")
-    rendered.should include('focus()')
+    expect(rendered).to include("crm.create_or_select_account")
+    expect(rendered).to include('focus()')
   end
-
 end

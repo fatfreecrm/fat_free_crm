@@ -11,16 +11,16 @@ describe "/contacts/new" do
   before do
     login_and_assign
     @account = FactoryGirl.create(:account)
-    assign(:contact, Contact.new(:user => current_user))
-    assign(:users, [ current_user ])
+    assign(:contact, Contact.new(user: current_user))
+    assign(:users, [current_user])
     assign(:account, @account)
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
   end
 
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include("crm.flick('empty', 'toggle')")
+    expect(rendered).to include("crm.flick('empty', 'toggle')")
   end
 
   describe "new contact" do
@@ -28,8 +28,8 @@ describe "/contacts/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("$('#create_contact').html")
-      rendered.should include("crm.create_or_select_account(false)")
+      expect(rendered).to include("$('#create_contact').html")
+      expect(rendered).to include("crm.create_or_select_account(false)")
     end
   end
 
@@ -38,9 +38,8 @@ describe "/contacts/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not include("$('#create_contact').html")
-      rendered.should include("crm.flip_form('create_contact');")
+      expect(rendered).not_to include("$('#create_contact').html")
+      expect(rendered).to include("crm.flip_form('create_contact');")
     end
   end
-
 end

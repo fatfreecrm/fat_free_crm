@@ -7,8 +7,8 @@ module FatFreeCRM
   module Callback
     @@classes   = []  # Classes that inherit from FatFreeCRM::Callback::Base.
     @@responder = {}  # Class instances that respond to (i.e. implement) hook methods.
-                      # Also includes class instances that implement a
-                      # set of view hook operations (insert_after, replace, etc).
+    # Also includes class instances that implement a
+    # set of view hook operations (insert_after, replace, etc).
 
     # Adds a class inherited from from FatFreeCRM::Callback::Base.
     #--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ module FatFreeCRM
     # Finds class instance that responds to given method.
     #------------------------------------------------------------------------------
     def self.responder(method)
-      @@responder[method] ||= @@classes.map { |klass| klass.instance }.select { |instance| instance.respond_to?(method) }
+      @@responder[method] ||= @@classes.map(&:instance).select { |instance| instance.respond_to?(method) }
     end
 
     # Invokes the hook named :method and captures its output.
@@ -35,14 +35,13 @@ module FatFreeCRM
       str
     end
 
-
     #                             [View] Hooks
     # -----------------------------------------------------------------------------
 
     # Find class instances that contain operations for the given view hook.
     #------------------------------------------------------------------------------
     def self.view_responder(method)
-      @@responder[method] ||= @@classes.map { |klass| klass.instance }.select { |instance| instance.class.view_hooks[method] }
+      @@responder[method] ||= @@classes.map(&:instance).select { |instance| instance.class.view_hooks[method] }
     end
     # Invokes the view hook Proc stored under :hook and captures its output.
     # => Instead of defining methods on the class, view hooks are
@@ -78,14 +77,25 @@ module FatFreeCRM
         attr_accessor :view_hooks
 
         def add_view_hook(hook, proc, position)
-          @view_hooks[hook] += [{:proc => proc,
-                                 :position => position}]
+          @view_hooks[hook] += [{ proc: proc,
+                                  position: position }]
         end
 
-        def insert_before(hook, &block); add_view_hook(hook, block,        :before);  end
-        def insert_after(hook, &block);  add_view_hook(hook, block,        :after);   end
-        def replace(hook, &block);       add_view_hook(hook, block,        :replace); end
-        def remove(hook);                add_view_hook(hook, Proc.new{""}, :replace); end
+        def insert_before(hook, &block)
+          add_view_hook(hook, block,        :before)
+        end
+
+        def insert_after(hook, &block)
+          add_view_hook(hook, block,        :after)
+        end
+
+        def replace(hook, &block)
+          add_view_hook(hook, block,        :replace)
+        end
+
+        def remove(hook)
+          add_view_hook(hook, proc { "" }, :replace)
+        end
       end
     end # class Base
 
@@ -105,19 +115,19 @@ module FatFreeCRM
           # -- replace || original block
           # -- after
           view_data = "".html_safe
-          hooks[:before].each{|data| view_data << data }
+          hooks[:before].each { |data| view_data << data }
           # Only render the original view block if there are no pending :replace operations
           if hooks[:replace].empty?
             view_data << if block_given?
-                capture(&block)
-              else
-                # legacy view hooks
-                FatFreeCRM::Callback.hook(method, caller, context)
+                           capture(&block)
+                         else
+                           # legacy view hooks
+                           FatFreeCRM::Callback.hook(method, caller, context)
               end
           else
-            hooks[:replace].each{|data| view_data << data }
+            hooks[:replace].each { |data| view_data << data }
           end
-          hooks[:after].each{|data| view_data << data }
+          hooks[:after].each { |data| view_data << data }
 
           view_data
 
@@ -127,10 +137,8 @@ module FatFreeCRM
         end
       end
     end # module Helper
-
   end # module Callback
 end # module FatFreeCRM
-
 
 ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
 ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)

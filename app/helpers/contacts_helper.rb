@@ -19,4 +19,3 @@ module ContactsHelper
     summary.join(', ')
   end
 end
-

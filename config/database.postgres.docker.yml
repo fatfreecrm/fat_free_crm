@@ -1,3 +1,4 @@
+---
 development: &development
   adapter: postgresql
   database: fat_free_crm_development
@@ -22,4 +23,3 @@ production:
 staging:
   <<: *development
   database: fat_free_crm_staging
-

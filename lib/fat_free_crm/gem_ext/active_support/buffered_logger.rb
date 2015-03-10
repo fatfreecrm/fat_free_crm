@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class ActiveSupport::BufferedLogger
-
   BRIGHT = "\033[1;37;40m"
   NORMAL = "\033[0m"
 
@@ -15,6 +14,4 @@ class ActiveSupport::BufferedLogger
   def i(*args)
     info "#{BRIGHT}\n\n" << args.map(&:inspect).join(" ") << "#{NORMAL}\n\n\n"
   end
-
 end
-

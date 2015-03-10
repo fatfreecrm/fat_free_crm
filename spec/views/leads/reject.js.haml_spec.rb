@@ -8,30 +8,30 @@ require 'spec_helper'
 describe "/leads/reject" do
   before do
     login_and_assign
-    assign(:lead, @lead = FactoryGirl.create(:lead, :status => "new"))
+    assign(:lead, @lead = FactoryGirl.create(:lead, status: "new"))
     assign(:lead_status_total, Hash.new(1))
   end
 
   it "should refresh current lead partial" do
     render
 
-    rendered.should include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-    rendered.should include(%Q/$('#lead_#{@lead.id}').effect("highlight"/)
+    expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+    expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
   end
 
   it "should update sidebar filters when called from index page" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
     render
 
-    rendered.should include("$('#sidebar').html")
-    rendered.should include("$('#filters').effect('shake'")
+    expect(rendered).to include("$('#sidebar').html")
+    expect(rendered).to include("$('#filters').effect('shake'")
   end
 
   it "should update sidebar summary when called from landing page" do
     render
 
-    rendered.should include("$('#sidebar').html")
-    rendered.should include("$('#summary').effect('shake'")
+    expect(rendered).to include("$('#sidebar').html")
+    expect(rendered).to include("$('#summary').effect('shake'")
   end
 
   it "should update campaign sidebar if called from campaign landing page" do
@@ -39,9 +39,8 @@ describe "/leads/reject" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 
-    rendered.should include("#sidebar")
-    rendered.should have_text("Summary")
-    rendered.should have_text("Recent Items")
+    expect(rendered).to include("#sidebar")
+    expect(rendered).to have_text("Summary")
+    expect(rendered).to have_text("Recent Items")
   end
-
 end

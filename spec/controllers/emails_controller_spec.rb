@@ -6,7 +6,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe EmailsController, "handling GET /emails" do
-  MEDIATOR = [ :account, :campaign, :contact, :lead, :opportunity ].freeze
+  MEDIATOR = [:account, :campaign, :contact, :lead, :opportunity].freeze
 
   before(:each) do
     require_user
@@ -21,16 +21,15 @@ describe EmailsController, "handling GET /emails" do
         MEDIATOR.each do |asset|
           it "should destroy the requested email and render [destroy] template" do
             @asset = FactoryGirl.create(asset)
-            @email = FactoryGirl.create(:email, :mediator => @asset, :user => current_user)
-            Email.stub(:new).and_return(@email)
+            @email = FactoryGirl.create(:email, mediator: @asset, user: current_user)
+            allow(Email).to receive(:new).and_return(@email)
 
-            xhr :delete, :destroy, :id => @email.id
-            lambda { Email.find(@email) }.should raise_error(ActiveRecord::RecordNotFound)
-            response.should render_template("emails/destroy")
+            xhr :delete, :destroy, id: @email.id
+            expect { Email.find(@email.id) }.to raise_error(ActiveRecord::RecordNotFound)
+            expect(response).to render_template("emails/destroy")
           end
         end
       end
     end
   end
-
 end

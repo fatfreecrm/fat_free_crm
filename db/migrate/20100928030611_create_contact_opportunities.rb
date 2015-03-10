@@ -1,10 +1,10 @@
 class CreateContactOpportunities < ActiveRecord::Migration
   def self.up
-    create_table :contact_opportunities, :force => true do |t|
+    create_table :contact_opportunities, force: true do |t|
       t.references :contact
       t.references :opportunity
-      t.string     :role, :limit => 32
-      t.datetime   :deleted_at
+      t.string :role, limit: 32
+      t.datetime :deleted_at
       t.timestamps
     end
   end
@@ -13,4 +13,3 @@ class CreateContactOpportunities < ActiveRecord::Migration
     drop_table :contact_opportunities
   end
 end
-

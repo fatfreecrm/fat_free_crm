@@ -16,7 +16,6 @@ guard 'rspec', zeus: true, bundler: false, all_on_start: false, all_after_pass: 
 
   # Capybara features specs
   # watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/features/#{m[1]}_spec.rb" }
-
 end
 
 guard 'rails', server: 'thin', debugger: true, zeus: true do

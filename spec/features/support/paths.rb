@@ -41,7 +41,6 @@ module NavigationHelpers
   def opportunity_overview_page
     opportunities_overview_users_path
   end
-
 end
 
-RSpec.configuration.include NavigationHelpers, :type => :feature
+RSpec.configuration.include NavigationHelpers, type: :feature

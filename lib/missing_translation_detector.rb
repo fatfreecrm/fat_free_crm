@@ -1,27 +1,27 @@
 # Compares two locale files and detects missing translations.
 class MissingTranslationDetector
   attr_reader :missing_translations
-  
+
   # @params [String] base_file_name File name of the base locale is i.e. en-US
   # @params [String] target_file_name File name of a locale with missing translations is i.e. de
   def initialize(base_file_name, target_file_name)
-    @base = yml_load base_file_name 
-    @target = yml_load target_file_name 
+    @base = yml_load base_file_name
+    @target = yml_load target_file_name
     @missing_translations = []
   end
 
   # Detects missing translations within the target locale file
   # and stores it in "missing_translations".
-  def detect(h=@base, keys=[])
+  def detect(h = @base, keys = [])
     h.each_key do |key|
       key_path = keys.clone.push key
 
       if h[key].is_a?(Hash)
-        detect h[key], key_path 
+        detect h[key], key_path
       elsif blank?(key_path)
-        missing_translations << OpenStruct.new(:key_path => key_path,
-                                               :value => h[key]) 
-      end 
+        missing_translations << OpenStruct.new(key_path: key_path,
+                                               value: h[key])
+      end
     end
   end
 
@@ -34,9 +34,9 @@ class MissingTranslationDetector
 
   def blank?(keys)
     h = @target
-    
+
     keys.each do |key|
-      return true if !h.is_a?(Hash) || !h.has_key?(key)
+      return true if !h.is_a?(Hash) || !h.key?(key)
       h = h[key]
     end
 

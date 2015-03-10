@@ -19,7 +19,7 @@ module FatFreeCRM
 
     module InstanceMethods
       def add_comment_by_user(comment_body, user)
-        comments.create(:comment => comment_body, :user => user) if comment_body.present?
+        comments.create(comment: comment_body, user: user) if comment_body.present?
       end
     end
   end
