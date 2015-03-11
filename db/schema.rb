@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230205455) do
+ActiveRecord::Schema.define(version: 20150123060900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,16 +20,16 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.integer  "account_id"
     t.integer  "contact_id"
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "account_opportunities", force: :cascade do |t|
     t.integer  "account_id"
     t.integer  "opportunity_id"
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   add_index "account_opportunities", ["account_id", "opportunity_id"], name: "index_account_opportunities_on_account_id_and_opportunity_id", using: :btree
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.string   "phone",            limit: 32
     t.string   "fax",              limit: 32
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.string   "email",            limit: 254
     t.string   "background_info",  limit: 255
     t.integer  "rating",                       default: 0,        null: false
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.string   "action",       limit: 32,  default: "created"
     t.string   "info",         limit: 255, default: ""
     t.boolean  "private",                  default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
   end
 
   add_index "activities", ["created_at"], name: "index_activities_on_created_at", using: :btree
@@ -81,8 +81,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.string   "address_type",     limit: 16
     t.integer  "addressable_id"
     t.string   "addressable_type", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.datetime "deleted_at"
   end
 
@@ -95,8 +95,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.integer  "image_file_size"
     t.string   "image_file_name",    limit: 255
     t.string   "image_content_type", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -116,8 +116,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.date     "ends_on"
     t.text     "objectives"
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                                  null: false
+    t.datetime "updated_at",                                                                  null: false
     t.string   "background_info",     limit: 255
     t.text     "subscribed_users"
   end
@@ -132,8 +132,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.boolean  "private"
     t.string   "title",            limit: 255, default: ""
     t.text     "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
     t.string   "state",            limit: 16,  default: "Expanded", null: false
   end
 
@@ -142,8 +142,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.integer  "opportunity_id"
     t.string   "role",           limit: 32
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   add_index "contact_opportunities", ["contact_id", "opportunity_id"], name: "index_contact_opportunities_on_contact_id_and_opportunity_id", using: :btree
@@ -171,8 +171,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.date     "born_on"
     t.boolean  "do_not_call",                  default: false,    null: false
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.string   "background_info",  limit: 255
     t.string   "skype",            limit: 128
     t.text     "subscribed_users"
@@ -196,8 +196,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.datetime "sent_at"
     t.datetime "received_at"
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.string   "state",           limit: 16,  default: "Expanded", null: false
   end
 
@@ -208,8 +208,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.string   "label",      limit: 128
     t.integer  "position"
     t.string   "hint",       limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "tag_id"
     t.string   "klass_name", limit: 32
   end
@@ -227,8 +227,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.boolean  "disabled"
     t.boolean  "required"
     t.integer  "maxlength"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "pair_id"
     t.text     "settings"
   end
@@ -238,8 +238,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "groups_users", id: false, force: :cascade do |t|
@@ -274,8 +274,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.integer  "rating",                       default: 0,        null: false
     t.boolean  "do_not_call",                  default: false,    null: false
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.string   "background_info",  limit: 255
     t.string   "skype",            limit: 128
     t.text     "subscribed_users"
@@ -287,8 +287,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   create_table "lists", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.text     "url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "user_id"
   end
 
@@ -307,8 +307,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.decimal  "discount",                     precision: 12, scale: 2
     t.date     "closes_on"
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
     t.string   "background_info",  limit: 255
     t.text     "subscribed_users"
   end
@@ -320,8 +320,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.integer  "user_id"
     t.integer  "asset_id"
     t.string   "asset_type", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "group_id"
   end
 
@@ -333,8 +333,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.integer  "user_id"
     t.string   "name",       limit: 32, default: "", null: false
     t.text     "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "preferences", ["user_id", "name"], name: "index_preferences_on_user_id_and_name", using: :btree
@@ -342,8 +342,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255, null: false
     t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
@@ -352,8 +352,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   create_table "settings", force: :cascade do |t|
     t.string   "name",       limit: 32, default: "", null: false
     t.text     "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "settings", ["name"], name: "index_settings_on_name", using: :btree
@@ -391,8 +391,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.datetime "due_at"
     t.datetime "completed_at"
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.string   "background_info",  limit: 255
     t.text     "subscribed_users"
   end
@@ -425,8 +425,8 @@ ActiveRecord::Schema.define(version: 20141230205455) do
     t.string   "current_login_ip",    limit: 255
     t.integer  "login_count",                     default: 0,     null: false
     t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.boolean  "admin",                           default: false, null: false
     t.datetime "suspended_at"
     t.string   "single_access_token", limit: 255
@@ -435,7 +435,7 @@ ActiveRecord::Schema.define(version: 20141230205455) do
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["last_request_at"], name: "index_users_on_last_request_at", using: :btree
   add_index "users", ["perishable_token"], name: "index_users_on_perishable_token", using: :btree
-  add_index "users", ["persistence_token"], name: "index_users_on_persistence_token", using: :btree
+  add_index "users", ["persistence_token"], name: "index_users_on_remember_token", using: :btree
   add_index "users", ["username", "deleted_at"], name: "index_users_on_username_and_deleted_at", unique: true, using: :btree
 
   create_table "versions", force: :cascade do |t|
