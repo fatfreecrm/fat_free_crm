@@ -513,7 +513,7 @@ pl:
   crm_admin_page: Fat Free CRM Administration
   approve: Akceptuj
   create_user: Dodaj użytkownika
-  last_seen: ostatnio widziany %{value} temu
+  last_logged_in: ostatnio zalogowany %{value}
   personal_information: Informacje osobiste
   reactivate: Reaktywuj
   save_user: Zapisz użytkownika

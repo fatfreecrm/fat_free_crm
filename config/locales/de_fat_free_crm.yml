@@ -204,7 +204,7 @@ de:
   closing_date: Abschlussdatum ist %{value}
   no_recent_items: Es gibt hier noch nichts zum Anzeigen.
   affiliate: Verbundenes Unternehmen
-  last_seen: zuletzt eingeloggt vor %{value}
+  last_logged_in: last logged in %{value}
   status: Status
   dropbox_notification_to: Hinzugefügt zu
   related: ! 're:'

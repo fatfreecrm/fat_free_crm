@@ -598,7 +598,7 @@ pt-BR:
   crm_admin_page: Administração do Fat Free CRM
   approve: Aprovar
   create_user: Novo usuário
-  last_seen: entrou pela última vez há %{value} atrás
+  last_logged_in: last logged in %{value}
   personal_information: Informações Pessoais
   reactivate: Reativar
   save_user: Salvar usuário

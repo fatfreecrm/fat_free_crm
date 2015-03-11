@@ -25,7 +25,6 @@
 #  password_salt       :string(255)     default(""), not null
 #  persistence_token   :string(255)     default(""), not null
 #  perishable_token    :string(255)     default(""), not null
-#  last_request_at     :datetime
 #  last_login_at       :datetime
 #  current_login_at    :datetime
 #  last_login_ip       :string(255)

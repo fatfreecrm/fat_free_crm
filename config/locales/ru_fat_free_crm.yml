@@ -742,8 +742,7 @@ ru:
     ссылок на нее.
   approve: Подтвердить
   create_user: Создать Пользователя
-  last_seen: последний визит %{value} назад
-  last_seen2: последний визит %{value}
+  last_logged_in: last logged in %{value}
   personal_information: Личные Данные
   group_memberships: Принадлежит группе
   reactivate: Разблокиривать

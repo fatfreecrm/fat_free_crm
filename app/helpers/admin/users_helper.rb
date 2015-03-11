@@ -26,7 +26,7 @@ module Admin::UsersHelper
     title_and_company = user.title.blank? ? '' : h(user.title)
     title_and_company << " #{t(:at)} #{user.company}" unless user.company.blank?
     summary << title_and_company unless title_and_company.blank?
-    summary << t('pluralize.login', user.login_count) if user.last_request_at && user.login_count > 0
+    summary << t('pluralize.login', user.login_count) if user.last_login_at && user.login_count > 0
     summary << user.email
     summary << "#{t :phone_small}: #{user.phone}" unless user.phone.blank?
     summary << "#{t :mobile_small}: #{user.mobile}" unless user.mobile.blank?

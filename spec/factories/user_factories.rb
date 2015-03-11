@@ -24,7 +24,6 @@ FactoryGirl.define do
     persistence_token   { SecureRandom.hex(64) }
     perishable_token    { SecureRandom.hex(10) }
     single_access_token nil
-    last_request_at     { FactoryGirl.generate(:time) }
     current_login_at    { FactoryGirl.generate(:time) }
     last_login_at       { FactoryGirl.generate(:time) }
     last_login_ip "127.0.0.1"

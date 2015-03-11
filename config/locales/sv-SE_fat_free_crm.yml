@@ -514,7 +514,7 @@ sv-SE:
   crm_admin_page: Administration
   approve: Godkänn
   create_user: Skapa användare
-  last_seen: senast inloggad %{value} sedan
+  last_logged_in: last logged in %{value}
   personal_information: Personuppgifter
   reactivate: Återaktivera
   save_user: Spara användare
