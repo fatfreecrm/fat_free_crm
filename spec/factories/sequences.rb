@@ -6,7 +6,7 @@
 FactoryGirl.define do
   sequence :address do |_n|
     Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"
-    Faker::Address.city + ", " + Faker::Address.us_state_abbr + " " + Faker::Address.zip_code
+    Faker::Address.city + ", " + Faker::AddressUS.state_abbr + " " + Faker::AddressUS.zip_code
   end
 
   sequence :username do |n|

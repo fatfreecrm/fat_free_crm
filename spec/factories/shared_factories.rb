@@ -46,9 +46,9 @@ FactoryGirl.define do
     street1             { Faker::Address.street_address }
     street2             { Faker::Address.street_address }
     city                { Faker::Address.city }
-    state               { Faker::Address.us_state_abbr }
-    zipcode             { Faker::Address.zip_code }
-    country             { Faker::Address.uk_country }
+    state               { Faker::AddressUS.state_abbr }
+    zipcode             { Faker::AddressUS.zip_code }
+    country             { Faker::AddressUK.country }
     full_address        { FactoryGirl.generate(:address) }
     address_type        { %w(Business Billing Shipping).sample }
     updated_at          { FactoryGirl.generate(:time) }
