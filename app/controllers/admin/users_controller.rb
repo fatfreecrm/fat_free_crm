@@ -44,7 +44,7 @@ class Admin::UsersController < Admin::ApplicationController
   # POST /admin/users.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def create
-    params[:user][:email].strip!
+    params[:user][:email].try(:strip!)
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     admin = params[:user].delete(:admin)
     @user = User.new(params[:user])
@@ -58,7 +58,7 @@ class Admin::UsersController < Admin::ApplicationController
   # PUT /admin/users/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def update
-    params[:user][:email].strip!
+    params[:user][:email].try(:strip!)
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     admin = params[:user].delete(:admin)
     @user = User.find(params[:id])
