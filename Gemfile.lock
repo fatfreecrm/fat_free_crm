@@ -388,7 +388,7 @@ DEPENDENCIES
   email_reply_parser_ffcrm
   execjs
   factory_girl_rails
-  ffaker
+  ffaker (< 2)
   font-awesome-rails
   guard
   guard-rails
