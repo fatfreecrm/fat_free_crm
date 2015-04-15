@@ -5,16 +5,16 @@
 #------------------------------------------------------------------------------
 FactoryGirl.define do
   sequence :address do |_n|
-    Faker::Address.street_address + " " + Faker::Address.secondary_address + "\n"
-    Faker::Address.city + ", " + Faker::AddressUS.state_abbr + " " + Faker::AddressUS.zip_code
+    FFaker::Address.street_address + " " + FFaker::Address.secondary_address + "\n"
+    FFaker::Address.city + ", " + FFaker::AddressUS.state_abbr + " " + FFaker::AddressUS.zip_code
   end
 
   sequence :username do |n|
-    Faker::Internet.user_name + n.to_s  # make sure it's unique by appending sequence number
+    FFaker::Internet.user_name + n.to_s  # make sure it's unique by appending sequence number
   end
 
   sequence :website do |_n|
-    "http://www." + Faker::Internet.domain_name
+    "http://www." + FFaker::Internet.domain_name
   end
 
   sequence :title do |_n|

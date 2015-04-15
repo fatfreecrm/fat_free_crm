@@ -6,14 +6,14 @@
 FactoryGirl.define do
   factory :user do
     username            { FactoryGirl.generate(:username) }
-    email               { Faker::Internet.email }
-    first_name          { Faker::Name.first_name }
-    last_name           { Faker::Name.last_name }
+    email               { FFaker::Internet.email }
+    first_name          { FFaker::Name.first_name }
+    last_name           { FFaker::Name.last_name }
     title               { FactoryGirl.generate(:title) }
-    company             { Faker::Company.name }
-    alt_email           { Faker::Internet.email }
-    phone               { Faker::PhoneNumber.phone_number }
-    mobile              { Faker::PhoneNumber.phone_number }
+    company             { FFaker::Company.name }
+    alt_email           { FFaker::Internet.email }
+    phone               { FFaker::PhoneNumber.phone_number }
+    mobile              { FFaker::PhoneNumber.phone_number }
     aim nil
     yahoo nil
     google nil
@@ -57,7 +57,7 @@ FactoryGirl.define do
   end
 
   factory :group do
-    name                { Faker::Company.name }
+    name                { FFaker::Company.name }
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
   end

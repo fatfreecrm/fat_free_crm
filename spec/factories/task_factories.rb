@@ -9,12 +9,12 @@ FactoryGirl.define do
     asset nil
     assigned_to nil
     completed_by nil
-    name                { Faker::Lorem.sentence[0, 64] }
+    name                { FFaker::Lorem.sentence[0, 64] }
     priority nil
     category            { %w(call email follow_up lunch meeting money presentation trip).sample }
     bucket "due_asap"
     due_at              { FactoryGirl.generate(:time) }
-    background_info     { Faker::Lorem.paragraph[0, 255] }
+    background_info     { FFaker::Lorem.paragraph[0, 255] }
     completed_at nil
     deleted_at nil
     updated_at          { FactoryGirl.generate(:time) }

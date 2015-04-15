@@ -16,7 +16,7 @@ FactoryGirl.define do
     commentable         { fail "Please specify :commentable for the comment" }
     title               { FactoryGirl.generate(:title) }
     private false
-    comment             { Faker::Lorem.paragraph }
+    comment             { FFaker::Lorem.paragraph }
     state "Expanded"
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
@@ -26,12 +26,12 @@ FactoryGirl.define do
     imap_message_id     { "%08x" % rand(0xFFFFFFFF) }
     user
     mediator            { fail "Please specify :mediator for the email" }
-    sent_from           { Faker::Internet.email }
-    sent_to             { Faker::Internet.email }
-    cc                  { Faker::Internet.email }
+    sent_from           { FFaker::Internet.email }
+    sent_to             { FFaker::Internet.email }
+    cc                  { FFaker::Internet.email }
     bcc nil
-    subject             { Faker::Lorem.sentence }
-    body                { Faker::Lorem.paragraph[0, 255] }
+    subject             { FFaker::Lorem.sentence }
+    body                { FFaker::Lorem.paragraph[0, 255] }
     header nil
     sent_at             { FactoryGirl.generate(:time) }
     received_at         { FactoryGirl.generate(:time) }
@@ -43,12 +43,12 @@ FactoryGirl.define do
 
   factory :address do
     addressable         { fail "Please specify :addressable for the address" }
-    street1             { Faker::Address.street_address }
-    street2             { Faker::Address.street_address }
-    city                { Faker::Address.city }
-    state               { Faker::AddressUS.state_abbr }
-    zipcode             { Faker::AddressUS.zip_code }
-    country             { Faker::AddressUK.country }
+    street1             { FFaker::Address.street_address }
+    street2             { FFaker::Address.street_address }
+    city                { FFaker::Address.city }
+    state               { FFaker::AddressUS.state_abbr }
+    zipcode             { FFaker::AddressUS.zip_code }
+    country             { FFaker::AddressUK.country }
     full_address        { FactoryGirl.generate(:address) }
     address_type        { %w(Business Billing Shipping).sample }
     updated_at          { FactoryGirl.generate(:time) }

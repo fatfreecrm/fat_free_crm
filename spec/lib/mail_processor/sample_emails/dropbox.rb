@@ -12,7 +12,7 @@ Date: Mon, 26 May 2003 11:22:33 -0600
 Message-ID: <1234@local.machine.example>
 Content-Type: text/plain
 
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Aaron
 END
@@ -28,7 +28,7 @@ Content-Type: text/html
 <html>
   <head></head>
   <body>
-    <p>#{Faker::Lorem.paragraph}</p>
+    <p>#{FFaker::Lorem.paragraph}</p>
     <p>Aaron</p>
   </body>
 </html>
@@ -43,7 +43,7 @@ Message-ID: <1234@local.machine.example>
 Content-Type: text/plain
 
 .campaign Got milk
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Aaron
 END
@@ -57,7 +57,7 @@ Message-ID: <1234@local.machine.example>
 Content-Type: text/plain
 
 .lead Cindy Cluster
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Aaron
 END
@@ -71,7 +71,7 @@ Message-ID: <1234@local.machine.example>
 Content-Type: text/plain
 
 .contact Cindy Cluster
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Aaron
 END
@@ -90,7 +90,7 @@ Date: Sun, Mar 22, 2009 at 3:28 PM
 Subject: Fwd:
 To: Cindy Cluster <cindy@example.com>
 
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Ben
 END
