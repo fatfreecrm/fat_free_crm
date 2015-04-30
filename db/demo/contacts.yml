@@ -45,17 +45,17 @@ contact_<%= i %>:
   user_id     : <%= rand(8) + 1 %>
   assigned_to : <%= rand(8) + 1 %>
   reports_to  : <%= (rand(8) + 1) if i > 10 %>
-  first_name  : <%= first_name = Faker::Name.first_name %>
-  last_name   : <%= last_name = Faker::Name.last_name %>
+  first_name  : <%= first_name = FFaker::Name.first_name %>
+  last_name   : <%= last_name = FFaker::Name.last_name %>
   access      : Public
   title       : <%= title.sample %>
   department  :
   source      : <%= source.sample %>
-  email       : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
-  alt_email   : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) %>
-  phone       : <%= Faker::PhoneNumber.short_phone_number if rand(10) < 8 %>
-  mobile      : <%= Faker::PhoneNumber.short_phone_number if rand(10) < 6 %>
-  fax         : <%= Faker::PhoneNumber.short_phone_number if rand(10) < 4 %>
+  email       : <%= FFaker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
+  alt_email   : <%= FFaker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) %>
+  phone       : <%= FFaker::PhoneNumber.short_phone_number if rand(10) < 8 %>
+  mobile      : <%= FFaker::PhoneNumber.short_phone_number if rand(10) < 6 %>
+  fax         : <%= FFaker::PhoneNumber.short_phone_number if rand(10) < 4 %>
   blog        : <%= %[http://#{(first_name + last_name.first).downcase}.blogger.com] if rand(10) < 8 %>
   linkedin    : <%= %[http://www.linkedin.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
   facebook    : <%= %[http://www.facebook.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
@@ -65,6 +65,6 @@ contact_<%= i %>:
   do_not_call : false
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
-  background_info : <%= Faker::Lorem.paragraph[0,255] %>
+  background_info : <%= FFaker::Lorem.paragraph[0,255] %>
 <% end %>
 

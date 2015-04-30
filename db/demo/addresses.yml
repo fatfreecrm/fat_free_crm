@@ -32,11 +32,11 @@ address_<%= i %>:
   addressable_id   : <%= i/2 %>
   addressable_type : <%= asset = addressable.sample %>
   address_type     : <%= asset == 'Account' ? type.sample : 'Business' %>
-  street1          : <%= street1 = Faker::Address.street_address %>
-  street2          : <%= street2 = Faker::Address.street_address %>
-  city             : <%= city    = Faker::Address.city %>
-  state            : <%= state   = Faker::AddressUS.state_abbr %>
-  zipcode          : <%= zipcode = Faker::AddressUS.zip_code %>
+  street1          : <%= street1 = FFaker::Address.street_address %>
+  street2          : <%= street2 = FFaker::Address.street_address %>
+  city             : <%= city    = FFaker::Address.city %>
+  state            : <%= state   = FFaker::AddressUS.state_abbr %>
+  zipcode          : <%= zipcode = FFaker::AddressUS.zip_code %>
   country          : US
   full_address     : |
                       <%= street1 %>

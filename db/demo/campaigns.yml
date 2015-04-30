@@ -136,9 +136,9 @@ campaign<%= i %>:
   revenue             : <%= future ? "" : rand(1000) * 1000 %>
   starts_on           : <%= starts %>
   ends_on             : <%= starts + rand(50).days %>
-  objectives          : <%= Faker::Lorem.sentence %>
+  objectives          : <%= FFaker::Lorem.sentence %>
   background_info     :
-# background_info     : <%= Faker::Lorem.paragraph[0,255] %>
+# background_info     : <%= FFaker::Lorem.paragraph[0,255] %>
   created_at          : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at          : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
 <% end %>

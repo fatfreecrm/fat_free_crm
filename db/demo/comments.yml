@@ -26,5 +26,5 @@ comment_<%= i %>:
   user_id          : <%= rand(8) + 1 %>
   commentable_id   : <%= rand(100) + 1 %>
   commentable_type : <%= commentable.sample %>
-  comment          : <%= Faker::Lorem::paragraph(rand(10) + 1) %>
+  comment          : <%= FFaker::Lorem::paragraph(rand(10) + 1) %>
 <% end %>

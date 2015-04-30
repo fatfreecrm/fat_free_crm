@@ -50,13 +50,13 @@ task<%= i %>:
   user_id      : <%= user %>
   assigned_to  : <%= rand(4) == 0 ? rand(5) + 1 : "" %>
   completed_by : <%= completed_by %>
-  name         : <%= Faker::Lorem::sentence(rand(2) + 2).sub(".", "") %>
+  name         : <%= FFaker::Lorem::sentence(rand(2) + 2).sub(".", "") %>
   asset_id     : <%= asset %>
   asset_type   : <%= %w(Account Campaign Contact Lead Opportunity).sample if asset %>
   category     : <%= category.sample %>
   bucket       : <%= bucket %>
   background_info :
-# background_info : <%= Faker::Lorem.paragraph[0,255] %>
+# background_info : <%= FFaker::Lorem.paragraph[0,255] %>
   due_at       : <%= due_at %>
   completed_at : <%= completed_by ? Date.today - rand(5).days : "" %>
   created_at   : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>

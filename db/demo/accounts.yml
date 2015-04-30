@@ -32,14 +32,14 @@ account<%= i %>:
   id               : <%= i %>
   user_id          : <%= rand(8) + 1 %>
   assigned_to      : <%= rand(8) + 1 %>
-  name             : <%= company = Faker::Company.name %>
+  name             : <%= company = FFaker::Company.name %>
   access           : Public
   website          : http://www.<%= company.downcase.gsub(/\W/, "") %>.com
   toll_free_phone  : 1-800-<%= "%03d-%04d" % [rand(999), rand(9999)] %>
-  phone            : <%= Faker::PhoneNumber.short_phone_number %>
-  fax              : <%= Faker::PhoneNumber.short_phone_number %>
+  phone            : <%= FFaker::PhoneNumber.short_phone_number %>
+  fax              : <%= FFaker::PhoneNumber.short_phone_number %>
   email            : info@<%= company.downcase.gsub(/\W/, "") %>.com
-  background_info  : <%= Faker::Company.catch_phrase << " " << Faker::Company.bs %>
+  background_info  : <%= FFaker::Company.catch_phrase << " " << FFaker::Company.bs %>
   rating           : <%= rand(5) %>
   category         : <%= category.sample %>
   created_at       : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>

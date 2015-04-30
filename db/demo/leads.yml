@@ -35,7 +35,7 @@
   require "ffaker"
   puts "Loading leads..."
 
-  Faker::PhoneNumber::Formats = ["(###)###-####"]
+  FFaker::PhoneNumber::Formats = ["(###)###-####"]
   title = [ "", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer" ]
   source = %w(campaign cold_call conference online referral self web word_of_mouth other) << ""
   status = %w(new contacted converted rejected) << ""
@@ -47,25 +47,25 @@ lead<%= i %>:
   user_id     : <%= rand(8) + 1 %>
   campaign_id : <%= rand(5) + 1 %>
   assigned_to : <%= rand(8) + 1 %>
-  first_name  : <%= first_name = Faker::Name.first_name %>
-  last_name   : <%= last_name = Faker::Name.last_name %>
+  first_name  : <%= first_name = FFaker::Name.first_name %>
+  last_name   : <%= last_name = FFaker::Name.last_name %>
   access      : Public
-  company     : <%= Faker::Company.name %>
+  company     : <%= FFaker::Company.name %>
   title       : <%= title.sample %>
   source      : <%= source.sample %>
   status      : <%= status.sample %>
   rating      : <%= rand(5) %>
-  referred_by : <%= Faker::Name.first_name + " " + Faker::Name.last_name if rand(10) < 5 %>
+  referred_by : <%= FFaker::Name.first_name + " " + FFaker::Name.last_name if rand(10) < 5 %>
   blog        : <%= %[http://#{(first_name + last_name.first).downcase}.blogger.com] if rand(10) < 8 %>
   linkedin    : <%= %[http://www.linkedin.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
   facebook    : <%= %[http://www.facebook.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
   twitter     : <%= %[http://www.twitter.com/#{(first_name + last_name.first).downcase}] if rand(10) < 8 %>
-  email       : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
-  alt_email   : <%= Faker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) if rand(10) < 3 %>
-  phone       : <%= Faker::PhoneNumber.short_phone_number if rand(10) < 5 %>
-  mobile      : <%= Faker::PhoneNumber.short_phone_number if rand(10) < 3 %>
+  email       : <%= FFaker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{last_name.first}@".downcase) %>
+  alt_email   : <%= FFaker::Internet.free_email.sub(/^.+?@/, "#{first_name}#{rand(9999)}@".downcase) if rand(10) < 3 %>
+  phone       : <%= FFaker::PhoneNumber.short_phone_number if rand(10) < 5 %>
+  mobile      : <%= FFaker::PhoneNumber.short_phone_number if rand(10) < 3 %>
   do_not_call : false
   created_at  : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
   updated_at  : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
-  background_info : <%= Faker::Lorem.paragraph[0,255] %>
+  background_info : <%= FFaker::Lorem.paragraph[0,255] %>
 <% end %>
