@@ -190,7 +190,7 @@ pt-BR:
   msg_account_not_approved: Sua conta ainda não foi aprovada.
   msg_asset_deleted: ! '%{value} foi removido.'
   msg_asset_not_available: Este(a) %{value} não está mais disponível.
-  msg_asset_not_authorized: You are not authorized to view this %{value}.
+  msg_asset_not_authorized: Você não está autorizado para ver isso %{value}.
   msg_assets_not_available: Estes(as) %{value} não estão mais disponíveis.
   msg_asset_rejected: ! '%{value} foi rejeitado.'
   msg_bad_image_file: ^Não foi possível enviar ou redimensionar a imagem que você
@@ -326,7 +326,7 @@ pt-BR:
   fax: Fax
   intro: Você pode adicionar %{value} informação depois.
   keep_private: manter privado, não compartilhar com os outros
-  mail_to: E-mail to %{value}
+  mail_to: E-mail para %{value}
   make_public: Compartilhar com todos
   mobile_small: celular
   open_in_window: Abrir %{value} em uma nova janela
@@ -351,10 +351,10 @@ pt-BR:
   campaign: Campanha
   campaign_and_leads: campanha e seus leads
   campaign_small: campanha
-  campaign_summary: Campaign Summary
-  campaign_targets: Campaign Targets
+  campaign_summary: Resumo da Campanha
+  campaign_targets: Metas da Campanha
   campaigns: Campanhas
-  campaigns_options: Campaigns Options
+  campaigns_options: Opcôes de Campanhas
   campaigns_small: campanhas
   conversion: Conversão
   conversion_label: Conversão (%)
@@ -393,7 +393,7 @@ pt-BR:
   department: Departamento
   department_small: ! '%{value} departamento'
   do_not_call: Não ligar
-  extra_info: Informações exttra
+  extra_info: Informações extra
   extra_info_small: informação extra
   facebook: Facebook
   linked_in: LinkedIn
@@ -404,17 +404,16 @@ pt-BR:
     Você pode mudar as permissões depois..
   permissions_intro_shared: Por padrão, somente os usuários selecionados terão acesso
     em %{value}. Você pode mudar as permissões depois..
-  referred_by: Referred by
-  referred_by_small: referred by
+  referred_by: Indicado Por
+  referred_by_small: indicado por
   save_contact: Salvar contato
   twitter: Twitter
-  web_presence: Web Presence
-  web_presence_small: web presence
+  web_presence: Presença na Web
+  web_presence_small: presença na web
   works_at: ! '%{job_title} na %{company}'
   convert: Converter
   convert_lead: Converter lead
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead
-    being converted. You can change contact permissions later.
+  convert_lead_permissions_intro: Permissões de contato vão ser copiados do lead sendo convertido. Você pode mudar as permissões de contato depois.
   convert_lead_text: By converting the lead %{value} will become a contact associated
     with the existing or newly created account. Lead status will be automatically
     set to converted.
@@ -433,7 +432,7 @@ pt-BR:
     do 'lead' depois.
   lead_small: lead
   lead_status_small: situação do lead
-  lead_summary: Lead Summary
+  lead_summary: Resumo do Lead
   leads: Leads
   leads_options: Opções de Lead
   leads_small: leads
@@ -446,13 +445,13 @@ pt-BR:
   status: Situação
   total_leads: Total de leads
   amount: Valor
-  close_date: Close date
+  close_date: Data de fechar
   closed_ago_on: fechada há %{time_ago} atrás em %{date}
-  closes_today: expected to close today!
-  closing_date: closing date is %{value}
+  closes_today: esperado de fechar hoje!
+  closing_date: data de fechar é %{value}
   create_opportunity: Cria oportunidade
   currency: (R$)
-  days_late: Late by
+  days_late: Atrasado
   days_left: Dias restante
   discount: Desconto
   discount_number: com %{value} desconto
@@ -500,7 +499,7 @@ pt-BR:
   task_uncomplete: Reverter
   task_completed_ago: terminada há %{value} atrás
   task_completed_by: terminada há %{time_ago} atrás por %{user}
-  task_created: A tarea foi criada
+  task_created: A tarefa foi criada
   task_due_in: due in %{value}
   task_due_later: due sometime soon
   task_due_now: vende
