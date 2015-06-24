@@ -22,10 +22,6 @@ class String
     match(/^https?:\/\//) ? self : "http://" << self
   end
 
-  def snakecase
-    strip.downcase.gsub(/[\s\/]+/, "_")
-  end
-
   def true?
     self == "true"
   end
