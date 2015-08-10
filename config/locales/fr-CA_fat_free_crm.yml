@@ -373,7 +373,7 @@ fr-CA:
   total_leads: Total des pistes
   amount: Montant
   close_date: Date de clôture
-  closed_ago_on: clôturé il y à%{time_ago} le %{date}
+  closed_ago_on: clôturé il y a%{time_ago} le %{date}
   closes_today: doit être clôturé aujourd'hui!
   closing_date: la date de clôture est %{value}
   create_opportunity: Créer une opportunité
@@ -424,8 +424,8 @@ fr-CA:
   task_assigned_to: et assignée à %{value}
   task_completed: complétée
   task_uncomplete: Revenir
-  task_completed_ago: complétée il y à %{value}
-  task_completed_by: complétée il y à %{time_ago} par %{user}
+  task_completed_ago: complétée il y a %{value}
+  task_completed_by: complétée il y a %{time_ago} par %{user}
   task_created: La tâche à été crée.
   task_due_in: échéance dans %{value}
   task_due_later: a faire bientôt
@@ -462,8 +462,8 @@ fr-CA:
   add_note: Ajouter une note
   save_note: Enregistrer la note
   add_note_help: Ajouter une nouvelle note...
-  added_ago: ajoutée il y à %{value}
-  added_by: ajoutée il y à %{time_ago} par %{user}
+  added_ago: ajoutée il y a %{value}
+  added_by: ajoutée il y a %{time_ago} par %{user}
   back: Retour
   cancel: Annuler
   close_form: Fermer le formulaire
@@ -489,7 +489,7 @@ fr-CA:
   please_retry: tentez une autre requête.
   recent_items: Objets récents
   search_assets: Recherche de %{value}
-  time_ago: il y à %{value}
+  time_ago: il y a %{value}
   about: A propos
   about_dev_group: Groupe de discussion développeur
   about_features: Fonctionnalités et bugs
