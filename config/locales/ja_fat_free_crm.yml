@@ -1,10 +1,6 @@
 ---
 ja:
   language: Japanese
-
-  # Generic terms.
-  #----------------------------------------------------------------------------
-  id: Id
   all: 全て
   at: at
   here: こちら
@@ -14,10 +10,6 @@ ja:
   select_none: -- なし --
   select_blank: -- 選択 --
   yes_button: はい
-
-
-  # Settings.
-  #----------------------------------------------------------------------------
   tab_dashboard: ダッシュボード
   tab_tasks: タスク
   tab_campaigns: キャンペーン
@@ -25,19 +17,9 @@ ja:
   tab_accounts: 取引先
   tab_contacts: 取引先責任者
   tab_opportunities: 商談
-  tab_team: チーム
-  admin_tab_groups: グループ
   admin_tab_users: ユーザ
-  admin_tab_fields: カスタムフィールド
-  admin_tab_tags: タグ
   admin_tab_settings: 管理設定
   admin_tab_plugins: プラグイン
-  affiliate: アフリエイト
-  competitor: コンペティター
-  customer: カスタマー
-  partner: パートナー
-  reseller: リセラー
-  vendor: ベンダー
   planned: 計画済
   started: 開始済
   on_hold: 保留中
@@ -83,18 +65,12 @@ ja:
   completed_last_week: 先週
   completed_this_month: 今月
   completed_last_month: 先月
-
-  # Models/Activity.
-  #----------------------------------------------------------------------------
   one_hour: 1時間
   one_day: 1日
   two_days: 2日
   one_week: 1週間
   two_weeks: 2週間
   one_month: 1ヶ月
-
-  # Model Validations.
-  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
@@ -154,45 +130,24 @@ ja:
             email:
               missing_email: ^Eメールアドレスを指定してください。
               email_in_use: ^同じEメールアドレスを持つ他のユーザがいます。
-        custom_field:
-          required: ^%{field} is required.
-          maxlength: ^%{field} is too long.
-          endbeforestart: ^%{field} cannot end before it begins.
-    attribute_options:
-      opportunity:
-        stage:
-          prospecting: Prospecting
-          analysis: Analysis
-          presentation: Presentation
-          proposal: Proposal
-          negotiation: Negotiation
-          final_review: Final Review
-          won: Closed/Won
-          lost: Closed/Lost
-      account:
-        rating:
-          "0": "-"
-          "1": "★"
-          "2": "★★"
-          "3": "★★★"
-          "4": "★★★★"
-          "5": "★★★★★"
-
+  errors:
+    template:
+      header:
+        one: ! '%{model}にエラーが発生しました。'
+        other: ! '%{model}に%{count}つのエラーが発生しました。'
+      body: 次の項目を確認してください。
   msg_account_suspended: User account has been suspended.
   password_reset_instruction: password reset instructions
-
-  # Controllers.
-  #----------------------------------------------------------------------------
   msg_account_created: あなたのアカウントは生成され、システム管理者の承認待ちです。
   msg_account_not_approved: あなたのアカウントは承認されていません。
   msg_asset_deleted: ! '%{value} は削除されています。'
   msg_asset_not_available: この %{value} は、もはや存在しません。
-  msg_not_authorized: You are not authorized to take this action.
+  msg_asset_not_authorized: You are not authorized to view this %{value}.
   msg_assets_not_available: ! '%{value} は存在しません。'
   msg_asset_rejected: ! '%{value} は拒否されています。'
   msg_bad_image_file: ^指定されたファイルのアップデートもしくはリサイズができませんでした。
   msg_cant_create_related: ! '%{related} がもはや存在しないため、 %{asset} を生成できません。'
-  msg_cant_delete_user: ^Couldn't delete the user since %{value} has related assets
+  msg_cant_delete_user: Couldn't delete the user since %{value} has related assets
     present.
   msg_cant_do: Can't %{action} the %{asset} since it's no longer available.
   msg_email_not_found: そのEメールアドレスを持つユーザが見つかりませんでした。
@@ -210,12 +165,8 @@ ja:
   msg_require_admin: このページへのアクセスは管理者でなければなりません。
   msg_successful_signup: サインアップ成功です。 Fat Free CRM へようこそ!
   msg_welcome: Fat Free CRM へようこそ!
-
-  # Options.
-  #----------------------------------------------------------------------------
   option_amount*probability: weighted amount
   activity_options: Show %{models} activities performed by %{user} in the past %{period}.
-    %{period}.
   all_users: 全ユーザ
   option_after: 前
   option_all: 全て
@@ -242,17 +193,6 @@ ja:
   show_per_page: ! '%{fmt}書式で1ページ%{number}件ずつ%{models}を表示。'
   sort_by: ! '%{field}でを並べ替える。'
   sort_by_displaying: 姓を名の%{position}に表示にして、%{field}で%{models}を並べ替える。
-  entities_per_page: ! '%{entity} ページ毎の表示件数:'
-  contacts_index_long: Long format
-  contacts_index_brief: Brief format
-  contacts_index_full: Full format
-  opportunities_index_normal: Normal format
-  accounts_index_normal: Normal format
-  leads_index_normal: Normal format
-  campaigns_index_normal: Normal format
-
-  # Views -> Profile.
-  #----------------------------------------------------------------------------
   aim: AOL IM
   already_signed_up: サインアップ済みですか?
   alt_email: その他のEメール
@@ -267,6 +207,7 @@ ja:
   gravatar_help: Gravatarsをご存知ない？ Gravatarsについては
   image_file: 画像ファイル
   image_help: アップロードされた画像ファイルは自動的に 75 x 75 ピクセルの大きさに調整されます。対応フォーマットは GIF, JPG, PNG
+    です。
   job_title: 役職
   last_name: 姓
   login_now_link: 今すぐログイン！
@@ -287,26 +228,13 @@ ja:
   user: ユーザ
   username: ユーザ名
   yahoo: Yahoo IM
-  born_on: Born on
-  reports_to: Reports to
-  access: Access
-
-  # Views -> Authenticate.
-  #----------------------------------------------------------------------------
   forgot_password: パスワードを忘れた場合
   login: ログイン
   no_account: アカウントがない場合
   remember_me: Remember Me
   sign_up_now: 今すぐサインアップ！
-
-  # Views -> Accounts.
-  #----------------------------------------------------------------------------
   account: 取引先
-  account_id: Account
-  select_an_account: Select an Account
   account_small: 取引先
-  account_summary: Account Summary
-  account_categories: 取引先 カテゴリー
   accounts: 取引先
   accounts_options: 取引先オプション
   accounts_small: 取引先
@@ -317,25 +245,18 @@ ja:
   date_updated: 更新日
   fax: FAX
   intro: 後で%{value}の情報を追加することができます。
-  keep_private: 秘密扱いにして、他人と共有しない
-  mail_to: ! '%{value}へのメール'
-  make_public: 全員と共有する
   mobile_small: 携帯電話
   open_in_window: 新しいウィンドウで%{value}を開く
+  mail_to: ! '%{value}へのメール'
   phone_small: 電話
   phone_toll_free: 通話無料
-  pipeline: パイプライン
+  keep_private: 秘密扱いにして、他人と共有しない
+  make_public: 全員と共有する
   same_as_billing: 請求先と同じ
   save_account: 取引先を保存
   share_with: 以下の人達と共有する
   shipping_address: 発送先住所
-  total_accounts: すべての取引先
   website: Webサイト
-  account_with_title_department: ! '%{title}, %{department} at %{account}'
-  account_with_title: ! '%{title} at %{account}'
-
-  # Views -> Campaigns.
-  #----------------------------------------------------------------------------
   actual: Actual
   actual_performance: Actual Performance
   budget: 予算
@@ -345,14 +266,12 @@ ja:
   campaign_small: キャンペーン
   campaign_summary: Campaign Summary
   campaign_targets: Campaign Targets
-  campaign_statuses: キャンペーン ステータス
   campaigns: キャンペーン
   campaigns_options: キャンペーンオプション
   campaigns_small: キャンペーン
   conversion: Conversion
   conversion_label: Conversion (%)
   conversion_number: ! '%{value} conversion'
-  target_conversion: Target conversion
   create_campaign: キャンペーンを作成
   end_date: 終了日
   finished_on: completed on %{value}
@@ -376,11 +295,6 @@ ja:
   total_campaigns: キャンペーンの合計
   was_supposed_to_finish: was supposed to finish on %{value}
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
-  was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
-  select_a_campaign: Select a campaign
-
-  # Views -> Contacts.
-  #----------------------------------------------------------------------------
   alt_email_small: その他
   blog: Webサイト/ブログ
   contact: 取引先責任者
@@ -388,7 +302,6 @@ ja:
   contacts: 取引先責任者
   contacts_options: 取引先責任者オプション
   contacts_small: 取引先責任者
-  contact_summary: Contact Summary
   create_contact: 取引先責任者を作成
   department: 部署
   department_small: ! '%{value}部署'
@@ -405,21 +318,9 @@ ja:
   referred_by_small: referred by
   save_contact: 取引先責任者を保存
   twitter: Twitter
-  unassigned: Unassigned
   web_presence: Webサイト情報
   web_presence_small: Webサイト
   works_at: ! '%{company} の %{job_title}'
-  general_info: General Information
-  show_general_info_small: Show general information for this contact.
-  show_extra_info_small: Show extra information for this contact.
-  tag_details: ! '%{tag} Details'
-  show_tag_info_small: Show %{tag} information for this contact.
-  shared_with_everyone: Shared with everyone
-  title: Title
-  subscriptions: Subscriptions
-
-  # Views -> Leads.
-  #----------------------------------------------------------------------------
   convert: コンバート
   convert_lead: Convert Lead
   convert_lead_permissions_intro: Contact permissions will be copied from the lead
@@ -442,7 +343,6 @@ ja:
   lead_small: リード
   lead_status_small: リードステータス
   lead_summary: Lead Summary
-  lead_statuses: リード ステータス
   leads: リード
   leads_options: リードオプション
   leads_small: リード
@@ -454,14 +354,8 @@ ja:
   source: Source
   status: Status
   total_leads: リードの合計
-  show_status_info_small: Show status information for this lead.
-  show_contact_info_small: Show contact information for this lead.
-
-  # Views -> Opportunities.
-  #----------------------------------------------------------------------------
   amount: 金額
   close_date: 終了日
-  closes_on: Closes on
   closed_ago_on: ! '%{date}の%{time_ago}前に終了'
   closes_today: 本日終了の見込み
   closing_date: 終了日は%{value}
@@ -480,7 +374,6 @@ ja:
   opportunities_small: 商談
   opportunity: 商談
   opportunity_small: 商談
-  opportunity_stages: Opportunity Stages
   opportunity_summary: Opportunity At a Glance
   opportunity_summary_text: ! '%{amount} %{discount}値引きかつ確度%{probability}'
   past_due: 期限切れ、%{value}前に終了見込み
@@ -490,13 +383,6 @@ ja:
   stage: Stage
   total_opportunities: 商談の合計
   weighted_amount: Weighted amount
-
-  # Views -> Tasks.
-  #----------------------------------------------------------------------------
-  task: Task
-  task_small: タスク
-  tasks: タスク
-  tasks_small: tasks
   assign_to: 担当
   assigned_tab: 担当
   assigned_tasks: 担当タスク
@@ -530,57 +416,31 @@ ja:
   task_from: From %{value}
   task_overdue: late, was due on
   task_pending: The task has been moved to pending tasks
+  task_small: タスク
+  tasks: タスク
   total_tasks: ! '%{value}の合計'
   view_assigned_tasks: 担当タスクを表示
   view_pending_tasks: 見完了タスクを表示
-
-  # Views -> Team.
-  #----------------------------------------------------------------------------
-  unassigned_opportunities: Unassigned Opportunities
-  no_opportunities_found: There are currently no outstanding opportunities.
-
-  # Views -> Home.
-  #----------------------------------------------------------------------------
+  action_commented: コメントした
   action_completed: 完了した
-  action_create: created
-  action_destroy: deleted
+  action_created: 作成した
+  action_deleted: 削除した
+  action_email: exchanged emails with
   action_reassigned: 再割り当てした
   action_rejected: 拒否した
   action_rescheduled: 再スケジュールした
-  action_update: updated
-  action_view: viewed
+  action_updated: 更新した
+  action_viewed: 表示した
   action_won: 成立させた
-  activities: Activities
   no_activity_records: 活動の記録がありません。
   recent_activity: 最近の活動
   recent_activity_options: Recent Activity オプション
   subject_account: 取引先責任者
-  subject_address: address on
   subject_campaign: キャンペーン
-  subject_comment: comment on
   subject_contact: 取引先責任者
-  subject_email: email on
   subject_lead: リード
   subject_opportunity: 商談
   subject_task: タスク
-  subject_user: user
-  tag_list: Tags
-  create_past_participle: Record Creations
-  view_past_participle: Views
-  update_past_participle: Updates
-  destroy_past_participle: Deletions
-  all_events_past_participle: Activities
-  action_create_comment: ! '- &quot;%{comment}&quot;'
-  my_tasks: マイタスク
-  no_task_records: あなたのタスクはありません。
-  my_opportunities: 商談
-  no_opportunity_records: あなたの商談はありません。
-  my_accounts: 取引先
-  no_account_records: あなたの取引先はありません。
-  not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
-
-  # Views -> Common.
-  #----------------------------------------------------------------------------
   add_note: ノートを追加
   save_note: ノートを保存
   add_note_help: 新しいノートを追加...
@@ -590,13 +450,11 @@ ja:
   back: 戻る
   cancel: キャンセル
   close_form: フォームを閉じる
-  comment_intro: You can add comments later.
   confirm_delete: この %{value} を削除しますか?
   copy_permissions: Copy %{value} permissions
   could_not_find: ! '%{value}がありません。どうぞお気軽に'
   could_not_find_matching: マッチする%{value}がありません。
   create_new: 新規作成してください -
-  create_a_new: 新規作成
   select_existing: 既存から選択
   delete: 削除
   discard: Discard
@@ -613,10 +471,6 @@ ja:
   permissions: パーミッション
   please_retry: please try another query.
   recent_items: 最近のアイテム
-  select_contact: Select Contact
-  select_lead: Select Lead
-  select_task: Select Task
-  select_opportunity: Select Opportunity
   search_assets: ! '%{value}を検索'
   time_ago: ! '%{value}前'
   background_info: 背景
@@ -627,14 +481,6 @@ ja:
   zipcode: 郵便番号
   state: 都道府県
   country: 国
-  select_a_country: Select a Country
-  expand_all: Expand all
-  collapse_all: Collapse all
-  expanded: Expanded
-  collapsed: Collapsed
-
-  # Views -> Layout.
-  #----------------------------------------------------------------------------
   about: About
   about_dev_group: 開発者のためのディスカッショングループ
   about_features: Features and bugs
@@ -649,66 +495,25 @@ ja:
   about_user_group: ユーザのためのディスカッショングループ
   admin: 管理画面
   logout: ログアウト
-  quick_find: クイック検索
+  quick_find: Quick find
   welcome: ようこそ
-
-  # Advanced search
-  accounts_advanced_search: 取引先詳細検索
-  advanced_search: 詳細検索
-  basic_search: 基本検索
-  search_results_count:
-    one: 検索結果 %{count} 件
-    other: 検索結果 %{count} 件
-
-  # Views -> Comments.
-  #----------------------------------------------------------------------------
-  comment: Comment
   edit_comment: コメント編集中
   show: 表示
   update: 更新
-  following_users_will_be_notified: The following users will be notified by email
-  notifications_tooltip: Subscribers will receive new comments via email
-  subscribe_via_email: Subscribe via email
-  disable_email_subscriptions: Disable email subscription
-  added_note: added note %{value}
-
-  # Views -> Emails.
-  #----------------------------------------------------------------------------
-
-  # Views -> Passwords.
-  #----------------------------------------------------------------------------
   confirm_password_intro: Please type your new password and then confirm it.
   password_intro: Please specify your email address, and the instructions to reset
     your password will be sent to you.
   reset_password: Reset Password
   update_password_and_login: Update Password and Login
-
-  # Views -> Admin
-  #----------------------------------------------------------------------------
   back_to_crm: Fat Free CRM に戻る
   crm_admin_page: Fat Free CRM 管理
-
-  # Views -> Admin -> Groups
-  #----------------------------------------------------------------------------
-  create_group: グループ作成
-  save_group: グループ保存
-  group_members: メンバー
-  groups: グループ
-  groups_small: グループ
-  group_small: グループ
-
-  # Views -> Admin -> Users
-  #----------------------------------------------------------------------------
-  confirm_group_delete: Are you sure you wish to delete this group? There are %{count}
-    items that still reference it.
   approve: Approve
   create_user: ユーザを作成
   last_logged_in: last logged in %{value}
   personal_information: 個人情報
-  group_memberships: グループメンバー
-  reactivate: 再開
+  reactivate: Reactivate
   save_user: ユーザを保存
-  suspend: 保留
+  suspend: Suspend
   user_active: Active
   user_admin: 管理者
   user_awaits_approval: awaits your approval
@@ -722,81 +527,25 @@ ja:
   user_suspended_on: suspended on %{value}
   users: ユーザ
   users_small: ユーザ
-
-  # Views -> Versions
-  #----------------------------------------------------------------------------
-  versions: History
-  version:
-    create: ! '%{item} created by %{by}'
-    update: ! '%{item} modified by %{by}'
-    destroy: ! '%{item} destroyed by %{by}'
-    set_html: ! '%{attr} set to %{to}'
-    unset_html: ! '%{attr} unset'
-    change_html: ! '%{attr} changed from %{from} to %{to}'
-    anonymous: anonymous
-  account_contact_id: Account id
-  account_contact_name: Account name
-  user_id: User id
-  created_at: Created at
-  updated_at: Updated at
-
-  # Export.
-  #----------------------------------------------------------------------------
-  to_xls: Excelにエクスポート
-  to_csv: CSVファイルにエクスポート (削除済みレコード含む)
-  to_rss: RSSフィード
-  to_atom: Atomフィード
-  to_perm: パーマリンク
-
-  # Dropbox.
-  #----------------------------------------------------------------------------
-  dropbox_notification_subject: dropbox - Added email - %{subject}
-  dropbox_notification_intro: Succesfully added the email you sent to dropbox
-  dropbox_notification_to: Added to
-  subject: Subject
-  body: Body
-
-  # Comment Inbox
-  #----------------------------------------------------------------------------
-  comment_notification:
-    intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
-    reply_instructions: Reply to this email directly to add a new comment, or view
-      the %{entity} online
-
-  # Lists
-  #----------------------------------------------------------------------------
-  global_lists: 全体のリスト
-  personal_lists: マイリスト
-  list: リスト
-  no_saved_lists: 保存されたリストはありません。
-  make_current_view_list: Make current view a list
-  list_name_info: If you use the name of an existing list, you will overwrite that
-    list with your current settings
-
-  # Pluralizations.
-  #----------------------------------------------------------------------------
   pluralize:
     comment:
       one: 1 件のコメント
       other: ! '%{count} 件のコメント'
     contact:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
+      one: 1 contact
+      other: ! '%{count} contacts'
     opportunity:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
+      one: 1 件の商談
+      other: ! '%{count} 件の商談'
     lead:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
+      one: 1 lead
+      other: ! '%{count} leads'
     day:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
+      one: 1 日
+      other: ! '%{count} 日'
     login:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
-
-  # Custom date/time formats.
-  #----------------------------------------------------------------------------
+      one: 1 login
+      other: ! '%{count} logins'
   date:
     formats:
       mmddyyyy: ! '%Y/%m/%d'
@@ -806,122 +555,3 @@ ja:
     formats:
       mmddhhss: ! '%b %e at %l:%M%p'
       mmddyyyy_hhmm: ! '%m/%d/%Y %l:%M %p'
-
-  # will_paginate translations copied for 'en-US'
-  #----------------------------------------------------------------------------
-  will_paginate:
-    previous_label: ! '&#8592; Previous'
-    next_label: Next &#8594;
-    page_gap: ! '&hellip;'
-    page_entries_info:
-      single_page:
-        zero: No %{plural} found
-        one: ! '%{model}にエラーが発生しました。'
-        other: ! '%{model}に%{count}つのエラーが発生しました。'
-      multi_page: Displaying %{plural} %{from} - %{to} of %{total} in total
-
-  # Views -> Admin -> Custom Fields
-  #----------------------------------------------------------------------------
-  label: Label
-  custom_fields: カスタムフィールド
-  custom_field_options: Custom Field Options
-  create_field: Create field
-  save_field: Save field
-  create_field_group: Create field group
-  edit_field_group: Edit field group
-  save_field_group: Save field group
-  field_group_empty: There are no fields in this group.
-  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
-  restrict_by_tag: ! 'Restrict by Tag:'
-  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
-  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
-  field_group_unrestricted: This field group applies to all %{assets}
-  field_group_confirm_delete: If a field group is deleted, any fields will be moved
-    to the default field group.
-  msg_cant_delete_field_group: Field Group could not be deleted.
-  admin_fields_info: ! 'Custom fields are displayed in groups.
-    Create a new field group, or add fields to one of the groups below.
-    You can drag and drop fields to change their display order or move them between
-    field groups.'
-  # Views -> Admin -> Tags
-  #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'It is strongly recommended you restart your server after
-    adding or removing any custom field.
-
-'
-  tags: タグ
-  tag_small: tag
-  tagged: Tagged
-  create_tag: Create Tag
-  save_tag: Save Tag
-  field_group_tags: Field Groups shown for this Tag
-
-  # Views -> Admin -> Plugins
-  #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from
-    %{value} records.
-  msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
-  views:
-    admin:
-      plugins:
-        author: Author
-        version: Version
-        description: Description
-
-  # Simple Form translations
-  #----------------------------------------------------------------------------
-  simple_form:
-    yes: 'はい'
-    no: 'いいえ'
-    required:
-      text: required
-      mark: ! '*'
-      # You can uncomment the line below if you need to overwrite the whole required html.
-      # When using html, text and mark won't be used.
-      # html: '<abbr title="required">*</abbr>'
-    error_notification:
-      default_message: ! 'Some errors were found, please take a look:'
-
-  # Form field types
-  #----------------------------------------------------------------------------
-  field_types:
-    string:
-      title: テキスト
-    text:
-      title: 複数行テキスト
-    select:
-      title: リスト選択
-    multiselect:
-      title: 複数選択
-    radio_buttons:
-      title: ラジオボタン
-    boolean:
-      title: チェックボックス
-    check_boxes:
-      title: チェックボックスリスト
-    date:
-      title: 日付
-    date_pair:
-      title: Date Pair
-    datetime:
-      title: Date & Time
-    datetime_pair:
-      title: Date & Time Pair
-    email:
-      title: Emailアドレス
-    url:
-      title: URL
-    tel:
-      title: 電話番号
-    decimal:
-      title: Number (Decimal)
-    integer:
-      title: Number (Integer)
-    float:
-      title: Number (Floating Point)
-  pair:
-    start: 開始
-    end: 終了
-    from_to: From %{from} to %{to}
-    from_only: From %{from}
-    to_only: Until %{to}
