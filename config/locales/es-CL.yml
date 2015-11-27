@@ -6,7 +6,7 @@
 # chilean format currency by  Danilo Lacoste https://github.com/dalacost
 
 ---
-es:
+es-CL:
   date:
     formats:
       default: ! '%d/%m/%Y'
