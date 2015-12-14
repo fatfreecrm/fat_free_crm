@@ -3,16 +3,34 @@
 # fig up
 
 FROM phusion/passenger-ruby21
-MAINTAINER Steve Kenworthy
+MAINTAINER Ivan Bianko
 
-ENV HOME /root
+# Configure the main working directory. This is the base
+# directory used in any further RUN, COPY, and ENTRYPOINT
+# commands.
+RUN mkdir -p /app 
+WORKDIR /app
 
-CMD ["/sbin/my_init"]
+# Copy the Gemfile as well as the Gemfile.lock and install
+# the RubyGems. This is a separate step so the dependencies
+# will be cached unless changes to one of those two files
+# are made.
+COPY Gemfile Gemfile.lock ./ 
+RUN gem install bundler && bundle install --jobs 20 --retry 5 --without development test
 
-ADD . /home/app/ffcrm
-WORKDIR /home/app/ffcrm
+# Set Rails to run in production
+ENV RAILS_ENV production 
+ENV RACK_ENV production
 
+# Copy the main application.
+COPY . ./
+
+# Precompile Rails assets
+RUN bundle exec rake assets:precompile
+
+RUN cp config/settings.default.yml config/settings.yml
 RUN cp config/database.postgres.docker.yml config/database.yml
 
-RUN chown -R app:app /home/app/ffcrm
-RUN sudo -u app bundle install --deployment
+RUN bundle exec rake assets:precompile
+
+CMD bundle exec unicorn -p $PORT -c ./config/unicorn.rb
