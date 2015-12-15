@@ -58,10 +58,8 @@ Please note that several severe vulnerabilities have been fixed recently. You sh
 
 ## System Requirements
 
-* Ruby 2.2 (master branch / rails 4 versions only)
-* Ruby 2.1 (or 2.0) recommended (it's much faster!)
-  * Ruby 1.9.3 is also compatible
-  * Ruby 1.9.2 should be compatible but is no longer supported
+* Ruby 2 (2.2 recommended)
+  * Ruby 1.9.3 is no longer compatible (final gem release tag v0.13.6)
   * Ruby v1.8.7 was supported until v0.11.4 (see https://github.com/fatfreecrm/fat_free_crm/tree/ruby1.8)
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
 * ImageMagick (optional, only needed if you would like to use avatars)

@@ -55,8 +55,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'
   gem 'headless'
-  gem 'debugger', platforms: 'mri_19' unless ENV["CI"]
-  gem 'byebug', platforms: %w(mri_20 mri_21) unless ENV["CI"]
+  gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
   gem 'factory_girl_rails'
 end

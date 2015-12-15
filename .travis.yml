@@ -1,7 +1,6 @@
 sudo: false
 language: ruby
 rvm:
-  - 1.9.3
   - 2.0.0
   - 2.1.5
   - 2.2.2
@@ -13,10 +12,6 @@ env:
 
 matrix:
   exclude:
-    - rvm: 1.9.3
-      env: DB=mysql
-    - rvm: 1.9.3
-      env: DB=sqlite
     - rvm: 2.0.0
       env: DB=mysql
     - rvm: 2.0.0
