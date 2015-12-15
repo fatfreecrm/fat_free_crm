@@ -39,7 +39,6 @@ GEM
     arel (3.0.3)
     authlogic (3.1.0)
       activerecord (>= 3.0.7)
-      activerecord (>= 3.0.7)
     builder (3.0.4)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -187,6 +186,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
+    puma (2.15.3)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.4.5)
@@ -371,6 +371,7 @@ DEPENDENCIES
   pg
   premailer
   pry-rails
+  puma
   quiet_assets
   rails (~> 3.2.12)
   rails3-jquery-autocomplete
@@ -398,3 +399,6 @@ DEPENDENCIES
   valium
   will_paginate
   zeus
+
+BUNDLED WITH
+   1.10.6

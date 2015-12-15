@@ -5,9 +5,11 @@
 FROM phusion/passenger-ruby21
 MAINTAINER Ivan Bianko
 
-
-
 ENV HOME /root
+
+# Set Rails to run in production
+ENV RAILS_ENV production 
+ENV RACK_ENV production
 
 CMD ["/sbin/my_init"]
 
@@ -19,9 +21,6 @@ RUN cp config/database.postgres.docker.yml config/database.yml
 
 RUN chown -R app:app /home/app/ffcrm
 
-# Set Rails to run in production
-ENV RAILS_ENV production 
-ENV RACK_ENV production
 
 RUN sudo -u app bundle install --deployment
 # Precompile Rails assets
