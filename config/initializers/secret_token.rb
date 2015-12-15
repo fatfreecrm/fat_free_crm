@@ -20,5 +20,5 @@
 # We should setup a secret token if FFCRM is running in application mode but NOT in engine mode.
 # This functionality has been extracted to lib so it can be tested.
 if FatFreeCRM.application?
-  FatFreeCRM::Application.config.secret_key_base = ENV['SECRET_KEY_BASE']
+  FatFreeCRM::Application.config.secret_token = ENV['SECRET_KEY_BASE']
 end
