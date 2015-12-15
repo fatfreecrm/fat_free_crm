@@ -15,4 +15,4 @@ end
 #
 # Default timeout for extended for AJAX based application
 #
-Capybara.default_max_wait_time= = 7
+Capybara.default_max_wait_time = 7
