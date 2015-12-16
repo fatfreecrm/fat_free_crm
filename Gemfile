@@ -32,6 +32,7 @@ gem 'premailer', :require => false
 remove 'fat_free_crm'
 
 gem 'puma'
+gem 'recurrent'
 
 group :development do
   # don't load these gems in travis
