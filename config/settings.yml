@@ -52,7 +52,7 @@
 # http://www.domain.com/crm   => :base_url: "/crm"   # (without trailing slash)
 # http://www.domain.com/a/crm => :base_url: "/a/crm" # (without trailing slash)
 #
-:base_url: "http://crm.stein-pilz.com"
+:base_url: ""
 
 
 # Locale
@@ -64,27 +64,27 @@
 
 # Settings for outgoing email (SMTP)
 # Uncomment to set up for your specific mailer
-#------------------------------------------------------------------------------
-#:smtp:
-  #:address                    : ""        # e.g. smtp.gmail.com
-  #:from                       : ""        # e.g. no-reply@your-domain.com
-  #:enable_starttls_auto       : true
-  #:port                       : "587"
-  #:authentication             : :plain
-  #:user_name                  : ""
-  #:password                   : ""
+# ------------------------------------------------------------------------------
+:smtp:
+  :address                    : <%= ENV['SMTP_ADDRESS'] %>        # e.g. smtp.gmail.com
+  :from                       : <%= ENV['SMTP_FROM'] %>        # e.g. no-reply@your-domain.com
+  :enable_starttls_auto       : true
+  :port                       : "587"
+  :authentication             : :plain
+  :user_name                  : <%= ENV['SMTP_USERNAME'] %>
+  :password                   : <%= ENV['SMTP_PASSWORD'] %>
 
 # Settings for the Email dropbox (IMAP)
 # - Connection settings for the IMAP account, server and folders.
 #------------------------------------------------------------------------------
 :email_dropbox:
-  :server                     : ""        # IMAP server name.
-  :port                       : ""        # IMAP server port number.
-  :ssl                        : ""        # True for secure IMAP connection, false othewise.
-  :address                    : ""        # Dropbox email address.
-  :user                       : ""        # User to login to the IMAP server.
-  :password                   : ""        # Password to login to the IMAP server.
-  :scan_folder                : ""        # Folder to scan for dropbox messages.
+  :server                     : <%= ENV['DROPBOX_EMAIL_SERVER'] %>        # IMAP server name.
+  :port                       : <%= ENV['DROPBOX_EMAIL_PORT'] %>        # IMAP server port number.
+  :ssl                        : <%= ENV['DROPBOX_EMAIL_SSL'] %>        # True for secure IMAP connection, false othewise.
+  :address                    : <%= ENV['DROPBOX_EMAIL_ADDRESS'] %>        # Dropbox email address.
+  :user                       : <%= ENV['DROPBOX_EMAIL_USER'] %>        # User to login to the IMAP server.
+  :password                   : <%= ENV['DROPBOX_EMAIL_PASSWORD'] %>        # Password to login to the IMAP server.
+  :scan_folder                : <%= ENV['DROPBOX_EMAIL_SCAN_FOLDER'] %>        # Folder to scan for dropbox messages.
   :attach_to_account          : ""        # Attach emails to contact's account, if any.
                                           # (The rule above also applies to opportunities.)
 #  :address_aliases:                      # Optional: List any aliases that you also want to
