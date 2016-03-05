@@ -298,7 +298,7 @@ GEM
     scrypt (2.0.2)
       ffi-compiler (>= 0.0.2)
       rake
-    select2-rails (3.5.10)
+    select2-rails (3.5.9.3)
       thor (~> 0.14)
     selenium-webdriver (2.48.1)
       childprocess (~> 0.5)
@@ -409,7 +409,7 @@ DEPENDENCIES
   rspec-rails
   sass
   sass-rails
-  select2-rails (~> 3)
+  select2-rails (~> 3.5.9.3)
   selenium-webdriver
   simple_form
   sprockets-rails (= 2.2.2)

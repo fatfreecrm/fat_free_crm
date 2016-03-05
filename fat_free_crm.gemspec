@@ -22,7 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'jquery-rails'
   gem.add_dependency 'jquery-migrate-rails'
   gem.add_dependency 'jquery-ui-rails'
-  gem.add_dependency 'select2-rails', '~> 3'
+  gem.add_dependency 'select2-rails', '~> 3.5.9.3'
   gem.add_dependency 'simple_form'
   gem.add_dependency 'will_paginate'
   gem.add_dependency 'paperclip'
