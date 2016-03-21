@@ -176,7 +176,7 @@ class EntitiesController < ApplicationController
 
   #----------------------------------------------------------------------------
   def update_recently_viewed
-    entity.versions.create(event: :view, whodunnit: PaperTrail.whodunnit)
+    #entity.versions.create(event: :view, whodunnit: PaperTrail.whodunnit)
   end
 
   # Somewhat simplistic parser that extracts query and hash-prefixed tags from
