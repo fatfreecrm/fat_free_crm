@@ -1,5 +1,4 @@
 *sublime*
-db/migrate/*
 
 config/*.yml
 config/deploy.rb
