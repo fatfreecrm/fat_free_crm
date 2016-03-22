@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322103112) do
+ActiveRecord::Schema.define(version: 20160322120748) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer  "account_id", limit: 4
@@ -250,7 +250,7 @@ ActiveRecord::Schema.define(version: 20160322103112) do
 
   create_table "kiosks", force: :cascade do |t|
     t.string   "name",            limit: 255
-    t.datetime "purchase_date"
+    t.date     "purchase_date"
     t.string   "contract_type",   limit: 255
     t.integer  "contract_length", limit: 4
     t.string   "password",        limit: 255
