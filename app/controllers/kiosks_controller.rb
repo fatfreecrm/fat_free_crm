@@ -1,5 +1,6 @@
 class KiosksController < ApplicationController
   before_action :set_kiosk, only: [:show, :edit, :update, :destroy]
+  before_filter :set_current_tab
 
   # GET /kiosks
   def index
