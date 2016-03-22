@@ -114,10 +114,20 @@ $color_footer: grey;
     color: $color_active_tab;
     text-decoration: none; } }
 
-/* this is for the kiosk page. Can't figure out how to add css to that page */
-.optional {
+.kiosk_labels {
+  float: left;
+  width: 100px;
+}
+
+.kiosk_inputs {
   width: 200px;
 }
+
+.kiosk_actions_class {
+  width: 300px;
+  text-align: center;
+}
+
 
 #footer {
   color: $color_footer;
