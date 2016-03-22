@@ -1,0 +1,2 @@
+module KiosksHelper
+end

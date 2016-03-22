@@ -1,0 +1,18 @@
+<%= simple_form_for(@kiosk) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="inputs">
+    <%= f.input :name %>
+    <%= f.input :purchase_date %>
+    <%= f.input :contract_type %>
+    <%= f.input :contract_length %>
+    <%= f.input :password %>
+    <%= f.input :cd_password %>
+    <%= f.input :notes %>
+    <%= f.input :account_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

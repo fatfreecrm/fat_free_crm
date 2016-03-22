@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Kiosks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Purchase date</th>
+      <th>Contract type</th>
+      <th>Contract length</th>
+      <th>Password</th>
+      <th>Cd password</th>
+      <th>Notes</th>
+      <th>Account ID</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @kiosks.each do |kiosk| %>
+      <tr>
+        <td><%= kiosk.name %></td>
+        <td><%= kiosk.purchase_date %></td>
+        <td><%= kiosk.contract_type %></td>
+        <td><%= kiosk.contract_length %></td>
+        <td><%= kiosk.password %></td>
+        <td><%= kiosk.cd_password %></td>
+        <td><%= kiosk.notes %></td>
+        <td><a href="/accounts/<%= kiosk.account_id %>">Account</a></td>
+        <td><%= link_to 'Show', kiosk %></td>
+        <td><%= link_to 'Edit', edit_kiosk_path(kiosk) %></td>
+        <td><%= link_to 'Destroy', kiosk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Kiosk', new_kiosk_path %>
