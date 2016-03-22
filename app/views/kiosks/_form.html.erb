@@ -5,11 +5,11 @@
   <div class="kiosk_inputs_class">
     <br>
     <%= f.label :name, class: 'kiosk_labels' %>
-    <%= f.input_field :name, class: 'kiosk_inputs' %>
+    <%= f.input_field :name, class: 'kiosk_inputs', required: true %>
     <br>
     <br>
     <%= f.label :account_id, class: 'kiosk_labels' %>
-    <%= f.input_field :account_id, class: 'kiosk_inputs' %>
+    <%= f.input_field :account_id, class: 'kiosk_inputs', min: 1 %>
     <br>
     <br>
     <%= f.label :purchase_date, class: 'kiosk_labels' %>
@@ -21,15 +21,15 @@
     <br>
     <br>
     <%= f.label :contract_length, class: 'kiosk_labels' %>
-    <%= f.input_field :contract_length, class: 'kiosk_inputs' %>
+    <%= f.input_field :contract_length, class: 'kiosk_inputs', min: 1 %>
     <br>
     <br>
     <%= f.label :password, class: 'kiosk_labels' %>
-    <%= f.input_field :password, class: 'kiosk_inputs' %>
+    <%= f.input_field :password, as: :string, class: 'kiosk_inputs', required: true %>
     <br>
     <br>
     <%= f.label 'CD Burn Code', class: 'kiosk_labels' %>
-    <%= f.input_field :cd_password, class: 'kiosk_inputs' %>
+    <%= f.input_field :cd_password, as: :string, class: 'kiosk_inputs', required: true %>
     <br>
     <br>
     <%= f.label :notes, class: 'kiosk_labels' %>
