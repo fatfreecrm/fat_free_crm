@@ -114,6 +114,8 @@ $color_footer: grey;
     color: $color_active_tab;
     text-decoration: none; } }
 
+/* -------------- Kiosk stuff ---------- */
+
 .kiosk_labels {
   float: left;
   width: 100px;
@@ -128,6 +130,11 @@ $color_footer: grey;
   text-align: center;
 }
 
+.kiosk_display_table {
+  border-spacing: 15px;
+}
+
+/* -------------- End Kiosk stuff ---------- */
 
 #footer {
   color: $color_footer;

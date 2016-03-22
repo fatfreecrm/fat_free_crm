@@ -2,15 +2,15 @@
 
 <h1>Listing Kiosks</h1>
 
-<table>
+<table class="kiosk_display_table">
   <thead>
-    <tr>
+    <tr align="center">
       <th>Name</th>
       <th>Purchase date</th>
       <th>Contract type</th>
       <th>Contract length</th>
       <th>Password</th>
-      <th>Cd password</th>
+      <th>CD Password</th>
       <th>Notes</th>
       <th>Account</th>
       <th colspan="3"></th>
@@ -19,7 +19,7 @@
 
   <tbody>
     <% @kiosks.each do |kiosk| %>
-      <tr>
+      <tr align="center">
         <td><%= kiosk.name %></td>
         <td><%= kiosk.purchase_date %></td>
         <td><%= kiosk.contract_type %></td>
