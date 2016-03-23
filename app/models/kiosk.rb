@@ -11,6 +11,9 @@
 # account_id            :integer       account the kiosk is linked too
 
 class Kiosk < ActiveRecord::Base
+
+  belongs_to :account
   validates :name, uniqueness: true
   validate :account_id
+
 end

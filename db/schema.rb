@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322120748) do
+ActiveRecord::Schema.define(version: 20160323122252) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer  "account_id", limit: 4
@@ -261,6 +261,8 @@ ActiveRecord::Schema.define(version: 20160322120748) do
     t.integer  "account_id",      limit: 4
   end
 
+  add_index "kiosks", ["account_id"], name: "index_kiosks_on_account_id", using: :btree
+
   create_table "leads", force: :cascade do |t|
     t.integer  "user_id",          limit: 4
     t.integer  "campaign_id",      limit: 4
@@ -465,4 +467,5 @@ ActiveRecord::Schema.define(version: 20160322120748) do
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
   add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit", using: :btree
 
+  add_foreign_key "kiosks", "accounts"
 end
