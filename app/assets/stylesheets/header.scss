@@ -114,27 +114,6 @@ $color_footer: grey;
     color: $color_active_tab;
     text-decoration: none; } }
 
-/* -------------- Kiosk stuff ---------- */
-
-.kiosk_labels {
-  float: left;
-  width: 100px;
-}
-
-.kiosk_inputs {
-  width: 200px;
-}
-
-.kiosk_actions_class {
-  width: 300px;
-  text-align: center;
-}
-
-.kiosk_display_table {
-  border-spacing: 15px;
-}
-
-/* -------------- End Kiosk stuff ---------- */
 
 #footer {
   color: $color_footer;
