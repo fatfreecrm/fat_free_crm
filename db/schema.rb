@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323122252) do
+ActiveRecord::Schema.define(version: 20160324122639) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer  "account_id", limit: 4
@@ -178,6 +178,12 @@ ActiveRecord::Schema.define(version: 20160323122252) do
   add_index "contacts", ["assigned_to"], name: "index_contacts_on_assigned_to", using: :btree
   add_index "contacts", ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true, using: :btree
 
+  create_table "contracts", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "emails", force: :cascade do |t|
     t.string   "imap_message_id", limit: 255,                        null: false
     t.integer  "user_id",         limit: 4
@@ -251,7 +257,6 @@ ActiveRecord::Schema.define(version: 20160323122252) do
   create_table "kiosks", force: :cascade do |t|
     t.string   "name",            limit: 255
     t.date     "purchase_date"
-    t.string   "contract_type",   limit: 255
     t.integer  "contract_length", limit: 4
     t.string   "password",        limit: 255
     t.string   "cd_password",     limit: 255
@@ -259,9 +264,11 @@ ActiveRecord::Schema.define(version: 20160323122252) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.integer  "account_id",      limit: 4
+    t.integer  "contract_id",     limit: 4
   end
 
   add_index "kiosks", ["account_id"], name: "index_kiosks_on_account_id", using: :btree
+  add_index "kiosks", ["contract_id"], name: "index_kiosks_on_contract_id", using: :btree
 
   create_table "leads", force: :cascade do |t|
     t.integer  "user_id",          limit: 4
@@ -468,4 +475,5 @@ ActiveRecord::Schema.define(version: 20160323122252) do
   add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit", using: :btree
 
   add_foreign_key "kiosks", "accounts"
+  add_foreign_key "kiosks", "contracts"
 end

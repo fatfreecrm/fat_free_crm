@@ -15,6 +15,7 @@ class KiosksController < ApplicationController
   def new
     @kiosk = Kiosk.new
     @accounts_list = Account.all.map { |acc| [acc.name, acc.id] }
+    @contract_list = Contract.all.map { |con| [con.name, con.id] }
   end
 
   # GET /kiosks/1/edit
@@ -55,6 +56,6 @@ class KiosksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def kiosk_params
-      params.require(:kiosk).permit(:name, :purchase_date, :contract_type, :contract_length, :password, :cd_password, :notes, :account_id)
+      params.require(:kiosk).permit(:name, :purchase_date, :contract_id, :contract_length, :password, :cd_password, :notes, :account_id)
     end
 end

@@ -16,8 +16,10 @@
     <%= f.input_field :purchase_date, class: 'kiosk_inputs' %>
     <br>
     <br>
-    <%= f.label :contract_type, class: 'kiosk_labels' %>
-    <%= f.input_field :contract_type, class: 'kiosk_inputs' %>
+    <%= f.label :contract_id, class: 'kiosk_labels' %>
+    <%= f.select(:contract_id, @contract_list, {}, { class: 'kiosk_inputs' }) %>
+    <% #f.label :contract_id, class: 'kiosk_labels' %>
+    <% #f.input_field :contract_type, class: 'kiosk_inputs' %>
     <br>
     <br>
     <%= f.label :contract_length, class: 'kiosk_labels' %>
