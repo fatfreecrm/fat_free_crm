@@ -9,7 +9,7 @@
     <br>
     <br>
     <%= f.label :account_id, class: 'kiosk_labels' %>
-    <%= f.input_field :account_id, class: 'kiosk_inputs', min: 1 %>
+    <%= f.select(:account_id, @accounts_list, {}, { class: 'kiosk_inputs' }) %>
     <br>
     <br>
     <%= f.label :purchase_date, class: 'kiosk_labels' %>
@@ -36,7 +36,6 @@
     <%= f.input_field :notes, class: 'kiosk_inputs' %>
     <br>
     <br>
-
   </div>
 
   <div class="kiosk_actions_class">

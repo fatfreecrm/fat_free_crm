@@ -14,6 +14,7 @@ class KiosksController < ApplicationController
   # GET /kiosks/new
   def new
     @kiosk = Kiosk.new
+    @accounts_list = Account.all.map { |acc| [acc.name, acc.id] }
   end
 
   # GET /kiosks/1/edit
