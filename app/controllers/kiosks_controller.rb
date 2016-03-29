@@ -14,7 +14,6 @@ class KiosksController < ApplicationController
   # GET /kiosks/new
   def new
     @kiosk = Kiosk.new
-    generate_dropdown_lists
   end
 
   # GET /kiosks/1/edit
@@ -28,7 +27,6 @@ class KiosksController < ApplicationController
     if @kiosk.save
       redirect_to @kiosk, notice: 'Kiosk was successfully created.'
     else
-      generate_dropdown_lists
       render :new
     end
   end
@@ -57,11 +55,6 @@ class KiosksController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def kiosk_params
       params.require(:kiosk).permit(:name, :purchase_date, :contract_id, :contract_length, :password, :cd_password, :notes, :account_id)
-    end
-
-    def generate_dropdown_lists
-      @accounts_list = Account.all.map { |acc| [acc.name, acc.id] }
-      @contract_list = Contract.all.map { |con| [con.name, con.id] }
     end
 
 end
