@@ -6,9 +6,9 @@
   <thead>
     <tr align="center">
       <th>Name</th>
-      <th>Purchase date</th>
       <th>Contract type</th>
       <th>Contract length (Months)</th>
+      <th>Purchase date</th>
       <th>Password</th>
       <th>CD Password</th>
       <th>Notes</th>
@@ -21,18 +21,17 @@
     <% @kiosks.each do |kiosk| %>
       <tr align="center">
         <td><a href="http://ubuntu.livelinkprint.com/manage_labs/search?q=<%= kiosk.name[-5..-1] %>" target="_blank"><%= kiosk.name %></td>
-        <td><%= kiosk.purchase_date %></td>
         <td><%= kiosk.contract.name %></td>
         <td><%= kiosk.contract_length %></td>
+        <td><%= kiosk.purchase_date %></td>
         <td><%= kiosk.password %></td>
         <td><%= kiosk.cd_password %></td>
-        <td><%= kiosk.notes %></td>
-        <td><a href="/accounts/<%= kiosk.account_id %>"><%= kiosk.account.name %></a></td>
+        <td id="kiosk_notes"><%= kiosk.notes %></td>
+        <td><%= link_to kiosk.account.name, account_path(kiosk.account) %></td>
         <td></td>
-        <td></td>
-        <td><%= link_to 'Show', kiosk %></td>
-        <td><%= link_to 'Edit', edit_kiosk_path(kiosk) %></td>
-        <td><%= link_to 'Destroy', kiosk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', kiosk %> 
+        <%= link_to 'Edit', edit_kiosk_path(kiosk) %> 
+        <%= link_to 'Destroy', kiosk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
