@@ -11,7 +11,7 @@
 # account_id            :reference     account the kiosk is linked too
 
 class Kiosk < ActiveRecord::Base
-
+  before_save { self.name.downcase! }
   belongs_to :account
   belongs_to :contract
   validates :name, uniqueness: true
