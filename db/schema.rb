@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324122639) do
+ActiveRecord::Schema.define(version: 20160329145615) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer  "account_id", limit: 4
@@ -269,6 +269,7 @@ ActiveRecord::Schema.define(version: 20160324122639) do
 
   add_index "kiosks", ["account_id"], name: "index_kiosks_on_account_id", using: :btree
   add_index "kiosks", ["contract_id"], name: "index_kiosks_on_contract_id", using: :btree
+  add_index "kiosks", ["name"], name: "index_kiosks_on_name", unique: true, using: :btree
 
   create_table "leads", force: :cascade do |t|
     t.integer  "user_id",          limit: 4
