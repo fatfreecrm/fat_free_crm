@@ -12,5 +12,3 @@ Rails.application.config.assets.precompile += %w( print.css chosen-sprite.png jq
 
 # Don't initialize Rails environment
 Rails.application.config.assets.initialize_on_precompile = false
-
-Rails.application.config.assets.precompile += %w( kiosks.css )

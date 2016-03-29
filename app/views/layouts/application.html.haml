@@ -9,7 +9,6 @@
     = hook(:stylesheet_includes, self) do
       #{yield :stylesheet_includes}
     %style= yield :styles
-    = stylesheet_link_tag params[:controller]
 
     = javascript_include_tag :application
 

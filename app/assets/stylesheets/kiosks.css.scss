@@ -1,3 +1,4 @@
+/* Form pages - Edit / New */
 .kiosk_labels {
   float: left;
   width: 100px;
@@ -12,6 +13,26 @@
   text-align: center;
 }
 
+/* Index page */
 .kiosk_display_table {
-  border-spacing: 15px;
+	border-collapse: collapse;
+	td {
+		padding: 10px;
+		width:100px;
+	}
+}
+
+#kiosk_notes {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+#action_kiosk_buttons {
+  max-width: 200px;
+  white-space: nowrap;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(200, 100, 0, 0.6);
 }
