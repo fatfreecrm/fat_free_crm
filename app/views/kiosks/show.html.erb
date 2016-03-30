@@ -1,39 +1,16 @@
-<p id="notice"><%= notice %></p>
+<div class="container" id="kiosk_details">
+  <ul id="kiosk_details_list">
+    <li><span class="list_key">Name:</span> <%= @kiosk.name %></li>
+    <li><span class="list_key">Contract:</span> <%= @kiosk.contract.name %></li>
+    <li><span class="list_key">Contract Length:</span> <%= @kiosk.contract_length %></li>
+    <li><span class="list_key">Purchase Date:</span> <%= @kiosk.purchase_date %></li>
+    <li><span class="list_key">Password:</span> <%= @kiosk.password %></li>
+    <li><span class="list_key">CD Password:</span> <%= @kiosk.cd_password %></li>
+    <li><span class="list_key">Notes:</span> <%= @kiosk.notes %></li>
+  </ul>
+</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @kiosk.name %>
-</p>
-
-<p>
-  <strong>Purchase date:</strong>
-  <%= @kiosk.purchase_date %>
-</p>
-
-<p>
-  <strong>Contract type:</strong>
-  <%= @kiosk.contract_id %>
-</p>
-
-<p>
-  <strong>Contract length:</strong>
-  <%= @kiosk.contract_length %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @kiosk.password %>
-</p>
-
-<p>
-  <strong>Cd password:</strong>
-  <%= @kiosk.cd_password %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @kiosk.notes %>
-</p>
-
-<%= link_to 'Edit', edit_kiosk_path(@kiosk) %> |
-<%= link_to 'Back', kiosks_path %>
+<div class="nav_buttons">
+  <%= link_to 'Edit', edit_kiosk_path(@kiosk) %> |
+  <%= link_to 'Back', kiosks_path %>
+</div>

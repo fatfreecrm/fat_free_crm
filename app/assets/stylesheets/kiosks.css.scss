@@ -37,3 +37,24 @@
 tr:nth-child(even) {
 	background-color: rgba(195, 195, 195, 0.8);
 }
+
+/* Show page */
+
+#kiosk_details {
+  width: 500px;
+  border-style: solid;
+}
+
+#kiosk_details_list {
+  li {
+    margin: 10px;
+  }
+}
+
+.nav_buttons {
+  margin: 10px;
+}
+
+.list_key {
+  font-weight: bold;
+}
