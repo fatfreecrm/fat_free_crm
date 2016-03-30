@@ -17,5 +17,4 @@ class Kiosk < ActiveRecord::Base
   validates :name, uniqueness: true
   validate :account_id
   validate :contract_id
-
 end
