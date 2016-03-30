@@ -20,6 +20,9 @@
 		padding: 10px;
 		width:100px;
 	}
+  tr:nth-child(even) {
+    background-color: rgba(195, 195, 195, 0.8);
+  }
 }
 
 #kiosk_notes {
@@ -33,11 +36,6 @@
   max-width: 200px;
   white-space: nowrap;
 }
-
-tr:nth-child(even) {
-	background-color: rgba(195, 195, 195, 0.8);
-}
-
 /* Show page */
 
 #kiosk_details {
