@@ -1,0 +1,15 @@
+<%= simple_form_for(@webkiosk) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="inputs">
+    <%= f.input :url %>
+    <%= f.association :account %>
+    <%= f.input :live %>
+    <%= f.input :platform %>
+    <%= f.input :notes %>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

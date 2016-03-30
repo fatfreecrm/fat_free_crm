@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @webkiosk.url %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @webkiosk.account %>
+</p>
+
+<p>
+  <strong>Live:</strong>
+  <%= @webkiosk.live %>
+</p>
+
+<p>
+  <strong>Platform:</strong>
+  <%= @webkiosk.platform %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @webkiosk.notes %>
+</p>
+
+<%= link_to 'Edit', edit_webkiosk_path(@webkiosk) %> |
+<%= link_to 'Back', webkiosks_path %>

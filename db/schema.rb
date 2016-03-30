@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329145615) do
+ActiveRecord::Schema.define(version: 20160330131832) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer  "account_id", limit: 4
@@ -475,6 +475,19 @@ ActiveRecord::Schema.define(version: 20160329145615) do
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
   add_index "versions", ["whodunnit"], name: "index_versions_on_whodunnit", using: :btree
 
+  create_table "webkiosks", force: :cascade do |t|
+    t.string   "url",        limit: 255
+    t.integer  "account_id", limit: 4
+    t.boolean  "live"
+    t.string   "platform",   limit: 255
+    t.text     "notes",      limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "webkiosks", ["account_id"], name: "index_webkiosks_on_account_id", using: :btree
+
   add_foreign_key "kiosks", "accounts"
   add_foreign_key "kiosks", "contracts"
+  add_foreign_key "webkiosks", "accounts"
 end

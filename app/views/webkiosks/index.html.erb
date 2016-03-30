@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Webkiosks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Url</th>
+      <th>Account</th>
+      <th>Live</th>
+      <th>Platform</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @webkiosks.each do |webkiosk| %>
+      <tr>
+        <td><%= webkiosk.url %></td>
+        <td><%= webkiosk.account %></td>
+        <td><%= webkiosk.live %></td>
+        <td><%= webkiosk.platform %></td>
+        <td><%= webkiosk.notes %></td>
+        <td><%= link_to 'Show', webkiosk %></td>
+        <td><%= link_to 'Edit', edit_webkiosk_path(webkiosk) %></td>
+        <td><%= link_to 'Destroy', webkiosk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Webkiosk', new_webkiosk_path %>

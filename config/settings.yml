@@ -243,7 +243,11 @@
   :icon: :fa-globe
   :url:
     :controller: kiosks
-    :action: index
+- :active: false
+  :text: :Web Kiosks
+  :icon: :fa-globe
+  :url:
+    :controller: webkiosks
 
 :admin_tabs:
 - :active: true
