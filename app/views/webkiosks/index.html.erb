@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Webkiosks</h1>
+<h1 class="kiosk_heading">Listing Webkiosks</h1>
 
-<table>
+<table class="kiosk_display_table">
   <thead>
-    <tr>
+    <tr align="center">
       <th>Url</th>
       <th>Account</th>
       <th>Live</th>
@@ -16,15 +16,15 @@
 
   <tbody>
     <% @webkiosks.each do |webkiosk| %>
-      <tr>
-        <td><%= webkiosk.url %></td>
-        <td><%= webkiosk.account %></td>
+      <tr align="center">
+        <td><%= setup_tracker_link(webkiosk) %></td>
+        <td><%= webkiosk.account.name %></td>
         <td><%= webkiosk.live %></td>
         <td><%= webkiosk.platform %></td>
-        <td><%= webkiosk.notes %></td>
-        <td><%= link_to 'Show', webkiosk %></td>
-        <td><%= link_to 'Edit', edit_webkiosk_path(webkiosk) %></td>
-        <td><%= link_to 'Destroy', webkiosk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="kiosk_notes"><%= webkiosk.notes %></td>
+        <td><%= link_to 'Show', webkiosk %>
+        <%= link_to 'Edit', edit_webkiosk_path(webkiosk) %>
+        <%= link_to 'Destroy', webkiosk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -33,3 +33,4 @@
 <br>
 
 <%= link_to 'New Webkiosk', new_webkiosk_path %>
+
