@@ -1,3 +1,5 @@
+/* This contains the css for kiosks and webkiosks pages */
+
 /* Form pages - Edit / New */
 .kiosk_labels {
   float: left;
@@ -13,7 +15,14 @@
   text-align: center;
 }
 
+
+
 /* Index page */
+
+.kiosk_heading {
+  margin-bottom: 20px;
+}
+
 .kiosk_display_table {
 	border-collapse: collapse;
 	td {
@@ -25,7 +34,7 @@
   }
 }
 
-#kiosk_notes {
+.kiosk_notes {
   max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
@@ -36,6 +45,8 @@
   max-width: 200px;
   white-space: nowrap;
 }
+
+
 /* Show page */
 
 #kiosk_details {
