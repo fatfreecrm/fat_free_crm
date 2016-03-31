@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Kiosks</h1>
+<h1 class="kiosk_heading">Listing Kiosks</h1>
 
 <table class="kiosk_display_table">
   <thead>
@@ -19,12 +19,12 @@
   <tbody>
     <% @kiosks.each do |kiosk| %>
       <tr align="center">
-        <td><a href="http://ubuntu.livelinkprint.com/manage_labs/search?q=<%= kiosk.name[-5..-1] %>" target="_blank"><%= kiosk.name %></td>
+        <td><%= manage_labs_link(kiosk) %></td>
         <td><%= kiosk.contract.name %></td>
         <td><%= kiosk.purchase_date %></td>
         <td><%= kiosk.password %></td>
         <td><%= kiosk.cd_password %></td>
-        <td id="kiosk_notes"><%= kiosk.notes %></td>
+        <td class="kiosk_notes"><%= kiosk.notes %></td>
         <td><%= link_to kiosk.account.name, account_path(kiosk.account) %></td>
         <td></td>
         <td><%= link_to 'Show', kiosk %> 

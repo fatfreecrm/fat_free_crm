@@ -16,4 +16,8 @@ class Kiosk < ActiveRecord::Base
   validates :name, uniqueness: true
   validate :account_id
   validate :contract_id
+
+  def short_name
+    self.name.slice(/\d+\z/)
+  end
 end
