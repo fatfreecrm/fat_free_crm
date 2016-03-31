@@ -54,7 +54,7 @@ class KiosksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def kiosk_params
-      params.require(:kiosk).permit(:name, :purchase_date, :contract_id, :contract_length, :password, :cd_password, :notes, :account_id)
+      params.require(:kiosk).permit(:name, :purchase_date, :contract_id, :password, :cd_password, :notes, :account_id)
     end
 
 end

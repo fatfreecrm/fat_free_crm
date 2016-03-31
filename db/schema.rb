@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330131832) do
+ActiveRecord::Schema.define(version: 20160331082041) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer  "account_id", limit: 4
@@ -255,16 +255,15 @@ ActiveRecord::Schema.define(version: 20160330131832) do
   add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id", using: :btree
 
   create_table "kiosks", force: :cascade do |t|
-    t.string   "name",            limit: 255
+    t.string   "name",          limit: 255
     t.date     "purchase_date"
-    t.integer  "contract_length", limit: 4
-    t.string   "password",        limit: 255
-    t.string   "cd_password",     limit: 255
-    t.text     "notes",           limit: 65535
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.integer  "account_id",      limit: 4
-    t.integer  "contract_id",     limit: 4
+    t.string   "password",      limit: 255
+    t.string   "cd_password",   limit: 255
+    t.text     "notes",         limit: 65535
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "account_id",    limit: 4
+    t.integer  "contract_id",   limit: 4
   end
 
   add_index "kiosks", ["account_id"], name: "index_kiosks_on_account_id", using: :btree

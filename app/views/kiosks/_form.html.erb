@@ -19,10 +19,6 @@
     <%= f.collection_select(:contract_id, Contract.all, :id, :name, {}, {class: 'kiosk_inputs'}) %>
     <br>
     <br>
-    <%= f.label :contract_length, class: 'kiosk_labels' %>
-    <%= f.input_field :contract_length, class: 'kiosk_inputs', min: 1 %>
-    <br>
-    <br>
     <%= f.label :password, class: 'kiosk_labels' %>
     <%= f.input_field :password, as: :string, class: 'kiosk_inputs', required: true %>
     <br>
