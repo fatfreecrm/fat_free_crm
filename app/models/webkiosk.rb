@@ -9,11 +9,12 @@
 
 class Webkiosk < ActiveRecord::Base
   belongs_to :account
-  validates :url, uniqueness: true
   validate :account_id
+  validates :url, uniqueness: true, format: { with: /http:\/\/.*/}
 
   def short_name
     name = self.url.sub('http://','')
     name.split('.').first
   end
+
 end
