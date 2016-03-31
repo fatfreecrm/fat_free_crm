@@ -1,5 +1,6 @@
 class WebkiosksController < ApplicationController
   before_action :set_webkiosk, only: [:show, :edit, :update, :destroy]
+  before_action :set_current_tab
 
   # GET /webkiosks
   def index
