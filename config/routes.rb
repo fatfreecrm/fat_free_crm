@@ -4,6 +4,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 Rails.application.routes.draw do
+  resources :webkiosks
+  resources :kiosks
   resources :lists
 
   root to: 'home#index'

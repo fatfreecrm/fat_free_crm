@@ -1,0 +1,31 @@
+<%= simple_form_for(@webkiosk) do |f| %>
+<%= f.error_messages %>
+
+<div class="kiosk_inputs_class">
+  <br>
+  <%= f.label :url, class: 'kiosk_labels' %>
+  <%= f.input_field :url, class: 'kiosk_inputs', required: true %>
+  <br>
+  <br>
+  <%= f.label :account_id, class: 'kiosk_labels' %>
+  <%= f.collection_select(:account_id, Account.all, :id, :name, {}, {class: 'kiosk_inputs'}) %>
+  <br>
+  <br>
+  <%= f.label :live, class: 'kiosk_labels' %>
+  <%= f.input_field :live %>
+  <br>
+  <br>
+  <%= f.label :platform, class: 'kiosk_labels' %>
+  <%= f.input_field :platform, class: 'kiosk_inputs' %>
+  <br>
+  <br>
+  <%= f.label :notes, class: 'kiosk_labels' %>
+  <%= f.input_field :notes, class: 'kiosk_inputs' %>
+  <br>
+  <br>
+</div>
+
+<div class="kiosk_actions_class">
+  <%= f.button :submit %>
+</div>
+<% end %>

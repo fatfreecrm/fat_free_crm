@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="kiosk_heading">Listing Kiosks</h1>
+
+<table class="kiosk_display_table">
+  <thead>
+    <tr align="center">
+      <th>Name</th>
+      <th>Contract type</th>
+      <th>Purchase date</th>
+      <th>Password</th>
+      <th>CD Password</th>
+      <th>Notes</th>
+      <th>Account</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @kiosks.each do |kiosk| %>
+      <tr align="center">
+        <td><%= manage_labs_link(kiosk) %></td>
+        <td><%= kiosk.contract.name %></td>
+        <td><%= kiosk.purchase_date %></td>
+        <td><%= kiosk.password %></td>
+        <td><%= kiosk.cd_password %></td>
+        <td class="kiosk_notes"><%= kiosk.notes %></td>
+        <td><%= link_to kiosk.account.name, account_path(kiosk.account) %></td>
+        <td></td>
+        <td><%= link_to 'Show', kiosk %> 
+        <%= link_to 'Edit', edit_kiosk_path(kiosk) %> 
+        <%= link_to 'Destroy', kiosk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Kiosk', new_kiosk_path %>

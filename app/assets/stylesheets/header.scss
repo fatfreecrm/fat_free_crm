@@ -76,8 +76,8 @@ $color_footer: grey;
   padding: 0px;
   text-align: center;
   width: 100%;
-  i.fa { 
-    font-size: 130%; 
+  i.fa {
+    font-size: 130%;
     vertical-align:text-top; }
   ul {
     // :margin 0px 25%,  18% for 5th tab
@@ -113,6 +113,7 @@ $color_footer: grey;
     background: $color_active_tab_background;
     color: $color_active_tab;
     text-decoration: none; } }
+
 
 #footer {
   color: $color_footer;

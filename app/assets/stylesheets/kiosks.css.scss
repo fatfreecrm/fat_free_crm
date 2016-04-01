@@ -1,0 +1,72 @@
+/* This contains the css for kiosks and webkiosks pages */
+
+/* Form pages - Edit / New */
+.kiosk_labels {
+  float: left;
+  width: 100px;
+}
+
+.kiosk_inputs {
+  width: 200px;
+}
+
+.kiosk_actions_class {
+  width: 300px;
+  text-align: center;
+}
+
+
+
+/* Index page */
+
+.kiosk_heading {
+  margin-bottom: 20px;
+}
+
+.kiosk_display_table {
+	border-collapse: collapse;
+	td {
+		padding: 10px;
+		width:100px;
+	}
+/*  
+  tr:nth-child(even) {
+    background-color: rgba(195, 195, 195, 0.8);
+  }
+*/
+}
+
+
+.kiosk_notes {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#action_kiosk_buttons {
+  max-width: 200px;
+  white-space: nowrap;
+}
+
+
+/* Show page */
+
+#kiosk_details {
+  width: 500px;
+  border-style: solid;
+}
+
+#kiosk_details_list {
+  li {
+    margin: 10px;
+  }
+}
+
+.nav_buttons {
+  margin: 10px;
+}
+
+.list_key {
+  font-weight: bold;
+}

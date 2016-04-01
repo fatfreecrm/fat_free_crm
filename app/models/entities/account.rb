@@ -33,6 +33,7 @@ class Account < ActiveRecord::Base
   has_many :account_opportunities, dependent: :destroy
   has_many :opportunities, -> { order("opportunities.id DESC").distinct }, through: :account_opportunities
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
+  has_many :kiosks
   has_one :billing_address, -> { where(address_type: "Billing") }, dependent: :destroy, as: :addressable, class_name: "Address"
   has_one :shipping_address, -> { where(address_type: "Shipping") }, dependent: :destroy, as: :addressable, class_name: "Address"
   has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this

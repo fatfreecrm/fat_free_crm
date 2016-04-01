@@ -1,0 +1,15 @@
+<div class="container" id="kiosk_details">
+  <ul id="kiosk_details_list">
+    <li><span class="list_key">Name:</span> <%= @kiosk.name %></li>
+    <li><span class="list_key">Contract:</span> <%= @kiosk.contract.name %></li>
+    <li><span class="list_key">Purchase Date:</span> <%= @kiosk.purchase_date %></li>
+    <li><span class="list_key">Password:</span> <%= @kiosk.password %></li>
+    <li><span class="list_key">CD Password:</span> <%= @kiosk.cd_password %></li>
+    <li><span class="list_key">Notes:</span> <%= @kiosk.notes %></li>
+  </ul>
+</div>
+
+<div class="nav_buttons">
+  <%= link_to 'Edit', edit_kiosk_path(@kiosk) %> |
+  <%= link_to 'Back', kiosks_path %>
+</div>

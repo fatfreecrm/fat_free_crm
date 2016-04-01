@@ -7,3 +7,10 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 # ~ require Rails.root.join('db/seeds/fields')
+
+Contract.destroy_all
+
+bronze = Contract.create!(name: 'Bronze')
+silver = Contract.create!(name: 'Silver')
+gold = Contract.create!(name: 'Gold')
+platinum = Contract.create!(name: 'Platinum')
