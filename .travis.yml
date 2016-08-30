@@ -21,8 +21,6 @@ matrix:
     - rvm: 2.1
       env: DB=sqlite
 
-gemfile: Gemfile.ci
-
 bundler_args: --path=vendor/bundle --without heroku
 
 cache: bundler
