@@ -85,3 +85,4 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer', platform: :ruby unless ENV["CI"]
+gem 'nokogiri', '>= 1.6.8'
