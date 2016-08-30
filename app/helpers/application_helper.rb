@@ -520,6 +520,7 @@ module ApplicationHelper
   #         options = { renderer: {...} , params: {...}
   def paginate(options = {})
     collection = options.delete(:collection)
+    options = { params: { action: 'index'}}.merge(options) if params['action'] == 'filter'
     options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
     will_paginate(collection, options)
   end
