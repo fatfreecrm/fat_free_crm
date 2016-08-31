@@ -9,6 +9,7 @@
 //= require jquery_timeago/jquery.timeago.it
 //= require jquery_timeago/jquery.timeago.ja
 //= require jquery_timeago/jquery.timeago.js
+//= require jquery_timeago/jquery.timeago.nl.js
 //= require jquery_timeago/jquery.timeago.pl.js
 //= require jquery_timeago/jquery.timeago.pt-BR
 //= require jquery_timeago/jquery.timeago.ru.js

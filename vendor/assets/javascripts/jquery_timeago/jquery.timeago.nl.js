@@ -1,4 +1,4 @@
-// Italian
+// Dutch
 jQuery.timeago.settings.locales['nl'] = {
   prefixAgo: null,
   prefixFromNow: "over",
