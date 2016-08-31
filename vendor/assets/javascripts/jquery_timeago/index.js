@@ -4,6 +4,7 @@
 //= require jquery_timeago/jquery.timeago.en-GB
 //= require jquery_timeago/jquery.timeago.en-US
 //= require jquery_timeago/jquery.timeago.es
+//= require jquery_timeago/jquery.timeago.es-CL
 //= require jquery_timeago/jquery.timeago.fr-CA
 //= require jquery_timeago/jquery.timeago.fr
 //= require jquery_timeago/jquery.timeago.it
