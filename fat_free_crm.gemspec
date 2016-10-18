@@ -2,6 +2,11 @@
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 require 'fat_free_crm/version'
 
+require 'globby'
+rules = File.read('.gitignore').split("\n")
+rules << '.git'
+files = Globby.reject(rules)
+
 Gem::Specification.new do |gem|
   gem.name = 'fat_free_crm'
   gem.authors = ['Michael Dvorkin', 'Ben Tillman', 'Nathan Broadbent', 'Stephen Kenworthy']
@@ -9,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.description = 'An open source, Ruby on Rails customer relationship management platform'
   gem.homepage = 'http://fatfreecrm.com'
   gem.email = ['mike@fatfreecrm.com', 'nathan@fatfreecrm.com', 'warp@fatfreecrm.com', 'steveyken@gmail.com']
-  gem.files = `git ls-files`.split("\n")
+  gem.files = files
   gem.version = FatFreeCRM::VERSION::STRING
   gem.required_ruby_version = '>= 2.0.0'
   gem.license = 'MIT'
@@ -48,6 +53,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rails_autolink'
   gem.add_dependency 'coffee-script-source', '~>1.8.0' # pegged until https://github.com/jashkenas/coffeescript/issues/3829 is resolved
   gem.add_dependency 'country_select'
+  gem.add_dependency 'globby'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
