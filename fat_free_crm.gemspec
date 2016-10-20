@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
-$LOAD_PATH.push File.expand_path('../lib', __FILE__)
-require 'fat_free_crm/version'
-
+$LOAD_PATH.push File.expand_path('../vendor/gems/globby-0.1.2/lib', __FILE__)
 require 'globby'
-rules = File.read('.gitignore').split("\n")
+rules = File.read("#{File.expand_path('..', __FILE__)}/.gitignore").split("\n")
 rules << '.git'
 files = Globby.reject(rules)
+
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
+require 'fat_free_crm/version'
 
 Gem::Specification.new do |gem|
   gem.name = 'fat_free_crm'
@@ -53,7 +54,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rails_autolink'
   gem.add_dependency 'coffee-script-source', '~>1.8.0' # pegged until https://github.com/jashkenas/coffeescript/issues/3829 is resolved
   gem.add_dependency 'country_select'
-  gem.add_dependency 'globby'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
