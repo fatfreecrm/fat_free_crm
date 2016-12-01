@@ -40,7 +40,7 @@
 
 class User < ActiveRecord::Base
   before_create :check_if_needs_approval
-  before_destroy :check_if_current_user, :check_if_has_related_assets
+  before_destroy :check_if_current_user
 
   has_one :avatar, as: :entity, dependent: :destroy  # Personal avatar.
   has_many :avatars                                         # As owner who uploaded it, ex. Contact avatar.
@@ -143,8 +143,6 @@ class User < ActiveRecord::Base
     [name].to_xml
   end
 
-  private
-
   # Suspend newly created user if signup requires an approval.
   #----------------------------------------------------------------------------
   def check_if_needs_approval
@@ -159,13 +157,16 @@ class User < ActiveRecord::Base
 
   # Prevent deleting a user unless she has no artifacts left.
   #----------------------------------------------------------------------------
-  def check_if_has_related_assets
+  def check_if_has_no_related_assets
     sum = %w(Account Campaign Lead Contact Opportunity Comment Task).detect do |asset|
       klass = asset.constantize
+
+      condition = klass.where('assigned_to = ? OR user_id = ?', self.id, self.id).exists? if asset != "Comment"
+      condition = klass.where('user_id = ?', self.id).exists? if asset == "Comment"
       
-      asset != "Comment" && klass.assigned_to(self).exists? || klass.created_by(self).exists?
+      condition
     end
-    sum == nil
+    !sum.nil?
   end
 
   # Define class methods

@@ -59,19 +59,16 @@ describe User do
       @user = FactoryGirl.create(:user)
     end
 
+    # TODO This really seems a users controller concern, not a user model concern
     %w(account campaign lead contact opportunity).each do |asset|
       it "should not destroy the user if she owns #{asset}" do
         FactoryGirl.create(asset, user: @user)
-        @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error
-        expect(@user.destroyed?).to eq(false)
+        expect(@user.check_if_has_no_related_assets).to eq true
       end
 
       it "should not destroy the user if she has #{asset} assigned" do
-        FactoryGirl.create(asset, assignee: @user)
-        @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error
-        expect(@user.destroyed?).to eq(false)
+        FactoryGirl.create(asset, assignee: @user, user: nil)
+        expect(@user.check_if_has_no_related_assets).to eq true
       end
     end
 
@@ -79,9 +76,8 @@ describe User do
       login
       account = FactoryGirl.create(:account, user: current_user)
       FactoryGirl.create(:comment, user: @user, commentable: account)
-      @user.destroy
-      expect { User.find(@user.id) }.to_not raise_error
-      expect(@user.destroyed?).to eq(false)
+
+      expect(@user.check_if_has_no_related_assets).to eq true
     end
 
     it "should not destroy the current user" do
@@ -98,7 +94,7 @@ describe User do
     end
 
     it "once the user gets deleted all her permissions must be deleted too" do
-      FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:account))
+      FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:account, user: nil))
       FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:contact))
       expect(@user.permissions.count).to eq(2)
       @user.destroy
