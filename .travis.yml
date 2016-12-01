@@ -1,7 +1,6 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.1
   - 2.2
 
 env:
@@ -11,9 +10,9 @@ env:
 
 matrix:
   exclude:
-    - rvm: 2.1
+    - rvm: 2.2
       env: DB=mysql
-    - rvm: 2.1
+    - rvm: 2.2
       env: DB=sqlite
 
 bundler_args: --path=vendor/bundle --without heroku
