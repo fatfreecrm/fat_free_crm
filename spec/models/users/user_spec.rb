@@ -128,30 +128,32 @@ describe User do
 
   context "scopes" do
     describe "have_assigned_opportunities" do
-      before :each do
+      before do
         @user1 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user1, stage: 'analysis')
+        FactoryGirl.create(:opportunity, assignee: @user1, stage: 'analysis', account: nil, campaign: nil, user: nil)
 
         @user2 = FactoryGirl.create(:user)
 
         @user3 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user3, stage: 'won')
+        FactoryGirl.create(:opportunity, assignee: @user3, stage: 'won', account: nil, campaign: nil, user: nil)
 
         @user4 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user4, stage: 'lost')
+        FactoryGirl.create(:opportunity, assignee: @user4, stage: 'lost', account: nil, campaign: nil, user: nil)
+
+        @result = User.have_assigned_opportunities
       end
 
       it "includes users with assigned opportunities" do
-        expect(User.have_assigned_opportunities).to include(@user1)
+        expect(@result).to include(@user1)
       end
 
       it "excludes users without any assigned opportunities" do
-        expect(User.have_assigned_opportunities).not_to include(@user2)
+        expect(@result).not_to include(@user2)
       end
 
       it "excludes users with opportunities that have been won or lost" do
-        expect(User.have_assigned_opportunities).not_to include(@user3)
-        expect(User.have_assigned_opportunities).not_to include(@user4)
+        expect(@result).not_to include(@user3)
+        expect(@result).not_to include(@user4)
       end
     end
   end
