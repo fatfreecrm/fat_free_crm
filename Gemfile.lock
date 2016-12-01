@@ -359,6 +359,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionview (~> 4.2.7.1)
   acts-as-taggable-on (>= 3.4.3)
   acts_as_commentable
   acts_as_fu
