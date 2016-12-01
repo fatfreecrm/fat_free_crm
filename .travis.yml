@@ -2,7 +2,7 @@ sudo: false
 language: ruby
 rvm:
   - 2.2
-  - 2.3
+  - 2.3.3
 env:
   - DB=mysql
   - DB=postgres
