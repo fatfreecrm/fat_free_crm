@@ -158,18 +158,21 @@ describe User do
 
   context "instance methods" do
     describe "assigned_opportunities" do
-      before :each do
+      before do
         @user = FactoryGirl.create(:user)
-        @opportunity1 = FactoryGirl.create(:opportunity, assignee: @user)
-        @opportunity2 = FactoryGirl.create(:opportunity, assignee: FactoryGirl.create(:user))
+
+        @opportunity1 = FactoryGirl.create(:opportunity, assignee: @user, account: nil, campaign: nil, user: nil)
+        @opportunity2 = FactoryGirl.create(:opportunity, assignee: FactoryGirl.create(:user), account: nil, campaign: nil, user: nil)
+
+        @result = @user.assigned_opportunities
       end
 
       it "includes opportunities assigned to user" do
-        expect(@user.assigned_opportunities).to include(@opportunity1)
+        expect(@result).to include(@opportunity1)
       end
 
       it "does not include opportunities assigned to another user" do
-        expect(@user.assigned_opportunities).not_to include(@opportunity2)
+        expect(@result).not_to include(@opportunity2)
       end
     end
   end
