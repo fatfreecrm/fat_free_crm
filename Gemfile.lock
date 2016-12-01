@@ -54,7 +54,7 @@ GEM
       scrypt (>= 1.2, < 3.0)
     builder (3.2.2)
     byebug (8.2.1)
-    cancancan (1.13.1)
+    cancancan (1.15.0)
     capistrano (3.4.0)
       i18n
       rake (>= 10.0.0)
