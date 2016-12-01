@@ -59,19 +59,16 @@ describe User do
       @user = FactoryGirl.create(:user)
     end
 
+    # TODO This really seems a users controller concern, not a user model concern
     %w(account campaign lead contact opportunity).each do |asset|
       it "should not destroy the user if she owns #{asset}" do
         FactoryGirl.create(asset, user: @user)
-        @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error
-        expect(@user.destroyed?).to eq(false)
+        expect(@user.check_if_has_no_related_assets).to eq true
       end
 
       it "should not destroy the user if she has #{asset} assigned" do
-        FactoryGirl.create(asset, assignee: @user)
-        @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error
-        expect(@user.destroyed?).to eq(false)
+        FactoryGirl.create(asset, assignee: @user, user: nil)
+        expect(@user.check_if_has_no_related_assets).to eq true
       end
     end
 
@@ -79,9 +76,8 @@ describe User do
       login
       account = FactoryGirl.create(:account, user: current_user)
       FactoryGirl.create(:comment, user: @user, commentable: account)
-      @user.destroy
-      expect { User.find(@user.id) }.to_not raise_error
-      expect(@user.destroyed?).to eq(false)
+
+      expect(@user.check_if_has_no_related_assets).to eq true
     end
 
     it "should not destroy the current user" do
@@ -98,7 +94,7 @@ describe User do
     end
 
     it "once the user gets deleted all her permissions must be deleted too" do
-      FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:account))
+      FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:account, user: nil))
       FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:contact))
       expect(@user.permissions.count).to eq(2)
       @user.destroy
@@ -128,48 +124,53 @@ describe User do
 
   context "scopes" do
     describe "have_assigned_opportunities" do
-      before :each do
+      before do
         @user1 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user1, stage: 'analysis')
+        FactoryGirl.create(:opportunity, assignee: @user1, stage: 'analysis', account: nil, campaign: nil, user: nil)
 
         @user2 = FactoryGirl.create(:user)
 
         @user3 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user3, stage: 'won')
+        FactoryGirl.create(:opportunity, assignee: @user3, stage: 'won', account: nil, campaign: nil, user: nil)
 
         @user4 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user4, stage: 'lost')
+        FactoryGirl.create(:opportunity, assignee: @user4, stage: 'lost', account: nil, campaign: nil, user: nil)
+
+        @result = User.have_assigned_opportunities
       end
 
       it "includes users with assigned opportunities" do
-        expect(User.have_assigned_opportunities).to include(@user1)
+        expect(@result).to include(@user1)
       end
 
       it "excludes users without any assigned opportunities" do
-        expect(User.have_assigned_opportunities).not_to include(@user2)
+        expect(@result).not_to include(@user2)
       end
 
       it "excludes users with opportunities that have been won or lost" do
-        expect(User.have_assigned_opportunities).not_to include(@user3)
-        expect(User.have_assigned_opportunities).not_to include(@user4)
+        expect(@result).not_to include(@user3)
+        expect(@result).not_to include(@user4)
       end
     end
   end
 
   context "instance methods" do
     describe "assigned_opportunities" do
-      before :each do
+      before do
         @user = FactoryGirl.create(:user)
-        @opportunity1 = FactoryGirl.create(:opportunity, assignee: @user)
-        @opportunity2 = FactoryGirl.create(:opportunity, assignee: FactoryGirl.create(:user))
+
+        @opportunity1 = FactoryGirl.create(:opportunity, assignee: @user, account: nil, campaign: nil, user: nil)
+        @opportunity2 = FactoryGirl.create(:opportunity, assignee: FactoryGirl.create(:user), account: nil, campaign: nil, user: nil)
+
+        @result = @user.assigned_opportunities
       end
 
       it "includes opportunities assigned to user" do
-        expect(@user.assigned_opportunities).to include(@opportunity1)
+        expect(@result).to include(@opportunity1)
       end
 
       it "does not include opportunities assigned to another user" do
-        expect(@user.assigned_opportunities).not_to include(@opportunity2)
+        expect(@result).not_to include(@opportunity2)
       end
     end
   end
