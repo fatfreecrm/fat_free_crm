@@ -258,8 +258,8 @@ GEM
       ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)
       ffi
-    rb-fsevent (0.9.6)
-    rb-inotify (0.9.5)
+    rb-fsevent (0.9.8)
+    rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     ref (2.0.0)
     request_store (1.2.1)
