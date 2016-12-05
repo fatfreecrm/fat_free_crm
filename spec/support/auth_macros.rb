@@ -25,7 +25,17 @@ alias :require_user :login
 
 #----------------------------------------------------------------------------
 def login_and_assign(user_stubs = {}, session_stubs = {})
-  login(user_stubs, session_stubs)
+  User.current_user = @current_user = FactoryGirl.build_stubbed(:user, user_stubs)
+  @current_user_session = double(Authentication, {record: current_user}.merge(session_stubs))
+  allow(Authentication).to receive(:find).and_return(@current_user_session)
+  #set_timezone
+  assigns[:current_user] = current_user
+end
+def login_and_assign!(user_stubs = {}, session_stubs = {})
+  User.current_user = @current_user = FactoryGirl.create(:user, user_stubs)
+  @current_user_session = double(Authentication, {record: current_user}.merge(session_stubs))
+  allow(Authentication).to receive(:find).and_return(@current_user_session)
+  #set_timezone
   assigns[:current_user] = current_user
 end
 
