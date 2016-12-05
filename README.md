@@ -48,19 +48,20 @@ Pull requests and bug reports are always welcome!
 
 Visit our website at http://www.fatfreecrm.com/
 
-## Rails 4 support
+## Usage
+This is a fork of fat free crm, as the original project was a little quiet.
 
-The master branch is now on Rails 4.2. However, there is a [Rails 3.2 branch](https://github.com/fatfreecrm/fat_free_crm/tree/rails3) available if you still need to use it. Please note that subsequent gem releases will focus on Rails 4 (v0.14.0+ as yet unreleased).
+To use this; simply add to your Gemfile
+```
+gem 'reduced_fat_crm', require: 'fat_free_crm'
+```
+in place of your previous fat_free_crm verison.
 
-## Important security note
 
-Please note that several severe vulnerabilities have been fixed recently. You should upgrade to the most recent 0.13.x version or higher. See the [**security vulnerabilities**](https://github.com/fatfreecrm/fat_free_crm/wiki/Security) page for more details.
 
 ## System Requirements
 
-* Ruby 2 (2.2 recommended)
-  * Ruby 1.9.3 is no longer compatible (final gem release tag v0.13.6)
-  * Ruby v1.8.7 was supported until v0.11.4 (see https://github.com/fatfreecrm/fat_free_crm/tree/ruby1.8)
+* Ruby 2.2+ recommended
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
 * ImageMagick (optional, only needed if you would like to use avatars)
 
