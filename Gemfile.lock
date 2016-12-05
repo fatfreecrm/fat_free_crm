@@ -42,7 +42,7 @@ GEM
     acts_as_fu (0.0.9)
       activerecord
       sqlite3
-    acts_as_list (0.7.2)
+    acts_as_list (0.8.2)
       activerecord (>= 3.0)
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
