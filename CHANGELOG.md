@@ -5,7 +5,8 @@ First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
 0.15.0
- - Refactoring, ```@user.check_if_needs_approval``` must be explicitly called in rake tasks or similar, it is no longer a before_create hook
+ - Refactoring: ```@user.check_if_needs_approval``` must be explicitly called in rake tasks or similar, it is no longer a before_create hook
+ - Refactoring: ```@user.destroyable?``` must be called in rake tasks or similar, it is no longer a before_destroy check
  - Various gem updates
 
 Mon, Dec 5, 2016 (0.14.0)
