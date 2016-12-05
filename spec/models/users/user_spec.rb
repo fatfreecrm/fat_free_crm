@@ -42,12 +42,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe User do
   it "should create a new instance given valid attributes" do
-    User.create!(
+    expect(User.new(
       username: "username",
       email:    "user@example.com",
       password: "password",
       password_confirmation: "password"
-    )
+    ).valid?).to eq true
   end
 
   it "should have a valid factory" do
@@ -57,7 +57,7 @@ describe User do
   describe '#destroyable?' do
     describe "Destroying users with and without related assets" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = FactoryGirl.build(:user)
       end
 
       %w(account campaign lead contact opportunity).each do |asset|
@@ -75,7 +75,7 @@ describe User do
 
       it "should not destroy the user if she owns a comment" do
         login
-        account = FactoryGirl.create(:account, user: current_user)
+        account = build(:account, user: current_user)
         FactoryGirl.create(:comment, user: @user, commentable: account)
         expect(@user.destroyable?).to eq(false)
       end
@@ -187,7 +187,7 @@ describe User do
 
   describe "Setting I18n.locale" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryGirl.build(:user)
       @locale = I18n.locale
     end
 
@@ -210,14 +210,14 @@ describe User do
 
   describe "Setting single access token" do
     it "should update single_access_token attribute if it is not set already" do
-      @user = FactoryGirl.create(:user, single_access_token: nil)
+      @user = FactoryGirl.build(:user, single_access_token: nil)
 
       @user.set_single_access_token
       expect(@user.single_access_token).not_to eq(nil)
     end
 
     it "should not update single_access_token attribute if it is set already" do
-      @user = FactoryGirl.create(:user, single_access_token: "token")
+      @user = FactoryGirl.build(:user, single_access_token: "token")
 
       @user.set_single_access_token
       expect(@user.single_access_token).to eq("token")
