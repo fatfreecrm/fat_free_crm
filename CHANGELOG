@@ -4,6 +4,32 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon, Dec 5, 2016 (0.14.0)
+---------------------------------------------------------------------
+Forked to publish 'reduced_fat_crm', a version of fat-free-crm with 
+more pull requests merged and more contributors.
+
+At this stage, no classes etc have been renamed.
+
+- Various security fixes
+- Enable CORS headers
+- Ruby 2.0 or less dropped from CI
+
+
+Missing release notes
+---------------------------------------------------------------------
+0.13.6 - February 12, 2015
+0.13.5 - January 22, 2015
+0.13.4 - September 4, 2014
+0.13.3 - August 26, 2014
+0.13.2 - January 9, 2014
+0.13.1 - January 7, 2014
+0.13.0 - December 27, 2013
+0.12.3 - January 9, 2014
+0.12.2 - January 7, 2014
+0.12.1 - December 27, 2013
+
+
 Fri, Jun 28, 2013 (0.12.0)
 ---------------------------------------------------------------------
 - Ruby 1.9 support only (no ruby 1.8 and not yet ruby 2)
