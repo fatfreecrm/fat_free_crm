@@ -38,7 +38,6 @@ script:
   - "RAILS_ENV=test bundle exec rake spec:lib"
   - "RAILS_ENV=test bundle exec rake spec:mailers"
   - "RAILS_ENV=test bundle exec rake spec:models"
-  - "RAILS_ENV=test bundle exec rake spec:prepare"
   - "RAILS_ENV=test bundle exec rake spec:routing"
   - "RAILS_ENV=test bundle exec rake spec:views"
   - "RAILS_ENV=test bundle exec rake spec:features"
