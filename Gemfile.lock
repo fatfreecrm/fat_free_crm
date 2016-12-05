@@ -96,7 +96,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     concurrent-ruby (1.0.2)
-    countries (1.2.2)
+    countries (1.2.5)
       currencies (~> 0.4.2)
       i18n_data (~> 0.7.0)
     country_select (2.5.1)
