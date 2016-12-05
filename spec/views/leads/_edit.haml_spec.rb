@@ -10,9 +10,9 @@ describe "/leads/_edit" do
 
   before do
     login_and_assign
-    assign(:lead, @lead = FactoryGirl.create(:lead))
+    assign(:lead, @lead = FactoryGirl.build_stubbed(:lead))
     assign(:users, [current_user])
-    assign(:campaign, @campaign = FactoryGirl.create(:campaign))
+    assign(:campaign, @campaign = FactoryGirl.build_stubbed(:campaign))
     assign(:campaigns, [@campaign])
   end
 

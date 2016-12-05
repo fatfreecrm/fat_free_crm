@@ -9,12 +9,12 @@ describe "/leads/create" do
   before do
     controller.controller_path = 'leads'
     login_and_assign
-    assign(:campaigns, [FactoryGirl.create(:campaign)])
+    assign(:campaigns, [FactoryGirl.build_stubbed(:campaign)])
   end
 
   describe "create success" do
     before do
-      assign(:lead, @lead = FactoryGirl.create(:lead))
+      assign(:lead, @lead = FactoryGirl.build_stubbed(:lead))
       assign(:leads, [@lead].paginate)
       assign(:lead_status_total, Hash.new(1))
     end
@@ -57,7 +57,7 @@ describe "/leads/create" do
   describe "create failure" do
     it "should re-render [create] template in :create_lead div" do
       assign(:lead, FactoryGirl.build(:lead, first_name: nil)) # make it invalid
-      assign(:users, [FactoryGirl.create(:user)])
+      assign(:users, [FactoryGirl.build_stubbed(:user)])
 
       render
 
