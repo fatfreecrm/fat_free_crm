@@ -346,9 +346,8 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unicode_utils (1.4.0)
-    unicorn (5.0.1)
+    unicorn (5.2.0)
       kgio (~> 2.6)
-      rack
       raindrops (~> 0.7)
     websocket (1.2.3)
     will_paginate (3.0.7)
