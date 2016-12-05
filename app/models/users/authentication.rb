@@ -6,6 +6,7 @@
 class Authentication < Authlogic::Session::Base # NOTE: This is not ActiveRecord model.
   authenticate_with User
   after_save :check_if_suspended
+  single_access_allowed_request_types :any
 
   def to_key
     id ? id : nil
