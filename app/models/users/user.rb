@@ -164,7 +164,7 @@ class User < ActiveRecord::Base
       
       asset != "Comment" && klass.assigned_to(self).exists? || klass.created_by(self).exists?
     end
-    sum == nil
+    !sum.nil?
   end
 
   private
