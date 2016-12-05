@@ -7,17 +7,17 @@ end
 
 describe "User abilities" do
   subject(:ability)  { Ability.new(user) }
-  let(:subject_user) { create :user }
+  let(:subject_user) { build :user }
 
   context "when site manager, I" do
-    let(:user)  { create :user, admin: true }
+    let(:user)  { build :user, admin: true }
     all_actions.each do |do_action|
       it { is_expected.to be_able_to(do_action, subject_user) }
     end
   end
 
   context "when myself, I" do
-    let(:user) { create :user }
+    let(:user) { build :user }
     let(:subject_user) { user }
     all_actions.each do |do_action|
       it { is_expected.to be_able_to(do_action, subject_user) }
