@@ -146,7 +146,7 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     haml (4.0.7)
       tilt
-    headless (2.2.0)
+    headless (2.3.1)
     htmlentities (4.3.4)
     i18n (0.7.0)
     i18n_data (0.7.0)
