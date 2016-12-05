@@ -169,7 +169,7 @@ GEM
     mime-types-data (3.2016.0521)
     mimemagic (0.3.0)
     mini_portile2 (2.1.0)
-    minitest (5.10.0)
+    minitest (5.10.1)
     multi_json (1.11.2)
     nenv (0.3.0)
     net-scp (1.2.1)
