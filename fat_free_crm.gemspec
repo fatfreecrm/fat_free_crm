@@ -9,7 +9,7 @@ $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 require 'fat_free_crm/version'
 
 Gem::Specification.new do |gem|
-  gem.name = 'fat_free_crm'
+  gem.name = 'reduced_fat_crm'
   gem.authors = ['Michael Dvorkin', 'Ben Tillman', 'Nathan Broadbent', 'Stephen Kenworthy']
   gem.summary = 'Fat Free CRM'
   gem.description = 'An open source, Ruby on Rails customer relationship management platform'
