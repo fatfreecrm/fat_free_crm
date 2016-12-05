@@ -15,25 +15,25 @@ describe "/opportunities/destroy" do
 
   it "should blind up destroyed opportunity partial" do
     render
-    rendered.should include("slideUp")
+    expect(rendered).to include("slideUp")
   end
 
   it "should update opportunities sidebar when called from opportunities index" do
-    assign(:opportunities, [ @opportunity ].paginate)
+    assign(:opportunities, [@opportunity].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
     render
 
-    rendered.should include("#sidebar")
-    rendered.should have_text("Recent Items")
-    rendered.should include("$('#filters').effect('shake'")
+    expect(rendered).to include("#sidebar")
+    expect(rendered).to have_text("Recent Items")
+    expect(rendered).to include("$('#filters').effect('shake'")
   end
 
   it "should update pagination when called from opportunities index" do
-    assign(:opportunities, [ @opportunity ].paginate)
+    assign(:opportunities, [@opportunity].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
     render
 
-    rendered.should include("#paginate")
+    expect(rendered).to include("#paginate")
   end
 
   it "should update related account sidebar when called from related account" do
@@ -41,9 +41,9 @@ describe "/opportunities/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
     render
 
-    rendered.should include("#sidebar")
-    rendered.should have_text("Account Summary")
-    rendered.should have_text("Recent Items")
+    expect(rendered).to include("#sidebar")
+    expect(rendered).to have_text("Account Summary")
+    expect(rendered).to have_text("Recent Items")
   end
 
   it "should update related campaign sidebar when called from related campaign" do
@@ -51,16 +51,15 @@ describe "/opportunities/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 
-    rendered.should include("#sidebar")
-    rendered.should have_text("Campaign Summary")
-    rendered.should have_text("Recent Items")
+    expect(rendered).to include("#sidebar")
+    expect(rendered).to have_text("Campaign Summary")
+    expect(rendered).to have_text("Recent Items")
   end
 
   it "should update recently viewed items when called from related contact" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
     render
 
-    rendered.should include("#recently")
+    expect(rendered).to include("#recently")
   end
-
 end

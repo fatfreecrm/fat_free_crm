@@ -20,7 +20,7 @@
   .list_form{ hidden }
     = simple_form_for(List.new, :remote => true) do |f|
       = f.text_field :name, :size => 25
-      = image_tag(asset_path('info_tiny.png'), :title => t(:list_name_info), class: "input_info")
+      = image_tag("info_tiny.png", :title => t(:list_name_info), class: "input_info")
       = f.hidden_field :url
       %input{:type => "hidden", :name => "is_global", :value => (personal ? 0 : 1) }
       %div

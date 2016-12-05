@@ -17,18 +17,17 @@ describe "/users/edit" do
     params[:cancel] = "true"
 
     render
-    rendered.should include("crm.flip_form('edit_profile')")
-    rendered.should include("crm.set_title('edit_profile', 'My Profile');")
+    expect(rendered).to include("crm.flip_form('edit_profile')")
+    expect(rendered).to include("crm.set_title('edit_profile', 'My Profile');")
   end
 
   it "edit profile: should hide [Upload Avatar] and [Change Password] forms and show [Edit Profile]" do
     render
 
-    rendered.should include("$('#edit_profile').html")
-    rendered.should include("crm.hide_form('upload_avatar');")
-    rendered.should include("crm.hide_form('change_password');")
-    rendered.should include("crm.flip_form('edit_profile');")
-    rendered.should include("crm.set_title('edit_profile', 'Edit Profile');")
+    expect(rendered).to include("$('#edit_profile').html")
+    expect(rendered).to include("crm.hide_form('upload_avatar');")
+    expect(rendered).to include("crm.hide_form('change_password');")
+    expect(rendered).to include("crm.flip_form('edit_profile');")
+    expect(rendered).to include("crm.set_title('edit_profile', 'Edit Profile');")
   end
-
 end

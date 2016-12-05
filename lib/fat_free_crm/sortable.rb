@@ -5,13 +5,11 @@
 #------------------------------------------------------------------------------
 module FatFreeCRM
   module Sortable
-
     def self.included(base)
       base.extend(ClassMethods)
     end
 
     module ClassMethods
-
       # Model class method to define sort options, for example:
       #   sortable :by => "first_name ASC"
       #   sortable :by => [ "first_name ASC", "last_name ASC" ]
@@ -23,8 +21,8 @@ module FatFreeCRM
                        :sort_by_clauses     # A copy of sortable :by => ... stored as array.
 
         self.sort_by_clauses = [options[:by]].flatten
-        self.sort_by_fields = self.sort_by_clauses.map(&:split).map(&:first)
-        self.sort_by = self.name.tableize + "." + (options[:default] || options[:by].first)
+        self.sort_by_fields = sort_by_clauses.map(&:split).map(&:first)
+        self.sort_by = name.tableize + "." + (options[:default] || options[:by].first)
       end
 
       # Return hash that maps sort options to the actual :order strings, for example:
@@ -33,14 +31,12 @@ module FatFreeCRM
       #--------------------------------------------------------------------------
       def sort_by_map
         Hash[
-          self.sort_by_fields.zip(self.sort_by_clauses).map do |field, clause|
-            [ field, self.name.tableize + "." + clause ]
+          sort_by_fields.zip(sort_by_clauses).map do |field, clause|
+            [field, name.tableize + "." + clause]
           end
         ]
       end
-
     end # ClassMethods
-
   end
 end
 

@@ -11,23 +11,22 @@ describe "/accounts/destroy" do
   before do
     login_and_assign
     assign(:account, @account = FactoryGirl.create(:account))
-    assign(:accounts, [ @account ].paginate)
+    assign(:accounts, [@account].paginate)
     assign(:account_category_total, Hash.new(1))
     render
   end
 
   it "should blind up destroyed account partial" do
-    rendered.should include("slideUp")
+    expect(rendered).to include("slideUp")
   end
 
   it "should update accounts pagination" do
-    rendered.should include("#paginate")
+    expect(rendered).to include("#paginate")
   end
 
   it "should update accounts sidebar" do
-    rendered.should include("#sidebar")
-    rendered.should have_text("Account Categories")
-    rendered.should have_text("Recent Items")
+    expect(rendered).to include("#sidebar")
+    expect(rendered).to have_text("Account Categories")
+    expect(rendered).to have_text("Recent Items")
   end
-
 end

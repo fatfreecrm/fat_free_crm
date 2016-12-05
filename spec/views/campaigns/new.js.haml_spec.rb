@@ -10,14 +10,14 @@ describe "/campaigns/new" do
 
   before do
     login_and_assign
-    assign(:campaign, Campaign.new(:user => current_user))
-    assign(:users, [ current_user ])
+    assign(:campaign, Campaign.new(user: current_user))
+    assign(:users, [current_user])
   end
 
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include("crm.flick('empty', 'toggle')")
+    expect(rendered).to include("crm.flick('empty', 'toggle')")
   end
 
   describe "new campaign" do
@@ -25,14 +25,14 @@ describe "/campaigns/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("$('#create_campaign').html")
+      expect(rendered).to include("$('#create_campaign').html")
     end
 
     it "should call JavaScript functions to load Calendar popup" do
       params[:cancel] = nil
       render
 
-      rendered.should include("crm.flip_form('create_campaign')")
+      expect(rendered).to include("crm.flip_form('create_campaign')")
     end
   end
 
@@ -41,9 +41,8 @@ describe "/campaigns/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not include("#create_campaignx")
-      rendered.should include("crm.flip_form('create_campaign')")
+      expect(rendered).not_to include("#create_campaignx")
+      expect(rendered).to include("crm.flip_form('create_campaign')")
     end
   end
-
 end

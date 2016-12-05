@@ -540,7 +540,7 @@ cz:
   crm_admin_page: Fat Free CRM Administrace
   approve: Schválit
   create_user: Vytvořit uživatele
-  last_seen: naposledy viděn před %{value}
+  last_logged_in: last logged in %{value}
   personal_information: Osobní informace
   reactivate: Reaktivovat
   save_user: Uložit uživatele

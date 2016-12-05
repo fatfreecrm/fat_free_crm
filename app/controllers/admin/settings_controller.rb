@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::SettingsController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/settings')", :only => [ :index ]
+  before_action "set_current_tab('admin/settings')", only: [:index]
 
   # GET /admin/settings
   # GET /admin/settings.xml
@@ -12,4 +12,3 @@ class Admin::SettingsController < Admin::ApplicationController
   def index
   end
 end
-

@@ -4,13 +4,12 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class UsersController < ApplicationController
-
-  before_filter :set_current_tab, :only => [ :show, :opportunities_overview ] # Don't hightlight any tabs.
+  before_action :set_current_tab, only: [:show, :opportunities_overview] # Don't hightlight any tabs.
 
   check_authorization
   load_and_authorize_resource # handles all security
 
-  respond_to :html, :only => [ :show, :new ]
+  respond_to :html, only: [:show, :new]
 
   # GET /users/1
   # GET /users/1.js
@@ -54,8 +53,7 @@ class UsersController < ApplicationController
   # PUT /users/1.js
   #----------------------------------------------------------------------------
   def update
-    params[:user][:email].try(:strip!)
-    @user.update_attributes(params[:user])
+    @user.update_attributes(user_params)
     respond_with(@user)
   end
 
@@ -76,7 +74,7 @@ class UsersController < ApplicationController
       render
     else
       if params[:avatar]
-        avatar = Avatar.create(params[:avatar].merge(:entity => @user))
+        avatar = Avatar.create(avatar_params)
         if avatar.valid?
           @user.avatar = avatar
         else
@@ -87,7 +85,7 @@ class UsersController < ApplicationController
       responds_to_parent do
         # Without return RSpec2 screams bloody murder about rendering twice:
         # within the block and after yield in responds_to_parent.
-        render and (return if Rails.env.test?)
+        render && (return if Rails.env.test?)
       end
     end
   end
@@ -123,7 +121,7 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def redraw
     current_user.preference[:locale] = params[:locale]
-    render :js => %Q{window.location.href = "#{user_path(current_user)}";}
+    render js: %(window.location.href = "#{user_path(current_user)}";)
   end
 
   # GET /users/opportunities_overview
@@ -133,4 +131,30 @@ class UsersController < ApplicationController
     @unassigned_opportunities = Opportunity.my.unassigned.pipeline.order(:stage)
   end
 
+  protected
+
+  def user_params
+    params[:user][:email].try(:strip!)
+    params[:user].permit(
+      :username,
+      :email,
+      :first_name,
+      :last_name,
+      :title,
+      :company,
+      :alt_email,
+      :phone,
+      :mobile,
+      :aim,
+      :yahoo,
+      :google,
+      :skype
+    )
+  end
+
+  def avatar_params
+    params[:avatar]
+      .permit(:image)
+      .merge(entity: @user)
+  end
 end

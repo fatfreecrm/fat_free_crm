@@ -10,20 +10,20 @@ describe "/comments/edit" do
 
   before do
     assign(:comment, stub_model(Comment,
-      :id => 321,
-      :new_record? => false,
-      :commentable => stub_model(Contact, :id => '123')
+                                id: 321,
+                                new_record?: false,
+                                commentable: stub_model(Contact, id: '123')
     ))
-    #params["contact_id"] = "123"
+    # params["contact_id"] = "123"
     assign(:current_user, stub_model(User,
-      :email => 'test@example.com'
+                                     email: 'test@example.com'
     ))
   end
 
   it "should render edit form" do
     render
 
-    rendered.should include("textarea")
-    rendered.should include("123")
+    expect(rendered).to include("textarea")
+    expect(rendered).to include("123")
   end
 end

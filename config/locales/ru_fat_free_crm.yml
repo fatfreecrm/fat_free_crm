@@ -527,7 +527,7 @@ ru:
   no_tasks_pending: незавершенных
   no_tasks_assigned: порученных
   no_tasks_completed: завершенных
-  pending_tab: На&nbsp;очереди
+  pending_tab: На очереди
   pending_tasks: Задания на очереди
   related: см.
   save_task: Сохранить Задание
@@ -742,8 +742,7 @@ ru:
     ссылок на нее.
   approve: Подтвердить
   create_user: Создать Пользователя
-  last_seen: последний визит %{value} назад
-  last_seen2: последний визит %{value}
+  last_logged_in: last logged in %{value}
   personal_information: Личные Данные
   group_memberships: Принадлежит группе
   reactivate: Разблокиривать
@@ -943,7 +942,7 @@ ru:
       title: Выберите список
     multiselect:
       title: Множественный выбор
-    radio:
+    radio_buttons:
       title: Radio кнопка
     boolean:
       title: Флажок

@@ -6,26 +6,24 @@
 require 'spec_helper'
 
 describe "admin/field_groups/destroy" do
-
   before do
-    login_and_assign(:admin => true)
+    login_and_assign(admin: true)
     assign(:field_group, field_group)
   end
 
   let(:field_group) { FactoryGirl.build(:field_group) }
 
   it "renders destroy javascript" do
-    field_group.stub(:destroyed?).and_return(true)
+    allow(field_group).to receive(:destroyed?).and_return(true)
     render
-    view.should render_template("admin/field_groups/destroy")
-    rendered.should have_text("slideUp(250)")
+    expect(view).to render_template("admin/field_groups/destroy")
+    expect(rendered).to have_text("slideUp(250)")
   end
 
   it "renders 'not destroyed' javascript" do
     render
-    view.should render_template("admin/field_groups/destroy")
-    rendered.should have_text("Field Group could not be deleted")
-    rendered.should have_text("crm.flash('warning');")
+    expect(view).to render_template("admin/field_groups/destroy")
+    expect(rendered).to have_text("Field Group could not be deleted")
+    expect(rendered).to have_text("crm.flash('warning');")
   end
-
 end

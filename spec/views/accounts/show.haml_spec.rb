@@ -10,25 +10,24 @@ describe "/accounts/show" do
 
   before do
     login_and_assign
-    @account = FactoryGirl.create(:account, :id => 42,
-      :contacts => [ FactoryGirl.create(:contact) ],
-      :opportunities => [ FactoryGirl.create(:opportunity) ])
+    @account = FactoryGirl.create(:account, id: 42,
+                                            contacts: [FactoryGirl.create(:contact)],
+                                            opportunities: [FactoryGirl.create(:opportunity)])
     assign(:account, @account)
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @account) ])
+    assign(:timeline, [FactoryGirl.create(:comment, commentable: @account)])
   end
 
   it "should render account landing page" do
     render
 
-    view.should render_template(:partial => "comments/_new")
-    view.should render_template(:partial => "shared/_timeline")
-    view.should render_template(:partial => "shared/_tasks")
-    view.should render_template(:partial => "contacts/_contact")
-    view.should render_template(:partial => "opportunities/_opportunity")
+    expect(view).to render_template(partial: "comments/_new")
+    expect(view).to render_template(partial: "shared/_timeline")
+    expect(view).to render_template(partial: "shared/_tasks")
+    expect(view).to render_template(partial: "contacts/_contact")
+    expect(view).to render_template(partial: "opportunities/_opportunity")
 
-    rendered.should have_tag("div[id=edit_account]")
+    expect(rendered).to have_tag("div[id=edit_account]")
   end
-
 end

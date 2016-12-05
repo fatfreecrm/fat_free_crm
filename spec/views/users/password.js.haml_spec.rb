@@ -17,19 +17,18 @@ describe "/users/password" do
     params[:cancel] = "true"
 
     render
-    rendered.should include("crm.flip_form('change_password')")
-    rendered.should include("crm.set_title('change_password', 'My Profile')")
+    expect(rendered).to include("crm.flip_form('change_password')")
+    expect(rendered).to include("crm.set_title('change_password', 'My Profile')")
   end
 
   it "edit profile: should hide [Edit Profile] and [Upload Avatar] forms and show [Change Password]" do
     render
 
-    rendered.should include("$('#change_password').html")
-    rendered.should include("crm.hide_form('edit_profile');")
-    rendered.should include("crm.hide_form('upload_avatar');")
-    rendered.should include("crm.flip_form('change_password');")
-    rendered.should include("crm.set_title('change_password', 'Change Password');")
-    rendered.should include("$('#current_password').focus();")
+    expect(rendered).to include("$('#change_password').html")
+    expect(rendered).to include("crm.hide_form('edit_profile');")
+    expect(rendered).to include("crm.hide_form('upload_avatar');")
+    expect(rendered).to include("crm.flip_form('change_password');")
+    expect(rendered).to include("crm.set_title('change_password', 'Change Password');")
+    expect(rendered).to include("$('#current_password').focus();")
   end
-
 end

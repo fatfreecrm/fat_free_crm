@@ -4,11 +4,9 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CustomFieldDatetimePair < CustomFieldDatePair
-
   def render(value)
     value && value.strftime(I18n.t("time.formats.mmddhhss"))
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_datetime_pair, self)
-
 end

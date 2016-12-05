@@ -5,13 +5,12 @@
 #------------------------------------------------------------------------------
 namespace :ffcrm do
   namespace :config do
-
     desc "Setup database.yml"
     task :copy_database_yml do
       require 'fileutils'
       filename = "config/database.#{ENV['DB'] || 'postgres'}.yml"
       orig, dest = FatFreeCRM.root.join(filename), Rails.root.join('config/database.yml')
-      unless File.exists?(dest)
+      unless File.exist?(dest)
         puts "Copying #{filename} to config/database.yml ..."
         FileUtils.cp orig, dest
       end
@@ -31,12 +30,11 @@ namespace :ffcrm do
       Dir[File.join(Rails.root, 'config', '**', '*.yml')].each do |file|
         YAML::ENGINE.yamler = 'syck'
         puts "Converting #{file}"
-        yml = YAML.load( File.read(file) )
+        yml = YAML.load(File.read(file))
         FileUtils.cp file, "#{file}.bak"
         YAML::ENGINE.yamler = 'psych'
-        File.open(file, 'w'){ |file| file.write(YAML.dump(yml)) }
+        File.open(file, 'w') { |file| file.write(YAML.dump(yml)) }
       end
     end
-
   end
 end

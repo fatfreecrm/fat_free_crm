@@ -20,22 +20,28 @@
 #
 
 class Comment < ActiveRecord::Base
-  belongs_to  :user
-  belongs_to  :commentable, :polymorphic => true
+  belongs_to :user
+  belongs_to :commentable, polymorphic: true
 
-  scope :created_by, lambda { |user| where(:user_id => user.id) }
+  scope :created_by, lambda { |user| where(user_id: user.id) }
 
   validates_presence_of :user, :commentable, :comment
-  has_paper_trail :meta => { :related => :commentable },
-                  :ignore => [:state]
+  has_paper_trail class_name: 'Version', meta: { related: :commentable },
+                  ignore: [:state]
 
   before_create :subscribe_mentioned_users
-  after_create  :subscribe_user_to_entity, :notify_subscribers
+  after_create :subscribe_user_to_entity, :notify_subscribers
 
-  def expanded?;  self.state == "Expanded";  end
-  def collapsed?; self.state == "Collapsed"; end
+  def expanded?
+    state == "Expanded"
+  end
+
+  def collapsed?
+    state == "Collapsed"
+  end
 
   private
+
   # Add user to subscribed_users field on entity
   def subscribe_user_to_entity(u = user)
     commentable.subscribed_users << u.id
@@ -44,9 +50,9 @@ class Comment < ActiveRecord::Base
 
   # Notify subscribed users when a comment is added, unless user created this comment
   def notify_subscribers
-    commentable.subscribed_users.reject{|user_id| user_id == user.id}.each do |subscriber_id|
+    commentable.subscribed_users.reject { |user_id| user_id == user.id }.each do |subscriber_id|
       if subscriber = User.find_by_id(subscriber_id)
-        SubscriptionMailer.comment_notification(subscriber, self).deliver
+        SubscriptionMailer.comment_notification(subscriber, self).deliver_now
       end
     end
   end

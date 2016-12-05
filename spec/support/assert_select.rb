@@ -8,7 +8,6 @@
 module RSpec # :nodoc:
   module Rails
     module Matchers
-
       class AssertSelect #:nodoc:
         attr_reader :options
 
@@ -19,30 +18,35 @@ module RSpec # :nodoc:
           @block = block
         end
 
-        def matches?(response_or_text, &block)
+        def matches?(_response_or_text, &block)
           @block = block if block
 
           begin
             @spec_scope.__send__(@selector_assertion, *@args, &@block)
             true
-          rescue ::Test::Unit::AssertionFailedError => @error
+          rescue ::ActiveSupport::TestCase::Assertion => @error
             false
           rescue ::MiniTest::Assertion => @error
             false
           end
         end
 
-        def failure_message_for_should; @error.message; end
-        def failure_message_for_should_not; "should not #{description}, but did"; end
+        def failure_message
+          @error.message
+        end
+
+        def failure_message_when_negated
+          "should not #{description}, but did"
+        end
 
         def description
           {
-            :assert_select => "have tag#{format_args(*@args)}",
-            :assert_select_email => "send email#{format_args(*@args)}",
+            assert_select: "have tag#{format_args(*@args)}",
+            assert_select_email: "send email#{format_args(*@args)}"
           }[@selector_assertion]
         end
 
-      private
+        private
 
         def format_args(*args)
           args.empty? ? "" : "(#{arg_list(*args)})"
@@ -55,15 +59,14 @@ module RSpec # :nodoc:
         end
 
         def args_and_options(args)
-          opts = {:xml => false, :strict => false}
+          opts = { xml: false, strict: false }
           if args.last.is_a?(::Hash)
             opts[:strict] = args.last.delete(:strict) unless args.last[:strict].nil?
             opts[:xml]    = args.last.delete(:xml)    unless args.last[:xml].nil?
             args.pop if args.last.empty?
           end
-          return [args, opts]
+          [args, opts]
         end
-
       end
 
       # :call-seq:
@@ -104,7 +107,7 @@ module RSpec # :nodoc:
       # see documentation for assert_select at http://api.rubyonrails.org/
       def with_tag(*args, &block)
         args = prepare_args(args, @__current_scope_for_assert_select)
-        @__current_scope_for_assert_select.should have_tag(*args, &block)
+        expect(@__current_scope_for_assert_select).to have_tag(*args, &block)
       end
 
       # wrapper for a nested assert_select with false
@@ -116,7 +119,7 @@ module RSpec # :nodoc:
       # see documentation for assert_select at http://api.rubyonrails.org/
       def without_tag(*args, &block)
         args = prepare_args(args, @__current_scope_for_assert_select)
-        @__current_scope_for_assert_select.should_not have_tag(*args, &block)
+        expect(@__current_scope_for_assert_select).not_to have_tag(*args, &block)
       end
 
       # :call-seq:
@@ -143,21 +146,19 @@ module RSpec # :nodoc:
       #
       # see documentation for assert_select_encoded at http://api.rubyonrails.org/
       def with_encoded(*args, &block)
-        should AssertSelect.new(:assert_select_encoded, self, *args, &block)
+        is_expected.to AssertSelect.new(:assert_select_encoded, self, *args, &block)
       end
 
-    private
+      private
 
       def prepare_args(args, current_scope = nil)
         return args if current_scope.nil?
-        defaults = current_scope.options || {:strict => false, :xml => false}
+        defaults = current_scope.options || { strict: false, xml: false }
         args << {} unless args.last.is_a?(::Hash)
         args.last[:strict] = defaults[:strict] if args.last[:strict].nil?
         args.last[:xml] = defaults[:xml] if args.last[:xml].nil?
         args
       end
-
     end
   end
 end
-

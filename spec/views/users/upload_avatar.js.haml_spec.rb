@@ -14,31 +14,31 @@ describe "/users/upload_avatar" do
 
   describe "no errors:" do
     before do
-      @avatar = FactoryGirl.create(:avatar, :entity => current_user)
-      current_user.stub(:avatar).and_return(@avatar)
+      @avatar = FactoryGirl.create(:avatar, entity: current_user)
+      allow(current_user).to receive(:avatar).and_return(@avatar)
       assign(:user, @user = current_user)
     end
 
     it "should flip [Upload Avatar] form" do
       render
-      rendered.should_not include("user_#{@user.id}")
-      rendered.should include("crm.flip_form('upload_avatar'")
-      rendered.should include("crm.set_title('upload_avatar', 'My Profile')")
+      expect(rendered).not_to include("user_#{@user.id}")
+      expect(rendered).to include("crm.flip_form('upload_avatar'")
+      expect(rendered).to include("crm.set_title('upload_avatar', 'My Profile')")
     end
   end # no errors
 
   describe "validation errors:" do
     before do
-      @avatar = FactoryGirl.create(:avatar, :entity => current_user)
+      @avatar = FactoryGirl.create(:avatar, entity: current_user)
       @avatar.errors.add(:image, "error")
-      current_user.stub(:avatar).and_return(@avatar)
+      allow(current_user).to receive(:avatar).and_return(@avatar)
       assign(:user, @user = current_user)
     end
 
     it "should redraw the [Upload Avatar] form and shake it" do
       render
-      rendered.should include("$('#upload_avatar').html")
-      rendered.should include(%Q/$('#upload_avatar').effect("shake"/)
+      expect(rendered).to include("$('#upload_avatar').html")
+      expect(rendered).to include(%/$('#upload_avatar').effect("shake"/)
     end
   end # errors
 end

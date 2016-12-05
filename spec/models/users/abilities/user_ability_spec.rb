@@ -6,14 +6,13 @@ def all_actions
 end
 
 describe "User abilities" do
-
   subject(:ability)  { Ability.new(user) }
   let(:subject_user) { create :user }
 
   context "when site manager, I" do
-    let(:user)  { create :user, admin: true}
+    let(:user)  { create :user, admin: true }
     all_actions.each do |do_action|
-      it{ should be_able_to(do_action, subject_user) }
+      it { is_expected.to be_able_to(do_action, subject_user) }
     end
   end
 
@@ -21,7 +20,7 @@ describe "User abilities" do
     let(:user) { create :user }
     let(:subject_user) { user }
     all_actions.each do |do_action|
-      it{ should be_able_to(do_action, subject_user) }
+      it { is_expected.to be_able_to(do_action, subject_user) }
     end
   end
 
@@ -29,30 +28,36 @@ describe "User abilities" do
     let(:user)  { create :user }
     let(:can)    { [] }
     let(:cannot) { [:show, :create, :update, :index, :destroy, :manage] }
-    it{ can.each do |do_action|
-      should be_able_to(do_action, subject_user)
-    end}
-    it{ cannot.each do |do_action|
-      should_not be_able_to(do_action, subject_user)
-    end}
+    it do
+      can.each do |do_action|
+        is_expected.to be_able_to(do_action, subject_user)
+      end
+    end
+    it do
+      cannot.each do |do_action|
+        is_expected.not_to be_able_to(do_action, subject_user)
+      end
+    end
   end
 
   context "when anonymous user, I" do
     let(:user)  { nil }
     let(:can)    { [] }
     let(:cannot) { [:show, :create, :update, :index, :destroy, :manage] }
-    it{ can.each do |do_action|
-      should be_able_to(do_action, subject_user)
-    end}
-    it{ cannot.each do |do_action|
-      should_not be_able_to(do_action, subject_user)
-    end}
-
-    it "and signup enabled" do
-      User.stub(:can_signup?).and_return(true)
-      should be_able_to(:create, User)
+    it do
+      can.each do |do_action|
+        is_expected.to be_able_to(do_action, subject_user)
+      end
+    end
+    it do
+      cannot.each do |do_action|
+        is_expected.not_to be_able_to(do_action, subject_user)
+      end
     end
 
+    it "and signup enabled" do
+      allow(User).to receive(:can_signup?).and_return(true)
+      is_expected.to be_able_to(:create, User)
+    end
   end
-
 end

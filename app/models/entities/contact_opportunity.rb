@@ -21,7 +21,7 @@ class ContactOpportunity < ActiveRecord::Base
   belongs_to :opportunity
   validates_presence_of :contact_id, :opportunity_id
 
-  # has_paper_trail
+  # has_paper_trail :class_name => 'Version'
 
   ActiveSupport.run_load_hooks(:fat_free_crm_contact_opportunity, self)
 end

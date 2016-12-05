@@ -3,7 +3,7 @@ if Setting.database_and_table_exists?
   Rails.application.config.after_initialize do
     I18n.backend.load_translations
 
-    translations = {ransack: { attributes: {}}}
+    translations = { ransack: { attributes: {} } }
     CustomField.find_each do |custom_field|
       if custom_field.field_group.present?
         model_key = custom_field.klass.model_name.singular

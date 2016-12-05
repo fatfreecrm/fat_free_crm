@@ -4,25 +4,26 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class ApplicationController < ActionController::Base
-
   protect_from_forgery
 
-  before_filter :set_context
-  before_filter :clear_setting_cache
-  before_filter "hook(:app_before_filter, self)"
-  after_filter  "hook(:app_after_filter,  self)"
+  before_action :set_context
+  before_action :clear_setting_cache
+  before_action :cors_preflight_check
+  before_action "hook(:app_before_filter, self)"
+  after_action "hook(:app_after_filter,  self)"
+  after_action :cors_set_access_control_headers
 
   helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
   helper_method :klass
 
-  respond_to :html, :only => [ :index, :show, :auto_complete ]
+  respond_to :html, only: [:index, :show, :auto_complete]
   respond_to :js
-  respond_to :json, :xml, :except => :edit
-  respond_to :atom, :csv, :rss, :xls, :only => :index
+  respond_to :json, :xml, except: :edit
+  respond_to :atom, :csv, :rss, :xls, only: :index
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :respond_to_not_found
-  rescue_from CanCan::AccessDenied,         :with => :respond_to_access_denied
+  rescue_from ActiveRecord::RecordNotFound, with: :respond_to_not_found
+  rescue_from CanCan::AccessDenied,         with: :respond_to_access_denied
 
   include ERB::Util # to give us h and j methods
 
@@ -30,24 +31,26 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:auto_complete_query] || ''
-    @auto_complete = hook(:auto_complete, self, :query => @query, :user => current_user)
+    @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
-      @auto_complete = klass.my.text_search(@query).search(:id_not_in => exclude_ids).result.limit(10)
+      @auto_complete = klass.my.text_search(@query).search(id_not_in: exclude_ids).result.limit(10)
     else
       @auto_complete = @auto_complete.last
     end
 
     session[:auto_complete] = controller_name.to_sym
     respond_to do |format|
-      format.any(:js, :html)   { render :partial => 'auto_complete' }
-      format.json { render :json => @auto_complete.inject({}){|h,a|
-        h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
-      }}
+      format.any(:js, :html)   { render partial: 'auto_complete' }
+      format.json do
+        render json: @auto_complete.inject({}){|h, a|
+                       h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
+                     }
+      end
     end
   end
 
-private
+  private
 
   #
   # In rails 3, the default behaviour for handle_unverified_request is to delete the session
@@ -69,7 +72,7 @@ private
     return [related.to_i].compact unless related.index('/')
     related_class, id = related.split('/')
     obj = related_class.classify.constantize.find_by_id(id)
-    if obj and obj.respond_to?(controller_name)
+    if obj && obj.respond_to?(controller_name)
       obj.send(controller_name).map(&:id)
     else
       []
@@ -89,7 +92,7 @@ private
   #----------------------------------------------------------------------------
   def set_context
     Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
-    if current_user.present? and (locale = current_user.preference[:locale]).present?
+    if current_user.present? && (locale = current_user.preference[:locale]).present?
       I18n.locale = locale
     elsif Setting.locale.present?
       I18n.locale = Setting.locale
@@ -130,7 +133,7 @@ private
       flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
       respond_to do |format|
         format.html { redirect_to login_url }
-        format.js   { render :text => "window.location = '#{login_url}';" }
+        format.js   { render text: "window.location = '#{login_url}';" }
       end
     end
   end
@@ -163,7 +166,7 @@ private
   #----------------------------------------------------------------------------
   def called_from_index_page?(controller = controller_name)
     if controller != "tasks"
-      request.referer =~ %r(/#{controller}$)
+      request.referer =~ %r{/#{controller}$}
     else
       request.referer =~ /tasks\?*/
     end
@@ -171,7 +174,7 @@ private
 
   #----------------------------------------------------------------------------
   def called_from_landing_page?(controller = controller_name)
-    request.referer =~ %r(/#{controller}/\w+)
+    request.referer =~ %r{/#{controller}/\w+}
   end
 
   # Proxy current page for any of the controllers by storing it in a session.
@@ -203,32 +206,32 @@ private
 
   #----------------------------------------------------------------------------
   def asset
-    self.controller_name.singularize
+    controller_name.singularize
   end
 
   #----------------------------------------------------------------------------
-  def respond_to_not_found(*types)
+  def respond_to_not_found(*_types)
     flash[:warning] = t(:msg_asset_not_available, asset)
 
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
-      format.js   { render :text => 'window.location.reload();' }
-      format.json { render :text => flash[:warning],  :status => :not_found }
-      format.xml  { render :xml => [flash[:warning]], :status => :not_found }
+      format.js   { render text: 'window.location.reload();' }
+      format.json { render text: flash[:warning],  status: :not_found }
+      format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
 
   #----------------------------------------------------------------------------
-  def respond_to_related_not_found(related, *types)
+  def respond_to_related_not_found(related, *_types)
     asset = "note" if asset == "comment"
-    flash[:warning] = t(:msg_cant_create_related, :asset => asset, :related => related)
+    flash[:warning] = t(:msg_cant_create_related, asset: asset, related: related)
 
     url = send("#{related.pluralize}_path")
     respond_to do |format|
       format.html { redirect_to(url) }
-      format.js   { render :text => %Q{window.location.href = "#{url}";} }
-      format.json { render :text => flash[:warning],  :status => :not_found }
-      format.xml  { render :xml => [flash[:warning]], :status => :not_found }
+      format.js   { render text: %(window.location.href = "#{url}";) }
+      format.json { render text: flash[:warning],  status: :not_found }
+      format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
 
@@ -237,9 +240,9 @@ private
     flash[:warning] = t(:msg_not_authorized, default: 'You are not authorized to take this action.')
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
-      format.js   { render :text => 'window.location.reload();' }
-      format.json { render :text => flash[:warning],  :status => :unauthorized }
-      format.xml  { render :xml => [flash[:warning]], :status => :unauthorized }
+      format.js   { render text: 'window.location.reload();' }
+      format.json { render text: flash[:warning],  status: :unauthorized }
+      format.xml  { render xml: [flash[:warning]], status: :unauthorized }
     end
   end
 
@@ -247,10 +250,27 @@ private
   def redirection_url
     # Try to redirect somewhere sensible. Note: not all controllers have an index action
     url = if current_user.present?
-      (respond_to?(:index) and self.action_name != 'index') ? { action: 'index' } : root_url
-    else
-      login_url
+            (respond_to?(:index) && action_name != 'index') ? { action: 'index' } : root_url
+          else
+            login_url
     end
   end
 
+  def cors_set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token'
+    headers['Access-Control-Max-Age'] = "1728000"
+  end
+
+  def cors_preflight_check
+    if request.method == 'OPTIONS'
+      headers['Access-Control-Allow-Origin'] = '*'
+      headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
+      headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Token'
+      headers['Access-Control-Max-Age'] = '1728000'
+
+      render :text => '', :content_type => 'text/plain'
+    end
+  end
 end

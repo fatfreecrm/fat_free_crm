@@ -1,9 +1,7 @@
 class IsParanoidToPaperTrail < ActiveRecord::Migration
   def up
     [Account, Campaign, Contact, Lead, Opportunity, Task].each do |klass|
-      klass.where('deleted_at IS NOT NULL').each do |object|
-        object.destroy
-      end
+      klass.where('deleted_at IS NOT NULL').each(&:destroy)
     end
   end
 

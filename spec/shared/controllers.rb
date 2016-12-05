@@ -10,40 +10,40 @@ shared_examples "auto complete" do
   end
 
   it "should do the search and find records that match autocomplete query" do
-    get :auto_complete, :auto_complete_query => @query
-    assigns[:query].should == @query
-    assigns[:auto_complete].should == @auto_complete_matches # Each controller must define it.
+    get :auto_complete, auto_complete_query: @query
+    expect(assigns[:query]).to eq(@query)
+    expect(assigns[:auto_complete]).to eq(@auto_complete_matches) # Each controller must define it.
   end
 
   it "should save current autocomplete controller in a session" do
-    get :auto_complete, :auto_complete_query => @query
+    get :auto_complete, auto_complete_query: @query
 
     # We don't save Admin/Users autocomplete controller in a session since Users are not
     # exposed through the Jumpbox.
     unless controller.class.to_s.starts_with?("Admin::")
-      session[:auto_complete].should == @controller.controller_name.to_sym
+      expect(session[:auto_complete]).to eq(@controller.controller_name.to_sym)
     end
   end
 
   it "should render application/_auto_complete template" do
-    post :auto_complete, :auto_complete_query => @query
-    response.should render_template("application/_auto_complete")
+    post :auto_complete, auto_complete_query: @query
+    expect(response).to render_template("application/_auto_complete")
   end
 end
 
 shared_examples "attach" do
   it "should attach existing asset to the parent asset of different type" do
-    xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
-    @model.send(@attachment.class.name.tableize).should include(@attachment)
-    assigns[:attachment].should == @attachment
-    assigns[:attached].should == [ @attachment ]
+    xhr :put, :attach, id: @model.id, assets: @attachment.class.name.tableize, asset_id: @attachment.id
+    expect(@model.send(@attachment.class.name.tableize)).to include(@attachment)
+    expect(assigns[:attachment]).to eq(@attachment)
+    expect(assigns[:attached]).to eq([@attachment])
     if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
-      assigns[:campaign].should == @attachment.reload.campaign
+      expect(assigns[:campaign]).to eq(@attachment.reload.campaign)
     end
     if @model.is_a?(Account) && @attachment.respond_to?(:account) # Skip Tasks...
-      assigns[:account].should == @attachment.reload.account
+      expect(assigns[:account]).to eq(@attachment.reload.account)
     end
-    response.should render_template("entities/attach")
+    expect(response).to render_template("entities/attach")
   end
 
   it "should not attach the asset that is already attached" do
@@ -53,51 +53,51 @@ shared_examples "attach" do
       @model.send(@attachment.class.name.tableize) << @attachment
     end
 
-    xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
-    assigns[:attached].should == nil
-    response.should render_template("entities/attach")
+    xhr :put, :attach, id: @model.id, assets: @attachment.class.name.tableize, asset_id: @attachment.id
+    expect(assigns[:attached]).to eq(nil)
+    expect(response).to render_template("entities/attach")
   end
 
   it "should display flash warning when the model is no longer available" do
     @model.destroy
 
-    xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
-    flash[:warning].should_not == nil
-    response.body.should == "window.location.reload();"
+    xhr :put, :attach, id: @model.id, assets: @attachment.class.name.tableize, asset_id: @attachment.id
+    expect(flash[:warning]).not_to eq(nil)
+    expect(response.body).to eq("window.location.reload();")
   end
   it "should display flash warning when the attachment is no longer available" do
     @attachment.destroy
 
-    xhr :put, :attach, :id => @model.id, :assets => @attachment.class.name.tableize, :asset_id => @attachment.id
-    flash[:warning].should_not == nil
-    response.body.should == "window.location.reload();"
+    xhr :put, :attach, id: @model.id, assets: @attachment.class.name.tableize, asset_id: @attachment.id
+    expect(flash[:warning]).not_to eq(nil)
+    expect(response.body).to eq("window.location.reload();")
   end
 end
 
 shared_examples "discard" do
   it "should discard the attachment without deleting it" do
-    xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
-    assigns[:attachment].should == @attachment.reload                     # The attachment should still exist.
-    @model.reload.send("#{@attachment.class.name.tableize}").should == [] # But no longer associated with the model.
-    assigns[:account].should == @model if @model.is_a?(Account)
-    assigns[:campaign].should == @model if @model.is_a?(Campaign)
+    xhr :post, :discard, id: @model.id, attachment: @attachment.class.name, attachment_id: @attachment.id
+    expect(assigns[:attachment]).to eq(@attachment.reload)                     # The attachment should still exist.
+    expect(@model.reload.send("#{@attachment.class.name.tableize}")).to eq([]) # But no longer associated with the model.
+    expect(assigns[:account]).to eq(@model) if @model.is_a?(Account)
+    expect(assigns[:campaign]).to eq(@model) if @model.is_a?(Campaign)
 
-    response.should render_template("entities/discard")
+    expect(response).to render_template("entities/discard")
   end
 
   it "should display flash warning when the model is no longer available" do
     @model.destroy
 
-    xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
-    flash[:warning].should_not == nil
-    response.body.should == "window.location.reload();"
+    xhr :post, :discard, id: @model.id, attachment: @attachment.class.name, attachment_id: @attachment.id
+    expect(flash[:warning]).not_to eq(nil)
+    expect(response.body).to eq("window.location.reload();")
   end
 
   it "should display flash warning when the attachment is no longer available" do
     @attachment.destroy
 
-    xhr :post, :discard, :id => @model.id, :attachment => @attachment.class.name, :attachment_id => @attachment.id
-    flash[:warning].should_not == nil
-    response.body.should == "window.location.reload();"
+    xhr :post, :discard, id: @model.id, attachment: @attachment.class.name, attachment_id: @attachment.id
+    expect(flash[:warning]).not_to eq(nil)
+    expect(response.body).to eq("window.location.reload();")
   end
 end

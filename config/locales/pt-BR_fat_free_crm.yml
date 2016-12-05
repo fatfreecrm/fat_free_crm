@@ -1,8 +1,12 @@
 ---
 pt-BR:
   language: Português do Brasil
+
+  # Generic terms.
+  #----------------------------------------------------------------------------
+  id: "ID"
   all: Tudo
-  at: at
+  at: em
   here: aqui
   no_button: Não
   not_implemented: Ainda não implementado.
@@ -10,6 +14,10 @@ pt-BR:
   select_blank: -- Selecione --
   select_none: -- Nenhum --
   yes_button: Sim
+
+
+  # Settings.
+  #----------------------------------------------------------------------------
   tab_dashboard: Dashboard
   tab_tasks: Tarefas
   tab_campaigns: Campanhas
@@ -17,9 +25,19 @@ pt-BR:
   tab_accounts: Contas
   tab_contacts: Contatos
   tab_opportunities: Oportunidades
+  tab_team: Equipe
   admin_tab_users: Usuários
   admin_tab_settings: Configurações
   admin_tab_plugins: Plugins
+  admin_tab_tags: Tags
+  admin_tab_settings: Configurações
+  admin_tab_plugins: Plugins
+  affiliate: Afiliar
+  competitor: Concorrente
+  customer: Cliente
+  partner: Parceiro
+  reseller: Revenda
+  vendor: Vendedor
   planned: Planejado
   started: Iniciado
   on_hold: Em espera
@@ -33,7 +51,7 @@ pt-BR:
   conference: Conferência
   online: Marketing Online
   referral: Referência
-  self: Self Generated
+  self: Auto gerado
   web: Website
   word_of_mouth: Boca-a-Boca
   other: Outros
@@ -65,12 +83,18 @@ pt-BR:
   completed_last_week: Semana passada
   completed_this_month: Este mês
   completed_last_month: Mês passado
+
+  # Models/Activity.
+  #----------------------------------------------------------------------------
   one_hour: Uma hora
   one_day: Um dia
   two_days: Dois dias
   one_week: Uma semana
   two_weeks: Duas semanas
   one_month: Um mês
+
+  # Model Validations.
+  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
@@ -85,18 +109,15 @@ pt-BR:
             name:
               missing_account_name: ^Por favor, informe um nome para a conta
             access:
-              share_account: ^Por favor, informe usuários com quem desejas compartilhar
-                esta conta.
+              share_account: ^Por favor, informe usuários com quem desejas compartilhar esta conta.
         campaign:
           attributes:
             name:
               missing_campaign_name: ^Por favor, informe uma node para a campanha.
             ends_on:
-              dates_not_in_sequence: ^Por favor, certifique-se que a data de término
-                da campanha seja posterior a data de início.
+              dates_not_in_sequence: ^Por favor, certifique-se que a data de término da campanha seja posterior a data de início.
             access:
-              share_campaign: ^Por favor, informe usuários com quem desejas compartilhar
-                esta campanha.
+              share_campaign: ^Por favor, informe usuários com quem desejas compartilhar esta campanha.
         contact:
           attributes:
             first_name:
@@ -104,8 +125,7 @@ pt-BR:
             last_name:
               missing_last_name: ^Por favor, informe o último nome.
             access:
-              share_contact: ^Por favor, informe usuários com quem desejas compartilhar
-                este contato.
+              share_contact: ^Por favor, informe usuários com quem desejas compartilhar este contato.
         lead:
           attributes:
             first_name:
@@ -136,20 +156,41 @@ pt-BR:
             email:
               missing_email: ^Por favor, informe o e-mail.
               email_in_use: ^Já existe um usuário com este e-mail.
-  errors:
-    template:
-      header:
-        one: ! 'Não foi possível gravar %{model}: 1 erro'
-        other: ! 'Não foi possível gravar %{model}: %{count} erros.'
-      body: ! 'Por favor, verifique o(s) seguinte(s) campo(s):'
+        custom_field:
+          required: ^%{field} é obrigatório.
+          maxlength: ^%{field} é muito longo.
+          endbeforestart: ^%{field} não pode finalizar antes de ser iniciado.
+    attribute_options:
+      opportunity:
+        stage:
+          prospecting: Prospecção
+          analysis: Análise
+          presentation: Apresentação
+          proposal: Proposta
+          negotiation: Negociação
+          final_review: Revisão final
+          won: Fechado/Ganho
+          lost: Fechado/Perdido
+      account:
+        rating:
+          "0": "-"
+          "1": "★"
+          "2": "★★"
+          "3": "★★★"
+          "4": "★★★★"
+          "5": "★★★★★"
+
   msg_account_suspended: A conta do usuário foi suspensa.
   password_reset_instruction: Instruções de redefinição da senha
+
+  # Controllers.
+  #----------------------------------------------------------------------------
   msg_account_created: Sua conta foi criada e está aguardando a aprovação do administrador
     do sistema.
   msg_account_not_approved: Sua conta ainda não foi aprovada.
   msg_asset_deleted: ! '%{value} foi removido.'
   msg_asset_not_available: Este(a) %{value} não está mais disponível.
-  msg_asset_not_authorized: You are not authorized to view this %{value}.
+  msg_asset_not_authorized: Você não está autorizado para ver isso %{value}.
   msg_assets_not_available: Estes(as) %{value} não estão mais disponíveis.
   msg_asset_rejected: ! '%{value} foi rejeitado.'
   msg_bad_image_file: ^Não foi possível enviar ou redimensionar a imagem que você
@@ -175,6 +216,9 @@ pt-BR:
   msg_require_admin: É preciso ser um administrador para acessar esta página.
   msg_successful_signup: Cadastrado com sucesso, bem vindo(a) ao Fat Free CRM!
   msg_welcome: Bem vindo(a) ao Fat Free CRM!
+
+  # Options.
+  #----------------------------------------------------------------------------
   option_amount*probability: weighted amount
   activity_options: Exibir atividades em %{models} feitas por %{user} no(s) último(s)
     %{period}.
@@ -205,6 +249,17 @@ pt-BR:
   sort_by: Sort by %{field}.
   sort_by_displaying: Ordenar %{models} por %{field} exibindo o primeiro nome %{position}
     do último nome.
+  entities_per_page: ! '%{entity} por página:'
+  contacts_index_long: Formato longo
+  contacts_index_brief: Formato breve
+  contacts_index_full: Formato total
+  opportunities_index_normal: Formato comum
+  accounts_index_normal: Formato comum
+  leads_index_normal: Formato comum
+  campaigns_index_normal: Formato comum
+
+  # Views -> Profile.
+  #----------------------------------------------------------------------------
   aim: AOL IM
   already_signed_up: Já é cadastrado?
   alt_email: Email alternativo
@@ -240,15 +295,26 @@ pt-BR:
   user: Usuário
   username: Usuário
   yahoo: Yahoo IM
+  born_on: Nascido em
+  reports_to: Reportar para
+  access: Acesso
+
+  # Views -> Authenticate.
+  #----------------------------------------------------------------------------
   forgot_password: Esqueceu a senha
   login: Login
   no_account: Não tem uma conta?
   remember_me: Me lembrar
   sign_up_now: Cadastre-se Agora!
+
+  # Views -> Accounts.
+  #----------------------------------------------------------------------------
   account: Conta
-  account_permissions_intro: Por padrão, somente você terá acesso a conta. Você pode
-    mudar as permissões da conta depois.
+  account_id: Conta
+  select_an_account: Selecione uma conta
   account_small: conta
+  account_summary: Índice de conta
+  account_categories: Categorias de conta
   accounts: Contas
   accounts_options: Opções da conta
   accounts_small: contas
@@ -259,17 +325,25 @@ pt-BR:
   date_updated: Data de atualização
   fax: Fax
   intro: Você pode adicionar %{value} informação depois.
+  keep_private: manter privado, não compartilhar com os outros
+  mail_to: E-mail para %{value}
+  make_public: Compartilhar com todos
   mobile_small: celular
   open_in_window: Abrir %{value} em uma nova janela
   phone_small: telefone
   phone_toll_free: Toll-free phone
-  keep_private: manter privado, não compartilhar com os outros
-  make_public: Compartilhar com todos
+  pipeline: Funil
   same_as_billing: mesmo da cobrança
   save_account: Salvar conta
   share_with: Compartilhar somente com algumas pessoas
   shipping_address: Endereço de entrega
+  total_accounts: Total de contas
   website: Website
+  account_with_title_department: ! '%{title}, %{department} em %{account}'
+  account_with_title: ! '%{title} em %{account}'
+
+  # Views -> Campaigns.
+  #----------------------------------------------------------------------------
   actual: Atual
   actual_performance: Performance atual
   budget: Orçamento
@@ -277,10 +351,10 @@ pt-BR:
   campaign: Campanha
   campaign_and_leads: campanha e seus leads
   campaign_small: campanha
-  campaign_summary: Campaign Summary
-  campaign_targets: Campaign Targets
+  campaign_summary: Resumo da Campanha
+  campaign_targets: Metas da Campanha
   campaigns: Campanhas
-  campaigns_options: Campaigns Options
+  campaigns_options: Opcôes de Campanhas
   campaigns_small: campanhas
   conversion: Conversão
   conversion_label: Conversão (%)
@@ -319,7 +393,7 @@ pt-BR:
   department: Departamento
   department_small: ! '%{value} departamento'
   do_not_call: Não ligar
-  extra_info: Informações exttra
+  extra_info: Informações extra
   extra_info_small: informação extra
   facebook: Facebook
   linked_in: LinkedIn
@@ -330,17 +404,16 @@ pt-BR:
     Você pode mudar as permissões depois..
   permissions_intro_shared: Por padrão, somente os usuários selecionados terão acesso
     em %{value}. Você pode mudar as permissões depois..
-  referred_by: Referred by
-  referred_by_small: referred by
+  referred_by: Indicado Por
+  referred_by_small: indicado por
   save_contact: Salvar contato
   twitter: Twitter
-  web_presence: Web Presence
-  web_presence_small: web presence
+  web_presence: Presença na Web
+  web_presence_small: presença na web
   works_at: ! '%{job_title} na %{company}'
   convert: Converter
   convert_lead: Converter lead
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead
-    being converted. You can change contact permissions later.
+  convert_lead_permissions_intro: Permissões de contato vão ser copiados do lead sendo convertido. Você pode mudar as permissões de contato depois.
   convert_lead_text: By converting the lead %{value} will become a contact associated
     with the existing or newly created account. Lead status will be automatically
     set to converted.
@@ -359,7 +432,7 @@ pt-BR:
     do 'lead' depois.
   lead_small: lead
   lead_status_small: situação do lead
-  lead_summary: Lead Summary
+  lead_summary: Resumo do Lead
   leads: Leads
   leads_options: Opções de Lead
   leads_small: leads
@@ -372,13 +445,13 @@ pt-BR:
   status: Situação
   total_leads: Total de leads
   amount: Valor
-  close_date: Close date
+  close_date: Data de fechar
   closed_ago_on: fechada há %{time_ago} atrás em %{date}
-  closes_today: expected to close today!
-  closing_date: closing date is %{value}
+  closes_today: esperado de fechar hoje!
+  closing_date: data de fechar é %{value}
   create_opportunity: Cria oportunidade
   currency: (R$)
-  days_late: Late by
+  days_late: Atrasado
   days_left: Dias restante
   discount: Desconto
   discount_number: com %{value} desconto
@@ -426,7 +499,7 @@ pt-BR:
   task_uncomplete: Reverter
   task_completed_ago: terminada há %{value} atrás
   task_completed_by: terminada há %{time_ago} atrás por %{user}
-  task_created: A tarea foi criada
+  task_created: A tarefa foi criada
   task_due_in: due in %{value}
   task_due_later: due sometime soon
   task_due_now: vende
@@ -524,7 +597,7 @@ pt-BR:
   crm_admin_page: Administração do Fat Free CRM
   approve: Aprovar
   create_user: Novo usuário
-  last_seen: entrou pela última vez há %{value} atrás
+  last_logged_in: last logged in %{value}
   personal_information: Informações Pessoais
   reactivate: Reativar
   save_user: Salvar usuário

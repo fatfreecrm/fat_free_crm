@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::ApplicationController < ApplicationController
-  before_filter :require_admin_user
+  before_action :require_admin_user
 
   layout "admin/application"
   helper "admin/field_groups"
@@ -14,10 +14,10 @@ class Admin::ApplicationController < ApplicationController
   def auto_complete
     @query = params[:auto_complete_query]
     @auto_complete = klass.text_search(@query).limit(10)
-    render :partial => 'auto_complete'
+    render partial: 'auto_complete'
   end
 
-private
+  private
 
   #----------------------------------------------------------------------------
   def require_admin_user

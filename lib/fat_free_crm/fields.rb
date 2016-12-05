@@ -5,7 +5,6 @@
 #------------------------------------------------------------------------------
 module FatFreeCRM
   module Fields
-
     def self.included(base)
       base.extend(ClassMethods)
     end
@@ -24,7 +23,7 @@ module FatFreeCRM
     module SingletonMethods
       def field_groups
         if ActiveRecord::Base.connection.table_exists? 'field_groups'
-          FieldGroup.where(:klass_name => self.name).order(:position)
+          FieldGroup.where(klass_name: name).order(:position)
         else
           []
         end
@@ -36,7 +35,7 @@ module FatFreeCRM
 
       def serialize_custom_fields!
         fields.each do |field|
-          if !serialized_attributes.keys.include?(field.name) and field.as == 'check_boxes'
+          if !serialized_attributes.keys.include?(field.name) && field.as == 'check_boxes'
             serialize(field.name.to_sym, Array)
           end
         end
@@ -45,7 +44,7 @@ module FatFreeCRM
       # Shows custom field select options in ransack search form
       def ransack_column_select_options
         field_groups.each_with_object({}) do |group, hash|
-          group.fields.select{|f| f.collection.present? }.each do |field|
+          group.fields.select { |f| f.collection.present? }.each do |field|
             hash[field.name] = field.collection.each_with_object({}) do |option, options|
               options[option] = option
             end
@@ -63,10 +62,10 @@ module FatFreeCRM
       # run custom field validations on this object
       #------------------------------------------------------------------------------
       def custom_fields_validator
-        self.field_groups.map(&:fields).flatten.each{|f| f.custom_validator(self) }
+        field_groups.map(&:fields).flatten.each { |f| f.custom_validator(self) }
       end
 
-      def assign_attributes(new_attributes, options = {})
+      def assign_attributes(new_attributes)
         super
       # If attribute is unknown, a new custom field may have been added.
       # Refresh columns and try again.
@@ -76,11 +75,11 @@ module FatFreeCRM
       end
 
       def method_missing(method_id, *args, &block)
-        if method_id.to_s =~ /\Acf_/
+        if method_id.to_s =~ /\Acf_.*[^=]\Z/
           # Refresh columns and try again.
           self.class.reset_column_information
           # If new record, create new object from class, else reload class
-          object = self.new_record? ? self.class.new : (self.reload && self)
+          object = self.new_record? ? self.class.new : (reload && self)
           # ensure serialization is setup if needed
           self.class.serialize_custom_fields!
           # Try again if object now responds to method, else return nil

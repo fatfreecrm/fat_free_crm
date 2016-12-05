@@ -24,7 +24,6 @@ This message will self-destruct in 10 seconds...
 """
 
     puts message unless Setting.have_run_country_migration
-  
   end
 
   def down

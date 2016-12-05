@@ -9,7 +9,6 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-
     # handle signup
     can(:create, User) if User.can_signup?
 
@@ -26,9 +25,9 @@ class Ability
       can :manage, Task, completed_by: user.id
 
       # Entities
-      can :manage, entities, :access => 'Public'
-      can :manage, entities + [Task], :user_id => user.id
-      can :manage, entities + [Task], :assigned_to => user.id
+      can :manage, entities, access: 'Public'
+      can :manage, entities + [Task], user_id: user.id
+      can :manage, entities + [Task], assigned_to: user.id
 
       #
       # Due to an obscure bug (see https://github.com/ryanb/cancan/issues/213)
@@ -47,8 +46,8 @@ class Ability
         end
 
         entities.each do |klass|
-          if (asset_ids = Permission.where(scope.and(t[:asset_type].eq(klass.name))).value_of(:asset_id)).any?
-            can :manage, klass, :id => asset_ids
+          if (asset_ids = Permission.where(scope.and(t[:asset_type].eq(klass.name))).pluck(:asset_id)).any?
+            can :manage, klass, id: asset_ids
           end
         end
       end # if user.admin?

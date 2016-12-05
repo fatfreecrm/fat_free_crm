@@ -6,63 +6,58 @@
 FactoryGirl.define do
   factory :user do
     username            { FactoryGirl.generate(:username) }
-    email               { Faker::Internet.email }
-    first_name          { Faker::Name.first_name }
-    last_name           { Faker::Name.last_name }
+    email               { FFaker::Internet.email }
+    first_name          { FFaker::Name.first_name }
+    last_name           { FFaker::Name.last_name }
     title               { FactoryGirl.generate(:title) }
-    company             { Faker::Company.name }
-    alt_email           { Faker::Internet.email }
-    phone               { Faker::PhoneNumber.phone_number }
-    mobile              { Faker::PhoneNumber.phone_number }
-    aim                 nil
-    yahoo               nil
-    google              nil
-    skype               nil
-    admin               false
+    company             { FFaker::Company.name }
+    alt_email           { FFaker::Internet.email }
+    phone               { FFaker::PhoneNumber.phone_number }
+    mobile              { FFaker::PhoneNumber.phone_number }
+    aim nil
+    yahoo nil
+    google nil
+    skype nil
+    admin false
     password_hash       { SecureRandom.hex(64) }
     password_salt       { SecureRandom.hex(64) }
     persistence_token   { SecureRandom.hex(64) }
     perishable_token    { SecureRandom.hex(10) }
     single_access_token nil
-    last_request_at     { FactoryGirl.generate(:time) }
     current_login_at    { FactoryGirl.generate(:time) }
     last_login_at       { FactoryGirl.generate(:time) }
-    last_login_ip       "127.0.0.1"
-    current_login_ip    "127.0.0.1"
+    last_login_ip "127.0.0.1"
+    current_login_ip "127.0.0.1"
     login_count         { rand(100) + 1 }
-    deleted_at          nil
+    deleted_at nil
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
-    suspended_at        nil
-    password              "password"
+    suspended_at nil
+    password "password"
     password_confirmation "password"
   end
 
-
   factory :admin do
-    admin               true
+    admin true
   end
-
 
   factory :permission do
     user
-    asset               { raise "Please specify :asset for the permission" }
+    asset               { fail "Please specify :asset for the permission" }
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
   end
-
 
   factory :preference do
     user
-    name                { raise "Please specify :name for the preference" }
-    value               { raise "Please specify :value for the preference" }
+    name                { fail "Please specify :name for the preference" }
+    value               { fail "Please specify :value for the preference" }
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
   end
 
-
   factory :group do
-    name                { Faker::Company.name }
+    name                { FFaker::Company.name }
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
   end

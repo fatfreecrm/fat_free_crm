@@ -16,17 +16,17 @@ describe "/users/update" do
   describe "no errors:" do
     it "should flip [Edit Profile] form" do
       render
-      rendered.should include("crm.flip_form('edit_profile')")
+      expect(rendered).to include("crm.flip_form('edit_profile')")
     end
 
     it "should update Welcome, user!" do
       render
-      rendered.should include("$('#welcome_username').html('#{@user.first_name}')")
+      expect(rendered).to include("$('#welcome_username').html('#{@user.first_name}')")
     end
 
     it "should update actual user profile information" do
       render
-      rendered.should include("$('#profile').html")
+      expect(rendered).to include("$('#profile').html")
     end
   end # no errors
 
@@ -37,10 +37,9 @@ describe "/users/update" do
 
     it "should redraw the [Edit Profile] form and shake it" do
       render
-      rendered.should include("$('#edit_profile').html")
-      rendered.should include(%Q/$('#edit_profile').effect("shake"/)
-      rendered.should include("$('#user_email').focus();")
+      expect(rendered).to include("$('#edit_profile').html")
+      expect(rendered).to include(%/$('#edit_profile').effect("shake"/)
+      expect(rendered).to include("$('#user_email').focus();")
     end
-
   end # errors
 end

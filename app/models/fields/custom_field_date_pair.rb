@@ -4,7 +4,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CustomFieldDatePair < CustomFieldPair
-
   # For rendering paired values
   # Handle case where both pairs are blank
   #------------------------------------------------------------------------------
@@ -12,12 +11,12 @@ class CustomFieldDatePair < CustomFieldPair
     return "" unless paired_with.present?
     from = render(object.send(name))
     to = render(object.send(paired_with.name))
-    if from.present? and to.present?
-      I18n.t('pair.from_to', :from => from, :to => to)
-    elsif from.present? and !to.present?
-      I18n.t('pair.from_only', :from => from)
-    elsif !from.present? and to.present?
-      I18n.t('pair.to_only', :to => to)
+    if from.present? && to.present?
+      I18n.t('pair.from_to', from: from, to: to)
+    elsif from.present? && !to.present?
+      I18n.t('pair.from_only', from: from)
+    elsif !from.present? && to.present?
+      I18n.t('pair.to_only', to: to)
     else
       ""
     end
@@ -35,7 +34,7 @@ class CustomFieldDatePair < CustomFieldPair
       return if start.nil?
       from = obj.send(start.name)
       to = obj.send(name)
-      obj.errors.add(name.to_sym, ::I18n.t('activerecord.errors.models.custom_field.endbeforestart', :field => start.label)) if from.present? and to.present? and (from > to)
+      obj.errors.add(name.to_sym, ::I18n.t('activerecord.errors.models.custom_field.endbeforestart', field: start.label)) if from.present? && to.present? && (from > to)
     end
   end
 

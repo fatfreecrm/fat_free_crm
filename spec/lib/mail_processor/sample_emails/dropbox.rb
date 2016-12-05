@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 DROPBOX_EMAILS = {
-  :plain => <<-END,
+  plain: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -12,12 +12,12 @@ Date: Mon, 26 May 2003 11:22:33 -0600
 Message-ID: <1234@local.machine.example>
 Content-Type: text/plain
 
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Aaron
 END
 
-  :html => <<-END,
+  html: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -28,13 +28,13 @@ Content-Type: text/html
 <html>
   <head></head>
   <body>
-    <p>#{Faker::Lorem.paragraph}</p>
+    <p>#{FFaker::Lorem.paragraph}</p>
     <p>Aaron</p>
   </body>
 </html>
 END
 
-  :first_line => <<-END,
+  first_line: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -43,12 +43,12 @@ Message-ID: <1234@local.machine.example>
 Content-Type: text/plain
 
 .campaign Got milk
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Aaron
 END
 
-  :first_line_lead => <<-END,
+  first_line_lead: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -57,12 +57,12 @@ Message-ID: <1234@local.machine.example>
 Content-Type: text/plain
 
 .lead Cindy Cluster
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Aaron
 END
 
-  :first_line_contact => <<-END,
+  first_line_contact: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -71,12 +71,12 @@ Message-ID: <1234@local.machine.example>
 Content-Type: text/plain
 
 .contact Cindy Cluster
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Aaron
 END
 
-  :forwarded => <<-END,
+  forwarded: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: dropbox@example.com
 Subject: Hi there
@@ -90,12 +90,12 @@ Date: Sun, Mar 22, 2009 at 3:28 PM
 Subject: Fwd:
 To: Cindy Cluster <cindy@example.com>
 
-#{Faker::Lorem.paragraph}
+#{FFaker::Lorem.paragraph}
 
 Ben
 END
 
-  :multipart => <<-END,
+  multipart: <<-END,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -169,4 +169,3 @@ ADpMhSwQ4p2Bz9o8V84oX868ufPn0KNLn64hAgA7
 --_006_200DA2FF7EAFC04BAD979DB9CF293BB365151E88CLEARWATERtesta_--
 END
 }
-

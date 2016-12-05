@@ -5,7 +5,6 @@
 #------------------------------------------------------------------------------
 
 class SubscriptionMailer < ActionMailer::Base
-
   def comment_notification(user, comment)
     @entity = comment.commentable
     @entity_type = @entity.class.to_s
@@ -23,9 +22,9 @@ class SubscriptionMailer < ActionMailer::Base
     subject = "RE: [#{@entity_type.downcase}:#{@entity.id}] #{@entity_name}"
     subject << " (#{@entity.tag_list.join(', ')})" if @entity.tag_list.any?
 
-    mail :subject => subject,
-         :to => user.email,
-         :from => "#{@user.full_name} <#{reply_to}>",
-         :date => Time.now
+    mail subject: subject,
+         to: user.email,
+         from: "#{@user.full_name} <#{reply_to}>",
+         date: Time.now
   end
 end

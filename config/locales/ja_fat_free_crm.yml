@@ -509,7 +509,7 @@ ja:
   crm_admin_page: Fat Free CRM 管理
   approve: Approve
   create_user: ユーザを作成
-  last_seen: 最後に見たのは%{value}前
+  last_logged_in: last logged in %{value}
   personal_information: 個人情報
   reactivate: Reactivate
   save_user: ユーザを保存

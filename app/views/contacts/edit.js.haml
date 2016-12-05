@@ -32,4 +32,3 @@
     crm.set_title('edit_#{entity_name}', "#{t :edit} #{h @entity.full_name}");
 
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
-  $('#new_#{entity_name} input[type!=hidden]').first().focus();

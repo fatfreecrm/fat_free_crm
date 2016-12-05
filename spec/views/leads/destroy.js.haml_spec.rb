@@ -14,25 +14,25 @@ describe "/leads/destroy" do
 
   it "should blind up destroyed lead partial" do
     render
-    rendered.should include("slideUp")
+    expect(rendered).to include("slideUp")
   end
 
   it "should update leads sidebar when called from leads index" do
-    assign(:leads, [ @lead ].paginate)
+    assign(:leads, [@lead].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
     render
 
-    rendered.should include("#sidebar")
-    rendered.should have_text("Recent Items")
-    rendered.should include("$('#filters').effect('shake'")
+    expect(rendered).to include("#sidebar")
+    expect(rendered).to have_text("Recent Items")
+    expect(rendered).to include("$('#filters').effect('shake'")
   end
 
   it "should update pagination when called from leads index" do
-    assign(:leads, [ @lead ].paginate)
+    assign(:leads, [@lead].paginate)
     controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
     render
 
-    rendered.should include("#paginate")
+    expect(rendered).to include("#paginate")
   end
 
   it "should update related asset sidebar when called from related asset" do
@@ -40,9 +40,8 @@ describe "/leads/destroy" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 
-    rendered.should include("#sidebar")
-    rendered.should have_text("Campaign Summary")
-    rendered.should have_text("Recent Items")
+    expect(rendered).to include("#sidebar")
+    expect(rendered).to have_text("Campaign Summary")
+    expect(rendered).to have_text("Recent Items")
   end
-
 end

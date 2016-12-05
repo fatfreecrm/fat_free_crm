@@ -18,35 +18,34 @@ describe FatFreeCRM::MailProcessor::Base do
   before(:each) do
     @crawler = FatFreeCRM::MailProcessor::Base.new
     # MailProcessor::Base doesn't load any settings by default
-    @crawler.instance_variable_set "@settings", {
-      :server   => "example.com",
-      :port     => "123",
-      :ssl      => true,
-      :address  => "test@example.com",
-      :user     => "test@example.com",
-      :password => "123"
-    }
+    @crawler.instance_variable_set "@settings",
+                                   server:   "example.com",
+                                   port:     "123",
+                                   ssl:      true,
+                                   address:  "test@example.com",
+                                   user:     "test@example.com",
+                                   password: "123"
   end
 
   #------------------------------------------------------------------------------
   describe "Connecting to the IMAP server" do
     it "should connect to the IMAP server and login as user, and select folder" do
       mock_imap
-      @imap.should_receive(:login).once.with(@settings[:user], @settings[:password])
-      @imap.should_receive(:select).once.with(@settings[:scan_folder])
+      expect(@imap).to receive(:login).once.with(@settings[:user], @settings[:password])
+      expect(@imap).to receive(:select).once.with(@settings[:scan_folder])
       @crawler.send(:connect!)
     end
 
     it "should connect to the IMAP server, login as user, but not select folder when requested so" do
       mock_imap
-      @imap.should_receive(:login).once.with(@settings[:user], @settings[:password])
-      @imap.should_not_receive(:select).with(@settings[:scan_folder])
-      @crawler.send(:connect!, :setup => true)
+      expect(@imap).to receive(:login).once.with(@settings[:user], @settings[:password])
+      expect(@imap).not_to receive(:select).with(@settings[:scan_folder])
+      @crawler.send(:connect!, setup: true)
     end
 
     it "should raise the error if connection fails" do
-      Net::IMAP.should_receive(:new).and_raise(SocketError) # No mocks this time! :-)
-      @crawler.send(:connect!).should == nil
+      expect(Net::IMAP).to receive(:new).and_raise(SocketError) # No mocks this time! :-)
+      expect(@crawler.send(:connect!)).to eq(nil)
     end
   end
 
@@ -55,8 +54,8 @@ describe FatFreeCRM::MailProcessor::Base do
     it "should logout and diconnect" do
       mock_connect
       mock_disconnect
-      @imap.should_receive(:logout).once
-      @imap.should_receive(:disconnect).once
+      expect(@imap).to receive(:logout).once
+      expect(@imap).to receive(:disconnect).once
 
       @crawler.send(:connect!)
       @crawler.send(:disconnect!)
@@ -73,15 +72,15 @@ describe FatFreeCRM::MailProcessor::Base do
 
     it "should copy message to invalid folder if it's set and flag the message as deleted" do
       @settings[:move_invalid_to_folder] = "invalid"
-      @imap.should_receive(:uid_copy).once.with(@uid, @settings[:move_invalid_to_folder])
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])
+      expect(@imap).to receive(:uid_copy).once.with(@uid, @settings[:move_invalid_to_folder])
+      expect(@imap).to receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])
       @crawler.send(:discard, @uid)
     end
 
     it "should not copy message to invalid folder if it's not set and flag the message as deleted" do
       @settings[:move_invalid_to_folder] = nil
-      @imap.should_not_receive(:uid_copy)
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])
+      expect(@imap).not_to receive(:uid_copy)
+      expect(@imap).to receive(:uid_store).once.with(@uid, "+FLAGS", [:Deleted])
       @crawler.send(:discard, @uid)
     end
   end
@@ -96,15 +95,15 @@ describe FatFreeCRM::MailProcessor::Base do
 
     it "should copy message to archive folder if it's set and flag the message as seen" do
       @settings[:move_to_folder] = "processed"
-      @imap.should_receive(:uid_copy).once.with(@uid, @settings[:move_to_folder])
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Seen])
+      expect(@imap).to receive(:uid_copy).once.with(@uid, @settings[:move_to_folder])
+      expect(@imap).to receive(:uid_store).once.with(@uid, "+FLAGS", [:Seen])
       @crawler.send(:archive, @uid)
     end
 
     it "should not copy message to archive folder if it's not set and flag the message as seen" do
       @settings[:move_to_folder] = nil
-      @imap.should_not_receive(:uid_copy)
-      @imap.should_receive(:uid_store).once.with(@uid, "+FLAGS", [:Seen])
+      expect(@imap).not_to receive(:uid_copy)
+      expect(@imap).to receive(:uid_store).once.with(@uid, "+FLAGS", [:Seen])
       @crawler.send(:archive, @uid)
     end
   end
@@ -116,53 +115,52 @@ describe FatFreeCRM::MailProcessor::Base do
     end
 
     it "should be valid email if its contents type is text/plain" do
-      @email.stub(:content_type).and_return("text/plain")
-      @crawler.send(:is_valid?, @email).should == true
+      allow(@email).to receive(:content_type).and_return("text/plain")
+      expect(@crawler.send(:is_valid?, @email)).to eq(true)
     end
 
     it "should be invalid email if its contents type is not text/plain" do
-      @email.stub(:content_type).and_return("text/html")
-      @crawler.send(:is_valid?, @email).should == false
+      allow(@email).to receive(:content_type).and_return("text/html")
+      expect(@crawler.send(:is_valid?, @email)).to eq(false)
     end
   end
 
   #------------------------------------------------------------------------------
   describe "Finding email sender among users" do
     before(:each) do
-      @from = [ "Aaron@Example.Com", "Ben@Example.com" ]
+      @from = ["Aaron@Example.Com", "Ben@Example.com"]
       @email = double
-      @email.stub(:from).and_return(@from)
+      allow(@email).to receive(:from).and_return(@from)
     end
 
     it "should find non-suspended user that matches From: field" do
-      @user = FactoryGirl.create(:user, :email => @from.first, :suspended_at => nil)
-      @crawler.send(:sent_from_known_user?, @email).should == true
-      @crawler.instance_variable_get("@sender").should == @user
+      @user = FactoryGirl.create(:user, email: @from.first, suspended_at: nil)
+      expect(@crawler.send(:sent_from_known_user?, @email)).to eq(true)
+      expect(@crawler.instance_variable_get("@sender")).to eq(@user)
     end
 
     it "should not find user if his email doesn't match From: field" do
-      FactoryGirl.create(:user, :email => "nobody@example.com")
-      @crawler.send(:sent_from_known_user?, @email).should == false
-      @crawler.instance_variable_get("@sender").should == nil
+      FactoryGirl.create(:user, email: "nobody@example.com")
+      expect(@crawler.send(:sent_from_known_user?, @email)).to eq(false)
+      expect(@crawler.instance_variable_get("@sender")).to eq(nil)
     end
 
     it "should not find user if his email matches From: field but is suspended" do
-      FactoryGirl.create(:user, :email => @from.first, :suspended_at => Time.now)
-      @crawler.send(:sent_from_known_user?, @email).should == false
-      @crawler.instance_variable_get("@sender").should == nil
+      FactoryGirl.create(:user, email: @from.first, suspended_at: Time.now)
+      expect(@crawler.send(:sent_from_known_user?, @email)).to eq(false)
+      expect(@crawler.instance_variable_get("@sender")).to eq(nil)
     end
 
     #------------------------------------------------------------------------------
     describe "Extracting plain text body" do
-
       it "should extract text from multipart text/plain" do
         text = @crawler.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:plain]))
-        text.should be_present
+        expect(text).to be_present
       end
 
       it "should extract text and strip tags from multipart text/html" do
         text = @crawler.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:multipart]))
-        text.should eql('Hello,')
+        expect(text).to eql('Hello,')
       end
     end
   end

@@ -10,25 +10,24 @@ describe "/campaigns/show" do
 
   before do
     login_and_assign
-    @campaign = FactoryGirl.create(:campaign, :id => 42,
-      :leads => [ FactoryGirl.create(:lead) ],
-      :opportunities => [ FactoryGirl.create(:opportunity) ])
+    @campaign = FactoryGirl.create(:campaign, id: 42,
+                                              leads: [FactoryGirl.create(:lead)],
+                                              opportunities: [FactoryGirl.create(:opportunity)])
     assign(:campaign, @campaign)
-    assign(:users, [ current_user ])
+    assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [ FactoryGirl.create(:comment, :commentable => @campaign) ])
-    view.stub(:params) { {:id => 123} }
+    assign(:timeline, [FactoryGirl.create(:comment, commentable: @campaign)])
+    allow(view).to receive(:params) { { id: 123 } }
   end
 
   it "should render campaign landing page" do
     render
-    view.should render_template(:partial => "comments/_new")
-    view.should render_template(:partial => "shared/_timeline")
-    view.should render_template(:partial => "shared/_tasks")
-    view.should render_template(:partial => "leads/_leads")
-    view.should render_template(:partial => "opportunities/_opportunities")
+    expect(view).to render_template(partial: "comments/_new")
+    expect(view).to render_template(partial: "shared/_timeline")
+    expect(view).to render_template(partial: "shared/_tasks")
+    expect(view).to render_template(partial: "leads/_leads")
+    expect(view).to render_template(partial: "opportunities/_opportunities")
 
-    rendered.should have_tag("div[id=edit_campaign]")
+    expect(rendered).to have_tag("div[id=edit_campaign]")
   end
-
 end

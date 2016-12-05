@@ -4,16 +4,16 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class EntitiesController < ApplicationController
-  before_filter :require_user
-  before_filter :set_current_tab, :only => [ :index, :show ]
-  before_filter :set_view, :only => [ :index, :show, :redraw ]
+  before_action :require_user
+  before_action :set_current_tab, only: [:index, :show]
+  before_action :set_view, only: [:index, :show, :redraw]
 
-  before_filter :set_options, :only => :index
-  before_filter :load_ransack_search, :only => :index
+  before_action :set_options, only: :index
+  before_action :load_ransack_search, only: :index
 
   load_and_authorize_resource
 
-  after_filter :update_recently_viewed, :only => :show
+  after_action :update_recently_viewed, only: :show
 
   helper_method :entity, :entities
 
@@ -44,7 +44,7 @@ class EntitiesController < ApplicationController
     entity.save
 
     respond_with(@entity) do |format|
-      format.js { render 'subscription_update', :entity => entity }
+      format.js { render 'subscription_update', entity: entity }
     end
   end
 
@@ -55,7 +55,7 @@ class EntitiesController < ApplicationController
     entity.save
 
     respond_with(entity) do |format|
-      format.js { render 'subscription_update', :entity => entity }
+      format.js { render 'subscription_update', entity: entity }
     end
   end
 
@@ -84,13 +84,13 @@ class EntitiesController < ApplicationController
     if @tag = Tag.find_by_name(params[:tag].strip)
       if @field_group = FieldGroup.find_by_tag_id_and_klass_name(@tag.id, klass.to_s)
         @asset = klass.find_by_id(params[:asset_id]) || klass.new
-        render 'fields/group' and return
+        render('fields/group') && return
       end
     end
-    render :text => ''
+    render text: ''
   end
 
-protected
+  protected
 
   #----------------------------------------------------------------------------
   def entity=(entity)
@@ -120,7 +120,11 @@ protected
     end
   end
 
-private
+  def resource_params
+    params[controller_name.singularize].permit!
+  end
+
+  private
 
   def ransack_search
     @ransack_search ||= load_ransack_search
@@ -138,7 +142,7 @@ private
     advanced_search = params[:q].present?
     wants = request.format
 
-    scope = entities.merge(ransack_search.result(:distinct => true))
+    scope = entities.merge(ransack_search.result(distinct: true))
 
     # Get filter from session, unless running an advanced search
     unless advanced_search
@@ -147,7 +151,7 @@ private
     end
 
     scope = scope.text_search(query)              if query.present?
-    scope = scope.tagged_with(tags, :on => :tags) if tags.present?
+    scope = scope.tagged_with(tags, on: :tags) if tags.present?
 
     # Ignore this order when doing advanced search
     unless advanced_search
@@ -158,13 +162,13 @@ private
     @search_results_count = scope.count
 
     # Pagination is disabled for xls and csv requests
-    unless (wants.xls? || wants.csv?)
+    unless wants.xls? || wants.csv?
       per_page = if options[:per_page]
-        options[:per_page] == 'all' ? @search_results_count : options[:per_page]
-      else
-        current_user.pref[:"#{controller_name}_per_page"]
+                   options[:per_page] == 'all' ? @search_results_count : options[:per_page]
+                 else
+                   current_user.pref[:"#{controller_name}_per_page"]
       end
-      scope = scope.paginate(:page => current_page, :per_page => per_page)
+      scope = scope.paginate(page: current_page, per_page: per_page)
     end
 
     scope
@@ -172,7 +176,7 @@ private
 
   #----------------------------------------------------------------------------
   def update_recently_viewed
-    entity.versions.create(:event => :view, :whodunnit => PaperTrail.whodunnit)
+    entity.versions.create(event: :view, whodunnit: PaperTrail.whodunnit)
   end
 
   # Somewhat simplistic parser that extracts query and hash-prefixed tags from
@@ -185,12 +189,12 @@ private
     query, tags = [], []
     search_string.strip.split(/\s+/).each do |token|
       if token.starts_with?("#")
-        tags << token[1 .. -1]
+        tags << token[1..-1]
       else
         query << token
       end
     end
-    [ query.join(" "), tags.join(", ") ]
+    [query.join(" "), tags.join(", ")]
   end
 
   #----------------------------------------------------------------------------

@@ -35,7 +35,6 @@ describe Email do
   end
 
   it "should be valid" do
-    @email.should be_valid
+    expect(@email).to be_valid
   end
 end
-

@@ -9,14 +9,13 @@ module FatFreeCRM
 end
 
 class ActionController::Base
-  rescue_from FatFreeCRM::MissingSettings,  :with => :render_fat_free_crm_exception
-  rescue_from FatFreeCRM::ObsoleteSettings, :with => :render_fat_free_crm_exception
+  rescue_from FatFreeCRM::MissingSettings,  with: :render_fat_free_crm_exception
+  rescue_from FatFreeCRM::ObsoleteSettings, with: :render_fat_free_crm_exception
 
   private
 
   def render_fat_free_crm_exception(exception)
     logger.error exception.inspect
-    render :layout => false, :template => "/layouts/500", :format => :html, :status => 500, :locals => { :exception => exception }
+    render layout: false, template: "/layouts/500", format: :html, status: 500, locals: { exception: exception }
   end
 end
-

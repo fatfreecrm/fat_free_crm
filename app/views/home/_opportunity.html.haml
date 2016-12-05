@@ -35,7 +35,7 @@
             %span.warn= t(:past_due, distance_of_time_in_words(opportunity.closes_on, Date.today))
         - else
           = t(:no_closing_date)
-      - if opportunity.tags.any?
+      - if opportunity.tags.present?
         %dt
           .tags= tags_for_dashboard(opportunity)
       = hook(:opportunity_bottom, self, :opportunity => opportunity)

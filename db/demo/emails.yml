@@ -34,19 +34,19 @@
 %>
 email_<%= i %>:
   id              : <%= i %>
-  imap_message_id : <%= Digest::MD5.hexdigest(i.to_s) << "@" << Faker::Internet.domain_name %>
+  imap_message_id : <%= Digest::MD5.hexdigest(i.to_s) << "@" << FFaker::Internet.domain_name %>
   user_id         : <%= user + 1 %>
   mediator_id     : <%= rand(80) + 1 %>
   mediator_type   : <%= mediators.sample %>
-  sent_from       : <%= Faker::Internet.email %>
+  sent_from       : <%= FFaker::Internet.email %>
   sent_to         : <%= users[user] + "@example.com" %>
   cc              : <%= users.sample + "@example.com" %>
   bcc             : <%= users.sample + "@example.com" %>
-  subject         : <%= Faker::Lorem.sentence[0..-2] %>
+  subject         : <%= FFaker::Lorem.sentence[0..-2] %>
   body            : |
-                     <%= Faker::Lorem.paragraph(rand(10) + 5) %>
+                     <%= FFaker::Lorem.paragraph(rand(10) + 5) %>
                      <%= "\n" %>
-                     <%= Faker::Lorem.paragraph(rand(10) + 5) %>
+                     <%= FFaker::Lorem.paragraph(rand(10) + 5) %>
   header          :
   sent_at         : <%= Date.today - rand(15).days %>
   received_at     : <%= Date.today - rand(15).days %>

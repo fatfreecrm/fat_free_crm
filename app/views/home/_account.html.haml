@@ -23,7 +23,7 @@
         = t(:phone_small) << ": " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
         = t('pluralize.contact', account.contacts.count) << " | "
         = t('pluralize.opportunity', account.opportunities.count)
-      - if account.tags.any?
+      - if account.tags.present?
         %dt
           .tags= tags_for_dashboard(account)
       = hook(:account_bottom, self, :account => account)

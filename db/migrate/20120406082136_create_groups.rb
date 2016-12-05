@@ -8,7 +8,7 @@ class CreateGroups < ActiveRecord::Migration
     add_column :permissions, :group_id, :integer
     add_index :permissions, :group_id
 
-    create_table :groups_users, :id => false do |t|
+    create_table :groups_users, id: false do |t|
       t.references :group
       t.references :user
     end

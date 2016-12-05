@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::TagsController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/tags')", :only => [ :index, :show ]
+  before_action "set_current_tab('admin/tags')", only: [:index, :show]
 
   load_resource
 
@@ -27,7 +27,7 @@ class Admin::TagsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def edit
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Tag.find_by_id($1) || $1.to_i
+      @previous = Tag.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
   end
 
@@ -35,7 +35,7 @@ class Admin::TagsController < Admin::ApplicationController
   # POST /admin/tags.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def create
-    @tag.update_attributes(params[:tag])
+    @tag.update_attributes(tag_params)
 
     respond_with(@tag)
   end
@@ -44,7 +44,7 @@ class Admin::TagsController < Admin::ApplicationController
   # PUT /admin/tags/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def update
-    @tag.update_attributes(params[:tag])
+    @tag.update_attributes(tag_params)
 
     respond_with(@tag)
   end
@@ -61,5 +61,11 @@ class Admin::TagsController < Admin::ApplicationController
   # GET /admin/tags/1/confirm                                             AJAX
   #----------------------------------------------------------------------------
   def confirm
+  end
+
+  protected
+
+  def tag_params
+    params[:tag].permit!
   end
 end

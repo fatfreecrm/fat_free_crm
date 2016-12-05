@@ -26,21 +26,19 @@ describe Avatar do
   end
 
   it "should create a new instance given valid attributes" do
-    FactoryGirl.create(:avatar, :entity => @user).should be_valid
+    expect(FactoryGirl.create(:avatar, entity: @user)).to be_valid
   end
 
   it "user should have one avatar as entity" do
-    avatar = FactoryGirl.create(:avatar, :entity => @user)
-    @user.avatar.should == avatar
+    avatar = FactoryGirl.create(:avatar, entity: @user)
+    expect(@user.avatar).to eq(avatar)
   end
 
   it "user might have many avatars as owner" do
     avatars = [
-      FactoryGirl.create(:avatar, :user=> @user, :entity => FactoryGirl.create(:user)),
-      FactoryGirl.create(:avatar, :user=> @user, :entity => FactoryGirl.create(:user))
+      FactoryGirl.create(:avatar, user: @user, entity: FactoryGirl.create(:user)),
+      FactoryGirl.create(:avatar, user: @user, entity: FactoryGirl.create(:user))
     ]
-    @user.avatars.should == avatars
+    expect(@user.avatars).to eq(avatars)
   end
-
 end
-

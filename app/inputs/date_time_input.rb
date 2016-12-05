@@ -4,12 +4,11 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class DateTimeInput < SimpleForm::Inputs::DateTimeInput
-
-  def input
+  def input(wrapper_options)
     add_autocomplete!
     input_html_options.merge(input_options)
-    input_html_options.merge!(:value => value)
-    @builder.text_field(attribute_name, input_html_options)
+    input_html_options.merge!(value: value)
+    @builder.text_field(attribute_name, merge_wrapper_options(input_html_options, wrapper_options))
   end
 
   def label_target

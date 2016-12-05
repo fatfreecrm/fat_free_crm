@@ -13,21 +13,20 @@ describe "/contacts/index" do
   end
 
   it "should render [contact] template with @contacts collection if there are contacts" do
-    assign(:contacts, [ FactoryGirl.create(:contact, :id => 42) ].paginate)
+    assign(:contacts, [FactoryGirl.create(:contact, id: 42)].paginate)
 
-    render :template => 'contacts/index', :formats => [:js]
+    render template: 'contacts/index', formats: [:js]
 
-    rendered.should include("$('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
+    expect(rendered).to include("#paginate")
   end
 
   it "should render [empty] template if @contacts collection if there are no contacts" do
     assign(:contacts, [].paginate)
 
-    render :template => 'contacts/index', :formats => [:js]
+    render template: 'contacts/index', formats: [:js]
 
-    rendered.should include("$('#contacts').html('<div id=\\'empty\\'>")
-    rendered.should include("#paginate")
+    expect(rendered).to include("$('#contacts').html('<div id=\\'empty\\'>")
+    expect(rendered).to include("#paginate")
   end
-
 end

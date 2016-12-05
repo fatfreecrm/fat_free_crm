@@ -6,7 +6,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FatFreeCRM::Permissions do
-
   before :each do
     build_model(:user_with_permission) do
       uses_user_permissions
@@ -17,64 +16,63 @@ describe FatFreeCRM::Permissions do
   describe "initialization" do
     it "should add 'has_many permissions' to the model" do
       entity = UserWithPermission.new
-      entity.should respond_to(:permissions)
+      expect(entity).to respond_to(:permissions)
     end
     it "should add scope called 'my'" do
-      UserWithPermission.should respond_to(:my)
+      expect(UserWithPermission).to respond_to(:my)
     end
   end
 
   describe "user_ids" do
     before(:each) do
-      @entity = UserWithPermission.create(:access => "Shared")
+      @entity = UserWithPermission.create(access: "Shared")
     end
 
     it "should assign permissions to the object" do
-      @entity.permissions.size.should == 0
-      @entity.update_attribute(:user_ids, ['1','2','3'])
-      @entity.permissions.find_all_by_user_id([1,2,3]).size.should == 3
+      expect(@entity.permissions.size).to eq(0)
+      @entity.update_attribute(:user_ids, %w(1 2 3))
+      expect(@entity.permissions.where(user_id: [1, 2, 3]).size).to eq(3)
     end
 
     it "should handle [] permissions" do
       @entity.update_attribute(:user_ids, [])
-      @entity.permissions.size.should == 0
+      expect(@entity.permissions.size).to eq(0)
     end
 
     it "should replace existing permissions" do
-      @entity.permissions << FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
-      @entity.permissions << FactoryGirl.create(:permission, :user_id => 2, :asset => @entity)
-      @entity.update_attribute(:user_ids, ['2','3'])
-      @entity.permissions.size.should == 2
-      @entity.permissions.find_all_by_user_id([1]).size.should == 0
-      @entity.permissions.find_all_by_user_id([2]).size.should == 1
-      @entity.permissions.find_all_by_user_id([3]).size.should == 1
+      @entity.permissions << FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      @entity.permissions << FactoryGirl.create(:permission, user_id: 2, asset: @entity)
+      @entity.update_attribute(:user_ids, %w(2 3))
+      expect(@entity.permissions.size).to eq(2)
+      expect(@entity.permissions.where(user_id: [1]).size).to eq(0)
+      expect(@entity.permissions.where(user_id: [2]).size).to eq(1)
+      expect(@entity.permissions.where(user_id: [3]).size).to eq(1)
     end
-
   end
 
   describe "group_ids" do
     before(:each) do
-      @entity = UserWithPermission.create(:access => "Shared")
+      @entity = UserWithPermission.create(access: "Shared")
     end
     it "should assign permissions to the object" do
-      @entity.permissions.size.should == 0
-      @entity.update_attribute(:group_ids, ['1','2','3'])
-      @entity.permissions.find_all_by_group_id([1,2,3]).size.should == 3
+      expect(@entity.permissions.size).to eq(0)
+      @entity.update_attribute(:group_ids, %w(1 2 3))
+      expect(@entity.permissions.where(group_id: [1, 2, 3]).size).to eq(3)
     end
 
     it "should handle [] permissions" do
       @entity.update_attribute(:group_ids, [])
-      @entity.permissions.size.should == 0
+      expect(@entity.permissions.size).to eq(0)
     end
 
     it "should replace existing permissions" do
-      @entity.permissions << FactoryGirl.build(:permission, :group_id => 1, :user_id => nil, :asset => @entity)
-      @entity.permissions << FactoryGirl.build(:permission, :group_id => 2, :user_id => nil, :asset => @entity)
-      @entity.permissions.size.should == 2
+      @entity.permissions << FactoryGirl.build(:permission, group_id: 1, user_id: nil, asset: @entity)
+      @entity.permissions << FactoryGirl.build(:permission, group_id: 2, user_id: nil, asset: @entity)
+      expect(@entity.permissions.size).to eq(2)
       @entity.update_attribute(:group_ids, ['3'])
-      @entity.permissions.size.should == 1
-      @entity.permissions.find_all_by_group_id([1,2]).size.should == 0
-      @entity.permissions.find_all_by_group_id([3]).size.should == 1
+      expect(@entity.permissions.size).to eq(1)
+      expect(@entity.permissions.where(group_id: [1, 2]).size).to eq(0)
+      expect(@entity.permissions.where(group_id: [3]).size).to eq(1)
     end
   end
 
@@ -83,32 +81,32 @@ describe FatFreeCRM::Permissions do
       @entity = UserWithPermission.create
     end
     it "should delete all permissions if access is set to Public" do
-      perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
-      perm.should_receive(:destroy)
-      Permission.should_receive(:find_all_by_asset_id_and_asset_type).with(@entity.id, @entity.class).and_return([perm])
+      perm = FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      expect(perm).to receive(:destroy)
+      expect(Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
       @entity.update_attribute(:access, 'Public')
     end
     it "should delete all permissions if access is set to Private" do
-      perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
-      perm.should_receive(:destroy)
-      Permission.should_receive(:find_all_by_asset_id_and_asset_type).with(@entity.id, @entity.class).and_return([perm])
+      perm = FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      expect(perm).to receive(:destroy)
+      expect(Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
       @entity.update_attribute(:access, 'Private')
     end
     it "should not remove permissions if access is set to Shared" do
-      perm = FactoryGirl.create(:permission, :user_id => 1, :asset => @entity)
-      perm.should_not_receive(:destroy)
+      perm = FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      expect(perm).not_to receive(:destroy)
       @entity.permissions << perm
-      Permission.should_not_receive(:find_all_by_asset_id)
+      expect(Permission).not_to receive(:find_all_by_asset_id)
       @entity.update_attribute(:access, 'Shared')
-      @entity.permissions.size.should == 1
+      expect(@entity.permissions.size).to eq(1)
     end
   end
 
   describe "save_with_permissions" do
     it "should raise deprecation warning and call save" do
       entity = UserWithPermission.new
-      ActiveSupport::Deprecation.should_receive(:warn)
-      entity.should_receive(:save)
+      expect(ActiveSupport::Deprecation).to receive(:warn)
+      expect(entity).to receive(:save)
       entity.save_with_permissions
     end
   end
@@ -116,8 +114,8 @@ describe FatFreeCRM::Permissions do
   describe "update_with_permissions" do
     it "should raise deprecation warning and call update_attributes" do
       entity = UserWithPermission.new
-      ActiveSupport::Deprecation.should_receive(:warn)
-      entity.should_receive(:update_attributes).with({})
+      expect(ActiveSupport::Deprecation).to receive(:warn)
+      expect(entity).to receive(:update_attributes).with({})
       entity.update_with_permissions({})
     end
   end
@@ -125,13 +123,12 @@ describe FatFreeCRM::Permissions do
   describe "save_with_model_permissions" do
     it "should copy permissions from original model" do
       entity = UserWithPermission.new
-      model = mock_model(Account, :access => "Shared", :user_ids => [1,2,3], :group_ids => [4,5,6])
-      entity.should_receive(:access=).with("Shared")
-      entity.should_receive(:user_ids=).with([1,2,3])
-      entity.should_receive(:group_ids=).with([4,5,6])
-      entity.should_receive(:save)
+      model = mock_model(Account, access: "Shared", user_ids: [1, 2, 3], group_ids: [4, 5, 6])
+      expect(entity).to receive(:access=).with("Shared")
+      expect(entity).to receive(:user_ids=).with([1, 2, 3])
+      expect(entity).to receive(:group_ids=).with([4, 5, 6])
+      expect(entity).to receive(:save)
       entity.save_with_model_permissions(model)
     end
   end
-
 end

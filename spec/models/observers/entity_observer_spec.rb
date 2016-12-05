@@ -6,70 +6,67 @@
 require 'spec_helper'
 
 describe EntityObserver do
-
   before do
-    Setting.stub(:host).and_return('http://www.example.com')
-    PaperTrail.stub(:whodunnit).and_return(assigner)
+    allow(Setting).to receive(:host).and_return('http://www.example.com')
+    allow(PaperTrail).to receive(:whodunnit).and_return(assigner)
   end
 
   [:account, :contact, :lead, :opportunity].each do |entity_type|
     describe "on creation of #{entity_type}" do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
-      let!(:entity)  { FactoryGirl.build(entity_type, :user => assigner, :assignee => assignee) }
-      let(:mail) { double('mail', :deliver => true) }
+      let!(:entity)  { FactoryGirl.build(entity_type, user: assigner, assignee: assignee) }
+      let(:mail) { double('mail', deliver_now: true) }
 
       after :each do
         entity.save
       end
 
       it "sends notification to the assigned user for entity" do
-        UserMailer.should_receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
+        expect(UserMailer).to receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
       end
 
       it "does not notify anyone if the entity is created and assigned to no-one" do
         entity.assignee = nil
-        UserMailer.should_not_receive(:assigned_entity_notification)
+        expect(UserMailer).not_to receive(:assigned_entity_notification)
       end
 
       it "does not notify me if I have created an entity for myself" do
         entity.assignee = entity.user = assigner
-        UserMailer.should_not_receive(:assigned_entity_notification)
+        expect(UserMailer).not_to receive(:assigned_entity_notification)
       end
 
       it "does not notify me if Setting.host has not been set" do
-        Setting.stub(:host).and_return('')
-        UserMailer.should_not_receive(:assigned_entity_notification)
+        allow(Setting).to receive(:host).and_return('')
+        expect(UserMailer).not_to receive(:assigned_entity_notification)
       end
-
     end
 
     describe "on update of #{entity_type}" do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }
-      let!(:entity)  { FactoryGirl.create(entity_type, :user => FactoryGirl.create(:user)) }
-      let(:mail) { double('mail', :deliver => true) }
+      let!(:entity)  { FactoryGirl.create(entity_type, user: FactoryGirl.create(:user)) }
+      let(:mail) { double('mail', deliver_now: true) }
 
       it "notifies the new owner if the entity is re-assigned" do
-        UserMailer.should_receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
-        entity.update_attributes(:assignee => assignee)
+        expect(UserMailer).to receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
+        entity.update_attributes(assignee: assignee)
       end
 
       it "does not notify the owner if the entity is not re-assigned" do
-        UserMailer.should_not_receive(:assigned_entity_notification)
+        expect(UserMailer).not_to receive(:assigned_entity_notification)
         entity.touch
       end
 
       it "does not notify anyone if the entity becomes unassigned" do
-        UserMailer.should_not_receive(:assigned_entity_notification)
-        entity.update_attributes(:assignee => nil)
+        expect(UserMailer).not_to receive(:assigned_entity_notification)
+        entity.update_attributes(assignee: nil)
       end
 
       it "does not notify me if I re-assign an entity to myself" do
-        UserMailer.should_not_receive(:assigned_entity_notification)
-        entity.update_attributes(:assignee => assigner)
+        expect(UserMailer).not_to receive(:assigned_entity_notification)
+        entity.update_attributes(assignee: assigner)
       end
     end
-
   end
 end

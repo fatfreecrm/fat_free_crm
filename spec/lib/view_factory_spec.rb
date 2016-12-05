@@ -7,67 +7,61 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require "fat_free_crm/view_factory"
 
 describe FatFreeCRM::ViewFactory do
-
   before(:each) do
     FatFreeCRM::ViewFactory.send(:class_variable_set, '@@views', [])
   end
 
   describe "initialization" do
-
     before(:each) do
-      @view_params = {:name => 'brief', :title => 'Brief View', :icon => 'fa-bars', :controllers => ['contacts'], :actions => ['show', 'index']}
+      @view_params = { name: 'brief', title: 'Brief View', icon: 'fa-bars', controllers: ['contacts'], actions: %w(show index) }
     end
 
     it "should initialize with required parameters" do
       view = FatFreeCRM::ViewFactory.new @view_params
-      view.name.should == 'brief'
-      view.title.should == 'Brief View'
-      view.controllers.should include('contacts')
-      view.actions.should include('show')
-      view.actions.should include('index')
+      expect(view.name).to eq('brief')
+      expect(view.title).to eq('Brief View')
+      expect(view.controllers).to include('contacts')
+      expect(view.actions).to include('show')
+      expect(view.actions).to include('index')
     end
 
     it "should register view with ViewFactory" do
-      FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views').size.should == 0
+      expect(FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views').size).to eq(0)
       FatFreeCRM::ViewFactory.new @view_params
-      FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views').size.should == 1
+      expect(FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views').size).to eq(1)
     end
 
     it "should not register the same view twice" do
       FatFreeCRM::ViewFactory.new @view_params
       FatFreeCRM::ViewFactory.new @view_params
       views = FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views')
-      views.size.should == 1
+      expect(views.size).to eq(1)
     end
-
   end
 
   describe "views_for" do
-
     before(:each) do
-      @v1 = FatFreeCRM::ViewFactory.new :name => 'brief', :title => 'Brief View', :controllers => ['contacts'], :actions => ['show', 'index']
-      @v2 = FatFreeCRM::ViewFactory.new :name => 'long', :title => 'Long View', :controllers => ['contacts'], :actions => ['show']
-      @v3 = FatFreeCRM::ViewFactory.new :name => 'full', :title => 'Full View', :controllers => ['accounts'], :actions => ['show']
+      @v1 = FatFreeCRM::ViewFactory.new name: 'brief', title: 'Brief View', controllers: ['contacts'], actions: %w(show index)
+      @v2 = FatFreeCRM::ViewFactory.new name: 'long', title: 'Long View', controllers: ['contacts'], actions: ['show']
+      @v3 = FatFreeCRM::ViewFactory.new name: 'full', title: 'Full View', controllers: ['accounts'], actions: ['show']
     end
 
     it "should return 'brief' view for ContactsController#index" do
-      FatFreeCRM::ViewFactory.views_for(:controller => 'contacts', :action => 'index').should == [@v1]
+      expect(FatFreeCRM::ViewFactory.views_for(controller: 'contacts', action: 'index')).to eq([@v1])
     end
 
     it "should return 'brief' and 'long' view for ContactsController#show" do
-      views = FatFreeCRM::ViewFactory.views_for(:controller => 'contacts', :action => 'show')
-      views.should include(@v1)
-      views.should include(@v2)
+      views = FatFreeCRM::ViewFactory.views_for(controller: 'contacts', action: 'show')
+      expect(views).to include(@v1)
+      expect(views).to include(@v2)
     end
 
     it "should return 'full' view for AccountsController#show" do
-      FatFreeCRM::ViewFactory.views_for(:controller => 'accounts', :action => 'show').should == [@v3]
+      expect(FatFreeCRM::ViewFactory.views_for(controller: 'accounts', action: 'show')).to eq([@v3])
     end
 
     it "should return no views for TasksController#show" do
-      FatFreeCRM::ViewFactory.views_for(:controller => 'tasks', :action => 'show').should == []
+      expect(FatFreeCRM::ViewFactory.views_for(controller: 'tasks', action: 'show')).to eq([])
     end
-
   end
-
 end

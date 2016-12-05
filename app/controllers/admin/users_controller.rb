@@ -4,15 +4,15 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::UsersController < Admin::ApplicationController
-  before_filter "set_current_tab('admin/users')", :only => [ :index, :show ]
+  before_action "set_current_tab('admin/users')", only: [:index, :show]
 
-  load_resource :except => [:create]
+  load_resource except: [:create]
 
   # GET /admin/users
   # GET /admin/users.xml                                                   HTML
   #----------------------------------------------------------------------------
   def index
-    @users = get_users(:page => params[:page])
+    @users = get_users(page: params[:page])
     respond_with(@users)
   end
 
@@ -34,7 +34,7 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def edit
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = User.find_by_id($1) || $1.to_i
+      @previous = User.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@user)
@@ -46,9 +46,7 @@ class Admin::UsersController < Admin::ApplicationController
   def create
     params[:user][:email].try(:strip!)
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
-    admin = params[:user].delete(:admin)
-    @user = User.new(params[:user])
-    @user.admin = (admin == "1") unless admin.nil?
+    @user = User.new(user_params)
     @user.save_without_session_maintenance
 
     respond_with(@user)
@@ -60,10 +58,8 @@ class Admin::UsersController < Admin::ApplicationController
   def update
     params[:user][:email].try(:strip!)
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
-    admin = params[:user].delete(:admin)
     @user = User.find(params[:id])
-    @user.attributes = params[:user]
-    @user.admin = (admin == "1") unless admin.nil?
+    @user.attributes = user_params
     @user.save_without_session_maintenance
 
     respond_with(@user)
@@ -106,7 +102,31 @@ class Admin::UsersController < Admin::ApplicationController
     respond_with(@user)
   end
 
-private
+  protected
+
+  def user_params
+    params[:user].permit(
+      :admin,
+      :username,
+      :email,
+      :first_name,
+      :last_name,
+      :title,
+      :company,
+      :alt_email,
+      :phone,
+      :mobile,
+      :aim,
+      :yahoo,
+      :google,
+      :skype,
+      :password,
+      :password_confirmation,
+      group_ids: []
+    )
+  end
+
+  private
 
   #----------------------------------------------------------------------------
   def get_users(options = {})
@@ -120,7 +140,7 @@ private
     scope = User.by_id
     scope = scope.merge(@search.result)
     scope = scope.text_search(current_query)      if current_query.present?
-    scope = scope.paginate(:page => current_page) if wants.html? || wants.js? || wants.xml?
+    scope = scope.paginate(page: current_page) if wants.html? || wants.js? || wants.xml?
     scope
   end
 end

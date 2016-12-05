@@ -6,81 +6,78 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
-
   it "should be included in the object returned by #helper" do
     included_modules = (class << helper; self; end).send :included_modules
-    included_modules.should include(ApplicationHelper)
+    expect(included_modules).to include(ApplicationHelper)
   end
 
   describe "link_to_emails" do
     it "should add Bcc: if dropbox address is set" do
-      Setting.stub(:email_dropbox).and_return({ :address => "drop@example.com" })
-      helper.link_to_email("hello@example.com").should == '<a href="mailto:hello@example.com?bcc=drop@example.com" title="hello@example.com">hello@example.com</a>'
+      allow(Setting).to receive(:email_dropbox).and_return(address: "drop@example.com")
+      expect(helper.link_to_email("hello@example.com")).to eq('<a title="hello@example.com" href="mailto:hello@example.com?bcc=drop@example.com">hello@example.com</a>')
     end
 
     it "should not add Bcc: if dropbox address is not set" do
-      Setting.stub(:email_dropbox).and_return({ :address => nil })
-      helper.link_to_email("hello@example.com").should == '<a href="mailto:hello@example.com" title="hello@example.com">hello@example.com</a>'
+      allow(Setting).to receive(:email_dropbox).and_return(address: nil)
+      expect(helper.link_to_email("hello@example.com")).to eq('<a title="hello@example.com" href="mailto:hello@example.com">hello@example.com</a>')
     end
 
     it "should truncate long emails" do
-      Setting.stub(:email_dropbox).and_return({ :address => nil })
-      helper.link_to_email("hello@example.com", 5).should == '<a href="mailto:hello@example.com" title="hello@example.com">he...</a>'
+      allow(Setting).to receive(:email_dropbox).and_return(address: nil)
+      expect(helper.link_to_email("hello@example.com", 5)).to eq('<a title="hello@example.com" href="mailto:hello@example.com">he...</a>')
     end
 
     it "should escape HTML entities" do
-      Setting.stub(:email_dropbox).and_return({ :address => 'dr&op@example.com' })
-      helper.link_to_email("hell&o@example.com").should == '<a href="mailto:hell&amp;o@example.com?bcc=dr&amp;op@example.com" title="hell&amp;o@example.com">hell&amp;o@example.com</a>'
+      allow(Setting).to receive(:email_dropbox).and_return(address: 'dr&op@example.com')
+      expect(helper.link_to_email("hell&o@example.com")).to eq('<a title="hell&amp;o@example.com" href="mailto:hell&amp;o@example.com?bcc=dr&amp;op@example.com">hell&amp;o@example.com</a>')
     end
   end
 
   it "link_to_discard" do
     lead = FactoryGirl.create(:lead)
-    controller.request.stub(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
+    allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
 
     link = helper.link_to_discard(lead)
-    link.should =~ %r|leads/#{lead.id}/discard|
-    link.should =~ %r|attachment=Lead&amp;attachment_id=#{lead.id}|
+    expect(link).to match(%r{leads/#{lead.id}/discard})
+    expect(link).to match(%r{attachment=Lead&amp;attachment_id=#{lead.id}})
   end
 
   describe "shown_on_landing_page?" do
     it "should return true for Ajax request made from the asset landing page" do
-      controller.request.stub(:xhr?).and_return(true)
-      controller.request.stub(:referer).and_return("http://www.example.com/leads/123")
-      helper.shown_on_landing_page?.should == true
+      allow(controller.request).to receive(:xhr?).and_return(true)
+      allow(controller.request).to receive(:referer).and_return("http://www.example.com/leads/123")
+      expect(helper.shown_on_landing_page?).to eq(true)
     end
 
     it "should return true for regular request to display asset landing page" do
-      controller.request.stub(:xhr?).and_return(false)
-      controller.request.stub(:fullpath).and_return("http://www.example.com/leads/123")
-      helper.shown_on_landing_page?.should == true
+      allow(controller.request).to receive(:xhr?).and_return(false)
+      allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads/123")
+      expect(helper.shown_on_landing_page?).to eq(true)
     end
 
     it "should return false for Ajax request made from page other than the asset landing page" do
-      controller.request.stub(:xhr?).and_return(true)
-      controller.request.stub(:referer).and_return("http://www.example.com/leads")
-      helper.shown_on_landing_page?.should == false
+      allow(controller.request).to receive(:xhr?).and_return(true)
+      allow(controller.request).to receive(:referer).and_return("http://www.example.com/leads")
+      expect(helper.shown_on_landing_page?).to eq(false)
     end
 
     it "should return false for regular request to display page other than asset landing page" do
-      controller.request.stub(:xhr?).and_return(false)
-      controller.request.stub(:fullpath).and_return("http://www.example.com/leads")
-      helper.shown_on_landing_page?.should == false
+      allow(controller.request).to receive(:xhr?).and_return(false)
+      allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads")
+      expect(helper.shown_on_landing_page?).to eq(false)
     end
   end
-  
+
   describe "current_view_name" do
-  
     before(:each) do
       @user = mock_model(User)
-      helper.stub(:current_user).and_return(@user)
-      controller.stub(:params).and_return({'action' => 'show', 'controller' => 'contacts'})
+      allow(helper).to receive(:current_user).and_return(@user)
+      allow(controller).to receive(:params).and_return('action' => 'show', 'controller' => 'contacts')
     end
-  
+
     it "should return the contact 'show' outline stored in the user preferences" do
-      @user.should_receive(:pref).and_return({:contacts_show_view => 'long'})
-      helper.current_view_name.should == 'long'
+      expect(@user).to receive(:pref).and_return(contacts_show_view: 'long')
+      expect(helper.current_view_name).to eq('long')
     end
-  
   end
 end

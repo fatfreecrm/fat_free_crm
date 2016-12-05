@@ -11,8 +11,8 @@ describe "/accounts/update" do
   before do
     login_and_assign
 
-    assign(:account, @account = FactoryGirl.create(:account, :user => current_user))
-    assign(:users, [ current_user ])
+    assign(:account, @account = FactoryGirl.create(:account, user: current_user))
+    assign(:users, [current_user])
     assign(:account_category_total, Hash.new(1))
   end
 
@@ -24,15 +24,15 @@ describe "/accounts/update" do
 
       it "should flip [edit_account] form" do
         render
-        rendered.should_not include("account_#{@account.id}")
-        rendered.should include("crm.flip_form('edit_account'")
+        expect(rendered).not_to include("account_#{@account.id}")
+        expect(rendered).to include("crm.flip_form('edit_account'")
       end
 
       it "should update sidebar" do
         render
-        rendered.should include("$('#sidebar').html")
-        rendered.should have_text("Recent Items")
-        rendered.should include("$('#summary').effect('shake'")
+        expect(rendered).to include("$('#sidebar').html")
+        expect(rendered).to have_text("Recent Items")
+        expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
 
@@ -43,17 +43,17 @@ describe "/accounts/update" do
 
       it "should update sidebar" do
         render
-        rendered.should include("#sidebar")
-        rendered.should have_text("Account Categories")
-        rendered.should have_text("Recent Items")
+        expect(rendered).to include("#sidebar")
+        expect(rendered).to have_text("Account Categories")
+        expect(rendered).to have_text("Recent Items")
       end
 
       it "should replace [edit_account] form with account partial and highlight it" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
         render
 
-        rendered.should include("#account_#{@account.id}")
-        rendered.should include(%Q/$('#account_#{@account.id}').effect("highlight"/)
+        expect(rendered).to include("#account_#{@account.id}")
+        expect(rendered).to include(%/$('#account_#{@account.id}').effect("highlight"/)
       end
     end
   end # no errors
@@ -71,9 +71,9 @@ describe "/accounts/update" do
       it "should redraw the [edit_account] form and shake it" do
         render
 
-        rendered.should include("#edit_account")
-        rendered.should include(%Q/$('#edit_account').effect("shake"/)
-        rendered.should include('focus()')
+        expect(rendered).to include("#edit_account")
+        expect(rendered).to include(%/$('#edit_account').effect("shake"/)
+        expect(rendered).to include('focus()')
       end
     end
 
@@ -85,9 +85,9 @@ describe "/accounts/update" do
       it "should redraw the [edit_account] form and shake it" do
         render
 
-        rendered.should include("account_#{@account.id}")
-        rendered.should include(%Q/$('#account_#{@account.id}').effect("shake"/)
-        rendered.should include('focus()')
+        expect(rendered).to include("account_#{@account.id}")
+        expect(rendered).to include(%/$('#account_#{@account.id}').effect("shake"/)
+        expect(rendered).to include('focus()')
       end
     end
   end # errors

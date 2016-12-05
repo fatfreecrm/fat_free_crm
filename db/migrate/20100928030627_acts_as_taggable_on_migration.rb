@@ -12,8 +12,8 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
 
       # You should make sure that the column created is
       # long enough to store the required class names.
-      t.string :taggable_type, :limit => 50
-      t.string :context, :limit => 50
+      t.string :taggable_type, limit: 50
+      t.string :context, limit: 50
 
       t.column :created_at, :datetime
     end
@@ -27,4 +27,3 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
     drop_table :tags
   end
 end
-

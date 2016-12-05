@@ -4,10 +4,9 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class DatePairInput < SimpleForm::Inputs::Base
-
   # Output two date fields: start and end
   #------------------------------------------------------------------------------
-  def input
+  def input(wrapper_options)
     add_autocomplete!
     out = "<br />".html_safe
 
@@ -15,12 +14,12 @@ class DatePairInput < SimpleForm::Inputs::Base
 
     [field1, field2].compact.each do |field|
       out << '<div>'.html_safe
-      label = field==field1 ? I18n.t('pair.start') : I18n.t('pair.end')
-      [:required, :disabled].each {|k| input_html_options.delete(k)} # ensure these come from field not default options
+      label = field == field1 ? I18n.t('pair.start') : I18n.t('pair.end')
+      [:required, :disabled].each { |k| input_html_options.delete(k) } # ensure these come from field not default options
       input_html_options.merge!(field.input_options)
-      input_html_options.merge!(:value => value(field))
+      input_html_options.merge!(value: value(field))
       out << "<label#{' class="req"' if input_html_options[:required]}>#{label}</label>".html_safe
-      text = @builder.text_field(field.name, input_html_options)
+      text = @builder.text_field(field.name, merge_wrapper_options(input_html_options, wrapper_options))
       out << text << '</div>'.html_safe
     end
 
@@ -50,7 +49,7 @@ class DatePairInput < SimpleForm::Inputs::Base
   # Returns the pair as [field1, field2]
   #------------------------------------------------------------------------------
   def get_fields
-    @field1 ||= Field.where(:name => attribute_name).first
+    @field1 ||= Field.where(name: attribute_name).first
     @field2 ||= @field1.try(:paired_with)
     [@field1, @field2]
   end

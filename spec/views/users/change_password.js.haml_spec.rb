@@ -17,16 +17,16 @@ describe "/users/change_password" do
     it "should flip [Change Password] form" do
       render
 
-      rendered.should_not include("user_#{@user.id}")
-      rendered.should include("crm.flip_form('change_password');")
-      rendered.should include("crm.set_title('change_password', 'My Profile');")
+      expect(rendered).not_to include("user_#{@user.id}")
+      expect(rendered).to include("crm.flip_form('change_password');")
+      expect(rendered).to include("crm.set_title('change_password', 'My Profile');")
     end
 
     it "should show flash message" do
       render
 
-      rendered.should include("#flash")
-      rendered.should include("crm.flash('notice')")
+      expect(rendered).to include("#flash")
+      expect(rendered).to include("crm.flash('notice')")
     end
   end # no errors
 
@@ -35,17 +35,16 @@ describe "/users/change_password" do
       @user.errors.add(:current_password, "error")
       render
 
-      rendered.should include("$('#change_password').html")
-      rendered.should include(%Q/$('#change_password').effect("shake"/)
-      rendered.should include("$('#current_password').focus();")
+      expect(rendered).to include("$('#change_password').html")
+      expect(rendered).to include(%/$('#change_password').effect("shake"/)
+      expect(rendered).to include("$('#current_password').focus();")
     end
 
     it "should redraw the [Change Password] form and correctly set focus" do
       @user.errors.add(:user_password, "error")
       render
 
-      rendered.should include("$('#user_password').focus();")
+      expect(rendered).to include("$('#user_password').focus();")
     end
-
   end # errors
 end

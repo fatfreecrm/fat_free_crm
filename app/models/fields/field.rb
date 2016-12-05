@@ -33,49 +33,50 @@ class Field < ActiveRecord::Base
 
   belongs_to :field_group
 
-  scope :core_fields,   -> { where(:type => 'CoreField') }
+  scope :core_fields,   -> { where(type: 'CoreField') }
   scope :custom_fields, -> { where("type != 'CoreField'") }
-  scope :without_pairs, -> { where(:pair_id => nil) }
+  scope :without_pairs, -> { where(pair_id: nil) }
 
-  delegate :klass, :klass_name, :klass_name=, :to => :field_group
+  delegate :klass, :klass_name, :klass_name=, to: :field_group
 
   BASE_FIELD_TYPES = {
-    'string'      => {:klass => 'CustomField', :type => 'string'},
-    'text'        => {:klass => 'CustomField', :type => 'text'},
-    'email'       => {:klass => 'CustomField', :type => 'string'},
-    'url'         => {:klass => 'CustomField', :type => 'string'},
-    'tel'         => {:klass => 'CustomField', :type => 'string'},
-    'select'      => {:klass => 'CustomField', :type => 'string'},
-    'radio'       => {:klass => 'CustomField', :type => 'string'},
-    'check_boxes' => {:klass => 'CustomField', :type => 'text'},
-    'boolean'     => {:klass => 'CustomField', :type => 'boolean'},
-    'date'        => {:klass => 'CustomField', :type => 'date'},
-    'datetime'    => {:klass => 'CustomField', :type => 'timestamp'},
-    'decimal'     => {:klass => 'CustomField', :type => 'decimal', :column_options => {:precision => 15, :scale => 2} },
-    'integer'     => {:klass => 'CustomField', :type => 'integer'},
-    'float'       => {:klass => 'CustomField', :type => 'float'}
+    'string'      => { klass: 'CustomField', type: 'string' },
+    'text'        => { klass: 'CustomField', type: 'text' },
+    'email'       => { klass: 'CustomField', type: 'string' },
+    'url'         => { klass: 'CustomField', type: 'string' },
+    'tel'         => { klass: 'CustomField', type: 'string' },
+    'select'      => { klass: 'CustomField', type: 'string' },
+    'radio_buttons'       => { klass: 'CustomField', type: 'string' },
+    'check_boxes' => { klass: 'CustomField', type: 'text' },
+    'boolean'     => { klass: 'CustomField', type: 'boolean' },
+    'date'        => { klass: 'CustomField', type: 'date' },
+    'datetime'    => { klass: 'CustomField', type: 'timestamp' },
+    'decimal'     => { klass: 'CustomField', type: 'decimal', column_options: { precision: 15, scale: 2 } },
+    'integer'     => { klass: 'CustomField', type: 'integer' },
+    'float'       => { klass: 'CustomField', type: 'float' }
   }.with_indifferent_access
 
-  validates_presence_of :label, :message => "^Please enter a field label."
-  validates_length_of :label, :maximum => 64, :message => "^The field name must be less than 64 characters in length."
-  validates_numericality_of :maxlength, :only_integer => true, :allow_blank => true, :message => "^Max size can only be whole number."
-  validates_presence_of :as, :message => "^Please specify a field type."
-  validates_inclusion_of :as, :in => Proc.new{self.field_types.keys}, :message => "^Invalid field type.", :allow_blank => true
+  validates_presence_of :label, message: "^Please enter a field label."
+  validates_length_of :label, maximum: 64, message: "^The field name must be less than 64 characters in length."
+  validates_numericality_of :maxlength, only_integer: true, allow_blank: true, message: "^Max size can only be whole number."
+  validates_presence_of :as, message: "^Please specify a field type."
+  validates_inclusion_of :as, in: proc { field_types.keys }, message: "^Invalid field type.", allow_blank: true
 
-  def column_type(field_type = self.as)
-    (opts = Field.field_types[field_type]) ? opts[:type] : raise("Unknown field_type: #{field_type}")
+  def column_type(field_type = as)
+    (opts = Field.field_types[field_type]) ? opts[:type] : fail("Unknown field_type: #{field_type}")
   end
 
   def input_options
     input_html = {}
-    attributes.reject { |k,v|
-      !%w(as collection disabled label placeholder required maxlength).include?(k) or v.blank?
-    }.symbolize_keys.merge(input_html)
+    attributes.reject do |k, v|
+      !%w(as collection disabled label placeholder required maxlength).include?(k) || v.blank?
+    end.symbolize_keys.merge(input_html)
   end
 
   def collection_string=(value)
     self.collection = value.split("|").map(&:strip).reject(&:blank?)
   end
+
   def collection_string
     collection.try(:join, "|")
   end
@@ -93,7 +94,7 @@ class Field < ActiveRecord::Base
     when 'datetime'
       value && value.in_time_zone.strftime(I18n.t("time.formats.mmddyyyy_hhmm"))
     when 'check_boxes'
-      value.select(&:present?).in_groups_of(2, false).map {|g| g.join(', ')}.join("<br />".html_safe) if Array === value
+      value.select(&:present?).in_groups_of(2, false).map { |g| g.join(', ') }.join("<br />".html_safe) if Array === value
     else
       value.to_s
     end
@@ -102,7 +103,6 @@ class Field < ActiveRecord::Base
   protected
 
   class << self
-
     # Provides access to registered field_types
     #------------------------------------------------------------------------------
     def field_types
@@ -123,7 +123,6 @@ class Field < ActiveRecord::Base
     def lookup_class(as)
       (@@field_types ||= BASE_FIELD_TYPES)[as][:klass]
     end
-
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_field, self)

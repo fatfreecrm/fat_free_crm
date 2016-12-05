@@ -4,9 +4,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class AuthenticationsController < ApplicationController
-
-  before_filter :require_no_user, :only => [ :new, :create, :show ]
-  before_filter :require_user, :only => :destroy
+  before_action :require_no_user, only: [:new, :create, :show]
+  before_action :require_user, only: :destroy
 
   #----------------------------------------------------------------------------
   def new
@@ -25,7 +24,7 @@ class AuthenticationsController < ApplicationController
     if @authentication.save && !@authentication.user.suspended?
       flash[:notice] = t(:msg_welcome)
       if @authentication.user.login_count > 1 && @authentication.user.last_login_at?
-        flash[:notice] << " " << t(:msg_last_login, l(@authentication.user.last_login_at, :format => :mmddhhss))
+        flash[:notice] << " " << t(:msg_last_login, l(@authentication.user.last_login_at, format: :mmddhhss))
       end
       redirect_back_or_default root_url
     else
@@ -34,14 +33,14 @@ class AuthenticationsController < ApplicationController
       else
         flash[:warning] = t(:msg_invalig_login)
       end
-      redirect_to :action => :new
+      redirect_to action: :new
     end
   end
 
   # The login form gets submitted to :update action when @authentication is
   # saved (@authentication != nil) but the user is suspended.
   #----------------------------------------------------------------------------
-  alias :update :create
+  alias_method :update, :create
 
   #----------------------------------------------------------------------------
   def destroy
@@ -49,6 +48,4 @@ class AuthenticationsController < ApplicationController
     flash[:notice] = t(:msg_goodbye)
     redirect_back_or_default login_url
   end
-
 end
-

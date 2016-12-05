@@ -7,33 +7,32 @@ require 'spec_helper'
 
 describe EmailsController do
   describe "routing" do
-
     it "should not recognize #index" do
-      { :get => "/emails" }.should_not be_routable
+      expect(get: "/emails").not_to be_routable
     end
 
     it "should not recognize #new" do
-      { :get => "/emails/new" }.should_not be_routable
+      expect(get: "/emails/new").not_to be_routable
     end
 
     it "should not recognize #show" do
-      { :get => "/emails/1" }.should_not be_routable
+      expect(get: "/emails/1").not_to be_routable
     end
 
     it "should not recognize #edit" do
-      { :get => "/emails/1/edit" }.should_not be_routable
+      expect(get: "/emails/1/edit").not_to be_routable
     end
 
     it "should not recognize #create" do
-      { :post => "/emails" }.should_not be_routable
+      expect(post: "/emails").not_to be_routable
     end
 
     it "should not recognize #update" do
-      { :put => "/emails/1" }.should_not be_routable
+      expect(put: "/emails/1").not_to be_routable
     end
 
     it "recognizes and generates #destroy" do
-      { :delete => "/emails/1" }.should route_to(:controller => "emails", :action => "destroy", :id => "1")
+      expect(delete: "/emails/1").to route_to(controller: "emails", action: "destroy", id: "1")
     end
   end
 end

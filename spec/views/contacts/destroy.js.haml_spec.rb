@@ -11,34 +11,33 @@ describe "/contacts/destroy" do
   before do
     login_and_assign
     assign(:contact, @contact = FactoryGirl.create(:contact))
-    assign(:contacts, [ @contact ].paginate)
+    assign(:contacts, [@contact].paginate)
   end
 
   it "should blind up destroyed contact partial" do
     render
-    rendered.should include("slideUp")
+    expect(rendered).to include("slideUp")
   end
 
   it "should update contacts sidebar when called from contacts index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
     render
 
-    rendered.should include("#sidebar")
-    rendered.should have_text("Recent Items")
+    expect(rendered).to include("#sidebar")
+    expect(rendered).to have_text("Recent Items")
   end
 
   it "should update pagination when called from contacts index" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
     render
 
-    rendered.should include("#paginate")
+    expect(rendered).to include("#paginate")
   end
 
   it "should update recently viewed items when called from related asset" do
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
     render
 
-    rendered.should include("#recently")
+    expect(rendered).to include("#recently")
   end
-
 end

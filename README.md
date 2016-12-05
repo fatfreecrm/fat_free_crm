@@ -50,18 +50,16 @@ Visit our website at http://www.fatfreecrm.com/
 
 ## Rails 4 support
 
-Currently, the master branch and gem releases of Fat Free CRM run on Rails 3.2 However, we are in the midst of upgrading to Rails 4.2, please see the [rails4](https://github.com/fatfreecrm/fat_free_crm/tree/rails4) branch. If you're a developer, you're welcome to check that code out, search for bugs and file them in the issue tracker using the [rails4](https://github.com/fatfreecrm/fat_free_crm/labels/rails4) label.
+The master branch is now on Rails 4.2. However, there is a [Rails 3.2 branch](https://github.com/fatfreecrm/fat_free_crm/tree/rails3) available if you still need to use it. Please note that subsequent gem releases will focus on Rails 4 (v0.14.0+ as yet unreleased).
 
 ## Important security note
 
-Please note that several severe vulnerabilities have been fixed recently. You should upgrade to versions 0.12.3 or 0.13.2 or higher. See the [**security vulnerabilities**](https://github.com/fatfreecrm/fat_free_crm/wiki/Security) page for more details.
+Please note that several severe vulnerabilities have been fixed recently. You should upgrade to the most recent 0.13.x version or higher. See the [**security vulnerabilities**](https://github.com/fatfreecrm/fat_free_crm/wiki/Security) page for more details.
 
 ## System Requirements
 
-* Ruby 2.1 (or 2.0) recommended (it's much faster!)
-  * Ruby 2.2 is not officially supported, but [reported to work for MySQL users](https://github.com/fatfreecrm/fat_free_crm/issues/362)
-  * Ruby 1.9.3 is also compatible
-  * Ruby 1.9.2 should be compatible but is not longer supported
+* Ruby 2 (2.2 recommended)
+  * Ruby 1.9.3 is no longer compatible (final gem release tag v0.13.6)
   * Ruby v1.8.7 was supported until v0.11.4 (see https://github.com/fatfreecrm/fat_free_crm/tree/ruby1.8)
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
 * ImageMagick (optional, only needed if you would like to use avatars)
@@ -93,7 +91,7 @@ This is the best way to deploy Fat Free CRM if you need to add plugins or make a
 
 ## Upgrading from previous versions of Fat Free CRM
 
-Please read the [Release Notes](http://guides.fatfreecrm.com/Release-Notes.html) document for more detailed information on upgrading from previous versions.
+Please read the [Release Notes](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG) document for more detailed information on upgrading from previous versions.
 
 
 ## Resources
@@ -115,7 +113,7 @@ Please read the [Release Notes](http://guides.fatfreecrm.com/Release-Notes.html)
 
 ## For Developers
 
-Fat Free CRM is released under the MIT license and is freely available for you to use for your own purposes. We do encourage contributions to make Fat Free CRM even better. Send us a pull-request and we'll do our best to accomodate your needs.
+Fat Free CRM is released under the MIT license and is freely available for you to use for your own purposes. We do encourage contributions to make Fat Free CRM even better. Send us a pull-request and we'll do our best to accommodate your needs.
 
 Specific features that are not 'Fat Free' in nature, can be added by creating Rails Engines. See the [wiki](http://github.com/fatfreecrm/fat_free_crm/wiki) for information on how to do this.
 

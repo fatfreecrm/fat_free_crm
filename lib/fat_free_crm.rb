@@ -12,9 +12,7 @@ module FatFreeCRM
       engine? ? Engine : Application
     end
 
-    def root
-      application.root
-    end
+    delegate :root, to: :application
 
     # Are we running as an engine?
     def engine?
@@ -24,7 +22,6 @@ module FatFreeCRM
     def application?
       !engine?
     end
-
   end
 end
 
@@ -54,7 +51,6 @@ require "fat_free_crm/fields"
 require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
-require "fat_free_crm/plugin"
 require "fat_free_crm/view_factory"
 
 require "country_select"

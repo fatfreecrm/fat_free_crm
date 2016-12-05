@@ -4,16 +4,16 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class ContactsController < EntitiesController
-  before_filter :get_accounts, :only => [ :new, :create, :edit, :update ]
+  before_action :get_accounts, only: [:new, :create, :edit, :update]
 
   # GET /contacts
   #----------------------------------------------------------------------------
   def index
-    @contacts = get_contacts(:page => params[:page], :per_page => params[:per_page])
+    @contacts = get_contacts(page: params[:page], per_page: params[:per_page])
 
     respond_with @contacts do |format|
-      format.xls { render :layout => 'header' }
-      format.csv { render :csv => @contacts }
+      format.xls { render layout: 'header' }
+      format.csv { render csv: @contacts }
     end
   end
 
@@ -30,15 +30,15 @@ class ContactsController < EntitiesController
   # GET /contacts/new
   #----------------------------------------------------------------------------
   def new
-    @contact.attributes = {:user => current_user, :access => Setting.default_access, :assigned_to => nil}
-    @account = Account.new(:user => current_user)
+    @contact.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
+    @account = Account.new(user: current_user)
 
     if params[:related]
       model, id = params[:related].split('_')
       if related = model.classify.constantize.my.find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
-        respond_to_related_not_found(model) and return
+        respond_to_related_not_found(model) && return
       end
     end
 
@@ -48,9 +48,9 @@ class ContactsController < EntitiesController
   # GET /contacts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @account = @contact.account || Account.new(:user => current_user)
+    @account = @contact.account || Account.new(user: current_user)
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Contact.my.find_by_id($1) || $1.to_i
+      @previous = Contact.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@contact)
@@ -60,8 +60,8 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
-    respond_with(@contact) do |format|
-      if @contact.save_with_account_and_permissions(params)
+    respond_with(@contact) do |_format|
+      if @contact.save_with_account_and_permissions(params.permit!)
         @contact.add_comment_by_user(@comment_body, current_user)
         @contacts = get_contacts if called_from_index_page?
       else
@@ -69,9 +69,9 @@ class ContactsController < EntitiesController
           @account = Account.find(params[:account][:id])
         else
           if request.referer =~ /\/accounts\/(\d+)\z/
-            @account = Account.find($1) # related account
+            @account = Account.find(Regexp.last_match[1]) # related account
           else
-            @account = Account.new(:user => current_user)
+            @account = Account.new(user: current_user)
           end
         end
         @opportunity = Opportunity.my.find(params[:opportunity]) unless params[:opportunity].blank?
@@ -82,12 +82,12 @@ class ContactsController < EntitiesController
   # PUT /contacts/1
   #----------------------------------------------------------------------------
   def update
-    respond_with(@contact) do |format|
-      unless @contact.update_with_account_and_permissions(params)
+    respond_with(@contact) do |_format|
+      unless @contact.update_with_account_and_permissions(params.permit!)
         if @contact.account
-          @account = Account.find(@contact.account.id)
+          @account = @contact.account
         else
-          @account = Account.new(:user => current_user)
+          @account = Account.new(user: current_user)
         end
       end
     end
@@ -123,9 +123,9 @@ class ContactsController < EntitiesController
 
     # Sorting and naming only: set the same option for Leads if the hasn't been set yet.
     if params[:sort_by]
-      current_user.pref[:contacts_sort_by] = Contact::sort_by_map[params[:sort_by]]
-      if Lead::sort_by_fields.include?(params[:sort_by])
-        current_user.pref[:leads_sort_by] ||= Lead::sort_by_map[params[:sort_by]]
+      current_user.pref[:contacts_sort_by] = Contact.sort_by_map[params[:sort_by]]
+      if Lead.sort_by_fields.include?(params[:sort_by])
+        current_user.pref[:leads_sort_by] ||= Lead.sort_by_map[params[:sort_by]]
       end
     end
     if params[:naming]
@@ -133,7 +133,7 @@ class ContactsController < EntitiesController
       current_user.pref[:leads_naming] ||= params[:naming]
     end
 
-    @contacts = get_contacts(:page => 1, :per_page => params[:per_page]) # Start on the first page.
+    @contacts = get_contacts(page: 1, per_page: params[:per_page]) # Start on the first page.
     set_options # Refresh options
 
     respond_with(@contacts) do |format|
@@ -142,8 +142,9 @@ class ContactsController < EntitiesController
   end
 
   private
+
   #----------------------------------------------------------------------------
-  alias :get_contacts :get_list_of_records
+  alias_method :get_contacts, :get_list_of_records
 
   #----------------------------------------------------------------------------
   def get_accounts
@@ -161,8 +162,8 @@ class ContactsController < EntitiesController
       if called_from_index_page?
         @contacts = get_contacts
         if @contacts.blank?
-          @contacts = get_contacts(:page => current_page - 1) if current_page > 1
-          render :index and return
+          @contacts = get_contacts(page: current_page - 1) if current_page > 1
+          render(:index) && return
         end
       else
         self.current_page = 1

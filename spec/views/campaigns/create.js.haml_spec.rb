@@ -13,37 +13,36 @@ describe "/campaigns/create" do
   describe "create success" do
     before do
       assign(:campaign, @campaign = FactoryGirl.create(:campaign))
-      assign(:campaigns, [ @campaign ].paginate)
+      assign(:campaigns, [@campaign].paginate)
       assign(:campaign_status_total, Hash.new(1))
       render
     end
 
     it "should hide [Create Campaign] form and insert campaign partial" do
-      rendered.should include("$('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
-      rendered.should include(%Q/$('#campaign_#{@campaign.id}').effect("highlight"/)
+      expect(rendered).to include("$('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+      expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
     end
 
     it "should update pagination" do
-      rendered.should include("#paginate")
+      expect(rendered).to include("#paginate")
     end
 
     it "should update Campaigns sidebar filters" do
-      rendered.should include("#sidebar")
-      rendered.should have_text("Campaign Statuses")
-      rendered.should have_text("Recent Items")
+      expect(rendered).to include("#sidebar")
+      expect(rendered).to have_text("Campaign Statuses")
+      expect(rendered).to have_text("Recent Items")
     end
   end
 
   describe "create failure" do
     it "should re-render [create] template in :create_campaign div" do
-      assign(:campaign, FactoryGirl.build(:campaign, :name => nil)) # make it invalid
-      assign(:users, [ FactoryGirl.create(:user) ])
+      assign(:campaign, FactoryGirl.build(:campaign, name: nil)) # make it invalid
+      assign(:users, [FactoryGirl.create(:user)])
 
       render
 
-      rendered.should include("$('#create_campaign').html")
-      rendered.should include(%Q/$('#create_campaign').effect("shake"/)
+      expect(rendered).to include("$('#create_campaign').html")
+      expect(rendered).to include(%/$('#create_campaign').effect("shake"/)
     end
   end
-
 end

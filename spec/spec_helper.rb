@@ -9,21 +9,19 @@ ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
+require 'paper_trail/frameworks/rspec'
 
 require 'acts_as_fu'
 require 'factory_girl_rails'
 require 'ffaker'
 require 'timecop'
 
-require 'coveralls'
-Coveralls.wear!
-
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir["./spec/support/**/*.rb"].sort.each {|f| require f}
+Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
 # Load shared behavior modules to be included by Runner config.
-Dir["./spec/shared/**/*.rb"].sort.each {|f| require f}
+Dir["./spec/shared/**/*.rb"].sort.each { |f| require f }
 
 TASK_STATUSES = %w(pending assigned completed).freeze
 
@@ -32,6 +30,7 @@ I18n.locale = 'en-US'
 Paperclip.options[:log] = false
 
 RSpec.configure do |config|
+  config.infer_spec_type_from_file_location!
 
   config.mock_with :rspec
 
@@ -39,7 +38,7 @@ RSpec.configure do |config|
 
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers
-  config.include(FactoryGirl::Syntax::Methods)
+  config.include FactoryGirl::Syntax::Methods
 
   config.before(:each) do
     # Overwrite locale settings within "config/settings.yml" if necessary.
@@ -52,49 +51,29 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = false
-  config.before :suite do
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
     DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
   end
-  config.before :all, :type => :feature do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-  config.around :each, :type => :feature do |example|
+
+  config.before(:each, :js) do
     DatabaseCleaner.strategy = :truncation
-    example.run
-    DatabaseCleaner.strategy = :transaction
   end
-  config.around :each do |example|
+
+  config.before(:each, :truncate) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
     DatabaseCleaner.start
-    example.run
+  end
+
+  config.append_after(:each) do
     DatabaseCleaner.clean
-  end
-
-  # PaperTrail slows down tests so only turned on when needed.
-  PaperTrail.enabled = false
-
-  config.around :each, :type => :feature do |example|
-    was_enabled = PaperTrail.enabled?
-    PaperTrail.enabled = true
-    PaperTrail.controller_info = {}
-    PaperTrail.whodunnit = nil
-    begin
-      example.run
-    ensure
-      PaperTrail.enabled = was_enabled
-    end
-  end
-
-  config.around :each, :versioning => true do |example|
-    was_enabled = PaperTrail.enabled?
-    PaperTrail.enabled = true
-    PaperTrail.controller_info = {}
-    PaperTrail.whodunnit = nil
-    begin
-      example.run
-    ensure
-      PaperTrail.enabled = was_enabled
-    end
   end
 
   # If true, the base class of anonymous controllers will be inferred
@@ -116,13 +95,13 @@ ActionView::Base.class_eval do
 
   def called_from_index_page?(controller = controller_name)
     if controller != "tasks"
-      request.referer =~ %r(/#{controller}$)
+      request.referer =~ %r{/#{controller}$}
     else
       request.referer =~ /tasks\?*/
     end
   end
 
   def called_from_landing_page?(controller = controller_name)
-    request.referer =~ %r(/#{controller}/\w+)
+    request.referer =~ %r{/#{controller}/\w+}
   end
 end

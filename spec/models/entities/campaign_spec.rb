@@ -32,11 +32,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Campaign do
-
   before { login }
 
   it "should create a new instance given valid attributes" do
-    Campaign.create!(:name => "Campaign", :user => FactoryGirl.create(:user))
+    Campaign.create!(name: "Campaign", user: FactoryGirl.create(:user))
   end
 
   describe "Attach" do
@@ -45,23 +44,23 @@ describe Campaign do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, :asset => @campaign, :user => current_user)
-      @lead = FactoryGirl.create(:lead, :campaign => @campaign)
-      @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign)
+      @task = FactoryGirl.create(:task, asset: @campaign, user: current_user)
+      @lead = FactoryGirl.create(:lead, campaign: @campaign)
+      @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign)
 
-      @campaign.attach!(@task).should == nil
-      @campaign.attach!(@lead).should == nil
-      @campaign.attach!(@opportunity).should == nil
+      expect(@campaign.attach!(@task)).to eq(nil)
+      expect(@campaign.attach!(@lead)).to eq(nil)
+      expect(@campaign.attach!(@opportunity)).to eq(nil)
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, :user => current_user)
+      @task = FactoryGirl.create(:task, user: current_user)
       @lead = FactoryGirl.create(:lead)
       @opportunity = FactoryGirl.create(:opportunity)
 
-      @campaign.attach!(@task).should == [ @task ]
-      @campaign.attach!(@lead).should == [ @lead ]
-      @campaign.attach!(@opportunity).should == [ @opportunity ]
+      expect(@campaign.attach!(@task)).to eq([@task])
+      expect(@campaign.attach!(@lead)).to eq([@lead])
+      expect(@campaign.attach!(@opportunity)).to eq([@opportunity])
     end
 
     it "should increment leads count when attaching a new lead" do
@@ -69,70 +68,64 @@ describe Campaign do
       @lead = FactoryGirl.create(:lead)
 
       @campaign.attach!(@lead)
-      @campaign.reload.leads_count.should == @leads_count + 1
+      expect(@campaign.reload.leads_count).to eq(@leads_count + 1)
     end
 
     it "should increment opportunities count when attaching new opportunity" do
       @opportunities_count = @campaign.opportunities_count
       @opportunity = FactoryGirl.create(:opportunity)
       @campaign.attach!(@opportunity)
-      @campaign.reload.opportunities_count.should == @opportunities_count + 1
+      expect(@campaign.reload.opportunities_count).to eq(@opportunities_count + 1)
     end
   end
 
   describe "Detach" do
     before do
-      @campaign = FactoryGirl.create(:campaign, :leads_count => 42, :opportunities_count => 42)
+      @campaign = FactoryGirl.create(:campaign, leads_count: 42, opportunities_count: 42)
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, :asset => @campaign, :user => current_user)
-      @campaign.tasks.count.should == 1
+      @task = FactoryGirl.create(:task, asset: @campaign, user: current_user)
+      expect(@campaign.tasks.count).to eq(1)
 
       @campaign.discard!(@task)
-      @campaign.reload.tasks.should == []
-      @campaign.tasks.count.should == 0
+      expect(@campaign.reload.tasks).to eq([])
+      expect(@campaign.tasks.count).to eq(0)
     end
 
     it "should discard a lead" do
-      @lead = FactoryGirl.create(:lead, :campaign => @campaign)
-      @campaign.reload.leads_count.should == 43
+      @lead = FactoryGirl.create(:lead, campaign: @campaign)
+      expect(@campaign.reload.leads_count).to eq(43)
 
       @campaign.discard!(@lead)
-      @campaign.leads.should == []
-      @campaign.reload.leads_count.should == 42
+      expect(@campaign.leads).to eq([])
+      expect(@campaign.reload.leads_count).to eq(42)
     end
 
     it "should discard an opportunity" do
-      @opportunity = FactoryGirl.create(:opportunity, :campaign => @campaign)
-      @campaign.reload.opportunities_count.should == 43
+      @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign)
+      expect(@campaign.reload.opportunities_count).to eq(43)
 
       @campaign.discard!(@opportunity)
-      @campaign.opportunities.should == []
-      @campaign.reload.opportunities_count.should == 42
+      expect(@campaign.opportunities).to eq([])
+      expect(@campaign.reload.opportunities_count).to eq(42)
     end
   end
 
   describe "Exportable" do
     describe "assigned campaign" do
-      before do
-        Campaign.delete_all
-        FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user, :first_name => "John", :last_name => "Smith"), :assignee => FactoryGirl.create(:user))
-        FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => FactoryGirl.create(:user, :first_name => nil, :last_name => nil))
-      end
+      let(:campaign1) { FactoryGirl.build(:campaign, user: FactoryGirl.create(:user, first_name: "John", last_name: "Smith"), assignee: FactoryGirl.create(:user)) }
+      let(:campaign2) { FactoryGirl.build(:campaign, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
-        let(:exported) { Campaign.all }
+        let(:exported) { [campaign1, campaign2] }
       end
     end
 
     describe "unassigned campaign" do
-      before do
-        Campaign.delete_all
-        FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user), :assignee => nil)
-        FactoryGirl.create(:campaign, :user => FactoryGirl.create(:user, :first_name => nil, :last_name => nil), :assignee => nil)
-      end
+      let(:campaign1) { FactoryGirl.build(:campaign, user: FactoryGirl.create(:user), assignee: nil) }
+      let(:campaign2) { FactoryGirl.build(:campaign, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
-        let(:exported) { Campaign.all }
+        let(:exported) { [campaign1, campaign2] }
       end
     end
   end

@@ -24,95 +24,95 @@ describe AccountsController do
     end
 
     it "should expose all accounts as @accounts and render [index] template" do
-      @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
+      @accounts = [FactoryGirl.create(:account, user: current_user)]
       get :index
-      assigns[:accounts].should == @accounts
-      response.should render_template("accounts/index")
+      expect(assigns[:accounts]).to eq(@accounts)
+      expect(response).to render_template("accounts/index")
     end
 
     it "should collect the data for the accounts sidebar" do
-      @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
+      @accounts = [FactoryGirl.create(:account, user: current_user)]
 
       get :index
-      (assigns[:account_category_total].keys.map(&:to_sym) - (@category << :all << :other)).should == []
+      expect(assigns[:account_category_total].keys.map(&:to_sym) - (@category << :all << :other)).to eq([])
     end
 
     it "should filter out accounts by category" do
       categories = %w(customer vendor)
       controller.session[:accounts_filter] = categories.join(',')
       @accounts = [
-        FactoryGirl.create(:account, :user => current_user, :category => categories.first),
-        FactoryGirl.create(:account, :user => current_user, :category => categories.last)
+        FactoryGirl.create(:account, user: current_user, category: categories.first),
+        FactoryGirl.create(:account, user: current_user, category: categories.last)
       ]
       # This one should be filtered out.
-      FactoryGirl.create(:account, :user => current_user, :category => "competitor")
+      FactoryGirl.create(:account, user: current_user, category: "competitor")
 
       get :index
-      assigns[:accounts].should == @accounts
+      expect(assigns[:accounts]).to eq(@accounts)
     end
 
     it "should perform lookup using query string" do
-      @first  = FactoryGirl.create(:account, :user => current_user, :name => "The first one")
-      @second = FactoryGirl.create(:account, :user => current_user, :name => "The second one")
+      @first  = FactoryGirl.create(:account, user: current_user, name: "The first one")
+      @second = FactoryGirl.create(:account, user: current_user, name: "The second one")
 
-      get :index, :query => "second"
-      assigns[:accounts].should == [ @second ]
-      assigns[:current_query].should == "second"
-      session[:accounts_current_query].should == "second"
+      get :index, query: "second"
+      expect(assigns[:accounts]).to eq([@second])
+      expect(assigns[:current_query]).to eq("second")
+      expect(session[:accounts_current_query]).to eq("second")
     end
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
-        xhr :get, :index, :page => 42
+        @accounts = [FactoryGirl.create(:account, user: current_user)]
+        xhr :get, :index, page: 42
 
-        assigns[:current_page].to_i.should == 42
-        assigns[:accounts].should == [] # page #42 should be empty if there's only one account ;-)
-        session[:accounts_current_page].to_i.should == 42
-        response.should render_template("accounts/index")
+        expect(assigns[:current_page].to_i).to eq(42)
+        expect(assigns[:accounts]).to eq([]) # page #42 should be empty if there's only one account ;-)
+        expect(session[:accounts_current_page].to_i).to eq(42)
+        expect(response).to render_template("accounts/index")
       end
 
       it "should pick up saved page number from session" do
         session[:accounts_current_page] = 42
-        @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
+        @accounts = [FactoryGirl.create(:account, user: current_user)]
         xhr :get, :index
 
-        assigns[:current_page].should == 42
-        assigns[:accounts].should == []
-        response.should render_template("accounts/index")
+        expect(assigns[:current_page]).to eq(42)
+        expect(assigns[:accounts]).to eq([])
+        expect(response).to render_template("accounts/index")
       end
 
       it "should reset current_page when query is altered" do
         session[:accounts_current_page] = 42
         session[:accounts_current_query] = "bill"
-        @accounts = [ FactoryGirl.create(:account, :user => current_user) ]
+        @accounts = [FactoryGirl.create(:account, user: current_user)]
         xhr :get, :index
 
-        assigns[:current_page].should == 1
-        assigns[:accounts].should == @accounts
-        response.should render_template("accounts/index")
+        expect(assigns[:current_page]).to eq(1)
+        expect(assigns[:accounts]).to eq(@accounts)
+        expect(response).to render_template("accounts/index")
       end
     end
 
     describe "with mime type of JSON" do
       it "should render all accounts as json" do
-        @controller.should_receive(:get_accounts).and_return(accounts = double("Array of Accounts"))
-        accounts.should_receive(:to_json).and_return("generated JSON")
+        expect(@controller).to receive(:get_accounts).and_return(accounts = double("Array of Accounts"))
+        expect(accounts).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
         get :index
-        response.body.should == "generated JSON"
+        expect(response.body).to eq("generated JSON")
       end
     end
 
     describe "with mime type of XML" do
       it "should render all accounts as xml" do
-        @controller.should_receive(:get_accounts).and_return(accounts = double("Array of Accounts"))
-        accounts.should_receive(:to_xml).and_return("generated XML")
+        expect(@controller).to receive(:get_accounts).and_return(accounts = double("Array of Accounts"))
+        expect(accounts).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :index
-        response.body.should == "generated XML"
+        expect(response.body).to eq("generated XML")
       end
     end
   end
@@ -121,176 +121,171 @@ describe AccountsController do
   # GET /accounts/1.xml                                                    HTML
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
-
     describe "with mime type of HTML" do
       before do
-        @account = FactoryGirl.create(:account, :user => current_user)
+        @account = FactoryGirl.create(:account, user: current_user)
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
 
       it "should expose the requested account as @account and render [show] template" do
-        get :show, :id => @account.id
-        assigns[:account].should == @account
-        assigns[:stage].should == @stage
-        assigns[:comment].attributes.should == @comment.attributes
-        response.should render_template("accounts/show")
+        get :show, id: @account.id
+        expect(assigns[:account]).to eq(@account)
+        expect(assigns[:stage]).to eq(@stage)
+        expect(assigns[:comment].attributes).to eq(@comment.attributes)
+        expect(response).to render_template("accounts/show")
       end
 
       it "should update an activity when viewing the account" do
-        get :show, :id => @account.id
-        @account.versions.last.event.should == 'view'
+        get :show, id: @account.id
+        expect(@account.versions.last.event).to eq('view')
       end
     end
 
     describe "with mime type of JSON" do
       it "should render the requested account as json" do
-        @account = FactoryGirl.create(:account, :user => current_user)
-        Account.should_receive(:find).and_return(@account)
-        @account.should_receive(:to_json).and_return("generated JSON")
+        @account = FactoryGirl.create(:account, user: current_user)
+        expect(Account).to receive(:find).and_return(@account)
+        expect(@account).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
-        get :show, :id => 42
-        response.body.should == "generated JSON"
+        get :show, id: 42
+        expect(response.body).to eq("generated JSON")
       end
     end
 
     describe "with mime type of XML" do
       it "should render the requested account as xml" do
-        @account = FactoryGirl.create(:account, :user => current_user)
-        Account.should_receive(:find).and_return(@account)
-        @account.should_receive(:to_xml).and_return("generated XML")
+        @account = FactoryGirl.create(:account, user: current_user)
+        expect(Account).to receive(:find).and_return(@account)
+        expect(@account).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :show, :id => 42
-        response.body.should == "generated XML"
+        get :show, id: 42
+        expect(response.body).to eq("generated XML")
       end
     end
 
     describe "account got deleted or otherwise unavailable" do
       it "should redirect to account index if the account got deleted" do
-        @account = FactoryGirl.create(:account, :user => current_user)
+        @account = FactoryGirl.create(:account, user: current_user)
         @account.destroy
 
-        get :show, :id => @account.id
-        flash[:warning].should_not == nil
-        response.should redirect_to(accounts_path)
+        get :show, id: @account.id
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response).to redirect_to(accounts_path)
       end
 
       it "should redirect to account index if the account is protected" do
-        @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
+        @private = FactoryGirl.create(:account, user: FactoryGirl.create(:user), access: "Private")
 
-        get :show, :id => @private.id
-        flash[:warning].should_not == nil
-        response.should redirect_to(accounts_path)
+        get :show, id: @private.id
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response).to redirect_to(accounts_path)
       end
 
       it "should return 404 (Not Found) JSON error" do
-        @account = FactoryGirl.create(:account, :user => current_user)
+        @account = FactoryGirl.create(:account, user: current_user)
         @account.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
-        get :show, :id => @account.id
-        response.code.should == "404" # :not_found
+        get :show, id: @account.id
+        expect(response.code).to eq("404") # :not_found
       end
 
       it "should return 404 (Not Found) XML error" do
-        @account = FactoryGirl.create(:account, :user => current_user)
+        @account = FactoryGirl.create(:account, user: current_user)
         @account.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
-        get :show, :id => @account.id
-        response.code.should == "404" # :not_found
+        get :show, id: @account.id
+        expect(response.code).to eq("404") # :not_found
       end
     end
-
   end
 
   # GET /accounts/new
   # GET /accounts/new.xml                                                  AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
-
     it "should expose a new account as @account and render [new] template" do
-      @account = Account.new(:user => current_user,
-                             :access => Setting.default_access)
+      @account = Account.new(user: current_user,
+                             access: Setting.default_access)
       xhr :get, :new
-      assigns[:account].attributes.should == @account.attributes
-      assigns[:contact].should == nil
-      response.should render_template("accounts/new")
+      expect(assigns[:account].attributes).to eq(@account.attributes)
+      expect(assigns[:contact]).to eq(nil)
+      expect(response).to render_template("accounts/new")
     end
 
     it "should created an instance of related object when necessary" do
-      @contact = FactoryGirl.create(:contact, :id => 42)
+      @contact = FactoryGirl.create(:contact, id: 42)
 
-      xhr :get, :new, :related => "contact_42"
-      assigns[:contact].should == @contact
+      xhr :get, :new, related: "contact_42"
+      expect(assigns[:contact]).to eq(@contact)
     end
-
   end
 
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
-
     it "should expose the requested account as @account and render [edit] template" do
-      @account = FactoryGirl.create(:account, :id => 42, :user => current_user)
+      @account = FactoryGirl.create(:account, id: 42, user: current_user)
 
-      xhr :get, :edit, :id => 42
-      assigns[:account].should == @account
-      assigns[:previous].should == nil
-      response.should render_template("accounts/edit")
+      xhr :get, :edit, id: 42
+      expect(assigns[:account]).to eq(@account)
+      expect(assigns[:previous]).to eq(nil)
+      expect(response).to render_template("accounts/edit")
     end
 
     it "should expose previous account as @previous when necessary" do
-      @account = FactoryGirl.create(:account, :id => 42)
-      @previous = FactoryGirl.create(:account, :id => 41)
+      @account = FactoryGirl.create(:account, id: 42)
+      @previous = FactoryGirl.create(:account, id: 41)
 
-      xhr :get, :edit, :id => 42, :previous => 41
-      assigns[:previous].should == @previous
+      xhr :get, :edit, id: 42, previous: 41
+      expect(assigns[:previous]).to eq(@previous)
     end
 
     describe "(account got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the account got deleted" do
-        @account = FactoryGirl.create(:account, :user => current_user)
+        @account = FactoryGirl.create(:account, user: current_user)
         @account.destroy
 
-        xhr :get, :edit, :id => @account.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        xhr :get, :edit, id: @account.id
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
 
       it "should reload current page with the flash message if the account is protected" do
-        @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
+        @private = FactoryGirl.create(:account, user: FactoryGirl.create(:user), access: "Private")
 
-        xhr :get, :edit, :id => @private.id
-        flash[:warning].should_not == nil
-        response.body.should == "window.location.reload();"
+        xhr :get, :edit, id: @private.id
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response.body).to eq("window.location.reload();")
       end
     end
 
     describe "(previous account got deleted or is otherwise unavailable)" do
       before do
-        @account = FactoryGirl.create(:account, :user => current_user)
-        @previous = FactoryGirl.create(:account, :user => FactoryGirl.create(:user))
+        @account = FactoryGirl.create(:account, user: current_user)
+        @previous = FactoryGirl.create(:account, user: FactoryGirl.create(:user))
       end
 
       it "should notify the view if previous account got deleted" do
         @previous.destroy
 
-        xhr :get, :edit, :id => @account.id, :previous => @previous.id
-        flash[:warning].should == nil # no warning, just silently remove the div
-        assigns[:previous].should == @previous.id
-        response.should render_template("accounts/edit")
+        xhr :get, :edit, id: @account.id, previous: @previous.id
+        expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
+        expect(assigns[:previous]).to eq(@previous.id)
+        expect(response).to render_template("accounts/edit")
       end
 
       it "should notify the view if previous account got protected" do
         @previous.update_attribute(:access, "Private")
 
-        xhr :get, :edit, :id => @account.id, :previous => @previous.id
-        flash[:warning].should == nil
-        assigns[:previous].should == @previous.id
-        response.should render_template("accounts/edit")
+        xhr :get, :edit, id: @account.id, previous: @previous.id
+        expect(flash[:warning]).to eq(nil)
+        expect(assigns[:previous]).to eq(@previous.id)
+        expect(response).to render_template("accounts/edit")
       end
     end
   end
@@ -299,52 +294,50 @@ describe AccountsController do
   # POST /accounts.xml                                                     AJAX
   #----------------------------------------------------------------------------
   describe "responding to POST create" do
-
     describe "with valid params" do
-
       it "should expose a newly created account as @account and render [create] template" do
-        @account = FactoryGirl.build(:account, :name => "Hello world", :user => current_user)
-        Account.stub(:new).and_return(@account)
+        @account = FactoryGirl.build(:account, name: "Hello world", user: current_user)
+        allow(Account).to receive(:new).and_return(@account)
 
-        xhr :post, :create, :account => { :name => "Hello world" }
-        assigns(:account).should == @account
-        response.should render_template("accounts/create")
+        xhr :post, :create, account: { name: "Hello world" }
+        expect(assigns(:account)).to eq(@account)
+        expect(response).to render_template("accounts/create")
       end
 
       # Note: [Create Account] is shown only on Accounts index page.
       it "should reload accounts to update pagination" do
-        @account = FactoryGirl.build(:account, :user => current_user)
-        Account.stub(:new).and_return(@account)
+        @account = FactoryGirl.build(:account, user: current_user)
+        allow(Account).to receive(:new).and_return(@account)
 
-        xhr :post, :create, :account => { :name => "Hello" }
-        assigns[:accounts].should == [ @account ]
+        xhr :post, :create, account: { name: "Hello" }
+        expect(assigns[:accounts]).to eq([@account])
       end
 
       it "should get data to update account sidebar" do
-        @account = FactoryGirl.build(:account, :name => "Hello", :user => current_user)
-        Campaign.stub(:new).and_return(@account)
+        @account = FactoryGirl.build(:account, name: "Hello", user: current_user)
+        allow(Campaign).to receive(:new).and_return(@account)
 
-        xhr :post, :create, :account => { :name => "Hello" }
-        assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
+        xhr :post, :create, account: { name: "Hello" }
+        expect(assigns[:account_category_total]).to be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should add a new comment to the newly created account when specified" do
-        @account = FactoryGirl.build(:account, :name => "Hello world", :user => current_user)
-        Account.stub(:new).and_return(@account)
+        @account = FactoryGirl.build(:account, name: "Hello world", user: current_user)
+        allow(Account).to receive(:new).and_return(@account)
 
-        xhr :post, :create, :account => { :name => "Hello world" }, :comment_body => "Awesome comment is awesome"
-        assigns[:account].comments.map(&:comment).should include("Awesome comment is awesome")
+        xhr :post, :create, account: { name: "Hello world" }, comment_body: "Awesome comment is awesome"
+        expect(assigns[:account].comments.map(&:comment)).to include("Awesome comment is awesome")
       end
     end
 
     describe "with invalid params" do
       it "should expose a newly created but unsaved account as @account and still render [create] template" do
-        @account = FactoryGirl.build(:account, :name => nil, :user => nil)
-        Account.stub(:new).and_return(@account)
+        @account = FactoryGirl.build(:account, name: nil, user: nil)
+        allow(Account).to receive(:new).and_return(@account)
 
-        xhr :post, :create, :account => {}
-        assigns(:account).should == @account
-        response.should render_template("accounts/create")
+        xhr :post, :create, account: {}
+        expect(assigns(:account)).to eq(@account)
+        expect(response).to render_template("accounts/create")
       end
     end
   end
@@ -353,65 +346,63 @@ describe AccountsController do
   # PUT /accounts/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   describe "responding to PUT update" do
-
     describe "with valid params" do
       it "should update the requested account, expose the requested account as @account, and render [update] template" do
-        @account = FactoryGirl.create(:account, :id => 42, :name => "Hello people")
+        @account = FactoryGirl.create(:account, id: 42, name: "Hello people")
 
-        xhr :put, :update, :id => 42, :account => { :name => "Hello world" }
-        @account.reload.name.should == "Hello world"
-        assigns(:account).should == @account
-        response.should render_template("accounts/update")
+        xhr :put, :update, id: 42, account: { name: "Hello world" }
+        expect(@account.reload.name).to eq("Hello world")
+        expect(assigns(:account)).to eq(@account)
+        expect(response).to render_template("accounts/update")
       end
 
       it "should get data for accounts sidebar when called from Campaigns index" do
-        @account = FactoryGirl.create(:account, :id => 42)
+        @account = FactoryGirl.create(:account, id: 42)
         request.env["HTTP_REFERER"] = "http://localhost/accounts"
 
-        xhr :put, :update, :id => 42, :account => { :name => "Hello" }
-        assigns(:account).should == @account
-        assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
+        xhr :put, :update, id: 42, account: { name: "Hello" }
+        expect(assigns(:account)).to eq(@account)
+        expect(assigns[:account_category_total]).to be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should update account permissions when sharing with specific users" do
-        @account = FactoryGirl.create(:account, :id => 42, :access => "Public")
+        @account = FactoryGirl.create(:account, id: 42, access: "Public")
 
-        xhr :put, :update, :id => 42, :account => { :name => "Hello", :access => "Shared", :user_ids => [7, 8] }
-        assigns[:account].access.should == "Shared"
-        assigns[:account].user_ids.sort.should == [7, 8]
+        xhr :put, :update, id: 42, account: { name: "Hello", access: "Shared", user_ids: [7, 8] }
+        expect(assigns[:account].access).to eq("Shared")
+        expect(assigns[:account].user_ids.sort).to eq([7, 8])
       end
 
       describe "account got deleted or otherwise unavailable" do
         it "should reload current page is the account got deleted" do
-          @account = FactoryGirl.create(:account, :user => current_user)
+          @account = FactoryGirl.create(:account, user: current_user)
           @account.destroy
 
-          xhr :put, :update, :id => @account.id
-          flash[:warning].should_not == nil
-          response.body.should == "window.location.reload();"
+          xhr :put, :update, id: @account.id
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.body).to eq("window.location.reload();")
         end
 
         it "should reload current page with the flash message if the account is protected" do
-          @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
+          @private = FactoryGirl.create(:account, user: FactoryGirl.create(:user), access: "Private")
 
-          xhr :put, :update, :id => @private.id
-          flash[:warning].should_not == nil
-          response.body.should == "window.location.reload();"
+          xhr :put, :update, id: @private.id
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.body).to eq("window.location.reload();")
         end
       end
     end
 
     describe "with invalid params" do
       it "should not update the requested account but still expose the requested account as @account, and render [update] template" do
-        @account = FactoryGirl.create(:account, :id => 42, :name => "Hello people")
+        @account = FactoryGirl.create(:account, id: 42, name: "Hello people")
 
-        xhr :put, :update, :id => 42, :account => { :name => nil }
-        assigns(:account).reload.name.should == "Hello people"
-        assigns(:account).should == @account
-        response.should render_template("accounts/update")
+        xhr :put, :update, id: 42, account: { name: nil }
+        expect(assigns(:account).reload.name).to eq("Hello people")
+        expect(assigns(:account)).to eq(@account)
+        expect(response).to render_template("accounts/update")
       end
     end
-
   end
 
   # DELETE /accounts/1
@@ -419,87 +410,86 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before do
-      @account = FactoryGirl.create(:account, :user => current_user)
+      @account = FactoryGirl.create(:account, user: current_user)
     end
 
     describe "AJAX request" do
       it "should destroy the requested account and render [destroy] template" do
-        @another_account = FactoryGirl.create(:account, :user => current_user)
-        xhr :delete, :destroy, :id => @account.id
+        @another_account = FactoryGirl.create(:account, user: current_user)
+        xhr :delete, :destroy, id: @account.id
 
-        lambda { Account.find(@account) }.should raise_error(ActiveRecord::RecordNotFound)
-        assigns[:accounts].should == [ @another_account ] # @account got deleted
-        response.should render_template("accounts/destroy")
+        expect { Account.find(@account.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect(assigns[:accounts]).to eq([@another_account]) # @account got deleted
+        expect(response).to render_template("accounts/destroy")
       end
 
       it "should get data for accounts sidebar" do
-        xhr :delete, :destroy, :id => @account.id
+        xhr :delete, :destroy, id: @account.id
 
-        assigns[:account_category_total].should be_instance_of(HashWithIndifferentAccess)
+        expect(assigns[:account_category_total]).to be_instance_of(HashWithIndifferentAccess)
       end
 
       it "should try previous page and render index action if current page has no accounts" do
         session[:accounts_current_page] = 42
 
-        xhr :delete, :destroy, :id => @account.id
-        session[:accounts_current_page].should == 41
-        response.should render_template("accounts/index")
+        xhr :delete, :destroy, id: @account.id
+        expect(session[:accounts_current_page]).to eq(41)
+        expect(response).to render_template("accounts/index")
       end
 
       it "should render index action when deleting last account" do
         session[:accounts_current_page] = 1
 
-        xhr :delete, :destroy, :id => @account.id
-        session[:accounts_current_page].should == 1
-        response.should render_template("accounts/index")
+        xhr :delete, :destroy, id: @account.id
+        expect(session[:accounts_current_page]).to eq(1)
+        expect(response).to render_template("accounts/index")
       end
 
       describe "account got deleted or otherwise unavailable" do
         it "should reload current page is the account got deleted" do
-          @account = FactoryGirl.create(:account, :user => current_user)
+          @account = FactoryGirl.create(:account, user: current_user)
           @account.destroy
 
-          xhr :delete, :destroy, :id => @account.id
-          flash[:warning].should_not == nil
-          response.body.should == "window.location.reload();"
+          xhr :delete, :destroy, id: @account.id
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.body).to eq("window.location.reload();")
         end
 
         it "should reload current page with the flash message if the account is protected" do
-          @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
+          @private = FactoryGirl.create(:account, user: FactoryGirl.create(:user), access: "Private")
 
-          xhr :delete, :destroy, :id => @private.id
-          flash[:warning].should_not == nil
-          response.body.should == "window.location.reload();"
+          xhr :delete, :destroy, id: @private.id
+          expect(flash[:warning]).not_to eq(nil)
+          expect(response.body).to eq("window.location.reload();")
         end
       end
     end
 
     describe "HTML request" do
       it "should redirect to Accounts index when an account gets deleted from its landing page" do
-        delete :destroy, :id => @account.id
+        delete :destroy, id: @account.id
 
-        flash[:notice].should_not == nil
-        response.should redirect_to(accounts_path)
+        expect(flash[:notice]).not_to eq(nil)
+        expect(response).to redirect_to(accounts_path)
       end
 
       it "should redirect to account index with the flash message is the account got deleted" do
-        @account = FactoryGirl.create(:account, :user => current_user)
+        @account = FactoryGirl.create(:account, user: current_user)
         @account.destroy
 
-        delete :destroy, :id => @account.id
-        flash[:warning].should_not == nil
-        response.should redirect_to(accounts_path)
+        delete :destroy, id: @account.id
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response).to redirect_to(accounts_path)
       end
 
       it "should redirect to account index with the flash message if the account is protected" do
-        @private = FactoryGirl.create(:account, :user => FactoryGirl.create(:user), :access => "Private")
+        @private = FactoryGirl.create(:account, user: FactoryGirl.create(:user), access: "Private")
 
-        delete :destroy, :id => @private.id
-        flash[:warning].should_not == nil
-        response.should redirect_to(accounts_path)
+        delete :destroy, id: @private.id
+        expect(flash[:warning]).not_to eq(nil)
+        expect(response).to redirect_to(accounts_path)
       end
     end
-
   end
 
   # PUT /accounts/1/attach
@@ -509,7 +499,7 @@ describe AccountsController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:account)
-        @attachment = FactoryGirl.create(:task, :asset => nil)
+        @attachment = FactoryGirl.create(:task, asset: nil)
       end
       it_should_behave_like("attach")
     end
@@ -517,7 +507,7 @@ describe AccountsController do
     describe "contacts" do
       before do
         @model = FactoryGirl.create(:account)
-        @attachment = FactoryGirl.create(:contact, :account => nil)
+        @attachment = FactoryGirl.create(:contact, account: nil)
       end
       it_should_behave_like("attach")
     end
@@ -530,7 +520,7 @@ describe AccountsController do
     describe "tasks" do
       before do
         @model = FactoryGirl.create(:account)
-        @attachment = FactoryGirl.create(:task, :asset => @model)
+        @attachment = FactoryGirl.create(:task, asset: @model)
       end
       it_should_behave_like("discard")
     end
@@ -560,7 +550,7 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before do
-      @auto_complete_matches = [ FactoryGirl.create(:account, :name => "Hello World", :user => current_user) ]
+      @auto_complete_matches = [FactoryGirl.create(:account, name: "Hello World", user: current_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -570,26 +560,26 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to GET redraw" do
     it "should save user selected account preference" do
-      xhr :get, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
-      current_user.preference[:accounts_per_page].should == "42"
-      current_user.preference[:accounts_index_view].should  == "brief"
-      current_user.preference[:accounts_sort_by].should  == "accounts.name ASC"
+      xhr :get, :redraw, per_page: 42, view: "brief", sort_by: "name"
+      expect(current_user.preference[:accounts_per_page]).to eq("42")
+      expect(current_user.preference[:accounts_index_view]).to eq("brief")
+      expect(current_user.preference[:accounts_sort_by]).to eq("accounts.name ASC")
     end
 
     it "should reset current page to 1" do
-      xhr :get, :redraw, :per_page => 42, :view => "brief", :sort_by => "name"
-      session[:accounts_current_page].should == 1
+      xhr :get, :redraw, per_page: 42, view: "brief", sort_by: "name"
+      expect(session[:accounts_current_page]).to eq(1)
     end
 
     it "should select @accounts and render [index] template" do
       @accounts = [
-        FactoryGirl.create(:account, :name => "A", :user => current_user),
-        FactoryGirl.create(:account, :name => "B", :user => current_user)
+        FactoryGirl.create(:account, name: "A", user: current_user),
+        FactoryGirl.create(:account, name: "B", user: current_user)
       ]
 
-      xhr :get, :redraw, :per_page => 1, :sort_by => "name"
-      assigns(:accounts).should == [ @accounts.first ]
-      response.should render_template("accounts/index")
+      xhr :get, :redraw, per_page: 1, sort_by: "name"
+      expect(assigns(:accounts)).to eq([@accounts.first])
+      expect(response).to render_template("accounts/index")
     end
   end
 
@@ -598,18 +588,18 @@ describe AccountsController do
   describe "responding to POST filter" do
     it "should expose filtered accounts as @accounts and render [index] template" do
       session[:accounts_filter] = "customer,vendor"
-      @accounts = [ FactoryGirl.create(:account, :category => "partner", :user => current_user) ]
+      @accounts = [FactoryGirl.create(:account, category: "partner", user: current_user)]
 
-      xhr :post, :filter, :category => "partner"
-      assigns(:accounts).should == @accounts
-      response.should render_template("accounts/index")
+      xhr :post, :filter, category: "partner"
+      expect(assigns(:accounts)).to eq(@accounts)
+      expect(response).to render_template("accounts/index")
     end
 
     it "should reset current page to 1" do
       @accounts = []
-      xhr :post, :filter, :category => "partner"
+      xhr :post, :filter, category: "partner"
 
-      session[:accounts_current_page].should == 1
+      expect(session[:accounts_current_page]).to eq(1)
     end
   end
 end

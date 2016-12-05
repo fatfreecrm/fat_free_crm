@@ -11,17 +11,17 @@ describe "/opportunities/new" do
   before do
     login_and_assign
     @account = FactoryGirl.create(:account)
-    assign(:opportunity, Opportunity.new(:user => current_user))
-    assign(:users, [ current_user ])
+    assign(:opportunity, Opportunity.new(user: current_user))
+    assign(:users, [current_user])
     assign(:account, @account)
-    assign(:accounts, [ @account ])
+    assign(:accounts, [@account])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   it "should toggle empty message div if it exists" do
     render
 
-    rendered.should include("crm.flick('empty', 'toggle')")
+    expect(rendered).to include("crm.flick('empty', 'toggle')")
   end
 
   describe "new opportunity" do
@@ -29,14 +29,14 @@ describe "/opportunities/new" do
       params[:cancel] = nil
       render
 
-      rendered.should include("#create_opportunity")
+      expect(rendered).to include("#create_opportunity")
     end
 
     it "should call JavaScript functions to load Calendar popup" do
       params[:cancel] = nil
       render
 
-      rendered.should include("crm.flip_form('create_opportunity')")
+      expect(rendered).to include("crm.flip_form('create_opportunity')")
     end
   end
 
@@ -45,9 +45,8 @@ describe "/opportunities/new" do
       params[:cancel] = "true"
       render
 
-      rendered.should_not include("#create_opportunity")
-      rendered.should include("crm.flip_form('create_opportunity')")
+      expect(rendered).not_to include("#create_opportunity")
+      expect(rendered).to include("crm.flip_form('create_opportunity')")
     end
   end
-
 end

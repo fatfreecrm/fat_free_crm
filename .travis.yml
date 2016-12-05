@@ -1,16 +1,19 @@
 sudo: false
 language: ruby
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.5
-
+  - 2.2
+  - 2.3.3
 env:
   - DB=mysql
   - DB=postgres
   - DB=sqlite
 
-gemfile: Gemfile.ci
+matrix:
+  exclude:
+    - rvm: 2.2
+      env: DB=mysql
+    - rvm: 2.2
+      env: DB=sqlite
 
 bundler_args: --path=vendor/bundle --without heroku
 
