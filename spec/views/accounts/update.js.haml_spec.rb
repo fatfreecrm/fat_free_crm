@@ -11,7 +11,7 @@ describe "/accounts/update" do
   before do
     login_and_assign
 
-    assign(:account, @account = FactoryGirl.create(:account, user: current_user))
+    assign(:account, @account = FactoryGirl.build_stubbed(:account, user: current_user))
     assign(:users, [current_user])
     assign(:account_category_total, Hash.new(1))
   end

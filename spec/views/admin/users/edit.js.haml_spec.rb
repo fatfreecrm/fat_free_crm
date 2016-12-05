@@ -8,7 +8,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 describe "admin/users/edit" do
   before do
     login_and_assign(admin: true)
-    assign(:user, @user = FactoryGirl.create(:user))
+    assign(:user, @user = FactoryGirl.build_stubbed(:user))
   end
 
   it "cancel replaces [Edit User] form with user partial" do
@@ -19,7 +19,7 @@ describe "admin/users/edit" do
   end
 
   it "edit hides previously open [Edit User] and replaces it with user partial" do
-    assign(:previous, previous = FactoryGirl.create(:user))
+    assign(:previous, previous = FactoryGirl.build_stubbed(:user))
     render
 
     expect(rendered).to include("user_#{previous.id}")

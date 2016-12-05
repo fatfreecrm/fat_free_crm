@@ -9,16 +9,16 @@ describe "/leads/promote" do
   before do
     login_and_assign
     assign(:users, [current_user])
-    assign(:account, @account = FactoryGirl.create(:account))
+    assign(:account, @account = FactoryGirl.build_stubbed(:account))
     assign(:accounts, [@account])
-    assign(:contact, FactoryGirl.create(:contact))
-    assign(:opportunity, FactoryGirl.create(:opportunity))
+    assign(:contact, FactoryGirl.build_stubbed(:contact))
+    assign(:opportunity, FactoryGirl.build_stubbed(:opportunity))
     assign(:lead_status_total, Hash.new(1))
   end
 
   describe "no errors :" do
     before do
-      assign(:lead, @lead = FactoryGirl.create(:lead, status: "converted", user: current_user, assignee: current_user))
+      assign(:lead, @lead = FactoryGirl.build_stubbed(:lead, status: "converted", user: current_user, assignee: current_user))
     end
 
     describe "from lead landing page -" do
@@ -64,9 +64,9 @@ describe "/leads/promote" do
     describe "from related campaign page -" do
       before do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
-        assign(:campaign, FactoryGirl.create(:campaign))
+        assign(:campaign, FactoryGirl.build_stubbed(:campaign))
         assign(:stage, Setting.unroll(:opportunity_stage))
-        assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity))
+        assign(:opportunity, @opportunity = FactoryGirl.build_stubbed(:opportunity))
       end
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
@@ -93,7 +93,7 @@ describe "/leads/promote" do
 
   describe "validation errors:" do
     before do
-      assign(:lead, @lead = FactoryGirl.create(:lead, status: "new", user: current_user, assignee: current_user))
+      assign(:lead, @lead = FactoryGirl.build_stubbed(:lead, status: "new", user: current_user, assignee: current_user))
     end
 
     describe "from lead landing page -" do

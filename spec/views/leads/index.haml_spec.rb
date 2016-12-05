@@ -17,7 +17,7 @@ describe "/leads/index" do
   end
 
   it "should render list of accounts if list of leads is not empty" do
-    assign(:leads, [FactoryGirl.create(:lead)].paginate(page: 1, per_page: 20))
+    assign(:leads, [FactoryGirl.build_stubbed(:lead)].paginate(page: 1, per_page: 20))
 
     render
     expect(view).to render_template(partial: "_lead")

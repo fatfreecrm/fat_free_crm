@@ -14,7 +14,7 @@ describe "/users/upload_avatar" do
 
   describe "no errors:" do
     before do
-      @avatar = FactoryGirl.create(:avatar, entity: current_user)
+      @avatar = FactoryGirl.build_stubbed(:avatar, entity: current_user)
       allow(current_user).to receive(:avatar).and_return(@avatar)
       assign(:user, @user = current_user)
     end
@@ -29,7 +29,7 @@ describe "/users/upload_avatar" do
 
   describe "validation errors:" do
     before do
-      @avatar = FactoryGirl.create(:avatar, entity: current_user)
+      @avatar = FactoryGirl.build_stubbed(:avatar, entity: current_user)
       @avatar.errors.add(:image, "error")
       allow(current_user).to receive(:avatar).and_return(@avatar)
       assign(:user, @user = current_user)

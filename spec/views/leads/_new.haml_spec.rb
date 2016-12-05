@@ -12,7 +12,7 @@ describe "/leads/_new" do
     login_and_assign
     assign(:lead, FactoryGirl.build(:lead))
     assign(:users, [current_user])
-    assign(:campaign, @campaign = FactoryGirl.create(:campaign))
+    assign(:campaign, @campaign = FactoryGirl.build_stubbed(:campaign))
     assign(:campaigns, [@campaign])
   end
 

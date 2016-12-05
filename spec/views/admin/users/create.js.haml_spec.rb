@@ -12,7 +12,7 @@ describe "admin/users/create" do
 
   describe "create success" do
     before do
-      assign(:user, @user = FactoryGirl.create(:user))
+      assign(:user, @user = FactoryGirl.build_stubbed(:user))
       assign(:users, [@user]) # .paginate
     end
 
