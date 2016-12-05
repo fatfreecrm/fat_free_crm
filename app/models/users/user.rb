@@ -140,6 +140,9 @@ class User < ActiveRecord::Base
     [name].to_xml
   end
 
+  def destroyable?
+    check_if_current_user && !has_related_assets?
+  end
 
   # Suspend newly created user if signup requires an approval.
   #----------------------------------------------------------------------------
@@ -155,7 +158,7 @@ class User < ActiveRecord::Base
 
   # Prevent deleting a user unless she has no artifacts left.
   #----------------------------------------------------------------------------
-  def check_if_has_related_assets
+  def has_related_assets?
     sum = %w(Account Campaign Lead Contact Opportunity Comment Task).detect do |asset|
       klass = asset.constantize
       
