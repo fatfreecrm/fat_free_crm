@@ -47,6 +47,7 @@ class Admin::UsersController < Admin::ApplicationController
     params[:user][:email].try(:strip!)
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.new(user_params)
+    @user.check_if_needs_approval
     @user.save_without_session_maintenance
 
     respond_with(@user)

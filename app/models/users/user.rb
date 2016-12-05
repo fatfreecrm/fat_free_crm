@@ -39,7 +39,6 @@
 #
 
 class User < ActiveRecord::Base
-  before_create :check_if_needs_approval
   before_destroy :check_if_current_user, :check_if_has_related_assets
 
   has_one :avatar, as: :entity, dependent: :destroy  # Personal avatar.
@@ -143,13 +142,14 @@ class User < ActiveRecord::Base
     [name].to_xml
   end
 
-  private
 
   # Suspend newly created user if signup requires an approval.
   #----------------------------------------------------------------------------
   def check_if_needs_approval
     self.suspended_at = Time.now if Setting.user_signup == :needs_approval && !admin
   end
+
+  private
 
   # Prevent current user from deleting herself.
   #----------------------------------------------------------------------------
