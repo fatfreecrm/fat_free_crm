@@ -39,8 +39,6 @@
 #
 
 class User < ActiveRecord::Base
-  before_destroy :check_if_current_user, :check_if_has_related_assets
-
   has_one :avatar, as: :entity, dependent: :destroy  # Personal avatar.
   has_many :avatars                                         # As owner who uploaded it, ex. Contact avatar.
   has_many :comments, as: :commentable                   # As owner who created a comment.
@@ -155,8 +153,6 @@ class User < ActiveRecord::Base
     User.current_user.nil? || User.current_user != self
   end
 
-  private
-
   # Prevent deleting a user unless she has no artifacts left.
   #----------------------------------------------------------------------------
   def check_if_has_related_assets
@@ -167,6 +163,8 @@ class User < ActiveRecord::Base
     end
     sum == nil
   end
+
+  private
 
   # Define class methods
   #----------------------------------------------------------------------------
