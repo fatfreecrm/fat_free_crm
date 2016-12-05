@@ -54,49 +54,44 @@ describe User do
     expect(FactoryGirl.build(:user)).to be_valid
   end
 
-  describe "Destroying users with and without related assets" do
-    before do
-      @user = FactoryGirl.create(:user)
-    end
-
-    %w(account campaign lead contact opportunity).each do |asset|
-      it "should not destroy the user if she owns #{asset}" do
-        FactoryGirl.create(asset, user: @user)
-        @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error
-        expect(@user.destroyed?).to eq(false)
+  describe '#destroyable?' do
+    describe "Destroying users with and without related assets" do
+      before do
+        @user = FactoryGirl.create(:user)
       end
 
-      it "should not destroy the user if she has #{asset} assigned" do
-        FactoryGirl.create(asset, assignee: @user)
-        @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error
-        expect(@user.destroyed?).to eq(false)
+      %w(account campaign lead contact opportunity).each do |asset|
+        it "should not destroy the user if she owns #{asset}" do
+          FactoryGirl.create(asset, user: @user)
+
+          expect(@user.destroyable?).to eq(false)
+        end
+
+        it "should not destroy the user if she has #{asset} assigned" do
+          FactoryGirl.create(asset, assignee: @user)
+          expect(@user.destroyable?).to eq(false)
+        end
+      end
+
+      it "should not destroy the user if she owns a comment" do
+        login
+        account = FactoryGirl.create(:account, user: current_user)
+        FactoryGirl.create(:comment, user: @user, commentable: account)
+        expect(@user.destroyable?).to eq(false)
+      end
+
+      it "should not destroy the current user" do
+        login
+
+        expect(current_user.destroyable?).to eq(false)
+      end
+
+      it "should destroy the user" do
+        expect(@user.destoyable?).to eq(true)
       end
     end
-
-    it "should not destroy the user if she owns a comment" do
-      login
-      account = FactoryGirl.create(:account, user: current_user)
-      FactoryGirl.create(:comment, user: @user, commentable: account)
-      @user.destroy
-      expect { User.find(@user.id) }.to_not raise_error
-      expect(@user.destroyed?).to eq(false)
-    end
-
-    it "should not destroy the current user" do
-      login
-      current_user.destroy
-      expect { current_user.reload }.to_not raise_error
-      expect(current_user).not_to be_destroyed
-    end
-
-    it "should destroy the user" do
-      @user.destroy
-      expect { User.find(@user.id) }.to raise_error(ActiveRecord::RecordNotFound)
-      expect(@user).to be_destroyed
-    end
-
+  end
+  describe '#destroy' do
     it "once the user gets deleted all her permissions must be deleted too" do
       FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:account))
       FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:contact))
