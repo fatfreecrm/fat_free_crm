@@ -6,6 +6,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :set_paper_trail_whodunnit
+
   before_action :set_context
   before_action :clear_setting_cache
   before_action :cors_preflight_check
