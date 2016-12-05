@@ -8,7 +8,7 @@ then you win. –- Mahatma Gandhi
  - Refactoring: ```@user.check_if_needs_approval``` must be explicitly called in rake tasks or similar, it is no longer a before_create hook
  - Refactoring: ```@user.destroyable?``` must be called in rake tasks or similar, it is no longer a before_destroy check
  - Various gem updates
-
+ - Upgrade to Paperclip 5 (see https://github.com/thoughtbot/paperclip/wiki/Upgrade-Paperclip-4x-to-5x)
 Mon, Dec 5, 2016 (0.14.0)
 ---------------------------------------------------------------------
 Forked to publish 'reduced_fat_crm', a version of fat-free-crm with 
