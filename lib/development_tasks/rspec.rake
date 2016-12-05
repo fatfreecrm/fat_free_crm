@@ -17,8 +17,4 @@ if defined?(RSpec)
       Rails.env = tmp_env
     end
   end
-
-  Rake::Task["spec"].prerequisites.clear
-  Rake::Task["spec"].prerequisites.push("spec:prepare")
-
 end
