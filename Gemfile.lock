@@ -141,7 +141,7 @@ GEM
     guard-rails (0.8.0)
       guard (~> 2.11)
       guard-compat (~> 1.0)
-    guard-rspec (4.6.4)
+    guard-rspec (4.7.3)
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
@@ -311,7 +311,7 @@ GEM
     scrypt (2.1.1)
       ffi-compiler (>= 0.0.2)
       rake
-    select2-rails (3.5.9.3)
+    select2-rails (4.0.3)
       thor (~> 0.14)
     selenium-webdriver (2.53.4)
       childprocess (~> 0.5)
@@ -421,7 +421,7 @@ DEPENDENCIES
   rspec-rails
   sass
   sass-rails
-  select2-rails (~> 3.5.9.3)
+  select2-rails
   selenium-webdriver (< 3.0.0)
   simple_form
   sprockets-rails (= 2.2.2)
