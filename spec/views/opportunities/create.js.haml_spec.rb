@@ -13,7 +13,7 @@ describe "/opportunities/create" do
 
   describe "create success" do
     before do
-      assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity))
+      assign(:opportunity, @opportunity = FactoryGirl.build_stubbed(:opportunity))
       assign(:opportunities, [@opportunities].paginate)
       assign(:opportunity_stage_total, Hash.new(1))
     end
@@ -71,8 +71,8 @@ describe "/opportunities/create" do
   describe "create failure" do
     it "should re-render [create] template in :create_opportunity div" do
       assign(:opportunity, FactoryGirl.build(:opportunity, name: nil)) # make it invalid
-      @account = FactoryGirl.create(:account)
-      assign(:users, [FactoryGirl.create(:user)])
+      @account = FactoryGirl.build_stubbed(:account)
+      assign(:users, [FactoryGirl.build_stubbed(:user)])
       assign(:account, @account)
       assign(:accounts, [@account])
 

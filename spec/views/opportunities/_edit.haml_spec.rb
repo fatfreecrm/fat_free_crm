@@ -10,14 +10,14 @@ describe "/opportunities/_edit" do
 
   before do
     login_and_assign
-    assign(:account, @account = FactoryGirl.create(:account))
+    assign(:account, @account = FactoryGirl.build_stubbed(:account))
     assign(:accounts, [@account])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   it "should render [edit opportunity] form" do
     assign(:users, [current_user])
-    assign(:opportunity, @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign = FactoryGirl.create(:campaign)))
+    assign(:opportunity, @opportunity = FactoryGirl.build_stubbed(:opportunity, campaign: @campaign = FactoryGirl.build_stubbed(:campaign)))
     render
 
     expect(rendered).to have_tag("form[class=edit_opportunity]") do
@@ -28,7 +28,7 @@ describe "/opportunities/_edit" do
 
   it "should pick default assignee (Myself)" do
     assign(:users, [current_user])
-    assign(:opportunity, FactoryGirl.create(:opportunity, assignee: nil))
+    assign(:opportunity, FactoryGirl.build_stubbed(:opportunity, assignee: nil))
     render
 
     expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|
@@ -50,7 +50,7 @@ describe "/opportunities/_edit" do
 
   it "should render background info field if settings require so" do
     assign(:users, [current_user])
-    assign(:opportunity, FactoryGirl.create(:opportunity))
+    assign(:opportunity, FactoryGirl.build_stubbed(:opportunity))
     Setting.background_info = [:opportunity]
 
     render
@@ -59,7 +59,7 @@ describe "/opportunities/_edit" do
 
   it "should not render background info field if settings do not require so" do
     assign(:users, [current_user])
-    assign(:opportunity, FactoryGirl.create(:opportunity))
+    assign(:opportunity, FactoryGirl.build_stubbed(:opportunity))
     Setting.background_info = []
 
     render
