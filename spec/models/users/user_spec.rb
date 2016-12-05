@@ -92,6 +92,9 @@ describe User do
     end
   end
   describe '#destroy' do
+    before do
+      @user = FactoryGirl.create(:user)
+    end
     it "once the user gets deleted all her permissions must be deleted too" do
       FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:account))
       FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:contact))
