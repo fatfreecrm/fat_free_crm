@@ -8,7 +8,7 @@ require 'spec_helper'
 describe "admin/users/update" do
   before do
     login_and_assign(admin: true)
-    assign(:user, @user = FactoryGirl.create(:user))
+    assign(:user, @user = FactoryGirl.build_stubbed(:user))
   end
 
   describe "no errors:" do
