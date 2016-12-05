@@ -134,6 +134,7 @@ class UsersController < ApplicationController
   protected
 
   def user_params
+    params[:user][:email].try(:strip!)
     params[:user].permit(
       :username,
       :email,
