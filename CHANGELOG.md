@@ -9,7 +9,7 @@ then you win. –- Mahatma Gandhi
  - Refactoring: ```@user.destroyable?``` must be called in rake tasks or similar, it is no longer a before_destroy check
  - Various gem updates
  - Upgrade to Paperclip 5 (see https://github.com/thoughtbot/paperclip/wiki/Upgrade-Paperclip-4x-to-5x)
-
+ - Upgrade to paper_trail 6+ (https://github.com/airblade/paper_trail/blob/master/CHANGELOG.md)
 
 Mon, Dec 5, 2016 (0.14.0)
 ---------------------------------------------------------------------
