@@ -87,7 +87,7 @@ describe User do
       end
 
       it "should destroy the user" do
-        expect(@user.destoyable?).to eq(true)
+        expect(@user.destroyable?).to eq(true)
       end
     end
   end
