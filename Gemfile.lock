@@ -36,8 +36,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts-as-taggable-on (3.5.0)
-      activerecord (>= 3.2, < 5)
+    acts-as-taggable-on (4.0.0)
+      activerecord (>= 4.0)
     acts_as_commentable (4.0.2)
     acts_as_fu (0.0.9)
       activerecord
