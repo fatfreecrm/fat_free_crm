@@ -114,16 +114,24 @@ describe User do
     end
   end
 
-  it "should set suspended timestamp upon creation if signups need approval and the user is not an admin" do
-    allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-    @user = FactoryGirl.create(:user, suspended_at: nil)
-    expect(@user).to be_suspended
-  end
+  describe '#check_if_needs_approval' do
+    it "should set suspended timestamp upon creation if signups need approval and the user is not an admin" do
+      allow(Setting).to receive(:user_signup).and_return(:needs_approval)
+      @user = FactoryGirl.build(:user, suspended_at: nil)
 
-  it "should not set suspended timestamp upon creation if signups need approval and the user is an admin" do
-    allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-    @user = FactoryGirl.create(:user, admin: true, suspended_at: nil)
-    expect(@user).not_to be_suspended
+      @user.check_if_needs_approval
+
+      expect(@user).to be_suspended
+    end
+
+    it "should not set suspended timestamp upon creation if signups need approval and the user is an admin" do
+      allow(Setting).to receive(:user_signup).and_return(:needs_approval)
+      @user = FactoryGirl.build(:user, admin: true, suspended_at: nil)
+
+      @user.check_if_needs_approval
+
+      expect(@user).not_to be_suspended
+    end
   end
 
   context "scopes" do
