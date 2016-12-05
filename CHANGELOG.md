@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+0.15.0
+ - Refactoring, ```@user.check_if_needs_approval``` must be explicitly called in rake tasks or similar, it is no longer a before_create hook
+ - Various gem updates
+
 Mon, Dec 5, 2016 (0.14.0)
 ---------------------------------------------------------------------
 Forked to publish 'reduced_fat_crm', a version of fat-free-crm with 
