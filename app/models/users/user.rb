@@ -149,13 +149,13 @@ class User < ActiveRecord::Base
     self.suspended_at = Time.now if Setting.user_signup == :needs_approval && !admin
   end
 
-  private
-
   # Prevent current user from deleting herself.
   #----------------------------------------------------------------------------
   def check_if_current_user
     User.current_user.nil? || User.current_user != self
   end
+
+  private
 
   # Prevent deleting a user unless she has no artifacts left.
   #----------------------------------------------------------------------------
