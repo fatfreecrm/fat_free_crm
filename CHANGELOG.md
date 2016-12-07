@@ -28,53 +28,95 @@ At this stage, no classes etc have been renamed.
 - Ruby 2.0 or less dropped from CI
 
 
-Missing release notes
----------------------------------------------------------------------
 0.13.6 - February 12, 2015
+---------------------------------------------------------------------
+ - Fixes #413 and #414 - bold tag being escaped on user profile.
+ - Fix for CVE-2015-1585 - CSRF vulnerability.
+
+Full list:
+https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.5...v0.13.6
+
 0.13.5 - January 22, 2015
+---------------------------------------------------------------------
+ - Update gems
+ - Fixed #337 Added index on Versions created_at
+ - [Security] Team section should not display opportunities current user is not allowed to see...
+ - Update to rails 3.2.20
+ - Fixed issue #347
+ - Fixed issue #349
+ - Fixed #351 - missing interpolation argument.
+ - Fixed #353 - observes is a prototype function that is no longer used.
+ - Fixed #283 - email max length is 254 according to IETF
+ - Fix avatar issue in recent_activity
+ - Merge pull request #354 
+ - Fixed custom field handling of html entities.
+ - Merge pull request #355
+ - Fixed issue #374 - global lists missing from UK translation file.
+ - Fix #356 - default SMTP session should have no auth
+
+
+Full list:
+https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.4...v0.13.5
+
 0.13.4 - September 4, 2014
+---------------------------------------------------------------------
+ - Fixed XSS vulnerability in helper method.
+ - Use rails_autolink gem which contains updated XSS fixes.
+ - Fixed XSS vulnerability if email data is manipulated.
+
+Full list:
+https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.3...v0.13.4
 
 0.13.3 - August 26, 2014
 ---------------------------------------------------------------------
+ - Fixed bug where starts_on was being used instead of ends_on.      a0f69d7
+ - fixes bug with toggling select/create account when converting lead      7c76b9c
+ - Russian locale fixes. 
+ - Add entity_observer to list of observers when running as an engine.
+ - Allow notification emails to be sent from a particular address. Many 
+ - Convert tag select box to Select2. We're deprecating Chosen
+ - Enable fallback translations.
+ - Fixed 'end of week' spec in tasks using Timecop.
+ - Fixed bug with recent items box replacement.
+ - #311 - problem with Thor being reference before it is loa
+ - Fixed some bugs related to sorting custom fields.
+ - #334 Added byebug for ruby2+.      5dca0ba
+ - Update rails
+ - Update gems
+ - removes prototype-rails dependency
+ - replaces prototype with jquery
 
+Full list:
+https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.2...v0.13.3
 
-Missing release notes
----------------------------------------------------------------------
 0.13.2 - January 9, 2014
 ---------------------------------------------------------------------
-  Fixed issue with secret token not being saved if DB does not exist.
+ - Fixed issue with secret token not being saved if DB does not exist.
   
 0.13.1 - January 7, 2014
 ---------------------------------------------------------------------
-@steveyken  steveyken Lock down routes.     c2a0ae9
- @steveyken steveyken Remove stub hook      3551a9b
- @steveyken steveyken Remove unneccessary function      50cbe69
- @steveyken steveyken Don't spam gmail by default     3d35e34
- @steveyken steveyken consider_all_requests_local should be off by default in production mode     025a113
- @steveyken steveyken Remove pysch by default (optimise for ruby 2 now)     63ae518
- @steveyken steveyken Fixed typos     b640dca
- @steveyken steveyken Fixed regular expression logic to be more sensitive to newline attacks.     2de4219
-  Cleaned code, no functional changes.      2f55f3c
- @steveyken steveyken Strengthen validation     689345d
-Commits on Jan 02, 2014
- @steveyken steveyken users_controller requires security on its actions. Use CanCan 'load_a…  …     6a4ba78
- @steveyken steveyken Send emails to file in development mode     a822cca
- @steveyken steveyken Don't show user list if not logged in.      a966710
- @steveyken steveyken Clean up Capfile      9cc4d40
- @steveyken steveyken Remove unnecessary whitespace and test hook.      4de19f5
- @steveyken steveyken Remove old 'rake acceptance' task     2d4411a
-Commits on Jan 04, 2014
- @steveyken steveyken Refactored secret token generation code to generate and persist a sec…  …     518406f
- @steveyken steveyken Hide password related attributes from the logs.     f071199
- @steveyken steveyken File syntax layout tweak.     d31f2b5
- @steveyken steveyken Escape autocomplete output safely.      f923714
- @steveyken steveyken Locked down available views in Task.      fdb90e7
- @steveyken steveyken sanitize list.url     7db83d7
-Commits on Jan 07, 2014
- @steveyken steveyken Merge branch 'security-fixes'     67113f5
- @steveyken steveyken Don't generate secret token in test mode.     71a99f1
- @steveyken steveyken Don't raise secret token generation error during tests.     6e1624e
- @steveyken steveyken Bump version      84ece1
+ - Lock down routes.
+ - Remove stub hook
+ - Remove unneccessary function
+ - Don't spam gmail by default
+ - consider_all_requests_local should be off by default in production mode
+ - Remove pysch by default (optimise for ruby 2 now)
+ - Fixed regular expression logic to be more sensitive to newline attacks.
+ - users_controller requires security on its actions.
+ - Send emails to file in development mode
+ - Don't show user list if not logged in.
+ - Remove old 'rake acceptance' task     2d4411a
+ - Refactored secret token generation code
+ - Hide password related attributes from the logs.
+ - File syntax layout tweak.
+ - Escape autocomplete output safely.
+ - Locked down available views in Task.
+ - sanitize list.url
+ - Don't generate secret token in test mode.
+ - Don't raise secret token generation error during tests.
+
+Full list
+https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.0...v0.13.1
 
 Fri Dec 27, 2013 (0.13.0)
 ---------------------------------------------------------------------
