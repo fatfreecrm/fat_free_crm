@@ -4,7 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-0.15.0
+Wed, Dec 7, 2016 (0.15.0-beta)
+---------------------------------------------------------------------
+This release is aimed at getting as many dependencies as possible up to date without significant refactoring.
+
+ - Refactoring: Tests prefer build, build_record over ```FactoryGirl.create``` where possible
+ - Refactoring: View tests minimize DB interaction greatly
  - Refactoring: ```@user.check_if_needs_approval``` must be explicitly called in rake tasks or similar, it is no longer a before_create hook
  - Refactoring: ```@user.destroyable?``` must be called in rake tasks or similar, it is no longer a before_destroy check
  - Various gem updates
