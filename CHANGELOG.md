@@ -33,14 +33,113 @@ Missing release notes
 0.13.6 - February 12, 2015
 0.13.5 - January 22, 2015
 0.13.4 - September 4, 2014
-0.13.3 - August 26, 2014
-0.13.2 - January 9, 2014
-0.13.1 - January 7, 2014
-0.13.0 - December 27, 2013
-0.12.3 - January 9, 2014
-0.12.2 - January 7, 2014
-0.12.1 - December 27, 2013
 
+0.13.3 - August 26, 2014
+---------------------------------------------------------------------
+
+
+Missing release notes
+---------------------------------------------------------------------
+0.13.2 - January 9, 2014
+---------------------------------------------------------------------
+  Fixed issue with secret token not being saved if DB does not exist.
+  
+0.13.1 - January 7, 2014
+---------------------------------------------------------------------
+@steveyken  steveyken Lock down routes.     c2a0ae9
+ @steveyken steveyken Remove stub hook      3551a9b
+ @steveyken steveyken Remove unneccessary function      50cbe69
+ @steveyken steveyken Don't spam gmail by default     3d35e34
+ @steveyken steveyken consider_all_requests_local should be off by default in production mode     025a113
+ @steveyken steveyken Remove pysch by default (optimise for ruby 2 now)     63ae518
+ @steveyken steveyken Fixed typos     b640dca
+ @steveyken steveyken Fixed regular expression logic to be more sensitive to newline attacks.     2de4219
+  Cleaned code, no functional changes.      2f55f3c
+ @steveyken steveyken Strengthen validation     689345d
+Commits on Jan 02, 2014
+ @steveyken steveyken users_controller requires security on its actions. Use CanCan 'load_a…  …     6a4ba78
+ @steveyken steveyken Send emails to file in development mode     a822cca
+ @steveyken steveyken Don't show user list if not logged in.      a966710
+ @steveyken steveyken Clean up Capfile      9cc4d40
+ @steveyken steveyken Remove unnecessary whitespace and test hook.      4de19f5
+ @steveyken steveyken Remove old 'rake acceptance' task     2d4411a
+Commits on Jan 04, 2014
+ @steveyken steveyken Refactored secret token generation code to generate and persist a sec…  …     518406f
+ @steveyken steveyken Hide password related attributes from the logs.     f071199
+ @steveyken steveyken File syntax layout tweak.     d31f2b5
+ @steveyken steveyken Escape autocomplete output safely.      f923714
+ @steveyken steveyken Locked down available views in Task.      fdb90e7
+ @steveyken steveyken sanitize list.url     7db83d7
+Commits on Jan 07, 2014
+ @steveyken steveyken Merge branch 'security-fixes'     67113f5
+ @steveyken steveyken Don't generate secret token in test mode.     71a99f1
+ @steveyken steveyken Don't raise secret token generation error during tests.     6e1624e
+ @steveyken steveyken Bump version      84ece1
+
+Fri Dec 27, 2013 (0.13.0)
+---------------------------------------------------------------------
+- Add user_id to lists table    
+- Add campaign to opportunity advanced search.
+- Add id to export formats. 
+- Added ActiveSupport lazy load hooks for all models in Fat Free CRM.
+- Added timeago library to enable future caching of search results. 
+- Atom and RSS feeds now deal with cases where user doesn't exist.
+- Better solution to internationalizing jquery.timeago plugin. 
+- Configurationise the uniqueness constraint for account first names 
+- Convert settings from syck to psych and remove dependency on Syck.
+- Enforce available locales in latest version of I18n. 
+- German translations
+- Introducing client-side unobtrusive javascript for new comments.
+- Peg paper_trail to v2.7
+- Replaces rjs with erb/haml
+- Updated to latest rails version
+
+Bug fixes
+- Ensure user isn't deleted if they still have tasks.
+- Fix delete button not showing    
+- Fix global list save problem     
+- Closes #268: Replace the contents of "div#leads_pagination"
+- #242 and #245. Fix cohsen_select helper to be able to
+- Fixed issue #282
+- Fixed issue with account categories inclusion matcher.
+- Fixed issue with timeago plugin not precompiling. Resolves issue #286
+- Fixed issue#281 - psych v2 is not supported.      
+- Fixed one_submit_only js format and fixed red background highlight
+- Fixed uninitialized constant 'Version' error on dashboard ATOM/RSS
+- #270. Fixed procfile command for heroku. 
+- #273 from notentered/testFixes      
+- #279 from roadt/bugfix       
+- #284 from roadt/bugfix   
+- #287 from szetobo/fix_test_case   
+- #288 from szetobo/update_scope     
+- rake ffcrm:setup no longer nukes the database before starting.
+
+Full changes:
+https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.12.3...v0.13.0
+
+
+0.12.3 - January 9, 2014
+---------------------------------------------------------------------
+No changes
+
+0.12.2 - January 7, 2014
+---------------------------------------------------------------------
+ - users_controller requires security on its actions.
+ - Refactored secret token generation code to generate and persist a secret token in the DB if one doesn't exist
+ - Don't show user list if not logged in.
+ - Hide password related attributes from the logs.
+ - consider_all_requests_local should be off by default in production mode
+ - Fixed issue with secret token not being saved if DB does not exist. 
+
+
+0.12.1 - December 27, 2013
+---------------------------------------------------------------------
+- Strengthen case to generate unique secret token.
+- Ensure requests are protected.
+- Add custom serializers for xml and json.
+- Fixed sql injection in timeline method.
+- Refactor activity_user to remove possible SQL injection points.
+- Update gems to compile through
 
 Fri, Jun 28, 2013 (0.12.0)
 ---------------------------------------------------------------------
