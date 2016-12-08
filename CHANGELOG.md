@@ -18,11 +18,6 @@ This release is aimed at getting as many dependencies as possible up to date wit
 
 Mon, Dec 5, 2016 (0.14.0)
 ---------------------------------------------------------------------
-Forked to publish 'reduced_fat_crm', a version of fat-free-crm with 
-more pull requests merged and more contributors.
-
-At this stage, no classes etc have been renamed.
-
 - Various security fixes
 - Enable CORS headers
 - Ruby 2.0 or less dropped from CI
@@ -34,7 +29,7 @@ At this stage, no classes etc have been renamed.
  - Fix for CVE-2015-1585 - CSRF vulnerability.
 
 Full list:
-https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.5...v0.13.6
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.5...v0.13.6
 
 0.13.5 - January 22, 2015
 ---------------------------------------------------------------------
@@ -56,7 +51,7 @@ https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.5...v0.13.6
 
 
 Full list:
-https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.4...v0.13.5
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.4...v0.13.5
 
 0.13.4 - September 4, 2014
 ---------------------------------------------------------------------
@@ -65,7 +60,7 @@ https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.4...v0.13.5
  - Fixed XSS vulnerability if email data is manipulated.
 
 Full list:
-https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.3...v0.13.4
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.3...v0.13.4
 
 0.13.3 - August 26, 2014
 ---------------------------------------------------------------------
@@ -87,7 +82,7 @@ https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.3...v0.13.4
  - replaces prototype with jquery
 
 Full list:
-https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.2...v0.13.3
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.2...v0.13.3
 
 0.13.2 - January 9, 2014
 ---------------------------------------------------------------------
@@ -116,7 +111,7 @@ https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.2...v0.13.3
  - Don't raise secret token generation error during tests.
 
 Full list
-https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.13.0...v0.13.1
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.0...v0.13.1
 
 Fri Dec 27, 2013 (0.13.0)
 ---------------------------------------------------------------------
@@ -157,7 +152,7 @@ Bug fixes
 - rake ffcrm:setup no longer nukes the database before starting.
 
 Full changes:
-https://github.com/reduced-fat-crm/fat_free_crm/compare/v0.12.3...v0.13.0
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.12.3...v0.13.0
 
 
 0.12.3 - January 9, 2014
