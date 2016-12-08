@@ -48,16 +48,6 @@ Pull requests and bug reports are always welcome!
 
 Visit our website at http://www.fatfreecrm.com/
 
-## Usage
-This is a fork of fat free crm, as the original project was a little quiet.
-
-To use this; simply add to your Gemfile
-```
-gem 'reduced_fat_crm', require: 'fat_free_crm'
-```
-in place of your previous fat_free_crm verison.
-
-
 
 ## System Requirements
 
