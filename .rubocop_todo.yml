@@ -746,20 +746,6 @@ Style/TernaryParentheses:
     - 'app/helpers/application_helper.rb'
     - 'app/helpers/tasks_helper.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: final_newline, final_blank_line
-Style/TrailingBlankLines:
-  Exclude:
-    - 'config/initializers/paper_trail.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/TrailingWhitespace:
-  Exclude:
-    - 'app/models/users/user.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: ExactNameMatch, AllowPredicates, AllowDSLWriters, IgnoreClassMethods, Whitelist.
@@ -806,9 +792,3 @@ Style/WordArray:
   EnforcedStyle: percent
   MinSize: 5
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'app/models/polymorphic/version.rb'
-    - 'lib/gravatar_image_tag.rb'
