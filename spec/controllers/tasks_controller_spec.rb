@@ -55,7 +55,8 @@ describe TasksController do
   describe "responding to GET index" do
     before do
       update_sidebar
-      @timezone, Time.zone = Time.zone, 'UTC'
+      @timezone = Time.zone
+      Time.zone = 'UTC'
     end
 
     after do

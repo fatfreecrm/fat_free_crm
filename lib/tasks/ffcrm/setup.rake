@@ -28,7 +28,9 @@ namespace :ffcrm do
   namespace :setup do
     desc "Create admin user"
     task admin: :environment do
-      username, password, email = ENV["USERNAME"], ENV["PASSWORD"], ENV["EMAIL"]
+      username = ENV["USERNAME"]
+      password = ENV["PASSWORD"]
+      email = ENV["EMAIL"]
       unless username && password && email
         puts "\nTo create the admin user you will be prompted to enter username, password,"
         puts "and email address. You might also specify the username of existing user.\n"

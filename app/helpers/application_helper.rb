@@ -269,7 +269,8 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def redraw(option, value, url = send("redraw_#{controller.controller_name}_path"))
     if value.is_a?(Array)
-      param, value = value.first, value.last
+      param = value.first
+      value = value.last
     end
     %{
       if ($('##{option}').html() != '#{value}') {

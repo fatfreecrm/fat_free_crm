@@ -16,7 +16,9 @@ module FatFreeCRM
 
       #--------------------------------------------------------------------------------------
       def initialize
-        @archived, @discarded, @dry_run = 0, 0, false
+        @archived = 0
+        @discarded = 0
+        @dry_run = false
       end
 
       # Setup imap folders in settings.

@@ -186,7 +186,8 @@ class EntitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def parse_query_and_tags(search_string)
     return ['', ''] if search_string.blank?
-    query, tags = [], []
+    query = []
+    tags = []
     search_string.strip.split(/\s+/).each do |token|
       if token.starts_with?("#")
         tags << token[1..-1]

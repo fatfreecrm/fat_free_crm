@@ -13,7 +13,8 @@ module OpportunitiesHelper
   # Opportunity summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def opportunity_summary(opportunity)
-    summary, amount = [], []
+    summary = []
+    amount = []
     summary << (opportunity.stage ? t(opportunity.stage) : t(:other))
     summary << number_to_currency(opportunity.weighted_amount, precision: 0)
     unless %w(won lost).include?(opportunity.stage)
