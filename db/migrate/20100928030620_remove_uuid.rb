@@ -4,7 +4,7 @@ class RemoveUuid < ActiveRecord::Migration
   def self.up
     [:users, :accounts, :campaigns, :leads, :contacts, :opportunities, :tasks].each do |table|
       remove_column table, :uuid
-      execute("DROP TRIGGER IF EXISTS #{table}_uuid") if self.uuid_configured?
+      execute("DROP TRIGGER IF EXISTS #{table}_uuid") if uuid_configured?
     end
   end
 

@@ -105,7 +105,7 @@ class User < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def awaits_approval?
-    self.suspended? && login_count == 0 && Setting.user_signup == :needs_approval
+    suspended? && login_count == 0 && Setting.user_signup == :needs_approval
   end
 
   #----------------------------------------------------------------------------

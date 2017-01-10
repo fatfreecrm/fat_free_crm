@@ -79,7 +79,7 @@ module FatFreeCRM
           # Refresh columns and try again.
           self.class.reset_column_information
           # If new record, create new object from class, else reload class
-          object = self.new_record? ? self.class.new : (reload && self)
+          object = new_record? ? self.class.new : (reload && self)
           # ensure serialization is setup if needed
           self.class.serialize_custom_fields!
           # Try again if object now responds to method, else return nil

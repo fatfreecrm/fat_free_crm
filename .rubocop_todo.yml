@@ -467,14 +467,6 @@ Style/PredicateName:
     - 'lib/fat_free_crm/fields.rb'
     - 'lib/fat_free_crm/mail_processor/base.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Exclude:
-    - 'app/models/users/user.rb'
-    - 'db/migrate/20100928030620_remove_uuid.rb'
-    - 'lib/fat_free_crm/fields.rb'
-
 # Offense count: 18
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
