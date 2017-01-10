@@ -520,17 +520,6 @@ Style/SignalException:
     - 'spec/factories/shared_factories.rb'
     - 'spec/factories/user_factories.rb'
 
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowSafeAssignment.
-# SupportedStyles: require_parentheses, require_no_parentheses, require_parentheses_when_complex
-Style/TernaryParentheses:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/entities_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/tasks_helper.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: ExactNameMatch, AllowPredicates, AllowDSLWriters, IgnoreClassMethods, Whitelist.

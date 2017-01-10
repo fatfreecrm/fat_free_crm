@@ -252,7 +252,7 @@ class ApplicationController < ActionController::Base
   def redirection_url
     # Try to redirect somewhere sensible. Note: not all controllers have an index action
     url = if current_user.present?
-            (respond_to?(:index) && action_name != 'index') ? { action: 'index' } : root_url
+            respond_to?(:index) && action_name != 'index' ? { action: 'index' } : root_url
           else
             login_url
     end

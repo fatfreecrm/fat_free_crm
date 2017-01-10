@@ -453,7 +453,7 @@ module ApplicationHelper
   # Return name of current view
   def current_view_name
     controller = params['controller']
-    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
+    action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
     current_user.pref[:"#{controller}_#{action}_view"]
   end
 
@@ -461,7 +461,7 @@ module ApplicationHelper
   # Get template in current context with current view name
   def template_for_current_view
     controller = params['controller']
-    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
+    action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
     template = FatFreeCRM::ViewFactory.template_for_current_view(controller: controller, action: action, name: current_view_name)
     template
   end
@@ -470,7 +470,7 @@ module ApplicationHelper
   # Generate buttons for available views given the current context
   def view_buttons
     controller = params['controller']
-    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
+    action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
     views = FatFreeCRM::ViewFactory.views_for(controller: controller, action: action)
     return nil unless views.size > 1
     lis = ''.html_safe
@@ -482,7 +482,7 @@ module ApplicationHelper
                     "#{h view.name}-button"
           end
         lis << content_tag(:li) do
-          url = (action == "index") ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
+          url = action == "index" ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
           link_to('#', title: t(view.name, default: h(view.title)), "data-view": h(view.name), "data-url": h(url), "data-context": action, class: classes) do
             icon = view.icon || 'fa-bars'
             content_tag(:i, nil, class: "fa #{h icon}")

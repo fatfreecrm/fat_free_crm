@@ -208,7 +208,7 @@ class EntitiesController < ApplicationController
   def set_view
     if params['view']
       controller = params['controller']
-      action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
+      action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
       current_user.pref[:"#{controller}_#{action}_view"] = params['view']
     end
   end
