@@ -387,7 +387,7 @@ DEPENDENCIES
   dynamic_form
   email_reply_parser_ffcrm
   execjs
-  factory_girl_rails
+  factory_girl_rails (~> 4.7.0)
   ffaker (>= 2)
   font-awesome-rails
   guard
