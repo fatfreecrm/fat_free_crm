@@ -57,7 +57,7 @@ GEM
     builder (3.2.2)
     byebug (9.0.6)
     cancancan (1.15.0)
-    capistrano (3.6.1)
+    capistrano (3.7.1)
       airbrussh (>= 1.0.0)
       capistrano-harrow
       i18n
@@ -67,7 +67,7 @@ GEM
       capistrano (~> 3.1)
       sshkit (~> 1.2)
     capistrano-harrow (0.5.3)
-    capistrano-rails (1.2.0)
+    capistrano-rails (1.2.1)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     capistrano-rvm (0.1.2)
