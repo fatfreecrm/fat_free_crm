@@ -217,9 +217,7 @@ in a console and continue. This is strongly discouraged. You have been warned!
         tmp = Address.where(scope)
         tmp.map { |t| t.country = ct[2] }
 
-        unless tmp.blank?
-          addresses_to_update << tmp
-        end
+        addresses_to_update << tmp unless tmp.blank?
       end
 
       Address.transaction do

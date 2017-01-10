@@ -82,9 +82,7 @@ module FatFreeCRM
       def disconnect!
         if @imap
           @imap.logout
-          unless @imap.disconnected?
-            @imap.disconnect rescue nil
-          end
+          @imap.disconnect rescue nil unless @imap.disconnected?
         end
       end
 

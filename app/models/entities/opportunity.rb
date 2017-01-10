@@ -175,16 +175,12 @@ class Opportunity < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def increment_opportunities_count
-    if campaign_id
-      Campaign.increment_counter(:opportunities_count, campaign_id)
-    end
+    Campaign.increment_counter(:opportunities_count, campaign_id) if campaign_id
   end
 
   #----------------------------------------------------------------------------
   def decrement_opportunities_count
-    if campaign_id
-      Campaign.decrement_counter(:opportunities_count, campaign_id)
-    end
+    Campaign.decrement_counter(:opportunities_count, campaign_id) if campaign_id
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_opportunity, self)

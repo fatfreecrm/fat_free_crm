@@ -424,19 +424,6 @@ Style/IdenticalConditionalBranches:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Exclude:
-    - 'app/models/entities/lead.rb'
-    - 'app/models/entities/opportunity.rb'
-    - 'app/models/setting.rb'
-    - 'db/migrate/20100928030620_remove_uuid.rb'
-    - 'lib/fat_free_crm.rb'
-    - 'lib/fat_free_crm/mail_processor/base.rb'
-    - 'lib/tasks/ffcrm/update_data.rake'
-
 # Offense count: 27
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
