@@ -79,14 +79,14 @@ class OpportunitiesController < EntitiesController
         end
       else
         @accounts = Account.my.order('name')
-        unless params[:account][:id].blank?
-          @account = Account.find(params[:account][:id])
-        else
+        if params[:account][:id].blank?
           if request.referer =~ /\/accounts\/(\d+)\z/
             @account = Account.find(Regexp.last_match[1]) # related account
           else
             @account = Account.new(user: current_user)
           end
+        else
+          @account = Account.find(params[:account][:id])
         end
         @contact = Contact.find(params[:contact]) unless params[:contact].blank?
         @campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?

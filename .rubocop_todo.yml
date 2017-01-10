@@ -539,23 +539,6 @@ Style/TrivialAccessors:
   Exclude:
     - 'spec/support/auth_macros.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/UnlessElse:
-  Exclude:
-    - 'app/controllers/comments_controller.rb'
-    - 'app/controllers/entities/contacts_controller.rb'
-    - 'app/controllers/entities/opportunities_controller.rb'
-    - 'app/controllers/users_controller.rb'
-    - 'spec/views/application/auto_complete.haml_spec.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/UnneededInterpolation:
-  Exclude:
-    - 'config/initializers/simple_form.rb'
-    - 'spec/shared/controllers.rb'
-
 # Offense count: 14
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: snake_case, normalcase, non_integer

@@ -52,11 +52,11 @@ class CommentsController < ApplicationController
     # Make sure commentable object exists and is accessible to the current user.
     model = @comment.commentable_type
     id = @comment.commentable_id
-    unless model.constantize.my.find_by_id(id)
-      respond_to_related_not_found(model.downcase)
-    else
+    if model.constantize.my.find_by_id(id)
       @comment.save
       respond_with(@comment)
+    else
+      respond_to_related_not_found(model.downcase)
     end
   end
 
