@@ -41,9 +41,9 @@ end
 
   date: {
     formats: {
-      default: lambda { |date, _opts| "%d-%m-#{date.year + 543}" },
+      default: ->(date, _opts) { "%d-%m-#{date.year + 543}" },
       short: "%d %b",
-      long: lambda { |date, _opts| "%d %B #{date.year + 543}" }
+      long: ->(date, _opts) { "%d %B #{date.year + 543}" }
     },
 
     day_names: %w(อาทิตย์ จันทร์ อังคาร พุธ พฤหัสบดี ศุกร์ เสาร์),
@@ -56,9 +56,9 @@ end
 
   time: {
     formats: {
-      default: lambda { |date, _opts| "%a %d %b #{date.year + 543} %H:%M:%S %z" },
+      default: ->(date, _opts) { "%a %d %b #{date.year + 543} %H:%M:%S %z" },
       short: "%d %b %H:%M น.",
-      long: lambda { |date, _opts| "%d %B #{date.year + 543} %H:%M น." }
+      long: ->(date, _opts) { "%d %B #{date.year + 543} %H:%M น." }
     },
     am: "ก่อนเที่ยง",
     pm: "หลังเที่ยง"
