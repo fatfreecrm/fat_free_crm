@@ -31,6 +31,7 @@ def login_and_assign(user_stubs = {}, session_stubs = {})
   #set_timezone
   assigns[:current_user] = current_user
 end
+
 def login_and_assign!(user_stubs = {}, session_stubs = {})
   login
   assigns[:current_user] = current_user

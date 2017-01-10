@@ -166,6 +166,7 @@ class Task < ActiveRecord::Base
       "due_later"
     end
   end
+
   # Returns list of tasks grouping them by due date as required by tasks/index.
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)

@@ -85,6 +85,7 @@ class Lead < ActiveRecord::Base
   def self.per_page
     20
   end
+
   def self.first_name_position
     "before"
   end

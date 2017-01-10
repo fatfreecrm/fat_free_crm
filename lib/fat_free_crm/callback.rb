@@ -43,6 +43,7 @@ module FatFreeCRM
     def self.view_responder(method)
       @@responder[method] ||= @@classes.map(&:instance).select { |instance| instance.class.view_hooks[method] }
     end
+
     # Invokes the view hook Proc stored under :hook and captures its output.
     # => Instead of defining methods on the class, view hooks are
     #    stored as Procs in a hash. This allows the same hook to be manipulated in

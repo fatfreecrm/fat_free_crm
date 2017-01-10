@@ -363,27 +363,6 @@ Style/EmptyElse:
   Exclude:
     - 'app/models/polymorphic/task.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: AllowAdjacentOneLineDefs.
-Style/EmptyLineBetweenDefs:
-  Exclude:
-    - 'app/models/entities/contact.rb'
-    - 'app/models/entities/lead.rb'
-    - 'app/models/entities/opportunity.rb'
-    - 'app/models/polymorphic/task.rb'
-    - 'lib/fat_free_crm/callback.rb'
-    - 'spec/support/auth_macros.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: empty_lines, no_empty_lines
-Style/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'config/initializers/views.rb'
-    - 'db/schema.rb'
-
 # Offense count: 10
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
