@@ -177,14 +177,6 @@ Style/Alias:
     - 'lib/fat_free_crm/core_ext/string.rb'
     - 'spec/support/auth_macros.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Style/AlignHash:
-  Exclude:
-    - 'spec/views/campaigns/show.haml_spec.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
