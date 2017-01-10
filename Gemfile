@@ -46,8 +46,6 @@ group :development do
     gem 'capistrano-bundler'
     gem 'capistrano-rails'
     gem 'capistrano-rvm'
-    #~ gem 'capistrano-chruby'
-    #~ gem 'capistrano-rbenv'
     gem 'guard'
     gem 'guard-rspec'
     gem 'guard-rails'

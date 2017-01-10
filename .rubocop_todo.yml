@@ -456,13 +456,6 @@ Style/Lambda:
     - 'config/locales/th.rb'
     - 'lib/tasks/ffcrm/setup.rake'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/LeadingCommentSpace:
-  Exclude:
-    - 'Gemfile'
-    - 'spec/support/auth_macros.rb'
-
 # Offense count: 2
 Style/MethodMissing:
   Exclude:
