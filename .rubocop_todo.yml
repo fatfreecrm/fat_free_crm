@@ -422,21 +422,6 @@ Style/MultilineTernaryOperator:
   Exclude:
     - 'app/models/users/authentication.rb'
 
-# Offense count: 16
-# Cop supports --auto-correct.
-Style/MutableConstant:
-  Exclude:
-    - 'app/models/fields/custom_field.rb'
-    - 'app/models/polymorphic/task.rb'
-    - 'app/models/polymorphic/version.rb'
-    - 'config/locales/th.rb'
-    - 'lib/development_tasks/license.rake'
-    - 'lib/fat_free_crm/gem_ext/active_support/buffered_logger.rb'
-    - 'lib/fat_free_crm/mail_processor/comment_replies.rb'
-    - 'lib/fat_free_crm/version.rb'
-    - 'spec/features/support/headless.rb'
-    - 'spec/lib/mail_processor/sample_emails/dropbox.rb'
-
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, MinBodyLength, SupportedStyles.

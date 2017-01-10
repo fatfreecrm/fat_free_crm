@@ -7,3 +7,6 @@ StringLiterals:
 
 Metrics/LineLength:
   Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
