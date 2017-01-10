@@ -80,6 +80,7 @@ group :heroku do
   gem 'rails_12factor'
 end
 
+gem 'schema_validations'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
