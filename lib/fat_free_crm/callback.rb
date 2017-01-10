@@ -52,7 +52,7 @@ module FatFreeCRM
     # - a hash of arrays containing Procs and positions to insert content.
     #--------------------------------------------------------------------------
     def self.view_hook(hook, caller, context = {})
-      view_responder(hook).inject(Hash.new([])) do |response, instance|
+      view_responder(hook).each_with_object(Hash.new([])) do |instance, response|
         # Process each operation within each view hook, storing the data in a hash.
         instance.class.view_hooks[hook].each do |op|
           response[op[:position]] += [op[:proc].call(caller, context)]

@@ -194,7 +194,7 @@ class Task < ActiveRecord::Base
   def self.totals(user, view = "pending")
     return {} unless ALLOWED_VIEWS.include?(view)
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-    settings.inject(HashWithIndifferentAccess[all: 0]) do |hash, key|
+    settings.each_with_object(HashWithIndifferentAccess[all: 0]) do |key, hash|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)
       hash[:all] += hash[key]
       hash

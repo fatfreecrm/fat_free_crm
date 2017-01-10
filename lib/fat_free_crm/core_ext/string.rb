@@ -37,7 +37,7 @@ class String
     (parts.size - 1).times.map do|i|
       # ["A", "B", "C", "D"]  =>  [["A B C", "D"], ["A B", "C D"], ["A", "B C D"]]
       [parts[(0..i)].join(" "), parts[(i + 1)..-1].join(" ")]
-    end.inject([]) do |arr, perm|
+    end.each_with_object([]) do |perm, arr|
       # Search both [first, last] and [last, first]
       # e.g. for every ["A B C", "D"], also include ["D", "A B C"]
       arr << perm

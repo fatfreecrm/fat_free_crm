@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.any(:js, :html)   { render partial: 'auto_complete' }
       format.json do
-        render json: @auto_complete.inject({}){|h, a|
+        render json: @auto_complete.each_with_object({}){|a, h|
                        h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
                      }
       end

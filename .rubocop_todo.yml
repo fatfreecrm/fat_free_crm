@@ -349,17 +349,6 @@ Style/DoubleNegation:
     - 'app/models/polymorphic/task.rb'
     - 'lib/gravatar_image_tag.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-Style/EachWithObject:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/models/polymorphic/task.rb'
-    - 'lib/fat_free_crm/callback.rb'
-    - 'lib/fat_free_crm/core_ext/string.rb'
-    - 'spec/controllers/tasks_controller_spec.rb'
-    - 'spec/support/macros.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/EmptyCaseCondition:

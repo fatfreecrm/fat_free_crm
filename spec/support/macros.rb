@@ -22,7 +22,7 @@ end
 #----------------------------------------------------------------------------
 def stub_task_total(view = "pending")
   settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-  settings.inject(all: 0) { |hash, key| hash[key] = 1; hash }
+  settings.each_with_object(all: 0) { |key, hash| hash[key] = 1; hash }
 end
 
 # Get current server timezone and set it (see rake time:zones:local for details).
