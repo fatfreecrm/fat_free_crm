@@ -162,18 +162,6 @@ Performance/RedundantMatch:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: MaxKeyValuePairs.
-Performance/RedundantMerge:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/inputs/date_pair_input.rb'
-    - 'app/inputs/date_time_input.rb'
-    - 'app/models/polymorphic/address.rb'
-    - 'spec/models/setting_spec.rb'
-
-
 # Offense count: 12
 Style/AccessorMethodName:
   Exclude:

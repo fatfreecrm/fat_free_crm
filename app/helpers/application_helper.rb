@@ -362,11 +362,11 @@ module ApplicationHelper
   def links_to_export(action = :index)
     token = current_user.single_access_token
     url_params = { action: action }
-    url_params.merge!(id: params[:id]) unless params[:id].blank?
-    url_params.merge!(query: params[:query]) unless params[:query].blank?
-    url_params.merge!(q: params[:q]) unless params[:q].blank?
-    url_params.merge!(view: @view) unless @view.blank? # tasks
-    url_params.merge!(id: params[:id]) unless params[:id].blank?
+    url_params[:id] = params[:id] unless params[:id].blank?
+    url_params[:query] = params[:query] unless params[:query].blank?
+    url_params[:q] = params[:q] unless params[:q].blank?
+    url_params[:view] = @view unless @view.blank? # tasks
+    url_params[:id] = params[:id] unless params[:id].blank?
 
     exports = %w(xls csv).map do |format|
       link_to(format.upcase, url_params.merge(format: format), title: I18n.t(:"to_#{format}")) unless action.to_s == "show"

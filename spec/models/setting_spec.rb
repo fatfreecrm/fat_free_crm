@@ -31,7 +31,7 @@ describe Setting do
 
   it "should use value from YAML if setting is missing from database" do
     @setting = FactoryGirl.create(:setting, name: "magoody", value: nil)
-    Setting.yaml_settings.merge!(magoody: "thingymabob")
+    Setting.yaml_settings[:magoody] = "thingymabob"
     expect(Setting[:magoody]).to eq("thingymabob")
     expect(Setting.magoody).to eq("thingymabob")
   end
