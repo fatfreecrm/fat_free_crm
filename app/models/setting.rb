@@ -85,7 +85,10 @@ class Setting < ActiveRecord::Base
       # Returns false if table or database is unavailable.
       # Catches all database-related errors, so that Setting will return nil
       # instead of crashing the entire application.
-      table_exists? rescue false
+
+      table_exists?
+    rescue
+      false
     end
 
     # Loads settings from YAML files
