@@ -221,8 +221,6 @@ class Task < ActiveRecord::Base
       Time.zone.now.midnight + 100.years
     when "specific_time"
       calendar ? parse_calendar_date : nil
-    else # due_later or due_asap
-      nil
     end
   end
 
