@@ -192,12 +192,6 @@ Performance/StringReplacement:
   Exclude:
     - 'app/helpers/campaigns_helper.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Performance/TimesMap:
-  Exclude:
-    - 'lib/fat_free_crm/core_ext/string.rb'
-
 # Offense count: 12
 Style/AccessorMethodName:
   Exclude:
