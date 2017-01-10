@@ -74,20 +74,6 @@ Lint/UnifiedInteger:
     - 'lib/fat_free_crm/i18n.rb'
 
 # Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'config/unicorn.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'spec/support/auth_macros.rb'
-
-# Offense count: 4
 # Configuration parameters: ContextCreatingMethods.
 Lint/UselessAccessModifier:
   Exclude:

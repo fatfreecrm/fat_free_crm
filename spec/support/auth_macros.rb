@@ -32,7 +32,7 @@ def login_and_assign(user_stubs = {}, session_stubs = {})
   assigns[:current_user] = current_user
 end
 
-def login_and_assign!(user_stubs = {}, session_stubs = {})
+def login_and_assign!(_user_stubs = {}, _session_stubs = {})
   login
   assigns[:current_user] = current_user
 end
