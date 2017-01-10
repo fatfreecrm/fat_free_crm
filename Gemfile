@@ -64,6 +64,7 @@ group :development, :test do
   gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
   gem 'factory_girl_rails', '~> 4.7.0' # 4.8.0+ stubbed models are not allowed to access the database - User#destroyed?()
+  gem 'rubocop'
 end
 
 group :test do

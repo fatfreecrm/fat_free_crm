@@ -40,7 +40,7 @@ script:
   - "RAILS_ENV=test bundle exec rake spec:routing"
   - "RAILS_ENV=test bundle exec rake spec:views"
   - "RAILS_ENV=test bundle exec rake spec:features"
-
+  - "RAILS_ENV=test bundle exec rubocop"
 
 notifications:
   webhooks:
