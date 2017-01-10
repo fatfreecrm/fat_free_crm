@@ -67,12 +67,6 @@ Lint/ShadowingOuterLocalVariable:
     - 'lib/tasks/ffcrm/config.rake'
     - 'lib/tasks/ffcrm/update_data.rake'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Lint/UnifiedInteger:
-  Exclude:
-    - 'lib/fat_free_crm/i18n.rb'
-
 # Offense count: 4
 # Configuration parameters: ContextCreatingMethods.
 Lint/UselessAccessModifier:
