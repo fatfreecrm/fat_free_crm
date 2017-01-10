@@ -260,7 +260,7 @@ module ApplicationHelper
         else
           url = "http://" << url unless url.match(/^https?:\/\//)
         end
-        link_to(image_tag("#{site}.gif", size: "15x15"), h(url), :"data-popup" => true, title: t(:open_in_window, h(url)))
+        link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
       end
     end.compact.join("\n").html_safe
   end
@@ -482,7 +482,7 @@ module ApplicationHelper
           end
         lis << content_tag(:li) do
           url = (action == "index") ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
-          link_to('#', title: t(view.name, default: h(view.title)), :"data-view" => h(view.name), :"data-url" => h(url), :"data-context" => action, class: classes) do
+          link_to('#', title: t(view.name, default: h(view.title)), "data-view": h(view.name), "data-url": h(url), "data-context": action, class: classes) do
             icon = view.icon || 'fa-bars'
             content_tag(:i, nil, class: "fa #{h icon}")
           end
