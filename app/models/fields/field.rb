@@ -46,7 +46,7 @@ class Field < ActiveRecord::Base
     'url'         => { klass: 'CustomField', type: 'string' },
     'tel'         => { klass: 'CustomField', type: 'string' },
     'select'      => { klass: 'CustomField', type: 'string' },
-    'radio_buttons'       => { klass: 'CustomField', type: 'string' },
+    'radio_buttons' => { klass: 'CustomField', type: 'string' },
     'check_boxes' => { klass: 'CustomField', type: 'text' },
     'boolean'     => { klass: 'CustomField', type: 'boolean' },
     'date'        => { klass: 'CustomField', type: 'date' },

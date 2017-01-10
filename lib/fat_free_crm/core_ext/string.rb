@@ -34,7 +34,7 @@ class String
   # A query with 4 words will generate 6 permutations
   def name_permutations
     parts = split(" ")
-    (parts.size - 1).times.map do|i|
+    (parts.size - 1).times.map do |i|
       # ["A", "B", "C", "D"]  =>  [["A B C", "D"], ["A B", "C D"], ["A", "B C D"]]
       [parts[(0..i)].join(" "), parts[(i + 1)..-1].join(" ")]
     end.each_with_object([]) do |perm, arr|

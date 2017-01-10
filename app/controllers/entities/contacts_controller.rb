@@ -153,7 +153,7 @@ class ContactsController < EntitiesController
 
   def set_options
     super
-    @naming = (current_user.pref[:contacts_naming]   || Contact.first_name_position) unless params[:cancel].true?
+    @naming = (current_user.pref[:contacts_naming] || Contact.first_name_position) unless params[:cancel].true?
   end
 
   #----------------------------------------------------------------------------

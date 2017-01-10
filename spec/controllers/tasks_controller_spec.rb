@@ -14,7 +14,7 @@ describe TasksController do
   def produce_tasks(user, view)
     settings = (view != "completed" ? Setting.task_bucket : Setting.task_completed)
 
-    settings.each_with_object({}) do | due, hash |
+    settings.each_with_object({}) do |due, hash|
       hash[due] ||= []
       if Date.tomorrow == Date.today.end_of_week && due == :due_tomorrow
         due = :due_this_week

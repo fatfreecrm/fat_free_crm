@@ -15,7 +15,7 @@ describe "/tasks/update" do
   describe "Changing due date" do
     before do
       assign(:task_before_update, FactoryGirl.build_stubbed(:task, bucket: "due_asap"))
-      assign(:task, @task       = FactoryGirl.build_stubbed(:task, bucket: "due_tomorrow"))
+      assign(:task, @task = FactoryGirl.build_stubbed(:task, bucket: "due_tomorrow"))
       assign(:view, "pending")
       assign(:task_total, stub_task_total("pending"))
     end
@@ -64,7 +64,7 @@ describe "/tasks/update" do
     it "pending task to somebody from Tasks tab: should remove the task and show flash message (assigned)" do
       assignee = FactoryGirl.build_stubbed(:user)
       assign(:task_before_update, FactoryGirl.build_stubbed(:task, assignee: nil))
-      assign(:task, @task       = FactoryGirl.build_stubbed(:task, assignee: assignee))
+      assign(:task, @task = FactoryGirl.build_stubbed(:task, assignee: assignee))
       assign(:view, "pending")
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
@@ -78,7 +78,7 @@ describe "/tasks/update" do
     it "assigned tasks to me from Tasks tab: should remove the task and show flash message (pending)" do
       assignee = FactoryGirl.build_stubbed(:user)
       assign(:task_before_update, FactoryGirl.build_stubbed(:task, assignee: assignee))
-      assign(:task, @task       = FactoryGirl.build_stubbed(:task, assignee: nil))
+      assign(:task, @task = FactoryGirl.build_stubbed(:task, assignee: nil))
       assign(:view, "assigned")
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
@@ -91,7 +91,7 @@ describe "/tasks/update" do
 
     it "assigned tasks to somebody else from Tasks tab: should re-render task partial" do
       assign(:task_before_update, FactoryGirl.build_stubbed(:task, assignee: FactoryGirl.build_stubbed(:user)))
-      assign(:task, @task       = FactoryGirl.build_stubbed(:task, assignee: FactoryGirl.build_stubbed(:user)))
+      assign(:task, @task = FactoryGirl.build_stubbed(:task, assignee: FactoryGirl.build_stubbed(:user)))
       assign(:view, "assigned")
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
 
@@ -101,7 +101,7 @@ describe "/tasks/update" do
 
     it "from Tasks tab: should update tasks sidebar" do
       assign(:task_before_update, FactoryGirl.build_stubbed(:task, assignee: nil))
-      assign(:task, @task       = FactoryGirl.build_stubbed(:task, assignee: FactoryGirl.build_stubbed(:user)))
+      assign(:task, @task = FactoryGirl.build_stubbed(:task, assignee: FactoryGirl.build_stubbed(:user)))
       assign(:view, "assigned")
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
       render
@@ -114,7 +114,7 @@ describe "/tasks/update" do
 
     it "from asset page: should should re-render task partial" do
       assign(:task_before_update, FactoryGirl.build_stubbed(:task, assignee: nil))
-      assign(:task, @task       = FactoryGirl.build_stubbed(:task, assignee: FactoryGirl.build_stubbed(:user)))
+      assign(:task, @task = FactoryGirl.build_stubbed(:task, assignee: FactoryGirl.build_stubbed(:user)))
       render
 
       expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
@@ -122,7 +122,7 @@ describe "/tasks/update" do
 
     it "from asset page: should update recently viewed items" do
       assign(:task_before_update, FactoryGirl.build_stubbed(:task, assignee: nil))
-      assign(:task, @task       = FactoryGirl.build_stubbed(:task, assignee: FactoryGirl.build_stubbed(:user)))
+      assign(:task, @task = FactoryGirl.build_stubbed(:task, assignee: FactoryGirl.build_stubbed(:user)))
       render
 
       expect(rendered).to have_text("Recent Items")

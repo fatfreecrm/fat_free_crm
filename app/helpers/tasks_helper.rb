@@ -94,21 +94,21 @@ module TasksHelper
   def replace_content(task, bucket = nil)
     partial = (task.assigned_to && task.assigned_to != current_user.id) ? "assigned" : "pending"
     html = render(partial: "tasks/#{partial}", collection: [task], locals: { bucket: bucket })
-    text = "$('##{dom_id(task)}').html('#{ j html }');\n".html_safe
+    text = "$('##{dom_id(task)}').html('#{j html}');\n".html_safe
   end
 
   #----------------------------------------------------------------------------
   def insert_content(task, bucket, view)
     text = "$('#list_#{bucket}').show();\n"
     html = render(partial: view, collection: [task], locals: { bucket: bucket })
-    text << "$('##{h bucket.to_s}').prepend('#{ j html }');\n"
+    text << "$('##{h bucket.to_s}').prepend('#{j html}');\n"
     text << "$('##{dom_id(task)}').effect('highlight', { duration:1500 });\n"
     text.html_safe
   end
 
   #----------------------------------------------------------------------------
   def tasks_flash(message)
-    text = "$('#flash').html('#{ sanitize(message) }');\n"
+    text = "$('#flash').html('#{sanitize(message)}');\n"
     text << "crm.flash('notice', true)\n"
     text.html_safe
   end

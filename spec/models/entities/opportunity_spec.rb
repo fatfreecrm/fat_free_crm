@@ -35,7 +35,7 @@ describe Opportunity do
   end
 
   it "should be possible to create opportunity with the same name" do
-    first  = FactoryGirl.create(:opportunity, name: "Hello", user: current_user)
+    first = FactoryGirl.create(:opportunity, name: "Hello", user: current_user)
     expect { FactoryGirl.create(:opportunity, name: "Hello", user: current_user) }.to_not raise_error
   end
 

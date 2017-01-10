@@ -36,7 +36,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
     content_tag("div",
-                link_to("<small>#{ hidden ? '&#9658;' : '&#9660;' }</small> #{sanitize text}".html_safe,
+                link_to("<small>#{hidden ? '&#9658;' : '&#9660;'}</small> #{sanitize text}".html_safe,
                         url_for(controller: :home, action: :toggle, id: id),
                         remote: true,
                         onclick: "crm.flip_subtitle(this)"
@@ -244,7 +244,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil, shake = nil)
     text = ""
-    text << "$('#sidebar').html('#{ j render(partial: 'layouts/sidebar', locals: { view: view, action: action }) }');"
+    text << "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
     text << "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
     text.html_safe
   end
@@ -439,7 +439,7 @@ module ApplicationHelper
   def section_title(id, hidden = true, text = nil, info_text = nil)
     text = id.to_s.split("_").last.capitalize if text.nil?
     content_tag("div", class: "subtitle show_attributes") do
-      content = link_to("<small>#{ hidden ? '&#9658;' : '&#9660;' }</small> #{sanitize text}".html_safe,
+      content = link_to("<small>#{hidden ? '&#9658;' : '&#9660;'}</small> #{sanitize text}".html_safe,
                         url_for(controller: :home, action: :toggle, id: id),
                         remote:  true,
                         onclick: "crm.flip_subtitle(this)"
@@ -520,7 +520,7 @@ module ApplicationHelper
   #         options = { renderer: {...} , params: {...}
   def paginate(options = {})
     collection = options.delete(:collection)
-    options = { params: { action: 'index'}}.merge(options) if params['action'] == 'filter'
+    options = { params: { action: 'index' } }.merge(options) if params['action'] == 'filter'
     options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
     will_paginate(collection, options)
   end

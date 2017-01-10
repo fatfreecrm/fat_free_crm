@@ -16,7 +16,7 @@ describe "/tasks/index" do
     before do
       user = FactoryGirl.build_stubbed(:user)
       account = FactoryGirl.build_stubbed(:account)
-      @due  = FactoryGirl.build_stubbed(:task, asset: account, bucket: "due_asap", assignee: user)
+      @due = FactoryGirl.build_stubbed(:task, asset: account, bucket: "due_asap", assignee: user)
       @completed = FactoryGirl.build_stubbed(:task, asset: account, bucket: "completed_today", assignee: user, completed_at: 1.hour.ago, completor: user)
     end
 
