@@ -158,12 +158,6 @@ Metrics/PerceivedComplexity:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Performance/Casecmp:
-  Exclude:
-    - 'db/migrate/20120224073107_remove_default_value_and_clear_settings.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Performance/RedundantMatch:
   Exclude:
     - 'app/helpers/application_helper.rb'
@@ -179,18 +173,6 @@ Performance/RedundantMerge:
     - 'app/models/polymorphic/address.rb'
     - 'spec/models/setting_spec.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect.
-Performance/StartWith:
-  Exclude:
-    - 'app/helpers/versions_helper.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Performance/StringReplacement:
-  Exclude:
-    - 'app/helpers/campaigns_helper.rb'
 
 # Offense count: 12
 Style/AccessorMethodName:
