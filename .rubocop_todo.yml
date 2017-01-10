@@ -138,12 +138,6 @@ Metrics/PerceivedComplexity:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Performance/RedundantMatch:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect.
 Performance/StartWith:
   Exclude:
