@@ -28,7 +28,7 @@ end
 # (See https://github.com/carlhuda/bundler/issues/1041)
 spec = Bundler.load_gemspec(File.expand_path("../fat_free_crm.gemspec", __FILE__))
 spec.runtime_dependencies.each do |dep|
-  gem dep.name, *(dep.requirement.as_list)
+  gem dep.name, *dep.requirement.as_list
 end
 
 # Remove premailer auto-require

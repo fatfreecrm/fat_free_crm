@@ -17,7 +17,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def tabless_layout?
     %w(authentications passwords).include?(controller.controller_name) ||
-      ((controller.controller_name == "users") && (%w(create new).include?(controller.action_name)))
+      ((controller.controller_name == "users") && %w(create new).include?(controller.action_name))
   end
 
   # Show existing flash or embed hidden paragraph ready for flash[:notice]

@@ -591,15 +591,6 @@ Style/PredicateName:
     - 'lib/fat_free_crm/fields.rb'
     - 'lib/fat_free_crm/mail_processor/base.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/RedundantParentheses:
-  Exclude:
-    - 'Gemfile'
-    - 'app/controllers/passwords_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'lib/fat_free_crm/permissions.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/RedundantSelf:
