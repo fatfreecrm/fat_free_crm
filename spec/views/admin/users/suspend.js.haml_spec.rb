@@ -8,7 +8,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 describe "admin/users/suspend" do
   before do
     login_and_assign(admin: true)
-    assign(:user, @user = FactoryGirl.create(:user, suspended_at: nil))
+    assign(:user, @user = FactoryGirl.build_stubbed(:user, suspended_at: nil))
   end
 
   it "reloads the requested user partial" do

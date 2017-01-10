@@ -13,7 +13,7 @@ describe "/home/index" do
   end
 
   it "should render list of activities if it's not empty" do
-    assign(:activities, [FactoryGirl.create(:version, event: "update", item: FactoryGirl.create(:account))])
+    assign(:activities, [FactoryGirl.build_stubbed(:version, event: "update", item: FactoryGirl.build_stubbed(:account))])
     assign(:my_tasks, [])
     assign(:my_opportunities, [])
     assign(:my_accounts, [])

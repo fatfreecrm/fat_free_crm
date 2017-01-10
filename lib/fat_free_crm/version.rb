@@ -6,9 +6,9 @@
 module FatFreeCRM
   module VERSION #:nodoc:
     MAJOR = 0
-    MINOR = 14
+    MINOR = 15
     TINY  = 0
-    PRE   = nil
+    PRE   = 'beta'
 
     STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
   end

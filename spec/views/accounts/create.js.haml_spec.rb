@@ -16,7 +16,7 @@ describe "/accounts/create" do
   # core object Account partial is not embedded.
   describe "create success" do
     before do
-      assign(:account, @account = FactoryGirl.create(:account))
+      assign(:account, @account = FactoryGirl.build_stubbed(:account))
       assign(:accounts, [@account].paginate)
       assign(:account_category_total, Hash.new(1))
       render

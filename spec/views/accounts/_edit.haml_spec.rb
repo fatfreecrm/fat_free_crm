@@ -10,7 +10,7 @@ describe "/accounts/_edit" do
 
   before do
     login_and_assign
-    assign(:account, @account = FactoryGirl.create(:account))
+    assign(:account, @account = FactoryGirl.build_stubbed(:account))
     assign(:users, [current_user])
   end
 

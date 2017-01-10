@@ -9,11 +9,11 @@ describe "/home/index" do
   include HomeHelper
 
   before do
-    login_and_assign
+    login_and_assign!
   end
 
   it "should render [activity] template with @activities collection" do
-    assign(:activities, [FactoryGirl.create(:version, id: 42, event: "update", item: FactoryGirl.create(:account), whodunnit: current_user.id.to_s)])
+    assign(:activities, [FactoryGirl.build_stubbed(:version, id: 42, event: "update", item: FactoryGirl.build_stubbed(:account), whodunnit: current_user.id.to_s)])
 
     render template: 'home/index', formats: [:js]
 

@@ -7,9 +7,11 @@ require 'spec_helper'
 
 describe SubscriptionMailer do
   describe "comment notification" do
-    let(:user) { FactoryGirl.create(:user, email: 'notify_me@example.com') }
-    let(:commentable) { FactoryGirl.create(:opportunity, id: 47, name: 'Opportunity name') }
-    let(:comment) { FactoryGirl.create(:comment, commentable: commentable) }
+    let(:user) { build(:user, email: 'notify_me@example.com') }
+    let(:campaign) { build(:campaign, user: user) }
+    let(:account) { build(:account, user: user) }
+    let(:commentable) { build_stubbed(:opportunity, id: 47, name: 'Opportunity name', account: account, campaign: campaign, user: user) }
+    let(:comment) { build(:comment, commentable: commentable, user: user) }
     let(:mail) { SubscriptionMailer.comment_notification(user, comment) }
 
     before :each do

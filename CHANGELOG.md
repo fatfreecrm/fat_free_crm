@@ -4,6 +4,180 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Wed, Dec 7, 2016 (0.15.0-beta)
+---------------------------------------------------------------------
+This release is aimed at getting as many dependencies as possible up to date without significant refactoring.
+
+ - Refactoring: Tests prefer build, build_record over ```FactoryGirl.create``` where possible
+ - Refactoring: View tests minimize DB interaction greatly
+ - Refactoring: ```@user.check_if_needs_approval``` must be explicitly called in rake tasks or similar, it is no longer a before_create hook
+ - Refactoring: ```@user.destroyable?``` must be called in rake tasks or similar, it is no longer a before_destroy check
+ - Various gem updates
+ - Upgrade to Paperclip 5 (see https://github.com/thoughtbot/paperclip/wiki/Upgrade-Paperclip-4x-to-5x)
+ - Upgrade to paper_trail 6+ (https://github.com/airblade/paper_trail/blob/master/CHANGELOG.md)
+
+Mon, Dec 5, 2016 (0.14.0)
+---------------------------------------------------------------------
+- Various security fixes
+- Enable CORS headers
+- Ruby 2.0 or less dropped from CI
+
+
+0.13.6 - February 12, 2015
+---------------------------------------------------------------------
+ - Fixes #413 and #414 - bold tag being escaped on user profile.
+ - Fix for CVE-2015-1585 - CSRF vulnerability.
+
+Full list:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.5...v0.13.6
+
+0.13.5 - January 22, 2015
+---------------------------------------------------------------------
+ - Update gems
+ - Fixed #337 Added index on Versions created_at
+ - [Security] Team section should not display opportunities current user is not allowed to see...
+ - Update to rails 3.2.20
+ - Fixed issue #347
+ - Fixed issue #349
+ - Fixed #351 - missing interpolation argument.
+ - Fixed #353 - observes is a prototype function that is no longer used.
+ - Fixed #283 - email max length is 254 according to IETF
+ - Fix avatar issue in recent_activity
+ - Merge pull request #354 
+ - Fixed custom field handling of html entities.
+ - Merge pull request #355
+ - Fixed issue #374 - global lists missing from UK translation file.
+ - Fix #356 - default SMTP session should have no auth
+
+
+Full list:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.4...v0.13.5
+
+0.13.4 - September 4, 2014
+---------------------------------------------------------------------
+ - Fixed XSS vulnerability in helper method.
+ - Use rails_autolink gem which contains updated XSS fixes.
+ - Fixed XSS vulnerability if email data is manipulated.
+
+Full list:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.3...v0.13.4
+
+0.13.3 - August 26, 2014
+---------------------------------------------------------------------
+ - Fixed bug where starts_on was being used instead of ends_on.      a0f69d7
+ - fixes bug with toggling select/create account when converting lead      7c76b9c
+ - Russian locale fixes. 
+ - Add entity_observer to list of observers when running as an engine.
+ - Allow notification emails to be sent from a particular address. Many 
+ - Convert tag select box to Select2. We're deprecating Chosen
+ - Enable fallback translations.
+ - Fixed 'end of week' spec in tasks using Timecop.
+ - Fixed bug with recent items box replacement.
+ - #311 - problem with Thor being reference before it is loa
+ - Fixed some bugs related to sorting custom fields.
+ - #334 Added byebug for ruby2+.      5dca0ba
+ - Update rails
+ - Update gems
+ - removes prototype-rails dependency
+ - replaces prototype with jquery
+
+Full list:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.2...v0.13.3
+
+0.13.2 - January 9, 2014
+---------------------------------------------------------------------
+ - Fixed issue with secret token not being saved if DB does not exist.
+  
+0.13.1 - January 7, 2014
+---------------------------------------------------------------------
+ - Lock down routes.
+ - Remove stub hook
+ - Remove unneccessary function
+ - Don't spam gmail by default
+ - consider_all_requests_local should be off by default in production mode
+ - Remove pysch by default (optimise for ruby 2 now)
+ - Fixed regular expression logic to be more sensitive to newline attacks.
+ - users_controller requires security on its actions.
+ - Send emails to file in development mode
+ - Don't show user list if not logged in.
+ - Remove old 'rake acceptance' task     2d4411a
+ - Refactored secret token generation code
+ - Hide password related attributes from the logs.
+ - File syntax layout tweak.
+ - Escape autocomplete output safely.
+ - Locked down available views in Task.
+ - sanitize list.url
+ - Don't generate secret token in test mode.
+ - Don't raise secret token generation error during tests.
+
+Full list
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.0...v0.13.1
+
+Fri Dec 27, 2013 (0.13.0)
+---------------------------------------------------------------------
+- Add user_id to lists table    
+- Add campaign to opportunity advanced search.
+- Add id to export formats. 
+- Added ActiveSupport lazy load hooks for all models in Fat Free CRM.
+- Added timeago library to enable future caching of search results. 
+- Atom and RSS feeds now deal with cases where user doesn't exist.
+- Better solution to internationalizing jquery.timeago plugin. 
+- Configurationise the uniqueness constraint for account first names 
+- Convert settings from syck to psych and remove dependency on Syck.
+- Enforce available locales in latest version of I18n. 
+- German translations
+- Introducing client-side unobtrusive javascript for new comments.
+- Peg paper_trail to v2.7
+- Replaces rjs with erb/haml
+- Updated to latest rails version
+
+Bug fixes
+- Ensure user isn't deleted if they still have tasks.
+- Fix delete button not showing    
+- Fix global list save problem     
+- Closes #268: Replace the contents of "div#leads_pagination"
+- #242 and #245. Fix cohsen_select helper to be able to
+- Fixed issue #282
+- Fixed issue with account categories inclusion matcher.
+- Fixed issue with timeago plugin not precompiling. Resolves issue #286
+- Fixed issue#281 - psych v2 is not supported.      
+- Fixed one_submit_only js format and fixed red background highlight
+- Fixed uninitialized constant 'Version' error on dashboard ATOM/RSS
+- #270. Fixed procfile command for heroku. 
+- #273 from notentered/testFixes      
+- #279 from roadt/bugfix       
+- #284 from roadt/bugfix   
+- #287 from szetobo/fix_test_case   
+- #288 from szetobo/update_scope     
+- rake ffcrm:setup no longer nukes the database before starting.
+
+Full changes:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.12.3...v0.13.0
+
+
+0.12.3 - January 9, 2014
+---------------------------------------------------------------------
+No changes
+
+0.12.2 - January 7, 2014
+---------------------------------------------------------------------
+ - users_controller requires security on its actions.
+ - Refactored secret token generation code to generate and persist a secret token in the DB if one doesn't exist
+ - Don't show user list if not logged in.
+ - Hide password related attributes from the logs.
+ - consider_all_requests_local should be off by default in production mode
+ - Fixed issue with secret token not being saved if DB does not exist. 
+
+
+0.12.1 - December 27, 2013
+---------------------------------------------------------------------
+- Strengthen case to generate unique secret token.
+- Ensure requests are protected.
+- Add custom serializers for xml and json.
+- Fixed sql injection in timeline method.
+- Refactor activity_user to remove possible SQL injection points.
+- Update gems to compile through
+
 Fri, Jun 28, 2013 (0.12.0)
 ---------------------------------------------------------------------
 - Ruby 1.9 support only (no ruby 1.8 and not yet ruby 2)

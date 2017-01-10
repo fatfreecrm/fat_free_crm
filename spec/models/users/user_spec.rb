@@ -42,61 +42,59 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe User do
   it "should create a new instance given valid attributes" do
-    User.create!(
+    expect(User.new(
       username: "username",
       email:    "user@example.com",
       password: "password",
       password_confirmation: "password"
-    )
+    ).valid?).to eq true
   end
 
   it "should have a valid factory" do
     expect(FactoryGirl.build(:user)).to be_valid
   end
 
-  describe "Destroying users with and without related assets" do
+  describe '#destroyable?' do
+    describe "Destroying users with and without related assets" do
+      before do
+        @user = FactoryGirl.build(:user)
+      end
+
+      %w(account campaign lead contact opportunity).each do |asset|
+        it "should not destroy the user if she owns #{asset}" do
+          FactoryGirl.create(asset, user: @user)
+
+          expect(@user.destroyable?).to eq(false)
+        end
+
+        it "should not destroy the user if she has #{asset} assigned" do
+          FactoryGirl.create(asset, assignee: @user)
+          expect(@user.destroyable?).to eq(false)
+        end
+      end
+
+      it "should not destroy the user if she owns a comment" do
+        login
+        account = build(:account, user: current_user)
+        FactoryGirl.create(:comment, user: @user, commentable: account)
+        expect(@user.destroyable?).to eq(false)
+      end
+
+      it "should not destroy the current user" do
+        login
+
+        expect(current_user.destroyable?).to eq(false)
+      end
+
+      it "should destroy the user" do
+        expect(@user.destroyable?).to eq(true)
+      end
+    end
+  end
+  describe '#destroy' do
     before do
       @user = FactoryGirl.create(:user)
     end
-
-    %w(account campaign lead contact opportunity).each do |asset|
-      it "should not destroy the user if she owns #{asset}" do
-        FactoryGirl.create(asset, user: @user)
-        @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error
-        expect(@user.destroyed?).to eq(false)
-      end
-
-      it "should not destroy the user if she has #{asset} assigned" do
-        FactoryGirl.create(asset, assignee: @user)
-        @user.destroy
-        expect { User.find(@user.id) }.to_not raise_error
-        expect(@user.destroyed?).to eq(false)
-      end
-    end
-
-    it "should not destroy the user if she owns a comment" do
-      login
-      account = FactoryGirl.create(:account, user: current_user)
-      FactoryGirl.create(:comment, user: @user, commentable: account)
-      @user.destroy
-      expect { User.find(@user.id) }.to_not raise_error
-      expect(@user.destroyed?).to eq(false)
-    end
-
-    it "should not destroy the current user" do
-      login
-      current_user.destroy
-      expect { current_user.reload }.to_not raise_error
-      expect(current_user).not_to be_destroyed
-    end
-
-    it "should destroy the user" do
-      @user.destroy
-      expect { User.find(@user.id) }.to raise_error(ActiveRecord::RecordNotFound)
-      expect(@user).to be_destroyed
-    end
-
     it "once the user gets deleted all her permissions must be deleted too" do
       FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:account))
       FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:contact))
@@ -114,69 +112,82 @@ describe User do
     end
   end
 
-  it "should set suspended timestamp upon creation if signups need approval and the user is not an admin" do
-    allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-    @user = FactoryGirl.create(:user, suspended_at: nil)
-    expect(@user).to be_suspended
-  end
+  describe '#check_if_needs_approval' do
+    it "should set suspended timestamp upon creation if signups need approval and the user is not an admin" do
+      allow(Setting).to receive(:user_signup).and_return(:needs_approval)
+      @user = FactoryGirl.build(:user, suspended_at: nil)
 
-  it "should not set suspended timestamp upon creation if signups need approval and the user is an admin" do
-    allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-    @user = FactoryGirl.create(:user, admin: true, suspended_at: nil)
-    expect(@user).not_to be_suspended
+      @user.check_if_needs_approval
+
+      expect(@user).to be_suspended
+    end
+
+    it "should not set suspended timestamp upon creation if signups need approval and the user is an admin" do
+      allow(Setting).to receive(:user_signup).and_return(:needs_approval)
+      @user = FactoryGirl.build(:user, admin: true, suspended_at: nil)
+
+      @user.check_if_needs_approval
+
+      expect(@user).not_to be_suspended
+    end
   end
 
   context "scopes" do
     describe "have_assigned_opportunities" do
-      before :each do
+      before do
         @user1 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user1, stage: 'analysis')
+        FactoryGirl.create(:opportunity, assignee: @user1, stage: 'analysis', account: nil, campaign: nil, user: nil)
 
         @user2 = FactoryGirl.create(:user)
 
         @user3 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user3, stage: 'won')
+        FactoryGirl.create(:opportunity, assignee: @user3, stage: 'won', account: nil, campaign: nil, user: nil)
 
         @user4 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user4, stage: 'lost')
+        FactoryGirl.create(:opportunity, assignee: @user4, stage: 'lost', account: nil, campaign: nil, user: nil)
+
+        @result = User.have_assigned_opportunities
       end
 
       it "includes users with assigned opportunities" do
-        expect(User.have_assigned_opportunities).to include(@user1)
+        expect(@result).to include(@user1)
       end
 
       it "excludes users without any assigned opportunities" do
-        expect(User.have_assigned_opportunities).not_to include(@user2)
+        expect(@result).not_to include(@user2)
       end
 
       it "excludes users with opportunities that have been won or lost" do
-        expect(User.have_assigned_opportunities).not_to include(@user3)
-        expect(User.have_assigned_opportunities).not_to include(@user4)
+        expect(@result).not_to include(@user3)
+        expect(@result).not_to include(@user4)
       end
     end
   end
 
   context "instance methods" do
     describe "assigned_opportunities" do
-      before :each do
+      before do
         @user = FactoryGirl.create(:user)
-        @opportunity1 = FactoryGirl.create(:opportunity, assignee: @user)
-        @opportunity2 = FactoryGirl.create(:opportunity, assignee: FactoryGirl.create(:user))
+
+        @opportunity1 = FactoryGirl.create(:opportunity, assignee: @user, account: nil, campaign: nil, user: nil)
+        @opportunity2 = FactoryGirl.create(:opportunity, assignee: FactoryGirl.create(:user), account: nil, campaign: nil, user: nil)
+
+        @result = @user.assigned_opportunities
       end
 
       it "includes opportunities assigned to user" do
-        expect(@user.assigned_opportunities).to include(@opportunity1)
+        expect(@result).to include(@opportunity1)
       end
 
       it "does not include opportunities assigned to another user" do
-        expect(@user.assigned_opportunities).not_to include(@opportunity2)
+        expect(@result).not_to include(@opportunity2)
       end
     end
   end
 
   describe "Setting I18n.locale" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryGirl.build(:user)
       @locale = I18n.locale
     end
 
@@ -199,14 +210,14 @@ describe User do
 
   describe "Setting single access token" do
     it "should update single_access_token attribute if it is not set already" do
-      @user = FactoryGirl.create(:user, single_access_token: nil)
+      @user = FactoryGirl.build(:user, single_access_token: nil)
 
       @user.set_single_access_token
       expect(@user.single_access_token).not_to eq(nil)
     end
 
     it "should not update single_access_token attribute if it is set already" do
-      @user = FactoryGirl.create(:user, single_access_token: "token")
+      @user = FactoryGirl.build(:user, single_access_token: "token")
 
       @user.set_single_access_token
       expect(@user.single_access_token).to eq("token")
