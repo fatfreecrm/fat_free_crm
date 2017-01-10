@@ -9,7 +9,7 @@ class RemoveUuid < ActiveRecord::Migration
   end
 
   def self.down
-    fail ActiveRecord::IrreversibleMigration, "Can't recover deleted UUIDs"
+    raise ActiveRecord::IrreversibleMigration, "Can't recover deleted UUIDs"
   end
 
   private

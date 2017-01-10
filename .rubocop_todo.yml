@@ -508,18 +508,6 @@ Style/Semicolon:
     - 'spec/models/fields/custom_field_spec.rb'
     - 'spec/support/macros.rb'
 
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: only_raise, only_fail, semantic
-Style/SignalException:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/models/fields/field.rb'
-    - 'db/migrate/20100928030620_remove_uuid.rb'
-    - 'spec/factories/shared_factories.rb'
-    - 'spec/factories/user_factories.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: ExactNameMatch, AllowPredicates, AllowDSLWriters, IgnoreClassMethods, Whitelist.
