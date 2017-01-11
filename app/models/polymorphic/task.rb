@@ -166,6 +166,7 @@ class Task < ActiveRecord::Base
       "due_later"
     end
   end
+
   # Returns list of tasks grouping them by due date as required by tasks/index.
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)
@@ -194,7 +195,7 @@ class Task < ActiveRecord::Base
   def self.totals(user, view = "pending")
     return {} unless ALLOWED_VIEWS.include?(view)
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-    settings.inject(HashWithIndifferentAccess[all: 0]) do |hash, key|
+    settings.each_with_object(HashWithIndifferentAccess[all: 0]) do |key, hash|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)
       hash[:all] += hash[key]
       hash
@@ -220,8 +221,6 @@ class Task < ActiveRecord::Base
       Time.zone.now.midnight + 100.years
     when "specific_time"
       calendar ? parse_calendar_date : nil
-    else # due_later or due_asap
-      nil
     end
   end
 

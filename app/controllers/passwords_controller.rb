@@ -60,6 +60,6 @@ class PasswordsController < ApplicationController
   #----------------------------------------------------------------------------
   def empty_password?
     (params[:user][:password] == params[:user][:password_confirmation]) &&
-      (params[:user][:password].blank?)      # "   ".blank? == true
+      params[:user][:password].blank?      # "   ".blank? == true
   end
 end

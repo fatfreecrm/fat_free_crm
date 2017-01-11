@@ -11,8 +11,8 @@ describe "/campaigns/show" do
   before do
     login_and_assign
     @campaign = FactoryGirl.build_stubbed(:campaign, id: 42,
-                                              leads: [FactoryGirl.build_stubbed(:lead)],
-                                              opportunities: [FactoryGirl.build_stubbed(:opportunity)])
+                                                     leads: [FactoryGirl.build_stubbed(:lead)],
+                                                     opportunities: [FactoryGirl.build_stubbed(:opportunity)])
     assign(:campaign, @campaign)
     assign(:users, [current_user])
     assign(:comment, Comment.new)

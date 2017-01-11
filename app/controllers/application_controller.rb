@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.any(:js, :html)   { render partial: 'auto_complete' }
       format.json do
-        render json: @auto_complete.inject({}){|h, a|
+        render json: @auto_complete.each_with_object({}) { |a, h|
                        h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
                      }
       end
@@ -252,7 +252,7 @@ class ApplicationController < ActionController::Base
   def redirection_url
     # Try to redirect somewhere sensible. Note: not all controllers have an index action
     url = if current_user.present?
-            (respond_to?(:index) && action_name != 'index') ? { action: 'index' } : root_url
+            respond_to?(:index) && action_name != 'index' ? { action: 'index' } : root_url
           else
             login_url
     end
@@ -272,7 +272,7 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Token'
       headers['Access-Control-Max-Age'] = '1728000'
 
-      render :text => '', :content_type => 'text/plain'
+      render text: '', content_type: 'text/plain'
     end
   end
 end

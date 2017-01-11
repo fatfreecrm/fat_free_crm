@@ -25,10 +25,10 @@ describe "/application/_auto_complete" do
 
       render
       expect(rendered).to have_tag("ul", count: 1) do |list|
-        unless model == :lead
-          expect(list).to have_tag("li", id: @auto_complete.id.to_s, text: @auto_complete.name)
-        else
+        if model == :lead
           expect(list).to have_tag("li", id: @auto_complete.id.to_s, text: "#{@auto_complete.name} (#{@auto_complete.company})")
+        else
+          expect(list).to have_tag("li", id: @auto_complete.id.to_s, text: @auto_complete.name)
         end
       end
     end

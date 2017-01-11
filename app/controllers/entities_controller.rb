@@ -186,7 +186,8 @@ class EntitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def parse_query_and_tags(search_string)
     return ['', ''] if search_string.blank?
-    query, tags = [], []
+    query = []
+    tags = []
     search_string.strip.split(/\s+/).each do |token|
       if token.starts_with?("#")
         tags << token[1..-1]
@@ -207,7 +208,7 @@ class EntitiesController < ApplicationController
   def set_view
     if params['view']
       controller = params['controller']
-      action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
+      action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
       current_user.pref[:"#{controller}_#{action}_view"] = params['view']
     end
   end

@@ -3,7 +3,7 @@ class RemoveDefaultValueAndClearSettings < ActiveRecord::Migration
     remove_column :settings, :default_value
 
     # Truncate settings table
-    if connection.adapter_name.downcase == "sqlite"
+    if connection.adapter_name.casecmp("sqlite").zero?
       execute("DELETE FROM settings")
     else # mysql and postgres
       execute("TRUNCATE settings")

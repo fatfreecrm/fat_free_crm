@@ -74,7 +74,7 @@ module FatFreeCRM
           permissions_to_remove = []
         end
 
-        permissions_to_remove.each { |p| (permissions.delete(p); p.destroy) }
+        permissions_to_remove.each { |p| permissions.delete(p); p.destroy }
       end
 
       # Save the model along with its permissions if any.

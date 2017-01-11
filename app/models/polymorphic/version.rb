@@ -13,10 +13,10 @@ class Version < PaperTrail::Version
   belongs_to :related, polymorphic: true
   belongs_to :user, foreign_key: :whodunnit
 
-  scope :default_order,  lambda { order('created_at DESC') }
-  scope :include_events, lambda { |*events| where(event: events) }
-  scope :exclude_events, lambda { |*events| where('event NOT IN (?)', events) }
-  scope :for,            lambda { |user| where(whodunnit: user.id.to_s) }
+  scope :default_order,  -> { order('created_at DESC') }
+  scope :include_events, ->(*events) { where(event: events) }
+  scope :exclude_events, ->(*events) { where('event NOT IN (?)', events) }
+  scope :for,            ->(user) { where(whodunnit: user.id.to_s) }
 
   class << self
     def recent_for_user(user, limit = 10)
@@ -32,7 +32,7 @@ class Version < PaperTrail::Version
                 .offset(offset)
                 .default_order
 
-        break if query.size == 0
+        break if query.empty?
         versions += query.select { |v| v.item.present? }
         versions.uniq! { |v| [v.item_id, v.item_type] }
         offset += limit * 2

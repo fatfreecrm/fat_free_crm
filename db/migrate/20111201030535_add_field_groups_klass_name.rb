@@ -6,7 +6,8 @@ class AddFieldGroupsKlassName < ActiveRecord::Migration
     %w(Account Campaign Contact Lead Opportunity).each do |entity|
       klass = entity.classify.constantize
       field_group = FieldGroup.new
-      field_group.label, field_group.klass_name = 'Custom Fields', klass.name
+      field_group.label = 'Custom Fields'
+      field_group.klass_name = klass.name
       field_group.save!
       Field.where(field_group_id: nil, klass_name: klass.name).update_all(field_group_id: field_group.id)
     end

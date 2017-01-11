@@ -105,7 +105,7 @@ class User < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def awaits_approval?
-    self.suspended? && login_count == 0 && Setting.user_signup == :needs_approval
+    suspended? && login_count == 0 && Setting.user_signup == :needs_approval
   end
 
   #----------------------------------------------------------------------------
@@ -161,7 +161,7 @@ class User < ActiveRecord::Base
   def has_related_assets?
     sum = %w(Account Campaign Lead Contact Opportunity Comment Task).detect do |asset|
       klass = asset.constantize
-      
+
       asset != "Comment" && klass.assigned_to(self).exists? || klass.created_by(self).exists?
     end
     !sum.nil?

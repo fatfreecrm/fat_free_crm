@@ -23,7 +23,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, polymorphic: true
 
-  scope :created_by, lambda { |user| where(user_id: user.id) }
+  scope :created_by, ->(user) { where(user_id: user.id) }
 
   validates_presence_of :user, :commentable, :comment
   has_paper_trail class_name: 'Version', meta: { related: :commentable },
