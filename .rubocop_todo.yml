@@ -54,12 +54,6 @@ Lint/RescueException:
     - 'lib/fat_free_crm/mail_processor/base.rb'
     - 'lib/tasks/ffcrm/update_data.rake'
 
-# Offense count: 2
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'lib/tasks/ffcrm/config.rake'
-    - 'lib/tasks/ffcrm/update_data.rake'
-
 # Offense count: 4
 # Configuration parameters: ContextCreatingMethods.
 Lint/UselessAccessModifier:
