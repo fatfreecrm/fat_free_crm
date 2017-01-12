@@ -467,7 +467,7 @@ describe LeadsController do
         she = FactoryGirl.create(:user, id: 8)
 
         xhr :put, :update, id: @lead.id, lead: { access: "Shared", user_ids: %w(7 8) }
-        expect(@lead.user_ids.sort).to eq([7, 8])
+        expect(@lead.user_ids.sort).to eq([he.id, she.id])
       end
 
       it "should get the data for leads sidebar when called from leads index" do
