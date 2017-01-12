@@ -127,13 +127,16 @@ class HomeController < ApplicationController
   # yield incorrect results.
   def activity_user
     return nil if current_user.pref[:activity_user] == "all_users"
-    return nil unless current_user.pref[:activity_user] 
+    return nil unless current_user.pref[:activity_user]
 
-    if current_user.pref[:activity_user] =~ /@/ # email
-      user = User.where(email: current_user.pref[:activity_user]).first
-    else # first_name middle_name last_name any_name
-      user = name_query(current_user.pref[:activity_user])
-    end
+    is_email = current_user.pref[:activity_user].contains("@")
+
+    user = if is_email
+             User.where(email: current_user.pref[:activity_user]).first
+           else # first_name middle_name last_name any_name
+             name_query(current_user.pref[:activity_user])
+           end
+
     user.is_a?(User) ? user.id : nil
   end
 
