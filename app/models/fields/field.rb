@@ -113,7 +113,6 @@ class Field < ActiveRecord::Base
     # Example options: :as => 'datepair', :type => 'date', :klass => 'CustomFieldDatePair'
     #------------------------------------------------------------------------------
     def register(options)
-      opts = options.dup
       as = options.delete(:as)
       (@@field_types ||= BASE_FIELD_TYPES).merge!(as => options)
     end
