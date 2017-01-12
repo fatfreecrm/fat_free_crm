@@ -63,24 +63,6 @@ Lint/UselessAccessModifier:
     - 'db/migrate/20100928030620_remove_uuid.rb'
     - 'lib/gravatar_image_tag.rb'
 
-# Offense count: 20
-Lint/UselessAssignment:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/home_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/tasks_helper.rb'
-    - 'app/helpers/users_helper.rb'
-    - 'app/models/fields/field.rb'
-    - 'lib/tasks/ffcrm/comment_replies.rake'
-    - 'lib/tasks/ffcrm/demo.rake'
-    - 'lib/tasks/ffcrm/dropbox.rake'
-    - 'spec/controllers/entities/campaigns_controller_spec.rb'
-    - 'spec/controllers/entities/leads_controller_spec.rb'
-    - 'spec/controllers/home_controller_spec.rb'
-    - 'spec/models/entities/opportunity_spec.rb'
-    - 'spec/views/leads/update.js.haml_spec.rb'
-
 # Offense count: 2
 Lint/Void:
   Exclude:
