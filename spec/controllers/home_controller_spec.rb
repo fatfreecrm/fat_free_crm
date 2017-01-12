@@ -21,7 +21,7 @@ describe HomeController do
     end
 
     it "should not include views in the list of activities" do
-      activity = FactoryGirl.create(:version, item: FactoryGirl.create(:account, user: @current_user), event: "view")
+      FactoryGirl.create(:version, item: FactoryGirl.create(:account, user: @current_user), event: "view")
       expect(controller).to receive(:get_activities).once.and_return([])
 
       get :index
@@ -42,11 +42,12 @@ describe HomeController do
     end
 
     it "should not display completed tasks" do
-      task_1 = FactoryGirl.create(:task, user_id: current_user.id, name: "Your first task", bucket: "due_asap", assigned_to: current_user.id)
-      task_2 = FactoryGirl.create(:task, user_id: current_user.id, name: "Completed task", bucket: "due_asap", completed_at: 1.days.ago, completed_by: current_user.id, assigned_to: current_user.id)
+      my_task = FactoryGirl.create(:task, user_id: current_user.id, name: "Your first task", bucket: "due_asap", assigned_to: current_user.id)
+      FactoryGirl.create(:task, user_id: current_user.id, name: "Completed task", bucket: "due_asap", completed_at: 1.days.ago, completed_by: current_user.id, assigned_to: current_user.id)
 
       get :index
-      expect(assigns[:my_tasks]).to eq([task_1])
+
+      expect(assigns[:my_tasks]).to eq([my_task])
     end
 
     it "should get a list of my opportunities ordered by closes_on" do
@@ -202,7 +203,6 @@ describe HomeController do
     end
 
     it "should not do anything when state neither Expanded nor Collapsed" do
-      comment = double(Comment)
       expect(Comment).not_to receive(:find).with("1")
       xhr :get, :timeline, type: "comment", id: "1", state: "Explode"
     end
