@@ -63,12 +63,6 @@ Lint/UselessAccessModifier:
     - 'db/migrate/20100928030620_remove_uuid.rb'
     - 'lib/gravatar_image_tag.rb'
 
-# Offense count: 2
-Lint/Void:
-  Exclude:
-    - 'lib/tasks/ffcrm/update_data.rake'
-    - 'spec/factories/sequences.rb'
-
 # Offense count: 131
 Metrics/AbcSize:
   Max: 55

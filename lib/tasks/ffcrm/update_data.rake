@@ -227,8 +227,8 @@ in a console and continue. This is strongly discouraged. You have been warned!
           end
           Setting.have_run_country_migration = true
         rescue Exception => e
-          ActiveRecord::Rollback
           puts e
+          raise ActiveRecord::Rollback
         end
       end
     end
