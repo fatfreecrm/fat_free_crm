@@ -158,7 +158,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (1.8.3)
+    json (1.8.5)
     kgio (2.11.0)
     libv8 (3.16.14.17)
     listen (3.1.5)
