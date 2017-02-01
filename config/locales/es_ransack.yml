@@ -1,0 +1,91 @@
+---
+es:
+  ransack:
+    search: buscar
+    predicate: predicado
+    and: y
+    or: o
+    any: algún
+    all: todos
+    combinator: combinador
+    attribute: atributo
+    value: valor
+    condition: condición
+    sort: ordenar
+    asc: ascendente
+    desc: descendente
+    submit: Buscar
+    add_group: Añadir un grupo de filtros
+    group_first: Mostrando resultados donde %{combinator} de las siguientes coincidencias
+    group_rest: ! '...y donde %{combinator} de las siguientes coincidencias'
+    add_condition: Añadir un filtro
+    remove_condition: Borrar un filtro
+    predicates:
+      eq: es
+      eq_any: es cualquier
+      eq_all: es todo
+      not_eq: no es
+      not_eq_any: no es ninguna
+      not_eq_all: no es todo
+      matches: coincidencias
+      matches_any: coincide con cualquiera
+      matches_all: coincide con todos
+      does_not_match: no coincide
+      does_not_match_any: no coincide ninguno
+      does_not_match_all: no coincide todos
+      lt: es menor que
+      lt_any: es menor que cualquiera
+      lt_all: es menor que todos
+      lteq: es menor o igual que
+      lteq_any: es menor o igual que cualquiera
+      lteq_all: es menor o igual que todos
+      gt: es mayor que
+      gt_any: es mayor que cualquiera
+      gt_all: es mayor que todos
+      gteq: es mayor o igual que
+      gteq_any: es mayor o igual que cualquiera
+      gteq_all: es mayor o igual que todos
+      in: esta en
+      in_any: esta en cualquiera
+      in_all: esta en todos
+      not_in: no esta en
+      not_in_any: no esta en ninguno
+      not_in_all: no esta en todos
+      cont: contiene
+      cont_any: contiene algún
+      cont_all: contiene todos
+      not_cont: no contiene
+      not_cont_any: no contiene ningún
+      not_cont_all: no contiene todo
+      start: empieza con
+      start_any: empieza con cualquiera
+      start_all: empieza con todo
+      not_start: no empieza con
+      not_start_any: no empieza con cualquiera
+      not_start_all: no empieza con todo
+      end: termina con
+      end_any: termina con cualquiera
+      end_all: termina con todo
+      not_end: no termina con
+      not_end_any: no termina con ninguna
+      not_end_all: no termina con todas
+      'true': es cierto
+      'false': es falso
+      present: esta presente
+      blank: es blanco
+      'null': es nulo
+      not_null: no es nulo
+      alt:
+        date:
+          lt: es antes
+          lt_any: es antes de cualquier
+          lt_all: es antes de todos
+          lteq: es antes o en
+          lteq_any: es antes o en cualquier
+          lteq_all: es antes o en todos
+          gt: es después
+          gt_any: es después de cualquier
+          gt_all: es despueś de todos
+          gteq: es despueś o en
+          gteq_any: es despueś o en cualquier
+          gteq_all: es despueś o en todos

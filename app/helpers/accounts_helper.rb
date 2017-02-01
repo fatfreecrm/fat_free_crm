@@ -28,8 +28,8 @@ module AccountsHelper
     options[:selected] = (@account && @account.id) || 0
     accounts = ([@account] + Account.my.order(:name).limit(25)).compact.uniq
     collection_select :account, :id, accounts, :id, :name, options,
-                      :"data-placeholder" => t(:select_an_account),
-                      :"data-url" => auto_complete_accounts_path(format: 'json'),
+                      "data-placeholder": t(:select_an_account),
+                      "data-url": auto_complete_accounts_path(format: 'json'),
                       style: "width:330px; display:none;",
                       class: 'ajax_chosen'
   end

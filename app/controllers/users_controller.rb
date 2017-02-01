@@ -102,13 +102,13 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def change_password
     if @user.valid_password?(params[:current_password], true) || @user.password_hash.blank?
-      unless params[:user][:password].blank?
+      if params[:user][:password].blank?
+        flash[:notice] = t(:msg_password_not_changed)
+      else
         @user.password = params[:user][:password]
         @user.password_confirmation = params[:user][:password_confirmation]
         @user.save
         flash[:notice] = t(:msg_password_changed)
-      else
-        flash[:notice] = t(:msg_password_not_changed)
       end
     else
       @user.errors.add(:current_password, t(:msg_invalid_password))
@@ -134,6 +134,7 @@ class UsersController < ApplicationController
   protected
 
   def user_params
+    params[:user][:email].try(:strip!)
     params[:user].permit(
       :username,
       :email,

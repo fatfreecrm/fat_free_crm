@@ -46,7 +46,7 @@ class Field < ActiveRecord::Base
     'url'         => { klass: 'CustomField', type: 'string' },
     'tel'         => { klass: 'CustomField', type: 'string' },
     'select'      => { klass: 'CustomField', type: 'string' },
-    'radio_buttons'       => { klass: 'CustomField', type: 'string' },
+    'radio_buttons' => { klass: 'CustomField', type: 'string' },
     'check_boxes' => { klass: 'CustomField', type: 'text' },
     'boolean'     => { klass: 'CustomField', type: 'boolean' },
     'date'        => { klass: 'CustomField', type: 'date' },
@@ -63,7 +63,7 @@ class Field < ActiveRecord::Base
   validates_inclusion_of :as, in: proc { field_types.keys }, message: "^Invalid field type.", allow_blank: true
 
   def column_type(field_type = as)
-    (opts = Field.field_types[field_type]) ? opts[:type] : fail("Unknown field_type: #{field_type}")
+    (opts = Field.field_types[field_type]) ? opts[:type] : raise("Unknown field_type: #{field_type}")
   end
 
   def input_options

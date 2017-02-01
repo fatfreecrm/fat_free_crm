@@ -10,14 +10,14 @@ module ApplicationHelper
       @current_tab ||= tabs.first[:text] # Select first tab by default.
       tabs.each { |tab| tab[:active] = (@current_tab == tab[:text] || @current_tab == tab[:url][:controller]) }
     else
-      fail FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake ffcrm:setup</b> command."
+      raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake ffcrm:setup</b> command."
     end
   end
 
   #----------------------------------------------------------------------------
   def tabless_layout?
     %w(authentications passwords).include?(controller.controller_name) ||
-      ((controller.controller_name == "users") && (%w(create new).include?(controller.action_name)))
+      ((controller.controller_name == "users") && %w(create new).include?(controller.action_name))
   end
 
   # Show existing flash or embed hidden paragraph ready for flash[:notice]
@@ -36,7 +36,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
     content_tag("div",
-                link_to("<small>#{ hidden ? '&#9658;' : '&#9660;' }</small> #{sanitize text}".html_safe,
+                link_to("<small>#{hidden ? '&#9658;' : '&#9660;'}</small> #{sanitize text}".html_safe,
                         url_for(controller: :home, action: :toggle, id: id),
                         remote: true,
                         onclick: "crm.flip_subtitle(this)"
@@ -244,7 +244,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil, shake = nil)
     text = ""
-    text << "$('#sidebar').html('#{ j render(partial: 'layouts/sidebar', locals: { view: view, action: action }) }');"
+    text << "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
     text << "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
     text.html_safe
   end
@@ -258,9 +258,9 @@ module ApplicationHelper
         if site == :skype
           url = "callto:" << url
         else
-          url = "http://" << url unless url.match(/^https?:\/\//)
+          url = "http://" << url unless url =~ /^https?:\/\//
         end
-        link_to(image_tag("#{site}.gif", size: "15x15"), h(url), :"data-popup" => true, title: t(:open_in_window, h(url)))
+        link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
       end
     end.compact.join("\n").html_safe
   end
@@ -269,7 +269,8 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def redraw(option, value, url = send("redraw_#{controller.controller_name}_path"))
     if value.is_a?(Array)
-      param, value = value.first, value.last
+      param = value.first
+      value = value.last
     end
     %{
       if ($('##{option}').html() != '#{value}') {
@@ -361,11 +362,11 @@ module ApplicationHelper
   def links_to_export(action = :index)
     token = current_user.single_access_token
     url_params = { action: action }
-    url_params.merge!(id: params[:id]) unless params[:id].blank?
-    url_params.merge!(query: params[:query]) unless params[:query].blank?
-    url_params.merge!(q: params[:q]) unless params[:q].blank?
-    url_params.merge!(view: @view) unless @view.blank? # tasks
-    url_params.merge!(id: params[:id]) unless params[:id].blank?
+    url_params[:id] = params[:id] unless params[:id].blank?
+    url_params[:query] = params[:query] unless params[:query].blank?
+    url_params[:q] = params[:q] unless params[:q].blank?
+    url_params[:view] = @view unless @view.blank? # tasks
+    url_params[:id] = params[:id] unless params[:id].blank?
 
     exports = %w(xls csv).map do |format|
       link_to(format.upcase, url_params.merge(format: format), title: I18n.t(:"to_#{format}")) unless action.to_s == "show"
@@ -439,7 +440,7 @@ module ApplicationHelper
   def section_title(id, hidden = true, text = nil, info_text = nil)
     text = id.to_s.split("_").last.capitalize if text.nil?
     content_tag("div", class: "subtitle show_attributes") do
-      content = link_to("<small>#{ hidden ? '&#9658;' : '&#9660;' }</small> #{sanitize text}".html_safe,
+      content = link_to("<small>#{hidden ? '&#9658;' : '&#9660;'}</small> #{sanitize text}".html_safe,
                         url_for(controller: :home, action: :toggle, id: id),
                         remote:  true,
                         onclick: "crm.flip_subtitle(this)"
@@ -452,7 +453,7 @@ module ApplicationHelper
   # Return name of current view
   def current_view_name
     controller = params['controller']
-    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
+    action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
     current_user.pref[:"#{controller}_#{action}_view"]
   end
 
@@ -460,7 +461,7 @@ module ApplicationHelper
   # Get template in current context with current view name
   def template_for_current_view
     controller = params['controller']
-    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
+    action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
     template = FatFreeCRM::ViewFactory.template_for_current_view(controller: controller, action: action, name: current_view_name)
     template
   end
@@ -469,7 +470,7 @@ module ApplicationHelper
   # Generate buttons for available views given the current context
   def view_buttons
     controller = params['controller']
-    action = (params['action'] == 'show') ? 'show' : 'index' # create update redraw filter index actions all use index view
+    action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
     views = FatFreeCRM::ViewFactory.views_for(controller: controller, action: action)
     return nil unless views.size > 1
     lis = ''.html_safe
@@ -481,8 +482,8 @@ module ApplicationHelper
                     "#{h view.name}-button"
           end
         lis << content_tag(:li) do
-          url = (action == "index") ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
-          link_to('#', title: t(view.name, default: h(view.title)), :"data-view" => h(view.name), :"data-url" => h(url), :"data-context" => action, class: classes) do
+          url = action == "index" ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
+          link_to('#', title: t(view.name, default: h(view.title)), "data-view": h(view.name), "data-url": h(url), "data-context": action, class: classes) do
             icon = view.icon || 'fa-bars'
             content_tag(:i, nil, class: "fa #{h icon}")
           end
@@ -520,6 +521,7 @@ module ApplicationHelper
   #         options = { renderer: {...} , params: {...}
   def paginate(options = {})
     collection = options.delete(:collection)
+    options = { params: { action: 'index' } }.merge(options) if params['action'] == 'filter'
     options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
     will_paginate(collection, options)
   end

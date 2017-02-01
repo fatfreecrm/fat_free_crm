@@ -11,7 +11,7 @@ describe "/admin/users/index" do
   end
 
   it "renders a list of users" do
-    assign(:users, [FactoryGirl.create(:user)].paginate)
+    assign(:users, [FactoryGirl.build_stubbed(:user)].paginate)
 
     render
     expect(view).to render_template(partial: "_user")

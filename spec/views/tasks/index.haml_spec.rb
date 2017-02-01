@@ -14,10 +14,10 @@ describe "/tasks/index" do
 
   TASK_STATUSES.each do |status|
     before do
-      user = FactoryGirl.create(:user)
-      account = FactoryGirl.create(:account)
-      @due  = FactoryGirl.create(:task, asset: account, bucket: "due_asap", assignee: user)
-      @completed = FactoryGirl.create(:task, asset: account, bucket: "completed_today", assignee: user, completed_at: 1.hour.ago, completor: user)
+      user = FactoryGirl.build_stubbed(:user)
+      account = FactoryGirl.build_stubbed(:account)
+      @due = FactoryGirl.build_stubbed(:task, asset: account, bucket: "due_asap", assignee: user)
+      @completed = FactoryGirl.build_stubbed(:task, asset: account, bucket: "completed_today", assignee: user, completed_at: 1.hour.ago, completor: user)
     end
 
     it "should render list of #{status} tasks if list of tasks is not empty" do

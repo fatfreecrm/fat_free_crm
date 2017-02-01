@@ -56,15 +56,11 @@ class Setting < ActiveRecord::Base
       # Check database
       if database_and_table_exists?
         if setting = find_by_name(name.to_s)
-          unless setting.value.nil?
-            return cache[name] = setting.value
-          end
+          return cache[name] = setting.value unless setting.value.nil?
         end
       end
       # Check YAML settings
-      if yaml_settings.key?(name)
-        return cache[name] = yaml_settings[name]
-      end
+      return cache[name] = yaml_settings[name] if yaml_settings.key?(name)
     end
 
     # Set setting value
@@ -89,7 +85,10 @@ class Setting < ActiveRecord::Base
       # Returns false if table or database is unavailable.
       # Catches all database-related errors, so that Setting will return nil
       # instead of crashing the entire application.
-      table_exists? rescue false
+
+      table_exists?
+    rescue
+      false
     end
 
     # Loads settings from YAML files

@@ -85,6 +85,7 @@ class Lead < ActiveRecord::Base
   def self.per_page
     20
   end
+
   def self.first_name_position
     "before"
   end
@@ -150,9 +151,7 @@ class Lead < ActiveRecord::Base
   # Attach a task to the lead if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(task)
-    unless task_ids.include?(task.id)
-      tasks << task
-    end
+    tasks << task unless task_ids.include?(task.id)
   end
 
   # Discard a task from the lead.
@@ -175,16 +174,12 @@ class Lead < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def increment_leads_count
-    if campaign_id
-      Campaign.increment_counter(:leads_count, campaign_id)
-    end
+    Campaign.increment_counter(:leads_count, campaign_id) if campaign_id
   end
 
   #----------------------------------------------------------------------------
   def decrement_leads_count
-    if campaign_id
-      Campaign.decrement_counter(:leads_count, campaign_id)
-    end
+    Campaign.decrement_counter(:leads_count, campaign_id) if campaign_id
   end
 
   # Make sure at least one user has been selected if the lead is being shared.

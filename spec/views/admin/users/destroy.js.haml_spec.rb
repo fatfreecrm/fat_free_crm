@@ -26,7 +26,7 @@ describe "admin/users/destroy" do
 
   describe "user was not deleted" do
     before do
-      assign(:user, @user = FactoryGirl.create(:user))
+      assign(:user, @user = FactoryGirl.build_stubbed(:user))
     end
 
     it "should remove confirmation panel" do

@@ -11,7 +11,7 @@ module FatFreeCRM
     config.active_record.observers = [:lead_observer, :opportunity_observer,
                                       :task_observer, :entity_observer]
 
-    initializer "model_core.factories", :after => "factory_girl.set_factory_paths" do
+    initializer "model_core.factories", after: "factory_girl.set_factory_paths" do
       FactoryGirl.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryGirl)
     end
 
@@ -23,5 +23,10 @@ module FatFreeCRM
       end
     end
 
+    config.to_prepare do
+      Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|
+        require_dependency(c)
+      end
+    end
   end
 end

@@ -14,7 +14,7 @@ describe TasksController do
   def produce_tasks(user, view)
     settings = (view != "completed" ? Setting.task_bucket : Setting.task_completed)
 
-    settings.inject({}) do | hash, due |
+    settings.each_with_object({}) do |due, hash|
       hash[due] ||= []
       if Date.tomorrow == Date.today.end_of_week && due == :due_tomorrow
         due = :due_this_week
@@ -55,7 +55,8 @@ describe TasksController do
   describe "responding to GET index" do
     before do
       update_sidebar
-      @timezone, Time.zone = Time.zone, 'UTC'
+      @timezone = Time.zone
+      Time.zone = 'UTC'
     end
 
     after do

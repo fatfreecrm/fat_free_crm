@@ -41,9 +41,15 @@
           $('#filters').prop('disabled', false) # Enable filters panel (if present)
 
         when 'advanced_search'
-          $("#advanced_search form input:submit").click()
+          $('#advanced_search form input:submit').submit()
           $('#filters').prop('disabled', true) # Disable filters panel (if present)
 
+      return
+
+    # Update URL in browser #434
+    $(document).on 'click', '#advanced_search form input:submit', ->
+      # history.pushState(stateObj, title, url)
+      history.pushState("","",window.location.pathname + '?' + $('form.ransack_search').serialize())
       return
 
 ) jQuery

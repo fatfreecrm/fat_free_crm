@@ -11,7 +11,7 @@ describe "admin/field_groups/create" do
     assign(:field_group, field_group)
   end
 
-  let(:field_group) { FactoryGirl.create(:field_group, label: 'test') }
+  let(:field_group) { FactoryGirl.build_stubbed(:field_group, label: 'test') }
 
   it "renders javascript" do
     render

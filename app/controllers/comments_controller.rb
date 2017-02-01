@@ -34,7 +34,8 @@ class CommentsController < ApplicationController
   def edit
     @comment = Comment.find(params[:id])
 
-    model, id = @comment.commentable_type, @comment.commentable_id
+    model = @comment.commentable_type
+    id = @comment.commentable_id
     unless model.constantize.my.find_by_id(id)
       respond_to_related_not_found(model.downcase)
     end
@@ -49,12 +50,13 @@ class CommentsController < ApplicationController
       comment_params.merge(user_id: current_user.id)
     )
     # Make sure commentable object exists and is accessible to the current user.
-    model, id = @comment.commentable_type, @comment.commentable_id
-    unless model.constantize.my.find_by_id(id)
-      respond_to_related_not_found(model.downcase)
-    else
+    model = @comment.commentable_type
+    id = @comment.commentable_id
+    if model.constantize.my.find_by_id(id)
       @comment.save
       respond_with(@comment)
+    else
+      respond_to_related_not_found(model.downcase)
     end
   end
 

@@ -15,7 +15,7 @@ FactoryGirl.define do
   factory :opportunity do
     user
     campaign
-    account             { FactoryGirl.create(:account) }
+    account
     assigned_to nil
     name                { FFaker::Lorem.sentence[0, 64] }
     access "Public"

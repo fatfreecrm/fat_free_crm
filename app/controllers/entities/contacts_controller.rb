@@ -65,14 +65,14 @@ class ContactsController < EntitiesController
         @contact.add_comment_by_user(@comment_body, current_user)
         @contacts = get_contacts if called_from_index_page?
       else
-        unless params[:account][:id].blank?
-          @account = Account.find(params[:account][:id])
-        else
+        if params[:account][:id].blank?
           if request.referer =~ /\/accounts\/(\d+)\z/
             @account = Account.find(Regexp.last_match[1]) # related account
           else
             @account = Account.new(user: current_user)
           end
+        else
+          @account = Account.find(params[:account][:id])
         end
         @opportunity = Opportunity.my.find(params[:opportunity]) unless params[:opportunity].blank?
       end
@@ -153,7 +153,7 @@ class ContactsController < EntitiesController
 
   def set_options
     super
-    @naming = (current_user.pref[:contacts_naming]   || Contact.first_name_position) unless params[:cancel].true?
+    @naming = (current_user.pref[:contacts_naming] || Contact.first_name_position) unless params[:cancel].true?
   end
 
   #----------------------------------------------------------------------------

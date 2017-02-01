@@ -1,10 +1,8 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.0.0
-  - 2.1
-  - 2.2
-
+  - 2.3.3
+  # - 2.4.0
 env:
   - DB=mysql
   - DB=postgres
@@ -12,16 +10,10 @@ env:
 
 matrix:
   exclude:
-    - rvm: 2.0.0
+    - rvm: 2.3.3
       env: DB=mysql
-    - rvm: 2.0.0
+    - rvm: 2.3.3
       env: DB=sqlite
-    - rvm: 2.1
-      env: DB=mysql
-    - rvm: 2.1
-      env: DB=sqlite
-
-gemfile: Gemfile.ci
 
 bundler_args: --path=vendor/bundle --without heroku
 
@@ -35,10 +27,20 @@ before_script:
   - sh -c "cp config/database.$DB.yml config/database.yml"
   - sh -c "if [ \"$DB\" = 'postgres' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
   - sh -c "if [ \"$DB\" = 'mysql' ]; then mysql -e 'create database fat_free_crm_test;'; fi"
-  - sh -c "RAILS_ENV=test bundle exec rake db:schema:load"
+  - "RAILS_ENV=test bundle exec rake spec:preparedb"
 
 # Run specs
-script: "RAILS_ENV=test bundle exec rake"
+script: 
+  - "RAILS_ENV=test bundle exec rake spec:models"
+  - "RAILS_ENV=test bundle exec rake spec:mailers"
+  - "RAILS_ENV=test bundle exec rake spec:controllers"
+  - "RAILS_ENV=test bundle exec rake spec:helpers"
+  - "RAILS_ENV=test bundle exec rake spec:lib"
+  - "RAILS_ENV=test bundle exec rake spec:mailers"
+  - "RAILS_ENV=test bundle exec rake spec:routing"
+  - "RAILS_ENV=test bundle exec rake spec:views"
+  - "RAILS_ENV=test bundle exec rake spec:features"
+  - "RAILS_ENV=test bundle exec rubocop"
 
 notifications:
   webhooks:

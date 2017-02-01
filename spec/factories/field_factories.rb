@@ -22,7 +22,7 @@ FactoryGirl.define do
 
   factory :field do
     type "Field"
-    field_group         { FactoryGirl.create(:field_group) }
+    field_group
     position            { FactoryGirl.generate(:field_position) }
     label               { FactoryGirl.generate(:field_label) }
     name                { |f| f.label.downcase.gsub(/[^a-z0-9]+/, '_') }

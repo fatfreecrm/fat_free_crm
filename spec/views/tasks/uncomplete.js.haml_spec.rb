@@ -15,7 +15,7 @@ describe "/tasks/uncomplete" do
 
   describe "uncomplete from Tasks tab (completed view)" do
     before do
-      @task = FactoryGirl.create(:task)
+      @task = FactoryGirl.build_stubbed(:task)
       assign(:task, @task)
       assign(:view, "completed")
       assign(:empty_bucket, :due_asap)
@@ -31,7 +31,7 @@ describe "/tasks/uncomplete" do
     end
 
     it "should update tasks sidebar" do
-      assign(:task, FactoryGirl.create(:task))
+      assign(:task, FactoryGirl.build_stubbed(:task))
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
 
       render

@@ -51,7 +51,7 @@ class Address < ActiveRecord::Base
   def self.reject_address(attributes)
     exists = attributes['id'].present?
     empty = %w(street1 street2 city state zipcode country full_address).map { |name| attributes[name].blank? }.all?
-    attributes.merge!(_destroy: 1) if exists && empty
+    attributes[:_destroy] = 1 if exists && empty
     (!exists && empty)
   end
 

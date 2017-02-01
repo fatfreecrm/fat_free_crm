@@ -13,7 +13,8 @@ module OpportunitiesHelper
   # Opportunity summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def opportunity_summary(opportunity)
-    summary, amount = [], []
+    summary = []
+    amount = []
     summary << (opportunity.stage ? t(opportunity.stage) : t(:other))
     summary << number_to_currency(opportunity.weighted_amount, precision: 0)
     unless %w(won lost).include?(opportunity.stage)
@@ -38,8 +39,8 @@ module OpportunitiesHelper
     selected_campaign = Campaign.find_by_id(options[:selected])
     campaigns = ([selected_campaign] + Campaign.my.order(:name).limit(25)).compact.uniq
     collection_select :opportunity, :campaign_id, campaigns, :id, :name, options,
-                      :"data-placeholder" => t(:select_a_campaign),
-                      :"data-url" => auto_complete_campaigns_path(format: 'json'),
+                      "data-placeholder": t(:select_a_campaign),
+                      "data-url": auto_complete_campaigns_path(format: 'json'),
                       style: "width:330px; display:none;",
                       class: 'ajax_chosen'
   end

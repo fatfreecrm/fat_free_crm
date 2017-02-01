@@ -1,0 +1,91 @@
+---
+nl:
+  ransack:
+    search: zoeken
+    predicate: predicate
+    and: en
+    or: of
+    any: enkele
+    all: alle
+    combinator: samenvoeger
+    attribute: eigenschap
+    value: waarde
+    condition: conditie
+    sort: sorteer
+    asc: oplopend
+    desc: aflopend
+    submit: Zoek
+    add_group: Voeg een groep voorwaarden toe
+    group_first: Toon resultaten waar %{combinator} van de volgende overeenkomen met
+    group_rest: ! '...en waar %{combinator} van de volgende overeenkomen met'
+    add_condition: Voeg een filter toe
+    remove_condition: Verwijder filter
+    predicates:
+      eq: is
+      eq_any: is enkele
+      eq_all: is alle
+      not_eq: is niet
+      not_eq_any: is niet enkele
+      not_eq_all: is niet alle
+      matches: is gelijk aan
+      matches_any: is gelijk aan enkele
+      matches_all: is gelijk aan alle
+      does_not_match: is niet gelijk aan
+      does_not_match_any: is niet gelijk aan enkele
+      does_not_match_all: is niet gelijk aan alle
+      lt: is kleiner dan
+      lt_any: is kleiner dan enkele
+      lt_all: is kleiner dan alle
+      lteq: is kleiner dan of gelijk aan
+      lteq_any: is kleiner dan of gelijk aan enkele
+      lteq_all: is kleiner dan of gelijk aan alle
+      gt: is groter dan
+      gt_any: is groter dan enkele
+      gt_all: is groter dan alle
+      gteq: is groter dan of gelijk aan
+      gteq_any: is groter dan of gelijk aan enkele
+      gteq_all: is groter dan of gelijk aan alle
+      in: is in
+      in_any: is in enkele
+      in_all: is in alle
+      not_in: is niet in
+      not_in_any: is niet in enkele
+      not_in_all: is niet in alle
+      cont: bevat
+      cont_any: bevat enkele
+      cont_all: bevat alle
+      not_cont: bevat niet
+      not_cont_any: bevat geen enkele
+      not_cont_all: bevat geen van alle
+      start: begint met
+      start_any: begint met enkele
+      start_all: begint met alle
+      not_start: begint niet met
+      not_start_any: begint niet met enkele
+      not_start_all: begint niet met alle
+      end: eindigd met
+      end_any: eindigd met enkele
+      end_all: eindigd met alle
+      not_end: eindigd niet met
+      not_end_any: eindigd niet met enkele
+      not_end_all: eindigd niet met alle
+      'true': is waar
+      'false': is niet waar
+      present: is aanwezig
+      blank: is leeg
+      'null': is niets
+      not_null: is niet niets
+      alt:
+        date:
+          lt: is voor
+          lt_any: is voor enkele
+          lt_all: is voor alle
+          lteq: is voor of op
+          lteq_any: is voor of op enkele
+          lteq_all: is voor of op alle
+          gt: is na
+          gt_any: is na enkele
+          gt_all: is na alle
+          gteq: is na of op
+          gteq_any: is na of op enkele
+          gteq_all: is na of op alle

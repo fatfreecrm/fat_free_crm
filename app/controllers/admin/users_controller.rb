@@ -44,8 +44,10 @@ class Admin::UsersController < Admin::ApplicationController
   # POST /admin/users.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def create
+    params[:user][:email].try(:strip!)
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.new(user_params)
+    @user.check_if_needs_approval
     @user.save_without_session_maintenance
 
     respond_with(@user)
@@ -55,6 +57,7 @@ class Admin::UsersController < Admin::ApplicationController
   # PUT /admin/users/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def update
+    params[:user][:email].try(:strip!)
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.find(params[:id])
     @user.attributes = user_params
@@ -73,7 +76,9 @@ class Admin::UsersController < Admin::ApplicationController
   # DELETE /admin/users/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   def destroy
-    flash[:warning] = t(:msg_cant_delete_user, @user.full_name) unless @user.destroy
+    unless @user.destroyable? && @user.destroy
+      flash[:warning] = t(:msg_cant_delete_user, @user.full_name)
+    end
 
     respond_with(@user)
   end

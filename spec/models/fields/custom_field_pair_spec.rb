@@ -18,7 +18,7 @@ describe CustomFieldPair do
       @field = { 'as' => 'foopair', 'field_group_id' => 1, 'label' => 'Event' }
       @pair1 = { 'name' => 'pair1' }
       @pair2 = { 'name' => 'pair2' }
-      @params  = { 'field' => @field, 'pair' => { '0' => @pair1, '1' => @pair2 } }
+      @params = { 'field' => @field, 'pair' => { '0' => @pair1, '1' => @pair2 } }
     end
 
     it "should create the pair" do
@@ -38,7 +38,7 @@ describe CustomFieldPair do
       @field = { 'as' => 'foopair', 'field_group_id' => 1, 'label' => 'Event' }
       @pair1 = { 'name' => 'pair1' }
       @pair2 = { 'name' => 'pair2' }
-      @params  = { 'id' => '3', 'field' => @field, 'pair' => { '0' => @pair1, '1' => @pair2 } }
+      @params = { 'id' => '3', 'field' => @field, 'pair' => { '0' => @pair1, '1' => @pair2 } }
     end
 
     it "should update the pair" do

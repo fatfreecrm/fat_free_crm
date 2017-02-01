@@ -6,14 +6,14 @@
 FactoryGirl.define do
   factory :version do
     whodunnit ""
-    item                { fail "Please specify :item for the version" }
+    item                { raise "Please specify :item for the version" }
     event "create"
     created_at          { FactoryGirl.generate(:time) }
   end
 
   factory :comment do
     user
-    commentable         { fail "Please specify :commentable for the comment" }
+    commentable         { raise "Please specify :commentable for the comment" }
     title               { FactoryGirl.generate(:title) }
     private false
     comment             { FFaker::Lorem.paragraph }
@@ -25,7 +25,7 @@ FactoryGirl.define do
   factory :email do
     imap_message_id     { "%08x" % rand(0xFFFFFFFF) }
     user
-    mediator            { fail "Please specify :mediator for the email" }
+    mediator            { raise "Please specify :mediator for the email" }
     sent_from           { FFaker::Internet.email }
     sent_to             { FFaker::Internet.email }
     cc                  { FFaker::Internet.email }
@@ -42,7 +42,7 @@ FactoryGirl.define do
   end
 
   factory :address do
-    addressable         { fail "Please specify :addressable for the address" }
+    addressable         { raise "Please specify :addressable for the address" }
     street1             { FFaker::Address.street_address }
     street2             { FFaker::Address.street_address }
     city                { FFaker::Address.city }
@@ -58,7 +58,7 @@ FactoryGirl.define do
 
   factory :avatar do
     user
-    entity              { fail "Please specify :entity for the avatar" }
+    entity              { raise "Please specify :entity for the avatar" }
     image               { File.new(Rails.root.join('spec', 'fixtures', 'rails.png')) }
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }

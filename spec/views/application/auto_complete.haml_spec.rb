@@ -15,20 +15,20 @@ describe "/application/_auto_complete" do
   [:account, :campaign, :contact, :lead, :opportunity].each do |model|
     it "should render autocomplete list if #{model} matches found" do
       @auto_complete = if model == :lead
-                         FactoryGirl.create(:lead, first_name: "Billy", last_name: "Bones", company: "Hello, World!")
+                         FactoryGirl.build_stubbed(:lead, first_name: "Billy", last_name: "Bones", company: "Hello, World!")
                        elsif model == :contact
-                         FactoryGirl.create(:contact, first_name: "Billy", last_name: "Bones")
+                         FactoryGirl.build_stubbed(:contact, first_name: "Billy", last_name: "Bones")
                        else
-                         FactoryGirl.create(model, name: "Hello, World!")
+                         FactoryGirl.build_stubbed(model, name: "Hello, World!")
       end
       assign(:auto_complete, [@auto_complete])
 
       render
       expect(rendered).to have_tag("ul", count: 1) do |list|
-        unless model == :lead
-          expect(list).to have_tag("li", id: @auto_complete.id.to_s, text: @auto_complete.name)
-        else
+        if model == :lead
           expect(list).to have_tag("li", id: @auto_complete.id.to_s, text: "#{@auto_complete.name} (#{@auto_complete.company})")
+        else
+          expect(list).to have_tag("li", id: @auto_complete.id.to_s, text: @auto_complete.name)
         end
       end
     end

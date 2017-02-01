@@ -10,13 +10,13 @@ describe "/campaigns/show" do
 
   before do
     login_and_assign
-    @campaign = FactoryGirl.create(:campaign, id: 42,
-                                              leads: [FactoryGirl.create(:lead)],
-                                              opportunities: [FactoryGirl.create(:opportunity)])
+    @campaign = FactoryGirl.build_stubbed(:campaign, id: 42,
+                                                     leads: [FactoryGirl.build_stubbed(:lead)],
+                                                     opportunities: [FactoryGirl.build_stubbed(:opportunity)])
     assign(:campaign, @campaign)
     assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [FactoryGirl.create(:comment, commentable: @campaign)])
+    assign(:timeline, [FactoryGirl.build_stubbed(:comment, commentable: @campaign)])
     allow(view).to receive(:params) { { id: 123 } }
   end
 

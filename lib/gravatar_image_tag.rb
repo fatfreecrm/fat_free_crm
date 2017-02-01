@@ -46,11 +46,11 @@ module GravatarImageTag
   end
 
   def self.gravatar_id(email, filetype = nil)
-    "#{ Digest::MD5.hexdigest(email) }#{ ".#{filetype}" unless filetype.nil? }" unless email.nil?
+    "#{Digest::MD5.hexdigest(email)}#{".#{filetype}" unless filetype.nil?}" unless email.nil?
   end
 
   def self.url_params(gravatar_params)
-    return nil if gravatar_params.keys.size == 0
+    return nil if gravatar_params.keys.empty?
     "?#{gravatar_params.map { |key, value| "#{key}=#{URI.escape(value.is_a?(String) ? value : value.to_s, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))}" }.join('&amp;')}"
   end
 end

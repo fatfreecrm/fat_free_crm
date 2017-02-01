@@ -13,7 +13,7 @@ describe "/contacts/index" do
   end
 
   it "should render [contact] template with @contacts collection if there are contacts" do
-    assign(:contacts, [FactoryGirl.create(:contact, id: 42)].paginate)
+    assign(:contacts, [FactoryGirl.build_stubbed(:contact, id: 42)].paginate)
 
     render template: 'contacts/index', formats: [:js]
 
