@@ -80,6 +80,9 @@ group :heroku do
   gem 'rails_12factor'
 end
 
+# Temporarily for https://github.com/fatfreecrm/fat_free_crm/issues/553
+gem 'rails', github: 'rails/rails', branch: '4-2-stable'
+
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
