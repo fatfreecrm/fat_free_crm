@@ -6,13 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# Configuration parameters: Include.
-# Include: **/Gemfile, **/gems.rb
-Bundler/DuplicatedGem:
-  Exclude:
-    - 'Gemfile'
-
 # Offense count: 17
 # Cop supports --auto-correct.
 # Configuration parameters: Include.
@@ -55,12 +48,6 @@ Lint/IneffectiveAccessModifier:
 Lint/RescueException:
   Exclude:
     - 'lib/fat_free_crm/mail_processor/base.rb'
-    - 'lib/tasks/ffcrm/update_data.rake'
-
-# Offense count: 2
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'lib/tasks/ffcrm/config.rake'
     - 'lib/tasks/ffcrm/update_data.rake'
 
 # Offense count: 4
