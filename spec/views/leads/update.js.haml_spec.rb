@@ -67,7 +67,7 @@ describe "/leads/update" do
       end
 
       it "should update campaign sidebar" do
-        assign(:campaign, campaign = FactoryGirl.build_stubbed(:campaign))
+        assign(:campaign, FactoryGirl.build_stubbed(:campaign))
         render
 
         expect(rendered).to include("sidebar")
