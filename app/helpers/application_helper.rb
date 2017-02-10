@@ -118,7 +118,7 @@ module ApplicationHelper
     confirm = options[:confirm] || nil
 
     link_to(t(:delete) + "!",
-            options[:url] || url_for(object),
+            options[:url] || url_for(record),
             method: :delete,
             remote: true,
             confirm: confirm
