@@ -129,7 +129,7 @@ class HomeController < ApplicationController
     return nil if current_user.pref[:activity_user] == "all_users"
     return nil unless current_user.pref[:activity_user]
 
-    is_email = current_user.pref[:activity_user].contains("@")
+    is_email = current_user.pref[:activity_user].include?("@")
 
     user = if is_email
              User.where(email: current_user.pref[:activity_user]).first
