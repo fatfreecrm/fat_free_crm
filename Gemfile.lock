@@ -55,7 +55,7 @@ GEM
       activesupport (>= 3.2)
       request_store (~> 1.0)
       scrypt (>= 1.2, < 3.0)
-    builder (3.2.2)
+    builder (3.2.3)
     byebug (9.0.6)
     cancancan (1.15.0)
     capistrano (3.7.1)
@@ -68,7 +68,7 @@ GEM
       capistrano (~> 3.1)
       sshkit (~> 1.2)
     capistrano-harrow (0.5.3)
-    capistrano-rails (1.2.1)
+    capistrano-rails (1.2.2)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     capistrano-rvm (0.1.2)
@@ -119,7 +119,7 @@ GEM
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
     ffaker (2.4.0)
-    ffi (1.9.14)
+    ffi (1.9.17)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
@@ -158,7 +158,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (1.8.3)
+    json (1.8.6)
     kgio (2.11.0)
     libv8 (3.16.14.17)
     listen (3.1.5)
@@ -204,7 +204,7 @@ GEM
     polyamorous (1.3.1)
       activerecord (>= 3.0)
     powerpack (0.1.1)
-    premailer (1.8.7)
+    premailer (1.9.0)
       css_parser (>= 1.4.5)
       htmlentities (>= 4.0.0)
     pry (0.10.4)
@@ -362,7 +362,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.1.2)
+    unicode-display_width (1.1.3)
     unicode_utils (1.4.0)
     unicorn (5.2.0)
       kgio (~> 2.6)
@@ -421,6 +421,7 @@ DEPENDENCIES
   rails3-jquery-autocomplete
   rails_12factor
   rails_autolink
+  rainbow (< 2.2.1)
   ransack (~> 1.6.2)
   ransack_ui (>= 1.3.1)
   rb-fchange
@@ -447,4 +448,4 @@ DEPENDENCIES
   zeus
 
 BUNDLED WITH
-   1.12.5
+   1.13.7
