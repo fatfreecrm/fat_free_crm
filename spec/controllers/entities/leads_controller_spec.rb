@@ -52,7 +52,7 @@ describe LeadsController do
       @captain_flint = FactoryGirl.create(:lead, user: current_user, first_name: "Captain", last_name: "Flint")
 
       get :index, query: "bill"
-      expect(assigns[:leads]).to eq([@billy_bones])
+      expect(assigns[:leads].to_a).to eq([@billy_bones])
       expect(assigns[:current_query]).to eq("bill")
       expect(session[:leads_current_query]).to eq("bill")
     end
