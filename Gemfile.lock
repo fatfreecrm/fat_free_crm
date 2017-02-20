@@ -119,7 +119,7 @@ GEM
     factory_girl_rails (4.7.0)
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
-    ffaker (2.4.0)
+    ffaker (2.5.0)
     ffi (1.9.17)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
