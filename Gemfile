@@ -2,15 +2,13 @@ source 'https://rubygems.org'
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
-case ENV['CI'] && ENV['DB']
-when "mysql"; gem "mysql2"
-when "sqlite"; gem "sqlite3"
-when "postgres"; gem "pg"
-else
-  # gem 'mysql2'
-  # gem 'sqlite3'
-  gem 'pg'
-end
+db_drivers = {
+  "mysql" => "mysql2",
+  "sqlite" => "sqlite3",
+  "postgres" => "pg"
+}
+
+gem db_drivers[ENV['CI'] && ENV['DB']] || 'pg'
 
 # Removes a gem dependency
 def remove(name)
@@ -79,9 +77,6 @@ group :heroku do
   gem 'unicorn', platform: :ruby
   gem 'rails_12factor'
 end
-
-# Temporarily for https://github.com/fatfreecrm/fat_free_crm/issues/553
-gem 'rails', github: 'rails/rails', branch: '4-2-stable'
 
 gem 'sass-rails'
 gem 'coffee-rails'

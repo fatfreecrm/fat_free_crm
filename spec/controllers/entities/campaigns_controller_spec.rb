@@ -373,7 +373,7 @@ describe CampaignsController do
 
         xhr :put, :update, id: 42, campaign: { name: "Hello", access: "Shared", user_ids: %w(7 8) }
         expect(assigns[:campaign].access).to eq("Shared")
-        expect(assigns[:campaign].user_ids.sort).to eq([7, 8])
+        expect(assigns[:campaign].user_ids.sort).to eq([he.id, she.id])
       end
 
       describe "campaign got deleted or otherwise unavailable" do

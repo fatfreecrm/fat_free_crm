@@ -126,21 +126,28 @@ class HomeController < ApplicationController
   # needs refactoring to use user id instead. Permuations based on name or email
   # yield incorrect results.
   def activity_user
-    user = current_user.pref[:activity_user]
-    if user && user != "all_users"
-      user = if user =~ /@/ # email
-               User.where(email: user).first
-             else # first_name middle_name last_name any_name
-               name_query = if user.include?(" ")
-                              user.name_permutations.map do |first, last|
-                                User.where(first_name: first, last_name: last)
-                              end.map(&:to_a).flatten.first
-                            else
-                              [User.where(first_name: user), User.where(last_name: user)].map(&:to_a).flatten.first
-               end
-        end
-    end
+    return nil if current_user.pref[:activity_user] == "all_users"
+    return nil unless current_user.pref[:activity_user]
+
+    is_email = current_user.pref[:activity_user].include?("@")
+
+    user = if is_email
+             User.where(email: current_user.pref[:activity_user]).first
+           else # first_name middle_name last_name any_name
+             name_query(current_user.pref[:activity_user])
+           end
+
     user.is_a?(User) ? user.id : nil
+  end
+
+  def name_query(user)
+    if user.include?(" ")
+      user.name_permutations.map do |first, last|
+        User.where(first_name: first, last_name: last)
+      end.map(&:to_a).flatten.first
+    else
+      [User.where(first_name: user), User.where(last_name: user)].map(&:to_a).flatten.first
+    end
   end
 
   #----------------------------------------------------------------------------

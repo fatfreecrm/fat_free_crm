@@ -18,7 +18,6 @@
     #$(".select2_tag").each ->
       $(this).select2
         'width':'resolve'
-        tags: $(this).data("tags")
         placeholder: $(this).data("placeholder")
         multiple: $(this).data("multiple")
 
