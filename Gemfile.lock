@@ -80,7 +80,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    childprocess (0.6.1)
+    childprocess (0.6.2)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
     climate_control (0.1.0)
