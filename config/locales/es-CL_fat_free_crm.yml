@@ -159,6 +159,7 @@ es-CL:
         custom_field:
           required: ^%{field} es requerido.
           maxlength: ^%{field} es demasiado largo.
+          minlength: ^%{field} es demasiado corto.
           endbeforestart: ^%{field} no puede ser anterior al inicio.
     attribute_options:
       opportunity:
@@ -859,7 +860,7 @@ de agregar o remover campos personalizados.
 
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: Si la etiqueta es eliminada, será removida de 
+  tag_with_taggings_confirm_delete: Si la etiqueta es eliminada, será removida de
     %{value} registros.
   msg_cant_delete_tag: No se puede borrar '%{value}' debido a que está asociado a un Grupo de campos.
   views:

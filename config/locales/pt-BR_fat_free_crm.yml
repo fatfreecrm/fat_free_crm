@@ -159,6 +159,7 @@ pt-BR:
         custom_field:
           required: ^%{field} é obrigatório.
           maxlength: ^%{field} é muito longo.
+          minlength: ^%{field} é muito curto.
           endbeforestart: ^%{field} não pode finalizar antes de ser iniciado.
     attribute_options:
       opportunity:

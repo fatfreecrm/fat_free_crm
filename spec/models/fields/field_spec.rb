@@ -20,6 +20,7 @@
 #  disabled       :boolean
 #  required       :boolean
 #  maxlength      :integer
+#  minlength      :integer
 #  created_at     :datetime
 #  updated_at     :datetime
 #
@@ -33,6 +34,7 @@ describe Field do
       label:     'Skype address',
       as:        'string',
       maxlength: 220,
+      minlength: 12,
       position:  10
     )
   end

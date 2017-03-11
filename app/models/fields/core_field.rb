@@ -20,6 +20,7 @@
 #  disabled       :boolean
 #  required       :boolean
 #  maxlength      :integer
+#  minlength      :integer
 #  created_at     :datetime
 #  updated_at     :datetime
 #
