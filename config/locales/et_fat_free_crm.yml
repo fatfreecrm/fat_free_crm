@@ -1,0 +1,928 @@
+---
+et:
+  language: Estonian
+
+  # Generic terms.
+  #----------------------------------------------------------------------------
+  id: nr
+  all: Kõik
+  at: kl
+  here: siin
+  no_button: 'Ei'
+  not_implemented: Implementatsioon puudub.
+  or: või
+  select_none: -- Mitte ükski --
+  select_blank: -- Vali --
+  yes_button: 'Jah'
+
+
+  # Settings.
+  #----------------------------------------------------------------------------
+  tab_dashboard: Esipaneel
+  tab_tasks: Ülesanded
+  tab_campaigns: Kampaaniad
+  tab_leads: Juhtlõngad
+  tab_accounts: Kontod
+  tab_contacts: Kontaktid
+  tab_opportunities: Väljavaated
+  tab_team: Meeskond
+  admin_tab_groups: Rühmad
+  admin_tab_users: Kasutajad
+  admin_tab_fields: Kohandatud väljad
+  admin_tab_tags: Märgendid
+  admin_tab_settings: Seaded
+  admin_tab_plugins: Pistikud
+  affiliate: Filiaalpartner
+  competitor: Konkurent
+  customer: Klient
+  partner: Koostööpartner
+  reseller: Edasimüüja
+  vendor: Tarnija
+  planned: Planeeritud
+  started: Alustatud
+  on_hold: Ootel
+  completed: Lõpetatud
+  called_off: Katkestatud
+  new: Uus
+  contacted: Ühendust võetud
+  converted: konverteeritud
+  rejected: Tagasi lükatud
+  cold_call: Ootamatu kõne
+  conference: Konverents
+  online: Online-turundus
+  referral: Soovitus
+  self: Spontaanne
+  web: Veeb
+  word_of_mouth: Suusõnaline
+  other: Muu
+  prospecting: Potentsiaalne
+  analysis: Analüüs
+  presentation: Presentatsioon
+  proposal: Pakkumine
+  negotiation: Läbirääkimine
+  final_review: Viimane revideerimine
+  won: Suletud/Võidetud
+  lost: Suletud/Kaotatud
+  call: Kõne
+  email: Elektronpost
+  follow_up: Järg
+  lunch: Lõuna
+  meeting: Koosolek
+  money: Raha
+  trip: Reis
+  overdue: Üle tähtaja
+  due_asap: Esimesel võimalusel
+  due_today: Täna
+  due_tomorrow: Homme
+  due_this_week: Sel nädalal
+  due_next_week: Järgmisel nädalal
+  due_later: Hiljem
+  due_specific_date: Kindlaksmääratud ajal...
+  completed_today: Täna
+  completed_yesterday: Eile
+  completed_last_week: Eelmisel nädalal
+  completed_this_month: Sel kuul
+  completed_last_month: Eelmisel kuul
+
+  # Models/Activity.
+  #----------------------------------------------------------------------------
+  one_hour: tund
+  one_day: päev
+  two_days: kaks päeva
+  one_week: nädal
+  two_weeks: kaks nädalat
+  one_month: kuu
+
+  # Model Validations.
+  #----------------------------------------------------------------------------
+  activerecord:
+    errors:
+      models:
+        authentication:
+          attributes:
+            login_field:
+              is_not_valid: ei ole korrektne
+            password_field:
+              is_not_valid: ei ole korrektne
+        account:
+          attributes:
+            name:
+              missing_account_name: ^Palun täida konto nimi.
+            access:
+              share_account: ^Palun märgi kontoga seotud kasutajad.
+        campaign:
+          attributes:
+            name:
+              missing_campaign_name: ^Palun täida kampaania nimi.
+            ends_on:
+              dates_not_in_sequence: ^Palun kontrolli, et kampaania lõppkuupäev oleks
+                hilisem alguskuupäevast.
+            access:
+              share_campaign: ^Palun märgi kampaaniaga seotud kasutajad.
+        contact:
+          attributes:
+            first_name:
+              missing_first_name: ^Palun täida eesnimi.
+            last_name:
+              missing_last_name: ^Palun täida perekonnanimi.
+            access:
+              share_contact: ^Palun märgi kontaktiga seotud kasutajad.
+        lead:
+          attributes:
+            first_name:
+              missing_first_name: ^Palun täida eesnimi.
+            last_name:
+              missing_last_name: ^Palun täida perekonnanimi.
+            access:
+              share_lead: ^Palun märgi juhtlõngaga seotud kasutajad.
+        opportunity:
+          attributes:
+            name:
+              missing_opportunity_name: ^Palun täida väljavaate nimi.
+            access:
+              share_opportunity: ^Palun märgi väljavaatega seotud kasutajad.
+        task:
+          attributes:
+            name:
+              missing_task_name: ^Palun täida ülesande nimi.
+            calendar:
+              invalid_date: ^Palun märgi korrektne kuupäev.
+        user:
+          attributes:
+            username:
+              missing_username: ^Palun täida kasutajanimi.
+              username_taken: ^Kasutajanimi on juba kasutusel.
+            email:
+              missing_email: ^Palun täida elektronposti aadress.
+              email_in_use: ^Elektronposti aadress on juba kasutusel.
+        custom_field:
+          required: ^%{field} on nõutud.
+          maxlength: ^%{field} on liiga pikk.
+          endbeforestart: ^%{field} ei saa lõppeda enne kui on alanud.
+    attribute_options:
+      opportunity:
+        stage:
+          prospecting: Potentsiaalne
+          analysis: Analüüs
+          presentation: Presentatsioon
+          proposal: Pakkumine
+          negotiation: Läbirääkimine
+          final_review: Viimane revideerimine
+          won: Suletud/Võidetud
+          lost: Suletud/Kaotatud
+      account:
+        rating:
+          "0": "-"
+          "1": "★"
+          "2": "★★"
+          "3": "★★★"
+          "4": "★★★★"
+          "5": "★★★★★"
+
+  msg_account_suspended: Kasutajakonto on peatatud.
+  password_reset_instruction: salasõna meeldetuletuse juhis
+
+  # Controllers.
+  #----------------------------------------------------------------------------
+  msg_account_created: Sinu konto on loodud ja ootab süsteemiadministraatori kinnitust.
+  msg_account_not_approved: Sinu konto ei ole veel kinnitatud.
+  msg_asset_deleted: ! '%{value} on kustutatud.'
+  msg_asset_not_available: ! '%{value} ei ole enam olemas.'
+  msg_not_authorized: Sul puudub autoriseering antud tegevuse läbiviimiseks.
+  msg_assets_not_available: ! '%{value} ei ole kättesaadavad.'
+  msg_asset_rejected: ! '%{value} on tagasi lükatud.'
+  msg_bad_image_file: ^Antud pildi üles laadimine või suuruse muutmine ebaõnnestus.
+  msg_cant_create_related: ! '%{asset} loomine ebaõnnestus, sest %{related} ei ole enam kättesaadav.'
+  msg_cant_delete_user: ^%{value} kustutamine ebaõnnestus kirjest sõltuvate relatsioonide tõttu.
+  msg_cant_do: Toiming %{action} ebaõnnestus, kuna %{asset} ei ole enam kättesaadav.
+  msg_email_not_found: Antud elektronpostiga kasutajat ei leitud.
+  msg_enter_new_password: Palun sisesta uus salasõna.
+  msg_goodbye: Oled süsteemist väljunud. Aitäh, et kasutasid Fat Free CRM'i!
+  msg_invalid_password: ^Palun sisesta korrektne salasõna.
+  msg_invalig_login: Kehtetu kasutajanimi või salasõna.
+  msg_last_login: Sinu viimane sisselogimine oli %{value}.
+  msg_login_needed: Lehekülje nägemiseks pead sisse logima.
+  msg_logout_needed: Lehekülje nägemiseks pead välja logima.
+  msg_password_changed: Sinu salasõna on muudetud.
+  msg_password_not_changed: Sinu salasõna ei muudetud.
+  msg_password_updated: Sinu salasõna on edukalt uuendatud.
+  msg_pwd_instructions_sent: Salasõna muutmise juhis on saadetud Sinu elektronposti aadressile.
+    Palun vaata saabunud kirju.
+  msg_require_admin: Juurdepääs sellele leheküljele on võimalik vaid administraatoritel.
+  msg_successful_signup: Registreerimine oli edukas, tere tulemast Fat Free CRM'i!
+  msg_welcome: Tere tulemast Fat Free CRM'i!
+
+  # Options.
+  #----------------------------------------------------------------------------
+  option_amount*probability: potentsiaal
+  activity_options: Näita perioodil %{period} kasutaja %{user} %{action_type} tüüpi päringuid objektidele %{models}.
+  all_users: kõik kasutajad
+  option_after: pärast
+  option_all: kõik
+  option_all_users: Kõik kasutajad
+  option_amount: kogus
+  option_before: enne
+  option_brief: lühiaegne
+  option_closes_on: sulgemiskuupäev
+  option_company: ettevõte
+  option_created_at: loomiskuupäev
+  option_ends_on: lõppkuupäev
+  option_first_name: eesnimi
+  option_last_name: perekonnanimi
+  option_leads_count: juhtlõng
+  option_long: pikk
+  option_name: nimi
+  option_probability: tõenäosus
+  option_rating: hinnang
+  option_revenue: tulu
+  option_starts_on: alguskuupäev
+  option_target_leads: sihtmärgi juhtlõngad
+  option_target_revenue: sihtmärgi tulu
+  option_updated_at: uuendamise kuupäev
+  show_per_page: Näita %{number} %{models} lehekülje kohta kasutades %{fmt} formaati.
+  sort_by: Sorteeri välja %{field} alusel
+  sort_by_displaying: Sorteeri objekte %{models} välja %{field} alusel, kuvades eesnimi %{position}
+    perekonnanimi.
+  entities_per_page: ! '%{entity}, kuvatuna ühel lehel:'
+  contacts_index_long: Pikk formaat
+  contacts_index_brief: Lühiformaat
+  contacts_index_full: Täisformaat
+  opportunities_index_normal: Tavaformaat
+  accounts_index_normal: Tavaformaat
+  leads_index_normal: Tavaformaat
+  campaigns_index_normal: Tavaformaat
+
+  # Views -> Profile.
+  #----------------------------------------------------------------------------
+  aim: AOL IM
+  already_signed_up: Juba registreerunud?
+  alt_email: Teine elektronposti aadress
+  avatar: Avatar
+  change_password: Muuda salasõna
+  company: Ettevõte
+  contact_info: Kontaktinformatsioon
+  current_password: Hetke salasõna
+  edit_profile: Muuda profiili
+  first_name: Eesnimi
+  google: Google IM
+  gravatar_help: Ei tea, mis on Gravatar? Vt järgi.
+  image_file: Pildifail
+  image_help: Üleslaetava pildi suurus muudetakse automaatselt mõõtu 75 x 75 pikslit.
+    Toetatud formaadid on GIF, JPG, ja PNG.
+  job_title: Ametikoht
+  last_name: Perekonnanimi
+  login_now_link: Logi sisse!
+  mobile: Mobiil
+  my_profile: Minu profiil
+  new_password: Uus salasõna
+  password: Salasõna
+  password_confirmation: Uue salasõna kinnitus
+  phone: Telefon
+  profile: Profiil
+  profile_language: Keel
+  save_profile: Salvesta profiil
+  sign_up: Registreeri
+  sign_up_button: Registreeri
+  skype: Skype
+  upload_picture: Lae pilt
+  use_gravatar: Kasuta Gravatar'i
+  user: Kasutaja
+  username: Kasutajanimi
+  yahoo: Yahoo IM
+  born_on: Sünnikuupäev
+  reports_to: Raporteerib
+  access: Juurdepääs
+
+  # Views -> Authenticate.
+  #----------------------------------------------------------------------------
+  forgot_password: Ununenud salasõna
+  login: Sisselogimine
+  no_account: Ei ole kontot?
+  remember_me: Pea mind meeles
+  sign_up_now: Registreeri!
+
+  # Views -> Accounts.
+  #----------------------------------------------------------------------------
+  account: Konto
+  account_id: Konto
+  select_an_account: Vali konto
+  account_small: konto
+  account_summary: Konto kirjeldus
+  account_categories: Konto kategooriad
+  accounts: Kontod
+  accounts_options: Kontode suvandid
+  accounts_small: kontod
+  assigned_to: Delegeeritud
+  billing_address: Arveldusaadress
+  create_account: Loo konto
+  date_created: Loomiskuupäev
+  date_updated: Muutmiskuupäev
+  fax: Faks
+  intro: Sa võid %{value} info lisada hiljem.
+  keep_private: Hoia seda salajas ning ära jaga teistega
+  mail_to: Postita aadressile %{value}
+  make_public: Jaga kõigiga
+  mobile_small: mobiil
+  open_in_window: Ava %{value} uues aknas
+  phone_small: telefon
+  phone_toll_free: Tollivaba
+  pipeline: Konveier
+  same_as_billing: sama, mis arveldusaadress
+  save_account: Salvesta konto
+  share_with: Jaga järgnevate inimestega
+  shipping_address: Tarneaadress
+  total_accounts: Kontosid kokku
+  website: Veebisait
+  account_with_title_department: ! '%{title}, %{department}, %{account}'
+  account_with_title: ! '%{title}, %{account}'
+
+  # Views -> Campaigns.
+  #----------------------------------------------------------------------------
+  actual: Aktuaalne
+  actual_performance: Aktuaalne jõudlus
+  budget: Eelarve
+  budget_label: Eelarve (€)
+  campaign: Kampaania
+  campaign_and_leads: kampaania ja selle juhtlõngad
+  campaign_small: kampaania
+  campaign_summary: Kampaania kokkuvõte
+  campaign_targets: Kampaania sihtmärgid
+  campaign_statuses: Kampaania olekud
+  campaigns: Kampaaniad
+  campaigns_options: Kampaania suvandid
+  campaigns_small: kampaaniad
+  conversion: Konversioon
+  conversion_label: Konversioon (%)
+  conversion_number: ! '%{value} konversioon'
+  target_conversion: Sihtmärgi konversioon
+  create_campaign: Loo kampaania
+  end_date: Lõppkuupäev
+  finished_on: lõppenud %{value}
+  finishes_in: lõppeb %{value}
+  no_start_date: määramata alguskuupäev
+  number_of_leads: Juhtlõngade arv
+  objectives: Eesmärgid
+  objectives_help: Palun märgi sihtarv juhtlõngasid, oodatav juhtlõngade ja väljavaadete konversiooni suhe, oodatav tulu ja kampaania eelarve.
+    Need numbrid aitavad Sul jälgida tegelikku kampaania jõudlust.
+  objectives_small: kampaania eesmärgid
+  revenue: Tulu
+  revenue_label: Tulu (€)
+  revenue_number: ! '%{value} tulu'
+  save_campaign: Salvesta kampaania
+  start_date: Alguskuupäev
+  started_ago: alanud %{value} tagasi
+  starts_in: algab %{value}
+  starts_today: algab täna!
+  target: Sihtmärk
+  total_campaigns: Kampaaniaid kokku
+  was_supposed_to_finish: oli planeeritud lõppema %{value}
+  was_supposed_to_start: oli planeeritud algama %{time_ago} tagasi algusega %{start_date}
+  was_supposed_to_start_in: oli planeeritud algama %{starts_in} algusega %{start_date}
+  select_a_campaign: Vali kampaania
+
+  # Views -> Contacts.
+  #----------------------------------------------------------------------------
+  alt_email_small: Muu
+  blog: Veebisait/Ajaveeb
+  contact: Kontakt
+  contact_small: kontakt
+  contacts: Kontaktid
+  contacts_options: Kontaktide suvandid
+  contacts_small: kontaktid
+  contact_summary: Kontakti ülevaade
+  create_contact: Loo Kontakt
+  department: Osakond
+  department_small: ! '%{value} osakond'
+  do_not_call: Ära helista
+  extra_info: Täiendav informatsioon
+  extra_info_small: täiendav kontakt
+  facebook: Facebook
+  linked_in: LinkedIn
+  myself: Mina ise
+  permissions_intro_private: Vaikimisi on juurdepääs %{value}-le ainult Sinul.
+    Sa saad juurdepääsuprivileege hiljem muuta.
+  permissions_intro_public: Vaikimisi on juurdepääs %{value}-le kõigil kasutajatel.
+    Sa saad juurdepääsuprivileege hiljem muuta.
+  permissions_intro_shared: Vaikimisi on juurdepääs %{value}-le ainult määratud kasutajatel.
+    Sa saad juurdepääsuprivileege hiljem muuta.
+  referred_by: Soovitas
+  referred_by_small: soovitas
+  save_contact: Salvesta kontakt
+  twitter: Twitter
+  unassigned: Delegeerimata
+  web_presence: Kohalolek veebis
+  web_presence_small: kohalolek veebis
+  works_at: ! '%{job_title}, %{company}'
+  general_info: Üldinformatsioon
+  show_general_info_small: Näita kontakti üldinformatsiooni.
+  show_extra_info_small: Näita kontakti täiendavat informatsiooni.
+  tag_details: ! '%{tag} üksikasjad'
+  show_tag_info_small: Näita kontakti %{tag} informatsiooni.
+  shared_with_everyone: Jagatud kõigiga
+  title: Tiitel
+  subscriptions: Tellimused
+
+  # Views -> Leads.
+  #----------------------------------------------------------------------------
+  convert: Konverdi
+  convert_lead: Konverditud juhtlõng
+  convert_lead_permissions_intro: Kontakti juurdepääsuprivileegid kopeeritakse Konverditud
+    juhtlõngalt. Sa saad juurdepääsuprivileege hiljem muuta.
+  convert_lead_text: Juhtlõnga %{value} konvertimisel seotakse kontakt olemasoleva või uue
+    kontoga. Juhtlõnga olek märgitakse konverdituks.
+  create_lead: Loo juhtlõng
+  create_opp_for_contact: Sa saad täiendavalt luua väljavaate kontaktile %{value}, määrates
+    nime, hetkeseisu, hinnangulise lõppkuupäeva, müügipotentsiaali, tehingu mahu ja pakutud allahindluse.
+  lead: Juhtlõng
+  lead_info_small: Juhtlõnga kontakt
+  lead_permissions_intro_private: Vaikimisi kopeeritakse kampaania juurdpääsuprivileegid või lubatakse vaid privaatne juurdepääs.
+    Sa saad juurdepääsuprivileege hiljem muuta.
+  lead_permissions_intro_public: Vaikimisi kopeeritakse kampaania juurdepääsuprivileegid või lubatakse avalik juurdepääs.
+    Sa saad juurdepääsuprivileege hiljem muuta.
+  lead_permissions_intro_shared: Vaikimisi kopeeritakse kampaania juurdepääsuprivileegid või lubatakse juurdepääs kindlaksmääratud kasutajatele.
+    Sa saad juurdepääsuprivileege hiljem muuta.
+  lead_small: juhtlõng
+  lead_status_small: juhtlõnga olek
+  lead_summary: Juhtlõnga ülevaade
+  lead_statuses: Juhtlõnga olekud
+  leads: Juhtlõngad
+  leads_options: Juhtlõngade suvandid
+  leads_small: juhtlõngad
+  none: Mitte ükski
+  rating: hinnang
+  reject: Lükka tagasi
+  reject_lead_confirm: Kas oled kindel, et soovid seda juhtlõnga tagasi lükata?
+  save_lead: Salvesta juhtlõng
+  source: Allikas
+  status: Olek
+  total_leads: Juhtlõngasid kokku
+  show_status_info_small: Näita juhtlõnga oleku informatsiooni
+  show_contact_info_small: Näita juhtlõnga kontakti informatsiooni
+
+  # Views -> Opportunities.
+  #----------------------------------------------------------------------------
+  amount: Kogus
+  close_date: Lõppkuupäev
+  closes_on: Lõpeb kuupäeval
+  closed_ago_on: lõpetatud %{time_ago} tagasi kuupäeval %{date}
+  closes_today: lõppeb täna!
+  closing_date: lõppkuupäev on %{value}
+  create_opportunity: Loo väljavaade
+  currency: (€)
+  days_late: üle aja
+  days_left: Päevi jäänud
+  discount: Allahindlus
+  discount_number: koos %{value} allahindlusega
+  expected_to_close: lõppeb %{time} kuupäeval %{date}
+  from: alates
+  no_closing_date: lõppkuupäev puudub
+  no_discount: allahindluseta
+  opportunities: Väljavaated
+  opportunities_options: Väljavaadete suvandid
+  opportunities_small: väljavaated
+  opportunity: Väljavaade
+  opportunity_small: väljavaade
+  opportunity_stages: Väljavaate olekud
+  opportunity_summary: Väljavaade esmapilgul
+  opportunity_summary_text: ! '%{amount} koos %{discount} allahindlusega ja potentsiaaliga %{probability}'
+  past_due: üle aja, oleks pidanud lõppema %{value} tagasi
+  probability: Potentsiaal
+  probability_number: ja %{value} potentsiaal
+  save_opportunity: Salvesta väljavaade
+  stage: Etapp
+  total_opportunities: Väljavaateid kokku
+  weighted_amount: Hinnanguline kogus
+
+  # Views -> Tasks.
+  #----------------------------------------------------------------------------
+  task: Ülesanne
+  task_small: ülesanne
+  tasks: Ülesanded
+  tasks_small: ülesanded
+  assign_to: Delegeeri kasutajale
+  assigned_tab: Delegeeritud
+  assigned_tasks: Delegeeritud ülesanded
+  category: Kategooria
+  completed_tab: Täidetud
+  completed_tasks: Täidetud ülesanded
+  create_task: Loo ülesanne
+  create_task_small: loo uus ülesanne
+  due: Tähtaeg
+  feel_free: Oled teretulnud tegema muutusi,
+  move_to: teisalda
+  no_tasks: Sul ei ole mitte ühtegi %{value} ülesannet
+  no_tasks_pending: ootel
+  no_tasks_assigned: delegeeritud
+  no_tasks_completed: täidetud
+  pending_tab: Ootel
+  pending_tasks: Ootel ülesanded
+  related: ! 'seonduv:'
+  save_task: Salvesta ülesanne
+  task_assigned: Ülesanne on delegeeritud %{value}
+  task_assigned_to: ja delegeeritud kasutajale %{value}
+  task_completed: täidetud
+  task_uncomplete: Täitmata
+  task_completed_ago: täidetud %{value} tagasi
+  task_completed_by: täidetud %{time_ago} tagasi (%{date}) kasutaja %{user} poolt
+  task_created: Ülesanne on loodud
+  task_due_in: aegub %{value}
+  task_due_later: aegub peagi
+  task_due_now: aegub praegu
+  task_due_today: aegub täna
+  task_from: Kasutajalt %{value}
+  task_overdue: üle aja, aegus
+  task_pending: Ülesanne on teisaldatud ootel ülesannete hulka
+  total_tasks: ! '%{value}, kokku'
+  view_assigned_tasks: vt delegeeritud ülesandeid
+  view_pending_tasks: vt ootel ülesandeid
+
+  # Views -> Team.
+  #----------------------------------------------------------------------------
+  unassigned_opportunities: Delegeerimata väljavaated
+  no_opportunities_found: Hetkel täitmata väljavaateid ei leitud.
+
+  # Views -> Home.
+  #----------------------------------------------------------------------------
+  action_completed: täitis
+  action_create: lõi
+  action_destroy: kustutas
+  action_reassigned: delegeeris ümber
+  action_rejected: lükkas tagasi
+  action_rescheduled: ajatas
+  action_update: värskendas
+  action_view: vaatas
+  action_won: võitis
+  activities: Tegevused
+  no_activity_records: Tegevuste kirjeid ei leitud.
+  recent_activity: Viimased tegevused
+  recent_activity_options: Viimaste tegevuste suvandid
+  subject_account: konto
+  subject_address: aadress kuupäeval
+  subject_campaign: kampaania
+  subject_comment: kommentaar kuupäeval
+  subject_contact: kontakt
+  subject_email: meil kuupäeval
+  subject_lead: juhtlõng
+  subject_opportunity: väljavaade
+  subject_task: ülesanne
+  subject_user: kasutaja
+  tag_list: Sildid
+  create_past_participle: Kirjete loomisi
+  view_past_participle: Vaatamisi
+  update_past_participle: Värskendamisi
+  destroy_past_participle: Kustutamisi
+  all_events_past_participle: Tegevusi
+  action_create_comment: ! '- &quot;%{comment}&quot;'
+  my_tasks: Minu ülesanded
+  no_task_records: Sul ei ole ülesandeid.
+  my_opportunities: Minu väljavaated
+  no_opportunity_records: Sul ei ole väljavaateid.
+  my_accounts: Minu kontod
+  no_account_records: Sul ei ole kontosid
+  not_showing_hidden_entities: Ei näita %{count} peidetud %{entity}.
+
+  # Views -> Common.
+  #----------------------------------------------------------------------------
+  add_note: Lisa märkus
+  save_note: Salvesta märkus
+  add_note_help: Lisa uus märkus...
+  edit_note: Edit Note
+  added_ago: added %{value}
+  added_by: added %{time_ago} by %{user}
+  back: Tagasi
+  cancel: Tühista
+  close_form: Sulge vorm
+  comment_intro: Sa saad kommentaare lisada hiljem.
+  confirm_delete: Kas oled kindel, et soovid %{value} kustutada?
+  copy_permissions: Kopeeri %{value} privileegid
+  could_not_find: ! 'Otsing %{value}-tüüpi objektide seas vasteid ei leidnud. Oled teretulnud tegema muutusi,'
+  could_not_find_matching: Ei leidnud mitte ühtegi %{value}, mis oleks sobinud
+  create_new: loo uus
+  create_a_new: loo uus
+  select_existing: vali olemasolev
+  delete: Kustuta
+  discard: Tühista
+  edit: Muuda
+  items_total: ! '%{count} kokku.'
+  less: Vähem...
+  me: mina
+  more: Rohkem...
+  n_a: ei ole saadaval
+  name: Nimi
+  no_match: Ei ole %{value} vastet
+  no_recent_items: Viimaseid kirjeid ei ole veel võimalik kuvada.
+  options: Suvandid
+  permissions: Privileegid
+  please_retry: palun proovi teist päringut.
+  recent_items: Viimased kirjed
+  select_contact: Vali kontakt
+  select_lead: Vali juhtlõng
+  select_task: Vali ülesanne
+  select_opportunity: Vali väljavaade
+  search_assets: Otsi %{value}
+  time_ago: ! '%{value} tagasi'
+  background_info: Taustainformatsioon
+  address: Aadress
+  street1: Tänav 1
+  street2: Tänav 2
+  city: Linn
+  zipcode: Postikood
+  state: Maakond
+  country: Maa
+  select_a_country: Vali riik
+  expand_all: Ava kõik
+  collapse_all: Sule kõik
+  expanded: Avatud
+  collapsed: Suletud
+
+  # Views -> Layout.
+  #----------------------------------------------------------------------------
+  about: Projektist
+  about_dev_group: Arutelugrupp arendajatele
+  about_features: Funktsioonid ja vead
+  about_ffc: Fat Free CRM'ist
+  about_ffc_resources: Fat Free CRM'i ressursid (lingid avavad uue akna)
+  about_ffc_version: Fat Free CRM versioon
+  about_home_page: Koduleht
+  about_project_page: Projekti lehekülg
+  about_thank_you: Aitäh, et kasutasid Fat Free CRM'i! Me hindame Sinu äri ja
+    loodame, et Sulle meeldib seda tarkvara kasutada.
+  about_twitter: Twitter'i uuedistevoog
+  about_user_group: Arutlusgrupp kasutajatele
+  admin: Administraator
+  logout: Välju
+  quick_find: Kiirotsing
+  welcome: Tere tulemast
+
+  # Advanced search
+  accounts_advanced_search: Kontode täpsem otsing
+  advanced_search: Täpsem otsing
+  basic_search: Tavaotsing
+  search_results_count:
+    one: Otsing leidis %{count} tulemust.
+    other: Otsing leidis %{count} tulemust.
+
+  # Views -> Comments.
+  #----------------------------------------------------------------------------
+  comment: Kommentaar
+  edit_comment: Muuda kommentaari
+  show: Kuva
+  update: Värskenda
+  following_users_will_be_notified: Järgnevaid kasutajaid teavitatakse meili teel
+  notifications_tooltip: Teavitused tellinud kasutajaid teavitatakse uutest kommentaaridest meili teel
+  subscribe_via_email: Telli teavitused meilile
+  disable_email_subscriptions: Lõpeta teavituste tellimine meilile
+  added_note: lisas märkuse %{value}
+
+  # Views -> Emails.
+  #----------------------------------------------------------------------------
+
+  # Views -> Passwords.
+  #----------------------------------------------------------------------------
+  confirm_password_intro: Palun sisesta oma uus salasõna ja kinnita see.
+  password_intro: Palun sisesta oma meiliaadress ja jälgi juhiseid.
+    Salasõna lähtestamisel saadetakse uus salasõna meilile.
+  reset_password: Lähtesta salasõna
+  update_password_and_login: Värskenda salasõna ja logi sisse
+
+  # Views -> Admin
+  #----------------------------------------------------------------------------
+  back_to_crm: Tagasi Fat Free CRM'i
+  crm_admin_page: Fat Free CRM'i administreerimine
+
+  # Views -> Admin -> Groups
+  #----------------------------------------------------------------------------
+  create_group: Loo grupp
+  save_group: Salvesta grupp
+  group_members: liikmed
+  groups: Grupid
+  groups_small: grupid
+  group_small: grupp
+
+  # Views -> Admin -> Users
+  #----------------------------------------------------------------------------
+  confirm_group_delete: Kas oled kindel, et soovid selle grupi kustutada? Grupiga on seotud
+    %{count} teist objekti, mis sellele endiselt viitavad.
+  approve: Kinnita
+  create_user: Loo kasutaja
+  last_logged_in: viimane sisselogimine %{value}
+  personal_information: Isiklik informatsioon
+  group_memberships: Kuulumine gruppidesse
+  reactivate: Taasta
+  save_user: Salvesta kasutaja
+  suspend: Peata
+  user_active: Aktiivne
+  user_admin: Administraator
+  user_awaits_approval: ootab Sinu kinnitust
+  user_confirm_delete: kasutajat saab kustutada vaid juhul kui temale ei viita ühtegi objekti.
+  user_is_admin: Kasutaja on administraator
+  user_never_logged_in: ei ole veel sisse loginud
+  user_signed_up: Registreerunud
+  user_signed_up_on: registreerus kuupäeval %{value}
+  user_since: kasutaja alates %{value}
+  user_suspended: Peatatud
+  user_suspended_on: peatatud kuupäeval %{value}
+  users: Kasutajad
+  users_small: kasutajad
+
+  # Views -> Versions
+  #----------------------------------------------------------------------------
+  versions: Ajalugu
+  version:
+    create: ! '%{item} loodud %{by} poolt'
+    update: ! '%{item} värskendatud %{by} poolt'
+    destroy: ! '%{item} kustutatud %{by} poolt'
+    set_html: ! '%{attr} muudetud väärtusele %{to}'
+    unset_html: ! '%{attr} välja lülitatud'
+    change_html: ! '%{attr} muudetud väärtuselt %{from} väärtusele %{to}'
+    anonymous: anonüümne
+  account_contact_id: Konto nr
+  account_contact_name: Konto nimi
+  user_id: Kasutaja nr
+  created_at: Loodud
+  updated_at: Värskendatud
+
+  # Export.
+  #----------------------------------------------------------------------------
+  to_xls: Expordi Excel'isse
+  to_csv: Ekspordi komaeraldusega failiformaati (sh kustutatud kirjed)
+  to_rss: RSS voog
+  to_atom: Atom voog
+  to_perm: Püsilink
+
+  # Dropbox.
+  #----------------------------------------------------------------------------
+  dropbox_notification_subject: dropbox - Lisatud meil - %{subject}
+  dropbox_notification_intro: Dropbox'i saadetud meili lisamine õnnestus
+  dropbox_notification_to: Lisatud
+  subject: Pealkiri
+  body: Sisu
+
+  # Comment Inbox
+  #----------------------------------------------------------------------------
+  comment_notification:
+    intro: ! '%{user_full_name} kommenteeris objektitüüpi %{entity_type}: %{entity_name}'
+    reply_instructions: Uue kommentaari lisamiseks vasta meilile otse või
+      vaata %{entity} internetis
+
+  # Lists
+  #----------------------------------------------------------------------------
+  global_lists: Üldnimekirjad
+  personal_lists: Minu nimekirjad
+  list: Nimekiri
+  no_saved_lists: Salvestatud nimekirjad puuduvad
+  make_current_view_list: Tee antud kuvand nimekirjaks
+  list_name_info: Kui sa kasutad olemasoleva nimeirja nime, siis kirjutatakse
+    see nimekiri üle Sinu hetke seadetega
+
+  # Pluralizations.
+  #----------------------------------------------------------------------------
+  pluralize:
+    comment:
+      one: 1 kommentaar
+      other: ! '%{count} kommentaari'
+    contact:
+      one: 1 kontakt
+      other: ! '%{count} kontakti'
+    opportunity:
+      one: 1 väljavaade
+      other: ! '%{count} väljavaadet'
+    lead:
+      one: 1 juhtlõng
+      other: ! '%{count} juhtlõnga'
+    day:
+      one: 1 päev
+      other: ! '%{count} päeva'
+    login:
+      one: 1 sisselogimine
+      other: ! '%{count} sisselogimist'
+
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: ! '%d.%m.%Y'
+      mmdd: ! '%b %e'
+      mmddyy: ! '%b %e, %Y'
+  time:
+    formats:
+      mmddhhss: ! '%b %e at %H:%M'
+      mmddyyyy_hhmm: ! '%e %b %Y, %H:%M'
+
+  # will_paginate translations copied for 'en-US'
+  #----------------------------------------------------------------------------
+  will_paginate:
+    previous_label: ! '&#8592; Eelmine'
+    next_label: Järgmine &#8594;
+    page_gap: ! '&hellip;'
+    page_entries_info:
+      single_page:
+        zero: Mitte ühtki %{plural} ei leitud
+        one: Kuvatakse 1 %{name}
+        other: Kuvatakse %{count} %{plural}
+      multi_page: Kuvatakse %{plural} %{from} - %{to} kokku %{total} lehest
+
+  # Views -> Admin -> Custom Fields
+  #----------------------------------------------------------------------------
+  label: Silt
+  custom_fields: Kohandatud väljad
+  custom_field_options: Kohandatud välja suvandid
+  create_field: Loo väli
+  save_field: Salvesta väli
+  create_field_group: Loo väljagrupp
+  edit_field_group: Muuda väljagruppi
+  save_field_group: Salvesta väljagrupp
+  field_group_empty: Selles grupis ei ole välju.
+  select_or_create_tags: Vali märgned või loo uus märgend vajutades 'enter' klahvi.
+  restrict_by_tag: ! 'Kitsenda märgendi järgi:'
+  restrict_by_tag_info: (Näita vaid %{assets} välju, millel on järgnevad märgendid)
+  field_group_tag_restriction: See väljagrupp hõlmab vaid %{assets}, millel on "%{tag}" märgend
+  field_group_unrestricted: See väljagrupp hõlmab kõiki %{assets}
+  field_group_confirm_delete: Kui väljagrupp kustutakse, teisaldatakse kõik väljad
+    vaikimisi väljagruppi.
+  msg_cant_delete_field_group: Väljagrupi kustutamine ebaõnnestus.
+  admin_fields_info: ! 'Kohandatud välju kuvatakse gruppidena.
+    Loo uus väljagrupp või lisa väljad ühte alltoodud gruppidest.
+    Sa saad välju nende kuvamisjärjekorra või väljagrupi muutmiseks
+    pukseerida.'
+  # Views -> Admin -> Tags
+  #----------------------------------------------------------------------------
+  admin_fields_info2: ! 'Kohandatud välja lisamisel või kustutamisel on tungivalt soovitav
+    server taaskäivitada
+'
+  tags: Märgendid
+  tag_small: märgend
+  tagged: Märgendatud
+  create_tag: Loo märgend
+  save_tag: Salvesta märgend
+  field_group_tags: Sellele märgendile vastavad väljagrupid
+
+  # Views -> Admin -> Plugins
+  #----------------------------------------------------------------------------
+  tag_with_taggings_confirm_delete: Kui see märgend kustutada, eemaldatakse see
+    %{value} kirjete hulgast.
+  msg_cant_delete_tag: ! '%{value} kustutamine ebaõnnestus sellega seotud väljagruppide tõttu.'
+  views:
+    admin:
+      plugins:
+        author: Autor
+        version: Versioon
+        description: Kirjeldus
+
+  # Simple Form translations
+  #----------------------------------------------------------------------------
+  simple_form:
+    yes: 'Jah'
+    no: 'Ei'
+    required:
+      text: nõutud
+      mark: ! '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: ! 'Leiti vigu, palun kontrolli:'
+
+  # Form field types
+  #----------------------------------------------------------------------------
+  field_types:
+    string:
+      title: Lühike vastus
+    text:
+      title: Pikk vastus
+    select:
+      title: Valikute nimekiri
+    multiselect:
+      title: Mitmikvalik
+    radio_buttons:
+      title: Raadionupud
+    boolean:
+      title: Märkeruut
+    check_boxes:
+      title: Märkeruudud
+    date:
+      title: Kuupäev
+    date_pair:
+      title: Kuupäeva paar
+    datetime:
+      title: Kuupäev ja aeg
+    datetime_pair:
+      title: Kuupäeva ja aja paar
+    email:
+      title: Meil
+    url:
+      title: URL
+    tel:
+      title: Telefoninumber
+    decimal:
+      title: Number (murdarv)
+    integer:
+      title: Number (täisarv)
+    float:
+      title: Number (ujukomaga arv)
+  pair:
+    start: Algus
+    end: Lõpp
+    from_to: Alates %{from} kuni %{to}
+    from_only: Alates %{from}
+    to_only: Kuni %{to}
