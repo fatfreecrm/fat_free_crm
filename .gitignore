@@ -34,3 +34,5 @@ Design
 *~
 *.swp
 *.gem
+
+.passenger
