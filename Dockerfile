@@ -5,6 +5,10 @@
 FROM phusion/passenger-ruby21
 MAINTAINER Steve Kenworthy
 
+RUN apt-get update \
+  && apt-get install -y sudo \
+  && apt-get autoremove -y
+
 ENV HOME /root
 
 CMD ["/sbin/my_init"]
