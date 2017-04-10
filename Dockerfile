@@ -2,7 +2,7 @@
 # fig run web bundle exec rake db:create db:schema:load ffcrm:demo:load
 # fig up
 
-FROM phusion/passenger-ruby21
+FROM phusion/passenger-ruby24
 MAINTAINER Steve Kenworthy
 
 RUN apt-get update \
