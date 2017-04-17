@@ -550,15 +550,15 @@ fr:
 
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_completed: a complété le/la
-  action_created: a créé le/la
-  action_deleted: a supprimé le/la
+  action_complete: a complété le/la
+  action_create: a créé le/la
+  action_delete: a supprimé le/la
   action_email: a échangé des mails avec
   action_reassigned: a réassigné le/la
   action_rejected: a rejeté le/la
   action_rescheduled: a re-planifié le/la
-  action_updated: a mis à jour le/la
-  action_viewed: a vu le/la
+  action_update: a mis à jour le/la
+  action_view: a vu le/la
   action_won: a gagné une
   activities: Activités
   no_activity_records: Aucune activité trouvée.
@@ -732,9 +732,9 @@ fr:
   #----------------------------------------------------------------------------
   versions: Historique
   version:
-    create: Créé par %{by} il y a %{item}.
-    update: Modifié par %{by} il y a %{item}.
-    destroy: Détruit par %{by} il y a %{item}.
+    create: ! Créé par %{by} il y a %{item}.
+    update: ! Modifié par %{by} il y a %{item}.
+    destroy: ! Détruit par %{by} il y a %{item}.
     set: ! '%{attr} renseigné %{to}'
     unset: ! '%{attr} supprimé'
     change: ! '%{attr} changé de %{from} à %{to}'
