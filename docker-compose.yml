@@ -10,6 +10,7 @@ services:
       - gems:/usr/local/rvm/gems
     environment:
       RAILS_ENV: 'production'
+      PASSENGER_APP_ENV: 'production'
   db:
     image: postgres:9.5
 volumes:
