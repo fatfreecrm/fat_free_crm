@@ -10,7 +10,10 @@ ENV HOME /home/app
 ADD . /home/app
 WORKDIR /home/app
 
-RUN cp config/database.postgres.docker.yml config/database.yml \
+RUN apt-get update \
+  && apt-get install -y imagemagick firefox \
+  && apt-get autoremove -y \
+  && cp config/database.postgres.docker.yml config/database.yml \
   && chown -R app:app /home/app \
   && rm -f /etc/service/nginx/down /etc/nginx/sites-enabled/default \
   && cp .docker/nginx/sites-enabled/ffcrm.conf /etc/nginx/sites-enabled/ffcrm.conf \
