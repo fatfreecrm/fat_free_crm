@@ -21,7 +21,6 @@ Gem::Specification.new do |gem|
   gem.license = 'MIT'
 
   gem.add_dependency 'rails',               '~> 4.2'
-  gem.add_dependency 'rails-observers'
   # Sprockets 2.2.3 appears to have a bug resolving assets from the engine update to '>= 3.0.0 once released'
   gem.add_dependency 'sprockets-rails',     '2.2.2'
   gem.add_dependency 'responders',          '~> 2.0'

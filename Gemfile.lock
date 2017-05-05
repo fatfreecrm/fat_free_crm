@@ -236,8 +236,6 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails-observers (0.1.2)
-      activemodel (~> 4.0)
     rails3-jquery-autocomplete (1.0.15)
       rails (>= 3.2)
     rails_12factor (0.0.3)
@@ -415,7 +413,6 @@ DEPENDENCIES
   pry-rails
   quiet_assets
   rails (~> 4.2)
-  rails-observers
   rails3-jquery-autocomplete
   rails_12factor
   rails_autolink
@@ -446,4 +443,4 @@ DEPENDENCIES
   zeus
 
 BUNDLED WITH
-   1.13.7
+   1.14.6
