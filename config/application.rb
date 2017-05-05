@@ -35,11 +35,6 @@ module FatFreeCRM
     # Prevent Field class from being reloaded more than once as this clears registered customfields
     config.autoload_once_paths += [File.expand_path("../app/models/fields/field.rb", __FILE__)]
 
-    # Activate observers that should always be running.
-    unless ARGV.join.include?('assets:precompile')
-      config.active_record.observers = :lead_observer, :opportunity_observer, :task_observer, :entity_observer
-    end
-
     # Load development rake tasks (RSpec, Gem packaging, etc.)
     rake_tasks do
       Dir.glob(Rails.root.join('lib', 'development_tasks', '*.rake')).each { |t| load t }
