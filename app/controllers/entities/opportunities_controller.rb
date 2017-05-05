@@ -67,7 +67,9 @@ class OpportunitiesController < EntitiesController
   def create
     @comment_body = params[:comment_body]
     respond_with(@opportunity) do |_format|
+      observer.before_update(@opportunity)
       if @opportunity.save_with_account_and_permissions(params.permit!)
+        observer.after_update(@opportunity)
         @opportunity.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
           @opportunities = get_opportunities
@@ -98,7 +100,9 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@opportunity) do |_format|
+      observer.before_update(@opportunity)
       if @opportunity.update_with_account_and_permissions(params.permit!)
+        observer.after_update(@opportunity)
         if called_from_index_page?
           get_data_for_sidebar
         elsif called_from_landing_page?(:accounts)
@@ -125,7 +129,9 @@ class OpportunitiesController < EntitiesController
     elsif called_from_landing_page?(:campaigns)
       @campaign = @opportunity.campaign # Reload related campaign if any.
     end
+    observer.before_update(@opportunity)
     @opportunity.destroy
+    observer.after_update(@opportunity)
 
     respond_with(@opportunity) do |format|
       format.html { respond_to_destroy(:html) }
@@ -218,5 +224,9 @@ class OpportunitiesController < EntitiesController
     current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
     current_user.pref[:opportunities_sort_by]  = Opportunity.sort_by_map[params[:sort_by]] if params[:sort_by]
     session[:opportunities_filter] = params[:stage] if params[:stage]
+  end
+
+  def observer
+    @observer ||= OpportunityObserver.new
   end
 end
