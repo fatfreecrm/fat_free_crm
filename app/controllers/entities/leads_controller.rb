@@ -64,7 +64,9 @@ class LeadsController < EntitiesController
     @comment_body = params[:comment_body]
 
     respond_with(@lead) do |_format|
+      observer.before_update(@lead)
       if @lead.save_with_permissions(params.permit!)
+        observer.after_update(@lead)
         @lead.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
           @leads = get_leads
@@ -82,7 +84,9 @@ class LeadsController < EntitiesController
     respond_with(@lead) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @lead.access = resource_params[:access] if resource_params[:access]
+      observer.before_update(@lead)
       if @lead.update_with_lead_counters(resource_params)
+        observer.after_update(@lead)
         update_sidebar
       else
         @campaigns = Campaign.my.order('name')
@@ -93,7 +97,9 @@ class LeadsController < EntitiesController
   # DELETE /leads/1
   #----------------------------------------------------------------------------
   def destroy
+    observer.before_update(@lead)
     @lead.destroy
+    observer.after_update(@lead)
 
     respond_with(@lead) do |format|
       format.html { respond_to_destroy(:html) }
@@ -118,7 +124,9 @@ class LeadsController < EntitiesController
   # PUT /leads/1/promote
   #----------------------------------------------------------------------------
   def promote
+    observer.before_update(@lead)
     @account, @opportunity, @contact = @lead.promote(params.permit!)
+    observer.after_update(@lead)
     @accounts = Account.my.order('name')
     @stage = Setting.unroll(:opportunity_stage)
 
@@ -136,7 +144,9 @@ class LeadsController < EntitiesController
   # PUT /leads/1/reject
   #----------------------------------------------------------------------------
   def reject
+    observer.before_update(@lead)
     @lead.reject
+    observer.after_update(@lead)
     update_sidebar
 
     respond_with(@lead) do |format|
@@ -252,5 +262,9 @@ class LeadsController < EntitiesController
     else
       get_data_for_sidebar(:campaign)
     end
+  end
+
+  def observer
+    @observer ||= LeadObserver.new
   end
 end
