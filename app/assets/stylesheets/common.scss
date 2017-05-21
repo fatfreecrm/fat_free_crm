@@ -704,7 +704,8 @@ ul.tools {
 
 .mail.highlight,
 .comment.highlight {
-  background-color: #f2f2f2; }
+  background-color: #f2f2f2;
+  word-break: break-all; }
 
 .highlight:hover {
   background-color: seashell;
