@@ -11,8 +11,8 @@ class ApplicationController < ActionController::Base
   before_action :set_context
   before_action :clear_setting_cache
   before_action :cors_preflight_check
-  before_action "hook(:app_before_filter, self)"
-  after_action "hook(:app_after_filter,  self)"
+  before_action { hook(:app_before_filter, self) }
+  after_action { hook(:app_after_filter,  self) }
   after_action :cors_set_access_control_headers
 
   helper_method :current_user_session, :current_user, :can_signup?
