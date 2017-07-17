@@ -28,7 +28,7 @@ describe Admin::UsersController do
       @amy = FactoryGirl.create(:user, username: "amy_anderson")
       @bob = FactoryGirl.create(:user, username: "bob_builder")
 
-      get :index, query: "amy_anderson"
+      get :index, params: { query: "amy_anderson" }
       expect(assigns[:users]).to eq([@amy])
       expect(assigns[:current_query]).to eq("amy_anderson")
       expect(session[:users_current_query]).to eq("amy_anderson")
@@ -42,7 +42,7 @@ describe Admin::UsersController do
     it "assigns the requested user as @user and renders [show] template" do
       @user = FactoryGirl.create(:user)
 
-      get :show, id: @user.id
+      get :show, params: { id: @user.id }
       expect(assigns[:user]).to eq(@user)
       expect(response).to render_template("admin/users/show")
     end
@@ -53,7 +53,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "GET new" do
     it "assigns a new user as @user and renders [new] template" do
-      xhr :get, :new
+      get :new, xhr: true
       expect(assigns[:user]).to be_new_record
       expect(response).to render_template("admin/users/new")
     end
@@ -65,7 +65,7 @@ describe Admin::UsersController do
     it "assigns the requested user as @user and renders [edit] template" do
       @user = FactoryGirl.create(:user)
 
-      xhr :get, :edit, id: @user.id
+      get :edit, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(@user)
       expect(assigns[:previous]).to eq(nil)
       expect(response).to render_template("admin/users/edit")
@@ -75,7 +75,7 @@ describe Admin::UsersController do
       @user = FactoryGirl.create(:user)
       @previous = FactoryGirl.create(:user)
 
-      xhr :get, :edit, id: @user.id, previous: @previous.id
+      get :edit, params: { id: @user.id, previous: @previous.id }, xhr: true
       expect(assigns[:previous]).to eq(@previous)
     end
 
@@ -83,7 +83,7 @@ describe Admin::UsersController do
       @user = FactoryGirl.create(:user)
       @user.destroy
 
-      xhr :get, :edit, id: @user.id
+      get :edit, params: { id: @user.id }, xhr: true
       expect(flash[:warning]).not_to eq(nil)
       expect(response.body).to eq("window.location.reload();")
     end
@@ -93,7 +93,7 @@ describe Admin::UsersController do
       @previous = FactoryGirl.create(:user)
       @previous.destroy
 
-      xhr :get, :edit, id: @user.id, previous: @previous.id
+      get :edit, params: { id: @user.id, previous: @previous.id, xhr: true }
       expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
       expect(assigns[:previous]).to eq(@previous.id)
       expect(response).to render_template("admin/users/edit")
