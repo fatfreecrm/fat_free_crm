@@ -67,7 +67,7 @@ describe CampaignsController do
     describe "AJAX pagination" do
       it "should pick up page number from params" do
         @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
-        xhr :get, :index, page: 42
+        get :index, params: { page: 42 }, xhr: true
 
         expect(assigns[:current_page].to_i).to eq(42)
         expect(assigns[:campaigns]).to eq([]) # page #42 should be empty if there's only one campaign ;-)
@@ -222,7 +222,7 @@ describe CampaignsController do
     it "should create related object when necessary" do
       @lead = FactoryGirl.create(:lead, id: 42)
 
-      xhr :get, :new, related: "lead_42"
+      get :new, params: { related: "lead_42" }, xhr: true
       expect(assigns[:lead]).to eq(@lead)
     end
   end
@@ -233,7 +233,7 @@ describe CampaignsController do
     it "should expose the requested campaign as @campaign and render [edit] template" do
       @campaign = FactoryGirl.create(:campaign, id: 42, user: current_user)
 
-      xhr :get, :edit, id: 42
+      get :edit, params: { id: 42 }, xhr: true
       expect(assigns[:campaign]).to eq(@campaign)
       expect(response).to render_template("campaigns/edit")
     end
@@ -242,7 +242,7 @@ describe CampaignsController do
       @campaign = FactoryGirl.create(:campaign, id: 42)
       @previous = FactoryGirl.create(:campaign, id: 99)
 
-      xhr :get, :edit, id: 42, previous: 99
+      get :edit, params: { id: 42, previous: 99 }, xhr: true
       expect(assigns[:campaign]).to eq(@campaign)
       expect(assigns[:previous]).to eq(@previous)
     end
@@ -252,7 +252,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.create(:campaign, user: current_user)
         @campaign.destroy
 
-        xhr :get, :edit, id: @campaign.id
+        get :edit, params: { id: @campaign.id }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
         expect(response.body).to eq("window.location.reload();")
       end
@@ -260,7 +260,7 @@ describe CampaignsController do
       it "should reload current page with the flash message if the campaign is protected" do
         @private = FactoryGirl.create(:campaign, user: FactoryGirl.create(:user), access: "Private")
 
-        xhr :get, :edit, id: @private.id
+        get :edit, params: { id: @private.id }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
         expect(response.body).to eq("window.location.reload();")
       end
@@ -275,7 +275,7 @@ describe CampaignsController do
       it "should notify the view if previous campaign got deleted" do
         @previous.destroy
 
-        xhr :get, :edit, id: @campaign.id, previous: @previous.id
+        get :edit, params: { id: @campaign.id, previous: @previous.id }, xhr: true
         expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
         expect(assigns[:previous]).to eq(@previous.id)
         expect(response).to render_template("campaigns/edit")
@@ -284,7 +284,7 @@ describe CampaignsController do
       it "should notify the view if previous campaign got protected" do
         @previous.update_attribute(:access, "Private")
 
-        xhr :get, :edit, id: @campaign.id, previous: @previous.id
+        get :edit, params: { id: @campaign.id, previous: @previous.id }, xhr: true
         expect(flash[:warning]).to eq(nil)
         expect(assigns[:previous]).to eq(@previous.id)
         expect(response).to render_template("campaigns/edit")
@@ -301,7 +301,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, name: "Hello", user: current_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
-        xhr :post, :create, campaign: { name: "Hello" }
+        post :create, params: { campaign: { name: "Hello" } }, xhr: true
         expect(assigns(:campaign)).to eq(@campaign)
         expect(response).to render_template("campaigns/create")
       end
@@ -310,7 +310,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, name: "Hello", user: current_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
-        xhr :post, :create, campaign: { name: "Hello" }
+        post :create, params: { campaign: { name: "Hello" } }, xhr: true
         expect(assigns[:campaign_status_total]).to be_instance_of(HashWithIndifferentAccess)
       end
 
@@ -318,7 +318,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, user: current_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
-        xhr :post, :create, campaign: { name: "Hello" }
+        post :create, params: { campaign: { name: "Hello" } }, xhr: true
         expect(assigns[:campaigns]).to eq([@campaign])
       end
 
@@ -326,7 +326,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, name: "Hello world", user: current_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
-        xhr :post, :create, campaign: { name: "Hello world" }, comment_body: "Awesome comment is awesome"
+        post :create, params: { campaign: { name: "Hello world" }, comment_body: "Awesome comment is awesome" }, xhr: true
         expect(@campaign.reload.comments.map(&:comment)).to include("Awesome comment is awesome")
       end
     end
@@ -336,7 +336,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.build(:campaign, id: nil, name: nil, user: current_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
-        xhr :post, :create, campaign: {}
+        post :create, params: { campaign: {} }, xhr: true
         expect(assigns(:campaign)).to eq(@campaign)
         expect(response).to render_template("campaigns/create")
       end
@@ -351,7 +351,7 @@ describe CampaignsController do
       it "should update the requested campaign and render [update] template" do
         @campaign = FactoryGirl.create(:campaign, id: 42, name: "Bye")
 
-        xhr :put, :update, id: 42, campaign: { name: "Hello" }
+        put :update, params: { id: 42, campaign: { name: "Hello" } }, xhr: true
         expect(@campaign.reload.name).to eq("Hello")
         expect(assigns(:campaign)).to eq(@campaign)
         expect(response).to render_template("campaigns/update")
@@ -361,7 +361,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.create(:campaign, id: 42)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns"
 
-        xhr :put, :update, id: 42, campaign: { name: "Hello" }
+        put :update, params: { id: 42, campaign: { name: "Hello" } }, xhr: true
         expect(assigns(:campaign)).to eq(@campaign)
         expect(assigns[:campaign_status_total]).to be_instance_of(HashWithIndifferentAccess)
       end
@@ -371,7 +371,7 @@ describe CampaignsController do
         he  = FactoryGirl.create(:user, id: 7)
         she = FactoryGirl.create(:user, id: 8)
 
-        xhr :put, :update, id: 42, campaign: { name: "Hello", access: "Shared", user_ids: %w(7 8) }
+        put :update, params: { id: 42, campaign: { name: "Hello", access: "Shared", user_ids: %w(7 8) } }, xhr: true
         expect(assigns[:campaign].access).to eq("Shared")
         expect(assigns[:campaign].user_ids.sort).to eq([he.id, she.id])
       end
@@ -381,7 +381,7 @@ describe CampaignsController do
           @campaign = FactoryGirl.create(:campaign, user: current_user)
           @campaign.destroy
 
-          xhr :put, :update, id: @campaign.id
+          put :update, params: { id: @campaign.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -389,7 +389,7 @@ describe CampaignsController do
         it "should reload current page with the flash message if the campaign is protected" do
           @private = FactoryGirl.create(:campaign, user: FactoryGirl.create(:user), access: "Private")
 
-          xhr :put, :update, id: @private.id
+          put :update, params: { id: @private.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -400,7 +400,7 @@ describe CampaignsController do
       it "should not update the requested campaign, but still expose it as @campaign and still render [update] template" do
         @campaign = FactoryGirl.create(:campaign, id: 42, name: "Hello", user: current_user)
 
-        xhr :put, :update, id: 42, campaign: { name: nil }
+        put :update, params: { id: 42, campaign: { name: nil } }, xhr: true
         expect(@campaign.reload.name).to eq("Hello")
         expect(assigns(:campaign)).to eq(@campaign)
         expect(response).to render_template("campaigns/update")
@@ -419,7 +419,7 @@ describe CampaignsController do
     describe "AJAX request" do
       it "should destroy the requested campaign and render [destroy] template" do
         @another_campaign = FactoryGirl.create(:campaign, user: current_user)
-        xhr :delete, :destroy, id: @campaign.id
+        delete :destroy, params: { id: @campaign.id }, xhr: true
 
         expect(assigns[:campaigns]).to eq([@another_campaign])
         expect { Campaign.find(@campaign.id) }.to raise_error(ActiveRecord::RecordNotFound)
@@ -427,7 +427,7 @@ describe CampaignsController do
       end
 
       it "should get data for campaigns sidebar" do
-        xhr :delete, :destroy, id: @campaign.id
+        delete :destroy, params: { id: @campaign.id }, xhr: true
 
         expect(assigns[:campaign_status_total]).to be_instance_of(HashWithIndifferentAccess)
       end
@@ -435,7 +435,7 @@ describe CampaignsController do
       it "should try previous page and render index action if current page has no campaigns" do
         session[:campaigns_current_page] = 42
 
-        xhr :delete, :destroy, id: @campaign.id
+        delete :destroy, params: { id: @campaign.id }, xhr: true
         expect(session[:campaigns_current_page]).to eq(41)
         expect(response).to render_template("campaigns/index")
       end
@@ -443,7 +443,7 @@ describe CampaignsController do
       it "should render index action when deleting last campaign" do
         session[:campaigns_current_page] = 1
 
-        xhr :delete, :destroy, id: @campaign.id
+        delete :destroy, params: { id: @campaign.id }, xhr: true
         expect(session[:campaigns_current_page]).to eq(1)
         expect(response).to render_template("campaigns/index")
       end
@@ -453,7 +453,7 @@ describe CampaignsController do
           @campaign = FactoryGirl.create(:campaign, user: current_user)
           @campaign.destroy
 
-          xhr :delete, :destroy, id: @campaign.id
+          delete :destroy, params: { id: @campaign.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -461,7 +461,7 @@ describe CampaignsController do
         it "should reload current page with the flash message if the campaign is protected" do
           @private = FactoryGirl.create(:campaign, user: FactoryGirl.create(:user), access: "Private")
 
-          xhr :delete, :destroy, id: @private.id
+          delete :destroy, params: { id: @private.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -598,14 +598,14 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to GET redraw" do
     it "should save user selected campaign preference" do
-      xhr :get, :redraw, per_page: 42, view: "brief", sort_by: "name"
+      get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
       expect(current_user.preference[:campaigns_per_page]).to eq("42")
       expect(current_user.preference[:campaigns_index_view]).to eq("brief")
       expect(current_user.preference[:campaigns_sort_by]).to eq("campaigns.name ASC")
     end
 
     it "should reset current page to 1" do
-      xhr :get, :redraw, per_page: 42, view: "brief", sort_by: "name"
+      get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
       expect(session[:campaigns_current_page]).to eq(1)
     end
 
@@ -615,7 +615,7 @@ describe CampaignsController do
         FactoryGirl.create(:campaign, name: "B", user: current_user)
       ]
 
-      xhr :get, :redraw, per_page: 1, sort_by: "name"
+      get :redraw, params: { per_page: 1, sort_by: "name" }, xhr: true
       expect(assigns(:campaigns)).to eq([@campaigns.first])
       expect(response).to render_template("campaigns/index")
     end
@@ -628,14 +628,14 @@ describe CampaignsController do
       session[:campaigns_filter] = "planned,started"
       @campaigns = [FactoryGirl.create(:campaign, status: "completed", user: current_user)]
 
-      xhr :post, :filter, status: "completed"
+      post :filter, params: { status: "completed" }, xhr: true
       expect(assigns(:campaigns)).to eq(@campaigns)
       expect(response).to render_template("campaigns/index")
     end
 
     it "should reset current page to 1" do
       @campaigns = []
-      xhr :post, :filter, status: "completed"
+      post :filter, params: { status: "completed" }, xhr: true
 
       expect(session[:campaigns_current_page]).to eq(1)
     end
