@@ -15,7 +15,7 @@ describe UsersController do
     end
 
     it "should render [show] template" do
-      get :show, id: current_user.id
+      get :show, params: { id: current_user.id }
       expect(assigns[:user]).to eq(current_user)
       expect(response).to render_template("users/show")
     end
@@ -29,14 +29,14 @@ describe UsersController do
     it "should show user if admin user" do
       @user = create(:user)
       require_user(admin: true)
-      get :show, id: @user.id
+      get :show, params: { id: @user.id }
       expect(assigns[:user]).to eq(@user)
       expect(response).to render_template("users/show")
     end
 
     it "should not show user if not admin user" do
       @user = create(:user)
-      get :show, id: @user.id
+      get :show, params: { id: @user.id }
       expect(response).to redirect_to(root_url)
     end
 
@@ -49,7 +49,7 @@ describe UsersController do
         expect(User).to receive(:find).and_return(current_user)
         expect(current_user).to receive(:to_json).and_return("generated JSON")
 
-        get :show, id: current_user.id
+        get :show, params: { id: current_user.id }
         expect(response.body).to eq("generated JSON")
       end
 
@@ -70,7 +70,7 @@ describe UsersController do
         expect(User).to receive(:find).and_return(current_user)
         expect(current_user).to receive(:to_xml).and_return("generated XML")
 
-        get :show, id: current_user.id
+        get :show, params: { id: current_user.id }
         expect(response.body).to eq("generated XML")
       end
 
@@ -151,7 +151,7 @@ describe UsersController do
 
       it "exposes a newly created user as @user and redirect to profile page" do
         require_user(admin: true)
-        post :create, user: { username: @username, email: @email, password: @password, password_confirmation: @password }
+        post :create, params: { user: { username: @username, email: @email, password: @password, password_confirmation: @password } }
         expect(assigns[:user]).to eq(@user)
         expect(flash[:notice]).to match(/welcome/)
         expect(response).to redirect_to(profile_path)
@@ -160,7 +160,7 @@ describe UsersController do
       it "should redirect to login page if user signup needs approval" do
         allow(Setting).to receive(:user_signup).and_return(:needs_approval)
 
-        post :create, user: { username: @username, email: @email, password: @password, password_confirmation: @password }
+        post :create, params: { user: { username: @username, email: @email, password: @password, password_confirmation: @password } }
         expect(assigns[:user]).to eq(@user)
         expect(flash[:notice]).to match(/approval/)
         expect(response).to redirect_to(login_path)
@@ -173,7 +173,7 @@ describe UsersController do
         @user = FactoryGirl.build(:user, username: "", email: "")
         allow(User).to receive(:new).and_return(@user)
 
-        post :create, user: {}
+        post :create, params: { user: {} }
         expect(assigns[:user]).to eq(@user)
         expect(response).to render_template("users/new")
       end
