@@ -39,7 +39,6 @@ group :development do
   # don't load these gems in travis
   unless ENV["CI"]
     gem 'thin'
-    gem 'quiet_assets'
     gem 'capistrano'
     gem 'capistrano-bundler'
     gem 'capistrano-rails'
