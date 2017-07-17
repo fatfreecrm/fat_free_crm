@@ -217,8 +217,8 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
-      format.js   { render text: 'window.location.reload();' }
-      format.json { render text: flash[:warning],  status: :not_found }
+      format.js   { render plain: 'window.location.reload();' }
+      format.json { render plain: flash[:warning],  status: :not_found }
       format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
