@@ -231,8 +231,8 @@ class ApplicationController < ActionController::Base
     url = send("#{related.pluralize}_path")
     respond_to do |format|
       format.html { redirect_to(url) }
-      format.js   { render text: %(window.location.href = "#{url}";) }
-      format.json { render text: flash[:warning],  status: :not_found }
+      format.js   { render plain: %(window.location.href = "#{url}";) }
+      format.json { render plain: flash[:warning],  status: :not_found }
       format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
