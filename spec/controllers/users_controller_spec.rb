@@ -191,7 +191,7 @@ describe UsersController do
 
     describe "with valid params" do
       it "should update user information and render [update] template" do
-        put :update, params: { id: @user.id, user: { first_name: "Billy", last_name: "Bones" } }
+        put :update, params: { id: @user.id, user: { first_name: "Billy", last_name: "Bones" } }, xhr: true
         @user.reload
         expect(@user.first_name).to eq("Billy")
         expect(@user.last_name).to eq("Bones")
@@ -202,7 +202,7 @@ describe UsersController do
 
     describe "with invalid params" do
       it "should not update the user information and redraw [update] template" do
-        put :update, params: { id: @user.id, user: { first_name: nil } }
+        put :update, params: { id: @user.id, user: { first_name: nil } }, xhr: true
         expect(@user.reload.first_name).to eq(current_user.first_name)
         expect(assigns[:user]).to eq(@user)
         expect(response).to render_template("users/update")
@@ -235,7 +235,7 @@ describe UsersController do
     end
 
     it "should expose current user as @user and render [avatar] template" do
-      get :avatar, params: { id: @user.id }
+      get :avatar, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(current_user)
       expect(response).to render_template("users/avatar")
     end
@@ -253,7 +253,7 @@ describe UsersController do
     it "should delete avatar if user chooses to use Gravatar" do
       @avatar = FactoryGirl.create(:avatar, user: @user, entity: @user)
 
-      put :upload_avatar, params: { id: @user.id, gravatar: 1 }
+      put :upload_avatar, params: { id: @user.id, gravatar: 1 }, xhr: true
       expect(@user.reload.avatar).to eq(nil)
       expect(response).to render_template("users/upload_avatar")
     end
@@ -261,7 +261,7 @@ describe UsersController do
     it "should do nothing if user hasn't specified the avatar file to upload" do
       @avatar = FactoryGirl.create(:avatar, user: @user, entity: @user)
 
-      put :upload_avatar, params: { id: @user.id, avatar: nil }
+      put :upload_avatar, params: { id: @user.id }, xhr: true
       expect(@user.avatar).to eq(@avatar)
       expect(response).to render_template("users/upload_avatar")
     end

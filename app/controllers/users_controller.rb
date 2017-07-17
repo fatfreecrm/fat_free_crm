@@ -154,6 +154,7 @@ class UsersController < ApplicationController
   end
 
   def avatar_params
+    return {} unless params[:avatar]
     params[:avatar]
       .permit(:image)
       .merge(entity: @user)
