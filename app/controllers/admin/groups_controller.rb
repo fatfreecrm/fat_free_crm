@@ -63,7 +63,7 @@ class Admin::GroupsController < Admin::ApplicationController
     params[:group].permit!
   end
 
-  def setup_current_tab 
+  def setup_current_tab
     set_current_tab('admin/groups')
   end
 end

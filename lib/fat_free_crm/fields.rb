@@ -35,9 +35,7 @@ module FatFreeCRM
 
       def serialize_custom_fields!
         fields.each do |field|
-          if field.as == 'check_boxes'
-            serialize(field.name.to_sym, Array)
-          end
+          serialize(field.name.to_sym, Array) if field.as == 'check_boxes'
         end
       end
 

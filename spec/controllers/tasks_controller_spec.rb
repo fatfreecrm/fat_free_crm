@@ -275,7 +275,7 @@ describe TasksController do
           allow(Task).to receive(:new).and_return(@task)
 
           request.env["HTTP_REFERER"] = "http://localhost/tasks#{view}"
-          post :create, params: { task: { name: "Hello world" }}, xhr: true
+          post :create, params: { task: { name: "Hello world" } }, xhr: true
           expect(assigns[:task_total]).to be_an_instance_of(HashWithIndifferentAccess)
         end
       end
@@ -286,7 +286,7 @@ describe TasksController do
         @task = FactoryGirl.build(:task, name: nil, user: current_user)
         allow(Task).to receive(:new).and_return(@task)
 
-        post :create, params: { task: {}}, xhr: true
+        post :create, params: { task: {} }, xhr: true
         expect(assigns(:task)).to eq(@task)
         expect(assigns(:view)).to eq("pending")
         expect(assigns[:task_total]).to eq(nil)
@@ -491,7 +491,7 @@ describe TasksController do
         name = "filter_by_task_#{view}"
         session[name] = "due_asap,due_today,due_tomorrow"
 
-        get :filter, params: {filter: "due_asap", view: view}, xhr: true
+        get :filter, params: { filter: "due_asap", view: view }, xhr: true
         expect(session[name]).not_to include("due_asap")
         expect(session[name]).to include("due_today")
         expect(session[name]).to include("due_tomorrow")
