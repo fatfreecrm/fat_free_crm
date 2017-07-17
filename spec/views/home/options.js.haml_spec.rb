@@ -22,7 +22,7 @@ describe "/home/options" do
     render
 
     expect(rendered).to include("$('#options').html")
-    expect(rendered).to include("$(\\'#asset\\').html(\\'campaign\\')")
+    expect(rendered).to include("$(&#39;#asset&#39;).html(&#39;campaign&#39;)")
     expect(rendered).to include("crm.flip_form('options')")
     expect(rendered).to include("crm.set_title('title', 'Recent Activity Options')")
   end
