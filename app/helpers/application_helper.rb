@@ -302,7 +302,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def get_browser_timezone_offset
     unless session[:timezone_offset]
-      "$.get('#{raw timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
+      raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
     end
   end
 
