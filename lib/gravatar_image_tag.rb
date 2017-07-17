@@ -22,6 +22,7 @@ module GravatarImageTag
 
   module InstanceMethods
     def gravatar_image_tag(email, options = {})
+      raise ArgumentError.new("Options must be a hash, got #{options.inspect}") unless options.kind_of? Hash
       options[:alt] ||= 'Gravatar'
       image_tag(GravatarImageTag.gravatar_url(email, options.delete(:gravatar)), options)
     end
