@@ -115,7 +115,7 @@ describe UsersController do
     it "should expose current user as @user and render [edit] template" do
       require_user
       @user = current_user
-      xhr :get, :edit, id: @user.id
+      get :edit, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(current_user)
       expect(response).to render_template("users/edit")
     end
@@ -123,14 +123,14 @@ describe UsersController do
     it "should not allow current user to edit another user" do
       @user = create(:user)
       require_user
-      xhr :get, :edit, id: @user.id
+      get :edit, params: { id: @user.id }, xhr: true
       expect(response.body).to eql("window.location.reload();")
     end
 
     it "should allow admin to edit another user" do
       require_user(admin: true)
       @user = create(:user)
-      xhr :get, :edit, id: @user.id
+      get :edit, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(@user)
       expect(response).to render_template("users/edit")
     end
@@ -191,7 +191,7 @@ describe UsersController do
 
     describe "with valid params" do
       it "should update user information and render [update] template" do
-        xhr :put, :update, id: @user.id, user: { first_name: "Billy", last_name: "Bones" }
+        put :update, params: { id: @user.id, user: { first_name: "Billy", last_name: "Bones" } }
         @user.reload
         expect(@user.first_name).to eq("Billy")
         expect(@user.last_name).to eq("Bones")
@@ -202,7 +202,7 @@ describe UsersController do
 
     describe "with invalid params" do
       it "should not update the user information and redraw [update] template" do
-        xhr :put, :update, id: @user.id, user: { first_name: nil }
+        put :update, params: { id: @user.id, user: { first_name: nil } }
         expect(@user.reload.first_name).to eq(current_user.first_name)
         expect(assigns[:user]).to eq(@user)
         expect(response).to render_template("users/update")
@@ -235,7 +235,7 @@ describe UsersController do
     end
 
     it "should expose current user as @user and render [avatar] template" do
-      xhr :get, :avatar, id: @user.id
+      get :avatar, params: { id: @user.id }
       expect(assigns[:user]).to eq(current_user)
       expect(response).to render_template("users/avatar")
     end
@@ -253,7 +253,7 @@ describe UsersController do
     it "should delete avatar if user chooses to use Gravatar" do
       @avatar = FactoryGirl.create(:avatar, user: @user, entity: @user)
 
-      xhr :put, :upload_avatar, id: @user.id, gravatar: 1
+      put :upload_avatar, params: { id: @user.id, gravatar: 1 }
       expect(@user.reload.avatar).to eq(nil)
       expect(response).to render_template("users/upload_avatar")
     end
@@ -261,7 +261,7 @@ describe UsersController do
     it "should do nothing if user hasn't specified the avatar file to upload" do
       @avatar = FactoryGirl.create(:avatar, user: @user, entity: @user)
 
-      xhr :put, :upload_avatar, id: @user.id, avatar: nil
+      put :upload_avatar, params: { id: @user.id, avatar: nil }
       expect(@user.avatar).to eq(@avatar)
       expect(response).to render_template("users/upload_avatar")
     end
@@ -269,7 +269,7 @@ describe UsersController do
     it "should save the user avatar if it was successfully uploaded and resized" do
       @image = fixture_file_upload('/rails.png', 'image/png')
 
-      xhr :put, :upload_avatar, id: @user.id, avatar: { image: @image }
+      put :upload_avatar, params: { id: @user.id, avatar: { image: @image } }, xhr: true
       expect(@user.avatar).not_to eq(nil)
       expect(@user.avatar.image_file_size).to eq(@image.size)
       expect(@user.avatar.image_file_name).to eq(@image.original_filename)
@@ -282,7 +282,7 @@ describe UsersController do
     #      @image = fixture_file_upload("spec/fixtures/rails.png", "image/png")
     #      @user.stub(:save).and_return(false) # make it fail
 
-    #      xhr :put, :upload_avatar, :id => @user.id, :avatar => { :image => @image }
+    #      put :upload_avatar, :id => @user.id, :avatar => { :image => @image }
     #      @user.avatar.errors.should_not be_empty
     #      @user.avatar.should have(1).error # .error_on(:image)
     #      response.should render_template("users/upload_avatar")
@@ -299,7 +299,7 @@ describe UsersController do
     end
 
     it "should expose current user as @user and render [pssword] template" do
-      xhr :get, :password, id: @user.id
+      get :password, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(current_user)
       expect(response).to render_template("users/password")
     end
@@ -319,7 +319,7 @@ describe UsersController do
     end
 
     it "should set new user password" do
-      xhr :put, :change_password, id: @user.id, current_password: @user.password, user: { password: @new_password, password_confirmation: @new_password }
+      put :change_password, params: { id: @user.id, current_password: @user.password, user: { password: @new_password, password_confirmation: @new_password } }, xhr: true
       expect(assigns[:user]).to eq(current_user)
       expect(current_user.password).to eq(@new_password)
       expect(current_user.errors).to be_empty
@@ -329,7 +329,7 @@ describe UsersController do
 
     it "should allow to change password if current password is blank" do
       @user.password_hash = nil
-      xhr :put, :change_password, id: @user.id, current_password: "", user: { password: @new_password, password_confirmation: @new_password }
+      put :change_password, params: { id: @user.id, current_password: "", user: { password: @new_password, password_confirmation: @new_password } }, xhr: true
       expect(current_user.password).to eq(@new_password)
       expect(current_user.errors).to be_empty
       expect(flash[:notice]).not_to eq(nil)
@@ -337,7 +337,7 @@ describe UsersController do
     end
 
     it "should not change user password if password field is blank" do
-      xhr :put, :change_password, id: @user.id, current_password: @user.password, user: { password: "", password_confirmation: "" }
+      put :change_password, params: { id: @user.id, current_password: @user.password, user: { password: "", password_confirmation: "" } }, xhr: true
       expect(assigns[:user]).to eq(current_user)
       expect(current_user.password).to eq(@user.password) # password stays the same
       expect(current_user.errors).to be_empty # no errors
@@ -346,14 +346,14 @@ describe UsersController do
     end
 
     it "should require valid current password" do
-      xhr :put, :change_password, id: @user.id, current_password: "what?!", user: { password: @new_password, password_confirmation: @new_password }
+      put :change_password, params: { id: @user.id, current_password: "what?!", user: { password: @new_password, password_confirmation: @new_password } }, xhr: true
       expect(current_user.password).to eq(@user.password) # password stays the same
       expect(current_user.errors.size).to eq(1) # .error_on(:current_password)
       expect(response).to render_template("users/change_password")
     end
 
     it "should require new password and password confirmation to match" do
-      xhr :put, :change_password, id: @user.id, current_password: @user.password, user: { password: @new_password, password_confirmation: "none" }
+      put :change_password, params: { id: @user.id, current_password: @user.password, user: { password: @new_password, password_confirmation: "none" } }, xhr: true
       expect(current_user.password).to eq(@user.password) # password stays the same
       expect(current_user.errors.size).to eq(1) # .error_on(:current_password)
       expect(response).to render_template("users/change_password")
@@ -372,7 +372,7 @@ describe UsersController do
 
     it "should assign @users_with_opportunities" do
       FactoryGirl.create(:opportunity, stage: "prospecting", assignee: @user)
-      xhr :get, :opportunities_overview
+      get :opportunities_overview, xhr: true
       expect(assigns[:users_with_opportunities]).to eq([@current_user])
     end
 
@@ -385,7 +385,7 @@ describe UsersController do
       user2 = FactoryGirl.create(:user, first_name: "Bilbo", last_name: "Magic")
       FactoryGirl.create(:opportunity, stage: "prospecting", assignee: user2)
 
-      xhr :get, :opportunities_overview
+      get :opportunities_overview, xhr: true
 
       expect(assigns[:users_with_opportunities]).to eq([@user, user2, user1])
     end
@@ -395,7 +395,7 @@ describe UsersController do
       @o2 = FactoryGirl.create(:opportunity, stage: "won", assignee: nil)
       @o3 = FactoryGirl.create(:opportunity, stage: "prospecting", assignee: nil)
 
-      xhr :get, :opportunities_overview
+      get :opportunities_overview, xhr: true
 
       expect(assigns[:unassigned_opportunities]).to include(@o1, @o3)
       expect(assigns[:unassigned_opportunities]).not_to include(@o2)
@@ -406,25 +406,25 @@ describe UsersController do
       @o2 = FactoryGirl.create(:opportunity, stage: "prospecting", assignee: nil)
       @o3 = FactoryGirl.create(:opportunity, stage: "negotiation", assignee: nil)
 
-      xhr :get, :opportunities_overview
+      get :opportunities_overview, xhr: true
 
       expect(assigns[:unassigned_opportunities]).to eq([@o3, @o1, @o2])
     end
 
     it "should not include users who have no assigned opportunities" do
-      xhr :get, :opportunities_overview
+      get :opportunities_overview, xhr: true
       expect(assigns[:users_with_opportunities]).to eq([])
     end
 
     it "should not include users who have no open assigned opportunities" do
       FactoryGirl.create(:opportunity, stage: "won", assignee: @user)
 
-      xhr :get, :opportunities_overview
+      get :opportunities_overview, xhr: true
       expect(assigns[:users_with_opportunities]).to eq([])
     end
 
     it "should render opportunities overview" do
-      xhr :get, :opportunities_overview
+      get :opportunities_overview, xhr: true
       expect(response).to render_template("users/opportunities_overview")
     end
   end
