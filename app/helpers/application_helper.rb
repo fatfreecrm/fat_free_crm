@@ -316,7 +316,7 @@ module ApplicationHelper
       image_tag(model.avatar.image.url(args.delete(:size)), args)
     else
       args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
-      gravatar_image_tag(model.email, args)
+      gravatar_image_tag(model.email, args.delete(:size))
     end
   end
 
