@@ -51,7 +51,7 @@ describe LeadsController do
       @billy_bones   = FactoryGirl.create(:lead, user: current_user, first_name: "Billy",   last_name: "Bones")
       @captain_flint = FactoryGirl.create(:lead, user: current_user, first_name: "Captain", last_name: "Flint")
 
-      get :index, query: "bill"
+      get :index, params: { query: "bill" }
       expect(assigns[:leads]).to eq([@billy_bones])
       expect(assigns[:current_query]).to eq("bill")
       expect(session[:leads_current_query]).to eq("bill")
@@ -125,14 +125,14 @@ describe LeadsController do
       end
 
       it "should expose the requested lead as @lead and render [show] template" do
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(assigns[:lead]).to eq(@lead)
         expect(assigns[:comment].attributes).to eq(@comment.attributes)
         expect(response).to render_template("leads/show")
       end
 
       it "should update an activity when viewing the lead" do
-        get :show, id: @lead.id
+        get :show, params: { id: @lead.id }
         expect(@lead.versions.last.event).to eq('view')
       end
     end
@@ -144,7 +144,7 @@ describe LeadsController do
         expect(@lead).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated JSON")
       end
     end
@@ -156,7 +156,7 @@ describe LeadsController do
         expect(@lead).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated XML")
       end
     end
@@ -166,7 +166,7 @@ describe LeadsController do
         @lead = FactoryGirl.create(:lead, user: current_user)
         @lead.destroy
 
-        get :show, id: @lead.id
+        get :show, params: { id: @lead.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(leads_path)
       end
@@ -174,7 +174,7 @@ describe LeadsController do
       it "should redirect to lead index if the lead is protected" do
         @private = FactoryGirl.create(:lead, user: FactoryGirl.create(:user), access: "Private")
 
-        get :show, id: @private.id
+        get :show, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(leads_path)
       end
@@ -184,7 +184,7 @@ describe LeadsController do
         @lead.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
-        get :show, id: @lead.id
+        get :show, params: { id: @lead.id }
         expect(response.code).to eq("404") # :not_found
       end
 
@@ -193,7 +193,7 @@ describe LeadsController do
         @lead.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
-        get :show, id: @lead.id
+        get :show, params: { id: @lead.id }
         expect(response.code).to eq("404") # :not_found
       end
     end
@@ -612,7 +612,7 @@ describe LeadsController do
 
     describe "HTML request" do
       it "should redirect to Leads index when a lead gets deleted from its landing page" do
-        delete :destroy, id: @lead.id
+        delete :destroy, params: { id: @lead.id }
         expect(flash[:notice]).not_to eq(nil)
         expect(session[:leads_current_page]).to eq(1)
         expect(response).to redirect_to(leads_path)
@@ -622,7 +622,7 @@ describe LeadsController do
         @lead = FactoryGirl.create(:lead, user: current_user)
         @lead.destroy
 
-        delete :destroy, id: @lead.id
+        delete :destroy, params: { id: @lead.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(leads_path)
       end
@@ -630,7 +630,7 @@ describe LeadsController do
       it "should redirect to lead index with the flash message if the lead is protected" do
         @private = FactoryGirl.create(:lead, user: FactoryGirl.create(:user), access: "Private")
 
-        delete :destroy, id: @private.id
+        delete :destroy, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(leads_path)
       end
@@ -872,7 +872,7 @@ describe LeadsController do
 
     describe "HTML request" do
       it "should redirect to Leads index when a lead gets rejected from its landing page" do
-        put :reject, id: @lead.id
+        put :reject, params: { id: @lead.id }
 
         expect(assigns[:lead]).to eq(@lead.reload)
         expect(@lead.status).to eq("rejected")
@@ -885,7 +885,7 @@ describe LeadsController do
           @lead = FactoryGirl.create(:lead, user: current_user)
           @lead.destroy
 
-          put :reject, id: @lead.id
+          put :reject, params: { id: @lead.id }
           expect(flash[:warning]).not_to eq(nil)
           expect(response).to redirect_to(leads_path)
         end
@@ -893,7 +893,7 @@ describe LeadsController do
         it "should redirect to lead index if the lead is protected" do
           @private = FactoryGirl.create(:lead, user: FactoryGirl.create(:user), access: "Private")
 
-          put :reject, id: @private.id
+          put :reject, params: { id: @private.id }
           expect(flash[:warning]).not_to eq(nil)
           expect(response).to redirect_to(leads_path)
         end
