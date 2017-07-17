@@ -30,19 +30,22 @@ describe FatFreeCRM::Permissions do
 
     it "should assign permissions to the object" do
       expect(@entity.permissions.size).to eq(0)
-      @entity.update_attribute(:user_ids, %w(1 2 3))
+      @entity.user_ids = %w(1 2 3)
+      @entity.save!
       expect(@entity.permissions.where(user_id: [1, 2, 3]).size).to eq(3)
     end
 
     it "should handle [] permissions" do
-      @entity.update_attribute(:user_ids, [])
+      @entity.user_ids = []
+      @entity.save!
       expect(@entity.permissions.size).to eq(0)
     end
 
     it "should replace existing permissions" do
       @entity.permissions << FactoryGirl.create(:permission, user_id: 1, asset: @entity)
       @entity.permissions << FactoryGirl.create(:permission, user_id: 2, asset: @entity)
-      @entity.update_attribute(:user_ids, %w(2 3))
+      @entity.user_ids = %w(2 3)
+      @entity.save!
       expect(@entity.permissions.size).to eq(2)
       expect(@entity.permissions.where(user_id: [1]).size).to eq(0)
       expect(@entity.permissions.where(user_id: [2]).size).to eq(1)
@@ -56,12 +59,14 @@ describe FatFreeCRM::Permissions do
     end
     it "should assign permissions to the object" do
       expect(@entity.permissions.size).to eq(0)
-      @entity.update_attribute(:group_ids, %w(1 2 3))
+      @entity.group_ids = %w(1 2 3)
+      @entity.save!
       expect(@entity.permissions.where(group_id: [1, 2, 3]).size).to eq(3)
     end
 
     it "should handle [] permissions" do
-      @entity.update_attribute(:group_ids, [])
+      @entity.group_ids = []
+      @entity.save!
       expect(@entity.permissions.size).to eq(0)
     end
 
@@ -69,7 +74,8 @@ describe FatFreeCRM::Permissions do
       @entity.permissions << FactoryGirl.build(:permission, group_id: 1, user_id: nil, asset: @entity)
       @entity.permissions << FactoryGirl.build(:permission, group_id: 2, user_id: nil, asset: @entity)
       expect(@entity.permissions.size).to eq(2)
-      @entity.update_attribute(:group_ids, ['3'])
+      @entity.group_ids = ['3']
+      @entity.save!
       expect(@entity.permissions.size).to eq(1)
       expect(@entity.permissions.where(group_id: [1, 2]).size).to eq(0)
       expect(@entity.permissions.where(group_id: [3]).size).to eq(1)
