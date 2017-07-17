@@ -76,7 +76,7 @@ describe OpportunitiesController do
       it "should pick up saved page number from session" do
         session[:opportunities_current_page] = 42
         @opportunities = [FactoryGirl.create(:opportunity, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
         expect(assigns[:opportunities]).to eq([])
@@ -87,7 +87,7 @@ describe OpportunitiesController do
         session[:opportunities_current_page] = 42
         session[:opportunities_current_query] = "bill"
         @opportunities = [FactoryGirl.create(:opportunity, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
         expect(assigns[:opportunities]).to eq(@opportunities)
@@ -225,7 +225,7 @@ describe OpportunitiesController do
       @account = Account.new(user: current_user, access: Setting.default_access)
       @accounts = [FactoryGirl.create(:account, user: current_user)]
 
-      xhr :get, :new
+      get :new, xhr: true
       expect(assigns[:opportunity].attributes).to eq(@opportunity.attributes)
       expect(assigns[:account].attributes).to eq(@account.attributes)
       expect(assigns[:accounts]).to eq(@accounts)
@@ -402,7 +402,7 @@ describe OpportunitiesController do
       end
 
       it "should create new account and associate it with the opportunity" do
-        put :create, opportunity: { name: "Hello" }, account: { name: "new account" }
+        put :create, params: { opportunity: { name: "Hello" }, account: { name: "new account" } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(@opportunity.account.name).to eq("new account")
       end
@@ -497,7 +497,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
         @stage = Setting.unroll(:opportunity_stage)
 
-        put :update, id: 42, opportunity: { name: "Hello world" }, account: { name: "Test Account" }
+        put :update, params: { id: 42, opportunity: { name: "Hello world" }, account: { name: "Test Account" } }, xhr: true
         expect(@opportunity.reload.name).to eq("Hello world")
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:stage)).to eq(@stage)
@@ -509,7 +509,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        put :update, id: 42, opportunity: { name: "Hello world" }, account: { name: "Test Account" }
+        put :update, params: { id: 42, opportunity: { name: "Hello world" }, account: { name: "Test Account" } }, xhr: true
         expect(assigns(:opportunity_stage_total)).to be_an_instance_of(HashWithIndifferentAccess)
       end
 
@@ -518,7 +518,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42, account: @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-        put :update, id: 42, opportunity: { name: "Hello world" }
+        put :update, params: { id: 42, opportunity: { name: "Hello world" } }, xhr: true
         expect(assigns(:account)).to eq(@account)
       end
 
@@ -527,7 +527,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42, account: @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-        put :update, id: 42, opportunity: { name: "Hello world" }, account: { id: "" }
+        put :update, params: { id: 42, opportunity: { name: "Hello world" }, account: { id: "" } }, xhr: true
         expect(assigns(:account)).to eq(nil)
       end
 
@@ -537,14 +537,14 @@ describe OpportunitiesController do
         @campaign.opportunities << @opportunity
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
-        put :update, id: 42, opportunity: { name: "Hello world", campaign_id: @campaign.id }, account: {}
+        put :update, params: { id: 42, opportunity: { name: "Hello world", campaign_id: @campaign.id }, account: {} }, xhr: true
         expect(assigns(:campaign)).to eq(@campaign)
       end
 
       it "should be able to create an account and associate it with updated opportunity" do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
 
-        put :update, id: 42, opportunity: { name: "Hello" }, account: { name: "new account" }
+        put :update, params: { id: 42, opportunity: { name: "Hello" }, account: { name: "new account" } }, xhr: true
         expect(assigns[:opportunity]).to eq(@opportunity)
         expect(assigns[:opportunity].account).not_to be_nil
         expect(assigns[:opportunity].account.name).to eq("new account")
@@ -555,7 +555,7 @@ describe OpportunitiesController do
         @new_account = FactoryGirl.create(:account, id: 999)
         @opportunity = FactoryGirl.create(:opportunity, id: 42, account: @old_account)
 
-        put :update, id: 42, opportunity: { name: "Hello" }, account: { id: 999 }
+        put :update, params: { id: 42, opportunity: { name: "Hello" }, account: { id: 999 } }, xhr: true
         expect(assigns[:opportunity]).to eq(@opportunity)
         expect(assigns[:opportunity].account).to eq(@new_account)
       end
@@ -563,7 +563,7 @@ describe OpportunitiesController do
       it "should update opportunity permissions when sharing with specific users" do
         @opportunity = FactoryGirl.create(:opportunity, id: 42, access: "Public")
 
-        put :update, id: 42, opportunity: { name: "Hello", access: "Shared", user_ids: [7, 8] }, account: { name: "Test Account" }
+        put :update, params: { id: 42, opportunity: { name: "Hello", access: "Shared", user_ids: [7, 8] }, account: { name: "Test Account" } }, xhr: true
         expect(assigns[:opportunity].access).to eq("Shared")
         expect(assigns[:opportunity].user_ids.sort).to eq([7, 8])
       end
@@ -573,7 +573,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
-        put :update, id: @opportunity.id, opportunity: { name: "Hello" }, account: { name: "Test Account" }
+        put :update, params: { id: @opportunity.id, opportunity: { name: "Hello" }, account: { name: "Test Account" } }, xhr: true
         expect(assigns[:campaign]).to eq(@campaign)
       end
 
@@ -582,7 +582,7 @@ describe OpportunitiesController do
           @campaign = FactoryGirl.create(:campaign, revenue: 1000)
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign, stage: 'prospecting', amount: 1100, discount: 100)
 
-          put :update, id: @opportunity, opportunity: { stage: "won" }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: "won" }, account: { name: "Test Account" } }, xhr: true
           expect(@campaign.reload.revenue.to_i).to eq(2000) # 1000 -> 2000
         end
 
@@ -591,7 +591,7 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign, stage: "won", amount: 1100, discount: 100)
           # @campaign.revenue is now $2000 since we created winning opportunity.
 
-          put :update, id: @opportunity, opportunity: { stage: 'prospecting' }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: 'prospecting' }, account: { name: "Test Account" } }, xhr: true
           expect(@campaign.reload.revenue.to_i).to eq(1000) # Should be adjusted back to $1000.
         end
 
@@ -599,7 +599,7 @@ describe OpportunitiesController do
           @campaign = FactoryGirl.create(:campaign, revenue: 1000)
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign, stage: 'prospecting', amount: 1100, discount: 100)
 
-          put :update, id: @opportunity, opportunity: { stage: "lost" }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: "lost" }, account: { name: "Test Account" } }, xhr: true
           expect(@campaign.reload.revenue.to_i).to eq(1000) # Stays the same.
         end
       end
@@ -609,7 +609,7 @@ describe OpportunitiesController do
           @campaigns = { old: FactoryGirl.create(:campaign, revenue: 1000), new: FactoryGirl.create(:campaign, revenue: 1000) }
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaigns[:old], stage: 'prospecting', amount: 1100, discount: 100)
 
-          put :update, id: @opportunity, opportunity: { stage: "won", campaign_id: @campaigns[:new].id }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: "won", campaign_id: @campaigns[:new].id }, account: { name: "Test Account" } }, xhr: true
 
           expect(@campaigns[:old].reload.revenue.to_i).to eq(1000) # Stays the same.
           expect(@campaigns[:new].reload.revenue.to_i).to eq(2000) # 1000 -> 2000
@@ -620,7 +620,7 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaigns[:old], stage: "won", amount: 1100, discount: 100)
           # @campaign.revenue is now $2000 since we created winning opportunity.
 
-          put :update, id: @opportunity, opportunity: { stage: 'prospecting', campaign_id: @campaigns[:new].id }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: 'prospecting', campaign_id: @campaigns[:new].id }, account: { name: "Test Account" } }, xhr: true
           expect(@campaigns[:old].reload.revenue.to_i).to eq(1000) # Should be adjusted back to $1000.
           expect(@campaigns[:new].reload.revenue.to_i).to eq(1000) # Stays the same.
         end
@@ -629,7 +629,7 @@ describe OpportunitiesController do
           @campaigns = { old: FactoryGirl.create(:campaign, revenue: 1000), new: FactoryGirl.create(:campaign, revenue: 1000) }
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaigns[:old], stage: 'prospecting', amount: 1100, discount: 100)
 
-          put :update, id: @opportunity, opportunity: { stage: "lost", campaign_id: @campaigns[:new].id }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: "lost", campaign_id: @campaigns[:new].id }, account: { name: "Test Account" } }, xhr: true
           expect(@campaigns[:old].reload.revenue.to_i).to eq(1000) # Stays the same.
           expect(@campaigns[:new].reload.revenue.to_i).to eq(1000) # Stays the same.
         end
@@ -640,7 +640,7 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, user: current_user)
           @opportunity.destroy
 
-          put :update, id: @opportunity.id
+          put :update, params: { id: @opportunity.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -648,7 +648,7 @@ describe OpportunitiesController do
         it "should reload current page with the flash message if the opportunity is protected" do
           @private = FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), access: "Private")
 
-          put :update, id: @private.id
+          put :update, params: { id: @private.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -659,7 +659,7 @@ describe OpportunitiesController do
       it "should not update the requested opportunity but still expose it as @opportunity, and render [update] template" do
         @opportunity = FactoryGirl.create(:opportunity, id: 42, name: "Hello people")
 
-        put :update, id: 42, opportunity: { name: nil }, account: { name: "Test Account" }
+        put :update, params: { id: 42, opportunity: { name: nil }, account: { name: "Test Account" } }, xhr: true
         expect(@opportunity.reload.name).to eq("Hello people")
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:opportunity_stage_total)).to eq(nil)
@@ -671,7 +671,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
         FactoryGirl.create(:account_opportunity, account: @account, opportunity: @opportunity)
 
-        put :update, id: 42, opportunity: { name: nil }, account: { id: 99 }
+        put :update, params: { id: 42, opportunity: { name: nil }, account: { id: 99 } }, xhr: true
         expect(assigns(:account)).to eq(@account)
       end
     end
