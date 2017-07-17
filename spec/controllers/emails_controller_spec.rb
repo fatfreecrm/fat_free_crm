@@ -24,7 +24,7 @@ describe EmailsController, "handling GET /emails" do
             @email = FactoryGirl.create(:email, mediator: @asset, user: current_user)
             allow(Email).to receive(:new).and_return(@email)
 
-            xhr :delete, :destroy, id: @email.id
+            delete :destroy, params: { id: @email.id }, xhr: true
             expect { Email.find(@email.id) }.to raise_error(ActiveRecord::RecordNotFound)
             expect(response).to render_template("emails/destroy")
           end

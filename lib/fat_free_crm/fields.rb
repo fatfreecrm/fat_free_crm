@@ -22,7 +22,7 @@ module FatFreeCRM
 
     module SingletonMethods
       def field_groups
-        if ActiveRecord::Base.connection.table_exists? 'field_groups'
+        if ActiveRecord::Base.connection.data_source_exists? 'field_groups'
           FieldGroup.where(klass_name: name).order(:position)
         else
           []
@@ -35,9 +35,7 @@ module FatFreeCRM
 
       def serialize_custom_fields!
         fields.each do |field|
-          if !serialized_attributes.keys.include?(field.name) && field.as == 'check_boxes'
-            serialize(field.name.to_sym, Array)
-          end
+          serialize(field.name.to_sym, Array) if field.as == 'check_boxes'
         end
       end
 

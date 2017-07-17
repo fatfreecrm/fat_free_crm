@@ -6,13 +6,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :set_paper_trail_whodunnit
+  before_action :set_paper_trail_whodunnit
 
   before_action :set_context
   before_action :clear_setting_cache
   before_action :cors_preflight_check
-  before_action "hook(:app_before_filter, self)"
-  after_action "hook(:app_after_filter,  self)"
+  before_action { hook(:app_before_filter, self) }
+  after_action { hook(:app_after_filter,  self) }
   after_action :cors_set_access_control_headers
 
   helper_method :current_user_session, :current_user, :can_signup?
@@ -135,7 +135,7 @@ class ApplicationController < ActionController::Base
       flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
       respond_to do |format|
         format.html { redirect_to login_url }
-        format.js   { render text: "window.location = '#{login_url}';" }
+        format.js   { render plain: "window.location = '#{login_url}';" }
       end
     end
   end
@@ -217,8 +217,8 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
-      format.js   { render text: 'window.location.reload();' }
-      format.json { render text: flash[:warning],  status: :not_found }
+      format.js   { render plain: 'window.location.reload();' }
+      format.json { render plain: flash[:warning],  status: :not_found }
       format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
@@ -231,8 +231,8 @@ class ApplicationController < ActionController::Base
     url = send("#{related.pluralize}_path")
     respond_to do |format|
       format.html { redirect_to(url) }
-      format.js   { render text: %(window.location.href = "#{url}";) }
-      format.json { render text: flash[:warning],  status: :not_found }
+      format.js   { render plain: %(window.location.href = "#{url}";) }
+      format.json { render plain: flash[:warning],  status: :not_found }
       format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
@@ -242,8 +242,8 @@ class ApplicationController < ActionController::Base
     flash[:warning] = t(:msg_not_authorized, default: 'You are not authorized to take this action.')
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
-      format.js   { render text: 'window.location.reload();' }
-      format.json { render text: flash[:warning],  status: :unauthorized }
+      format.js   { render plain: 'window.location.reload();' }
+      format.json { render plain: flash[:warning],  status: :unauthorized }
       format.xml  { render xml: [flash[:warning]], status: :unauthorized }
     end
   end
@@ -272,7 +272,7 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Token'
       headers['Access-Control-Max-Age'] = '1728000'
 
-      render text: '', content_type: 'text/plain'
+      render plain: ''
     end
   end
 end

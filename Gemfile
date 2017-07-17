@@ -39,7 +39,6 @@ group :development do
   # don't load these gems in travis
   unless ENV["CI"]
     gem 'thin'
-    gem 'quiet_assets'
     gem 'capistrano'
     gem 'capistrano-bundler'
     gem 'capistrano-rails'
@@ -54,6 +53,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'
   gem 'headless'
@@ -61,7 +61,7 @@ group :development, :test do
   gem 'pry-rails' unless ENV["CI"]
   gem 'factory_girl_rails', '~> 4.7.0' # 4.8.0+ stubbed models are not allowed to access the database - User#destroyed?()
   gem 'rubocop'
-  gem 'rainbow', '< 2.2.1' # https://github.com/fatfreecrm/fat_free_crm/issues/551
+  gem 'rainbow'
 end
 
 group :test do
@@ -84,3 +84,4 @@ gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer', platform: :ruby unless ENV["CI"]
 gem 'nokogiri', '>= 1.6.8'
+gem 'activemodel-serializers-xml'

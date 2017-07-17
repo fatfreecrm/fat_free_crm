@@ -87,7 +87,7 @@ class EntitiesController < ApplicationController
         render('fields/group') && return
       end
     end
-    render text: ''
+    render plain: ''
   end
 
   protected
@@ -121,7 +121,7 @@ class EntitiesController < ApplicationController
   end
 
   def resource_params
-    params[controller_name.singularize].permit!
+    params[controller_name.singularize].permit! if params[controller_name.singularize].present?
   end
 
   private

@@ -65,14 +65,16 @@ class ContactsController < EntitiesController
         @contact.add_comment_by_user(@comment_body, current_user)
         @contacts = get_contacts if called_from_index_page?
       else
-        if params[:account][:id].blank?
-          if request.referer =~ /\/accounts\/(\d+)\z/
-            @account = Account.find(Regexp.last_match[1]) # related account
+        if params[:account]
+          if params[:account][:id].blank?
+            if request.referer =~ /\/accounts\/(\d+)\z/
+              @account = Account.find(Regexp.last_match[1]) # related account
+            else
+              @account = Account.new(user: current_user)
+            end
           else
-            @account = Account.new(user: current_user)
+            @account = Account.find(params[:account][:id])
           end
-        else
-          @account = Account.find(params[:account][:id])
         end
         @opportunity = Opportunity.my.find(params[:opportunity]) unless params[:opportunity].blank?
       end

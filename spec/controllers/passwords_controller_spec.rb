@@ -16,14 +16,14 @@ describe PasswordsController do
     it "should accept non-blank passwords" do
       password = "password"
       expect(user).to receive(:update_attributes).and_return(true)
-      put :update, id: 1, user: { password: password, password_confirmation: password }
+      put :update, params: { id: 1, user: { password: password, password_confirmation: password } }
       expect(response).to redirect_to(profile_url)
     end
 
     it "should not accept blank passwords" do
       password = "    "
       expect(user).not_to receive(:update_attributes)
-      put :update, id: 1, user: { password: password, password_confirmation: password }
+      put :update, params: { id: 1, user: { password: password, password_confirmation: password } }
       expect(response).to render_template('edit')
     end
   end

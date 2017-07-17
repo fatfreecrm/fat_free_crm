@@ -56,7 +56,7 @@ describe OpportunitiesController do
       @first  = FactoryGirl.create(:opportunity, user: current_user, name: "The first one")
       @second = FactoryGirl.create(:opportunity, user: current_user, name: "The second one")
 
-      get :index, query: "second"
+      get :index, params: { query: "second" }
       expect(assigns[:opportunities]).to eq([@second])
       expect(assigns[:current_query]).to eq("second")
       expect(session[:opportunities_current_query]).to eq("second")
@@ -65,7 +65,7 @@ describe OpportunitiesController do
     describe "AJAX pagination" do
       it "should pick up page number from params" do
         @opportunities = [FactoryGirl.create(:opportunity, user: current_user)]
-        xhr :get, :index, page: 42
+        get :index, params: { page: 42 }, xhr: true
 
         expect(assigns[:current_page].to_i).to eq(42)
         expect(assigns[:opportunities]).to eq([]) # page #42 should be empty if there's only one opportunity ;-)
@@ -76,7 +76,7 @@ describe OpportunitiesController do
       it "should pick up saved page number from session" do
         session[:opportunities_current_page] = 42
         @opportunities = [FactoryGirl.create(:opportunity, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
         expect(assigns[:opportunities]).to eq([])
@@ -87,7 +87,7 @@ describe OpportunitiesController do
         session[:opportunities_current_page] = 42
         session[:opportunities_current_query] = "bill"
         @opportunities = [FactoryGirl.create(:opportunity, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
         expect(assigns[:opportunities]).to eq(@opportunities)
@@ -141,7 +141,7 @@ describe OpportunitiesController do
       end
 
       it "should expose the requested opportunity as @opportunity and render [show] template" do
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(assigns[:opportunity]).to eq(@opportunity)
         expect(assigns[:stage]).to eq(@stage)
         expect(assigns[:comment].attributes).to eq(@comment.attributes)
@@ -149,7 +149,7 @@ describe OpportunitiesController do
       end
 
       it "should update an activity when viewing the opportunity" do
-        get :show, id: @opportunity.id
+        get :show, params: { id: @opportunity.id }
         expect(@opportunity.versions.last.event).to eq('view')
       end
     end
@@ -161,7 +161,7 @@ describe OpportunitiesController do
         expect(@opportunity).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated JSON")
       end
     end
@@ -173,7 +173,7 @@ describe OpportunitiesController do
         expect(@opportunity).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated XML")
       end
     end
@@ -183,7 +183,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, user: current_user)
         @opportunity.destroy
 
-        get :show, id: @opportunity.id
+        get :show, params: { id: @opportunity.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
@@ -191,7 +191,7 @@ describe OpportunitiesController do
       it "should redirect to opportunity index if the opportunity is protected" do
         @private = FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), access: "Private")
 
-        get :show, id: @private.id
+        get :show, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
@@ -201,7 +201,7 @@ describe OpportunitiesController do
         @opportunity.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
-        get :show, id: @opportunity.id
+        get :show, params: { id: @opportunity.id }
         expect(response.code).to eq("404") # :not_found
       end
 
@@ -210,7 +210,7 @@ describe OpportunitiesController do
         @opportunity.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
-        get :show, id: @opportunity.id
+        get :show, params: { id: @opportunity.id }
         expect(response.code).to eq("404") # :not_found
       end
     end
@@ -225,7 +225,7 @@ describe OpportunitiesController do
       @account = Account.new(user: current_user, access: Setting.default_access)
       @accounts = [FactoryGirl.create(:account, user: current_user)]
 
-      xhr :get, :new
+      get :new, xhr: true
       expect(assigns[:opportunity].attributes).to eq(@opportunity.attributes)
       expect(assigns[:account].attributes).to eq(@account.attributes)
       expect(assigns[:accounts]).to eq(@accounts)
@@ -235,7 +235,7 @@ describe OpportunitiesController do
     it "should created an instance of related object when necessary" do
       @contact = FactoryGirl.create(:contact, id: 42)
 
-      xhr :get, :new, related: "contact_42"
+      get :new, params: { related: "contact_42" }, xhr: true
       expect(assigns[:contact]).to eq(@contact)
     end
 
@@ -244,7 +244,7 @@ describe OpportunitiesController do
         @account = FactoryGirl.create(:account)
         @account.destroy
 
-        xhr :get, :new, related: "account_#{@account.id}"
+        get :new, params: { related: "account_#{@account.id}" }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
         expect(response.body).to eq('window.location.href = "/accounts";')
       end
@@ -252,7 +252,7 @@ describe OpportunitiesController do
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
         @account = FactoryGirl.create(:account, access: "Private")
 
-        xhr :get, :new, related: "account_#{@account.id}"
+        get :new, params: { related: "account_#{@account.id}" }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
         expect(response.body).to eq('window.location.href = "/accounts";')
       end
@@ -271,7 +271,7 @@ describe OpportunitiesController do
       @stage = Setting.unroll(:opportunity_stage)
       @accounts = [@account]
 
-      xhr :get, :edit, id: 42
+      get :edit, params: { id: 42 }, xhr: true
       @opportunity.reload
       expect(assigns[:opportunity]).to eq(@opportunity)
       expect(assigns[:account].attributes).to eq(@opportunity.account.attributes)
@@ -285,7 +285,7 @@ describe OpportunitiesController do
       @opportunity = FactoryGirl.create(:opportunity, id: 42)
       @previous = FactoryGirl.create(:opportunity, id: 41)
 
-      xhr :get, :edit, id: 42, previous: 41
+      get :edit, params: { id: 42, previous: 41 }, xhr: true
       expect(assigns[:previous]).to eq(@previous)
     end
 
@@ -294,7 +294,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, user: current_user)
         @opportunity.destroy
 
-        xhr :get, :edit, id: @opportunity.id
+        get :edit, params: { id: @opportunity.id }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
         expect(response.body).to eq("window.location.reload();")
       end
@@ -302,7 +302,7 @@ describe OpportunitiesController do
       it "should reload current page with the flash message if the opportunity is protected" do
         @private = FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), access: "Private")
 
-        xhr :get, :edit, id: @private.id
+        get :edit, params: { id: @private.id }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
         expect(response.body).to eq("window.location.reload();")
       end
@@ -317,7 +317,7 @@ describe OpportunitiesController do
       it "should notify the view if previous opportunity got deleted" do
         @previous.destroy
 
-        xhr :get, :edit, id: @opportunity.id, previous: @previous.id
+        get :edit, params: { id: @opportunity.id, previous: @previous.id }, xhr: true
         expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
         expect(assigns[:previous]).to eq(@previous.id)
         expect(response).to render_template("opportunities/edit")
@@ -326,7 +326,7 @@ describe OpportunitiesController do
       it "should notify the view if previous opportunity got protected" do
         @previous.update_attribute(:access, "Private")
 
-        xhr :get, :edit, id: @opportunity.id, previous: @previous.id
+        get :edit, params: { id: @opportunity.id, previous: @previous.id }, xhr: true
         expect(flash[:warning]).to eq(nil)
         expect(assigns[:previous]).to eq(@previous.id)
         expect(response).to render_template("opportunities/edit")
@@ -346,7 +346,7 @@ describe OpportunitiesController do
       end
 
       it "should expose a newly created opportunity as @opportunity and render [create] template" do
-        xhr :post, :create, opportunity: { name: "Hello" }, account: { name: "Hello again" }
+        post :create, params: { opportunity: { name: "Hello" }, account: { name: "Hello again" } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:stage)).to eq(@stage)
         expect(assigns(:opportunity_stage_total)).to be_nil
@@ -355,7 +355,7 @@ describe OpportunitiesController do
 
       it "should get sidebar data if called from opportunities index" do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        xhr :post, :create, opportunity: { name: "Hello" }, account: { name: "Hello again" }
+        post :create, params: { opportunity: { name: "Hello" }, account: { name: "Hello again" } }, xhr: true
         expect(assigns(:opportunity_stage_total)).to be_an_instance_of(HashWithIndifferentAccess)
       end
 
@@ -363,7 +363,7 @@ describe OpportunitiesController do
         @account = FactoryGirl.create(:account, user: current_user)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-        xhr :post, :create, opportunity: { name: "Hello" }, account: { id: @account.id }
+        post :create, params: { opportunity: { name: "Hello" }, account: { id: @account.id } }, xhr: true
         expect(assigns(:account)).to eq(@account)
       end
 
@@ -371,13 +371,13 @@ describe OpportunitiesController do
         @campaign = FactoryGirl.create(:campaign, user: current_user)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
-        xhr :post, :create, opportunity: { name: "Hello" }, campaign: @campaign.id, account: { name: "Hello again" }
+        post :create, params: { opportunity: { name: "Hello" }, campaign: @campaign.id, account: { name: "Hello again" } }, xhr: true
         expect(assigns(:campaign)).to eq(@campaign)
       end
 
       it "should reload opportunities to update pagination if called from opportunities index" do
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        xhr :post, :create, opportunity: { name: "Hello" }, account: { name: "Hello again" }
+        post :create, params: { opportunity: { name: "Hello" }, account: { name: "Hello again" } }, xhr: true
         expect(assigns[:opportunities]).to eq([@opportunity])
       end
 
@@ -385,7 +385,7 @@ describe OpportunitiesController do
         @campaign = FactoryGirl.create(:campaign)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
-        xhr :post, :create, opportunity: { name: "Hello" }, campaign: @campaign.id, account: { name: "Test Account" }
+        post :create, params: { opportunity: { name: "Hello" }, campaign: @campaign.id, account: { name: "Test Account" } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:campaign)).to eq(@campaign)
         expect(@opportunity.campaign).to eq(@campaign)
@@ -395,14 +395,14 @@ describe OpportunitiesController do
         @contact = FactoryGirl.create(:contact, id: 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts/42"
-        xhr :post, :create, opportunity: { name: "Hello" }, contact: 42, account: { name: "Hello again" }
+        post :create, params: { opportunity: { name: "Hello" }, contact: 42, account: { name: "Hello again" } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(@opportunity.contacts).to include(@contact)
         expect(@contact.opportunities).to include(@opportunity)
       end
 
       it "should create new account and associate it with the opportunity" do
-        xhr :put, :create, opportunity: { name: "Hello" }, account: { name: "new account" }
+        put :create, params: { opportunity: { name: "Hello" }, account: { name: "new account" } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(@opportunity.account.name).to eq("new account")
       end
@@ -410,7 +410,7 @@ describe OpportunitiesController do
       it "should associate opportunity with the existing account" do
         @account = FactoryGirl.create(:account, id: 42)
 
-        xhr :post, :create, opportunity: { name: "Hello world" }, account: { id: 42 }
+        post :create, params: { opportunity: { name: "Hello world" }, account: { id: 42 } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(@opportunity.account).to eq(@account)
         expect(@account.opportunities).to include(@opportunity)
@@ -421,7 +421,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.build(:opportunity, user: current_user, stage: "won", amount: 1100, discount: 100)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
 
-        xhr :post, :create, opportunity: { name: "Hello world" }, campaign: @campaign.id, account: { name: "Test Account" }
+        post :create, params: { opportunity: { name: "Hello world" }, campaign: @campaign.id, account: { name: "Test Account" } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(@opportunity.campaign).to eq(@campaign.reload)
         expect(@campaign.revenue.to_i).to eq(1000) # 1000 - 100 discount.
@@ -431,7 +431,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.build(:opportunity, user: current_user)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
 
-        xhr :post, :create, opportunity: { name: "Opportunity Knocks" }, account: { name: "My Account" }, comment_body: "Awesome comment is awesome"
+        post :create, params: { opportunity: { name: "Opportunity Knocks" }, account: { name: "My Account" }, comment_body: "Awesome comment is awesome" }, xhr: true
         expect(@opportunity.reload.comments.map(&:comment)).to include("Awesome comment is awesome")
       end
     end
@@ -446,7 +446,7 @@ describe OpportunitiesController do
         @accounts = [FactoryGirl.create(:account, user: current_user)]
 
         # Expect to redraw [create] form with blank account.
-        xhr :post, :create, opportunity: {}, account: { user_id: current_user.id }
+        post :create, params: { opportunity: {}, account: { user_id: current_user.id } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:account).attributes).to eq(@account.attributes)
         expect(assigns(:accounts)).to eq(@accounts)
@@ -461,7 +461,7 @@ describe OpportunitiesController do
         @stage = Setting.unroll(:opportunity_stage)
 
         # Expect to redraw [create] form with selected account.
-        xhr :post, :create, opportunity: {}, account: { id: 42, user_id: current_user.id }
+        post :create, params: { opportunity: {}, account: { id: 42, user_id: current_user.id } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:account)).to eq(@account)
         expect(assigns(:accounts)).to eq([@account])
@@ -472,7 +472,7 @@ describe OpportunitiesController do
         @campaign = FactoryGirl.create(:campaign, id: 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/42"
-        xhr :post, :create, opportunity: { name: nil }, campaign: 42, account: { name: "Test Account" }
+        post :create, params: { opportunity: { name: nil }, campaign: 42, account: { name: "Test Account" } }, xhr: true
         expect(assigns(:campaign)).to eq(@campaign)
         expect(response).to render_template("opportunities/create")
       end
@@ -481,7 +481,7 @@ describe OpportunitiesController do
         @contact = FactoryGirl.create(:contact, id: 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts/42"
-        xhr :post, :create, opportunity: { name: nil }, contact: 42, account: { name: "Test Account" }
+        post :create, params: { opportunity: { name: nil }, contact: 42, account: { name: "Test Account" } }, xhr: true
         expect(assigns(:contact)).to eq(@contact)
         expect(response).to render_template("opportunities/create")
       end
@@ -497,7 +497,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
         @stage = Setting.unroll(:opportunity_stage)
 
-        xhr :put, :update, id: 42, opportunity: { name: "Hello world" }, account: { name: "Test Account" }
+        put :update, params: { id: 42, opportunity: { name: "Hello world" }, account: { name: "Test Account" } }, xhr: true
         expect(@opportunity.reload.name).to eq("Hello world")
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:stage)).to eq(@stage)
@@ -509,7 +509,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
 
         request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-        xhr :put, :update, id: 42, opportunity: { name: "Hello world" }, account: { name: "Test Account" }
+        put :update, params: { id: 42, opportunity: { name: "Hello world" }, account: { name: "Test Account" } }, xhr: true
         expect(assigns(:opportunity_stage_total)).to be_an_instance_of(HashWithIndifferentAccess)
       end
 
@@ -518,7 +518,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42, account: @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-        xhr :put, :update, id: 42, opportunity: { name: "Hello world" }
+        put :update, params: { id: 42, opportunity: { name: "Hello world" } }, xhr: true
         expect(assigns(:account)).to eq(@account)
       end
 
@@ -527,7 +527,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42, account: @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-        xhr :put, :update, id: 42, opportunity: { name: "Hello world" }, account: { id: "" }
+        put :update, params: { id: 42, opportunity: { name: "Hello world" }, account: { id: "" } }, xhr: true
         expect(assigns(:account)).to eq(nil)
       end
 
@@ -537,14 +537,14 @@ describe OpportunitiesController do
         @campaign.opportunities << @opportunity
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
-        xhr :put, :update, id: 42, opportunity: { name: "Hello world", campaign_id: @campaign.id }, account: {}
+        put :update, params: { id: 42, opportunity: { name: "Hello world", campaign_id: @campaign.id }, account: {} }, xhr: true
         expect(assigns(:campaign)).to eq(@campaign)
       end
 
       it "should be able to create an account and associate it with updated opportunity" do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
 
-        xhr :put, :update, id: 42, opportunity: { name: "Hello" }, account: { name: "new account" }
+        put :update, params: { id: 42, opportunity: { name: "Hello" }, account: { name: "new account" } }, xhr: true
         expect(assigns[:opportunity]).to eq(@opportunity)
         expect(assigns[:opportunity].account).not_to be_nil
         expect(assigns[:opportunity].account.name).to eq("new account")
@@ -555,7 +555,7 @@ describe OpportunitiesController do
         @new_account = FactoryGirl.create(:account, id: 999)
         @opportunity = FactoryGirl.create(:opportunity, id: 42, account: @old_account)
 
-        xhr :put, :update, id: 42, opportunity: { name: "Hello" }, account: { id: 999 }
+        put :update, params: { id: 42, opportunity: { name: "Hello" }, account: { id: 999 } }, xhr: true
         expect(assigns[:opportunity]).to eq(@opportunity)
         expect(assigns[:opportunity].account).to eq(@new_account)
       end
@@ -563,7 +563,7 @@ describe OpportunitiesController do
       it "should update opportunity permissions when sharing with specific users" do
         @opportunity = FactoryGirl.create(:opportunity, id: 42, access: "Public")
 
-        xhr :put, :update, id: 42, opportunity: { name: "Hello", access: "Shared", user_ids: [7, 8] }, account: { name: "Test Account" }
+        put :update, params: { id: 42, opportunity: { name: "Hello", access: "Shared", user_ids: [7, 8] }, account: { name: "Test Account" } }, xhr: true
         expect(assigns[:opportunity].access).to eq("Shared")
         expect(assigns[:opportunity].user_ids.sort).to eq([7, 8])
       end
@@ -573,7 +573,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign)
 
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
-        xhr :put, :update, id: @opportunity.id, opportunity: { name: "Hello" }, account: { name: "Test Account" }
+        put :update, params: { id: @opportunity.id, opportunity: { name: "Hello" }, account: { name: "Test Account" } }, xhr: true
         expect(assigns[:campaign]).to eq(@campaign)
       end
 
@@ -582,7 +582,7 @@ describe OpportunitiesController do
           @campaign = FactoryGirl.create(:campaign, revenue: 1000)
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign, stage: 'prospecting', amount: 1100, discount: 100)
 
-          xhr :put, :update, id: @opportunity, opportunity: { stage: "won" }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: "won" }, account: { name: "Test Account" } }, xhr: true
           expect(@campaign.reload.revenue.to_i).to eq(2000) # 1000 -> 2000
         end
 
@@ -591,7 +591,7 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign, stage: "won", amount: 1100, discount: 100)
           # @campaign.revenue is now $2000 since we created winning opportunity.
 
-          xhr :put, :update, id: @opportunity, opportunity: { stage: 'prospecting' }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: 'prospecting' }, account: { name: "Test Account" } }, xhr: true
           expect(@campaign.reload.revenue.to_i).to eq(1000) # Should be adjusted back to $1000.
         end
 
@@ -599,7 +599,7 @@ describe OpportunitiesController do
           @campaign = FactoryGirl.create(:campaign, revenue: 1000)
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaign, stage: 'prospecting', amount: 1100, discount: 100)
 
-          xhr :put, :update, id: @opportunity, opportunity: { stage: "lost" }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: "lost" }, account: { name: "Test Account" } }, xhr: true
           expect(@campaign.reload.revenue.to_i).to eq(1000) # Stays the same.
         end
       end
@@ -609,7 +609,7 @@ describe OpportunitiesController do
           @campaigns = { old: FactoryGirl.create(:campaign, revenue: 1000), new: FactoryGirl.create(:campaign, revenue: 1000) }
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaigns[:old], stage: 'prospecting', amount: 1100, discount: 100)
 
-          xhr :put, :update, id: @opportunity, opportunity: { stage: "won", campaign_id: @campaigns[:new].id }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: "won", campaign_id: @campaigns[:new].id }, account: { name: "Test Account" } }, xhr: true
 
           expect(@campaigns[:old].reload.revenue.to_i).to eq(1000) # Stays the same.
           expect(@campaigns[:new].reload.revenue.to_i).to eq(2000) # 1000 -> 2000
@@ -620,7 +620,7 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaigns[:old], stage: "won", amount: 1100, discount: 100)
           # @campaign.revenue is now $2000 since we created winning opportunity.
 
-          xhr :put, :update, id: @opportunity, opportunity: { stage: 'prospecting', campaign_id: @campaigns[:new].id }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: 'prospecting', campaign_id: @campaigns[:new].id }, account: { name: "Test Account" } }, xhr: true
           expect(@campaigns[:old].reload.revenue.to_i).to eq(1000) # Should be adjusted back to $1000.
           expect(@campaigns[:new].reload.revenue.to_i).to eq(1000) # Stays the same.
         end
@@ -629,7 +629,7 @@ describe OpportunitiesController do
           @campaigns = { old: FactoryGirl.create(:campaign, revenue: 1000), new: FactoryGirl.create(:campaign, revenue: 1000) }
           @opportunity = FactoryGirl.create(:opportunity, campaign: @campaigns[:old], stage: 'prospecting', amount: 1100, discount: 100)
 
-          xhr :put, :update, id: @opportunity, opportunity: { stage: "lost", campaign_id: @campaigns[:new].id }, account: { name: "Test Account" }
+          put :update, params: { id: @opportunity, opportunity: { stage: "lost", campaign_id: @campaigns[:new].id }, account: { name: "Test Account" } }, xhr: true
           expect(@campaigns[:old].reload.revenue.to_i).to eq(1000) # Stays the same.
           expect(@campaigns[:new].reload.revenue.to_i).to eq(1000) # Stays the same.
         end
@@ -640,7 +640,7 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, user: current_user)
           @opportunity.destroy
 
-          xhr :put, :update, id: @opportunity.id
+          put :update, params: { id: @opportunity.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -648,7 +648,7 @@ describe OpportunitiesController do
         it "should reload current page with the flash message if the opportunity is protected" do
           @private = FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), access: "Private")
 
-          xhr :put, :update, id: @private.id
+          put :update, params: { id: @private.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -659,7 +659,7 @@ describe OpportunitiesController do
       it "should not update the requested opportunity but still expose it as @opportunity, and render [update] template" do
         @opportunity = FactoryGirl.create(:opportunity, id: 42, name: "Hello people")
 
-        xhr :put, :update, id: 42, opportunity: { name: nil }, account: { name: "Test Account" }
+        put :update, params: { id: 42, opportunity: { name: nil }, account: { name: "Test Account" } }, xhr: true
         expect(@opportunity.reload.name).to eq("Hello people")
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:opportunity_stage_total)).to eq(nil)
@@ -671,7 +671,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, id: 42)
         FactoryGirl.create(:account_opportunity, account: @account, opportunity: @opportunity)
 
-        xhr :put, :update, id: 42, opportunity: { name: nil }, account: { id: 99 }
+        put :update, params: { id: 42, opportunity: { name: nil }, account: { id: 99 } }, xhr: true
         expect(assigns(:account)).to eq(@account)
       end
     end
@@ -687,7 +687,7 @@ describe OpportunitiesController do
 
     describe "AJAX request" do
       it "should destroy the requested opportunity and render [destroy] template" do
-        xhr :delete, :destroy, id: @opportunity.id
+        delete :destroy, params: { id: @opportunity.id }, xhr: true
 
         expect { Opportunity.find(@opportunity.id) }.to raise_error(ActiveRecord::RecordNotFound)
         expect(assigns(:opportunity_stage_total)).to eq(nil)
@@ -700,14 +700,14 @@ describe OpportunitiesController do
         end
 
         it "should get sidebar data if called from opportunities index" do
-          xhr :delete, :destroy, id: @opportunity.id
+          delete :destroy, params: { id: @opportunity.id }, xhr: true
           expect(assigns(:opportunity_stage_total)).to be_an_instance_of(HashWithIndifferentAccess)
         end
 
         it "should try previous page and render index action if current page has no opportunities" do
           session[:opportunities_current_page] = 42
 
-          xhr :delete, :destroy, id: @opportunity.id
+          delete :destroy, params: { id: @opportunity.id }, xhr: true
           expect(session[:opportunities_current_page]).to eq(41)
           expect(response).to render_template("opportunities/index")
         end
@@ -715,7 +715,7 @@ describe OpportunitiesController do
         it "should render index action when deleting last opportunity" do
           session[:opportunities_current_page] = 1
 
-          xhr :delete, :destroy, id: @opportunity.id
+          delete :destroy, params: { id: @opportunity.id }, xhr: true
           expect(session[:opportunities_current_page]).to eq(1)
           expect(response).to render_template("opportunities/index")
         end
@@ -725,7 +725,7 @@ describe OpportunitiesController do
         it "should reset current page to 1" do
           request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
 
-          xhr :delete, :destroy, id: @opportunity.id
+          delete :destroy, params: { id: @opportunity.id }, xhr: true
           expect(session[:opportunities_current_page]).to eq(1)
           expect(response).to render_template("opportunities/destroy")
         end
@@ -735,7 +735,7 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, user: current_user, account: @account)
           request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
-          xhr :delete, :destroy, id: @opportunity.id
+          delete :destroy, params: { id: @opportunity.id }, xhr: true
           expect(assigns[:account]).to eq(@account)
           expect(response).to render_template("opportunities/destroy")
         end
@@ -745,7 +745,7 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, user: current_user, campaign: @campaign)
           request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
-          xhr :delete, :destroy, id: @opportunity.id
+          delete :destroy, params: { id: @opportunity.id }, xhr: true
           expect(assigns[:campaign]).to eq(@campaign)
           expect(response).to render_template("opportunities/destroy")
         end
@@ -756,7 +756,7 @@ describe OpportunitiesController do
           @opportunity = FactoryGirl.create(:opportunity, user: current_user)
           @opportunity.destroy
 
-          xhr :delete, :destroy, id: @opportunity.id
+          delete :destroy, params: { id: @opportunity.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -764,7 +764,7 @@ describe OpportunitiesController do
         it "should reload current page with the flash message if the opportunity is protected" do
           @private = FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), access: "Private")
 
-          xhr :delete, :destroy, id: @private.id
+          delete :destroy, params: { id: @private.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
           expect(response.body).to eq("window.location.reload();")
         end
@@ -773,7 +773,7 @@ describe OpportunitiesController do
 
     describe "HTML request" do
       it "should redirect to Opportunities index when an opportunity gets deleted from its landing page" do
-        delete :destroy, id: @opportunity.id
+        delete :destroy, params: { id: @opportunity.id }
         expect(flash[:notice]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
@@ -782,7 +782,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, user: current_user)
         @opportunity.destroy
 
-        delete :destroy, id: @opportunity.id
+        delete :destroy, params: { id: @opportunity.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
@@ -790,7 +790,7 @@ describe OpportunitiesController do
       it "should redirect to opportunity index with the flash message if the opportunity is protected" do
         @private = FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), access: "Private")
 
-        delete :destroy, id: @private.id
+        delete :destroy, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
@@ -854,14 +854,14 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to GET redraw" do
     it "should save user selected opportunity preference" do
-      xhr :get, :redraw, per_page: 42, view: "brief", sort_by: "name"
+      get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
       expect(current_user.preference[:opportunities_per_page]).to eq("42")
       expect(current_user.preference[:opportunities_index_view]).to eq("brief")
       expect(current_user.preference[:opportunities_sort_by]).to eq("opportunities.name ASC")
     end
 
     it "should reset current page to 1" do
-      xhr :get, :redraw, per_page: 42, view: "brief", sort_by: "name"
+      get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
       expect(session[:opportunities_current_page]).to eq(1)
     end
 
@@ -871,7 +871,7 @@ describe OpportunitiesController do
         FactoryGirl.create(:opportunity, name: "B", user: current_user)
       ]
 
-      xhr :get, :redraw, per_page: 1, sort_by: "name"
+      get :redraw, params: { per_page: 1, sort_by: "name" }, xhr: true
       expect(assigns(:opportunities)).to eq([@opportunities.first])
       expect(response).to render_template("opportunities/index")
     end
@@ -885,7 +885,7 @@ describe OpportunitiesController do
       @opportunities = [FactoryGirl.create(:opportunity, stage: "prospecting", user: current_user)]
       @stage = Setting.unroll(:opportunity_stage)
 
-      xhr :get, :filter, stage: "prospecting"
+      get :filter, params: { stage: "prospecting" }, xhr: true
       expect(assigns(:opportunities)).to eq(@opportunities)
       expect(assigns[:stage]).to eq(@stage)
       expect(response).to be_a_success
@@ -894,7 +894,7 @@ describe OpportunitiesController do
 
     it "should reset current page to 1" do
       @opportunities = []
-      xhr :get, :filter, status: "new"
+      get :filter, params: { status: "new" }, xhr: true
 
       expect(session[:opportunities_current_page]).to eq(1)
     end

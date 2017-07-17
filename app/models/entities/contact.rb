@@ -205,7 +205,7 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def save_account(params)
     account_params = params[:account]
-    if account_params[:id] == "" || account_params[:name] == ""
+    if !account_params || account_params[:id] == "" || account_params[:name] == ""
       self.account = nil
     else
       self.account = Account.create_or_select_for(self, account_params)
