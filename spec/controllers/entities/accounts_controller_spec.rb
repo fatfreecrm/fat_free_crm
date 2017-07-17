@@ -75,7 +75,7 @@ describe AccountsController do
       it "should pick up saved page number from session" do
         session[:accounts_current_page] = 42
         @accounts = [FactoryGirl.create(:account, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
         expect(assigns[:accounts]).to eq([])
@@ -86,7 +86,7 @@ describe AccountsController do
         session[:accounts_current_page] = 42
         session[:accounts_current_query] = "bill"
         @accounts = [FactoryGirl.create(:account, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
         expect(assigns[:accounts]).to eq(@accounts)
@@ -211,7 +211,7 @@ describe AccountsController do
     it "should expose a new account as @account and render [new] template" do
       @account = Account.new(user: current_user,
                              access: Setting.default_access)
-      xhr :get, :new
+      get :new, xhr: true
       expect(assigns[:account].attributes).to eq(@account.attributes)
       expect(assigns[:contact]).to eq(nil)
       expect(response).to render_template("accounts/new")
