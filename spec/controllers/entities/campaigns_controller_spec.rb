@@ -58,7 +58,7 @@ describe CampaignsController do
       @first  = FactoryGirl.create(:campaign, user: current_user, name: "Hello, world!")
       @second = FactoryGirl.create(:campaign, user: current_user, name: "Hello again")
 
-      get :index, query: "again"
+      get :index, params: { query: "again" }
       expect(assigns[:campaigns]).to eq([@second])
       expect(assigns[:current_query]).to eq("again")
       expect(session[:campaigns_current_query]).to eq("again")
@@ -132,7 +132,7 @@ describe CampaignsController do
       end
 
       it "should expose the requested campaign as @campaign and render [show] template" do
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(assigns[:campaign]).to eq(@campaign)
         expect(assigns[:stage]).to eq(@stage)
         expect(assigns[:comment].attributes).to eq(@comment.attributes)
@@ -140,7 +140,7 @@ describe CampaignsController do
       end
 
       it "should update an activity when viewing the campaign" do
-        get :show, id: @campaign.id
+        get :show, params: { id: @campaign.id }
         expect(@campaign.versions.last.event).to eq('view')
       end
     end
@@ -152,7 +152,7 @@ describe CampaignsController do
         expect(@campaign).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated JSON")
       end
     end
@@ -164,7 +164,7 @@ describe CampaignsController do
         expect(@campaign).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated XML")
       end
     end
@@ -174,7 +174,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.create(:campaign, user: current_user)
         @campaign.destroy
 
-        get :show, id: @campaign.id
+        get :show, params: { id: @campaign.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(campaigns_path)
       end
@@ -182,7 +182,7 @@ describe CampaignsController do
       it "should redirect to campaign index if the campaign is protected" do
         @campaign = FactoryGirl.create(:campaign, user: FactoryGirl.create(:user), access: "Private")
 
-        get :show, id: @campaign.id
+        get :show, params: { id: @campaign.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(campaigns_path)
       end
@@ -192,7 +192,7 @@ describe CampaignsController do
         @campaign.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
-        get :show, id: @campaign.id
+        get :show, params: { id: @campaign.id }
         expect(response.code).to eq("404") # :not_found
       end
 
@@ -201,7 +201,7 @@ describe CampaignsController do
         @campaign.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
-        get :show, id: @campaign.id
+        get :show, params: { id: @campaign.id }
         expect(response.code).to eq("404") # :not_found
       end
     end
@@ -470,7 +470,7 @@ describe CampaignsController do
 
     describe "HTML request" do
       it "should redirect to Campaigns index when a campaign gets deleted from its landing page" do
-        delete :destroy, id: @campaign.id
+        delete :destroy, params: { id: @campaign.id }
 
         expect(flash[:notice]).not_to eq(nil)
         expect(response).to redirect_to(campaigns_path)
@@ -480,7 +480,7 @@ describe CampaignsController do
         @campaign = FactoryGirl.create(:campaign, user: current_user)
         @campaign.destroy
 
-        delete :destroy, id: @campaign.id
+        delete :destroy, params: { id: @campaign.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(campaigns_path)
       end
@@ -488,7 +488,7 @@ describe CampaignsController do
       it "should redirect to campaign index with the flash message if the campaign is protected" do
         @private = FactoryGirl.create(:campaign, user: FactoryGirl.create(:user), access: "Private")
 
-        delete :destroy, id: @private.id
+        delete :destroy, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(campaigns_path)
       end
