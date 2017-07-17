@@ -89,7 +89,7 @@ describe HomeController do
       @user = FactoryGirl.create(:preference, user: current_user, name: "activity_user", value: Base64.encode64(Marshal.dump("Billy Bones")))
       @duration = FactoryGirl.create(:preference, user: current_user, name: "activity_duration", value: Base64.encode64(Marshal.dump("two days")))
 
-      get :options, xhr: true
+      get :options, params: { xhr: true }
       expect(assigns[:asset]).to eq("tasks")
       expect(assigns[:user]).to eq("Billy Bones")
       expect(assigns[:duration]).to eq("two days")
