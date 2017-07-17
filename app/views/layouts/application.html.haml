@@ -27,7 +27,7 @@
       :javascript
         #{yield :javascript}
         var _ffcrm_users = [
-        #{User.all.map{|u| "\"#{j u.full_name} (@#{j u.username})\"" }.join(",\n")}
+        #{raw User.all.map{|u| "'#{j u.full_name} (@#{j u.username})'" }.join(",\n")}
         ];
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
