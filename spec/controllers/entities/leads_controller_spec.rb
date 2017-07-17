@@ -208,7 +208,7 @@ describe LeadsController do
       allow(Lead).to receive(:new).and_return(@lead)
       @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
 
-      xhr :get, :new
+      get :new, xhr: true
       expect(assigns[:lead].attributes).to eq(@lead.attributes)
       expect(assigns[:campaigns]).to eq(@campaigns)
       expect(response).to render_template("leads/new")
