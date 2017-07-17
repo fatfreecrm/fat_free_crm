@@ -93,7 +93,7 @@ describe Admin::UsersController do
       @previous = FactoryGirl.create(:user)
       @previous.destroy
 
-      get :edit, params: { id: @user.id, previous: @previous.id, xhr: true }
+      get :edit, params: { id: @user.id, previous: @previous.id }, xhr: true 
       expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
       expect(assigns[:previous]).to eq(@previous.id)
       expect(response).to render_template("admin/users/edit")

@@ -44,8 +44,6 @@ class Admin::UsersController < Admin::ApplicationController
   # POST /admin/users.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def create
-    params[:user][:email].try(:strip!)
-    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.new(user_params)
     @user.check_if_needs_approval
     @user.save_without_session_maintenance
@@ -57,8 +55,6 @@ class Admin::UsersController < Admin::ApplicationController
   # PUT /admin/users/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def update
-    params[:user][:email].try(:strip!)
-    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.find(params[:id])
     @user.attributes = user_params
     @user.save_without_session_maintenance
@@ -108,6 +104,10 @@ class Admin::UsersController < Admin::ApplicationController
   protected
 
   def user_params
+    return {} unless params[:user]
+    params[:user][:email].try(:strip!)
+    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
+
     params[:user].permit(
       :admin,
       :username,
