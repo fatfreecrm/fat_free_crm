@@ -83,7 +83,7 @@ describe LeadsController do
         session[:leads_current_page] = 42
         session[:leads_current_query] = "bill"
         @leads = [FactoryGirl.create(:lead, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
         expect(assigns[:leads]).to eq(@leads)

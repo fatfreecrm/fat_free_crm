@@ -78,7 +78,7 @@ describe CampaignsController do
       it "should pick up saved page number from session" do
         session[:campaigns_current_page] = 42
         @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
         expect(assigns[:campaigns]).to eq([])
@@ -89,7 +89,7 @@ describe CampaignsController do
         session[:campaigns_current_page] = 42
         session[:campaigns_current_query] = "bill"
         @campaigns = [FactoryGirl.create(:campaign, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
         expect(assigns[:campaigns]).to eq(@campaigns)
@@ -214,7 +214,7 @@ describe CampaignsController do
     it "should expose a new campaign as @campaign" do
       @campaign = Campaign.new(user: current_user,
                                access: Setting.default_access)
-      xhr :get, :new
+      get :new, xhr: true
       expect(assigns[:campaign].attributes).to eq(@campaign.attributes)
       expect(response).to render_template("campaigns/new")
     end
