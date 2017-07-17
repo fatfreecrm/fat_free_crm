@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::UsersController < Admin::ApplicationController
-  before_action "set_current_tab('admin/users')", only: [:index, :show]
+  before_action :setup_current_tab, only: [:index, :show]
 
   load_resource except: [:create]
 
@@ -145,5 +145,9 @@ class Admin::UsersController < Admin::ApplicationController
     scope = scope.text_search(current_query)      if current_query.present?
     scope = scope.paginate(page: current_page) if wants.html? || wants.js? || wants.xml?
     scope
+  end
+
+  def setup_current_tab
+    set_current_tab('admin/users')
   end
 end
