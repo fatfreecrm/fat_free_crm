@@ -27,7 +27,7 @@ describe ContactsController do
       @billy_bones   = FactoryGirl.create(:contact, user: current_user, first_name: "Billy",   last_name: "Bones")
       @captain_flint = FactoryGirl.create(:contact, user: current_user, first_name: "Captain", last_name: "Flint")
 
-      get :index, query: @billy_bones.email
+      get :index, params: { query: @billy_bones.email }
       expect(assigns[:contacts]).to eq([@billy_bones])
       expect(assigns[:current_query]).to eq(@billy_bones.email)
       expect(session[:contacts_current_query]).to eq(@billy_bones.email)
@@ -101,7 +101,7 @@ describe ContactsController do
       end
 
       it "should expose the requested contact as @contact" do
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(assigns[:contact]).to eq(@contact)
         expect(assigns[:stage]).to eq(@stage)
         expect(assigns[:comment].attributes).to eq(@comment.attributes)
@@ -109,7 +109,7 @@ describe ContactsController do
       end
 
       it "should update an activity when viewing the contact" do
-        get :show, id: @contact.id
+        get :show, params: { id: @contact.id }
         expect(@contact.versions.last.event).to eq('view')
       end
     end
@@ -121,7 +121,7 @@ describe ContactsController do
         expect(@contact).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated JSON")
       end
     end
@@ -133,7 +133,7 @@ describe ContactsController do
         expect(@contact).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated XML")
       end
     end
@@ -143,7 +143,7 @@ describe ContactsController do
         @contact = FactoryGirl.create(:contact, user: current_user)
         @contact.destroy
 
-        get :show, id: @contact.id
+        get :show, params: { id: @contact.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(contacts_path)
       end
@@ -151,7 +151,7 @@ describe ContactsController do
       it "should redirect to contact index if the contact is protected" do
         @private = FactoryGirl.create(:contact, user: FactoryGirl.create(:user), access: "Private")
 
-        get :show, id: @private.id
+        get :show, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(contacts_path)
       end
@@ -161,7 +161,7 @@ describe ContactsController do
         @contact.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
-        get :show, id: @contact.id
+        get :show, params: { id: @contact.id }
         expect(response.code).to eq("404") # :not_found
       end
     end
@@ -567,7 +567,7 @@ describe ContactsController do
 
     describe "HTML request" do
       it "should redirect to Contacts index when a contact gets deleted from its landing page" do
-        delete :destroy, id: @contact.id
+        delete :destroy, params: { id: @contact.id }
 
         expect(flash[:notice]).not_to eq(nil)
         expect(response).to redirect_to(contacts_path)
@@ -577,7 +577,7 @@ describe ContactsController do
         @contact = FactoryGirl.create(:contact, user: current_user)
         @contact.destroy
 
-        delete :destroy, id: @contact.id
+        delete :destroy, params: { id: @contact.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(contacts_path)
       end
@@ -585,7 +585,7 @@ describe ContactsController do
       it "should redirect to contact index with the flash message if the contact is protected" do
         @private = FactoryGirl.create(:contact, user: FactoryGirl.create(:user), access: "Private")
 
-        delete :destroy, id: @private.id
+        delete :destroy, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(contacts_path)
       end
