@@ -56,7 +56,7 @@ describe OpportunitiesController do
       @first  = FactoryGirl.create(:opportunity, user: current_user, name: "The first one")
       @second = FactoryGirl.create(:opportunity, user: current_user, name: "The second one")
 
-      get :index, query: "second"
+      get :index, params: { query: "second" }
       expect(assigns[:opportunities]).to eq([@second])
       expect(assigns[:current_query]).to eq("second")
       expect(session[:opportunities_current_query]).to eq("second")
@@ -141,7 +141,7 @@ describe OpportunitiesController do
       end
 
       it "should expose the requested opportunity as @opportunity and render [show] template" do
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(assigns[:opportunity]).to eq(@opportunity)
         expect(assigns[:stage]).to eq(@stage)
         expect(assigns[:comment].attributes).to eq(@comment.attributes)
@@ -149,7 +149,7 @@ describe OpportunitiesController do
       end
 
       it "should update an activity when viewing the opportunity" do
-        get :show, id: @opportunity.id
+        get :show, params: { id: @opportunity.id }
         expect(@opportunity.versions.last.event).to eq('view')
       end
     end
@@ -161,7 +161,7 @@ describe OpportunitiesController do
         expect(@opportunity).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated JSON")
       end
     end
@@ -173,7 +173,7 @@ describe OpportunitiesController do
         expect(@opportunity).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated XML")
       end
     end
@@ -183,7 +183,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, user: current_user)
         @opportunity.destroy
 
-        get :show, id: @opportunity.id
+        get :show, params: { id: @opportunity.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
@@ -191,7 +191,7 @@ describe OpportunitiesController do
       it "should redirect to opportunity index if the opportunity is protected" do
         @private = FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), access: "Private")
 
-        get :show, id: @private.id
+        get :show, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
@@ -201,7 +201,7 @@ describe OpportunitiesController do
         @opportunity.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
-        get :show, id: @opportunity.id
+        get :show, params: { id: @opportunity.id }
         expect(response.code).to eq("404") # :not_found
       end
 
@@ -210,7 +210,7 @@ describe OpportunitiesController do
         @opportunity.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
-        get :show, id: @opportunity.id
+        get :show, params: { id: @opportunity.id }
         expect(response.code).to eq("404") # :not_found
       end
     end
@@ -773,7 +773,7 @@ describe OpportunitiesController do
 
     describe "HTML request" do
       it "should redirect to Opportunities index when an opportunity gets deleted from its landing page" do
-        delete :destroy, id: @opportunity.id
+        delete :destroy, params: { id: @opportunity.id }
         expect(flash[:notice]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
@@ -782,7 +782,7 @@ describe OpportunitiesController do
         @opportunity = FactoryGirl.create(:opportunity, user: current_user)
         @opportunity.destroy
 
-        delete :destroy, id: @opportunity.id
+        delete :destroy, params: { id: @opportunity.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
@@ -790,7 +790,7 @@ describe OpportunitiesController do
       it "should redirect to opportunity index with the flash message if the opportunity is protected" do
         @private = FactoryGirl.create(:opportunity, user: FactoryGirl.create(:user), access: "Private")
 
-        delete :destroy, id: @private.id
+        delete :destroy, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(opportunities_path)
       end
