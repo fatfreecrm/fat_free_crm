@@ -147,7 +147,7 @@ GEM
       tilt
     headless (2.3.1)
     htmlentities (4.3.4)
-    i18n (0.8.1)
+    i18n (0.8.6)
     i18n_data (0.7.0)
     jquery-migrate-rails (1.2.1)
     jquery-rails (4.3.1)
@@ -173,7 +173,7 @@ GEM
     mime-types-data (3.2016.0521)
     mimemagic (0.3.2)
     mini_portile2 (2.1.0)
-    minitest (5.10.1)
+    minitest (5.10.2)
     money (6.8.2)
       i18n (>= 0.6.4, < 0.9)
       sixarm_ruby_unaccent (>= 1.1.1, < 2)
@@ -236,8 +236,8 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails-observers (0.1.2)
-      activemodel (~> 4.0)
+    rails-observers (0.1.5)
+      activemodel (>= 4.0)
     rails3-jquery-autocomplete (1.0.15)
       rails (>= 3.2)
     rails_12factor (0.0.3)
@@ -446,4 +446,4 @@ DEPENDENCIES
   zeus
 
 BUNDLED WITH
-   1.13.7
+   1.15.1
