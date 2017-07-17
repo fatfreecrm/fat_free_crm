@@ -47,7 +47,7 @@ describe ContactsController do
       it "should pick up saved page number from session" do
         session[:contacts_current_page] = 42
         @contacts = [FactoryGirl.create(:contact, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
         expect(assigns[:contacts]).to eq([])
@@ -58,7 +58,7 @@ describe ContactsController do
         session[:contacts_current_page] = 42
         session[:contacts_current_query] = "bill"
         @contacts = [FactoryGirl.create(:contact, user: current_user)]
-        xhr :get, :index
+        get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
         expect(assigns[:contacts]).to eq(@contacts)
@@ -177,7 +177,7 @@ describe ContactsController do
       @account = Account.new(user: current_user)
       @accounts = [FactoryGirl.create(:account, user: current_user)]
 
-      xhr :get, :new
+      get :new, xhr: true
       expect(assigns[:contact].attributes).to eq(@contact.attributes)
       expect(assigns[:account].attributes).to eq(@account.attributes)
       expect(assigns[:accounts]).to eq(@accounts)

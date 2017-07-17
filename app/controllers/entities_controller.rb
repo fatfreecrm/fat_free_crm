@@ -87,7 +87,7 @@ class EntitiesController < ApplicationController
         render('fields/group') && return
       end
     end
-    render text: ''
+    render plain: ''
   end
 
   protected
