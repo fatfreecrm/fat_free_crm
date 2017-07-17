@@ -12,7 +12,7 @@ describe "/campaigns/index" do
     view.lookup_context.prefixes << 'entities'
     assign :per_page, Campaign.per_page
     assign :sort_by,  Campaign.sort_by
-    assign :ransack_search, Campaign.search
+    assign :ransack_search, Campaign.ransack
     login_and_assign
   end
 

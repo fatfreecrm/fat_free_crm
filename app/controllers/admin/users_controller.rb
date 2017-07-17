@@ -136,7 +136,7 @@ class Admin::UsersController < Admin::ApplicationController
     self.current_page  = options[:page] if options[:page]
     self.current_query = params[:query] if params[:query]
 
-    @search = klass.search(params[:q])
+    @search = klass.ransack(params[:q])
     @search.build_grouping unless @search.groupings.any?
 
     wants = request.format

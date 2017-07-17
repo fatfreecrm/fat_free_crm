@@ -14,7 +14,7 @@ describe "/opportunities/index" do
     assign :stage, Setting.unroll(:opportunity_stage)
     assign :per_page, Opportunity.per_page
     assign :sort_by,  Opportunity.sort_by
-    assign :ransack_search, Opportunity.search
+    assign :ransack_search, Opportunity.ransack
   end
 
   it "should render list of accounts if list of opportunities is not empty" do
