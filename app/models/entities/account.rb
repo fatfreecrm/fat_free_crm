@@ -49,7 +49,7 @@ class Account < ActiveRecord::Base
   scope :created_by,  ->(user) { where(user_id: user.id) }
   scope :assigned_to, ->(user) { where(assigned_to: user.id) }
 
-  scope :text_search, ->(query) { search('name_or_email_cont' => query).result }
+  scope :text_search, ->(query) { ransack('name_or_email_cont' => query).result }
 
   scope :visible_on_dashboard, ->(user) {
     # Show accounts which either belong to the user and are unassigned, or are assigned to the user

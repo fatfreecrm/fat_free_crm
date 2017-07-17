@@ -54,7 +54,7 @@ class Opportunity < ActiveRecord::Base
     if query =~ /\A\d+\z/
       where('upper(name) LIKE upper(:name) OR opportunities.id = :id', name: "%#{query}%", id: query)
     else
-      search('name_cont' => query).result
+      ransack('name_cont' => query).result
     end
   }
 

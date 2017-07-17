@@ -12,7 +12,7 @@ describe "/contacts/index" do
     view.lookup_context.prefixes << 'entities'
     assign :per_page, Contact.per_page
     assign :sort_by,  Contact.sort_by
-    assign :ransack_search, Contact.search
+    assign :ransack_search, Contact.ransack
     login_and_assign
   end
 

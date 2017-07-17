@@ -12,7 +12,7 @@ describe "/accounts/index" do
     view.lookup_context.prefixes << 'entities'
     assign :per_page, Account.per_page
     assign :sort_by,  Account.sort_by
-    assign :ransack_search, Account.search
+    assign :ransack_search, Account.ransack
     login_and_assign
   end
 
