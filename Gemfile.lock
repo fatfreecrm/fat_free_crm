@@ -29,6 +29,11 @@ GEM
       globalid (>= 0.3.6)
     activemodel (5.0.4)
       activesupport (= 5.0.4)
+    activemodel-serializers-xml (1.0.1)
+      activemodel (> 5.x)
+      activerecord (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     activerecord (5.0.4)
       activemodel (= 5.0.4)
       activesupport (= 5.0.4)
@@ -393,6 +398,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemodel-serializers-xml
   acts-as-taggable-on (>= 3.4.3)
   acts_as_commentable
   acts_as_fu
