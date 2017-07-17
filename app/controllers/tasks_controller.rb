@@ -170,6 +170,7 @@ class TasksController < ApplicationController
   protected
 
   def task_params
+    return {} unless params[:task]
     params[:task].permit!
   end
 
