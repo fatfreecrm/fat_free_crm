@@ -5,8 +5,7 @@
 #------------------------------------------------------------------------------
 FactoryGirl.define do
   sequence :address do |_n|
-    FFaker::Address.street_address + " " + FFaker::Address.secondary_address + "\n"
-    FFaker::Address.city + ", " + FFaker::AddressUS.state_abbr + " " + FFaker::AddressUS.zip_code
+    FFaker::Address.street_address + " " + FFaker::Address.secondary_address + "\n" + FFaker::Address.city + ", " + FFaker::AddressUS.state_abbr + " " + FFaker::AddressUS.zip_code
   end
 
   sequence :username do |n|

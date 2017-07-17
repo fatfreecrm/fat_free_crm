@@ -95,6 +95,8 @@ module TasksHelper
     partial = task.assigned_to && task.assigned_to != current_user.id ? "assigned" : "pending"
     html = render(partial: "tasks/#{partial}", collection: [task], locals: { bucket: bucket })
     text = "$('##{dom_id(task)}').html('#{j html}');\n".html_safe
+
+    text
   end
 
   #----------------------------------------------------------------------------

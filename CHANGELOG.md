@@ -4,6 +4,15 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+
+Thu Feb 23, 2017 (0.15.0-beta.2)
+---------------------------------------------------------------------
+This release is aimed at minor updates and ruby 2.4 compatability via
+the relevant rails updates.
+
+Other improvements include:
+  - #480 Improve select2 behaviour
+
 Wed, Dec 7, 2016 (0.15.0-beta)
 ---------------------------------------------------------------------
 This release is aimed at getting as many dependencies as possible up to date without significant refactoring.

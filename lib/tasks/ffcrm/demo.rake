@@ -46,7 +46,7 @@ namespace :ffcrm do
 
         if [Account, Campaign, Contact, Lead, Opportunity].include?(item.class)
           viewed_at = created_at + rand(12 * 60).minutes
-          version = create_version(event: "view", created_at: viewed_at, user: user, item: item)
+          create_version(event: "view", created_at: viewed_at, user: user, item: item)
         end
         print "." if item.id % 10 == 0
       end
