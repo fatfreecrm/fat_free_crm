@@ -19,7 +19,7 @@ class AuthenticationsController < ApplicationController
 
   #----------------------------------------------------------------------------
   def create
-    @authentication = Authentication.new(params[:authentication].to_hash)
+    @authentication = Authentication.new(params[:authentication].permit(:username, :password, :remember_me))
 
     if @authentication.save && !@authentication.user.suspended?
       flash[:notice] = t(:msg_welcome)
