@@ -24,8 +24,8 @@ class CommentsController < ApplicationController
     flash[:warning] = t(:msg_assets_not_available, "notes")
     respond_to do |format|
       format.html { redirect_to root_url }
-      format.json { render text: flash[:warning], status: :not_found }
-      format.xml  { render text: flash[:warning], status: :not_found }
+      format.json { render plain: flash[:warning], status: :not_found }
+      format.xml  { render plain: flash[:warning], status: :not_found }
     end
   end
 
@@ -83,6 +83,7 @@ class CommentsController < ApplicationController
   protected
 
   def comment_params
+    return {} unless params[:comment]
     params[:comment].permit!
   end
 
