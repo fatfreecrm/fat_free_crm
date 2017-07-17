@@ -50,7 +50,7 @@ class HomeController < ApplicationController
     else
       session[params[:id].to_sym] = true
     end
-    render nothing: true
+    head :ok
   end
 
   # GET /home/timeline                                                     AJAX
@@ -71,7 +71,7 @@ class HomeController < ApplicationController
       end
     end
 
-    render nothing: true
+    head :ok
   end
 
   # GET /home/timezone                                                     AJAX
@@ -85,7 +85,7 @@ class HomeController < ApplicationController
       session[:timezone_offset] = params[:offset].to_i * -60
       ActiveSupport::TimeZone[session[:timezone_offset]]
     end
-    render nothing: true
+    head :ok
   end
 
   private
