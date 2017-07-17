@@ -57,9 +57,9 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     arel (7.1.4)
     ast (2.3.0)
-    authlogic (3.5.0)
-      activerecord (>= 3.2, < 5.1)
-      activesupport (>= 3.2, < 5.1)
+    authlogic (3.6.0)
+      activerecord (>= 3.2, < 5.2)
+      activesupport (>= 3.2, < 5.2)
       request_store (~> 1.0)
       scrypt (>= 1.2, < 4.0)
     builder (3.2.3)
@@ -402,7 +402,7 @@ DEPENDENCIES
   acts_as_commentable
   acts_as_fu
   acts_as_list
-  authlogic (>= 3.4.4, < 3.6.0)
+  authlogic (>= 3.4.4)
   byebug
   cancancan
   capistrano
