@@ -55,7 +55,7 @@ describe AccountsController do
       @first  = FactoryGirl.create(:account, user: current_user, name: "The first one")
       @second = FactoryGirl.create(:account, user: current_user, name: "The second one")
 
-      get :index, query: "second"
+      get :index, params: { query: "second" }
       expect(assigns[:accounts]).to eq([@second])
       expect(assigns[:current_query]).to eq("second")
       expect(session[:accounts_current_query]).to eq("second")
@@ -129,7 +129,7 @@ describe AccountsController do
       end
 
       it "should expose the requested account as @account and render [show] template" do
-        get :show, id: @account.id
+        get :show, params: { id: @account.id }
         expect(assigns[:account]).to eq(@account)
         expect(assigns[:stage]).to eq(@stage)
         expect(assigns[:comment].attributes).to eq(@comment.attributes)
@@ -137,7 +137,7 @@ describe AccountsController do
       end
 
       it "should update an activity when viewing the account" do
-        get :show, id: @account.id
+        get :show, params: { id: @account.id }
         expect(@account.versions.last.event).to eq('view')
       end
     end
@@ -149,7 +149,7 @@ describe AccountsController do
         expect(@account).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated JSON")
       end
     end
@@ -161,7 +161,7 @@ describe AccountsController do
         expect(@account).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
-        get :show, id: 42
+        get :show, params: { id: 42 }
         expect(response.body).to eq("generated XML")
       end
     end
@@ -171,7 +171,7 @@ describe AccountsController do
         @account = FactoryGirl.create(:account, user: current_user)
         @account.destroy
 
-        get :show, id: @account.id
+        get :show, params: { id: @account.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(accounts_path)
       end
@@ -179,7 +179,7 @@ describe AccountsController do
       it "should redirect to account index if the account is protected" do
         @private = FactoryGirl.create(:account, user: FactoryGirl.create(:user), access: "Private")
 
-        get :show, id: @private.id
+        get :show, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(accounts_path)
       end
@@ -189,7 +189,7 @@ describe AccountsController do
         @account.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
-        get :show, id: @account.id
+        get :show, params: { id: @account.id }
         expect(response.code).to eq("404") # :not_found
       end
 
@@ -198,7 +198,7 @@ describe AccountsController do
         @account.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
-        get :show, id: @account.id
+        get :show, params: { id: @account.id }
         expect(response.code).to eq("404") # :not_found
       end
     end
@@ -467,7 +467,7 @@ describe AccountsController do
 
     describe "HTML request" do
       it "should redirect to Accounts index when an account gets deleted from its landing page" do
-        delete :destroy, id: @account.id
+        delete :destroy, params: { id: @account.id }
 
         expect(flash[:notice]).not_to eq(nil)
         expect(response).to redirect_to(accounts_path)
@@ -477,7 +477,7 @@ describe AccountsController do
         @account = FactoryGirl.create(:account, user: current_user)
         @account.destroy
 
-        delete :destroy, id: @account.id
+        delete :destroy, params: { id: @account.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(accounts_path)
       end
@@ -485,7 +485,7 @@ describe AccountsController do
       it "should redirect to account index with the flash message if the account is protected" do
         @private = FactoryGirl.create(:account, user: FactoryGirl.create(:user), access: "Private")
 
-        delete :destroy, id: @private.id
+        delete :destroy, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
         expect(response).to redirect_to(accounts_path)
       end
@@ -590,14 +590,14 @@ describe AccountsController do
       session[:accounts_filter] = "customer,vendor"
       @accounts = [FactoryGirl.create(:account, category: "partner", user: current_user)]
 
-      xhr :post, :filter, category: "partner"
+      post :filter, params: { category: "partner" }, xhr: true
       expect(assigns(:accounts)).to eq(@accounts)
       expect(response).to render_template("accounts/index")
     end
 
     it "should reset current page to 1" do
       @accounts = []
-      xhr :post, :filter, category: "partner"
+      post :filter, params: { category: "partner" }, xhr: true
 
       expect(session[:accounts_current_page]).to eq(1)
     end
