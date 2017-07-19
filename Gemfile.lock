@@ -106,7 +106,7 @@ GEM
       money (~> 6.7)
       sixarm_ruby_unaccent (~> 1.1)
       unicode_utils (~> 1.4)
-    country_select (3.0.0)
+    country_select (3.1.0)
       countries (~> 2.0)
       sort_alphabetical (~> 1.0)
     css_parser (1.5.0)
@@ -464,6 +464,7 @@ DEPENDENCIES
   unicorn
   will_paginate
   zeus
+
 
 BUNDLED WITH
    1.15.1
