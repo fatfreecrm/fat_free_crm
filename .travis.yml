@@ -3,10 +3,14 @@ language: ruby
 rvm:
   - 2.3.3
   # - 2.4.0
+
 env:
-  - DB=mysql
-  - DB=postgres
-  - DB=sqlite
+  global:
+    - BROWSER=chrome
+  matrix:
+    - DB=mysql
+    - DB=postgres
+    - DB=sqlite
 
 matrix:
   exclude:

@@ -8,11 +8,15 @@
 #
 if ENV['BROWSER'] == 'chrome'
   Capybara.register_driver :selenium do |app|
-    Capybara::Selenium::Driver.new(app, browser: :chrome)
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: %w(no-sandbox headless disable-gpu) })
+    Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
   end
 else
   Capybara.register_driver :selenium do |app|
-    Capybara::Selenium::Driver.new(app, browser: :firefox, desired_capabilities: Selenium::WebDriver::Remote::Capabilities.firefox(marionette: false))
+    options = Selenium::WebDriver::Firefox::Options.new
+    options.args << '--headless'
+    capabilities = Selenium::WebDriver::Remote::Capabilities.firefox(marionette: false)
+    Capybara::Selenium::Driver.new(app, browser: :firefox, options: options, desired_capabilities: capabilities)
   end
 end
 

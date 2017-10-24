@@ -67,6 +67,7 @@ end
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem "acts_as_fu"
   gem 'zeus' unless ENV["CI"]
