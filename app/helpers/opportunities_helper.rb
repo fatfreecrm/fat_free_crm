@@ -40,7 +40,7 @@ module OpportunitiesHelper
     campaigns = ([selected_campaign] + Campaign.my.order(:name).limit(25)).compact.uniq
 
     collection_select :opportunity, :campaign_id, campaigns, :id, :name,
-      { selected: options[:selected], prompt: t(:select_a_campaign) },
-      { style: "width:330px;", class: 'select2' }
+                      { selected: options[:selected], prompt: t(:select_a_campaign) },
+                      style: 'width:330px;', class: 'select2'
   end
 end
