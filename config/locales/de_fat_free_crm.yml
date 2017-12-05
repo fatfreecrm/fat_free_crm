@@ -300,6 +300,7 @@ de:
         custom_field:
           required: ^%{field} muss vorhanden sein.
           maxlength: ^%{field} ist zu lang.
+          minlength: ^%{field} ist zu kurz.
           endbeforestart: ^%{field} kann nicht enden bevor es beginnt.
     attribute_options:
       opportunity:

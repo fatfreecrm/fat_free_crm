@@ -19,7 +19,7 @@ nl:
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Dashboard
-  tab_tasks: Taken 
+  tab_tasks: Taken
   tab_campaigns: Campagnes
   tab_leads: Leads
   tab_accounts: Accounts
@@ -157,6 +157,7 @@ nl:
         custom_field:
           required: ^%{field} is vereist.
           maxlength: ^%{field} is te lang.
+          minlength: ^%{field} is te kort.
           endbeforestart: ^%{field} kan niet eindigen voor het begint.
     attribute_options:
       opportunity:

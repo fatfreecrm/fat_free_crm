@@ -158,6 +158,7 @@ fr:
         custom_field:
           required: ^%{field} est requis.
           maxlength: ^%{field} est trop long.
+          minlength: ^%{field} est trop court.
           endbeforestart: ^%{field} ne peut pas finir avoir d'avoir démarré.
     attribute_options:
       opportunity:
