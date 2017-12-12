@@ -19,6 +19,9 @@ matrix:
     - rvm: 2.3.3
       env: DB=sqlite
 
+addons:
+  chrome: stable
+
 bundler_args: --path=vendor/bundle --without heroku
 
 cache: bundler
