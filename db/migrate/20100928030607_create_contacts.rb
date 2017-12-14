@@ -28,7 +28,7 @@ class CreateContacts < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
-    add_index :contacts, [:user_id, :last_name, :deleted_at], unique: true, name: 'id_last_name_deleted'
+    add_index :contacts, %i[user_id last_name deleted_at], unique: true, name: 'id_last_name_deleted'
     add_index :contacts, :assigned_to
   end
 

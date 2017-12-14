@@ -28,7 +28,7 @@ class CreateLeads < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
-    add_index :leads, [:user_id, :last_name, :deleted_at], unique: true
+    add_index :leads, %i[user_id last_name deleted_at], unique: true
     add_index :leads, :assigned_to
   end
 

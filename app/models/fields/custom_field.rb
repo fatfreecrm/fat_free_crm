@@ -54,7 +54,7 @@ class CustomField < Field
   after_create :add_ransack_translation
 
   SAFE_DB_TRANSITIONS = {
-    any: [%w(date time timestamp), %w(integer float)],
+    any: [%w[date time timestamp], %w[integer float]],
     one: { 'string' => 'text' }
   }
 

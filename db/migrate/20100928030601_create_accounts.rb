@@ -16,7 +16,7 @@ class CreateAccounts < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
-    add_index :accounts, [:user_id, :name, :deleted_at], unique: true
+    add_index :accounts, %i[user_id name deleted_at], unique: true
     add_index :accounts, :assigned_to
   end
 

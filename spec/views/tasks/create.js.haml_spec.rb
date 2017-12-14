@@ -12,7 +12,7 @@ describe "/tasks/create" do
     login_and_assign
   end
 
-  (TASK_STATUSES - %w(completed)).each do |status|
+  (TASK_STATUSES - ['completed']).each do |status|
     describe "create from #{status} tasks page" do
       before do
         assign(:view, status)
@@ -84,7 +84,7 @@ describe "/tasks/create" do
     expect(rendered).to have_text("Recent Items")
   end
 
-  (TASK_STATUSES - %w(assigned)).each do |status|
+  (TASK_STATUSES - ['assigned']).each do |status|
     describe "create from outside the Tasks tab" do
       before do
         @task = FactoryGirl.build_stubbed(:task, id: 42)

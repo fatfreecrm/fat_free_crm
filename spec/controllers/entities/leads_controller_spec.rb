@@ -44,7 +44,7 @@ describe LeadsController do
       get :index
       # Note: can't compare campaigns directly because of BigDecimals.
       expect(assigns[:leads].size).to eq(2)
-      expect(assigns[:leads].map(&:status).sort).to eq(%w(contacted new))
+      expect(assigns[:leads].map(&:status).sort).to eq(%w[contacted new])
     end
 
     it "should perform lookup using query string" do
@@ -335,12 +335,12 @@ describe LeadsController do
         @lead = FactoryGirl.build(:lead, campaign: @campaign, user: current_user, access: "Shared")
         allow(Lead).to receive(:new).and_return(@lead)
 
-        post :create, params: { lead: { first_name: "Billy", last_name: "Bones", access: "Campaign", user_ids: %w(7 8) }, campaign: @campaign.id }, xhr: true
+        post :create, params: { lead: { first_name: "Billy", last_name: "Bones", access: "Campaign", user_ids: %w[7 8] }, campaign: @campaign.id }, xhr: true
         expect(assigns(:lead)).to eq(@lead)
         expect(@lead.reload.access).to eq("Shared")
         expect(@lead.permissions.map(&:user_id).sort).to eq([7, 8])
         expect(@lead.permissions.map(&:asset_id)).to eq([@lead.id, @lead.id])
-        expect(@lead.permissions.map(&:asset_type)).to eq(%w(Lead Lead))
+        expect(@lead.permissions.map(&:asset_type)).to eq(%w[Lead Lead])
       end
 
       it "should get the data to update leads sidebar if called from leads index" do
@@ -466,7 +466,7 @@ describe LeadsController do
         he  = FactoryGirl.create(:user, id: 7)
         she = FactoryGirl.create(:user, id: 8)
 
-        put :update, params: { id: @lead.id, lead: { access: "Shared", user_ids: %w(7 8) } }, xhr: true
+        put :update, params: { id: @lead.id, lead: { access: "Shared", user_ids: %w[7 8] } }, xhr: true
         expect(@lead.user_ids.sort).to eq([he.id, she.id])
       end
 
@@ -746,11 +746,11 @@ describe LeadsController do
       expect(@account.access).to eq("Shared")
       expect(@account.permissions.map(&:user_id).sort).to eq([7, 8])
       expect(@account.permissions.map(&:asset_id)).to eq([@account.id, @account.id])
-      expect(@account.permissions.map(&:asset_type)).to eq(%w(Account Account))
+      expect(@account.permissions.map(&:asset_type)).to eq(%w[Account Account])
       expect(@opportunity.access).to eq("Shared")
       expect(@opportunity.permissions.map(&:user_id).sort).to eq([7, 8])
       expect(@opportunity.permissions.map(&:asset_id)).to eq([@opportunity.id, @opportunity.id])
-      expect(@opportunity.permissions.map(&:asset_type)).to eq(%w(Opportunity Opportunity))
+      expect(@opportunity.permissions.map(&:asset_type)).to eq(%w[Opportunity Opportunity])
     end
 
     it "should assign lead's campaign to the newly created opportunity" do

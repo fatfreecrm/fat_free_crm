@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::UsersController < Admin::ApplicationController
-  before_action :setup_current_tab, only: [:index, :show]
+  before_action :setup_current_tab, only: %i[index show]
 
   load_resource except: [:create]
 

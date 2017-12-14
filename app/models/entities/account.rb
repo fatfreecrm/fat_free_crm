@@ -67,7 +67,7 @@ class Account < ActiveRecord::Base
   exportable
   sortable by: ["name ASC", "rating DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
-  has_ransackable_associations %w(contacts opportunities tags activities emails addresses comments tasks)
+  has_ransackable_associations %w[contacts opportunities tags activities emails addresses comments tasks]
   ransack_can_autocomplete
 
   validates_presence_of :name, message: :missing_account_name

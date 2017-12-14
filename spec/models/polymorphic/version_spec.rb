@@ -34,7 +34,7 @@ describe Version, versioning: true do
     before do
       @lead = FactoryGirl.create(:lead)
 
-      %w(create destroy update view).each do |event|
+      %w[create destroy update view].each do |event|
         FactoryGirl.create(:version, event: event, item: @lead, whodunnit: PaperTrail.whodunnit)
         FactoryGirl.create(:version, event: event, item: @lead, whodunnit: "1")
       end
@@ -54,12 +54,12 @@ describe Version, versioning: true do
 
     it "should include only destroy events" do
       @versions = Version.for(current_user).include_events(:destroy)
-      expect(@versions.pluck(:event).uniq).to eq(%w(destroy))
+      expect(@versions.pluck(:event).uniq).to eq(['destroy'])
     end
 
     it "should include create and update events" do
       @versions = Version.for(current_user).include_events(:create, :update)
-      expect(@versions.pluck(:event).uniq.sort).to eq(%w(create update))
+      expect(@versions.pluck(:event).uniq.sort).to eq(%w[create update])
     end
 
     it "should select all versions for a given user" do
@@ -68,7 +68,7 @@ describe Version, versioning: true do
     end
   end
 
-  %w(account campaign contact lead opportunity task).each do |item|
+  %w[account campaign contact lead opportunity task].each do |item|
     describe "Create, update, and delete (#{item})" do
       before :each do
         @item = FactoryGirl.create(item.to_sym, user: current_user)
@@ -122,7 +122,7 @@ describe Version, versioning: true do
       @task.update(name: 'New Name')
 
       versions = Version.where(@conditions)
-      expect(versions.pluck(:event).sort).to eq(%w(create update)) # but not view
+      expect(versions.pluck(:event).sort).to eq(%w[create update]) # but not view
     end
   end
 
@@ -179,7 +179,7 @@ describe Version, versioning: true do
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
-      expect(versions.pluck(:event).sort).to eq(%w(create update))
+      expect(versions.pluck(:event).sort).to eq(%w[create update])
 
       visible_versions = Version.visible_to(@user)
       expect(visible_versions).to eq([])
@@ -190,7 +190,7 @@ describe Version, versioning: true do
       @item.destroy
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
-      expect(versions.pluck(:event).sort).to eq(%w(create destroy))
+      expect(versions.pluck(:event).sort).to eq(%w[create destroy])
 
       visible_versions = Version.visible_to(@user)
       expect(visible_versions).to eq([])
@@ -205,7 +205,7 @@ describe Version, versioning: true do
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
-      expect(versions.pluck(:event).sort).to eq(%w(create update))
+      expect(versions.pluck(:event).sort).to eq(%w[create update])
 
       visible_versions = Version.visible_to(@user)
       expect(visible_versions).to eq([])
@@ -220,7 +220,7 @@ describe Version, versioning: true do
       @item.destroy
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
-      expect(versions.pluck(:event).sort).to eq(%w(create destroy))
+      expect(versions.pluck(:event).sort).to eq(%w[create destroy])
 
       visible_versions = Version.visible_to(@user)
       expect(visible_versions).to eq([])
@@ -235,10 +235,10 @@ describe Version, versioning: true do
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
-      expect(versions.pluck(:event).sort).to eq(%w(create update))
+      expect(versions.pluck(:event).sort).to eq(%w[create update])
 
       visible_versions = Version.visible_to(@user)
-      expect(visible_versions.map(&:event).sort).to eq(%w(create update))
+      expect(visible_versions.map(&:event).sort).to eq(%w[create update])
     end
   end
 end

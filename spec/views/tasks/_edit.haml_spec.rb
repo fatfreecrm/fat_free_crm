@@ -12,8 +12,8 @@ describe "/tasks/_edit" do
     login_and_assign
     assign(:task, FactoryGirl.build_stubbed(:task, asset: FactoryGirl.build_stubbed(:account), bucket: "due_asap"))
     assign(:users, [current_user])
-    assign(:bucket, %w(due_asap due_today))
-    assign(:category, %w(meeting money))
+    assign(:bucket, %w[due_asap due_today])
+    assign(:category, %w[meeting money])
   end
 
   it "should render [edit task] form" do

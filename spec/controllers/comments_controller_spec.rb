@@ -6,7 +6,7 @@
 require 'spec_helper'
 
 describe CommentsController do
-  COMMENTABLE = [:account, :campaign, :contact, :lead, :opportunity].freeze
+  COMMENTABLE = %i[account campaign contact lead opportunity].freeze
 
   before(:each) do
     require_user

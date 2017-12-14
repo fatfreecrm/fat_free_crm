@@ -5,11 +5,11 @@
 #------------------------------------------------------------------------------
 FactoryGirl.define do
   sequence :opportunity_status do |_s|
-    %w(prospecting analysis presentation proposal negotiation final_review won lost).sample
+    %w[prospecting analysis presentation proposal negotiation final_review won lost].sample
   end
 
   sequence :opportunity_open_status do |_s|
-    %w(prospecting analysis presentation proposal negotiation final_review).sample
+    %w[prospecting analysis presentation proposal negotiation final_review].sample
   end
 
   factory :opportunity do
@@ -19,7 +19,7 @@ FactoryGirl.define do
     assigned_to nil
     name                { FFaker::Lorem.sentence[0, 64] }
     access "Public"
-    source              { %w(campaign cold_call conference online referral self web word_of_mouth other).sample }
+    source              { %w[campaign cold_call conference online referral self web word_of_mouth other].sample }
     stage               { FactoryGirl.generate(:opportunity_status) }
     probability         { rand(50) }
     amount              { rand(1000) }

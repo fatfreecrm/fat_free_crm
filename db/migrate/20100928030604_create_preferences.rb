@@ -6,7 +6,7 @@ class CreatePreferences < ActiveRecord::Migration[4.2]
       t.text :value
       t.timestamps
     end
-    add_index :preferences, [:user_id, :name]
+    add_index :preferences, %i[user_id name]
   end
 
   def self.down

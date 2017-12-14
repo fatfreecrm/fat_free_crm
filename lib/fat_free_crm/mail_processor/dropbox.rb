@@ -8,7 +8,7 @@ require 'fat_free_crm/mail_processor/base'
 module FatFreeCRM
   module MailProcessor
     class Dropbox < Base
-      KEYWORDS = %w(account campaign contact lead opportunity).freeze
+      KEYWORDS = %w[account campaign contact lead opportunity].freeze
 
       #--------------------------------------------------------------------------------------
       def initialize

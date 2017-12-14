@@ -29,7 +29,7 @@ class Task < ActiveRecord::Base
   include ActiveModel::Serializers::Xml
 
   attr_accessor :calendar
-  ALLOWED_VIEWS = %w(pending assigned completed)
+  ALLOWED_VIEWS = %w[pending assigned completed]
 
   belongs_to :user
   belongs_to :assignee, class_name: "User", foreign_key: :assigned_to

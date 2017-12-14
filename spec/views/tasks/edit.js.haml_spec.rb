@@ -15,7 +15,7 @@ describe "/tasks/edit" do
     assign(:category, Setting.unroll(:task_category))
   end
 
-  %w(pending assigned).each do |view|
+  %w[pending assigned].each do |view|
     it "cancel for #{view} view: should replace [Edit Task] form with the task partial" do
       params[:cancel] = "true"
       @task = stub_task(view)

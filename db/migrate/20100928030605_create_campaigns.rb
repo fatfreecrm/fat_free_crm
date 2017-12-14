@@ -24,7 +24,7 @@ class CreateCampaigns < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
-    add_index :campaigns, [:user_id, :name, :deleted_at], unique: true
+    add_index :campaigns, %i[user_id name deleted_at], unique: true
     add_index :campaigns, :assigned_to
   end
 
