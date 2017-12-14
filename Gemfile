@@ -86,3 +86,4 @@ gem 'execjs'
 gem 'therubyracer', platform: :ruby unless ENV["CI"]
 gem 'nokogiri', '>= 1.8.1'
 gem 'activemodel-serializers-xml'
+gem 'bootsnap', require: false

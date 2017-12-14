@@ -64,6 +64,8 @@ GEM
       activesupport (>= 3.2, < 5.2)
       request_store (~> 1.0)
       scrypt (>= 1.2, < 4.0)
+    bootsnap (1.1.6)
+      msgpack (~> 1.0)
     builder (3.2.3)
     byebug (9.0.6)
     cancancan (2.0.0)
@@ -194,6 +196,7 @@ GEM
     minitest (5.10.3)
     money (6.9.0)
       i18n (>= 0.6.4, < 0.9)
+    msgpack (1.2.0)
     nenv (0.3.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -410,6 +413,7 @@ DEPENDENCIES
   acts_as_fu
   acts_as_list
   authlogic (>= 3.4.4)
+  bootsnap
   byebug
   cancancan
   capistrano
@@ -476,4 +480,4 @@ DEPENDENCIES
   zeus
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
