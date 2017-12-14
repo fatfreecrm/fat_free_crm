@@ -103,7 +103,7 @@ module FatFreeCRM
 
     module SingletonMethods
     end
-  end # Permissions
-end # FatFreeCRM
+  end
+end
 
 ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)

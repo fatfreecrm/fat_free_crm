@@ -143,6 +143,6 @@ describe AuthenticationsController do
           expect(response).to redirect_to(action: :new)
         end
       end
-    end # authentication failure
-  end # POST authenticate
+    end
+  end
 end

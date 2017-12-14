@@ -56,7 +56,7 @@ describe "/accounts/update" do
         expect(rendered).to include(%/$('#account_#{@account.id}').effect("highlight"/)
       end
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     before do
@@ -90,5 +90,5 @@ describe "/accounts/update" do
         expect(rendered).to include('focus()')
       end
     end
-  end # errors
+  end
 end

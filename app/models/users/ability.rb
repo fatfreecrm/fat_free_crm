@@ -50,7 +50,7 @@ class Ability
             can :manage, klass, id: asset_ids
           end
         end
-      end # if user.admin?
+      end
 
     end
   end
