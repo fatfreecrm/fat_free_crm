@@ -1,4 +1,4 @@
-class ChangeFieldsCollectionToText < ActiveRecord::Migration
+class ChangeFieldsCollectionToText < ActiveRecord::Migration[4.2]
   def self.up
     change_column :fields, :collection, :text
   end

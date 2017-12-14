@@ -1,4 +1,4 @@
-class ActivitiesToVersions < ActiveRecord::Migration
+class ActivitiesToVersions < ActiveRecord::Migration[4.2]
   def up
     events = {
       'created'     => 'create',

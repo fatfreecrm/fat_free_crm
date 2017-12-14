@@ -1,4 +1,4 @@
-class AddVersionsRelated < ActiveRecord::Migration
+class AddVersionsRelated < ActiveRecord::Migration[4.2]
   def change
     add_column :versions, :related_id, :integer
     add_column :versions, :related_type, :string

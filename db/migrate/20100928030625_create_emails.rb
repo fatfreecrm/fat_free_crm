@@ -1,4 +1,4 @@
-class CreateEmails < ActiveRecord::Migration
+class CreateEmails < ActiveRecord::Migration[4.2]
   def self.up
     create_table :emails, force: true do |t|
       t.string :imap_message_id, null: false  # IMAP internal message identifier.

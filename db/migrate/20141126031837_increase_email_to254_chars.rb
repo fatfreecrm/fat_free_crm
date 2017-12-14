@@ -1,4 +1,4 @@
-class IncreaseEmailTo254Chars < ActiveRecord::Migration
+class IncreaseEmailTo254Chars < ActiveRecord::Migration[4.2]
   def up
     change_column :accounts, :email, :string, limit: 254
     change_column :contacts, :email, :string, limit: 254

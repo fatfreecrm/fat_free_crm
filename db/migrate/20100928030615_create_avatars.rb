@@ -1,4 +1,4 @@
-class CreateAvatars < ActiveRecord::Migration
+class CreateAvatars < ActiveRecord::Migration[4.2]
   def self.up
     create_table :avatars do |t|
       t.references :user                         # Who uploaded the avatar.
