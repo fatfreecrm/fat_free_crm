@@ -588,7 +588,7 @@ Style/Semicolon:
 # Configuration parameters: MinSize, SupportedStyles.
 # SupportedStyles: percent, brackets
 Style/SymbolArray:
-  EnforcedStyle: brackets
+  EnforcedStyle: percent
 
 # Offense count: 2
 # Cop supports --auto-correct.
