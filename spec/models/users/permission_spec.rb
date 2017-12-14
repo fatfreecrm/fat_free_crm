@@ -52,5 +52,5 @@ describe Permission do
 
     expect(permission1).to be_valid
     expect(permission2).not_to be_valid
-  end 
+  end
 end

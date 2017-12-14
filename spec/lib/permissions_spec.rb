@@ -151,7 +151,7 @@ describe FatFreeCRM::Permissions do
     context 'with an existing record' do
       before :each do
         @entity = UserWithPermission.create
-        
+
         @permission1 = Permission.create(user_id: 1, group_id: 1, asset_id: @entity.id, asset_type: 'UserWithPermission')
         @permission2 = Permission.create(user_id: 1, group_id: 2, asset_id: @entity.id, asset_type: 'UserWithPermission')
       end
@@ -159,7 +159,7 @@ describe FatFreeCRM::Permissions do
         current = Permission.all.count
 
         expect(@entity.remove_permissions.length).to eq 2
-        expect(Permission.all.count).to eq (current - 2)
+        expect(Permission.all.count).to eq(current - 2)
       end
     end
   end
