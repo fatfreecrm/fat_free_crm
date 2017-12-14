@@ -12,7 +12,7 @@ require 'nokogiri'
 module FatFreeCRM
   module MailProcessor
     class Base
-      KEYWORDS = %w(account campaign contact lead opportunity).freeze
+      KEYWORDS = %w[account campaign contact lead opportunity].freeze
 
       #--------------------------------------------------------------------------------------
       def initialize
@@ -94,7 +94,7 @@ module FatFreeCRM
 
       #--------------------------------------------------------------------------------------
       def with_new_emails
-        @imap.uid_search(%w(NOT SEEN)).each do |uid|
+        @imap.uid_search(%w[NOT SEEN]).each do |uid|
           begin
             email = Mail.new(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
             log "fetched new message...", email
@@ -104,7 +104,7 @@ module FatFreeCRM
               discard(uid)
             end
           rescue Exception => e
-            if %w(test development).include?(Rails.env)
+            if %w[test development].include?(Rails.env)
               $stderr.puts e
               $stderr.puts e.backtrace
             end
@@ -184,7 +184,7 @@ module FatFreeCRM
       # Centralized logging.
       #--------------------------------------------------------------------------------------
       def log(message, email = nil)
-        unless %w(test cucumber).include?(Rails.env)
+        unless %w[test cucumber].include?(Rails.env)
           klass = self.class.to_s.split("::").last
           klass << " [Dry Run]" if @dry_run
           puts "[#{Time.now.rfc822}] #{klass}: #{message}"

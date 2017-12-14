@@ -12,7 +12,7 @@ describe "/application/_auto_complete" do
     login_and_assign
   end
 
-  [:account, :campaign, :contact, :lead, :opportunity].each do |model|
+  %i[account campaign contact lead opportunity].each do |model|
     it "should render autocomplete list if #{model} matches found" do
       @auto_complete = if model == :lead
                          FactoryGirl.build_stubbed(:lead, first_name: "Billy", last_name: "Bones", company: "Hello, World!")

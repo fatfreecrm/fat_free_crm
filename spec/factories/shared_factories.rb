@@ -50,7 +50,7 @@ FactoryGirl.define do
     zipcode             { FFaker::AddressUS.zip_code }
     country             { FFaker::AddressUK.country }
     full_address        { FactoryGirl.generate(:address) }
-    address_type        { %w(Business Billing Shipping).sample }
+    address_type        { %w[Business Billing Shipping].sample }
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
     deleted_at nil

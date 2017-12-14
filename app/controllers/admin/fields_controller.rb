@@ -6,7 +6,7 @@
 class Admin::FieldsController < Admin::ApplicationController
   before_action "set_current_tab('admin/fields')", only: [:index]
 
-  load_resource except: [:create, :subform]
+  load_resource except: %i[create subform]
 
   # GET /fields
   # GET /fields.xml                                                      HTML

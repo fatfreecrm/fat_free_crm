@@ -17,14 +17,14 @@ Rails.application.routes.draw do
 
   get '/home/options',  as: :options
   get '/home/toggle',   as: :toggle
-  match '/home/timeline', as: :timeline, via: [:get, :put, :post]
-  match '/home/timezone', as: :timezone, via: [:get, :put, :post]
+  match '/home/timeline', as: :timeline, via: %i[get put post]
+  match '/home/timezone', as: :timezone, via: %i[get put post]
   post '/home/redraw',   as: :redraw
 
-  resource :authentication, except: [:index, :edit]
-  resources :comments,       except: [:new, :show]
+  resource :authentication, except: %i[index edit]
+  resources :comments,       except: %i[new show]
   resources :emails,         only: [:destroy]
-  resources :passwords,      only: [:new, :create, :edit, :update]
+  resources :passwords,      only: %i[new create edit update]
 
   resources :accounts, id: /\d+/ do
     collection do
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
     end
@@ -52,7 +52,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
     end
@@ -72,7 +72,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
     end
@@ -91,7 +91,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
       get :autocomplete_account_name
@@ -102,7 +102,7 @@ Rails.application.routes.draw do
       post :subscribe
       post :unsubscribe
       put :attach
-      match :promote, via: [:patch, :put]
+      match :promote, via: %i[patch put]
       put :reject
     end
   end
@@ -113,7 +113,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
     end
@@ -129,7 +129,7 @@ Rails.application.routes.draw do
   resources :tasks, id: /\d+/ do
     collection do
       post :filter
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
     end
     member do
       put :complete
@@ -137,16 +137,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, id: /\d+/, except: [:index, :destroy] do
+  resources :users, id: /\d+/, except: %i[index destroy] do
     member do
       get :avatar
       get :password
-      match :upload_avatar, via: [:put, :patch]
+      match :upload_avatar, via: %i[put patch]
       patch :change_password
       post :redraw
     end
     collection do
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :opportunities_overview
     end
   end
@@ -156,7 +156,7 @@ Rails.application.routes.draw do
 
     resources :users do
       collection do
-        match :auto_complete, via: [:get, :post]
+        match :auto_complete, via: %i[get post]
       end
       member do
         get :confirm
@@ -165,7 +165,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :field_groups, except: [:index, :show] do
+    resources :field_groups, except: %i[index show] do
       collection do
         post :sort
       end
@@ -176,7 +176,7 @@ Rails.application.routes.draw do
 
     resources :fields do
       collection do
-        match :auto_complete, via: [:get, :post]
+        match :auto_complete, via: %i[get post]
         get :options
         get :redraw
         post :sort

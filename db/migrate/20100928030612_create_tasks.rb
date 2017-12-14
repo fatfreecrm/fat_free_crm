@@ -16,7 +16,7 @@ class CreateTasks < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :tasks, [:user_id, :name, :deleted_at], unique: true
+    add_index :tasks, %i[user_id name deleted_at], unique: true
     add_index :tasks, :assigned_to
   end
 

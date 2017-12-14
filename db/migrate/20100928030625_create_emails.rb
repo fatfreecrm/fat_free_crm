@@ -17,7 +17,7 @@ class CreateEmails < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :emails, [:mediator_id, :mediator_type]
+    add_index :emails, %i[mediator_id mediator_type]
   end
 
   def self.down

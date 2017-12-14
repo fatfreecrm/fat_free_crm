@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class ContactsController < EntitiesController
-  before_action :get_accounts, only: [:new, :create, :edit, :update]
+  before_action :get_accounts, only: %i[new create edit update]
 
   # GET /contacts
   #----------------------------------------------------------------------------

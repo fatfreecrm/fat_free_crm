@@ -13,8 +13,8 @@ FactoryGirl.define do
     access "Public"
     company             { FFaker::Company.name }
     title               { FactoryGirl.generate(:title) }
-    source              { %w(campaign cold_call conference online referral self web word_of_mouth other).sample }
-    status              { %w(new contacted converted rejected).sample }
+    source              { %w[campaign cold_call conference online referral self web word_of_mouth other].sample }
+    status              { %w[new contacted converted rejected].sample }
     rating 1
     referred_by         { FFaker::Name.name }
     do_not_call false

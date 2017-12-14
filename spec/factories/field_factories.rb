@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 FactoryGirl.define do
   sequence :klass_name do |_x|
-    %w(Contact Account Opportunity Lead Campaign).sample
+    %w[Contact Account Opportunity Lead Campaign].sample
   end
 
   sequence(:field_position) { |x| x }

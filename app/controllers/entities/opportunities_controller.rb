@@ -6,7 +6,7 @@
 class OpportunitiesController < EntitiesController
   before_action :load_settings
   before_action :get_data_for_sidebar, only: :index
-  before_action :set_params, only: [:index, :redraw, :filter]
+  before_action :set_params, only: %i[index redraw filter]
 
   # GET /opportunities
   #----------------------------------------------------------------------------

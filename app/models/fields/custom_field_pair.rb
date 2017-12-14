@@ -12,7 +12,7 @@ class CustomFieldPair < CustomField
     fields = params['field']
     as = params['field']['as']
     pair = params.delete('pair')
-    base_params = fields.delete_if { |k, _v| !%w(field_group_id label as).include?(k) }
+    base_params = fields.delete_if { |k, _v| !%w[field_group_id label as].include?(k) }
     klass = ("custom_field_" + as.gsub('pair', '_pair')).classify.constantize
     field1 = klass.create(base_params.merge(pair['0']))
     field2 = klass.create(base_params.merge(pair['1']).merge('pair_id' => field1.id, 'required' => field1.required, 'disabled' => field1.disabled))
@@ -24,7 +24,7 @@ class CustomFieldPair < CustomField
   def self.update_pair(params)
     fields = params['field']
     pair = params.delete('pair')
-    base_params = fields.delete_if { |k, _v| !%w(field_group_id label as).include?(k) }
+    base_params = fields.delete_if { |k, _v| !%w[field_group_id label as].include?(k) }
     field1 = CustomFieldPair.find(params['id'])
     field1.update_attributes(base_params.merge(pair['0']))
     field2 = field1.paired_with

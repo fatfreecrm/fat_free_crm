@@ -60,7 +60,7 @@ describe User do
         @user = FactoryGirl.build(:user)
       end
 
-      %w(account campaign lead contact opportunity).each do |asset|
+      %w[account campaign lead contact opportunity].each do |asset|
         it "should not destroy the user if she owns #{asset}" do
           FactoryGirl.create(asset, user: @user)
 

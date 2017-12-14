@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class HomeController < ApplicationController
-  before_action :require_user, except: [:toggle, :timezone]
+  before_action :require_user, except: %i[toggle timezone]
   before_action :set_current_tab, only: :index
 
   #----------------------------------------------------------------------------
@@ -57,9 +57,9 @@ class HomeController < ApplicationController
   #----------------------------------------------------------------------------
   def timeline
     state = params[:state].to_s
-    if %w(Collapsed Expanded).include?(state)
+    if %w[Collapsed Expanded].include?(state)
       if (model_type = params[:type].to_s).present?
-        if %w(comment email).include?(model_type)
+        if %w[comment email].include?(model_type)
           model = model_type.camelize.constantize
           item = model.find(params[:id])
           item.update_attribute(:state, state)
@@ -115,7 +115,7 @@ class HomeController < ApplicationController
   def activity_event
     event = current_user.pref[:activity_event]
     if event == "all_events"
-      %w(create update destroy)
+      %w[create update destroy]
     else
       event
     end
@@ -155,8 +155,8 @@ class HomeController < ApplicationController
     duration = current_user.pref[:activity_duration]
     if duration
       words = duration.split("_") # "two_weeks" => 2.weeks
-      if %w(one two).include?(words.first) && %w(hour day days week weeks month).include?(words.last)
-        %w(zero one two).index(words.first).send(words.last)
+      if %w[one two].include?(words.first) && %w[hour day days week weeks month].include?(words.last)
+        %w[zero one two].index(words.first).send(words.last)
       end
     end
   end

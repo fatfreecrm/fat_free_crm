@@ -56,11 +56,11 @@ class Campaign < ActiveRecord::Base
   exportable
   sortable by: ["name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
-  has_ransackable_associations %w(leads opportunities tags activities emails comments tasks)
+  has_ransackable_associations %w[leads opportunities tags activities emails comments tasks]
   ransack_can_autocomplete
 
   validates_presence_of :name, message: :missing_campaign_name
-  validates_uniqueness_of :name, scope: [:user_id, :deleted_at]
+  validates_uniqueness_of :name, scope: %i[user_id deleted_at]
   validate :start_and_end_dates
   validate :users_for_shared_access
   validates :status, inclusion: { in: proc { Setting.unroll(:campaign_status).map { |s| s.last.to_s } } }, allow_blank: true

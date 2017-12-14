@@ -23,7 +23,7 @@ Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 # Load shared behavior modules to be included by Runner config.
 Dir["./spec/shared/**/*.rb"].sort.each { |f| require f }
 
-TASK_STATUSES = %w(pending assigned completed).freeze
+TASK_STATUSES = %w[pending assigned completed].freeze
 
 I18n.locale = 'en-US'
 

@@ -14,7 +14,7 @@ FactoryGirl.define do
     access "Public"
     title               { FactoryGirl.generate(:title) }
     department          { FFaker::Name.name + " Dept." }
-    source              { %w(campaign cold_call conference online referral self web word_of_mouth other).sample }
+    source              { %w[campaign cold_call conference online referral self web word_of_mouth other].sample }
     email               { FFaker::Internet.email }
     alt_email           { FFaker::Internet.email }
     phone               { FFaker::PhoneNumber.phone_number }

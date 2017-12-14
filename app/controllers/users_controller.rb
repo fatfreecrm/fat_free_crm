@@ -4,12 +4,12 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class UsersController < ApplicationController
-  before_action :set_current_tab, only: [:show, :opportunities_overview] # Don't hightlight any tabs.
+  before_action :set_current_tab, only: %i[show opportunities_overview] # Don't hightlight any tabs.
 
   check_authorization
   load_and_authorize_resource # handles all security
 
-  respond_to :html, only: [:show, :new]
+  respond_to :html, only: %i[show new]
 
   # GET /users/1
   # GET /users/1.js

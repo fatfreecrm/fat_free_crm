@@ -1,5 +1,5 @@
 class AddAccountContactsIndex < ActiveRecord::Migration
   def change
-    add_index :account_contacts, [:account_id, :contact_id]
+    add_index :account_contacts, %i[account_id contact_id]
   end
 end

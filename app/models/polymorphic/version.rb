@@ -6,9 +6,9 @@
 require 'paper_trail'
 
 class Version < PaperTrail::Version
-  ASSETS = %w(all tasks campaigns leads accounts contacts opportunities comments emails)
-  EVENTS = %w(all_events create view update destroy)
-  DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
+  ASSETS = %w[all tasks campaigns leads accounts contacts opportunities comments emails]
+  EVENTS = %w[all_events create view update destroy]
+  DURATION = %w[one_hour one_day two_days one_week two_weeks one_month]
 
   belongs_to :related, polymorphic: true
   belongs_to :user, foreign_key: :whodunnit
