@@ -38,7 +38,7 @@ describe AccountsController do
     end
 
     it "should filter out accounts by category" do
-      categories = %w(customer vendor)
+      categories = %w[customer vendor]
       controller.session[:accounts_filter] = categories.join(',')
       @accounts = [
         FactoryGirl.create(:account, user: current_user, category: categories.first),

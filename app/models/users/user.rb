@@ -159,7 +159,7 @@ class User < ActiveRecord::Base
   # Prevent deleting a user unless she has no artifacts left.
   #----------------------------------------------------------------------------
   def has_related_assets?
-    sum = %w(Account Campaign Lead Contact Opportunity Comment Task).detect do |asset|
+    sum = %w[Account Campaign Lead Contact Opportunity Comment Task].detect do |asset|
       klass = asset.constantize
 
       asset != "Comment" && klass.assigned_to(self).exists? || klass.created_by(self).exists?
@@ -177,7 +177,7 @@ class User < ActiveRecord::Base
     end
 
     def can_signup?
-      [:allowed, :needs_approval].include? Setting.user_signup
+      %i[allowed needs_approval].include? Setting.user_signup
     end
   end
 

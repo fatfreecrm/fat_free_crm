@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   helper_method :called_from_index_page?, :called_from_landing_page?
   helper_method :klass
 
-  respond_to :html, only: [:index, :show, :auto_complete]
+  respond_to :html, only: %i[index show auto_complete]
   respond_to :js
   respond_to :json, :xml, except: :edit
   respond_to :atom, :csv, :rss, :xls, only: :index

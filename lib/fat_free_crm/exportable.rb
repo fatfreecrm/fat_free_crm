@@ -43,7 +43,7 @@ module FatFreeCRM
 
     module SingletonMethods
     end
-  end # Exportable
-end # FatFreeCRM
+  end
+end
 
 ActiveRecord::Base.send(:include, FatFreeCRM::Exportable)

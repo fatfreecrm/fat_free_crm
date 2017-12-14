@@ -46,7 +46,7 @@ describe "/campaigns/update" do
         expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
       end
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     describe "on landing page -" do
@@ -76,5 +76,5 @@ describe "/campaigns/update" do
         expect(rendered).to include('focus()')
       end
     end
-  end # errors
+  end
 end

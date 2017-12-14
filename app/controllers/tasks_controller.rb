@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 class TasksController < ApplicationController
   before_action :require_user
-  before_action :set_current_tab, only: [:index, :show]
+  before_action :set_current_tab, only: %i[index show]
   before_action :update_sidebar, only: :index
 
   # GET /tasks

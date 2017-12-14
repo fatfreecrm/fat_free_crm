@@ -1,4 +1,4 @@
-class CreateAccountOpportunities < ActiveRecord::Migration
+class CreateAccountOpportunities < ActiveRecord::Migration[4.2]
   def self.up
     create_table :account_opportunities, force: true do |t|
       t.references :account

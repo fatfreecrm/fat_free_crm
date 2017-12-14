@@ -18,7 +18,7 @@ describe "admin/users/update" do
       expect(rendered).to include("user_#{@user.id}")
       expect(rendered).to include(%/$('#user_#{@user.id}').effect("highlight"/)
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     before do
@@ -32,5 +32,5 @@ describe "admin/users/update" do
       expect(rendered).to include(%/$('#user_#{@user.id}').effect("shake"/)
       expect(rendered).to include(%/$('#user_username').focus()/)
     end
-  end # errors
+  end
 end

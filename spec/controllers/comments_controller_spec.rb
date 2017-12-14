@@ -6,7 +6,7 @@
 require 'spec_helper'
 
 describe CommentsController do
-  COMMENTABLE = [:account, :campaign, :contact, :lead, :opportunity].freeze
+  COMMENTABLE = %i[account campaign contact lead opportunity].freeze
 
   before(:each) do
     require_user
@@ -32,7 +32,7 @@ describe CommentsController do
           expect(flash[:warning]).not_to eq(nil)
           expect(response).to redirect_to(root_path)
         end
-      end # HTML
+      end
 
       describe "(JSON)" do
         before(:each) do
@@ -51,7 +51,7 @@ describe CommentsController do
           expect(flash[:warning]).not_to eq(nil)
           expect(response.code).to eq("404")
         end
-      end # JSON
+      end
 
       describe "(XML)" do
         before(:each) do
@@ -70,8 +70,8 @@ describe CommentsController do
           expect(flash[:warning]).not_to eq(nil)
           expect(response.code).to eq("404")
         end
-      end # XML
-    end # COMMENTABLE.each
+      end
+    end
   end
 
   # GET /comments/1/edit                                                   AJAX

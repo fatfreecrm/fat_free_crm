@@ -74,7 +74,7 @@ describe "/contacts/update" do
         expect(rendered).to include("#recently")
       end
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     before do
@@ -126,5 +126,5 @@ describe "/contacts/update" do
         expect(rendered).to include('focus()')
       end
     end
-  end # errors
+  end
 end

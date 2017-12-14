@@ -1,4 +1,4 @@
-class CreateCampaigns < ActiveRecord::Migration
+class CreateCampaigns < ActiveRecord::Migration[4.2]
   def self.up
     create_table :campaigns, force: true do |t|
       t.string :uuid,   limit: 36
@@ -24,7 +24,7 @@ class CreateCampaigns < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :campaigns, [:user_id, :name, :deleted_at], unique: true
+    add_index :campaigns, %i[user_id name deleted_at], unique: true
     add_index :campaigns, :assigned_to
   end
 

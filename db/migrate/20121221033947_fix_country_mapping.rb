@@ -1,4 +1,4 @@
-class FixCountryMapping < ActiveRecord::Migration
+class FixCountryMapping < ActiveRecord::Migration[4.2]
   def up
     message = """ Important note about countries. Please read carefully!
 

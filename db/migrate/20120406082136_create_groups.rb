@@ -1,4 +1,4 @@
-class CreateGroups < ActiveRecord::Migration
+class CreateGroups < ActiveRecord::Migration[4.2]
   def change
     create_table :groups do |t|
       t.string :name
@@ -14,6 +14,6 @@ class CreateGroups < ActiveRecord::Migration
     end
     add_index :groups_users, :group_id
     add_index :groups_users, :user_id
-    add_index :groups_users, [:group_id, :user_id]
+    add_index :groups_users, %i[group_id user_id]
   end
 end

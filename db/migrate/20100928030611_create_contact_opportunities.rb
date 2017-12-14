@@ -1,4 +1,4 @@
-class CreateContactOpportunities < ActiveRecord::Migration
+class CreateContactOpportunities < ActiveRecord::Migration[4.2]
   def self.up
     create_table :contact_opportunities, force: true do |t|
       t.references :contact

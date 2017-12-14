@@ -52,7 +52,7 @@ class Contact < ActiveRecord::Base
 
   delegate :campaign, to: :lead, allow_nil: true
 
-  has_ransackable_associations %w(account opportunities tags activities emails addresses comments tasks)
+  has_ransackable_associations %w[account opportunities tags activities emails addresses comments tasks]
   ransack_can_autocomplete
 
   serialize :subscribed_users, Set
@@ -162,7 +162,7 @@ class Contact < ActiveRecord::Base
       assigned_to: params[:account][:assigned_to],
       access:      params[:access]
     }
-    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info).each do |name|
+    %w[first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info].each do |name|
       attributes[name] = model.send(name.intern)
     end
 

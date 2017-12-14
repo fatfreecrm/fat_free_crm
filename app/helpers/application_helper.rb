@@ -16,14 +16,14 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def tabless_layout?
-    %w(authentications passwords).include?(controller.controller_name) ||
-      ((controller.controller_name == "users") && %w(create new).include?(controller.action_name))
+    %w[authentications passwords].include?(controller.controller_name) ||
+      ((controller.controller_name == "users") && %w[create new].include?(controller.action_name))
   end
 
   # Show existing flash or embed hidden paragraph ready for flash[:notice]
   #----------------------------------------------------------------------------
   def show_flash(options = { sticky: false })
-    [:error, :warning, :info, :notice].each do |type|
+    %i[error warning info notice].each do |type|
       if flash[type]
         html = content_tag(:div, h(flash[type]), id: "flash")
         flash[type] = nil
@@ -175,7 +175,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def jumpbox(current)
-    tabs = [:campaigns, :accounts, :leads, :contacts, :opportunities]
+    tabs = %i[campaigns accounts leads contacts opportunities]
     current = tabs.first unless tabs.include?(current)
     tabs.map do |tab|
       link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", "html-data" => tab, class: (tab == current ? 'selected' : ''))
@@ -252,7 +252,7 @@ module ApplicationHelper
   # Display web presence mini-icons for Contact or Lead.
   #----------------------------------------------------------------------------
   def web_presence_icons(person)
-    [:blog, :linkedin, :facebook, :twitter, :skype].map do |site|
+    %i[blog linkedin facebook twitter skype].map do |site|
       url = person.send(site)
       unless url.blank?
         if site == :skype
@@ -368,15 +368,15 @@ module ApplicationHelper
     url_params[:view] = @view unless @view.blank? # tasks
     url_params[:id] = params[:id] unless params[:id].blank?
 
-    exports = %w(xls csv).map do |format|
+    exports = %w[xls csv].map do |format|
       link_to(format.upcase, url_params.merge(format: format), title: I18n.t(:"to_#{format}")) unless action.to_s == "show"
     end
 
-    feeds = %w(rss atom).map do |format|
+    feeds = %w[rss atom].map do |format|
       link_to(format.upcase, url_params.merge(format: format, authentication_credentials: token), title: I18n.t(:"to_#{format}"))
     end
 
-    links = %w(perm).map do |format|
+    links = ['perm'].map do |format|
       link_to(format.upcase, url_params, title: I18n.t(:"to_#{format}"))
     end
 

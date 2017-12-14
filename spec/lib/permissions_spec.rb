@@ -30,7 +30,7 @@ describe FatFreeCRM::Permissions do
 
     it "should assign permissions to the object" do
       expect(@entity.permissions.size).to eq(0)
-      @entity.user_ids = %w(1 2 3)
+      @entity.user_ids = %w[1 2 3]
       @entity.save!
       expect(@entity.permissions.where(user_id: [1, 2, 3]).size).to eq(3)
     end
@@ -44,7 +44,7 @@ describe FatFreeCRM::Permissions do
     it "should replace existing permissions" do
       @entity.permissions << FactoryGirl.create(:permission, user_id: 1, asset: @entity)
       @entity.permissions << FactoryGirl.create(:permission, user_id: 2, asset: @entity)
-      @entity.user_ids = %w(2 3)
+      @entity.user_ids = %w[2 3]
       @entity.save!
       expect(@entity.permissions.size).to eq(2)
       expect(@entity.permissions.where(user_id: [1]).size).to eq(0)
@@ -59,7 +59,7 @@ describe FatFreeCRM::Permissions do
     end
     it "should assign permissions to the object" do
       expect(@entity.permissions.size).to eq(0)
-      @entity.group_ids = %w(1 2 3)
+      @entity.group_ids = %w[1 2 3]
       @entity.save!
       expect(@entity.permissions.where(group_id: [1, 2, 3]).size).to eq(3)
     end

@@ -1,4 +1,4 @@
-class ConvertRadioToRadioButtons < ActiveRecord::Migration
+class ConvertRadioToRadioButtons < ActiveRecord::Migration[4.2]
   def up
     # UPDATE "fields" SET "as" = 'radio_buttons' WHERE "fields"."as" = $1  [["as", "radio"]]
     Field.where(as: 'radio').update_all(as: 'radio_buttons')

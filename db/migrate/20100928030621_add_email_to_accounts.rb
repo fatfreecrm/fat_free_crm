@@ -1,4 +1,4 @@
-class AddEmailToAccounts < ActiveRecord::Migration
+class AddEmailToAccounts < ActiveRecord::Migration[4.2]
   def self.up
     add_column :accounts, :email, :string, limit: 64
   end

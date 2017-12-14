@@ -36,7 +36,7 @@ module FatFreeCRM
           end
         ]
       end
-    end # ClassMethods
+    end
   end
 end
 

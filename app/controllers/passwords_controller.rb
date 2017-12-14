@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class PasswordsController < ApplicationController
-  before_action :load_user_using_perishable_token, only: [:edit, :update]
+  before_action :load_user_using_perishable_token, only: %i[edit update]
   before_action :require_no_user
 
   #----------------------------------------------------------------------------

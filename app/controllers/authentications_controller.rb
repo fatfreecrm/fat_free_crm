@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class AuthenticationsController < ApplicationController
-  before_action :require_no_user, only: [:new, :create, :show]
+  before_action :require_no_user, only: %i[new create show]
   before_action :require_user, only: :destroy
 
   #----------------------------------------------------------------------------

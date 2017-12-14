@@ -75,7 +75,7 @@ describe "/leads/update" do
         expect(rendered).to have_text("Recent Items")
       end
     end
-  end # no errors
+  end
 
   describe "validation errors :" do
     before do
@@ -120,5 +120,5 @@ describe "/leads/update" do
         expect(rendered).to include('focus()')
       end
     end
-  end # errors
+  end
 end

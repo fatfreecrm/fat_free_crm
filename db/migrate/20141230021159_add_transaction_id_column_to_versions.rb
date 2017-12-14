@@ -1,4 +1,4 @@
-class AddTransactionIdColumnToVersions < ActiveRecord::Migration
+class AddTransactionIdColumnToVersions < ActiveRecord::Migration[4.2]
   def self.up
     add_column :versions, :transaction_id, :integer
     add_index :versions, [:transaction_id]

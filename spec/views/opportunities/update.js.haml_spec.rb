@@ -145,5 +145,5 @@ describe "/opportunities/update" do
         expect(rendered).to include('focus()')
       end
     end
-  end # errors
+  end
 end

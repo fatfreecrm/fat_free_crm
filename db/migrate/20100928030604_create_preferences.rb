@@ -1,4 +1,4 @@
-class CreatePreferences < ActiveRecord::Migration
+class CreatePreferences < ActiveRecord::Migration[4.2]
   def self.up
     create_table :preferences do |t|
       t.references :user
@@ -6,7 +6,7 @@ class CreatePreferences < ActiveRecord::Migration
       t.text :value
       t.timestamps
     end
-    add_index :preferences, [:user_id, :name]
+    add_index :preferences, %i[user_id name]
   end
 
   def self.down

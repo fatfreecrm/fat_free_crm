@@ -1,4 +1,4 @@
-class CreateUsers < ActiveRecord::Migration
+class CreateUsers < ActiveRecord::Migration[4.2]
   def self.up
     create_table :users, force: true do |t|
       t.string :uuid,             limit: 36
@@ -32,7 +32,7 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :users, [:username, :deleted_at], unique: true
+    add_index :users, %i[username deleted_at], unique: true
     add_index :users, :email
     add_index :users, :last_request_at
     add_index :users, :remember_token

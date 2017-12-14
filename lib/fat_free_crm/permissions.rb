@@ -33,7 +33,7 @@ module FatFreeCRM
     module InstanceMethods
       # Save shared permissions to the model, if any.
       #--------------------------------------------------------------------------
-      %w(group user).each do |model|
+      %w[group user].each do |model|
         class_eval %{
 
           def #{model}_ids=(value)
@@ -103,7 +103,7 @@ module FatFreeCRM
 
     module SingletonMethods
     end
-  end # Permissions
-end # FatFreeCRM
+  end
+end
 
 ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
