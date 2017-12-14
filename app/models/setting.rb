@@ -86,7 +86,7 @@ class Setting < ActiveRecord::Base
       # Catches all database-related errors, so that Setting will return nil
       # instead of crashing the entire application.
 
-      table_exists?
+      data_source_exists?
     rescue
       false
     end
