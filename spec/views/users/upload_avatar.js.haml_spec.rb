@@ -25,7 +25,7 @@ describe "/users/upload_avatar" do
       expect(rendered).to include("crm.flip_form('upload_avatar'")
       expect(rendered).to include("crm.set_title('upload_avatar', 'My Profile')")
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     before do
@@ -40,5 +40,5 @@ describe "/users/upload_avatar" do
       expect(rendered).to include("$('#upload_avatar').html")
       expect(rendered).to include(%/$('#upload_avatar').effect("shake"/)
     end
-  end # errors
+  end
 end

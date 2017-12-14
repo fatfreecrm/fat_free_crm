@@ -89,7 +89,7 @@ describe "/leads/promote" do
         expect(rendered).to include("$('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}")
       end
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     before do
@@ -137,5 +137,5 @@ describe "/leads/promote" do
       expect(rendered).to include("crm.create_or_select_account")
       expect(rendered).to include('focus()')
     end
-  end # errors
+  end
 end

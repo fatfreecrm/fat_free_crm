@@ -28,7 +28,7 @@ describe "/users/change_password" do
       expect(rendered).to include("#flash")
       expect(rendered).to include("crm.flash('notice')")
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     it "should redraw the [Change Password] form and shake it" do
@@ -46,5 +46,5 @@ describe "/users/change_password" do
 
       expect(rendered).to include("$('#user_password').focus();")
     end
-  end # errors
+  end
 end

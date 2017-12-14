@@ -28,7 +28,7 @@ describe "/users/update" do
       render
       expect(rendered).to include("$('#profile').html")
     end
-  end # no errors
+  end
 
   describe "validation errors :" do
     before do
@@ -41,5 +41,5 @@ describe "/users/update" do
       expect(rendered).to include(%/$('#edit_profile').effect("shake"/)
       expect(rendered).to include("$('#user_email').focus();")
     end
-  end # errors
+  end
 end
