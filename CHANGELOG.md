@@ -4,7 +4,7 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased (0.15.0)
+Thu Dec 14, 2017 (0.15.0)
 ---------------------------------------------------------------------
 This release upgrades to rails 5.0.0
  - #500 - Upgrade rails
