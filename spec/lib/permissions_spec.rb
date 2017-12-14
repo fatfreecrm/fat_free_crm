@@ -151,9 +151,9 @@ describe FatFreeCRM::Permissions do
     context 'with an existing record' do
       before :each do
         @entity = UserWithPermission.create
-        @permission1 = Permission.new(user_id: 1, group_id: 1, asset_id: @entity.id, asset_type: 'UserWithPermission').save!
-        @permission2 = Permission.new(user_id: 1, group_id: 2, asset_id: @entity.id, asset_type: 'UserWithPermission').save!
-        @permissions = [@permission1, @permission2]
+        
+        @permission1 = Permission.create(user_id: 1, group_id: 1, asset_id: @entity.id, asset_type: 'UserWithPermission')
+        @permission2 = Permission.create(user_id: 1, group_id: 2, asset_id: @entity.id, asset_type: 'UserWithPermission')
       end
       it 'should remove the related permissions' do
         current = Permission.all.count
