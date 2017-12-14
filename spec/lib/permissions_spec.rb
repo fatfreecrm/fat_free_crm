@@ -137,4 +137,30 @@ describe FatFreeCRM::Permissions do
       entity.save_with_model_permissions(model)
     end
   end
+
+  describe 'remove_permissions' do
+    context 'with a new record' do
+      before :each do
+        @entity = UserWithPermission.new
+      end
+      it 'should have no relationships to destroy' do
+        expect(@entity.remove_permissions).to eq []
+      end
+    end
+
+    context 'with an existing record' do
+      before :each do
+        @entity = UserWithPermission.create
+        @permission1 = Permission.new(user_id: 1, group_id: 1, asset_id: @entity.id, asset_type: 'UserWithPermission').save!
+        @permission2 = Permission.new(user_id: 1, group_id: 2, asset_id: @entity.id, asset_type: 'UserWithPermission').save!
+        @permissions = [@permission1, @permission2]
+      end
+      it 'should remove the related permissions' do
+        current = Permission.all.count
+
+        expect(@entity.remove_permissions.length).to eq 2
+        expect(Permission.all.count).to eq (current - 2)
+      end
+    end
+  end
 end
