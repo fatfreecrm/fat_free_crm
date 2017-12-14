@@ -16,7 +16,7 @@ translations to the Fat Free CRM:
   * Codemis
   * Craig Ulliott (USA)
   * Daniel Jabbour (USA)
-  * Daniel O'Connor
+  * Daniel O'Connor (@CloCkWeRX)
   * David Cornu
   * David Keita
   * Dirk Kelly (Australia)
@@ -38,6 +38,7 @@ translations to the Fat Free CRM:
   * James Zhang (China)
   * Jan Schulz-Hofen
   * Jim Gay (USA)
+  * Johnny Shields (@jonnyshields)
   * Josef Chmel
   * Jose Luis Gordo Romero (Spain)
   * Joseph Near
