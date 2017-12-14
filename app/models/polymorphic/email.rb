@@ -46,14 +46,16 @@ class Email < ActiveRecord::Base
     super
   end
 
-  def body_with_textile
-    if defined?(RedCloth)
-      RedCloth.new(body_without_textile).to_html
-    else
-      body_without_textile.to_s.gsub("\n", "<br/>")
+  module BodyWithTextile
+    def body
+      if defined?(RedCloth)
+        RedCloth.new(super).to_html
+      else
+        super.to_s.gsub("\n", "<br/>")
+      end
     end
   end
-  alias_method_chain :body, :textile
+  prepend BodyWithTextile
 
   ActiveSupport.run_load_hooks(:fat_free_crm_email, self)
 end
