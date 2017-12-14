@@ -1,4 +1,4 @@
-class RemoveUuid < ActiveRecord::Migration
+class RemoveUuid < ActiveRecord::Migration[4.2]
   @@uuid_configured = false
 
   def self.up

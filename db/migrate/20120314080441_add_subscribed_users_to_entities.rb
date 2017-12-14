@@ -1,4 +1,4 @@
-class AddSubscribedUsersToEntities < ActiveRecord::Migration
+class AddSubscribedUsersToEntities < ActiveRecord::Migration[4.2]
   def change
     %w(accounts campaigns contacts leads opportunities tasks).each do |table|
       add_column table.to_sym, :subscribed_users, :text

@@ -1,4 +1,4 @@
-class CreateAccounts < ActiveRecord::Migration
+class CreateAccounts < ActiveRecord::Migration[4.2]
   def self.up
     create_table :accounts, force: true do |t|
       t.string :uuid, limit: 36

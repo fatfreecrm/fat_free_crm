@@ -1,4 +1,4 @@
-class CreateAddresses < ActiveRecord::Migration
+class CreateAddresses < ActiveRecord::Migration[4.2]
   def self.up
     create_table :addresses do |t|
       t.string :street1

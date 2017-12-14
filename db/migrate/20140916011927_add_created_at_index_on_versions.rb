@@ -1,4 +1,4 @@
-class AddCreatedAtIndexOnVersions < ActiveRecord::Migration
+class AddCreatedAtIndexOnVersions < ActiveRecord::Migration[4.2]
   def change
     add_index :versions, :created_at
   end

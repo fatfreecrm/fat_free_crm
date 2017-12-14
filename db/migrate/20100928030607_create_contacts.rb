@@ -1,4 +1,4 @@
-class CreateContacts < ActiveRecord::Migration
+class CreateContacts < ActiveRecord::Migration[4.2]
   def self.up
     create_table :contacts, force: true do |t|
       t.string :uuid,   limit: 36

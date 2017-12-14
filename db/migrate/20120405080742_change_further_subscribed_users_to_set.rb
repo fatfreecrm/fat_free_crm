@@ -1,4 +1,4 @@
-class ChangeFurtherSubscribedUsersToSet < ActiveRecord::Migration
+class ChangeFurtherSubscribedUsersToSet < ActiveRecord::Migration[4.2]
   def up
     # Change the other tables that were missing from the previous migration
     %w(campaigns opportunities leads tasks accounts).each do |table|

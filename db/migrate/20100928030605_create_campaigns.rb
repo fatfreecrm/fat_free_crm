@@ -1,4 +1,4 @@
-class CreateCampaigns < ActiveRecord::Migration
+class CreateCampaigns < ActiveRecord::Migration[4.2]
   def self.up
     create_table :campaigns, force: true do |t|
       t.string :uuid,   limit: 36

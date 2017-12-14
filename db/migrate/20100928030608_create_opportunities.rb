@@ -1,4 +1,4 @@
-class CreateOpportunities < ActiveRecord::Migration
+class CreateOpportunities < ActiveRecord::Migration[4.2]
   def self.up
     create_table :opportunities, force: true do |t|
       t.string :uuid,     limit: 36

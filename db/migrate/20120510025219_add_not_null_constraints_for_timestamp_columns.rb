@@ -1,4 +1,4 @@
-class AddNotNullConstraintsForTimestampColumns < ActiveRecord::Migration
+class AddNotNullConstraintsForTimestampColumns < ActiveRecord::Migration[4.2]
   def up
     set_timestamp_constraints null: false unless $FFCRM_NEW_DATABASE
   end

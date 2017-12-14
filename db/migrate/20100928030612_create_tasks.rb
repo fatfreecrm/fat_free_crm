@@ -1,4 +1,4 @@
-class CreateTasks < ActiveRecord::Migration
+class CreateTasks < ActiveRecord::Migration[4.2]
   def self.up
     create_table :tasks, force: true do |t|
       t.string :uuid, limit: 36
