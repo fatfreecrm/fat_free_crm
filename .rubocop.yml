@@ -10,3 +10,6 @@ Metrics/LineLength:
 
 Style/MutableConstant:
   Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: percent
