@@ -1,6 +1,10 @@
 inherit_from: .rubocop_todo.yml
+
 AllCops:
   TargetRubyVersion: 2.3
+
+Bundler/OrderedGems:
+  Enabled: false
 
 StringLiterals:
   Enabled: false
