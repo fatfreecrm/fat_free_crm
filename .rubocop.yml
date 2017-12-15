@@ -18,6 +18,10 @@ Style/EmptyMethod:
 Style/MutableConstant:
   Enabled: false
 
+# See #647
+Style/SafeNavigation:
+  Enabled: false
+
 Style/WordArray:
   Exclude:
     - 'db/schema.rb'
