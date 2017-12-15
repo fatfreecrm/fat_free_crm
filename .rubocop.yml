@@ -12,6 +12,9 @@ StringLiterals:
 Metrics/LineLength:
   Enabled: false
 
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
 Style/MutableConstant:
   Enabled: false
 

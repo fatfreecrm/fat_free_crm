@@ -352,20 +352,6 @@ Style/EmptyCaseCondition:
   Exclude:
     - 'app/models/polymorphic/task.rb'
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: compact, expanded
-Style/EmptyMethod:
-  Exclude:
-    - 'app/controllers/admin/fields_controller.rb'
-    - 'app/controllers/admin/settings_controller.rb'
-    - 'app/controllers/admin/tags_controller.rb'
-    - 'app/controllers/entities_controller.rb'
-    - 'db/migrate/20120216042541_is_paranoid_to_paper_trail.rb'
-    - 'db/migrate/20120316045804_activities_to_versions.rb'
-    - 'db/migrate/20121221033947_fix_country_mapping.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
