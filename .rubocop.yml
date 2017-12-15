@@ -15,5 +15,9 @@ Metrics/LineLength:
 Style/MutableConstant:
   Enabled: false
 
+Style/WordArray:
+  Exclude:
+    - 'db/schema.rb'
+
 Style/SymbolArray:
   EnforcedStyle: percent

@@ -601,10 +601,3 @@ Style/VariableNumber:
   Exclude:
     - 'spec/controllers/home_controller_spec.rb'
 
-# Offense count: 18
-# Cop supports --auto-correct.
-# Configuration parameters: SupportedStyles, WordRegex.
-# SupportedStyles: percent, brackets
-Style/WordArray:
-  EnforcedStyle: percent
-  MinSize: 5
