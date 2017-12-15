@@ -195,7 +195,7 @@ class LeadsController < EntitiesController
   private
 
   #----------------------------------------------------------------------------
-  alias_method :get_leads, :get_list_of_records
+  alias get_leads get_list_of_records
 
   #----------------------------------------------------------------------------
   def get_campaigns

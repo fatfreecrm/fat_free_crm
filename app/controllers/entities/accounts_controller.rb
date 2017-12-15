@@ -125,7 +125,7 @@ class AccountsController < EntitiesController
   private
 
   #----------------------------------------------------------------------------
-  alias_method :get_accounts, :get_list_of_records
+  alias get_accounts get_list_of_records
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

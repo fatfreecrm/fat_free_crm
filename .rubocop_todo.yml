@@ -270,24 +270,6 @@ Style/AccessorMethodName:
     - 'spec/controllers/entities/opportunities_controller_spec.rb'
     - 'spec/support/macros.rb'
 
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: prefer_alias, prefer_alias_method
-Style/Alias:
-  Exclude:
-    - 'app/controllers/authentications_controller.rb'
-    - 'app/controllers/entities/accounts_controller.rb'
-    - 'app/controllers/entities/campaigns_controller.rb'
-    - 'app/controllers/entities/contacts_controller.rb'
-    - 'app/controllers/entities/leads_controller.rb'
-    - 'app/controllers/entities/opportunities_controller.rb'
-    - 'app/models/entities/contact.rb'
-    - 'app/models/entities/lead.rb'
-    - 'app/models/users/user.rb'
-    - 'lib/fat_free_crm/core_ext/string.rb'
-    - 'spec/support/auth_macros.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

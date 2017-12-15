@@ -112,7 +112,7 @@ class User < ActiveRecord::Base
   def preference
     @preference ||= preferences.build
   end
-  alias_method :pref, :preference
+  alias pref preference
 
   #----------------------------------------------------------------------------
   def deliver_password_reset_instructions!

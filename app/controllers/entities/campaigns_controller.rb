@@ -163,7 +163,7 @@ class CampaignsController < EntitiesController
   private
 
   #----------------------------------------------------------------------------
-  alias_method :get_campaigns, :get_list_of_records
+  alias get_campaigns get_list_of_records
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

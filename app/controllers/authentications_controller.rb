@@ -40,7 +40,7 @@ class AuthenticationsController < ApplicationController
   # The login form gets submitted to :update action when @authentication is
   # saved (@authentication != nil) but the user is suspended.
   #----------------------------------------------------------------------------
-  alias_method :update, :create
+  alias update create
 
   #----------------------------------------------------------------------------
   def destroy

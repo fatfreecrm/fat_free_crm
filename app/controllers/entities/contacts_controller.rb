@@ -146,7 +146,7 @@ class ContactsController < EntitiesController
   private
 
   #----------------------------------------------------------------------------
-  alias_method :get_contacts, :get_list_of_records
+  alias get_contacts get_list_of_records
 
   #----------------------------------------------------------------------------
   def get_accounts

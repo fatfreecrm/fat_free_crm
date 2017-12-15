@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class String
-  alias_method :-, :delete
+  alias - delete
 
   def n2br
     strip.gsub("\n", "<br />")
