@@ -6,8 +6,8 @@ if item == 'task'
   title  = t(:"#{@view}_tab") << ' ' << t(@items.to_sym)
 end
 
-xml.instruct! :xml, :version => "1.0"
-xml.rss :version => "2.0" do
+xml.instruct! :xml, version: "1.0"
+xml.rss version: "2.0" do
   xml.channel do
     xml.generator  "Fat Free CRM v#{FatFreeCRM::VERSION::STRING}"
     xml.link       send(:"#{@items}_url")

@@ -399,17 +399,6 @@ Style/GlobalVars:
 Style/GuardClause:
   Enabled: false
 
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
-Style/HashSyntax:
-  Exclude:
-    - 'app/views/application/index.rss.builder'
-    - 'app/views/application/show.rss.builder'
-    - 'app/views/home/index.atom.builder'
-    - 'app/views/home/index.rss.builder'
-
 # Offense count: 2
 Style/IdenticalConditionalBranches:
   Exclude:
