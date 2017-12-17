@@ -20,7 +20,7 @@
 
 class FieldGroup < ActiveRecord::Base
   has_many :fields, -> { order :position }
-  belongs_to :tag
+  belongs_to :tag, optional: true
   before_destroy :not_default_field_group, :move_fields_to_default_field_group
 
   validates_presence_of :label

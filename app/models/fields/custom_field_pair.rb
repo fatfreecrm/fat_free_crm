@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CustomFieldPair < CustomField
-  has_one :pair, class_name: CustomFieldPair, foreign_key: 'pair_id', dependent: :destroy # points to 'end'
+  has_one :pair, class_name: 'CustomFieldPair', foreign_key: 'pair_id', dependent: :destroy # points to 'end'
 
   # Helper to create a pair. Used in fields_controller
   #------------------------------------------------------------------------------

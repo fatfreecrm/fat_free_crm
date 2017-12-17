@@ -42,10 +42,6 @@ class Email < ActiveRecord::Base
     state == "Collapsed"
   end
 
-  def body
-    super
-  end
-
   module BodyWithTextile
     def body
       if defined?(RedCloth)
