@@ -85,7 +85,7 @@ module FatFreeCRM
           unless @imap.disconnected?
             begin
               @imap.disconnect
-            rescue Exception => e
+            rescue Exception
               nil
             end
           end
