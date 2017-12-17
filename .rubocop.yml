@@ -6,11 +6,32 @@ AllCops:
 Bundler/OrderedGems:
   Enabled: false
 
+Gemspec/OrderedDependencies:
+  Enabled: false
+
 StringLiterals:
   Enabled: false
 
+Lint/BooleanSymbol:
+  Exclude:
+    - 'config/initializers/ransack.rb'
+
 Metrics/LineLength:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Gemfile'
+    - 'config/routes.rb'
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'spec/**/*'
+    - '**/*.gemspec'
+    - '**/*.rake'
+    - '**/*.xls.builder'
+
+Style/Alias:
+  EnforcedStyle: prefer_alias
 
 Style/EmptyMethod:
   EnforcedStyle: expanded
