@@ -114,7 +114,7 @@ class Contact < ActiveRecord::Base
       "#{last_name}, #{first_name}"
     end
   end
-  alias_method :name, :full_name
+  alias name full_name
 
   # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------

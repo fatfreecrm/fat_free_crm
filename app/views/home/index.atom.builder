@@ -13,7 +13,7 @@ atom_feed do |feed|
   end
 
   @activities.each do |activity|
-    feed.entry(activity, :url => '') do |entry|
+    feed.entry(activity, url: '') do |entry|
       entry.title activity_title(activity)
 
       entry.author do |author|

@@ -168,7 +168,7 @@ class Lead < ActiveRecord::Base
       "#{last_name}, #{first_name}"
     end
   end
-  alias_method :name, :full_name
+  alias name full_name
 
   private
 
