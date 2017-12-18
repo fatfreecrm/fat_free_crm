@@ -3,16 +3,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_tasks) do
     unless @tasks.empty?
       # Header.
       xml.Row do
-        heads = %w{id
-                   name
-                   due
-                   date_created
-                   date_updated
-                   completed
-                   user
-                   assigned_to
-                   category
-                   background_info}
+        heads = %w[id name due date_created date_updated completed user assigned_to category background_info]
 
         heads.each do |head|
           xml.Cell do

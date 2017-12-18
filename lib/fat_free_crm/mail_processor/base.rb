@@ -41,7 +41,7 @@ module FatFreeCRM
           end
         end
       rescue Exception => e
-        $stderr.puts "setup error #{e.inspect}"
+        warn "setup error #{e.inspect}"
       ensure
         disconnect!
       end
@@ -74,7 +74,7 @@ module FatFreeCRM
         @imap.select(@settings[:scan_folder]) unless options[:setup]
         @imap
       rescue Exception => e
-        $stderr.puts "Could not login to the IMAP server: #{e.inspect}" unless Rails.env == "test"
+        warn "Could not login to the IMAP server: #{e.inspect}" unless Rails.env == "test"
         nil
       end
 
@@ -105,8 +105,8 @@ module FatFreeCRM
             end
           rescue Exception => e
             if %w[test development].include?(Rails.env)
-              $stderr.puts e
-              $stderr.puts e.backtrace
+              warn e
+              warn e.backtrace
             end
             log "error processing email: #{e.inspect}", email
             discard(uid)

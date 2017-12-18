@@ -83,7 +83,7 @@ describe TasksController do
         expect(assigns[:tasks].values.flatten - @tasks.values.flatten).to eq([])
         hash = ActiveSupport::JSON.decode(response.body)
 
-        hash.keys.each do |key|
+        hash.each_key do |key|
           hash[key].each do |attr|
             task = Task.new(attr["task"])
             expect(task).to be_instance_of(Task)
@@ -99,7 +99,7 @@ describe TasksController do
         expect(assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).to eq([])
         expect(assigns[:tasks].values.flatten - @tasks.values.flatten).to eq([])
         hash = Hash.from_xml(response.body)
-        hash["hash"].keys.each do |key|
+        hash["hash"].each_key do |key|
           hash["hash"][key].each do |attr|
             task = Task.new(attr)
             expect(task).to be_instance_of(Task)

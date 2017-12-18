@@ -6,14 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: Include, TreatCommentsAsGroupSeparators.
-# Include: **/*.gemspec
-Gemspec/OrderedDependencies:
-  Exclude:
-    - 'fat_free_crm.gemspec'
-
 # Offense count: 1
 # Configuration parameters: Include.
 # Include: **/*.gemspec
@@ -56,12 +48,10 @@ Layout/ClosingParenthesisIndentation:
     - 'spec/models/polymorphic/version_spec.rb'
     - 'spec/views/comments/edit.js.haml_spec.rb'
 
-# Offense count: 3
+# Offense count: 1
 # Cop supports --auto-correct.
 Layout/EmptyLineAfterMagicComment:
   Exclude:
-    - 'db/schema.rb'
-    - 'fat_free_crm.gemspec'
     - 'spec/models/polymorphic/task_spec.rb'
 
 # Offense count: 21
@@ -95,7 +85,7 @@ Layout/EmptyLinesAroundExceptionHandlingKeywords:
   Exclude:
     - 'app/controllers/comments_controller.rb'
 
-# Offense count: 108
+# Offense count: 106
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.
 Layout/ExtraSpacing:
@@ -190,11 +180,6 @@ Layout/SpaceInsideArrayLiteralBrackets:
 Lint/AssignmentInCondition:
   Enabled: false
 
-# Offense count: 2
-Lint/BooleanSymbol:
-  Exclude:
-    - 'config/initializers/ransack.rb'
-
 # Offense count: 1
 Lint/DuplicateMethods:
   Exclude:
@@ -225,7 +210,7 @@ Lint/IneffectiveAccessModifier:
     - 'db/migrate/20100928030620_remove_uuid.rb'
     - 'lib/gravatar_image_tag.rb'
 
-# Offense count: 5
+# Offense count: 4
 Lint/RescueException:
   Exclude:
     - 'lib/fat_free_crm/mail_processor/base.rb'
@@ -261,11 +246,6 @@ Lint/UselessAssignment:
 # Offense count: 130
 Metrics/AbcSize:
   Max: 55
-
-# Offense count: 293
-# Configuration parameters: CountComments, ExcludedMethods.
-Metrics/BlockLength:
-  Max: 775
 
 # Offense count: 4
 # Configuration parameters: CountBlocks.
@@ -311,13 +291,12 @@ Naming/AccessorMethodName:
     - 'spec/controllers/entities/opportunities_controller_spec.rb'
     - 'spec/support/macros.rb'
 
-# Offense count: 8
+# Offense count: 1
 # Configuration parameters: Blacklist.
 # Blacklist: END, (?-mix:EO[A-Z]{1})
 Naming/HeredocDelimiterNaming:
   Exclude:
     - 'app/controllers/passwords_controller.rb'
-    - 'spec/lib/mail_processor/sample_emails/dropbox.rb'
 
 # Offense count: 4
 # Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist, MethodDefinitionMacros.
@@ -348,14 +327,13 @@ Performance/CompareWithBlock:
     - 'app/views/application/show.atom.builder'
     - 'app/views/home/index.atom.builder'
 
-# Offense count: 4
+# Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect.
 Performance/HashEachMethods:
   Exclude:
     - 'app/controllers/entities/opportunities_controller.rb'
     - 'lib/fat_free_crm/errors.rb'
-    - 'spec/controllers/tasks_controller_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -430,10 +408,9 @@ Style/ClassVars:
     - 'lib/fat_free_crm/tabs.rb'
     - 'lib/fat_free_crm/view_factory.rb'
 
-# Offense count: 7
+# Offense count: 6
 Style/CommentedKeyword:
   Exclude:
-    - 'app/controllers/entities/leads_controller.rb'
     - 'app/helpers/application_helper.rb'
     - 'app/models/users/authentication.rb'
     - 'db/migrate/20100928030617_drop_openid_tables.rb'
@@ -457,12 +434,7 @@ Style/ConditionalAssignment:
     - 'spec/spec_helper.rb'
     - 'spec/support/macros.rb'
 
-# Offense count: 2
-Style/DateTime:
-  Exclude:
-    - 'spec/models/fields/field_spec.rb'
-
-# Offense count: 128
+# Offense count: 127
 Style/Documentation:
   Enabled: false
 
@@ -479,13 +451,6 @@ Style/EmptyCaseCondition:
   Exclude:
     - 'app/models/polymorphic/task.rb'
     - 'lib/fat_free_crm/core_ext/alias_method_chain.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Encoding:
-  Exclude:
-    - 'db/schema.rb'
-    - 'fat_free_crm.gemspec'
 
 # Offense count: 1
 Style/EvalWithLocation:
@@ -632,28 +597,6 @@ Style/NumericPredicate:
     - 'app/models/users/user.rb'
     - 'lib/tasks/ffcrm/demo.rake'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/ParallelAssignment:
-  Exclude:
-    - 'lib/fat_free_crm/core_ext/alias_method_chain.rb'
-
-# Offense count: 100
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'app/views/tasks/index.xls.builder'
-    - 'config/locales/th.rb'
-    - 'lib/tasks/ffcrm/update_data.rake'
-    - 'spec/models/fields/field_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/PerlBackrefs:
-  Exclude:
-    - 'lib/fat_free_crm/core_ext/alias_method_chain.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/RandomWithOffset:
@@ -686,6 +629,14 @@ Style/RegexpLiteral:
     - 'spec/views/contacts/update.js.haml_spec.rb'
     - 'spec/views/opportunities/update.js.haml_spec.rb'
 
+# Offense count: 1
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: implicit, explicit
+Style/RescueStandardError:
+  Exclude:
+    - 'lib/fat_free_crm/mail_processor/base.rb'
+
 # Offense count: 9
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAsExpressionSeparator.
@@ -698,12 +649,6 @@ Style/Semicolon:
     - 'spec/models/fields/custom_field_date_pair_spec.rb'
     - 'spec/models/fields/custom_field_spec.rb'
     - 'spec/support/macros.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/StderrPuts:
-  Exclude:
-    - 'lib/fat_free_crm/mail_processor/base.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -724,7 +669,7 @@ Style/UnneededInterpolation:
     - 'app/views/opportunities/index.xls.builder'
     - 'app/views/tasks/index.xls.builder'
 
-# Offense count: 2164
+# Offense count: 2161
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
 Metrics/LineLength:

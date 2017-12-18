@@ -4,7 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 DROPBOX_EMAILS = {
-  plain: <<-END,
+  plain: <<-EMAIL,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -15,9 +15,9 @@ Content-Type: text/plain
 #{FFaker::Lorem.paragraph}
 
 Aaron
-END
+EMAIL
 
-  html: <<-END,
+  html: <<-EMAIL,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -32,9 +32,9 @@ Content-Type: text/html
     <p>Aaron</p>
   </body>
 </html>
-END
+EMAIL
 
-  first_line: <<-END,
+  first_line: <<-EMAIL,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -46,9 +46,9 @@ Content-Type: text/plain
 #{FFaker::Lorem.paragraph}
 
 Aaron
-END
+EMAIL
 
-  first_line_lead: <<-END,
+  first_line_lead: <<-EMAIL,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -60,9 +60,9 @@ Content-Type: text/plain
 #{FFaker::Lorem.paragraph}
 
 Aaron
-END
+EMAIL
 
-  first_line_contact: <<-END,
+  first_line_contact: <<-EMAIL,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -74,9 +74,9 @@ Content-Type: text/plain
 #{FFaker::Lorem.paragraph}
 
 Aaron
-END
+EMAIL
 
-  forwarded: <<-END,
+  forwarded: <<-EMAIL,
 From: Aaron Assembler <aaron@example.com>
 To: dropbox@example.com
 Subject: Hi there
@@ -93,9 +93,9 @@ To: Cindy Cluster <cindy@example.com>
 #{FFaker::Lorem.paragraph}
 
 Ben
-END
+EMAIL
 
-  multipart: <<-END,
+  multipart: <<-EMAIL,
 From: Aaron Assembler <aaron@example.com>
 To: Ben Bootloader <ben@example.com>
 Subject: Hi there
@@ -167,5 +167,5 @@ G4LCQQBu3gjc+6lGwIA/KBPe1bOALkwasIj8wqoFFWKPqEA6QEKEmxqZQvTi1UxbEQebFRwkwJxh
 ADpMhSwQ4p2Bz9o8V84oX868ufPn0KNLn64hAgA7
 
 --_006_200DA2FF7EAFC04BAD979DB9CF293BB365151E88CLEARWATERtesta_--
-END
+EMAIL
 }
