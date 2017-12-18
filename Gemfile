@@ -38,7 +38,7 @@ remove 'fat_free_crm'
 group :development do
   # don't load these gems in travis
   unless ENV["CI"]
-    gem 'thin'
+    gem 'puma'
     gem 'capistrano'
     gem 'capistrano-bundler'
     gem 'capistrano-rails'
@@ -69,13 +69,12 @@ group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'database_cleaner'
-  gem "acts_as_fu"
-  gem 'zeus' unless ENV["CI"]
+  gem 'acts_as_fu'
+  gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
 end
 
 group :heroku do
-  gem 'unicorn', platform: :ruby
   gem 'rails_12factor'
 end
 
@@ -87,3 +86,4 @@ gem 'therubyracer', platform: :ruby unless ENV["CI"]
 gem 'nokogiri', '>= 1.8.1'
 gem 'activemodel-serializers-xml'
 gem 'bootsnap', require: false
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
