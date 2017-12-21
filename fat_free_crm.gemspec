@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+
 $LOAD_PATH.push File.expand_path('../vendor/gems/globby-0.1.2/lib', __FILE__)
 require 'globby'
 rules = File.read("#{File.expand_path('..', __FILE__)}/.gitignore").split("\n")

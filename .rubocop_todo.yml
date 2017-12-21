@@ -311,14 +311,6 @@ Naming/VariableNumber:
   Exclude:
     - 'spec/controllers/home_controller_spec.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Performance/CompareWithBlock:
-  Exclude:
-    - 'app/views/application/index.atom.builder'
-    - 'app/views/application/show.atom.builder'
-    - 'app/views/home/index.atom.builder'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect.
