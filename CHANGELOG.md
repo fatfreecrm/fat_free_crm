@@ -4,6 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Unreleased
+---------------------------------------------------------------------
+- #633 Upgrade to rails 5.1.0
+- #641 Swap default server from thin/unicorn to puma
+
 Thu Dec 14, 2017 (0.15.0)
 ---------------------------------------------------------------------
 This release upgrades to rails 5.0.0
