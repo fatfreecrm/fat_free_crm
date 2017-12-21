@@ -21,24 +21,24 @@ describe TasksController do
         hash[due] ||= []
       end
       hash[due] << case view
-      when "pending"
-        FactoryGirl.create(:task, user: user, bucket: due.to_s)
-      when "assigned"
-        FactoryGirl.create(:task, user: user, bucket: due.to_s, assigned_to: 1)
-      when "completed"
-        completed_at = case due
-          when :completed_today
-            Date.yesterday + 1.day
-          when :completed_yesterday
-            Date.yesterday
-          when :completed_last_week
-            Date.today.beginning_of_week - 7.days
-          when :completed_this_month
-            Date.today.beginning_of_month
-          when :completed_last_month
-            Date.today.beginning_of_month - 1.day
-        end
-        FactoryGirl.create(:task, user: user, bucket: due.to_s, completed_at: completed_at)
+                   when "pending"
+                     FactoryGirl.create(:task, user: user, bucket: due.to_s)
+                   when "assigned"
+                     FactoryGirl.create(:task, user: user, bucket: due.to_s, assigned_to: 1)
+                   when "completed"
+                     completed_at = case due
+                                    when :completed_today
+                                      Date.yesterday + 1.day
+                                    when :completed_yesterday
+                                      Date.yesterday
+                                    when :completed_last_week
+                                      Date.today.beginning_of_week - 7.days
+                                    when :completed_this_month
+                                      Date.today.beginning_of_month
+                                    when :completed_last_month
+                                      Date.today.beginning_of_month - 1.day
+                     end
+                     FactoryGirl.create(:task, user: user, bucket: due.to_s, completed_at: completed_at)
       end
       hash
     end

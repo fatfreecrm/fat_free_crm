@@ -209,20 +209,20 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def set_due_date
     self.due_at = case bucket
-    when "overdue"
-      due_at || Time.zone.now.midnight.yesterday
-    when "due_today"
-      Time.zone.now.midnight
-    when "due_tomorrow"
-      Time.zone.now.midnight.tomorrow
-    when "due_this_week"
-      Time.zone.now.end_of_week
-    when "due_next_week"
-      Time.zone.now.next_week.end_of_week
-    when "due_later"
-      Time.zone.now.midnight + 100.years
-    when "specific_time"
-      calendar ? parse_calendar_date : nil
+                  when "overdue"
+                    due_at || Time.zone.now.midnight.yesterday
+                  when "due_today"
+                    Time.zone.now.midnight
+                  when "due_tomorrow"
+                    Time.zone.now.midnight.tomorrow
+                  when "due_this_week"
+                    Time.zone.now.end_of_week
+                  when "due_next_week"
+                    Time.zone.now.next_week.end_of_week
+                  when "due_later"
+                    Time.zone.now.midnight + 100.years
+                  when "specific_time"
+                    calendar ? parse_calendar_date : nil
     end
   end
 

@@ -30,18 +30,6 @@ Layout/AlignParameters:
     - 'app/views/leads/index.xls.builder'
     - 'spec/views/leads/_sidebar_show.haml_spec.rb'
 
-# Offense count: 31
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentOneStep, IndentationWidth.
-# SupportedStyles: case, end
-Layout/CaseIndentation:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/leads_helper.rb'
-    - 'app/models/polymorphic/task.rb'
-    - 'lib/fat_free_crm/core_ext/alias_method_chain.rb'
-    - 'spec/controllers/tasks_controller_spec.rb'
-
 # Offense count: 27
 # Cop supports --auto-correct.
 Layout/ClosingParenthesisIndentation:
