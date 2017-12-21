@@ -35,14 +35,6 @@ Layout/ClosingParenthesisIndentation:
     - 'spec/models/polymorphic/version_spec.rb'
     - 'spec/views/comments/edit.js.haml_spec.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterMagicComment:
-  Exclude:
-    - 'db/schema.rb'
-    - 'fat_free_crm.gemspec'
-    - 'spec/models/polymorphic/task_spec.rb'
-
 # Offense count: 21
 # Cop supports --auto-correct.
 Layout/EmptyLinesAroundArguments:

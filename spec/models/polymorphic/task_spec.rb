@@ -4,6 +4,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 # encoding: utf-8
+
 # == Schema Information
 #
 # Table name: tasks
