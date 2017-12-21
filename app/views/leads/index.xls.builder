@@ -92,7 +92,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
           data.each do |value|
             xml.Cell do
               xml.Data value,
-                      'ss:Type' => "#{value.respond_to?(:abs) ? 'Number' : 'String'}"
+                       'ss:Type' => "#{value.respond_to?(:abs) ? 'Number' : 'String'}"
             end
           end
         end
