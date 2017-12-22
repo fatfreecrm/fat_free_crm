@@ -381,8 +381,6 @@ GEM
     timecop (0.9.1)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2017.3)
-      tzinfo (>= 1.0.0)
     uglifier (4.0.2)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.3.0)
@@ -443,6 +441,7 @@ DEPENDENCIES
   puma
   rails (~> 5.1.0)
   rails-controller-testing
+  rails-i18n
   rails-observers
   rails3-jquery-autocomplete
   rails_12factor
@@ -471,6 +470,7 @@ DEPENDENCIES
   uglifier
   will_paginate
   zeus
+
 
 BUNDLED WITH
    1.16.0
