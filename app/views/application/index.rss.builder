@@ -7,7 +7,7 @@ assets = instance_variable_get("@#{items}")
 
 if item == 'task'
   assets = assets.values.flatten
-  title  = t(:"#{@view}_tab") << ' ' << t(items.to_sym)
+  title  = t(:"#{@view}_tab") + ' ' + t(items.to_sym)
 end
 
 xml.instruct! :xml, version: "1.0"

@@ -49,7 +49,7 @@ module Globby
     def to_regexp
       parts = @pattern.split(GLOB_TOKENIZER) - [""]
 
-      result = parts.first.sub!(/\A\//, '') ? '\A' : '(\A|/)'
+      result = String.new(parts.first.sub!(/\A\//, '') ? '\A' : '(\A|/)')
       parts.each do |part|
         result << part_to_regexp(part)
       end

@@ -9,7 +9,7 @@
     = link_to(h(account.name), account)
     &ndash;
     %tt
-      = account.location << ", " unless account.location.blank?
+      = account.location + ", " unless account.location.blank?
       - user_name = account.user.try(:full_name)
       - if user_name
         = t(:added_by, :time_ago => timeago(account.created_at), :user => h(user_name)).html_safe
