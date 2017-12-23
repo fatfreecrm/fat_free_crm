@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddRatingAndCategoryToAccounts < ActiveRecord::Migration[4.2]
   def self.up
     add_column :accounts, :rating, :integer, default: 0, null: false

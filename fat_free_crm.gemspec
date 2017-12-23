@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 
 $LOAD_PATH.push File.expand_path('../vendor/gems/globby-0.1.2/lib', __FILE__)
 require 'globby'

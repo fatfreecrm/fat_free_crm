@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 xml.Worksheet 'ss:Name' => I18n.t(:tab_opportunities) do
   xml.Table do
     unless @opportunities.empty?

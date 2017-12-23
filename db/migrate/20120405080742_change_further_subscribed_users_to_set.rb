@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeFurtherSubscribedUsersToSet < ActiveRecord::Migration[4.2]
   def up
     # Change the other tables that were missing from the previous migration

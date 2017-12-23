@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # http://cyber.law.harvard.edu/rss/rss.html
 items  = controller.controller_name
 item   = items.singularize

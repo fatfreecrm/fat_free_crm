@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FixCountryMapping < ActiveRecord::Migration[4.2]
   def up
     message = """ Important note about countries. Please read carefully!

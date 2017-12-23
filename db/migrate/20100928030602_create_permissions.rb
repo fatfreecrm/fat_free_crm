@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePermissions < ActiveRecord::Migration[4.2]
   def self.up
     create_table :permissions, force: true do |t|
