@@ -97,7 +97,6 @@ module TasksHelper
     partial = task.assigned_to && task.assigned_to != current_user.id ? "assigned" : "pending"
     html = render(partial: "tasks/#{partial}", collection: [task], locals: { bucket: bucket })
     text = "$('##{dom_id(task)}').html('#{j html}');\n".html_safe
-
     text
   end
 
@@ -136,8 +135,8 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def reschedule(task)
     text = hide_task_and_possibly_bucket(task, @task_before_update.bucket)
-    text << insert_content(task, task.bucket, @view)
-    text << refresh_sidebar(:index, :filters)
+    text += insert_content(task, task.bucket, @view)
+    text += refresh_sidebar(:index, :filters)
     text
   end
 end
