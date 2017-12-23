@@ -227,7 +227,7 @@ module ApplicationHelper
     yes = link_to(t(:yes_button), params[:url] || model, method: :delete)
     no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
     text = "$('#confirm').html( $('#menu').html() );\n"
-    text << "$('#menu').html('#{question} #{yes} : #{no}');"
+    text += "$('#menu').html('#{question} #{yes} : #{no}');"
     text.html_safe
   end
 
@@ -246,8 +246,8 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil, shake = nil)
     text = ""
-    text << "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
-    text << "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
+    text += "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
+    text += "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
     text.html_safe
   end
 
@@ -258,9 +258,9 @@ module ApplicationHelper
       url = person.send(site)
       unless url.blank?
         if site == :skype
-          url = "callto:" << url
+          url = "callto:" + url
         else
-          url = "http://" << url unless url =~ /^https?:\/\//
+          url = "http://" + url unless url =~ /^https?:\/\//
         end
         link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
       end

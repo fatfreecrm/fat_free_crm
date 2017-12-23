@@ -22,7 +22,7 @@ class SubscriptionMailer < ActionMailer::Base
 
     # If entity has tags, join them and wrap in parantheses
     subject = "RE: [#{@entity_type.downcase}:#{@entity.id}] #{@entity_name}"
-    subject << " (#{@entity.tag_list.join(', ')})" if @entity.tag_list.any?
+    subject += " (#{@entity.tag_list.join(', ')})" if @entity.tag_list.any?
 
     mail subject: subject,
          to: user.email,

@@ -25,7 +25,7 @@ module Admin::UsersHelper
   #----------------------------------------------------------------------------
   def user_summary(user)
     summary = []
-    title_and_company = user.title.blank? ? '' : h(user.title)
+    title_and_company = String.new(user.title.blank? ? '' : h(user.title))
     title_and_company << " #{t(:at)} #{user.company}" unless user.company.blank?
     summary << title_and_company unless title_and_company.blank?
     summary << t('pluralize.login', user.login_count) if user.current_login_at && user.login_count > 0

@@ -28,7 +28,7 @@ describe "/tasks/index" do
 
       render
 
-      expect(view).to render_template(partial: "_" << status, count: 1)
+      expect(view).to render_template(partial: "_#{status}", count: 1)
       expect(view).not_to render_template(partial: "_empty")
     end
   end

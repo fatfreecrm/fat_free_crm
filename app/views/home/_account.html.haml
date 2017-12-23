@@ -18,10 +18,10 @@
 
     - unless current_user.preference[:accounts_index_view] == "accounts_index_brief"
       %dt
-        = link_to(account.website, account.website.to_url) << " | " if account.website.present?
-        = link_to_email(account.email) << " | " if account.email.present?
-        = t(:phone_small) << ": " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
-        = t('pluralize.contact', account.contacts.count) << " | "
+        = link_to(account.website, account.website.to_url) + " | " if account.website.present?
+        = link_to_email(account.email) + " | " if account.email.present?
+        = t(:phone_small) + ": " + (account.toll_free_phone || account.phone) + " | " if account.toll_free_phone? || account.phone?
+        = t('pluralize.contact', account.contacts.count) + " | "
         = t('pluralize.opportunity', account.opportunities.count)
       - if account.tags.present?
         %dt

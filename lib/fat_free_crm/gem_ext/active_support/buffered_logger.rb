@@ -10,10 +10,10 @@ class ActiveSupport::BufferedLogger
   NORMAL = "\033[0m"
 
   def p(*args)
-    info "#{BRIGHT}\n\n" << args.join(" ") << "#{NORMAL}\n\n\n"
+    info "#{BRIGHT}\n\n#{args.join(" ")}#{NORMAL}\n\n\n"
   end
 
   def i(*args)
-    info "#{BRIGHT}\n\n" << args.map(&:inspect).join(" ") << "#{NORMAL}\n\n\n"
+    info "#{BRIGHT}\n\n#{args.map(&:inspect).join(" ")}#{NORMAL}\n\n\n"
   end
 end

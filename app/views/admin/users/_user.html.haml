@@ -13,12 +13,12 @@
 
   .indentfull
     .tools
-      = link_to_edit(user, :url => edit_admin_user_path(user)) << " | "
+      = link_to_edit(user, :url => edit_admin_user_path(user)) + " | "
 
       - if user.suspended?
-        = link_to_reactivate(user) << " | "
+        = link_to_reactivate(user) + " | "
       - elsif user != current_user
-        = link_to_suspend(user) << " | "
+        = link_to_suspend(user) + " | "
       - else
         %span.grayed #{t :suspend}!
         = " | "
@@ -45,13 +45,13 @@
       - else
         %span.warn #{t :user_never_logged_in}
     %dt{ :style => "padding: 2px 0px 0px 0px" }
-      = link_to_email(user.email.to_s) << " | "
+      = link_to_email(user.email.to_s) + " | "
       - if user.phone?
-        = t(:phone_small) << ":"
-        = content_tag(:b, user.phone) << " | "
+        = t(:phone_small) + ":"
+        = content_tag(:b, user.phone) + " | "
       - if user.mobile?
-        = t(:mobile_small) << ":"
-        = content_tag(:b, user.mobile) << " | "
+        = t(:mobile_small) + ":"
+        = content_tag(:b, user.mobile) + " | "
 
       - if !user.suspended?
         %span #{t(:user_since, l(user.created_at.to_date, :format => :mmddyy))}
@@ -62,5 +62,5 @@
     - groups = user.groups
     - unless groups.count.zero?
       %dt{ :style => "padding: 2px 0px 0px 0px" }
-        = t(:groups) << ":"
+        = t(:groups) + ":"
         = groups.map(&:name).join(', ')
