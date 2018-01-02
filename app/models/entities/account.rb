@@ -32,6 +32,7 @@ class Account < ActiveRecord::Base
   has_many :contacts, -> { distinct }, through: :account_contacts
   has_many :account_opportunities, dependent: :destroy
   has_many :opportunities, -> { order("opportunities.id DESC").distinct }, through: :account_opportunities
+  has_many :pipeline_opportunities, -> { order("opportunities.id DESC").distinct.pipeline }, through: :account_opportunities, source: :opportunity
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
   has_one :billing_address, -> { where(address_type: "Billing") }, dependent: :destroy, as: :addressable, class_name: "Address"
   has_one :shipping_address, -> { where(address_type: "Shipping") }, dependent: :destroy, as: :addressable, class_name: "Address"

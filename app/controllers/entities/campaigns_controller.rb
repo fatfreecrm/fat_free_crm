@@ -166,6 +166,11 @@ class CampaignsController < EntitiesController
   alias get_campaigns get_list_of_records
 
   #----------------------------------------------------------------------------
+  def list_includes
+    %i[tags].freeze
+  end
+
+  #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax
       get_data_for_sidebar

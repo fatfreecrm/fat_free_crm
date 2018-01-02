@@ -198,6 +198,11 @@ class LeadsController < EntitiesController
   alias get_leads get_list_of_records
 
   #----------------------------------------------------------------------------
+  def list_includes
+    %i[tags].freeze
+  end
+
+  #----------------------------------------------------------------------------
   def get_campaigns
     @campaigns = Campaign.my.order('name')
   end

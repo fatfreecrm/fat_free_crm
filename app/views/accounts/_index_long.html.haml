@@ -1,4 +1,4 @@
-- amount = account.opportunities.pipeline.map(&:weighted_amount).sum
+- amount = account.pipeline_opportunities.map(&:weighted_amount).sum
 %li.highlight[account]
   - if account.category
     .strip{:class => account.category} #{t(account.category)}
@@ -35,7 +35,7 @@
       = " | ".html_safe << link_to_email(account.email) if account.email.present?
       = " | ".html_safe << t(:phone_small) << ": " << (account.toll_free_phone? ? account.toll_free_phone : account.phone) if account.toll_free_phone? || account.phone?
 
-    - if account.tag_list.present?
+    - if account.tags.present?
       %dt
         .tags= tags_for_index(account)
 
