@@ -26,7 +26,7 @@
         = t(:added_by, :time_ago => timeago(account.created_at), :user => h(user_name)).html_safe << " | "
       - else
         = t(:added_ago, :value => timeago(account.created_at)).html_safe << " | "
-      = t('pluralize.contact', account.contacts.count) << " | "
-      = t('pluralize.opportunity', account.opportunities.count)
+      = t('pluralize.contact', account.contacts_count) << " | "
+      = t('pluralize.opportunity', account.opportunities_count)
 
     = hook(:account_bottom, self, :account => account)

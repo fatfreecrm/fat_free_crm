@@ -1,0 +1,26 @@
+class AddAccountCounterCaches < ActiveRecord::Migration[5.1]
+
+  def change
+    change_table :accounts do |t|
+      t.integer :comments_count, default: 0
+      t.integer :contacts_count, default: 0
+      t.integer :opportunities_count, default: 0
+      t.integer :pipeline_opportunities_count, default: 0
+    end
+
+    reversible do |dir|
+      dir.up { data }
+    end
+  end
+
+  def data
+    Account.all.each do |account|
+      account.update_columns(
+          comments_count: account.comments.count,
+          contacts_count: account.contacts.count,
+          opportunities_count: account.opportunities.count,
+          pipeline_opportunities_count: account.pipeline_opportunities.count
+      )
+    end
+  end
+end
