@@ -42,16 +42,13 @@ class Email < ActiveRecord::Base
     state == "Collapsed"
   end
 
-  module BodyWithTextile
-    def body
-      if defined?(RedCloth)
-        RedCloth.new(super).to_html
-      else
-        super.to_s.gsub("\n", "<br/>")
-      end
-    end
+  def body_html
+    body.to_s.gsub("\n", "<br>")
   end
-  prepend BodyWithTextile
+
+  def body_inline
+    body.to_s.gsub("\n", " ")
+  end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_email, self)
 end
