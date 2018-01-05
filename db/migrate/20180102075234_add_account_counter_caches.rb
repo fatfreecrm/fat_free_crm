@@ -4,7 +4,6 @@ class AddAccountCounterCaches < ActiveRecord::Migration[5.1]
     change_table :accounts do |t|
       t.integer :contacts_count, default: 0
       t.integer :opportunities_count, default: 0
-      t.integer :pipeline_opportunities_count, default: 0
     end
 
     reversible do |dir|
@@ -16,8 +15,7 @@ class AddAccountCounterCaches < ActiveRecord::Migration[5.1]
     Account.all.each do |account|
       account.update_columns(
           contacts_count: account.contacts.count,
-          opportunities_count: account.opportunities.count,
-          pipeline_opportunities_count: account.pipeline_opportunities.count
+          opportunities_count: account.opportunities.count
       )
     end
   end
