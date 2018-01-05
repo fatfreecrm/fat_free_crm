@@ -26,6 +26,7 @@ describe AccountOpportunity do
   end
 
   it "should create a new instance given valid attributes" do
+    expect(@valid_attributes[:account]).to receive(:increment!)
     AccountOpportunity.create!(@valid_attributes)
   end
 end

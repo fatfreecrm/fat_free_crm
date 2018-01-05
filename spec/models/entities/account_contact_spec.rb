@@ -26,6 +26,7 @@ describe AccountContact do
   end
 
   it "should create a new instance given valid attributes" do
+    expect(@valid_attributes[:account]).to receive(:increment!)
     AccountContact.create!(@valid_attributes)
   end
 end
