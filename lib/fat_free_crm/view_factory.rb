@@ -45,7 +45,7 @@ module FatFreeCRM
       #----------------------------------------------------------------------------
       def template_for_current_view(options = {})
         view = views_for(options).first
-        view && view.template
+        view&.template
       end
     end
 

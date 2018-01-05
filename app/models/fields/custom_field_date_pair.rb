@@ -23,7 +23,7 @@ class CustomFieldDatePair < CustomFieldPair
   end
 
   def render(value)
-    value && value.strftime(I18n.t("date.formats.mmddyy"))
+    value&.strftime(I18n.t("date.formats.mmddyy"))
   end
 
   def custom_validator(obj)

@@ -25,7 +25,7 @@ module AccountsHelper
   # and prepends the currently selected account, if any.
   #----------------------------------------------------------------------------
   def account_select(options = {})
-    options[:selected] = (@account && @account.id) || 0
+    options[:selected] = (@account&.id) || 0
     accounts = ([@account] + Account.my.order(:name).limit(25)).compact.uniq
     collection_select :account, :id, accounts, :id, :name, options,
                       "data-placeholder": t(:select_an_account),

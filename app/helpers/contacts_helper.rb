@@ -10,7 +10,7 @@ module ContactsHelper
     summary = [""]
     summary << contact.title.titleize if contact.title?
     summary << contact.department if contact.department?
-    if contact.account && contact.account.name?
+    if contact.account&.name?
       summary.last << " #{t(:at)} #{contact.account.name}"
     end
     summary << contact.email if contact.email.present?
