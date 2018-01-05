@@ -63,7 +63,7 @@ GEM
       activesupport (>= 3.2, < 5.2)
       request_store (~> 1.0)
       scrypt (>= 1.2, < 4.0)
-    bootsnap (1.1.7)
+    bootsnap (1.1.8)
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (9.1.0)
