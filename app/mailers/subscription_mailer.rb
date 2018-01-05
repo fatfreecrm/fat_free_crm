@@ -18,15 +18,17 @@ class SubscriptionMailer < ActionMailer::Base
 
     mail subject: subject,
          to: user.email,
-         from: "#{@user.full_name} <#{reply_to_address}>",
+         from: from_address(@user),
          date: Time.now
   end
 
   private
 
-  def reply_to_address
-    Setting.dig(:email_comment_replies, :address).presence ||
+  def from_address(user = nil)
+    address = Setting.dig(:email_comment_replies, :address).presence ||
       Setting.dig(:smtp, :from).presence ||
       "noreply@fatfreecrm.com"
+    address = "#{user.full_name} <#{address}>" if user && !address.match(/<.+>\z/)
+    address
   end
 end
