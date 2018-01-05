@@ -34,7 +34,7 @@ describe SubscriptionMailer do
     it "should fallback to smtp from addres as the sender" do
       allow(Setting).to receive(:dig).with(:email_comment_replies, :address).and_return("")
       allow(Setting).to receive(:dig).with(:smtp, :from).and_return("smtp_from@example.com")
-      expect(mail.from).to eql(["other_email@example.com"])
+      expect(mail.from).to eql(["smtp_from@example.com"])
     end
 
     it "should set default reply-to address if email doesn't exist" do

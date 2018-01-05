@@ -39,7 +39,6 @@ before_script:
 # Run specs
 script: 
   - "RAILS_ENV=test bundle exec rake spec:models"
-  - "RAILS_ENV=test bundle exec rake spec:mailers"
   - "RAILS_ENV=test bundle exec rake spec:controllers"
   - "RAILS_ENV=test bundle exec rake spec:helpers"
   - "RAILS_ENV=test bundle exec rake spec:lib"
