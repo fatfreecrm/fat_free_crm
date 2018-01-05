@@ -36,14 +36,13 @@ describe SubscriptionMailer do
 
     it "should set default reply-to address if email doesn't exist" do
       allow(Setting.email_comment_replies).to receive(:[]).with(:address).and_return("")
-      allow(Setting).to receive(:host).and_return("fatfreecrm.com")
-      expect(mail.from).to eql(["no-reply@fatfreecrm.com"])
+      expect(mail.from).to eql([Setting.smtp.from])
     end
 
     it "should set default reply-to address if email and host don't exist" do
       allow(Setting.email_comment_replies).to receive(:[]).with(:address).and_return("")
       allow(Setting).to receive(:host).and_return("")
-      expect(mail.from).to eql(["no-reply@example.com"])
+      expect(mail.from).to eql([Setting.smtp.from])
     end
   end
 end
