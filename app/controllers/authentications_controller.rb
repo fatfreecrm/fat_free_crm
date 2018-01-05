@@ -28,7 +28,7 @@ class AuthenticationsController < ApplicationController
       end
       redirect_back_or_default root_url
     else
-      if @authentication.user && @authentication.user.awaits_approval?
+      if @authentication.user&.awaits_approval?
         flash[:notice] = t(:msg_account_not_approved)
       else
         flash[:warning] = t(:msg_invalig_login)

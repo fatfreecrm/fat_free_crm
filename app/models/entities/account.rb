@@ -89,7 +89,7 @@ class Account < ActiveRecord::Base
   def location
     return "" unless self[:billing_address]
     location = self[:billing_address].strip.split("\n").last
-    location.gsub(/(^|\s+)\d+(:?\s+|$)/, " ").strip if location
+    location&.gsub(/(^|\s+)\d+(:?\s+|$)/, " ")&.strip
   end
 
   # Attach given attachment to the account if it hasn't been attached already.
