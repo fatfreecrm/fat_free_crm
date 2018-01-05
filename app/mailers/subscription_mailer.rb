@@ -26,8 +26,8 @@ class SubscriptionMailer < ActionMailer::Base
 
   def from_address(user = nil)
     address = Setting.dig(:email_comment_replies, :address).presence ||
-      Setting.dig(:smtp, :from).presence ||
-      "noreply@fatfreecrm.com"
+              Setting.dig(:smtp, :from).presence ||
+              "noreply@fatfreecrm.com"
     address = "#{user.full_name} <#{address}>" if user && !address.match(/<.+>\z/)
     address
   end
