@@ -54,7 +54,7 @@ describe Setting do
 
   describe "#dig" do
     it "should dig into nested hashes" do
-      Setting[:hello] = {foo: {bar: 3}}
+      Setting[:hello] = { foo: { bar: 3 } }
       expect(Setting.dig(:hello, :foo, :bar)).to eq(3)
     end
 
@@ -69,7 +69,7 @@ describe Setting do
 
     it "should return nil if nil" do
       Setting[:hello] = "world"
-      expect{Setting.dig(:hello, :foo)}.to raise_error(TypeError)
+      expect { Setting.dig(:hello, :foo) }.to raise_error(TypeError)
     end
   end
 end

@@ -15,7 +15,7 @@ describe SubscriptionMailer do
     let(:mail) { SubscriptionMailer.comment_notification(user, comment) }
 
     before :each do
-      allow(Setting.email_comment_replies).to receive(:[]).with(:address).and_return("email_comment_reply@example.com")
+      allow(Setting).to receive(:dig).with(:email_comment_replies, :address).and_return("email_comment_reply@example.com")
     end
 
     it "uses email defined in settings as the sender" do
@@ -35,14 +35,14 @@ describe SubscriptionMailer do
     end
 
     it "should set default reply-to address if email doesn't exist" do
-      allow(Setting.email_comment_replies).to receive(:[]).with(:address).and_return("")
-      expect(mail.from).to eql([Setting.smtp.from])
+      allow(Setting).to receive(:dig).with(:email_comment_replies, :address).and_return("")
+      expect(mail.from).to eql(["noreply@fatfreecrm.com"])
     end
 
     it "should set default reply-to address if email and host don't exist" do
-      allow(Setting.email_comment_replies).to receive(:[]).with(:address).and_return("")
+      allow(Setting).to receive(:dig).with(:email_comment_replies, :address).and_return("")
       allow(Setting).to receive(:host).and_return("")
-      expect(mail.from).to eql([Setting.smtp.from])
+      expect(mail.from).to eql(["noreply@fatfreecrm.com"])
     end
   end
 end

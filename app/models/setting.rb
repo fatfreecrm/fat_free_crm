@@ -91,7 +91,7 @@ class Setting < ActiveRecord::Base
       elsif value.respond_to?(:dig)
         value.dig(*rest)
       else
-        fail TypeError, "#{value.class} does not have #dig method"
+        raise TypeError, "#{value.class} does not have #dig method"
       end
     end
 

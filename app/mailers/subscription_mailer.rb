@@ -26,7 +26,7 @@ class SubscriptionMailer < ActionMailer::Base
 
   def reply_to_address
     Setting.dig(:email_comment_replies, :address).presence ||
-        Setting.dig(:smtp, :from).presence ||
-        "noreply@fatfreecrm.com"
+      Setting.dig(:smtp, :from).presence ||
+      "noreply@fatfreecrm.com"
   end
 end
