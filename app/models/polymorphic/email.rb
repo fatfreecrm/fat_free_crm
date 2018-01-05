@@ -47,7 +47,7 @@ class Email < ActiveRecord::Base
   end
 
   def body_inline
-    body.to_s.gsub("\n", " ")
+    body.to_s.tr("\n", " ")
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_email, self)
