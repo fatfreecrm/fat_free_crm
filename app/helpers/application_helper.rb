@@ -160,7 +160,7 @@ module ApplicationHelper
   def link_to_email(email, length = nil, &_block)
     name = (length ? truncate(email, length: length) : email)
     bcc = Setting&.email_dropbox
-    if bcc[:address].present?
+    if bcc && bcc[:address].present?
       mailto = "#{email}?bcc=#{bcc[:address]}"
     else
       mailto = email
