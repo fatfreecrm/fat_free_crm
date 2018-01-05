@@ -325,7 +325,7 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.0)
-    rubocop (0.50.0)
+    rubocop (0.51.0)
       parallel (~> 1.10)
       parser (>= 2.3.3.1, < 3.0)
       powerpack (~> 0.1)
@@ -381,8 +381,6 @@ GEM
     timecop (0.9.1)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2017.3)
-      tzinfo (>= 1.0.0)
     uglifier (4.0.2)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.3.0)
@@ -443,6 +441,7 @@ DEPENDENCIES
   puma
   rails (~> 5.1.0)
   rails-controller-testing
+  rails-i18n
   rails-observers
   rails3-jquery-autocomplete
   rails_12factor
@@ -457,7 +456,7 @@ DEPENDENCIES
   responds_to_parent
   rspec-activemodel-mocks
   rspec-rails
-  rubocop (~> 0.50.0)
+  rubocop (~> 0.51.0)
   sass
   sass-rails
   select2-rails
