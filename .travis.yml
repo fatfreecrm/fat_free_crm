@@ -8,9 +8,20 @@ env:
   global:
     - BROWSER=chrome
   matrix:
+    - DB=mysql
     - DB=postgres
-    #- DB=mysql
-    #- DB=sqlite
+    - DB=sqlite
+
+matrix:
+  allow_failures:
+    - rvm: 2.3.6
+      env: DB=mysql
+    - rvm: 2.3.6
+      env: DB=sqlite
+    - rvm: 2.4.2
+      env: DB=mysql
+    - rvm: 2.4.2
+      env: DB=sqlite
 
 addons:
   chrome: stable
