@@ -42,7 +42,7 @@ class OpportunityObserver < ActiveRecord::Observer
   end
 
   def update_campaign_revenue(campaign, revenue)
-    campaign.update_attribute(:revenue, (campaign.revenue || 0) + revenue) if campaign
+    campaign&.update_attribute(:revenue, (campaign.revenue || 0) + revenue)
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_opportunity_observer, self)

@@ -84,7 +84,7 @@ This is the best way to deploy Fat Free CRM if you need to add plugins or make a
 
 ## Upgrading from previous versions of Fat Free CRM
 
-Please read the [Release Notes](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG) document for more detailed information on upgrading from previous versions.
+Please read the [Release Notes](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG.md) document for more detailed information on upgrading from previous versions.
 
 
 ## Resources

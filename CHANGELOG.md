@@ -4,10 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased
+Fri Jan 5, 2018 (0.16.0)
 ---------------------------------------------------------------------
 - #633 Upgrade to rails 5.1.0
 - #641 Swap default server from thin/unicorn to puma
+- #631 Clean up locale files
+- #612 DEPRECATION WARNING: #table_exists? currently checks both tables and views
 
 Thu Dec 14, 2017 (0.15.0)
 ---------------------------------------------------------------------

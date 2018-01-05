@@ -111,7 +111,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def current_user_session
     @current_user_session ||= Authentication.find
-    if @current_user_session && @current_user_session.record.suspended?
+    if @current_user_session&.record&.suspended?
       @current_user_session = nil
     end
     @current_user_session
@@ -120,7 +120,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def current_user
     unless @current_user
-      @current_user = (current_user_session && current_user_session.record)
+      @current_user = (current_user_session&.record)
       if @current_user
         @current_user.set_individual_locale
         @current_user.set_single_access_token
