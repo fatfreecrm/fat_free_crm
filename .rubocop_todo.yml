@@ -14,13 +14,6 @@ Gemspec/OrderedDependencies:
   Exclude:
     - 'fat_free_crm.gemspec'
 
-# Offense count: 1
-# Configuration parameters: Include.
-# Include: **/*.gemspec
-Gemspec/RequiredRubyVersion:
-  Exclude:
-    - 'fat_free_crm.gemspec'
-
 # Offense count: 27
 # Cop supports --auto-correct.
 Layout/ClosingParenthesisIndentation:
@@ -35,12 +28,12 @@ Layout/ClosingParenthesisIndentation:
     - 'spec/models/polymorphic/version_spec.rb'
     - 'spec/views/comments/edit.js.haml_spec.rb'
 
-# Offense count: 21
+# Offense count: 16
 # Cop supports --auto-correct.
 Layout/EmptyLinesAroundArguments:
   Exclude:
-    - 'config/initializers/views.rb'
-    - 'db/seeds/fields.rb'
+    - 'app/helpers/accounts_helper.rb'
+    - 'lib/fat_free_crm/permissions.rb'
     - 'spec/features/accounts_spec.rb'
     - 'spec/features/admin/groups_spec.rb'
     - 'spec/features/admin/users_spec.rb'
@@ -130,15 +123,6 @@ Layout/SpaceAroundOperators:
     - 'app/views/application/show.atom.builder'
     - 'app/views/application/show.rss.builder'
     - 'app/views/campaigns/index.xls.builder'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: .
-# SupportedStyles: space, no_space
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceBeforeBlockBraces:
-  EnforcedStyle: space
-  EnforcedStyleForEmptyBraces: space
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -247,7 +231,7 @@ Metrics/BlockNesting:
 Metrics/ClassLength:
   Max: 195
 
-# Offense count: 30
+# Offense count: 29
 Metrics/CyclomaticComplexity:
   Max: 14
 
@@ -259,9 +243,9 @@ Metrics/MethodLength:
 # Offense count: 2
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 391
+  Max: 392
 
-# Offense count: 28
+# Offense count: 27
 Metrics/PerceivedComplexity:
   Max: 15
 
@@ -370,7 +354,8 @@ Style/CaseEquality:
     - 'app/models/fields/field.rb'
 
 # Offense count: 18
-# Configuration parameters: EnforcedStyle.
+# Cop supports --auto-correct.
+# Configuration parameters: AutoCorrect, EnforcedStyle.
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
   Enabled: false
@@ -390,14 +375,12 @@ Style/ClassVars:
     - 'lib/fat_free_crm/tabs.rb'
     - 'lib/fat_free_crm/view_factory.rb'
 
-# Offense count: 7
+# Offense count: 3
 Style/CommentedKeyword:
   Exclude:
     - 'app/controllers/entities/leads_controller.rb'
-    - 'app/helpers/application_helper.rb'
     - 'app/models/users/authentication.rb'
     - 'db/migrate/20100928030617_drop_openid_tables.rb'
-    - 'lib/fat_free_crm/mail_processor/dropbox.rb'
 
 # Offense count: 13
 # Cop supports --auto-correct.
@@ -526,13 +509,9 @@ Style/MethodMissing:
     - 'app/models/setting.rb'
     - 'lib/fat_free_crm/fields.rb'
 
-# Offense count: 8
+# Offense count: 1
 Style/MixinUsage:
   Exclude:
-    - 'lib/fat_free_crm/comment_extensions.rb'
-    - 'lib/fat_free_crm/exportable.rb'
-    - 'lib/fat_free_crm/fields.rb'
-    - 'lib/fat_free_crm/permissions.rb'
     - 'spec/helpers/fields_helper_spec.rb'
 
 # Offense count: 2
