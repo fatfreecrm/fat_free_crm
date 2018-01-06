@@ -37,7 +37,7 @@ class ContactsController < EntitiesController
 
     if params[:related]
       model, id = params[:related].split('_')
-      if related = model.classify.constantize.my.find_by_id(id)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
         respond_to_related_not_found(model) && return
@@ -52,7 +52,7 @@ class ContactsController < EntitiesController
   def edit
     @account = @contact.account || Account.new(user: current_user)
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Contact.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
+      @previous = Contact.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@contact)
@@ -78,7 +78,7 @@ class ContactsController < EntitiesController
             @account = Account.find(params[:account][:id])
           end
         end
-        @opportunity = Opportunity.my.find(params[:opportunity]) unless params[:opportunity].blank?
+        @opportunity = Opportunity.my(current_user).find(params[:opportunity]) unless params[:opportunity].blank?
       end
     end
   end
@@ -157,7 +157,7 @@ class ContactsController < EntitiesController
 
   #----------------------------------------------------------------------------
   def get_accounts
-    @accounts = Account.my.order('name')
+    @accounts = Account.my(current_user).order('name')
   end
 
   def set_options
