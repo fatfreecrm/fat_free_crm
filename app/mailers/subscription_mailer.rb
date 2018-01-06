@@ -16,8 +16,7 @@ class SubscriptionMailer < ActionMailer::Base
     @user = comment.user
 
     if (reply_to = Setting.email_comment_replies[:address]).blank?
-      email_host = Setting.host.present? ? Setting.host : 'example.com'
-      reply_to = "no-reply@#{email_host}"
+      reply_to = from_address
     end
 
     # If entity has tags, join them and wrap in parantheses
@@ -28,5 +27,12 @@ class SubscriptionMailer < ActionMailer::Base
          to: user.email,
          from: "#{@user.full_name} <#{reply_to}>",
          date: Time.now
+  end
+
+  private
+
+  def from_address
+    from = (Setting.smtp || {})[:from]
+    !from.blank? ? from : "Fat Free CRM <noreply@fatfreecrm.com>"
   end
 end
