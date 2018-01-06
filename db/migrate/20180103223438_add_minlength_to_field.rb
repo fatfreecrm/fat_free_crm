@@ -1,4 +1,4 @@
-class AddMinlengthToField < ActiveRecord::Migration
+class AddMinlengthToField < ActiveRecord::Migration[5.1]
   def change
     add_column :fields, :minlength, :integer, limit: 4, default: 0
   end
