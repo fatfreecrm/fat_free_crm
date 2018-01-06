@@ -57,46 +57,46 @@ describe Opportunity do
     end
 
     it "should create new account if requested so" do
-      expect {
+      expect do
         @opportunity.update_with_account_and_permissions(
-        account: { name: "New account" },
-        opportunity: { name: "Hello" }
+          account: { name: "New account" },
+          opportunity: { name: "Hello" }
       )
-      }.to change(Account, :count).by(1)
+      end.to change(Account, :count).by(1)
       expect(Account.last.name).to eq("New account")
       expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
     end
 
     it "should update the account another account was selected" do
       @another_account = FactoryGirl.create(:account)
-      expect {
+      expect do
         @opportunity.update_with_account_and_permissions(
-        account: { id: @another_account.id },
-        opportunity: { name: "Hello" }
+          account: { id: @another_account.id },
+          opportunity: { name: "Hello" }
       )
-      }.not_to change(Account, :count)
+      end.not_to change(Account, :count)
       expect(@opportunity.account).to eq(@another_account)
       expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
     end
 
     it "should drop existing Account if [create new account] is blank" do
-      expect {
+      expect do
         @opportunity.update_with_account_and_permissions(
-        account: { name: "" },
-        opportunity: { name: "Hello" }
+          account: { name: "" },
+          opportunity: { name: "Hello" }
       )
-      }.not_to change(Account, :count)
+      end.not_to change(Account, :count)
       expect(@opportunity.account).to be_nil
       expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
     end
 
     it "should drop existing Account if [-- None --] is selected from list of accounts" do
-      expect {
+      expect do
         @opportunity.update_with_account_and_permissions(
-        account: { id: "" },
-        opportunity: { name: "Hello" }
+          account: { id: "" },
+          opportunity: { name: "Hello" }
       )
-      }.not_to change(Account, :count)
+      end.not_to change(Account, :count)
       expect(@opportunity.account).to be_nil
       expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
     end

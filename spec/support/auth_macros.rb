@@ -48,11 +48,7 @@ end
 alias require_no_user logout
 
 #----------------------------------------------------------------------------
-def current_user
-  @current_user
-end
+attr_reader :current_user
 
 #----------------------------------------------------------------------------
-def current_user_session
-  @current_user_session
-end
+attr_reader :current_user_session

@@ -202,8 +202,7 @@ describe Version, versioning: true do
       @item = FactoryGirl.create(:account,
                                  user: current_user,
                                  access: "Shared",
-                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)]
-      )
+                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)])
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -217,8 +216,7 @@ describe Version, versioning: true do
       @item = FactoryGirl.create(:account,
                                  user: current_user,
                                  access: "Shared",
-                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)]
-      )
+                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)])
       @item.destroy
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -232,8 +230,7 @@ describe Version, versioning: true do
       @item = FactoryGirl.create(:account,
                                  user: current_user,
                                  access: "Shared",
-                                 permissions: [FactoryGirl.build(:permission, user: @user, asset: @item)]
-      )
+                                 permissions: [FactoryGirl.build(:permission, user: @user, asset: @item)])
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)

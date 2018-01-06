@@ -54,46 +54,46 @@ describe Contact do
     end
 
     it "should create new account if requested so" do
-      expect {
+      expect do
         @contact.update_with_account_and_permissions(
-        account: { name: "New account" },
-        contact: { first_name: "Billy" }
+          account: { name: "New account" },
+          contact: { first_name: "Billy" }
       )
-      }.to change(Account, :count).by(1)
+      end.to change(Account, :count).by(1)
       expect(Account.last.name).to eq("New account")
       expect(@contact.first_name).to eq("Billy")
     end
 
     it "should change account if another account was selected" do
       @another_account = FactoryGirl.create(:account)
-      expect {
+      expect do
         @contact.update_with_account_and_permissions(
-        account: { id: @another_account.id },
-        contact: { first_name: "Billy" }
+          account: { id: @another_account.id },
+          contact: { first_name: "Billy" }
       )
-      }.not_to change(Account, :count)
+      end.not_to change(Account, :count)
       expect(@contact.account).to eq(@another_account)
       expect(@contact.first_name).to eq("Billy")
     end
 
     it "should drop existing Account if [create new account] is blank" do
-      expect {
+      expect do
         @contact.update_with_account_and_permissions(
-        account: { name: "" },
-        contact: { first_name: "Billy" }
+          account: { name: "" },
+          contact: { first_name: "Billy" }
       )
-      }.not_to change(Account, :count)
+      end.not_to change(Account, :count)
       expect(@contact.account).to eq(nil)
       expect(@contact.first_name).to eq("Billy")
     end
 
     it "should drop existing Account if [-- None --] is selected from list of accounts" do
-      expect {
+      expect do
         @contact.update_with_account_and_permissions(
-        account: { id: "" },
-        contact: { first_name: "Billy" }
+          account: { id: "" },
+          contact: { first_name: "Billy" }
       )
-      }.not_to change(Account, :count)
+      end.not_to change(Account, :count)
       expect(@contact.account).to eq(nil)
       expect(@contact.first_name).to eq("Billy")
     end
