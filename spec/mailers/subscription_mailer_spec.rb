@@ -31,7 +31,7 @@ describe SubscriptionMailer do
       expect(mail.from).to eql(["email_comment_reply@example.com"])
     end
 
-    it "should fallback to smtp from addres as the sender" do
+    it "should fallback to smtp from address as the sender" do
       allow(Setting).to receive(:dig).with(:email_comment_replies, :address).and_return("")
       allow(Setting).to receive(:dig).with(:smtp, :from).and_return("smtp_from@example.com")
       expect(mail.from).to eql(["smtp_from@example.com"])
