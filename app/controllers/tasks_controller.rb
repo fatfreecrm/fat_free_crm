@@ -86,11 +86,11 @@ class TasksController < ApplicationController
     @task = Task.tracked_by(current_user).find(params[:id])
     @task_before_update = @task.dup
 
-    if @task.due_at && (@task.due_at < Date.today.to_time)
-      @task_before_update.bucket = "overdue"
-    else
-      @task_before_update.bucket = @task.computed_bucket
-    end
+    @task_before_update.bucket = if @task.due_at && (@task.due_at < Date.today.to_time)
+                                   "overdue"
+                                 else
+                                   @task.computed_bucket
+                                 end
 
     respond_with(@task) do |_format|
       if @task.update_attributes(task_params)

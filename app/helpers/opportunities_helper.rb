@@ -25,11 +25,11 @@ module OpportunitiesHelper
       amount << t(:probability_number, (opportunity.probability || 0).to_s + '%')
       summary << amount.join(' ')
     end
-    if opportunity.closes_on
-      summary << t(:closing_date, l(opportunity.closes_on, format: :mmddyy))
-    else
-      summary << t(:no_closing_date)
-    end
+    summary << if opportunity.closes_on
+                 t(:closing_date, l(opportunity.closes_on, format: :mmddyy))
+               else
+                 t(:no_closing_date)
+               end
     summary.compact.join(', ')
   end
 
