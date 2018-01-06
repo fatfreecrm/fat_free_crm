@@ -1,4 +1,4 @@
-- amount = account.opportunities.pipeline.map(&:weighted_amount).sum
+- amount = account.pipeline_opportunities.map(&:weighted_amount).sum
 %li.highlight[account]
   - if account.category
     .strip{:class => account.category} #{t(account.category)}

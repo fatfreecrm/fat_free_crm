@@ -173,6 +173,11 @@ class OpportunitiesController < EntitiesController
   alias get_opportunities get_list_of_records
 
   #----------------------------------------------------------------------------
+  def list_includes
+    %i[account user tags].freeze
+  end
+
+  #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax
       if called_from_index_page?

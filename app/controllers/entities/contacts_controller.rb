@@ -151,6 +151,11 @@ class ContactsController < EntitiesController
   alias get_contacts get_list_of_records
 
   #----------------------------------------------------------------------------
+  def list_includes
+    %i[account tags].freeze
+  end
+
+  #----------------------------------------------------------------------------
   def get_accounts
     @accounts = Account.my.order('name')
   end
