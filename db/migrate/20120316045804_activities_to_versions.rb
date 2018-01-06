@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivitiesToVersions < ActiveRecord::Migration[4.2]
   def up
     events = {

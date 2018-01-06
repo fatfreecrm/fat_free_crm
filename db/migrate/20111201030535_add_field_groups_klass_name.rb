@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddFieldGroupsKlassName < ActiveRecord::Migration[4.2]
   def up
     add_column :field_groups, :klass_name, :string, limit: 32

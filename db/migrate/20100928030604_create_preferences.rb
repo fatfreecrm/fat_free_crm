@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePreferences < ActiveRecord::Migration[4.2]
   def self.up
     create_table :preferences do |t|

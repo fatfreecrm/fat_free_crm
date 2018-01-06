@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -33,7 +35,7 @@ module LeadsHelper
     yes = link_to(t(:yes_button), reject_lead_path(lead), method: :put)
     no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
     text = "$('#confirm').html( $('#menu').html() );\n"
-    text << "$('#menu').html('#{question} #{yes} : #{no}');"
+    text += "$('#menu').html('#{question} #{yes} : #{no}');"
     text.html_safe
   end
 

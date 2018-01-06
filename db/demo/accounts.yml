@@ -39,7 +39,7 @@ account<%= i %>:
   phone            : <%= FFaker::PhoneNumber.short_phone_number %>
   fax              : <%= FFaker::PhoneNumber.short_phone_number %>
   email            : info@<%= company.downcase.gsub(/\W/, "") %>.com
-  background_info  : <%= FFaker::Company.catch_phrase << " " << FFaker::Company.bs %>
+  background_info  : <%= "#{FFaker::Company.catch_phrase} #{FFaker::Company.bs}" %>
   rating           : <%= rand(5) %>
   category         : <%= category.sample %>
   created_at       : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>

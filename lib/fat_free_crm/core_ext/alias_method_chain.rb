@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Module
 
   def alias_method_chain(target, feature)
