@@ -17,8 +17,8 @@ module AccountsHelper
   def account_summary(account)
     [number_to_currency(account.opportunities.pipeline.map(&:weighted_amount).sum, precision: 0),
      t(:added_by, time_ago: time_ago_in_words(account.created_at), user: account.user_id_full_name),
-     t('pluralize.contact', account.contacts.count),
-     t('pluralize.opportunity', account.opportunities.count),
+     t('pluralize.contact', account.contacts_count),
+     t('pluralize.opportunity', account.opportunities_count),
      t('pluralize.comment', account.comments.count)
     ].join(', ')
   end

@@ -23,7 +23,7 @@ module FatFreeCRM
         items.each do |item|
           csv << columns.map do |column|
             if column == 'tags'
-              item.tag_list.join(' ')
+              item.tags.join(' ')
             else
               item.send(column)
             end

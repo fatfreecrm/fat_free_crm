@@ -50,7 +50,7 @@
 
   = render "fields/sidebar_show", :asset => @account
 
-  - if @account.tag_list.present?
+  - if @account.tags.present?
     %dt
       .tags= tags_for_index(@account)
 
