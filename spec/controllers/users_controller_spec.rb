@@ -152,7 +152,7 @@ describe UsersController do
       end
 
       it "exposes a newly created user as @user and redirect to profile page" do
-        require_user(admin: true)
+        login_admin
         post :create, params: { user: { username: @username, email: @email, password: @password, password_confirmation: @password } }
         expect(assigns[:user]).to eq(@user)
         expect(flash[:notice]).to match(/welcome/)
@@ -171,7 +171,7 @@ describe UsersController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and renders [new] template" do
-        require_user(admin: true)
+        login_admin
         @user = FactoryGirl.build(:user, username: "", email: "")
         allow(User).to receive(:new).and_return(@user)
 
@@ -312,7 +312,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to PUT change_password" do
     before(:each) do
-      require_user
+      login
       allow(User).to receive(:find).and_return(current_user)
       allow(@current_user_session).to receive(:unauthorized_record=).and_return(current_user)
       allow(@current_user_session).to receive(:save).and_return(current_user)

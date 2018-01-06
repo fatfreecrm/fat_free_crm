@@ -75,18 +75,7 @@ describe User do
         end
       end
 
-      it "should not destroy the user if she owns a comment" do
-        login
-        account = build(:account, user: current_user)
-        FactoryGirl.create(:comment, user: @user, commentable: account)
-        expect(@user.destroyable?).to eq(false)
-      end
-
-      it "should not destroy the current user" do
-        login
-
-        expect(current_user.destroyable?).to eq(false)
-      end
+      # USE THE OTHER VERSION (from PR #671) WHEN RESOLVING CONFLICTS HERE
 
       it "should destroy the user" do
         expect(@user.destroyable?).to eq(true)
