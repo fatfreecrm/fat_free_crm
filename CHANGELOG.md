@@ -4,6 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Unreleased (0.17.0)
+---------------------------------------------------------------------
+ - #655 Upgrade rubocop
+ - #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
+ - #658 Upgrade Bootsnap gem, fixing an issue with windows
+
 Sat Jan 6, 2018 (0.16.1)
 ---------------------------------------------------------------------
 - #653 Fix regression with emails
