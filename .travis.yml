@@ -1,23 +1,37 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.3.3
-  # - 2.4.0
+  - 2.3.6
+  - 2.4.2
 
 env:
   global:
     - BROWSER=chrome
   matrix:
-    - DB=mysql
-    - DB=postgres
-    - DB=sqlite
+    - DB=postgres TEST_SUITE=rubocop
+    - DB=mysql TEST_SUITE="rake spec:models"
+    - DB=postgres TEST_SUITE="rake spec:models"
+    - DB=postgres TEST_SUITE="rake spec:mailers"
+    - DB=postgres TEST_SUITE="rake spec:controllers"
+    - DB=postgres TEST_SUITE="rake spec:helpers"
+    - DB=postgres TEST_SUITE="rake spec:lib"
+    - DB=postgres TEST_SUITE="rake spec:routing"
+    - DB=postgres TEST_SUITE="rake spec:views"
+    - DB=postgres TEST_SUITE="rake spec:features"
+    - DB=sqlite TEST_SUITE="rake spec:models"
 
 matrix:
-  exclude:
-    - rvm: 2.3.3
-      env: DB=mysql
-    - rvm: 2.3.3
-      env: DB=sqlite
+  allow_failures:
+    - rvm: 2.3.6
+      env: DB=mysql TEST_SUITE="rake spec:models"
+    - rvm: 2.3.6
+      env: DB=postgres TEST_SUITE="rake spec:models"
+    - rvm: 2.3.6
+      env: DB=sqlite TEST_SUITE="rake spec:models"
+    - rvm: 2.4.2
+      env: DB=mysql TEST_SUITE="rake spec:models"
+    - rvm: 2.4.2
+      env: DB=sqlite TEST_SUITE="rake spec:models"
 
 addons:
   chrome: stable
@@ -37,16 +51,8 @@ before_script:
   - "RAILS_ENV=test bundle exec rake spec:preparedb"
 
 # Run specs
-script: 
-  - "RAILS_ENV=test bundle exec rake spec:models"
-  - "RAILS_ENV=test bundle exec rake spec:controllers"
-  - "RAILS_ENV=test bundle exec rake spec:helpers"
-  - "RAILS_ENV=test bundle exec rake spec:lib"
-  - "RAILS_ENV=test bundle exec rake spec:mailers"
-  - "RAILS_ENV=test bundle exec rake spec:routing"
-  - "RAILS_ENV=test bundle exec rake spec:views"
-  - "RAILS_ENV=test bundle exec rake spec:features"
-  - "RAILS_ENV=test bundle exec rubocop"
+script:
+  - "RAILS_ENV=test bundle exec $TEST_SUITE"
 
 notifications:
   webhooks:

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -15,8 +17,8 @@ module AccountsHelper
   def account_summary(account)
     [number_to_currency(account.opportunities.pipeline.map(&:weighted_amount).sum, precision: 0),
      t(:added_by, time_ago: time_ago_in_words(account.created_at), user: account.user_id_full_name),
-     t('pluralize.contact', account.contacts.count),
-     t('pluralize.opportunity', account.opportunities.count),
+     t('pluralize.contact', account.contacts_count),
+     t('pluralize.opportunity', account.opportunities_count),
      t('pluralize.comment', account.comments.count)
     ].join(', ')
   end
@@ -79,7 +81,7 @@ module AccountsHelper
            else
              ""
       end
-    text << t(:department_small, h(contact.department)) unless contact.department.blank?
+    text += t(:department_small, h(contact.department)) unless contact.department.blank?
     text
   end
 
@@ -94,7 +96,7 @@ module AccountsHelper
     account_text = ""
     account_text = link_to_if(can?(:read, account), h(account.name), account_path(account)) if account.present?
 
-    text << if title.present? && department.present?
+    text += if title.present? && department.present?
               t(:account_with_title_department, title: h(title), department: h(department), account: account_text)
             elsif title.present?
               t(:account_with_title, title: h(title), account: account_text)

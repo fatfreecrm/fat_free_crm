@@ -1,4 +1,4 @@
-- amount = account.opportunities.pipeline.map(&:weighted_amount).sum
+- amount = account.pipeline_opportunities.map(&:weighted_amount).sum
 %li.highlight[account]
   - if account.category
     .strip{:class => account.category} #{t(account.category)}
@@ -20,14 +20,14 @@
       %span.amount= number_to_currency(amount, :precision => 0)
     &ndash;
     %tt
-      = account.location << ", " unless account.location.blank?
+      = account.location + ", " unless account.location.blank?
       - user_name = account.user.try(:full_name)
       - if user_name
         = t(:added_by, :time_ago => timeago(account.created_at), :user => h(user_name)).html_safe << " | "
       - else
         = t(:added_ago, :value => timeago(account.created_at)).html_safe << " | "
-      = t('pluralize.contact', account.contacts.count) << " | "
-      = t('pluralize.opportunity', account.opportunities.count)
+      = t('pluralize.contact', account.contacts_count) + " | "
+      = t('pluralize.opportunity', account.opportunities_count)
 
     %dt
       = stars_for(account)
@@ -35,7 +35,7 @@
       = " | ".html_safe << link_to_email(account.email) if account.email.present?
       = " | ".html_safe << t(:phone_small) << ": " << (account.toll_free_phone? ? account.toll_free_phone : account.phone) if account.toll_free_phone? || account.phone?
 
-    - if account.tag_list.present?
+    - if account.tags.present?
       %dt
         .tags= tags_for_index(account)
 

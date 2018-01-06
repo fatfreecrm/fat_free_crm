@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This migration comes from acts_as_taggable_on_engine (originally 3)
 class AddTaggingsCounterCacheToTags < ActiveRecord::Migration[4.2]
   def self.up

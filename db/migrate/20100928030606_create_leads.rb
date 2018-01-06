@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLeads < ActiveRecord::Migration[4.2]
   def self.up
     create_table :leads, force: true do |t|

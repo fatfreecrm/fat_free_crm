@@ -14,7 +14,7 @@
   .indentwide
     %label{ :id => dom_id(pending, :name) }
       - if pending.user.id != current_user.id
-        = t(:task_from, link_to(h(pending.user.full_name), user_path(pending.user))).html_safe << ':'
+        = t(:task_from, link_to(h(pending.user.full_name), user_path(pending.user))).html_safe + ':'
       = auto_link h(pending.name)
       - if pending.asset_id?
         =t :related
@@ -35,7 +35,7 @@
             = l(pending.due_at.localtime, :format => :mmddhhss)
           - else
             = t(:task_due_in, distance_of_time_in_words(Time.now, pending.due_at.localtime))
-            = '(' << l(pending.due_at.localtime, :format => :mmddhhss) << ')'
+            = "(#{l(pending.due_at.localtime, :format => :mmddhhss)})"
 
         - else
           - if pending.due_at < Date.today

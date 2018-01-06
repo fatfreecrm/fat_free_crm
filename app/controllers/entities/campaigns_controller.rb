@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -164,6 +166,11 @@ class CampaignsController < EntitiesController
 
   #----------------------------------------------------------------------------
   alias get_campaigns get_list_of_records
+
+  #----------------------------------------------------------------------------
+  def list_includes
+    %i[tags].freeze
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

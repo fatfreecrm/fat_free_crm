@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddStateToTimelineObjects < ActiveRecord::Migration[4.2]
   def self.up
     add_column :comments, :state, :string, limit: 16, null: false, default: "Expanded"

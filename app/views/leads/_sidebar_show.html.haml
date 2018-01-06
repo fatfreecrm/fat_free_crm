@@ -58,7 +58,7 @@
 
   = render "fields/sidebar_show", :asset => @lead
 
-  - if @lead.tag_list.present?
+  - if @lead.tags.present?
     %dt
       .tags= tags_for_index(@lead)
 

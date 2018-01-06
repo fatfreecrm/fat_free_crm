@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # http://cyber.law.harvard.edu/rss/rss.html
 xml.instruct! :xml, version: "1.0"
 xml.rss version: "2.0" do

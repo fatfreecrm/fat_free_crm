@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -6,7 +8,7 @@
 module FatFreeCRM
   module VERSION #:nodoc:
     MAJOR = 0
-    MINOR = 16
+    MINOR = 17
     TINY  = 0
     PRE   = nil
 

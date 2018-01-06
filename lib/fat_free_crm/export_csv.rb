@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -21,7 +23,7 @@ module FatFreeCRM
         items.each do |item|
           csv << columns.map do |column|
             if column == 'tags'
-              item.tag_list.join(' ')
+              item.tags.join(' ')
             else
               item.send(column)
             end

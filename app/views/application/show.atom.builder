@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # http://www.atomenabled.org/developers/syndication/
 item   = @items.singularize
 

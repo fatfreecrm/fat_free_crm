@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCampaigns < ActiveRecord::Migration[4.2]
   def self.up
     create_table :campaigns, force: true do |t|
