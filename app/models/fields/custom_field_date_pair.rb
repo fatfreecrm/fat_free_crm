@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -23,7 +25,7 @@ class CustomFieldDatePair < CustomFieldPair
   end
 
   def render(value)
-    value && value.strftime(I18n.t("date.formats.mmddyy"))
+    value&.strftime(I18n.t("date.formats.mmddyy"))
   end
 
   def custom_validator(obj)

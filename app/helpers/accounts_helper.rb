@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -25,7 +27,7 @@ module AccountsHelper
   # and prepends the currently selected account, if any.
   #----------------------------------------------------------------------------
   def account_select(options = {})
-    options[:selected] = (@account && @account.id) || 0
+    options[:selected] = (@account&.id) || 0
     accounts = ([@account] + Account.my.order(:name).limit(25)).compact.uniq
     collection_select :account, :id, accounts, :id, :name, options,
                       "data-placeholder": t(:select_an_account),
@@ -79,7 +81,7 @@ module AccountsHelper
            else
              ""
       end
-    text << t(:department_small, h(contact.department)) unless contact.department.blank?
+    text += t(:department_small, h(contact.department)) unless contact.department.blank?
     text
   end
 
@@ -94,7 +96,7 @@ module AccountsHelper
     account_text = ""
     account_text = link_to_if(can?(:read, account), h(account.name), account_path(account)) if account.present?
 
-    text << if title.present? && department.present?
+    text += if title.present? && department.present?
               t(:account_with_title_department, title: h(title), department: h(department), account: account_text)
             elsif title.present?
               t(:account_with_title, title: h(title), account: account_text)

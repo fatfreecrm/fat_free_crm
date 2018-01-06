@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # Uncomment the database that you have configured in config/database.yml
@@ -60,7 +62,7 @@ group :development, :test do
   gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
   gem 'factory_girl_rails', '~> 4.7.0' # 4.8.0+ stubbed models are not allowed to access the database - User#destroyed?()
-  gem 'rubocop', '~> 0.50.0' # Pinned because upgrades require regenerating rubocop_todo.yml
+  gem 'rubocop', '~> 0.52.0' # Pinned because upgrades require regenerating rubocop_todo.yml
   gem 'rainbow'
 end
 

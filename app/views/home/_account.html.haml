@@ -9,7 +9,7 @@
     = link_to(h(account.name), account)
     &ndash;
     %tt
-      = account.location << ", " unless account.location.blank?
+      = account.location + ", " unless account.location.blank?
       - user_name = account.user.try(:full_name)
       - if user_name
         = t(:added_by, :time_ago => timeago(account.created_at), :user => h(user_name)).html_safe
@@ -18,10 +18,10 @@
 
     - unless current_user.preference[:accounts_index_view] == "accounts_index_brief"
       %dt
-        = link_to(account.website, account.website.to_url) << " | " if account.website.present?
-        = link_to_email(account.email) << " | " if account.email.present?
-        = t(:phone_small) << ": " << (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
-        = t('pluralize.contact', account.contacts_count) << " | "
+        = link_to(account.website, account.website.to_url) + " | " if account.website.present?
+        = link_to_email(account.email) + " | " if account.email.present?
+        = t(:phone_small) + ": " + (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
+        = t('pluralize.contact', account.contacts_count) + " | "
         = t('pluralize.opportunity', account.opportunities_count)
       - if account.tags.present?
         %dt

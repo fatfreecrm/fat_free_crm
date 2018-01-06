@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -123,7 +125,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def complete
     @task = Task.tracked_by(current_user).find(params[:id])
-    @task.update_attributes(completed_at: Time.now, completed_by: current_user.id) if @task
+    @task&.update_attributes(completed_at: Time.now, completed_by: current_user.id)
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
     if Task.bucket_empty?(params[:bucket], current_user)
@@ -138,7 +140,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def uncomplete
     @task = Task.tracked_by(current_user).find(params[:id])
-    @task.update_attributes(completed_at: nil, completed_by: nil) if @task
+    @task&.update_attributes(completed_at: nil, completed_by: nil)
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
     if Task.bucket_empty?(params[:bucket], current_user, @view)

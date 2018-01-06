@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IsParanoidToPaperTrail < ActiveRecord::Migration[4.2]
   def up
     [Account, Campaign, Contact, Lead, Opportunity, Task].each do |klass|

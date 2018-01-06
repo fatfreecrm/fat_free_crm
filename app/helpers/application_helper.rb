@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -77,7 +79,7 @@ module ApplicationHelper
   def rating_select(name, options = {})
     stars = Hash[(1..5).map { |star| [star, "&#9733;" * star] }].sort
     options_for_select = %(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
-    options_for_select << stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
+    options_for_select += stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
     select_tag name, options_for_select.html_safe, options
   end
 
@@ -159,8 +161,9 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_email(email, length = nil, &_block)
     name = (length ? truncate(email, length: length) : email)
-    if Setting.email_dropbox && Setting.email_dropbox[:address].present?
-      mailto = "#{email}?bcc=#{Setting.email_dropbox[:address]}"
+    bcc = Setting&.email_dropbox
+    if bcc && bcc[:address].present?
+      mailto = "#{email}?bcc=#{bcc[:address]}"
     else
       mailto = email
     end
@@ -225,7 +228,7 @@ module ApplicationHelper
     yes = link_to(t(:yes_button), params[:url] || model, method: :delete)
     no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
     text = "$('#confirm').html( $('#menu').html() );\n"
-    text << "$('#menu').html('#{question} #{yes} : #{no}');"
+    text += "$('#menu').html('#{question} #{yes} : #{no}');"
     text.html_safe
   end
 
@@ -244,8 +247,8 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil, shake = nil)
     text = ""
-    text << "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
-    text << "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
+    text += "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
+    text += "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
     text.html_safe
   end
 
@@ -256,9 +259,9 @@ module ApplicationHelper
       url = person.send(site)
       unless url.blank?
         if site == :skype
-          url = "callto:" << url
+          url = "callto:" + url
         else
-          url = "http://" << url unless url =~ /^https?:\/\//
+          url = "http://" + url unless url =~ /^https?:\/\//
         end
         link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
       end

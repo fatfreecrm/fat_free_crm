@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # http://www.atomenabled.org/developers/syndication/
 items  = controller.controller_name
 item   = items.singularize

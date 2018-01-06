@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSessions < ActiveRecord::Migration[4.2]
   def self.up
     # Set the following global variable to show that we are migrating

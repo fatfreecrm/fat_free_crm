@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -14,7 +16,7 @@ class LeadObserver < ActiveRecord::Observer
 
   def after_update(item)
     original = @@leads.delete(item.id)
-    if original && original.status != "rejected" && item.status == "rejected"
+    if original&.status != "rejected" && item.status == "rejected"
       return log_activity(item, :reject)
     end
   end

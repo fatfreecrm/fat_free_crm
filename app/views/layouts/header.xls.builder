@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 xml.instruct!
 xml.Workbook 'xmlns:x'    => 'urn:schemas-microsoft-com:office:excel',
              'xmlns:ss'   => 'urn:schemas-microsoft-com:office:spreadsheet',

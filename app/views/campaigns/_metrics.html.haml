@@ -13,4 +13,4 @@
   = t('pluralize.lead', campaign.leads_count || 0) + " | "
   = t('pluralize.opportunity', campaign.opportunities_count || 0)
   - if campaign.opportunities_count? && campaign.leads_count? && campaign.leads_count != 0
-    = " | " << t(:conversion_number, number_to_percentage(campaign.opportunities_count * 100 / campaign.leads_count, :precision => 1))
+    = " | " + t(:conversion_number, number_to_percentage(campaign.opportunities_count * 100 / campaign.leads_count, :precision => 1))

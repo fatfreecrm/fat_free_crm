@@ -1,8 +1,8 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.3.3
-  # - 2.4.0
+  - 2.3.6
+  - 2.4.2
 
 env:
   global:
@@ -13,10 +13,16 @@ env:
     - DB=sqlite
 
 matrix:
-  exclude:
-    - rvm: 2.3.3
+  allow_failures:
+    - rvm: 2.3.6
       env: DB=mysql
-    - rvm: 2.3.3
+    - rvm: 2.3.6
+      env: DB=postgres
+    - rvm: 2.3.6
+      env: DB=sqlite
+    - rvm: 2.4.2
+      env: DB=mysql
+    - rvm: 2.4.2
       env: DB=sqlite
 
 addons:
@@ -37,7 +43,8 @@ before_script:
   - "RAILS_ENV=test bundle exec rake spec:preparedb"
 
 # Run specs
-script: 
+script:
+  - "RAILS_ENV=test bundle exec rubocop"
   - "RAILS_ENV=test bundle exec rake spec:models"
   - "RAILS_ENV=test bundle exec rake spec:mailers"
   - "RAILS_ENV=test bundle exec rake spec:controllers"
@@ -47,7 +54,6 @@ script:
   - "RAILS_ENV=test bundle exec rake spec:routing"
   - "RAILS_ENV=test bundle exec rake spec:views"
   - "RAILS_ENV=test bundle exec rake spec:features"
-  - "RAILS_ENV=test bundle exec rubocop"
 
 notifications:
   webhooks:

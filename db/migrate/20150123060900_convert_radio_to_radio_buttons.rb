@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ConvertRadioToRadioButtons < ActiveRecord::Migration[4.2]
   def up
     # UPDATE "fields" SET "as" = 'radio_buttons' WHERE "fields"."as" = $1  [["as", "radio"]]
