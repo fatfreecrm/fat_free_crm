@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeSubscribedUsersToSet < ActiveRecord::Migration[4.2]
   def up
     contacts = connection.select_all %(

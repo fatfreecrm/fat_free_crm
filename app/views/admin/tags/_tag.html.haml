@@ -3,7 +3,7 @@
 
 %li.highlight[tag]
   .tools
-    = link_to_edit(tag, :url => edit_admin_tag_path(tag)) << " |"
+    = link_to_edit(tag, :url => edit_admin_tag_path(tag)) + " |"
     - if tag_field_groups.any?
       %span{:style => "color: #777"} Delete
     - else

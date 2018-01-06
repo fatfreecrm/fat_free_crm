@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveUuid < ActiveRecord::Migration[4.2]
   @@uuid_configured = false
 

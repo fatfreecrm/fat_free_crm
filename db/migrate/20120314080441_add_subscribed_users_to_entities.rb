@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddSubscribedUsersToEntities < ActiveRecord::Migration[4.2]
   def change
     %w[accounts campaigns contacts leads opportunities tasks].each do |table|

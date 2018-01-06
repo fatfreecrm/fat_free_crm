@@ -34,7 +34,7 @@
 %>
 email_<%= i %>:
   id              : <%= i %>
-  imap_message_id : <%= Digest::MD5.hexdigest(i.to_s) << "@" << FFaker::Internet.domain_name %>
+  imap_message_id : <%= "#{Digest::MD5.hexdigest(i.to_s)}@#{FFaker::Internet.domain_name}" %>
   user_id         : <%= user + 1 %>
   mediator_id     : <%= rand(80) + 1 %>
   mediator_type   : <%= mediators.sample %>

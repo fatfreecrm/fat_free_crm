@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DropOpenidTables < ActiveRecord::Migration[4.2]
   def self.up
     drop_table :open_id_authentication_associations

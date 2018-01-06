@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameRememberToken < ActiveRecord::Migration[4.2]
   def self.up
     rename_column :users, :remember_token, :persistence_token
