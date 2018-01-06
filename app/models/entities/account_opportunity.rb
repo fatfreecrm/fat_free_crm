@@ -18,7 +18,7 @@
 #
 
 class AccountOpportunity < ActiveRecord::Base
-  belongs_to :account
+  belongs_to :account, counter_cache: :opportunities_count
   belongs_to :opportunity
   validates_presence_of :account_id, :opportunity_id
 
