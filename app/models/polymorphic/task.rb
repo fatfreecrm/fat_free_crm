@@ -230,12 +230,12 @@ class Task < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def due_end_of_day?
-    due_at.present? && (due_at == due_at.end_of_day)
+    due_at.present? && (due_at.iso8601 == due_at.end_of_day.iso8601)
   end
 
   #----------------------------------------------------------------------------
   def due_beginning_of_day?
-    due_at.present? && (due_at == due_at.beginning_of_day)
+    due_at.present? && (due_at.iso8601 == due_at.beginning_of_day.iso8601)
   end
 
   #----------------------------------------------------------------------------
