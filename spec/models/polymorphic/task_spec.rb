@@ -106,7 +106,7 @@ describe Task do
         task.update_attributes(bucket: "due_this_week")
         expect(task.errors).to be_empty
         expect(task.bucket).to eq("due_this_week")
-        expect(task.due_at).to eq(Time.zone.now.end_of_week)
+        expect(task.due_at.iso8601).to eq(Time.zone.now.end_of_week.iso8601)
       end
 
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do
