@@ -10,13 +10,6 @@ env:
   matrix:
     - DB=postgres TEST_SUITE=rubocop
     - DB=mysql TEST_SUITE="rake spec:models"
-    - DB=mysql TEST_SUITE="rake spec:mailers"
-    - DB=mysql TEST_SUITE="rake spec:controllers"
-    - DB=mysql TEST_SUITE="rake spec:helpers"
-    - DB=mysql TEST_SUITE="rake spec:lib"
-    - DB=mysql TEST_SUITE="rake spec:routing"
-    - DB=mysql TEST_SUITE="rake spec:views"
-    - DB=mysql TEST_SUITE="rake spec:features"
     - DB=postgres TEST_SUITE="rake spec:models"
     - DB=postgres TEST_SUITE="rake spec:mailers"
     - DB=postgres TEST_SUITE="rake spec:controllers"
@@ -26,13 +19,6 @@ env:
     - DB=postgres TEST_SUITE="rake spec:views"
     - DB=postgres TEST_SUITE="rake spec:features"
     - DB=sqlite TEST_SUITE="rake spec:models"
-    - DB=sqlite TEST_SUITE="rake spec:mailers"
-    - DB=sqlite TEST_SUITE="rake spec:controllers"
-    - DB=sqlite TEST_SUITE="rake spec:helpers"
-    - DB=sqlite TEST_SUITE="rake spec:lib"
-    - DB=sqlite TEST_SUITE="rake spec:routing"
-    - DB=sqlite TEST_SUITE="rake spec:views"
-    - DB=sqlite TEST_SUITE="rake spec:features"
 
 
 matrix:
