@@ -11,7 +11,7 @@ describe "/accounts/_new" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
     assign(:account, Account.new)
     assign(:users, [current_user])
   end

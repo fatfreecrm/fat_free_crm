@@ -11,7 +11,7 @@ describe "/home/index" do
   include HomeHelper
 
   before do
-    login_and_assign!
+    login
   end
 
   it "should render [activity] template with @activities collection" do

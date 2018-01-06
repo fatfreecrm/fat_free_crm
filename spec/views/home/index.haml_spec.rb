@@ -11,7 +11,7 @@ describe "/home/index" do
   include HomeHelper
 
   before do
-    login_and_assign
+    login
   end
 
   it "should render list of activities if it's not empty" do

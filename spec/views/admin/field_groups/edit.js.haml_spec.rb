@@ -9,7 +9,7 @@ require 'spec_helper'
 
 describe "admin/field_groups/edit" do
   before do
-    login_and_assign(admin: true)
+    login_admin
     assign(:field_group, field_group)
   end
 

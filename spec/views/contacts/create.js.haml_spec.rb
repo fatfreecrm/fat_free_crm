@@ -11,7 +11,7 @@ describe "/contacts/create" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   describe "create success" do

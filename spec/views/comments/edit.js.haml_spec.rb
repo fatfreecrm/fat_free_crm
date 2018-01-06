@@ -11,6 +11,7 @@ describe "/comments/edit" do
   include CommentsHelper
 
   before do
+    login
     assign(:comment, stub_model(Comment,
                                 id: 321,
                                 new_record?: false,

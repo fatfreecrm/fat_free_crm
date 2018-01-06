@@ -11,7 +11,7 @@ describe "/contacts/index" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   it "should render [contact] template with @contacts collection if there are contacts" do

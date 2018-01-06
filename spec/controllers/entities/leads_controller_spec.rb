@@ -9,7 +9,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe LeadsController do
   before(:each) do
-    require_user
+    login
     set_current_tab(:leads)
   end
 

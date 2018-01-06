@@ -11,9 +11,8 @@ describe "/accounts/_edit" do
   include AccountsHelper
 
   before do
-    login_and_assign
-    assign(:account, @account = FactoryGirl.build_stubbed(:account))
-    assign(:users, [current_user])
+    login
+    assign(:account, @account = FactoryGirl.create(:account))
   end
 
   it "should render [edit account] form" do

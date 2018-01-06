@@ -11,7 +11,7 @@ describe "/leads/index" do
   include LeadsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   it "should render [lead] template with @leads collection if there are leads" do

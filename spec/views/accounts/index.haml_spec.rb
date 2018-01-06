@@ -15,7 +15,7 @@ describe "/accounts/index" do
     assign :per_page, Account.per_page
     assign :sort_by,  Account.sort_by
     assign :ransack_search, Account.ransack
-    login_and_assign
+    login
   end
 
   it "should render account name" do

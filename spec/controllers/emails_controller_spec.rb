@@ -11,7 +11,7 @@ describe EmailsController, "handling GET /emails" do
   MEDIATOR = %i[account campaign contact lead opportunity].freeze
 
   before(:each) do
-    require_user
+    login
   end
 
   # DELETE /emails/1

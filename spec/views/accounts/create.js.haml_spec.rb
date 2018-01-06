@@ -11,7 +11,7 @@ describe "/accounts/create" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   # Note: [Create Account] is only called from Accounts index. Unlike other
