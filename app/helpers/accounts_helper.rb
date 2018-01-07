@@ -28,7 +28,7 @@ module AccountsHelper
   #----------------------------------------------------------------------------
   def account_select(options = {})
     options[:selected] = (@account&.id) || 0
-    accounts = ([@account] + Account.my.order(:name).limit(25)).compact.uniq
+    accounts = ([@account] + Account.my(current_user).order(:name).limit(25)).compact.uniq
     collection_select :account, :id, accounts, :id, :name, options,
                       "data-placeholder": t(:select_an_account),
                       "data-url": auto_complete_accounts_path(format: 'json'),

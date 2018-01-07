@@ -111,7 +111,7 @@ class EntitiesController < ApplicationController
 
   #----------------------------------------------------------------------------
   def entities
-    instance_variable_get("@#{controller_name}") || klass.my
+    instance_variable_get("@#{controller_name}") || klass.my(current_user)
   end
 
   def set_options

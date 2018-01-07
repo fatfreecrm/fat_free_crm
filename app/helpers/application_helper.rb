@@ -520,7 +520,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   # Ajaxification FTW!
-  # e.g. collection = Opportunity.my.scope
+  # e.g. collection = Opportunity.my(current_user).scope
   #         options = { renderer: {...} , params: {...}
   def paginate(options = {})
     collection = options.delete(:collection)

@@ -22,9 +22,7 @@ module FatFreeCRM
           #
           has_many :permissions, as: :asset
 
-          scope :my, lambda {
-            accessible_by(User.current_ability)
-          }
+          scope :my, ->(current_user) { accessible_by(current_user.ability) }
 
           include FatFreeCRM::Permissions::InstanceMethods
           extend FatFreeCRM::Permissions::SingletonMethods

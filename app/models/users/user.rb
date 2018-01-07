@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
     where('upper(username) LIKE upper(:s) OR upper(email) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', s: "%#{query}%")
   }
 
-  scope :my, -> { accessible_by(User.current_ability) }
+  scope :my, ->(current_user) { accessible_by(current_user.ability) }
 
   scope :have_assigned_opportunities, -> {
     joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to")
@@ -142,20 +142,22 @@ class User < ActiveRecord::Base
     [name].to_xml
   end
 
-  def destroyable?
-    check_if_current_user && !has_related_assets?
+  # Returns permissions ability object.
+  #----------------------------------------------------------------------------
+  def ability
+    @ability ||= Ability.new(self)
+  end
+
+  # Returns true if this user is allowed to be destroyed.
+  #----------------------------------------------------------------------------
+  def destroyable?(current_user)
+    current_user != self && !has_related_assets?
   end
 
   # Suspend newly created user if signup requires an approval.
   #----------------------------------------------------------------------------
-  def check_if_needs_approval
+  def suspend_if_needs_approval
     self.suspended_at = Time.now if Setting.user_signup == :needs_approval && !admin
-  end
-
-  # Prevent current user from deleting herself.
-  #----------------------------------------------------------------------------
-  def check_if_current_user
-    User.current_user.nil? || User.current_user != self
   end
 
   # Prevent deleting a user unless she has no artifacts left.
@@ -174,10 +176,6 @@ class User < ActiveRecord::Base
   # Define class methods
   #----------------------------------------------------------------------------
   class << self
-    def current_ability
-      Ability.new(User.current_user)
-    end
-
     def can_signup?
       %i[allowed needs_approval].include? Setting.user_signup
     end

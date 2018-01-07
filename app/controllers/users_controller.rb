@@ -130,7 +130,7 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def opportunities_overview
     @users_with_opportunities = User.have_assigned_opportunities.order(:first_name)
-    @unassigned_opportunities = Opportunity.my.unassigned.pipeline.order(:stage).includes(:account, :user, :tags)
+    @unassigned_opportunities = Opportunity.my(current_user).unassigned.pipeline.order(:stage).includes(:account, :user, :tags)
   end
 
   protected
