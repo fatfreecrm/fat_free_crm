@@ -1,17 +1,17 @@
 = styles_for :group
 
 .title_tools
-  = link_to_inline(:create_group, new_admin_group_path, :text => t(:create_group))
+  = link_to_inline(:create_group, new_admin_group_path, text: t(:create_group))
 
 .title
   %span#create_group_title #{t :groups}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
 
 .remote#create_group{ hidden }
 
 %ul.list#groups
   - if @groups.any?
-    = render :partial => "group", :collection => @groups
+    = render partial: "group", collection: @groups
   - else
     = render "shared/empty"
 

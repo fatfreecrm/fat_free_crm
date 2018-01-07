@@ -6,23 +6,23 @@
 
   .subtitle_tools
     - unless field_group.name == "custom_fields"
-      = link_to_inline(edit_form_id, edit_admin_field_group_path(field_group), :text => t(:edit_field_group))
+      = link_to_inline(edit_form_id, edit_admin_field_group_path(field_group), text: t(:edit_field_group))
       |
-    = link_to(arrow_for(create_form_id) + t(:create_field), '#', :class => 'create')
+    = link_to(arrow_for(create_form_id) + t(:create_field), '#', class: 'create')
     - unless field_group.name == "custom_fields"
       |
       = link_to_confirm(field_group)
 
-  .subtitle{ :id => "#{dom_id(field_group)}_title" }= field_group_subtitle(field_group)
+  .subtitle{ id: "#{dom_id(field_group)}_title" }= field_group_subtitle(field_group)
 
-  .remote{ hidden.merge(:id => edit_form_id) }
+  .remote{ hidden.merge(id: edit_form_id) }
 
   .list
-    %ul{ :id => dom_id(field_group, :fields), 'data-sortable' => sort_admin_fields_path(:field_group_id => field_group.id), 'data-sortable-connect-with' => '.fields', 'data-sortable-handle' => '.handle' }
-      = render :partial => "admin/fields/field", :collection => field_group.fields.without_pairs
+    %ul{ id: dom_id(field_group, :fields), 'data-sortable' => sort_admin_fields_path(field_group_id: field_group.id), 'data-sortable-connect-with' => '.fields', 'data-sortable-handle' => '.handle' }
+      = render partial: "admin/fields/field", collection: field_group.fields.without_pairs
       %li.empty
         = t(:field_group_empty)
-        = link_to t(:create_field), '#', :class => 'create', 'data-for' => create_form_id
+        = link_to t(:create_field), '#', class: 'create', 'data-for' => create_form_id
 
-    .remote{ hidden.merge(:id => create_form_id, :class => 'create_field') }
-      = render :partial => 'admin/fields/form', :locals => {:field_group_id => field_group.id}
+    .remote{ hidden.merge(id: create_form_id, class: 'create_field') }
+      = render partial: 'admin/fields/form', locals: {field_group_id: field_group.id}

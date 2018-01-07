@@ -1,2 +1,2 @@
-$('#users').html('#{ j render(:partial => "admin/users/user", :collection => @users) }');
-$('#paginate').html('#{ j render(:partial => "shared/paginate") }')
+$('#users').html('#{ j render(partial: "admin/users/user", collection: @users) }');
+$('#paginate').html('#{ j render(partial: "shared/paginate") }')

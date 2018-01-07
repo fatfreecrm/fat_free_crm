@@ -1,11 +1,11 @@
 .remote
-  = form_for(@lead, :url => promote_lead_path(@lead), :html => one_submit_only, :remote => true) do |f|
+  = form_for(@lead, url: promote_lead_path(@lead), html: one_submit_only, remote: true) do |f|
     = link_to_close convert_lead_path(@lead)
     = fields_for(@account) do |a|
       = a.hidden_field :user_id
       = a.hidden_field :access
 
-      = error_messages_for :account, :opportunity, :object_name => t('lead')
+      = error_messages_for :account, :opportunity, object_name: t('lead')
 
       .section
         %small

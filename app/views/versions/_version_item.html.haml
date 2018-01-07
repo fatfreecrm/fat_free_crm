@@ -1,8 +1,8 @@
 - if [first, second].any?(&:present?)
   %br
   - if first.blank? and second.present?
-    = t('version.set_html', :attr => label, :to => second)
+    = t('version.set_html', attr: label, to: second)
   - elsif first.present? and second.present?
-    = t('version.change_html', :attr => label, :from => first, :to => second)
+    = t('version.change_html', attr: label, from: first, to: second)
   - elsif first.present? and second.blank?
-    = t('version.unset_html', :attr => label, :from => first)
+    = t('version.unset_html', attr: label, from: first)

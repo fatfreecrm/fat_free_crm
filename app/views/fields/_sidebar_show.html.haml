@@ -6,4 +6,4 @@
         .caption #{field_group.label_i18n}
       - fg.each do |field|
         - if (value = field.render_value(asset)).present?
-          == #{field.label}:<br /> <b>#{truncate(value, :length => 35)}</b><br />
+          == #{field.label}:<br /> <b>#{truncate(value, length: 35)}</b><br />

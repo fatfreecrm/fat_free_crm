@@ -8,4 +8,4 @@
       %td
         .label.top.req #{t :users}:
         %br
-        = f.select :user_ids, User.all.map {|u| [u.full_name, u.id]}, {}, :multiple => true, :class => 'select2'
+        = f.select :user_ids, User.all.map {|u| [u.full_name, u.id]}, {}, multiple: true, class: 'select2'

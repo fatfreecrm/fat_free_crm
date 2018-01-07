@@ -4,16 +4,16 @@
   - buckets = Setting.unroll(:task_completed)
   .title
     = t(:completed_tasks)
-    = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+    = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
 - else
   - buckets = Setting.unroll(:task_bucket)
   = render "title"
 
 .log#tasks
   - buckets.each do |value, key|
-    %div{ hidden_if(filtered_out?(@view, key)), :id => "list_#{key}" }
-      %h3{:class => key}= t(value)
-      .bucket{:id => key}= render :partial => @view, :collection => @tasks[key] || [], :locals => { :bucket => key }
+    %div{ hidden_if(filtered_out?(@view, key)), id: "list_#{key}" }
+      %h3{class: key}= t(value)
+      .bucket{id: key}= render partial: @view, collection: @tasks[key] || [], locals: { bucket: key }
   - if @tasks.values.flatten.blank?
     = render "empty"
 

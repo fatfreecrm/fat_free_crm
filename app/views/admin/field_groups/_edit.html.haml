@@ -1,8 +1,8 @@
-= form_for([:admin, @field_group], :html => one_submit_only, :remote => true) do |f|
+= form_for([:admin, @field_group], html: one_submit_only, remote: true) do |f|
   = link_to_close edit_admin_field_group_path(@field_group)
   = f.error_messages
-  = render :partial => "top_section", :locals => { :f => f, :edit => true }
+  = render partial: "top_section", locals: { f: f, edit: true }
   .buttonbar
-    = f.submit t(:save_field_group), :id => :field_group_submit
+    = f.submit t(:save_field_group), id: :field_group_submit
     or
     = link_to_cancel edit_admin_field_group_path(@field_group)

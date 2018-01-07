@@ -1,7 +1,7 @@
 - if @user.avatar.nil? || @user.avatar.errors.empty?
   crm.flip_form('upload_avatar');
   crm.set_title('upload_avatar', '#{j t(:my_profile)}');
-  $('#profile').html('#{ j render(:partial => "user") }');
+  $('#profile').html('#{ j render(partial: "user") }');
 - else
-  $('#upload_avatar').html('#{ j render(:partial => "avatar") }');
+  $('#upload_avatar').html('#{ j render(partial: "avatar") }');
   $('#upload_avatar').effect("shake", { duration:250, distance: 6 });

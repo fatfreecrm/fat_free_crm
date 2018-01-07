@@ -8,6 +8,6 @@
 - else
   - link_text, action = [t(:subscribe_via_email), "subscribe"]
 
-%div{:id => "#{id_prefix}_subscribe", :class => "comment_subscriptions"}
-  = image_tag "notifications.png", :title => t(:notifications_tooltip)
-  = link_to link_text, url_for(:controller => class_name.pluralize, :action => action, :id => entity.id), :remote => true, :method => :post
+%div{id: "#{id_prefix}_subscribe", class: "comment_subscriptions"}
+  = image_tag "notifications.png", title: t(:notifications_tooltip)
+  = link_to link_text, url_for(controller: class_name.pluralize, action: action, id: entity.id), remote: true, method: :post

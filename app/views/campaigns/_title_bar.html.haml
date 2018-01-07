@@ -1,11 +1,11 @@
 #confirm{ hidden }
 .title_tools#menu
-  = link_to_inline(:edit_campaign, edit_campaign_path(@campaign), :text => t(:edit)) + " | "
+  = link_to_inline(:edit_campaign, edit_campaign_path(@campaign), text: t(:edit)) + " | "
   = link_to_function(t(:delete) + '?', confirm_delete(@campaign))
 .title_tools#buttons
   = view_buttons
 .title#edit_campaign_title
   = h(@campaign.name)
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
 
 %div#edit_campaign{ hidden }

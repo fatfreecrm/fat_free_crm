@@ -1,7 +1,7 @@
-<%= I18n.t('comment_notification.intro', :user_full_name => @user.full_name, :entity_type => @entity_type, :entity_name => @entity_name) %>
+<%= I18n.t('comment_notification.intro', user_full_name: @user.full_name, entity_type: @entity_type, entity_name: @entity_name) %>
 
 <%= sanitize(@comment.comment) %>
 
 
 --
-<%= I18n.t('comment_notification.reply_instructions', :entity => @entity_type.downcase) %>: <%= polymorphic_url(@entity) %>
+<%= I18n.t('comment_notification.reply_instructions', entity: @entity_type.downcase) %>: <%= polymorphic_url(@entity) %>

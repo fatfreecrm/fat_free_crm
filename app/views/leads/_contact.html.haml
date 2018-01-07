@@ -24,12 +24,12 @@
           = f.text_field :mobile
       %tr
         %td
-          = render "shared/address", :f => f, :asset => @lead, :type => 'business', :title => :address
+          = render "shared/address", f: f, asset: @lead, type: 'business', title: :address
         %td= spacer
         %td
           .label #{t :referred_by}:
           = f.text_field :referred_by
-          %div{:style => "margin-top:6px"}
+          %div{style: "margin-top:6px"}
             .check_box
               = f.check_box :do_not_call, {}, true
               #{t :do_not_call}

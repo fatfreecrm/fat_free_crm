@@ -1,13 +1,13 @@
 - id = dom_id(@tag)
 
 - if params[:cancel].true?     # <----------------- Hide [Edit Tag]
-  $('##{id}').replaceWith('#{ j render(:partial => "tag", :collection => [ @tag ]) }');
+  $('##{id}').replaceWith('#{ j render(partial: "tag", collection: [ @tag ]) }');
 
 - else # <----------------------------------------  Show [Edit Tag] form.
 
   - if @previous                                    # Hide open [Edit Tag] form if any.
     - if @previous.is_a?(Tag)                       # Previous tag still exists?
-      $('##{dom_id(@previous)}').replaceWith('#{ j render(:partial => "tag", :collection => [ @previous ]) }');
+      $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: "tag", collection: [ @previous ]) }');
     - else
       crm.flick('tag_#{@previous}', 'remove');
 
@@ -16,5 +16,5 @@
   -# Show [Edit Tag] form.
   crm.highlight_off('#{id}');
   crm.hide_form('create_tag');
-  $('##{id}').html('#{ j render(:partial => "edit") }');
+  $('##{id}').html('#{ j render(partial: "edit") }');
   $('#tag_name').focus();

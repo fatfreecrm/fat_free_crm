@@ -1,6 +1,6 @@
 %li.highlight[opportunity]
   - if opportunity.stage
-    .strip{:class => opportunity.stage}= t(opportunity.stage)
+    .strip{class: opportunity.stage}= t(opportunity.stage)
   - else
     .strip.white #{t :other}
 
@@ -22,8 +22,8 @@
       &ndash;
       - user_name = opportunity.user.try(:full_name)
       - if user_name
-        = t(:added_by, :time_ago => timeago(opportunity.created_at), :user => h(user_name)).html_safe
+        = t(:added_by, time_ago: timeago(opportunity.created_at), user: h(user_name)).html_safe
       - else
-        = t(:added_ago, :value => timeago(opportunity.created_at)).html_safe
+        = t(:added_ago, value: timeago(opportunity.created_at)).html_safe
 
-    = hook(:opportunity_bottom, self, :opportunity => opportunity)
+    = hook(:opportunity_bottom, self, opportunity: opportunity)

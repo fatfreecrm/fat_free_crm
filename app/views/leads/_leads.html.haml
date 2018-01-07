@@ -1,6 +1,6 @@
 = section(object, :leads)
 .list#leads
-  - leads = object.leads.order('updated_at desc').paginate(:page => 1, :per_page => 20)
-  = render :partial => "leads/lead", :collection => object.leads.paginate(:page => 1, :per_page => 20)
+  - leads = object.leads.order('updated_at desc').paginate(page: 1, per_page: 20)
+  = render partial: "leads/lead", collection: object.leads.paginate(page: 1, per_page: 20)
 
 = paginate( collection: leads, id: 'leads_pagination', params: { action: 'leads' } )

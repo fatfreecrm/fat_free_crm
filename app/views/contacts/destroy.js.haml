@@ -4,6 +4,6 @@
 $('##{dom_id(@entity)}').css('background-color', '#ffe4e1').slideUp(250);
 - if called_from_index_page?
   = refresh_sidebar(:index, :filters)
-  $('#paginate').html('#{ j render(:partial => "shared/paginate_with_per_page") }');
+  $('#paginate').html('#{ j render(partial: "shared/paginate_with_per_page") }');
 - else
-  $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+  $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');

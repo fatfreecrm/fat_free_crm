@@ -4,7 +4,7 @@
     -# If it's not Tasks tab then we just reload appropriate
     -# partial with the new task, and update recent items.
     = replace_content(@task)
-    $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+    $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
   - else
     - if @task.assigned_to != @task_before_update.assigned_to
       = reassign(@task)

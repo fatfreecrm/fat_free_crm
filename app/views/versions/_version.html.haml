@@ -6,12 +6,12 @@
     - else
       - user_name = t('version.anonymous')
     -# If translation doesn't exist, just print event message
-    - if t('version.' + version.event, :default => 0) != 0
-      = t('version.' + version.event, :item => item_type, :by => user_name, :default => version.event)
+    - if t('version.' + version.event, default: 0) != 0
+      = t('version.' + version.event, item: item_type, by: user_name, default: version.event)
     - else
       = auto_link(version.event)
     %small= timeago(version.created_at)
     %tt
       - version.changeset.each do |attr_name, change|
         - label, first, second = parse_version(attr_name, change)
-        = render :partial => 'versions/version_item', :locals => {:label => label, :first => first, :second => second}
+        = render partial: 'versions/version_item', locals: {label: label, first: first, second: second}

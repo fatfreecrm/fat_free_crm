@@ -1,8 +1,8 @@
 %li.highlight[contact]
-  = avatar_for(contact, :size => "16x16")
+  = avatar_for(contact, size: "16x16")
 
   %ul.tools
-    = hook(:contact_tools_before, self, :contact => contact)
+    = hook(:contact_tools_before, self, contact: contact)
 
     - if can?(:update, contact)
       %li= link_to_edit(contact)
@@ -22,4 +22,4 @@
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
 
-    = hook(:contact_bottom, self, :contact => contact)
+    = hook(:contact_bottom, self, contact: contact)
