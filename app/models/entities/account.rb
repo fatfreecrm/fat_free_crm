@@ -134,7 +134,7 @@ class Account < ActiveRecord::Base
   # Make sure at least one user has been selected if the account is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, :share_account) if self[:access] == "Shared" && !permissions.any?
+    errors.add(:access, :share_account) if self[:access] == "Shared" && permissions.none?
   end
 
   def nullify_blank_category

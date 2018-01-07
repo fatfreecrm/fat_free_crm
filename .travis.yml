@@ -20,7 +20,6 @@ env:
     - DB=postgres TEST_SUITE="rake spec:features"
     - DB=sqlite TEST_SUITE="rake spec:models"
 
-
 matrix:
   allow_failures:
     - rvm: 2.3.6

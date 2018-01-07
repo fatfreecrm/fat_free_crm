@@ -217,17 +217,21 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax
-      if called_from_index_page?                  # Called from Leads index.
-        get_data_for_sidebar                      # Get data for the sidebar.
-        @leads = get_leads                        # Get leads for current page.
-        if @leads.blank?                          # If no lead on this page then try the previous one.
+      if called_from_index_page? # Called from Leads index.
+        get_data_for_sidebar
+        @leads = get_leads
+        if @leads.blank?
+          # If no lead on this page then try the previous one.
+          # and reload the whole list even if it's empty.
           @leads = get_leads(page: current_page - 1) if current_page > 1
-          render(:index) && return                # And reload the whole list even if it's empty.
+          render(:index) && return
         end
-      else                                        # Called from related asset.
-        self.current_page = 1                     # Reset current page to 1 to make sure it stays valid.
-        @campaign = @lead.campaign                # Reload lead's campaign if any.
-      end                                         # Render destroy.js
+      else # Called from related asset.
+        # Reset current page to 1 to make sure it stays valid.
+        # Reload lead's campaign if any and render destroy.js
+        self.current_page = 1
+        @campaign = @lead.campaign
+      end
     else # :html destroy
       self.current_page = 1
       flash[:notice] = t(:msg_asset_deleted, @lead.full_name)

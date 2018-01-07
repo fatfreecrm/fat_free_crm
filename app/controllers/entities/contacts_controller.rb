@@ -68,15 +68,15 @@ class ContactsController < EntitiesController
         @contacts = get_contacts if called_from_index_page?
       else
         if params[:account]
-          if params[:account][:id].blank?
-            if request.referer =~ /\/accounts\/(\d+)\z/
-              @account = Account.find(Regexp.last_match[1]) # related account
-            else
-              @account = Account.new(user: current_user)
-            end
-          else
-            @account = Account.find(params[:account][:id])
-          end
+          @account = if params[:account][:id].blank?
+                       if request.referer =~ /\/accounts\/(\d+)\z/
+                         Account.find(Regexp.last_match[1]) # related account
+                       else
+                         Account.new(user: current_user)
+                                  end
+                     else
+                       Account.find(params[:account][:id])
+                     end
         end
         @opportunity = Opportunity.my(current_user).find(params[:opportunity]) unless params[:opportunity].blank?
       end
@@ -88,11 +88,11 @@ class ContactsController < EntitiesController
   def update
     respond_with(@contact) do |_format|
       unless @contact.update_with_account_and_permissions(params.permit!)
-        if @contact.account
-          @account = @contact.account
-        else
-          @account = Account.new(user: current_user)
-        end
+        @account = if @contact.account
+                     @contact.account
+                   else
+                     Account.new(user: current_user)
+                   end
       end
     end
   end
