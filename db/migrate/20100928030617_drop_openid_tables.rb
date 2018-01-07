@@ -17,7 +17,7 @@ class DropOpenidTables < ActiveRecord::Migration[4.2]
     end
 
     create_table :open_id_authentication_nonces, force: true do |t|
-      t.integer :timestamp,  null: false
+      t.integer :timestamp, null: false
       t.string :server_url, null: true
       t.string :salt,       null: false
     end

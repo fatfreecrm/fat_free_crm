@@ -19,8 +19,7 @@ module AccountsHelper
      t(:added_by, time_ago: time_ago_in_words(account.created_at), user: account.user_id_full_name),
      t('pluralize.contact', account.contacts_count),
      t('pluralize.opportunity', account.opportunities_count),
-     t('pluralize.comment', account.comments.count)
-    ].join(', ')
+     t('pluralize.comment', account.comments.count)].join(', ')
   end
 
   # Generates a select list with the first 25 accounts
@@ -44,18 +43,14 @@ module AccountsHelper
 
     content_tag(:div, class: 'label') do
       t(:account).html_safe +
-
         content_tag(:span, id: 'account_create_title') do
           "(#{t :create_new} #{t :or} <a href='#' onclick='crm.select_account(); return false;'>#{t :select_existing}</a>):".html_safe
         end +
-
         content_tag(:span, id: 'account_select_title') do
           "(<a href='#' onclick='crm.create_account(); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):".html_safe
         end +
-
         content_tag(:span, ':', id: 'account_disabled_title')
     end +
-
       account_select(options) +
       form.text_field(:name, style: 'width:324px; display:none;')
   end

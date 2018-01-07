@@ -30,7 +30,7 @@ FactoryGirl.define do
     last_login_at       { FactoryGirl.generate(:time) }
     last_login_ip "127.0.0.1"
     current_login_ip "127.0.0.1"
-    login_count         { rand(100) + 1 }
+    login_count         { rand(1..100) }
     deleted_at nil
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }

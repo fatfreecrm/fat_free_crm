@@ -11,7 +11,6 @@ feature 'Dashboard', '
   In order to monitor activity
   As a user
   I want to see a dashboard
-
 ' do
   background do
     @me = FactoryGirl.create(:user)

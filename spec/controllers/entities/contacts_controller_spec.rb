@@ -228,7 +228,7 @@ describe ContactsController do
       end
 
       it "should have the same count of tags" do
-        get :field_group, params: { tag:  @tag.name }, xhr: true
+        get :field_group, params: { tag: @tag.name }, xhr: true
         expect(Tag.count).to equal(1)
       end
     end

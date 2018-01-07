@@ -17,7 +17,7 @@ class String
   end
 
   def digitize
-    gsub(/[^\d]/, "")  # "$100,000".digitize # => 100000
+    gsub(/[^\d]/, "") # "$100,000".digitize # => 100000
   end
 
   def to_url
