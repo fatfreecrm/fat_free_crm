@@ -97,6 +97,18 @@ describe Contact do
       expect(@contact.account).to eq(nil)
       expect(@contact.first_name).to eq("Billy")
     end
+
+    it "should change account if entered name of another account was found" do
+      @another_account = FactoryGirl.create(:account, name: "Another name")
+      expect {
+        @contact.update_with_account_and_permissions(
+          account: { name: "Another name" },
+          contact: { first_name: "Billy" }
+        )
+      }.not_to change(Account, :count)
+      expect(@contact.account).to eq(@another_account)
+      expect(@contact.first_name).to eq("Billy")
+    end
   end
 
   describe "Attach" do

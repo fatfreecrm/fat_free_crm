@@ -101,6 +101,18 @@ describe Opportunity do
       expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
     end
 
+    it "should change account if entered name of another account was found" do
+      @another_account = FactoryGirl.create(:account, name: "Another name")
+      expect {
+        @opportunity.update_with_account_and_permissions(
+          account: { name: "Another name" },
+          opportunity: { name: "Hello" }
+        )
+      }.not_to change(Account, :count)
+      expect(@opportunity.account).to eq(@another_account)
+      expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
+    end
+
     it "should set the probability to 0% if opportunity has been lost" do
       opportunity = FactoryGirl.create(:opportunity, stage: "prospecting", probability: 25)
       opportunity.update_attributes(stage: 'lost')

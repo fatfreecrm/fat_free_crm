@@ -116,15 +116,20 @@ class Account < ActiveRecord::Base
   # Class methods.
   #----------------------------------------------------------------------------
   def self.create_or_select_for(model, params)
+    # Attempt to find existing account
     if params[:id].present?
-      account = Account.find(params[:id])
+      return Account.find(params[:id])
+    elsif params[:name].present?
+      account = Account.find_by(name: params[:name])
+      return account if account
+    end
+
+    # Fallback to create new account
+    account = Account.new(params)
+    if account.access != "Lead" || model.nil?
+      account.save
     else
-      account = Account.new(params)
-      if account.access != "Lead" || model.nil?
-        account.save
-      else
-        account.save_with_model_permissions(model)
-      end
+      account.save_with_model_permissions(model)
     end
     account
   end
