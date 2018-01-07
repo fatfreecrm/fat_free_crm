@@ -131,8 +131,7 @@ class CustomField < Field
   # Adds custom field translation for Ransack
   def add_ransack_translation
     I18n.backend.store_translations(Setting.locale.to_sym,
-                                    ransack: { attributes: { klass.model_name.singular => { name => label } } }
-    )
+                                    ransack: { attributes: { klass.model_name.singular => { name => label } } })
     # Reset Ransack cache
     # Ransack::Helpers::FormBuilder.cached_searchable_attributes_for_base = {}
   end

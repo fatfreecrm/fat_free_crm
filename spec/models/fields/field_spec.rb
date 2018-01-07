@@ -57,10 +57,10 @@ describe Field do
     object = double('Object')
 
     #  as  |  value  |  expected
-    [["check_boxes", [1, 2, 3],               "1, 2<br />3"],
-     %w(checkbox 0 no),
-     ["checkbox",    1,                       "yes"],
-     ["date",        DateTime.new(2011, 4, 19), DateTime.new(2011, 4, 19).strftime(I18n.t("date.formats.mmddyy"))]].each do |as, value, expected|
+    [["check_boxes", [1, 2, 3], "1, 2<br />3"],
+     %w[checkbox 0 no],
+     ["checkbox", 1, "yes"],
+     ["date", Time.parse('2011-04-19'), Time.parse('2011-04-19').strftime(I18n.t("date.formats.mmddyy"))]].each do |as, value, expected|
       field.as = as
       allow(object).to receive(field.name).and_return(value)
       expect(field.render_value(object)).to eq(expected)

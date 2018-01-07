@@ -20,8 +20,7 @@ module LeadsHelper
     link_to(t(:convert), convert_lead_path(lead),
             method: :get,
             with:   "{ previous: crm.find_form('edit_lead') }",
-            remote: true
-    )
+            remote: true)
   end
 
   #----------------------------------------------------------------------------
