@@ -2,7 +2,7 @@
 - @entity = instance_variable_get("@#{entity_name}")
 - id = dom_id(@entity)
 
-$('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
+$('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
 $('##{id}').effect("highlight", { duration:1500 });
 - if called_from_index_page?
   = refresh_sidebar(:index, :filters)

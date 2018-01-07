@@ -6,7 +6,7 @@
   %h4= h(@account.name)
   - if @account.website
     %div
-      %b= link_to(truncate(@account.website, :length => 30), @account.website.to_url, :"data-popup" => true, :title => t(:open_in_window, @account.website))
+      %b= link_to(truncate(@account.website, length: 30), @account.website.to_url, :"data-popup" => true, title: t(:open_in_window, @account.website))
   - if @account.email.present?
     %div
       %b= link_to_email(@account.email, 30)
@@ -21,37 +21,37 @@
     - if @account.fax
       #{t :fax}: <b>#{@account.fax}</b><br />
 
-  %div= render "shared/address_show", :asset => @account, :type => 'billing', :title => :billing_address
-  %div= render "shared/address_show", :asset => @account, :type => 'shipping', :title => :shipping_address
+  %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address
+  %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address
 
   .caption #{t :account_summary}
   %li
-    %dt= pipeline != 0.0 ? number_to_currency(pipeline, :precision => 0) : t(:n_a)
+    %dt= pipeline != 0.0 ? number_to_currency(pipeline, precision: 0) : t(:n_a)
     %tt #{t :pipeline}:
   %li
-    %dt= won != 0.0 ? number_to_currency(won, :precision => 0) : t(:n_a)
+    %dt= won != 0.0 ? number_to_currency(won, precision: 0) : t(:n_a)
     %tt #{t :won}:
   %li
-    %dt= lost != 0.0 ? number_to_currency(lost, :precision => 0) : t(:n_a)
+    %dt= lost != 0.0 ? number_to_currency(lost, precision: 0) : t(:n_a)
     %tt #{t :lost}:
   %li
     %dt= @account.category ? t(@account.category) : t(:other)
     %tt #{t :category}:
   %li
-    %span{:style => "float:right;"}= stars_for(@account)
+    %span{style: "float:right;"}= stars_for(@account)
     %tt #{t :rating}:
   %li
-    %dt= @account.assigned_to ? truncate(@account.assignee.full_name, :length => 16) : nil
+    %dt= @account.assigned_to ? truncate(@account.assignee.full_name, length: 16) : nil
     %tt #{t :assigned_to}:
 
   - unless @account.background_info.blank?
     .caption #{t :background_info}
     = auto_link(simple_format @account.background_info)
 
-  = render "fields/sidebar_show", :asset => @account
+  = render "fields/sidebar_show", asset: @account
 
   - if @account.tags.present?
     %dt
       .tags= tags_for_index(@account)
 
-  = hook(:show_account_sidebar_bottom, self, :account => @account)
+  = hook(:show_account_sidebar_bottom, self, account: @account)

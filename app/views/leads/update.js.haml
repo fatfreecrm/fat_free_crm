@@ -8,17 +8,17 @@
     crm.set_title('edit_#{entity_name}', '#{h @entity.full_name}');
     = refresh_sidebar(:show, :summary)
   - else
-    $('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
+    $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
     $('##{id}').effect("highlight", { duration:1500 });
     - if called_from_index_page?
       = refresh_sidebar(:index, :filters)
     - elsif called_from_landing_page?("campaigns")
       = refresh_sidebar_for(:campaigns, :show, :summary)
     - else
-      $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+      $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
 
 - else
-  $('##{id}').html('#{ j render(:partial => "edit") }');
+  $('##{id}').html('#{ j render(partial: "edit") }');
   $('##{id}').effect("shake", { duration:250, distance: 6 });
   - if @entity.errors[:first_name].blank? and entity.errors[:last_name].present?
     $('#lead_last_name').focus();

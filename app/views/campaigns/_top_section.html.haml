@@ -1,29 +1,29 @@
-= hook(:campaign_top_section, self, :f => f) do
+= hook(:campaign_top_section, self, f: f) do
   .section
     %table
       %tr
         %td(colspan="5")
           .label.top.req #{t :name}:
-          = f.text_field :name, :autofocus => true, :style => "width:500px"
+          = f.text_field :name, autofocus: true, style: "width:500px"
       %tr
         %td
           .label #{t :start_date}:
-          = f.text_field :starts_on, :value => f.object.starts_on, :style => "width:110px", :autocomplete => :off, :class => 'date'
+          = f.text_field :starts_on, value: f.object.starts_on, style: "width:110px", autocomplete: :off, class: 'date'
         %td= spacer
         %td
           .label #{t :end_date}:
-          = f.text_field :ends_on, :value => f.object.ends_on, :style => "width:110px", :autocomplete => :off, :class => 'date'
+          = f.text_field :ends_on, value: f.object.ends_on, style: "width:110px", autocomplete: :off, class: 'date'
         %td= spacer
         %td
           .label #{t :status}:
-          = f.select :status, Setting.unroll(:campaign_status), { :selected => (@campaign.status || "planned").to_sym }, { :style => "width:250px" }
+          = f.select :status, Setting.unroll(:campaign_status), { selected: (@campaign.status || "planned").to_sym }, { style: "width:250px" }
 
       - if Setting.background_info && Setting.background_info.include?(:campaign)
         %tr
           %td(colspan="5")
             .label= t(:background_info) + ':'
-            = f.text_area :background_info, :style =>"width:500px", :rows => 3
+            = f.text_area :background_info, :style =>"width:500px", rows: 3
 
-      = render :partial => "/shared/tags", :locals => {:f => f, :span => 5}
+      = render partial: "/shared/tags", locals: {f: f, span: 5}
 
-      = hook(:campaign_top_section_bottom, self, :f => f)
+      = hook(:campaign_top_section_bottom, self, f: f)

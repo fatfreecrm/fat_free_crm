@@ -1,14 +1,14 @@
 
-= hook(:lead_top_section, self, :f => f) do
+= hook(:lead_top_section, self, f: f) do
   .section
     %table
       %tr
         %td
-          .label.top{ :class => "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
-          = f.text_field :first_name, :autofocus => true
+          .label.top{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
+          = f.text_field :first_name, autofocus: true
         %td= spacer
         %td
-          .label.top{ :class => "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
+          .label.top{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
           = f.text_field :last_name
       %tr
         %td
@@ -23,8 +23,8 @@
         %tr
           %td(colspan="3")
             .label= t(:background_info) + ':'
-            = f.text_area :background_info, :style =>"width:500px", :rows => 3
+            = f.text_area :background_info, :style =>"width:500px", rows: 3
 
-      = render :partial => "/shared/tags", :locals => {:f => f, :span => 3}
+      = render partial: "/shared/tags", locals: {f: f, span: 3}
 
-      = hook(:lead_top_section_bottom, self, :f => f)
+      = hook(:lead_top_section_bottom, self, f: f)

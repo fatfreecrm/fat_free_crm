@@ -1,9 +1,9 @@
 - id = dom_id(@group)
 
 - if @group.errors.empty?
-  $('##{id}').replaceWith('#{ j render(:partial => "group", :collection => [ @group ]) }')
+  $('##{id}').replaceWith('#{ j render(partial: "group", collection: [ @group ]) }')
   $('##{id}').effect("highlight", { duration:1000 });
 - else
-  $('##{id}').html('#{j render(:partial => "edit") }')
+  $('##{id}').html('#{j render(partial: "edit") }')
   $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('#group_name').focus()

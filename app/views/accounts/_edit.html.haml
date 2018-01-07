@@ -1,20 +1,20 @@
 .remote
-  = simple_form_for(@account, :html => one_submit_only, :remote => true) do |f|
+  = simple_form_for(@account, html: one_submit_only, remote: true) do |f|
     = link_to_close edit_account_path(@account)
     = f.hidden_field :user_id
 
-    = f.error_messages :object_name => t('account')
+    = f.error_messages object_name: t('account')
 
-    = render "accounts/top_section",  :f => f, :edit => true
-    = render "fields/edit_custom_field_group", :f => f, :edit => true
-    = render "accounts/contact_info", :f => f, :edit => true
-    = render "fields/groups",         :f => f, :edit => true
-    = render "entities/permissions",  :f => f, :edit => true, :entity => @account
+    = render "accounts/top_section",  f: f, edit: true
+    = render "fields/edit_custom_field_group", f: f, edit: true
+    = render "accounts/contact_info", f: f, edit: true
+    = render "fields/groups",         f: f, edit: true
+    = render "entities/permissions",  f: f, edit: true, entity: @account
     = hook(:entity_form, self, {f: f, entity: @account})
 
     .buttonbar
       - if Setting.compound_address
-        = f.submit t(:save_account), :onclick => "crm.clear_all_hints()"
+        = f.submit t(:save_account), onclick: "crm.clear_all_hints()"
       - else
         = f.submit t(:save_account)
       #{t :or}

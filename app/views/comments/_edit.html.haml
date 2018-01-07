@@ -1,11 +1,11 @@
 - class_name = commentable.class.name.underscore
-.comment{:style => "margin: 5px 0px 0px 0px"}
-  = link_to avatar_for(current_user, :size => :small), user_path(current_user)
-  = form_for(@comment, :remote => true) do |f|
+.comment{style: "margin: 5px 0px 0px 0px"}
+  = link_to avatar_for(current_user, size: :small), user_path(current_user)
+  = form_for(@comment, remote: true) do |f|
     = hidden_field_tag "comment[commentable_id]", commentable.id
     = hidden_field_tag "comment[commentable_type]", class_name.classify
-    = f.text_area :comment, :id => dom_id(@comment, :text)
+    = f.text_area :comment, id: dom_id(@comment, :text)
     .buttons
       = f.submit t(:save_note)
       #{t :or}
-      = link_to(t(:cancel), edit_comment_path(@comment, "#{class_name}_id" => commentable.id, :cancel => true), :remote => true)
+      = link_to(t(:cancel), edit_comment_path(@comment, "#{class_name}_id" => commentable.id, cancel: true), remote: true)

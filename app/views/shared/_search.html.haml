@@ -2,8 +2,8 @@
 - path = "admin/#{path}" if controller.class.to_s.starts_with?("Admin::")
 
 %h4 #{t(:search_assets, t(controller.controller_name + "_small"))}
-%div{ :style => "margin: 0px 0px 6px 0px" }
-  = text_field_tag('query', @current_query, :size => 23)
+%div{ style: "margin: 0px 0px 6px 0px" }
+  = text_field_tag('query', @current_query, size: 23)
 
 :javascript
   var searchTimeout;

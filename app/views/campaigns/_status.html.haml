@@ -15,7 +15,7 @@
         - if campaign.starts_on > Date.today
           = t(:starts_in, distance_of_time_in_words(Date.today, campaign.starts_on))
         - elsif campaign.starts_on < Date.today
-          %span.warn= t(:was_supposed_to_start, :time_ago => distance_of_time_in_words(campaign.starts_on, Date.today), :start_date => campaign.starts_on.strftime('%b %e, %Y'))
+          %span.warn= t(:was_supposed_to_start, time_ago: distance_of_time_in_words(campaign.starts_on, Date.today), start_date: campaign.starts_on.strftime('%b %e, %Y'))
         - else
           %span.cool #{t :starts_today}
       - else

@@ -6,12 +6,12 @@
 
 - if @field.valid?
   $("##{id}_arrow").html(crm.COLLAPSED)
-  $('##{container_id}').append('#{ j (render :partial => "field", :collection => [@field]) }')
+  $('##{container_id}').append('#{ j (render partial: "field", collection: [@field]) }')
   $('##{custom_field_id}').effect("highlight", { duration:1500 });
   $("##{create_field_id}").hide();
   $("##{empty_field_id}").hide();
   $('##{container_id}').sortable('reset');
 - else
-  $('##{id}').html('#{ j render(:partial => "admin/fields/form", :locals => {:field_group_id => @field.field_group_id}) }')
+  $('##{id}').html('#{ j render(partial: "admin/fields/form", locals: {field_group_id: @field.field_group_id}) }')
   $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{id}').find('input[type="text"]').first().focus()

@@ -6,7 +6,7 @@
     = t(:intro, t(:extra_info_small)) unless edit
   #contact_extra{ hidden_if(collapsed) }
     %table
-      = hook(:contact_extra_details_form, self, :f => f) do
+      = hook(:contact_extra_details_form, self, f: f) do
         %tr
           %td
             .label #{t :job_title}:
@@ -25,12 +25,12 @@
             = f.text_field :mobile
         %tr
           %td
-            = render "shared/address", :f => f, :asset => @contact, :type => 'business', :title => :address
+            = render "shared/address", f: f, asset: @contact, type: 'business', title: :address
           %td= spacer
           %td
             .label #{t :fax}:
             = f.text_field :fax
-            %div{:style => "margin-top:6px"}
+            %div{style: "margin-top:6px"}
               .check_box
                 = f.check_box :do_not_call, {}, true
                 #{t :do_not_call}

@@ -8,22 +8,22 @@
       %div #{t :no_saved_lists}
     - else
       - lists.sort.each_with_index do |item, i|
-        %li[item]{ :class => i < lists.size - 1 ? "" : "last" }
-          %dt= link_to(truncate(item.name, :length => 25), h(item.url), :title => item.name)
+        %li[item]{ class: i < lists.size - 1 ? "" : "last" }
+          %dt= link_to(truncate(item.name, length: 25), h(item.url), title: item.name)
           %tt
-            = link_to(url_for(item), :method => :delete, :confirm => t(:confirm_delete, value: 'list'), :remote => true, :class => "list_icon delete_on_hover") do
+            = link_to(url_for(item), method: :delete, confirm: t(:confirm_delete, value: 'list'), remote: true, class: "list_icon delete_on_hover") do
               %i.fa{:"data-controller" => item.controller, class: get_icon(item.controller)}
 
   .list_save{ hidden_if(!params[:q]) }
     = link_to(t(:make_current_view_list), '#')
 
   .list_form{ hidden }
-    = simple_form_for(List.new, :remote => true) do |f|
-      = f.text_field :name, :size => 25
-      = image_tag("info_tiny.png", :title => t(:list_name_info), class: "input_info")
+    = simple_form_for(List.new, remote: true) do |f|
+      = f.text_field :name, size: 25
+      = image_tag("info_tiny.png", title: t(:list_name_info), class: "input_info")
       = f.hidden_field :url
-      %input{:type => "hidden", :name => "is_global", :value => (personal ? 0 : 1) }
+      %input{type: "hidden", name: "is_global", value: (personal ? 0 : 1) }
       %div
         = f.submit( t(:save) )
         #{t :or}
-        = link_to(t(:cancel), '#', :class => "cancel")
+        = link_to(t(:cancel), '#', class: "cancel")

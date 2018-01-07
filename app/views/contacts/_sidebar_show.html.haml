@@ -1,9 +1,9 @@
 .panel#summary
-  %span{:style => "float:right"}= avatar_for(@contact, :size => "50x50")
+  %span{style: "float:right"}= avatar_for(@contact, size: "50x50")
   %h4= h(@contact.full_name)
   = account_with_title_and_department(@contact)
 
-  %div= render "shared/address_show", :asset => @contact, :type => 'business', :title => :address
+  %div= render "shared/address_show", asset: @contact, type: 'business', title: :address
 
   %div
     - unless @contact.phone.blank?
@@ -22,19 +22,19 @@
 
   .caption #{t :contact_summary}
   %li
-    %dt= @contact.assigned_to ? truncate(@contact.assignee.full_name, :length => 16) : nil
+    %dt= @contact.assigned_to ? truncate(@contact.assignee.full_name, length: 16) : nil
     %tt #{t :assigned_to}:
   %li
     %dt
       - if @contact.lead
-        = link_to(truncate(@contact.lead.name, :length => 16), @contact.lead, :title => @contact.lead.name)
+        = link_to(truncate(@contact.lead.name, length: 16), @contact.lead, title: @contact.lead.name)
       - else
         #{t :n_a}
     %tt #{t :lead}:
   %li
     %dt
       - if @contact.lead.try(:campaign)
-        = link_to(truncate(@contact.lead.campaign.name, :length => 16), @contact.lead.campaign, :title => @contact.lead.campaign.name)
+        = link_to(truncate(@contact.lead.campaign.name, length: 16), @contact.lead.campaign, title: @contact.lead.campaign.name)
       - else
         #{t :n_a}
     %tt #{t :campaign}:
@@ -43,10 +43,10 @@
     .caption #{t :background_info}
     = auto_link(simple_format @contact.background_info)
 
-  = render "fields/sidebar_show", :asset => @contact
+  = render "fields/sidebar_show", asset: @contact
 
   - if @contact.tags.present?
     %dt
       .tags= tags_for_index(@contact)
 
-  = hook(:show_contact_sidebar_bottom, self, :contact => @contact)
+  = hook(:show_contact_sidebar_bottom, self, contact: @contact)

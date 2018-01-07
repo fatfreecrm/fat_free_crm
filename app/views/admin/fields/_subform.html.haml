@@ -1,6 +1,6 @@
 
 = fields_for :field, @field do |f|
   - if (as = f.object.as).present? and lookup_context.exists? "#{as}_field", 'admin/custom_fields', true
-    = render :partial => "admin/custom_fields/#{as}_field", :locals => {:f => f}
+    = render partial: "admin/custom_fields/#{as}_field", locals: {f: f}
   - else
-    = render :partial => "admin/custom_fields/base_field", :locals => {:f => f}
+    = render partial: "admin/custom_fields/base_field", locals: {f: f}

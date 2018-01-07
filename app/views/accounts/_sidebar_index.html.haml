@@ -1,20 +1,20 @@
 .filters#filters
   .caption= t :account_categories
   - Setting.account_category.each do |key|
-    .check_box{:style => "border-bottom: 1px silver dotted;"}
-      %div{:style => "float:right;"}
+    .check_box{style: "border-bottom: 1px silver dotted;"}
+      %div{style: "float:right;"}
         = @account_category_total[key]
       = account_category_checkbox(key, @account_category_total[key])
       = label_tag(key, t(key))
 
-  .check_box{:style => "border-bottom: 1px silver dotted;"}
-    %div{:style => "float:right;"}
+  .check_box{style: "border-bottom: 1px silver dotted;"}
+    %div{style: "float:right;"}
       = @account_category_total[:other]
     = account_category_checkbox("other", @account_category_total[:other])
     = label_tag(:other, t(:other))
 
   .check_box
-    %div{:style => "float:right;"}
+    %div{style: "float:right;"}
       %b= @account_category_total[:all]
     %b #{t :total_accounts}
   = hook(:index_account_sidebar_bottom, self)

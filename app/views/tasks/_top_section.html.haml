@@ -3,19 +3,19 @@
     %tr
       %td(colspan="5")
         .label.top.req #{t :name}:
-        = f.text_field :name, :autofocus => true, :style => "width:500px"
+        = f.text_field :name, autofocus: true, style: "width:500px"
     %tr
       %td
         .label.req #{t :due}:
         - bucket = (params[:bucket].blank? ? @task.bucket : params[:bucket]) || "due_asap"
         - with_time = Setting.task_calendar_with_time
         - if @task.bucket != "specific_time"
-          = f.select :bucket, @bucket, { :selected => bucket.to_sym }, { :style => "width:160px;", :onchange => "crm.flip_calendar(this.value)" }
-          = f.text_field :calendar, :style => "width:160px; display:none;", :autocomplete => :off, :class => (with_time ? 'datetime' : 'date')
+          = f.select :bucket, @bucket, { selected: bucket.to_sym }, { style: "width:160px;", onchange: "crm.flip_calendar(this.value)" }
+          = f.text_field :calendar, style: "width:160px; display:none;", autocomplete: :off, class: (with_time ? 'datetime' : 'date')
         - else
-          = f.select :bucket, @bucket, { :selected => :specific_time }, { :style => "width:160px; display:none;", :onchange => "crm.flip_calendar(this.value)" }
+          = f.select :bucket, @bucket, { selected: :specific_time }, { style: "width:160px; display:none;", onchange: "crm.flip_calendar(this.value)" }
           - fmt = with_time ? '%Y-%m-%d %H:%M' : '%Y-%m-%d'
-          = f.text_field :calendar, :value => f.object.due_at.strftime(fmt), :style => "width:160px;", :autocomplete => :off, :class => (with_time ? 'datetime' : 'date')
+          = f.text_field :calendar, value: f.object.due_at.strftime(fmt), style: "width:160px;", autocomplete: :off, class: (with_time ? 'datetime' : 'date')
       %td= spacer
       %td
         .label.req #{t :assign_to}:
@@ -23,12 +23,12 @@
       %td= spacer
       %td
         .label.req #{t :category}:
-        = f.select :category, @category, { :selected => @task.category.blank? ? nil : @task.category.to_sym, :include_blank => t(:select_blank) }, { :style => "width:160px" }
+        = f.select :category, @category, { selected: @task.category.blank? ? nil : @task.category.to_sym, include_blank: t(:select_blank) }, { style: "width:160px" }
 
     - if Setting.background_info && Setting.background_info.include?(:task)
       %tr
         %td(colspan="5")
           .label= t(:extra_info).capitalize + ':'
-          = f.text_area :background_info, :style =>"width:500px", :rows => 3
+          = f.text_area :background_info, :style =>"width:500px", rows: 3
 
-    = hook(:task_top_section_bottom, self, :f => f)
+    = hook(:task_top_section_bottom, self, f: f)

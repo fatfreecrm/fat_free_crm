@@ -5,7 +5,7 @@
   %span#title #{t :my_tasks}
 %ul.list#tasks
   - unless @my_tasks.empty?
-    = render :partial => "home/task", :collection => @my_tasks.limit(10)
+    = render partial: "home/task", collection: @my_tasks.limit(10)
     = show_hidden_entities_message(@my_tasks.count, 'task', 10)
   - else
     #{t :no_task_records}
@@ -14,7 +14,7 @@
   %span#title #{t :my_opportunities}
 %ul.list#opportunities
   - unless @my_opportunities.empty?
-    = render :partial => "home/opportunity", :collection => @my_opportunities.limit(10)
+    = render partial: "home/opportunity", collection: @my_opportunities.limit(10)
     = show_hidden_entities_message(@my_opportunities.count, 'opportunity', 10)
   - else
     #{t :no_opportunity_records}
@@ -23,22 +23,22 @@
   %span#title #{t :my_accounts}
 %ul.list#accounts
   - unless @my_accounts.empty?
-    = render :partial => "home/account", :collection => @my_accounts.limit(10)
+    = render partial: "home/account", collection: @my_accounts.limit(10)
     = show_hidden_entities_message(@my_accounts.count, 'account', 10)
   - else
     #{t :no_account_records}
 
 .title_tools
-  = link_to_inline(:options, url_for(:action => :options), :text => t(:options))
+  = link_to_inline(:options, url_for(action: :options), text: t(:options))
 
 .title
   %span#title #{t :recent_activity}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
 .remote#options{ hidden }
 
 %ul.list#activities
   - unless @activities.empty?
-    = render :partial => "activity", :collection => @activities
+    = render partial: "activity", collection: @activities
   - else
     #{t :no_activity_records}
 
