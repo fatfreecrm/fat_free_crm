@@ -157,6 +157,7 @@ fr:
               email_in_use: ^Un utilisateur existe déjà avec cette adresse.
         custom_field:
           required: ^%{field} est requis.
+          minlength: ^%{field} est trop court.
           maxlength: ^%{field} est trop long.
           endbeforestart: ^%{field} ne peut pas finir avoir d'avoir démarré.
     attribute_options:

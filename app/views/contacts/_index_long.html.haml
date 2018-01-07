@@ -37,7 +37,7 @@
           |
       = t(:added_ago, value: timeago(contact.created_at)).html_safe
 
-    - if contact.tag_list.present?
+    - if contact.tags.present?
       %dt
         .tags= tags_for_index(contact)
 

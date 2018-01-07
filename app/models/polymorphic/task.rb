@@ -114,7 +114,7 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :user
   validates_presence_of :name, message: :missing_task_name
-  validates_presence_of :calendar, if: -> { self.bucket == 'specific_time' && !self.completed_at }
+  validates_presence_of :calendar, if: -> { bucket == 'specific_time' && !completed_at }
   validate :specific_time, unless: :completed?
 
   before_create :set_due_date
@@ -155,16 +155,15 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def computed_bucket
     return bucket if bucket != "specific_time"
-    case
-    when overdue?
+    if overdue?
       "overdue"
-    when due_today?
+    elsif due_today?
       "due_today"
-    when due_tomorrow?
+    elsif due_tomorrow?
       "due_tomorrow"
-    when due_this_week? && !due_today? && !due_tomorrow?
+    elsif due_this_week? && !due_today? && !due_tomorrow?
       "due_this_week"
-    when due_next_week?
+    elsif due_next_week?
       "due_next_week"
     else
       "due_later"

@@ -52,7 +52,7 @@
       - else
         = t(:no_closing_date)
 
-      - if opportunity.tag_list.present?
+      - if opportunity.tags.present?
         %dt
           .tags= tags_for_index(opportunity)
 

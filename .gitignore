@@ -36,3 +36,4 @@ Design
 *.gem
 
 .passenger
+.vagrant

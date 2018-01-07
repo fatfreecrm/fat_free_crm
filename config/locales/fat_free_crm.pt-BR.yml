@@ -158,6 +158,7 @@ pt-BR:
               email_in_use: ^Já existe um usuário com este e-mail.
         custom_field:
           required: ^%{field} é obrigatório.
+          minlength: ^%{field} é muito curto.
           maxlength: ^%{field} é muito longo.
           endbeforestart: ^%{field} não pode finalizar antes de ser iniciado.
     attribute_options:

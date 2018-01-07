@@ -84,7 +84,7 @@
 
   = render "fields/sidebar_show", :asset => @campaign
 
-  - if @campaign.tag_list.present?
+  - if @campaign.tags.present?
     %dt
       .tags= tags_for_index(@campaign)
 
