@@ -28,7 +28,7 @@ module AccountsHelper
   #----------------------------------------------------------------------------
   def account_select(options = {})
     options[:selected] = @account&.id || 0
-    accounts = ([@account.new_record? ? nil : @account] + Account.my.order(:name).limit(25)).compact.uniq
+    accounts = ([@account.new_record? ? nil : @account] + Account.my(current_user).order(:name).limit(25)).compact.uniq
     collection_select :account, :id, accounts, :id, :name,
                       { prompt: t(:select_an_account), include_blank: false },
                       style: 'width:330px; display:none;', class: 'select2'
