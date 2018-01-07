@@ -11,7 +11,6 @@ feature 'Groups tab', '
   In order to increase customer satisfaction
   As an administrator
   I want to manage groups
-
 ' do
   before(:each) do
     do_login(first_name: 'Captain', last_name: 'Kirk', admin: true)

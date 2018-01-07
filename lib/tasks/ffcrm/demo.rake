@@ -40,7 +40,7 @@ namespace :ffcrm do
                     item.mediator
         end
         # Backdate within the last 30 days
-        created_at = item.created_at - (rand(30) + 1).days + rand(12 * 60).minutes
+        created_at = item.created_at - rand(1..30).days + rand(12 * 60).minutes
         updated_at = created_at + rand(12 * 60).minutes
 
         create_version(event: "create", created_at: created_at, user: user, item: item, related: related)

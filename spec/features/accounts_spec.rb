@@ -11,7 +11,6 @@ feature 'Accounts', '
   In order to increase customer satisfaction
   As a user
   I want to manage accounts
-
 ' do
   before(:each) do
     do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')

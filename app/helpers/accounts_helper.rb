@@ -43,18 +43,14 @@ module AccountsHelper
 
     content_tag(:div, class: 'label') do
       t(:account).html_safe +
-
         content_tag(:span, id: 'account_create_title') do
           "(#{t :create_new} #{t :or} <a href='#' onclick='crm.select_account(); return false;'>#{t :select_existing}</a>):".html_safe
         end +
-
         content_tag(:span, id: 'account_select_title') do
           "(<a href='#' onclick='crm.create_account(); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):".html_safe
         end +
-
         content_tag(:span, ':', id: 'account_disabled_title')
     end +
-
       account_select(options) +
       form.text_field(:name, style: 'width:324px; display:none;')
   end
