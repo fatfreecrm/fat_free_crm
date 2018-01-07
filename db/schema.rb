@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102075234) do
+ActiveRecord::Schema.define(version: 20180103223438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20180102075234) do
     t.text "subscribed_users"
     t.integer "contacts_count", default: 0
     t.integer "opportunities_count", default: 0
+    t.integer "pipeline_opportunities_count", default: 0
     t.index ["assigned_to"], name: "index_accounts_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_accounts_on_user_id_and_name_and_deleted_at", unique: true
   end
@@ -227,6 +228,7 @@ ActiveRecord::Schema.define(version: 20180102075234) do
     t.datetime "updated_at"
     t.integer "pair_id"
     t.text "settings"
+    t.integer "minlength", default: 0
     t.index ["field_group_id"], name: "index_fields_on_field_group_id"
     t.index ["name"], name: "index_fields_on_name"
   end

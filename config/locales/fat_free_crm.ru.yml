@@ -157,6 +157,7 @@ ru:
               email_in_use: ^Пользователь с данным e-mail адресом уже существует.
         custom_field:
           required: ^%{field} требуется.
+          minlength: ^%{field} слишком короткое.
           maxlength: ^%{field} слишком длинное.
           endbeforestart: ^%{field} не может закончиться до того, как начинается.
     attribute_options:
