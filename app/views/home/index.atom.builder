@@ -8,7 +8,7 @@ assets = controller.instance_variable_get("@#{items}")
 atom_feed do |feed|
   feed.title t(:activities)
   feed.updated @activities.max_by(&:created_at).try(:created_at)
-  feed.generator  "Fat Free CRM v#{FatFreeCRM::VERSION::STRING}"
+  feed.generator "Fat Free CRM v#{FatFreeCRM::VERSION::STRING}"
   feed.author do |author|
     author.name  @current_user.full_name
     author.email @current_user.email
