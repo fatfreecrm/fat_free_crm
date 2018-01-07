@@ -13,7 +13,7 @@ class ChangeSubscribedUsersToSet < ActiveRecord::Migration[4.2]
     # Run as one atomic action.
     ActiveRecord::Base.transaction do
       contacts.each do |contact|
-        subscribed_users_set = Set.new(YAML.safe_load(contact["subscribed_users"]))
+        subscribed_users_set = Set.new(YAML.load(contact["subscribed_users"]))
 
         connection.execute %(
           UPDATE contacts

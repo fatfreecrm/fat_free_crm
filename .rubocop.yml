@@ -36,6 +36,12 @@ Metrics/BlockLength:
     - '**/*.rake'
     - '**/*.xls.builder'
 
+Security/YAMLLoad:
+  Exclude:
+    - 'app/models/setting.rb'
+    - 'db/migrate/*.rb'
+    - 'lib/tasks/ffcrm/config.rake'
+
 StringLiterals:
   Enabled: false
 
