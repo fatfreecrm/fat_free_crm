@@ -11,7 +11,7 @@ describe "/accounts/index" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   it "should render [account] template with @accounts collection if there are accounts" do

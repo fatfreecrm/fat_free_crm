@@ -30,15 +30,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Opportunity do
-  before { login }
-
   it "should create a new instance given valid attributes" do
     Opportunity.create!(name: "Opportunity", stage: 'analysis')
   end
 
   it "should be possible to create opportunity with the same name" do
-    FactoryGirl.create(:opportunity, name: "Hello", user: current_user)
-    expect { FactoryGirl.create(:opportunity, name: "Hello", user: current_user) }.to_not raise_error
+    FactoryGirl.create(:opportunity, name: "Hello")
+    expect { FactoryGirl.create(:opportunity, name: "Hello") }.to_not raise_error
   end
 
   it "have a default stage" do
@@ -165,7 +163,7 @@ describe Opportunity do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, asset: @opportunity, user: current_user)
+      @task = FactoryGirl.create(:task, asset: @opportunity)
       @contact = FactoryGirl.create(:contact)
       @opportunity.contacts << @contact
 
@@ -174,7 +172,7 @@ describe Opportunity do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, user: current_user)
+      @task = FactoryGirl.create(:task)
       @contact = FactoryGirl.create(:contact)
 
       expect(@opportunity.attach!(@task)).to eq([@task])
@@ -188,7 +186,7 @@ describe Opportunity do
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, asset: @opportunity, user: current_user)
+      @task = FactoryGirl.create(:task, asset: @opportunity)
       expect(@opportunity.tasks.count).to eq(1)
 
       @opportunity.discard!(@task)

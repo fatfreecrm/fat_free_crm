@@ -11,7 +11,7 @@ describe "/opportunities/index" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
+    login
     view.lookup_context.prefixes << 'entities'
     assign :stage, Setting.unroll(:opportunity_stage)
     assign :per_page, Opportunity.per_page

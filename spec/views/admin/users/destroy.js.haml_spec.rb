@@ -9,7 +9,7 @@ require 'spec_helper'
 
 describe "admin/users/destroy" do
   before do
-    login_and_assign(admin: true)
+    login_admin
   end
 
   describe "user got deleted" do

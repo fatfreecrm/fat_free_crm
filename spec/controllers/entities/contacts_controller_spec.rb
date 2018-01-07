@@ -9,7 +9,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe ContactsController do
   before(:each) do
-    require_user
+    login
     set_current_tab(:contacts)
   end
 

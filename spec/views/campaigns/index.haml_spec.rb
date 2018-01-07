@@ -15,7 +15,7 @@ describe "/campaigns/index" do
     assign :per_page, Campaign.per_page
     assign :sort_by,  Campaign.sort_by
     assign :ransack_search, Campaign.ransack
-    login_and_assign
+    login
   end
 
   it "should render list of accounts if list of campaigns is not empty" do

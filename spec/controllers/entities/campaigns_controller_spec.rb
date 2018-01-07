@@ -13,7 +13,7 @@ describe CampaignsController do
   end
 
   before(:each) do
-    require_user
+    login
     set_current_tab(:campaigns)
   end
 

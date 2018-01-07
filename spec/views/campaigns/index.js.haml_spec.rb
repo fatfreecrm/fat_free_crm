@@ -11,7 +11,7 @@ describe "/campaigns/index" do
   include CampaignsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   it "should render [campaign] template with @campaigns collection if there are campaigns" do

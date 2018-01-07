@@ -15,7 +15,7 @@ describe "/leads/index" do
     assign :per_page, Lead.per_page
     assign :sort_by,  Lead.sort_by
     assign :ransack_search, Lead.ransack
-    login_and_assign
+    login
   end
 
   it "should render list of accounts if list of leads is not empty" do

@@ -11,7 +11,7 @@ describe "/leads/_sidebar_show" do
   include LeadsHelper
 
   before do
-    login_and_assign
+    login
     assign(:users, [current_user])
     assign(:comment, Comment.new)
     assign(:lead, FactoryGirl.build_stubbed(:lead,

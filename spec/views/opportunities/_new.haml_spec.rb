@@ -11,7 +11,7 @@ describe "/opportunities/_new" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
+    login
     assign(:opportunity, FactoryGirl.build(:opportunity))
     @account = FactoryGirl.build_stubbed(:account)
     assign(:account, @account)

@@ -11,7 +11,7 @@ describe "/leads/_convert" do
   include LeadsHelper
 
   before do
-    login_and_assign
+    login
     @account = FactoryGirl.build_stubbed(:account)
     assign(:lead, FactoryGirl.build_stubbed(:lead))
     assign(:users, [current_user])

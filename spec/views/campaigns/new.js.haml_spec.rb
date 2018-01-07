@@ -11,7 +11,7 @@ describe "/campaigns/new" do
   include CampaignsHelper
 
   before do
-    login_and_assign
+    login
     assign(:campaign, Campaign.new(user: current_user))
     assign(:users, [current_user])
   end

@@ -9,7 +9,7 @@ require 'spec_helper'
 
 describe "/opportunities/destroy" do
   before do
-    login_and_assign
+    login
     assign(:opportunity, @opportunity = FactoryGirl.build_stubbed(:opportunity))
     assign(:stage, Setting.unroll(:opportunity_stage))
     assign(:opportunity_stage_total, Hash.new(1))
