@@ -8,6 +8,7 @@
 #
 # Allow tests to run in Chrome browser
 #
+Capaybara.app_host = ENV['app_url'] if ENV['app_url']
 if ENV['BROWSER'] == 'chrome'
   Capybara.register_driver :selenium do |app|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: ['no-sandbox', 'headless', 'disable-gpu'] })
@@ -21,6 +22,7 @@ else
     Capybara::Selenium::Driver.new(app, browser: :firefox, options: options, desired_capabilities: capabilities)
   end
 end
+
 
 #
 # Default timeout for extended for AJAX based application
