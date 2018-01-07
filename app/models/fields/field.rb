@@ -23,6 +23,7 @@
 #  disabled       :boolean
 #  required       :boolean
 #  maxlength      :integer
+#  minlength      :integer
 #  created_at     :datetime
 #  updated_at     :datetime
 #
@@ -60,7 +61,9 @@ class Field < ActiveRecord::Base
 
   validates_presence_of :label, message: "^Please enter a field label."
   validates_length_of :label, maximum: 64, message: "^The field name must be less than 64 characters in length."
-  validates_numericality_of :maxlength, only_integer: true, allow_blank: true, message: "^Max size can only be whole number."
+  validates_numericality_of :minlength, only_integer: true, greater_than_or_equal_to: 0, allow_blank: true, message: "^Min size can only be whole number."
+  validates_numericality_of :minlength, less_than_or_equal_to: :maxlength, allow_blank: true, if: :maxlength, message: "^Min size cannot be greater than max size."
+  validates_numericality_of :maxlength, only_integer: true, greater_than: 0, allow_blank: true, message: "^Max size can only be whole number."
   validates_presence_of :as, message: "^Please specify a field type."
   validates_inclusion_of :as, in: proc { field_types.keys }, message: "^Invalid field type.", allow_blank: true
 
@@ -71,7 +74,7 @@ class Field < ActiveRecord::Base
   def input_options
     input_html = {}
     attributes.reject do |k, v|
-      !%w[as collection disabled label placeholder required maxlength].include?(k) || v.blank?
+      !%w[as collection disabled label placeholder required minlength maxlength].include?(k) || v.blank?
     end.symbolize_keys.merge(input_html)
   end
 

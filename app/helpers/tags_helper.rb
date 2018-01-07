@@ -9,7 +9,7 @@ module TagsHelper
   # Generate tag links for use on asset index pages.
   #----------------------------------------------------------------------------
   def tags_for_index(model)
-    model.tag_list.inject("".html_safe) do |out, tag|
+    model.tags.inject("".html_safe) do |out, tag|
       query = controller.send(:current_query) || ""
       hashtag = "##{tag}"
       if query.empty?

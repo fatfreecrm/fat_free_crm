@@ -28,7 +28,6 @@ class UserMailer < ActionMailer::Base
   private
 
   def from_address
-    from = (Setting.smtp || {})[:from]
-    !from.blank? ? from : "Fat Free CRM <noreply@fatfreecrm.com>"
+    Setting.dig(:smtp, :from).presence || "Fat Free CRM <noreply@fatfreecrm.com>"
   end
 end

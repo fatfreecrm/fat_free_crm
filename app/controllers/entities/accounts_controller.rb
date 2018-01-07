@@ -130,6 +130,11 @@ class AccountsController < EntitiesController
   alias get_accounts get_list_of_records
 
   #----------------------------------------------------------------------------
+  def list_includes
+    %i[pipeline_opportunities user tags].freeze
+  end
+
+  #----------------------------------------------------------------------------
   def respond_to_destroy(method)
     if method == :ajax
       @accounts = get_accounts

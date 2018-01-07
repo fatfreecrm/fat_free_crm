@@ -13,7 +13,7 @@
     = render "campaigns/status", :campaign => campaign
 
     = render "campaigns/metrics", :campaign => campaign
-    - if campaign.tag_list.present?
+    - if campaign.tags.present?
       %dt
         .tags= tags_for_index(campaign)
 

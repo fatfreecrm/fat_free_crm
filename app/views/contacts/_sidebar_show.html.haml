@@ -45,7 +45,7 @@
 
   = render "fields/sidebar_show", :asset => @contact
 
-  - if @contact.tag_list.present?
+  - if @contact.tags.present?
     %dt
       .tags= tags_for_index(@contact)
 

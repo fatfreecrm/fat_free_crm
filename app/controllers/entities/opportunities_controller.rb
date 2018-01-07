@@ -81,15 +81,15 @@ class OpportunitiesController < EntitiesController
         end
       else
         @accounts = Account.my.order('name')
-        if params[:account][:id].blank?
-          if request.referer =~ /\/accounts\/(\d+)\z/
-            @account = Account.find(Regexp.last_match[1]) # related account
-          else
-            @account = Account.new(user: current_user)
-          end
-        else
-          @account = Account.find(params[:account][:id])
-        end
+        @account = if params[:account][:id].blank?
+                     if request.referer =~ /\/accounts\/(\d+)\z/
+                       Account.find(Regexp.last_match[1]) # related account
+                     else
+                       Account.new(user: current_user)
+                                end
+                   else
+                     Account.find(params[:account][:id])
+                   end
         @contact = Contact.find(params[:contact]) unless params[:contact].blank?
         @campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
       end
@@ -110,11 +110,11 @@ class OpportunitiesController < EntitiesController
         end
       else
         @accounts = Account.my.order('name')
-        if @opportunity.account
-          @account = Account.find(@opportunity.account.id)
-        else
-          @account = Account.new(user: current_user)
-        end
+        @account = if @opportunity.account
+                     Account.find(@opportunity.account.id)
+                   else
+                     Account.new(user: current_user)
+                   end
       end
     end
   end
@@ -171,6 +171,11 @@ class OpportunitiesController < EntitiesController
 
   #----------------------------------------------------------------------------
   alias get_opportunities get_list_of_records
+
+  #----------------------------------------------------------------------------
+  def list_includes
+    %i[account user tags].freeze
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)

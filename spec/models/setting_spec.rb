@@ -53,4 +53,25 @@ describe Setting do
     expect(Setting[:hello]).to eq(false)
     expect(Setting.hello).to eq(false)
   end
+
+  describe "#dig" do
+    it "should dig into nested hashes" do
+      Setting[:hello] = { foo: { bar: 3 } }
+      expect(Setting.dig(:hello, :foo, :bar)).to eq(3)
+    end
+
+    it "should dig into nested arrays" do
+      Setting[:hello] = [1, [2, 3]]
+      expect(Setting.dig(:hello, 1, 1)).to eq(3)
+    end
+
+    it "should return nil if nil" do
+      expect(Setting.dig(:foo, :bar)).to eq(nil)
+    end
+
+    it "should return nil if nil" do
+      Setting[:hello] = "world"
+      expect { Setting.dig(:hello, :foo) }.to raise_error(TypeError)
+    end
+  end
 end

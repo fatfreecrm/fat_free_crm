@@ -172,7 +172,7 @@ class Opportunity < ActiveRecord::Base
   # Make sure at least one user has been selected if the contact is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, :share_opportunity) if self[:access] == "Shared" && !permissions.any?
+    errors.add(:access, :share_opportunity) if self[:access] == "Shared" && permissions.none?
   end
 
   #----------------------------------------------------------------------------

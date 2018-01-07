@@ -28,9 +28,11 @@ atom_feed do |feed|
         author.name !asset.is_a?(User) ? asset.try(:user).try(:full_name) : asset.full_name
       end
 
-      entry.contributor do |contributor|
-        contributor.name asset.assigned_to_full_name
-      end if asset.respond_to?(:assigned_to_full_name)
+      if asset.respond_to?(:assigned_to_full_name)
+        entry.contributor do |contributor|
+          contributor.name asset.assigned_to_full_name
+        end
+      end
     end
   end
 end

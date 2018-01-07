@@ -3,6 +3,10 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   TargetRubyVersion: 2.4
 
+Layout/EmptyLinesAroundBlockBody:
+  Exclude:
+    - 'db/schema.rb'
+
 Lint/ScriptPermission:
   Exclude:
     - 'Rakefile'
