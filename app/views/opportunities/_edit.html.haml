@@ -1,18 +1,18 @@
 .remote
-  = simple_form_for(@opportunity, :html => one_submit_only, :remote => true) do |f|
+  = simple_form_for(@opportunity, html: one_submit_only, remote: true) do |f|
     = link_to_close edit_opportunity_path(@opportunity)
     = f.hidden_field :user_id
     = f.hidden_field :campaign_id
 
-    = f.error_messages :object_name => t('opportunity')
+    = f.error_messages object_name: t('opportunity')
 
-    = render "opportunities/top_section", :f => f, :edit => true
-    = render "fields/edit_custom_field_group", :f => f, :edit => true
-    = render "fields/groups",             :f => f, :edit => true
-    = render "entities/permissions",      :f => f, :edit => true, :entity => @opportunity
+    = render "opportunities/top_section", f: f, edit: true
+    = render "fields/edit_custom_field_group", f: f, edit: true
+    = render "fields/groups",             f: f, edit: true
+    = render "entities/permissions",      f: f, edit: true, entity: @opportunity
     = hook(:entity_form, self, {f: f, entity: @opportunity})
 
     .buttonbar
-      = f.submit t(:save_opportunity), :onclick => %/$("#account_assigned_to").val($("#opportunity_assigned_to").val());/
+      = f.submit t(:save_opportunity), onclick: %/$("#account_assigned_to").val($("#opportunity_assigned_to").val());/
       #{t :or}
       = link_to_cancel edit_opportunity_path(@opportunity)

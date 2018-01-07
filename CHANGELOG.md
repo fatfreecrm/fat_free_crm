@@ -6,6 +6,14 @@ then you win. –- Mahatma Gandhi
 
 Unreleased (0.17.0)
 ---------------------------------------------------------------------
+ - #678 Find an account by name when name is in params (fixes #397) 
+ - #673 Improve JS escaping 
+ - #671 Devise Readiness (+ thread-safety): Refactor User.my scope 
+ - #670 Fix #563 invalid default custom field minlength 
+ - #668 Rubocop fixes for xls/rss builder classes 
+ - #667 Rubocop: Autocorrect various assignment-if statements, case statements, etc. 
+ - #666 Various rubocop corrected items 
+ - #661 Bundle Update on 2018-01-06 
  - #655 Upgrade rubocop
  - #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
  - #658 Upgrade Bootsnap gem, fixing an issue with windows

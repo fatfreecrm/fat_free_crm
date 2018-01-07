@@ -1,15 +1,15 @@
 - if @user == current_user && Setting.per_user_locale
   %div#options(style="float:right")
-    #{t :profile_language}: #{link_to(language_for(current_user), "#", :id => :locale)}
+    #{t :profile_language}: #{link_to(language_for(current_user), "#", id: :locale)}
 
 %table(cellspacing="0" cellpadding="0")
   %tr
     %td(valign="top")
-      = avatar_for(@user, :style => "margin: 0px 10px 0px 0px")
+      = avatar_for(@user, style: "margin: 0px 10px 0px 0px")
     %td(valign="top")
       %h3= h(@user.full_name) + " (#{@user.username})"
       - if !@user.title.blank? && !@user.company.blank?
-        %div= t(:works_at, :job_title => h(@user.title), :company => h(@user.company))
+        %div= t(:works_at, job_title: h(@user.title), company: h(@user.company))
       - else
         = h(@user.title) unless @user.title.blank?
         = h(@user.company) unless @user.company.blank?

@@ -41,7 +41,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Contact do
-  before { login }
+  let(:current_user) { FactoryGirl.create(:user) }
 
   it "should create a new instance given valid attributes" do
     Contact.create!(first_name: "Billy", last_name: "Bones")
@@ -54,47 +54,59 @@ describe Contact do
     end
 
     it "should create new account if requested so" do
-      expect {
+      expect do
         @contact.update_with_account_and_permissions(
-        account: { name: "New account" },
-        contact: { first_name: "Billy" }
-      )
-      }.to change(Account, :count).by(1)
+          account: { name: "New account" },
+          contact: { first_name: "Billy" }
+        )
+      end.to change(Account, :count).by(1)
       expect(Account.last.name).to eq("New account")
       expect(@contact.first_name).to eq("Billy")
     end
 
     it "should change account if another account was selected" do
       @another_account = FactoryGirl.create(:account)
-      expect {
+      expect do
         @contact.update_with_account_and_permissions(
-        account: { id: @another_account.id },
-        contact: { first_name: "Billy" }
-      )
-      }.not_to change(Account, :count)
+          account: { id: @another_account.id },
+          contact: { first_name: "Billy" }
+        )
+      end.not_to change(Account, :count)
       expect(@contact.account).to eq(@another_account)
       expect(@contact.first_name).to eq("Billy")
     end
 
     it "should drop existing Account if [create new account] is blank" do
-      expect {
+      expect do
         @contact.update_with_account_and_permissions(
-        account: { name: "" },
-        contact: { first_name: "Billy" }
-      )
-      }.not_to change(Account, :count)
+          account: { name: "" },
+          contact: { first_name: "Billy" }
+        )
+      end.not_to change(Account, :count)
       expect(@contact.account).to eq(nil)
       expect(@contact.first_name).to eq("Billy")
     end
 
     it "should drop existing Account if [-- None --] is selected from list of accounts" do
-      expect {
+      expect do
         @contact.update_with_account_and_permissions(
-        account: { id: "" },
-        contact: { first_name: "Billy" }
-      )
-      }.not_to change(Account, :count)
+          account: { id: "" },
+          contact: { first_name: "Billy" }
+        )
+      end.not_to change(Account, :count)
       expect(@contact.account).to eq(nil)
+      expect(@contact.first_name).to eq("Billy")
+    end
+
+    it "should change account if entered name of another account was found" do
+      @another_account = FactoryGirl.create(:account, name: "Another name")
+      expect do
+        @contact.update_with_account_and_permissions(
+          account: { name: "Another name" },
+          contact: { first_name: "Billy" }
+        )
+      end.not_to change(Account, :count)
+      expect(@contact.account).to eq(@another_account)
       expect(@contact.first_name).to eq("Billy")
     end
   end

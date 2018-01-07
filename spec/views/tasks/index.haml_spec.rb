@@ -11,7 +11,7 @@ describe "/tasks/index" do
   include TasksHelper
 
   before do
-    login_and_assign
+    login
   end
 
   TASK_STATUSES.each do |status|
@@ -24,7 +24,7 @@ describe "/tasks/index" do
 
     it "should render list of #{status} tasks if list of tasks is not empty" do
       assign(:view, status)
-      assign(:tasks,  due_asap: [@due], completed_today: [@completed])
+      assign(:tasks, due_asap: [@due], completed_today: [@completed])
 
       render
 
@@ -36,7 +36,7 @@ describe "/tasks/index" do
   TASK_STATUSES.each do |status|
     it "should render a message if there're no #{status} tasks" do
       assign(:view, status)
-      assign(:tasks,  due_asap: [], due_today: [])
+      assign(:tasks, due_asap: [], due_today: [])
 
       render
 

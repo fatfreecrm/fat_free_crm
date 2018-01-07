@@ -1,6 +1,6 @@
 %li.highlight[assigned]
   - unless assigned.category.blank?
-    .strip{:class => assigned.category}= t(assigned.category)
+    .strip{class: assigned.category}= t(assigned.category)
   - else
     .strip.white #{t :other}
 
@@ -27,16 +27,16 @@
           - if assigned.due_at < Time.now
             %span.warn= distance_of_time_in_words(assigned.due_at, Time.now)
             = t(:task_overdue)
-            = l(assigned.due_at.localtime, :format => :mmddhhss)
+            = l(assigned.due_at.localtime, format: :mmddhhss)
           - else
             = t(:task_due_in, distance_of_time_in_words(Time.now, assigned.due_at))
-            = "(#{l(assigned.due_at.localtime, :format => :mmddhhss)})"
+            = "(#{l(assigned.due_at.localtime, format: :mmddhhss)})"
 
         - else
           - if assigned.due_at < Date.today
             %span.warn= distance_of_time_in_words(assigned.due_at, Time.now)
             = t(:task_overdue)
-            = l(assigned.due_at.localtime.to_date, :format => :mmdd)
+            = l(assigned.due_at.localtime.to_date, format: :mmdd)
           - elsif assigned.due_at > Date.today
             = t(:task_due_in, distance_of_time_in_words(Time.now, assigned.due_at.localtime.end_of_day))
           - else

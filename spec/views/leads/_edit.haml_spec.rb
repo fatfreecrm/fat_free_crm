@@ -11,7 +11,7 @@ describe "/leads/_edit" do
   include LeadsHelper
 
   before do
-    login_and_assign
+    login
     assign(:lead, @lead = FactoryGirl.build_stubbed(:lead))
     assign(:users, [current_user])
     assign(:campaign, @campaign = FactoryGirl.build_stubbed(:campaign))

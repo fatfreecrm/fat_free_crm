@@ -11,7 +11,7 @@ describe "/leads/show" do
   include LeadsHelper
 
   before do
-    login_and_assign
+    login
     assign(:lead, @lead = FactoryGirl.build_stubbed(:lead, id: 42))
     assign(:users, [current_user])
     assign(:comment, Comment.new)

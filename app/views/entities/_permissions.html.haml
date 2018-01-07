@@ -7,14 +7,14 @@
     = get_default_permissions_intro(entity.access, t("#{model}_small")) unless edit
   #entity_permissions{ hidden_if(collapsed) }
     .radio_box
-      = f.radio_button :access, "Private", :onclick => "$('#people').hide()"
-      = f.label :access_private, t(:keep_private), :style => "cursor:pointer"
+      = f.radio_button :access, "Private", onclick: "$('#people').hide()"
+      = f.label :access_private, t(:keep_private), style: "cursor:pointer"
     .radio_box
-      = f.radio_button :access, "Public", :onclick => "$('#people').hide()"
-      = f.label :access_public, t(:make_public), :style => "cursor:pointer"
+      = f.radio_button :access, "Public", onclick: "$('#people').hide()"
+      = f.label :access_public, t(:make_public), style: "cursor:pointer"
     .radio_box
-      = f.radio_button :access, "Shared", :onclick => "$('#people').show()"
-      = f.label :access_shared, t(:share_with), :style => "cursor:pointer"
+      = f.radio_button :access, "Shared", onclick: "$('#people').show()"
+      = f.label :access_shared, t(:share_with), style: "cursor:pointer"
 
     #people{ hidden_if(entity.access != "Shared") }
       %table
@@ -22,15 +22,15 @@
           %td
             = f.label :user_ids, "#{t(:users)}:"
             %br
-            = f.select :user_ids, user_options, {}, :multiple => true, :class => 'select2'
+            = f.select :user_ids, user_options, {}, multiple: true, class: 'select2'
         %tr
           %td
             = f.label :group_ids, "#{t(:groups)}:"
             %br
-            = f.select :group_ids, group_options, {}, :multiple => true, :class => 'select2'
+            = f.select :group_ids, group_options, {}, multiple: true, class: 'select2'
 
     - if !edit and entity.is_a?(Lead)
       .radio_box
-        = f.radio_button :access, t(:campaign), :onclick => "$('#people').hide(); $('#lead_access_campaign').val('Campaign');", :disabled => true
-        %font{ :id => :copy_permissions, :color => :grey }
+        = f.radio_button :access, t(:campaign), onclick: "$('#people').hide(); $('#lead_access_campaign').val('Campaign');", disabled: true
+        %font{ id: :copy_permissions, color: :grey }
           = t(:copy_permissions, t(:campaign_small))

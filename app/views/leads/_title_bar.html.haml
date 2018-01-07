@@ -1,8 +1,8 @@
 #confirm{ hidden }
 .title_tools#menu
   - unless %w(converted rejected).include?(@lead.status)
-    = link_to_inline(:convert_lead, convert_lead_path(@lead), :text => t(:convert)) + " | "
-  = link_to_inline(:edit_lead, edit_lead_path(@lead), :text => t(:edit)) + " | "
+    = link_to_inline(:convert_lead, convert_lead_path(@lead), text: t(:convert)) + " | "
+  = link_to_inline(:edit_lead, edit_lead_path(@lead), text: t(:edit)) + " | "
   - if @lead.status != "rejected"
     = link_to_function(t(:reject) + '?', confirm_reject(@lead)) + " | "
   = link_to_function(t(:delete) + '?', confirm_delete(@lead))
@@ -10,7 +10,7 @@
   = view_buttons
 .title#title
   = h(@lead.full_name)
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
 
 %div#convert_lead{ hidden }
 %div#edit_lead{ hidden }

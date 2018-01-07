@@ -2,9 +2,9 @@
   $('#create_group_arrow').html(crm.COLLAPSED);
   $('#create_group_title').html('#{ j t(:groups) }');
   $('#create_group').slideUp(250);
-  $('#groups').prepend('#{ j (render :partial => "group", :collection => [ @group ]) }');
+  $('#groups').prepend('#{ j (render partial: "group", collection: [ @group ]) }');
   $('##{dom_id(@group)}').effect("highlight", { duration:1500 });
 - else
-  $('#create_group').html('#{ j render(:partial => "new") }');
+  $('#create_group').html('#{ j render(partial: "new") }');
   $('#create_group').effect("shake", { duration:250, distance: 6 });
   $('#group_name').focus();

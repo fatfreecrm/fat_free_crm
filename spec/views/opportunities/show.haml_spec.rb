@@ -11,7 +11,7 @@ describe "/opportunities/show" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
+    login
     @opportunity = FactoryGirl.create(:opportunity, id: 42,
                                                     contacts: [FactoryGirl.create(:contact)])
     assign(:opportunity, @opportunity)

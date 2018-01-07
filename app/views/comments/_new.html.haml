@@ -1,7 +1,7 @@
 - class_name = commentable.class.name.underscore
 - id_prefix = "#{class_name}_#{commentable.id}"
 - @comment = @comment || Comment.new
-.comment.highlight.new_comment{ :id => "#{id_prefix}_comment_new" }
+.comment.highlight.new_comment{ id: "#{id_prefix}_comment_new" }
   - subscribed_users = commentable.subscribed_users.map{|uid| User.find_by_id(uid) unless uid == current_user.id }.compact
   - if notification_emails_configured? && subscribed_users.any?
     = t(:following_users_will_be_notified) << ":"
@@ -10,26 +10,26 @@
 
   -# Two hidden fields store the IDs of notes and emails shown for the asset. These IDs are used
   -# by [Expand/Collapse All]. The contents gets updated by actions such as [Add] or [Delete].
-  = hidden_field_tag :shown_notes, "#{commentable.comment_ids.join(',')}", :id => "#{id_prefix}_shown_notes"
-  = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}", :id => "#{id_prefix}_shown_emails"
+  = hidden_field_tag :shown_notes, "#{commentable.comment_ids.join(',')}", id: "#{id_prefix}_shown_notes"
+  = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}", id: "#{id_prefix}_shown_emails"
 
-  = link_to avatar_for(current_user, :size => :small), user_path(current_user)
+  = link_to avatar_for(current_user, size: :small), user_path(current_user)
   .tools
     = link_to_function(t(:expand_all), "crm.flip_notes_and_emails('#{t(:expanded)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')") << " | "
     = link_to_function(t(:collapse_all), "crm.flip_notes_and_emails('#{t(:collapsed)}', '#{t(:more)}', '#{t(:less)}', '#{id_prefix}')")
 
-  %div{ {:id => "#{id_prefix}_post"}.merge(hidden_if(true))}
-    = form_for(@comment, :remote => true, :html => {:id => "#{id_prefix}_new_comment"}) do |f|
-      = hidden_field_tag "comment[commentable_id]", commentable.id, :id => "#{id_prefix}_comment_commentable_id"
-      = hidden_field_tag "comment[commentable_type]", class_name.classify, :id => "#{id_prefix}_comment_commentable_type"
-      = f.text_area :comment, :id => "#{id_prefix}_comment_comment"
+  %div{ {id: "#{id_prefix}_post"}.merge(hidden_if(true))}
+    = form_for(@comment, remote: true, html: {id: "#{id_prefix}_new_comment"}) do |f|
+      = hidden_field_tag "comment[commentable_id]", commentable.id, id: "#{id_prefix}_comment_commentable_id"
+      = hidden_field_tag "comment[commentable_type]", class_name.classify, id: "#{id_prefix}_comment_commentable_type"
+      = f.text_area :comment, id: "#{id_prefix}_comment_comment"
       .buttons
-        = image_tag("loading.gif", :size => :thumb, :class => "spinner", :style => "display: none;")
-        = f.submit t(:add_note), :id => "#{id_prefix}_comment_submit"
+        = image_tag("loading.gif", size: :thumb, class: "spinner", style: "display: none;")
+        = f.submit t(:add_note), id: "#{id_prefix}_comment_submit"
         #{t :or}
-        = link_to(t(:cancel), '#', :class => 'cancel')
-  %div{ {:id => "#{id_prefix}_ask"}.merge(hidden_if(false))}
-    = text_field_tag :post_new_note, t(:add_note_help), :id => "#{id_prefix}_post_new_note"
+        = link_to(t(:cancel), '#', class: 'cancel')
+  %div{ {id: "#{id_prefix}_ask"}.merge(hidden_if(false))}
+    = text_field_tag :post_new_note, t(:add_note_help), id: "#{id_prefix}_post_new_note"
 
   - if notification_emails_configured?
-    = render :partial => "comments/subscription_links", :locals => {:entity => commentable}
+    = render partial: "comments/subscription_links", locals: {entity: commentable}

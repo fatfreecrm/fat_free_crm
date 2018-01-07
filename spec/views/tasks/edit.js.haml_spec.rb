@@ -11,7 +11,7 @@ describe "/tasks/edit" do
   include TasksHelper
 
   before do
-    login_and_assign
+    login
     assign(:users, [current_user])
     assign(:bucket, Setting.task_bucket[1..-1] << ["On Specific Date...", :specific_time])
     assign(:category, Setting.unroll(:task_category))

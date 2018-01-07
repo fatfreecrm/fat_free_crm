@@ -35,7 +35,6 @@ module FatFreeCRM
       #--------------------------------------------------------------------------
       %w[group user].each do |model|
         class_eval %{
-
           def #{model}_ids=(value)
             if access != 'Shared'
               remove_permissions

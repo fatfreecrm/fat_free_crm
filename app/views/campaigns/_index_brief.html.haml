@@ -1,5 +1,5 @@
 %li.highlight[campaign]
-  .strip{:class => campaign.status}= t(campaign.status)
+  .strip{class: campaign.status}= t(campaign.status)
 
   %ul.tools
     - if can?(:update, campaign)
@@ -10,6 +10,6 @@
 
   .indent
     = link_to(campaign.name, campaign)
-    = render "campaigns/status", :campaign => campaign
+    = render "campaigns/status", campaign: campaign
 
-    = hook(:campaign_bottom, self, :campaign => campaign)
+    = hook(:campaign_bottom, self, campaign: campaign)

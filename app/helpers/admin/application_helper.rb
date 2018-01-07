@@ -11,7 +11,6 @@ module Admin::ApplicationHelper
     link_to(t(:yes_button),
             url_for([:admin, model]),
             method:  :delete,
-            remote:  true
-    )
+            remote:  true)
   end
 end

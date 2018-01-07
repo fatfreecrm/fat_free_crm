@@ -1,20 +1,20 @@
 .filters#filters
   .caption= t :lead_statuses
   - Setting.lead_status.each do |key|
-    .check_box{:style => "border-bottom: 1px silver dotted;"}
-      %div{:style => "float:right;"}
+    .check_box{style: "border-bottom: 1px silver dotted;"}
+      %div{style: "float:right;"}
         = @lead_status_total[key]
       = lead_status_checkbox(key, @lead_status_total[key])
       = label_tag(key, t(key))
 
-  .check_box{:style => "border-bottom: 1px silver dotted;"}
-    %div{:style => "float:right;"}
+  .check_box{style: "border-bottom: 1px silver dotted;"}
+    %div{style: "float:right;"}
       = @lead_status_total[:other]
     = lead_status_checkbox("other", @lead_status_total[:other])
     = label_tag(:other, t(:other))
 
   .check_box
-    %div{:style => "float:right;"}
+    %div{style: "float:right;"}
       %b= @lead_status_total[:all]
     %b #{t :total_leads}
   = hook(:index_lead_sidebar_bottom, self)

@@ -196,7 +196,7 @@ class TasksController < ApplicationController
     # Update filters session if we added, deleted, or completed a task.
     if @task
       update_session do |filters|
-        if @empty_bucket  # deleted, completed, rescheduled, or reassigned and need to hide a bucket
+        if @empty_bucket # deleted, completed, rescheduled, or reassigned and need to hide a bucket
           filters.delete(@empty_bucket)
         elsif !@task.deleted_at && !@task.completed_at # created new task
           filters << @task.computed_bucket

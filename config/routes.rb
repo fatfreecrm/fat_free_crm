@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get '/home/toggle',   as: :toggle
   match '/home/timeline', as: :timeline, via: %i[get put post]
   match '/home/timezone', as: :timezone, via: %i[get put post]
-  post '/home/redraw',   as: :redraw
+  post '/home/redraw', as: :redraw
 
   resource :authentication, except: %i[index edit]
   resources :comments,       except: %i[new show]

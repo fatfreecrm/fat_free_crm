@@ -1,11 +1,11 @@
 !!!5
 %html
   %head
-    %meta{ "http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
+    %meta{ "http-equiv" => "Content-Type", content: "text/html; charset=utf-8" }
     %title Fat Free CRM
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
     = stylesheet_link_tag :application
-    = stylesheet_link_tag :print, :media => 'print'
+    = stylesheet_link_tag :print, media: 'print'
     = hook(:stylesheet_includes, self) do
       #{yield :stylesheet_includes}
     %style= yield :styles
@@ -41,7 +41,7 @@
       = render "layouts/tabbed"
       = render "layouts/footer"
 
-    %script{:type => "text/javascript"}
+    %script{type: "text/javascript"}
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset
       = content_for :javascript_epilogue

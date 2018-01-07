@@ -1,7 +1,7 @@
 .standalone#standalone
   -# The following form gets submitted to #create when @authentication is nil,
   -# or to #update when @authentication is not nil (ex. suspended).
-  = form_for @authentication, :url => authentication_path, :html => one_submit_only do |f|
+  = form_for @authentication, url: authentication_path, html: one_submit_only do |f|
     - if can_signup?
       .title_tools #{t :no_account} #{link_to t(:sign_up_now), signup_path}
     .title= t(:login)

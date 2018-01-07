@@ -11,7 +11,7 @@ describe "/contacts/_edit" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
     assign(:account, @account = FactoryGirl.create(:account))
     assign(:accounts, [@account])
   end

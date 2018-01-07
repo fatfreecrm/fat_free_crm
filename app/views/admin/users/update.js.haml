@@ -1,9 +1,9 @@
 - id = dom_id(@user)
 
 - if @user.errors.empty?
-  $('##{id}').replaceWith('#{ j render(:partial => "user", :collection => [ @user ]) }')
+  $('##{id}').replaceWith('#{ j render(partial: "user", collection: [ @user ]) }')
   $('##{id}').effect("highlight", { duration:1000 });
 - else
-  $('##{id}').html('#{j render(:partial => "edit") }')
+  $('##{id}').html('#{j render(partial: "edit") }')
   $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('#user_username').focus()

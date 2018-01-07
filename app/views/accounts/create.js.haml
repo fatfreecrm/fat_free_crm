@@ -6,12 +6,12 @@
   $('##{create_id}_arrow').html(crm.COLLAPSED);
   $('##{create_id}_title').html('#{ j t(entity_name.pluralize) }');
   $('##{create_id}').slideUp(250);
-  $('##{entity_name.pluralize}').prepend('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
+  $('##{entity_name.pluralize}').prepend('#{ j render(partial: entity_name, collection: [ @entity ]) }');
   $('##{dom_id(@entity)}').effect("highlight", { duration:1500 });
   = refresh_sidebar(:index, :filters)
-  $('#paginate').html('#{ j render(:partial => "shared/paginate_with_per_page") }');
+  $('#paginate').html('#{ j render(partial: "shared/paginate_with_per_page") }');
   crm.flick('empty', 'remove');
 - else
-  $('##{create_id}').html('#{ j render(:partial => "new") }');
+  $('##{create_id}').html('#{ j render(partial: "new") }');
   $('##{create_id}').effect("shake", { duration:250, distance: 6 });
   $('#new_#{entity_name} input[type!=hidden]').first().focus();

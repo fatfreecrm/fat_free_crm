@@ -1,8 +1,8 @@
 %li.highlight[contact]
-  = avatar_for(contact, :size => "30x30")
+  = avatar_for(contact, size: "30x30")
 
   %ul.tools
-    = hook(:contact_tools_before, self, :contact => contact)
+    = hook(:contact_tools_before, self, contact: contact)
 
     - if can?(:update, contact)
       %li= link_to_edit(contact)
@@ -22,7 +22,7 @@
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
 
-    %dt{ :style => "padding: 2px 0px 0px 0px" }
+    %dt{ style: "padding: 2px 0px 0px 0px" }
       - if can?(:read, contact)
         - if contact.email.present?
           = link_to_email(contact.email)
@@ -41,4 +41,4 @@
       %dt
         .tags= tags_for_index(contact)
 
-    = hook(:contact_bottom, self, :contact => contact)
+    = hook(:contact_bottom, self, contact: contact)

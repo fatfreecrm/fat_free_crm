@@ -11,7 +11,6 @@ feature 'Leads', '
   In order to increase sales
   As a user
   I want to manage leads
-
 ' do
   before(:each) do
     do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')

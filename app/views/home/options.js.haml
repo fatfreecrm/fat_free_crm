@@ -1,7 +1,7 @@
 crm.flip_form('options');
 
 - unless params[:cancel].true?
-  $('#options').html('#{ j render(:partial => "options") }');
+  $('#options').html('#{ j render(partial: "options") }');
   crm.set_title('title', '#{ j t(:recent_activity_options) }');
 - else
   crm.set_title('title', '#{ j t(:recent_activity) }');

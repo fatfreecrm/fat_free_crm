@@ -11,7 +11,7 @@ describe "/contacts/destroy" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
     assign(:contact, @contact = FactoryGirl.build_stubbed(:contact))
     assign(:contacts, [@contact].paginate)
   end

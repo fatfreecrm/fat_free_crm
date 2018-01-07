@@ -8,11 +8,11 @@
     crm.set_title('edit_#{entity_name}', '#{h @entity.name}');
     = refresh_sidebar(:show, :summary)
   - else
-    $('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
+    $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
     $('##{id}').effect("highlight", { duration:1500 });
     = refresh_sidebar(:index, :filters)
 - else
-  $('##{id}').html('#{ j render(:partial => "edit") }');
+  $('##{id}').html('#{ j render(partial: "edit") }');
   $('##{id}').effect("shake", { duration:250, distance: 6 });
   - if @campaign.errors[:name].blank? and @campaign.errors[:ends_on].present?
     $('#campaign_ends_on').focus();

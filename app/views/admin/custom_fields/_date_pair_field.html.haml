@@ -1,7 +1,7 @@
 - field1 = f.object || CustomFieldPair.new
 - field2 = f.object.respond_to?(:paired_with) ? field1.paired_with : CustomFieldPair.new
 
-%table{:class => :pairs}
+%table{class: :pairs}
   = fields_for("pair[0]", field1) do |first|
     = fields_for("pair[1]", field2) do |second|
       %tr
@@ -18,4 +18,4 @@
             = first.check_box :disabled
             = first.hidden_field :id
             = second.hidden_field :id
-            %div{:style => 'width: 240px;'}
+            %div{style: 'width: 240px;'}

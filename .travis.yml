@@ -9,7 +9,7 @@ env:
     - BROWSER=chrome
   matrix:
     - DB=postgres TEST_SUITE=rubocop
-    - DB=mysql TEST_SUITE="rake spec:models"
+    - DB=postgres TEST_SUITE="rake spec:features"
     - DB=postgres TEST_SUITE="rake spec:models"
     - DB=postgres TEST_SUITE="rake spec:mailers"
     - DB=postgres TEST_SUITE="rake spec:controllers"
@@ -17,10 +17,11 @@ env:
     - DB=postgres TEST_SUITE="rake spec:lib"
     - DB=postgres TEST_SUITE="rake spec:routing"
     - DB=postgres TEST_SUITE="rake spec:views"
-    - DB=postgres TEST_SUITE="rake spec:features"
+    - DB=mysql TEST_SUITE="rake spec:models"
     - DB=sqlite TEST_SUITE="rake spec:models"
 
 matrix:
+  fast_finish: true
   allow_failures:
     - rvm: 2.3.6
       env: DB=mysql TEST_SUITE="rake spec:models"

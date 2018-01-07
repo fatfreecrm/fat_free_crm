@@ -54,7 +54,7 @@ module FatFreeCRM
       #--------------------------------------------------------------------------------------
       def with_explicit_keyword(email)
         first_line = plain_text_body(email).split("\n").first
-        if first_line =~ %r{(#{KEYWORDS.join('|')})[^a-zA-Z0-9]+(.+)$}i
+        if first_line =~ /(#{KEYWORDS.join('|')})[^a-zA-Z0-9]+(.+)$/i
           yield Regexp.last_match[1].capitalize, Regexp.last_match[2].strip
         end
       end
@@ -209,14 +209,14 @@ module FatFreeCRM
 
         case keyword
         when "Account", "Campaign", "Opportunity"
-          defaults[:status] = "planned" if keyword == "Campaign"      # TODO: I18n
+          defaults[:status] = "planned" if keyword == "Campaign" # TODO: I18n
           defaults[:stage] = Opportunity.default_stage if keyword == "Opportunity" # TODO: I18n
 
         when "Contact", "Lead"
           first_name, *last_name = data.delete("Name").split(' ')
           defaults[:first_name] = first_name
           defaults[:last_name] = (last_name.any? ? last_name.join(" ") : "(unknown)")
-          defaults[:status] = "contacted" if keyword == "Lead"        # TODO: I18n
+          defaults[:status] = "contacted" if keyword == "Lead" # TODO: I18n
         end
 
         data.each do |key, value|

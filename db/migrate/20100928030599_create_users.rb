@@ -28,7 +28,7 @@ class CreateUsers < ActiveRecord::Migration[4.2]
       t.datetime :current_login_at
       t.string :last_login_ip
       t.string :current_login_ip
-      t.integer :login_count,      null: false, default: 0
+      t.integer :login_count, null: false, default: 0
       # >>> End of [authlogic] maintained fields.
       t.datetime :deleted_at
       t.timestamps

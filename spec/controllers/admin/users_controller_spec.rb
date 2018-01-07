@@ -9,7 +9,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::UsersController do
   before(:each) do
-    require_user(admin: true)
+    login_admin
     set_current_tab(:users)
   end
 

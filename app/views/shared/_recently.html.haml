@@ -2,6 +2,6 @@
 .panel#recently
   .caption #{t :recent_items}
   - if @versions.present?
-    = render :partial => "shared/recent", :collection => @versions
+    = render partial: "shared/recent", collection: @versions
   - else
     %div #{t :no_recent_items}

@@ -1,22 +1,22 @@
 - if (template = template_for_current_view)
-  = render(template, :opportunity => @opportunity)
+  = render(template, opportunity: @opportunity)
 - else
 
   -# default view
 
   = styles_for :task, :contact
 
-  = render 'opportunities/title_bar', :opportunity => @opportunity
+  = render 'opportunities/title_bar', opportunity: @opportunity
 
-  = render "comments/new", :commentable => @opportunity
-  = render :partial => "shared/timeline", :collection => @timeline
+  = render "comments/new", commentable: @opportunity
+  = render partial: "shared/timeline", collection: @timeline
 
   = hook(:show_opportunity_bottom, self, {entity: @opportunity}) do
 
-    = render "tasks/tasks", :object => @opportunity
+    = render "tasks/tasks", object: @opportunity
 
-    = render "contacts/contacts", :object => @opportunity
+    = render "contacts/contacts", object: @opportunity
 
-    = render "versions/versions", :object => @opportunity
+    = render "versions/versions", object: @opportunity
 
     = load_select_popups_for(@opportunity, :tasks, :contacts)

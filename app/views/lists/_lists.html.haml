@@ -1,5 +1,5 @@
-- @global_lists = List.where(:user_id => nil)
-- @personal_lists = List.where(:user_id => current_user.id)
+- @global_lists = List.where(user_id: nil)
+- @personal_lists = List.where(user_id: current_user.id)
 
 #lists
   = render "lists/sidebar", lists: @global_lists

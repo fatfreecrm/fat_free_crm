@@ -21,7 +21,6 @@ class CommentsController < ApplicationController
     respond_with(@comments) do |format|
       format.html { redirect_to @asset }
     end
-
   rescue ActiveRecord::RecordNotFound # Kicks in if @asset was not found.
     flash[:warning] = t(:msg_assets_not_available, "notes")
     respond_to do |format|

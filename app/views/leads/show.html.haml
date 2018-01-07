@@ -1,20 +1,20 @@
 - if (template = template_for_current_view)
-  = render(template, :lead => @lead)
+  = render(template, lead: @lead)
 - else
 
   -# default view
 
   = styles_for :task
 
-  = render 'leads/title_bar', :lead => @lead
+  = render 'leads/title_bar', lead: @lead
   
-  = render "comments/new", :commentable => @lead
-  = render :partial => "shared/timeline", :collection => @timeline
+  = render "comments/new", commentable: @lead
+  = render partial: "shared/timeline", collection: @timeline
 
   = hook(:show_lead_bottom, self, {entity: @lead}) do
 
-    = render :partial => "tasks/tasks", :locals => {:object => @lead}
+    = render partial: "tasks/tasks", locals: {object: @lead}
 
-    = render :partial => "versions/versions", :locals => {:object => @lead}
+    = render partial: "versions/versions", locals: {object: @lead}
 
     = load_select_popups_for(@lead, :tasks)
