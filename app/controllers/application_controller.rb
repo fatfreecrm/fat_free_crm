@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   before_action :clear_setting_cache
   before_action :cors_preflight_check
   before_action { hook(:app_before_filter, self) }
-  after_action { hook(:app_after_filter,  self) }
+  after_action { hook(:app_after_filter, self) }
   after_action :cors_set_access_control_headers
 
   helper_method :current_user_session, :current_user, :can_signup?
@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
 
     session[:auto_complete] = controller_name.to_sym
     respond_to do |format|
-      format.any(:js, :html)   { render partial: 'auto_complete' }
+      format.any(:js, :html) { render partial: 'auto_complete' }
       format.json do
         render json: @auto_complete.each_with_object({}) { |a, h|
                        h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
@@ -111,9 +111,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def current_user_session
     @current_user_session ||= Authentication.find
-    if @current_user_session&.record&.suspended?
-      @current_user_session = nil
-    end
+    @current_user_session = nil if @current_user_session&.record&.suspended?
     @current_user_session
   end
 
@@ -220,7 +218,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
       format.js   { render plain: 'window.location.reload();' }
-      format.json { render plain: flash[:warning],  status: :not_found }
+      format.json { render plain: flash[:warning], status: :not_found }
       format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
@@ -234,7 +232,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { redirect_to(url) }
       format.js   { render plain: %(window.location.href = "#{url}";) }
-      format.json { render plain: flash[:warning],  status: :not_found }
+      format.json { render plain: flash[:warning], status: :not_found }
       format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
@@ -245,7 +243,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
       format.js   { render plain: 'window.location.reload();' }
-      format.json { render plain: flash[:warning],  status: :unauthorized }
+      format.json { render plain: flash[:warning], status: :unauthorized }
       format.xml  { render xml: [flash[:warning]], status: :unauthorized }
     end
   end

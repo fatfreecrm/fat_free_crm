@@ -15,7 +15,7 @@ class ChangeFurtherSubscribedUsersToSet < ActiveRecord::Migration[4.2]
       # Run as one atomic action.
       ActiveRecord::Base.transaction do
         entities.each do |entity|
-          subscribed_users_set = Set.new(YAML.load(entity["subscribed_users"]))
+          subscribed_users_set = Set.new(YAML.safe_load(entity["subscribed_users"]))
 
           connection.execute %(
             UPDATE #{table}

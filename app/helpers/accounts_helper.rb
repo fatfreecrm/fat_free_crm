@@ -19,8 +19,7 @@ module AccountsHelper
      t(:added_by, time_ago: time_ago_in_words(account.created_at), user: account.user_id_full_name),
      t('pluralize.contact', account.contacts_count),
      t('pluralize.opportunity', account.opportunities_count),
-     t('pluralize.comment', account.comments.count)
-    ].join(', ')
+     t('pluralize.comment', account.comments.count)].join(', ')
   end
 
   # Generates a select list with the first 25 accounts

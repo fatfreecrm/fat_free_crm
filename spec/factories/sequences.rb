@@ -11,7 +11,7 @@ FactoryGirl.define do
   end
 
   sequence :username do |n|
-    FFaker::Internet.user_name + n.to_s  # make sure it's unique by appending sequence number
+    FFaker::Internet.user_name + n.to_s # make sure it's unique by appending sequence number
   end
 
   sequence :website do |_n|
@@ -19,7 +19,7 @@ FactoryGirl.define do
   end
 
   sequence :title do |_n|
-    ["", "Director", "Sales Manager",  "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer"].sample
+    ["", "Director", "Sales Manager", "Executive Assistant", "Marketing Manager", "Project Manager", "Product Manager", "Engineer"].sample
   end
 
   sequence :time do |n|

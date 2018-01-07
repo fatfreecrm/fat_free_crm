@@ -17,7 +17,7 @@ feature 'Groups tab', '
     do_login(first_name: 'Captain', last_name: 'Kirk', admin: true)
   end
 
-  scenario 'should create a new group', js: true  do
+  scenario 'should create a new group', js: true do
     FactoryGirl.create(:user, first_name: "Mr", last_name: "Spock")
     visit admin_groups_path
     expect(page).to have_content("Couldn't find any Groups.")

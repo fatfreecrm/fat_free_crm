@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddAccountCounterCaches < ActiveRecord::Migration[5.1]
   def change
     change_table :accounts do |t|

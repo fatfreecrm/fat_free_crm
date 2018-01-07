@@ -33,7 +33,7 @@ namespace :ffcrm do
       Dir[File.join(Rails.root, 'config', '**', '*.yml')].each do |file_path|
         YAML::ENGINE.yamler = 'syck'
         puts "Converting #{file_path}"
-        yml = YAML.load(File.read(file_path))
+        yml = YAML.safe_load(File.read(file_path))
         FileUtils.cp file_path, "#{file_path}.bak"
         YAML::ENGINE.yamler = 'psych'
         File.open(file_path, 'w') { |file| file.write(YAML.dump(yml)) }

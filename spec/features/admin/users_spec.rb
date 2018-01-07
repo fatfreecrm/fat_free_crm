@@ -17,7 +17,7 @@ feature 'Users tab', '
     do_login(first_name: 'Captain', last_name: 'Kirk', admin: true)
   end
 
-  scenario 'should create a new user', js: true  do
+  scenario 'should create a new user', js: true do
     FactoryGirl.create(:group, name: "Superheroes")
     visit admin_users_path
     click_link 'Create User'

@@ -173,9 +173,7 @@ class EntitiesController < ApplicationController
       scope = scope.paginate(page: current_page, per_page: per_page)
     end
 
-    if respond_to?(:list_includes, true)
-      scope = scope.includes(*list_includes)
-    end
+    scope = scope.includes(*list_includes) if respond_to?(:list_includes, true)
 
     scope
   end
