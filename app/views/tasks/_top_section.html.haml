@@ -29,6 +29,6 @@
       %tr
         %td(colspan="5")
           .label= t(:extra_info).capitalize + ':'
-          = f.text_area :background_info, :style =>"width:500px", rows: 3
+          = f.text_area :background_info, style: "width:500px", rows: 3
 
     = hook(:task_top_section_bottom, self, f: f)

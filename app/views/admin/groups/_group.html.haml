@@ -7,7 +7,7 @@
     %li= link_to_delete [:admin, group], confirm: confirm
 
   %span
-    = link_to(group.name, {action: :edit, id: group.id}, {:remote  => true,
+    = link_to(group.name, {action: :edit, id: group.id}, {remote: true,
           onclick: "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_group');"})
   %tt
     - if (users = group.users).present?
