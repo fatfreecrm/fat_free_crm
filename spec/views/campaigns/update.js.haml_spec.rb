@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -46,7 +48,7 @@ describe "/campaigns/update" do
         expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
       end
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     describe "on landing page -" do
@@ -76,5 +78,5 @@ describe "/campaigns/update" do
         expect(rendered).to include('focus()')
       end
     end
-  end # errors
+  end
 end

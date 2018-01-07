@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -6,7 +8,7 @@
 class Admin::FieldsController < Admin::ApplicationController
   before_action "set_current_tab('admin/fields')", only: [:index]
 
-  load_resource except: [:create, :subform]
+  load_resource except: %i[create subform]
 
   # GET /fields
   # GET /fields.xml                                                      HTML

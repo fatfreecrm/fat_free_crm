@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,7 +7,7 @@
 #------------------------------------------------------------------------------
 FactoryGirl.define do
   sequence :klass_name do |_x|
-    %w(Contact Account Opportunity Lead Campaign).sample
+    %w[Contact Account Opportunity Lead Campaign].sample
   end
 
   sequence(:field_position) { |x| x }

@@ -157,6 +157,7 @@ en-US:
               email_in_use: ^There is another user with the same email.
         custom_field:
           required: ^%{field} is required.
+          minlength: ^%{field} is too short.
           maxlength: ^%{field} is too long.
           endbeforestart: ^%{field} cannot end before it begins.
     attribute_options:

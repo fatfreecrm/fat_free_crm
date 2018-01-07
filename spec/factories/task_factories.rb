@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -11,7 +13,7 @@ FactoryGirl.define do
     completed_by nil
     name                { FFaker::Lorem.sentence[0, 64] }
     priority nil
-    category            { %w(call email follow_up lunch meeting money presentation trip).sample }
+    category            { %w[call email follow_up lunch meeting money presentation trip].sample }
     bucket "due_asap"
     due_at              { FactoryGirl.generate(:time) }
     background_info     { FFaker::Lorem.paragraph[0, 255] }

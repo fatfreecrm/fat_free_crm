@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -19,7 +21,7 @@ class ApplicationController < ActionController::Base
   helper_method :called_from_index_page?, :called_from_landing_page?
   helper_method :klass
 
-  respond_to :html, only: [:index, :show, :auto_complete]
+  respond_to :html, only: %i[index show auto_complete]
   respond_to :js
   respond_to :json, :xml, except: :edit
   respond_to :atom, :csv, :rss, :xls, only: :index
@@ -36,7 +38,7 @@ class ApplicationController < ActionController::Base
     @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
-      @auto_complete = klass.my.text_search(@query).ransack(id_not_in: exclude_ids).result.limit(10)
+      @auto_complete = klass.my(current_user).text_search(@query).ransack(id_not_in: exclude_ids).result.limit(10)
     else
       @auto_complete = @auto_complete.last
     end
@@ -109,7 +111,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def current_user_session
     @current_user_session ||= Authentication.find
-    if @current_user_session && @current_user_session.record.suspended?
+    if @current_user_session&.record&.suspended?
       @current_user_session = nil
     end
     @current_user_session
@@ -118,7 +120,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def current_user
     unless @current_user
-      @current_user = (current_user_session && current_user_session.record)
+      @current_user = (current_user_session&.record)
       if @current_user
         @current_user.set_individual_locale
         @current_user.set_single_access_token
@@ -167,11 +169,11 @@ class ApplicationController < ActionController::Base
 
   #----------------------------------------------------------------------------
   def called_from_index_page?(controller = controller_name)
-    if controller != "tasks"
-      request.referer =~ %r{/#{controller}$}
-    else
-      request.referer =~ /tasks\?*/
-    end
+    request.referer =~ if controller != "tasks"
+                         %r{/#{controller}$}
+                       else
+                         /tasks\?*/
+                       end
   end
 
   #----------------------------------------------------------------------------

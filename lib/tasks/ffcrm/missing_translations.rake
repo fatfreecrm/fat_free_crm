@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -19,14 +21,13 @@ namespace :ffcrm do
                                                   locale_file_names.last
         detector.detect
 
-        if detector.missing_translations?
-          puts
-          puts "Detected missing translations within \"config/locales/#{locale_file_names.last}.yml\":"
-          puts
+        next unless detector.missing_translations?
+        puts
+        puts "Detected missing translations within \"config/locales/#{locale_file_names.last}.yml\":"
+        puts
 
-          detector.missing_translations.each do |missing|
-            puts "#{missing.key_path.join(' => ')}: #{missing.value}"
-          end
+        detector.missing_translations.each do |missing|
+          puts "#{missing.key_path.join(' => ')}: #{missing.value}"
         end
       end
     end

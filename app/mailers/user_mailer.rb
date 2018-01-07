@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -26,7 +28,6 @@ class UserMailer < ActionMailer::Base
   private
 
   def from_address
-    from = (Setting.smtp || {})[:from]
-    !from.blank? ? from : "Fat Free CRM <noreply@fatfreecrm.com>"
+    Setting.dig(:smtp, :from).presence || "Fat Free CRM <noreply@fatfreecrm.com>"
   end
 end

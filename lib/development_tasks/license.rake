@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -22,11 +24,13 @@ namespace :license do
   ],
             js: [
               "app/assets/javascripts/**/*.js",
+              "app/assets/javascripts/**/*.js.erb",
               "app/assets/stylesheets/**/*.sass", # Sass also uses javascript style comments
               "app/assets/stylesheets/**/*.scss"
             ],
             css: [
-              "app/assets/stylesheets/**/*.css"
+              "app/assets/stylesheets/**/*.css",
+              "app/assets/stylesheets/**/*.css.erb"
             ] }
 
   LICENSE_RB = %{# Copyright (c) 2008-2013 Michael Dvorkin and contributors.
@@ -37,12 +41,11 @@ namespace :license do
 }
   LICENSES = { ruby: LICENSE_RB,
                js: LICENSE_RB.gsub(/^#/, "//"),
-               css: LICENSE_RB.gsub(/^# Fat Free/, "/*\n * Fat Free")
-                    .gsub(/^#/, " \*").sub(/---\n/, "---\n */") }
+               css: "/*\n" + LICENSE_RB.gsub(/^#/, ' *').sub(/---\n/, "---\n */\n") }
 
-  REGEXPS  = { ruby: /^# Fat Free CRM\n# Copyright \(C\).*?\n(#.*\n)*#-{10}-*\n*/,
-               js: /^\/\/ Fat Free CRM\n\/\/ Copyright \(C\).*?\n(\/\/.*\n)*\/\/-{10}-*\n*/,
-               css: /^\/\*\n \* Fat Free CRM\n \* Copyright \(C\).*?\n( \*.*\n)* \*-{10}-*\n \*\/\n*/ }
+  REGEXPS  = { ruby: /^# Copyright \(c\).*?\n(?:#.*\n)*?#-{10}-*\n/,
+               js: /^\/\/ Copyright \(c\).*?\n(?:\/\/.*\n)*?\/\/-{10}-*\n/,
+               css: /^\/\*\n \* Copyright \(c\).*?\n(?: \*.*\n)*? \*-{10}-*\n \*\/\n/ }
 
   def expand_globs(globs)
     globs.map { |f| Dir.glob(f) }.flatten.uniq
@@ -52,11 +55,13 @@ namespace :license do
   task :add do
     FILES.each do |lang, globs|
       expand_globs(globs).each do |file|
-        puts "== Adding license to '#{file}'..."
         old_content = File.read(file)
         new_content = LICENSES[lang] + old_content.sub(REGEXPS[lang], '')
 
-        File.open(file, "wb") { |f| f.puts new_content }
+        if new_content != old_content
+          File.open(file, "wb") { |f| f.puts new_content }
+          puts "== Added license to #{file}"
+        end
       end
     end
   end
@@ -69,7 +74,7 @@ namespace :license do
         new_content = old_content.sub(REGEXPS[lang], '')
         if new_content != old_content
           File.open(file, "wb") { |f| f.puts new_content }
-          puts "Removed license from '#{file}'."
+          puts "== Removed license from #{file}"
         end
       end
     end

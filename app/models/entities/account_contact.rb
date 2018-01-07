@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -16,11 +18,11 @@
 #
 
 class AccountContact < ActiveRecord::Base
-  belongs_to :account
+  belongs_to :account, counter_cache: :contacts_count
   belongs_to :contact
 
   has_paper_trail class_name: 'Version', meta: { related: :contact },
-                  ignore: [:id, :created_at, :updated_at, :contact_id]
+                  ignore: %i[id created_at updated_at contact_id]
 
   validates_presence_of :account_id
 

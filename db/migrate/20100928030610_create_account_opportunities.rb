@@ -1,4 +1,6 @@
-class CreateAccountOpportunities < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateAccountOpportunities < ActiveRecord::Migration[4.2]
   def self.up
     create_table :account_opportunities, force: true do |t|
       t.references :account

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -51,7 +53,7 @@ describe CampaignsController do
       get :index
       # Note: can't compare campaigns directly because of BigDecimal objects.
       expect(assigns[:campaigns].size).to eq(2)
-      expect(assigns[:campaigns].map(&:status).sort).to eq(%w(planned started))
+      expect(assigns[:campaigns].map(&:status).sort).to eq(%w[planned started])
     end
 
     it "should perform lookup using query string" do
@@ -371,7 +373,7 @@ describe CampaignsController do
         he  = FactoryGirl.create(:user, id: 7)
         she = FactoryGirl.create(:user, id: 8)
 
-        put :update, params: { id: 42, campaign: { name: "Hello", access: "Shared", user_ids: %w(7 8) } }, xhr: true
+        put :update, params: { id: 42, campaign: { name: "Hello", access: "Shared", user_ids: %w[7 8] } }, xhr: true
         expect(assigns[:campaign].access).to eq("Shared")
         expect(assigns[:campaign].user_ids.sort).to eq([he.id, she.id])
       end

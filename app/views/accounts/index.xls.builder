@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 xml.Worksheet 'ss:Name' => I18n.t(:tab_accounts) do
   xml.Table do
     unless @accounts.empty?
@@ -74,7 +76,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_accounts) do
           data.each do |value|
             xml.Cell do
               xml.Data value,
-                       'ss:Type' => "#{value.respond_to?(:abs) ? 'Number' : 'String'}"
+                       'ss:Type' => (value.respond_to?(:abs) ? 'Number' : 'String').to_s
             end
           end
         end

@@ -1,8 +1,15 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2008-2013 Michael Dvorkin and contributors.
+#
+# Fat Free CRM is freely distributable under the terms of MIT license.
+# See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
+#------------------------------------------------------------------------------
 require 'spec_helper'
 require 'cancan/matchers'
 
 def all_actions
-  [:index, :show, :create, :update, :destroy, :manage]
+  %i[index show create update destroy manage]
 end
 
 describe "User abilities" do
@@ -27,7 +34,7 @@ describe "User abilities" do
   context "when another user, I" do
     let(:user)  { create :user }
     let(:can)    { [] }
-    let(:cannot) { [:show, :create, :update, :index, :destroy, :manage] }
+    let(:cannot) { %i[show create update index destroy manage] }
     it do
       can.each do |do_action|
         is_expected.to be_able_to(do_action, subject_user)
@@ -43,7 +50,7 @@ describe "User abilities" do
   context "when anonymous user, I" do
     let(:user)  { nil }
     let(:can)    { [] }
-    let(:cannot) { [:show, :create, :update, :index, :destroy, :manage] }
+    let(:cannot) { %i[show create update index destroy manage] }
     it do
       can.each do |do_action|
         is_expected.to be_able_to(do_action, subject_user)

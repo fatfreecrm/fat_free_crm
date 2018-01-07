@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -75,11 +77,11 @@ class Opportunity < ActiveRecord::Base
   exportable
   sortable by: ["name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
-  has_ransackable_associations %w(account contacts tags campaign activities emails comments)
+  has_ransackable_associations %w[account contacts tags campaign activities emails comments]
   ransack_can_autocomplete
 
   validates_presence_of :name, message: :missing_opportunity_name
-  validates_numericality_of [:probability, :amount, :discount], allow_nil: true
+  validates_numericality_of %i[probability amount discount], allow_nil: true
   validate :users_for_shared_access
   validates :stage, inclusion: { in: proc { Setting.unroll(:opportunity_stage).map { |s| s.last.to_s } } }, allow_blank: true
 
@@ -170,7 +172,7 @@ class Opportunity < ActiveRecord::Base
   # Make sure at least one user has been selected if the contact is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, :share_opportunity) if self[:access] == "Shared" && !permissions.any?
+    errors.add(:access, :share_opportunity) if self[:access] == "Shared" && permissions.none?
   end
 
   #----------------------------------------------------------------------------

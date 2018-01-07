@@ -156,6 +156,7 @@ es:
               email_in_use: ^Ya existe otro usuario con el mismo email.
         custom_field:
           required: ^%{field} no puede ser vacio.
+          minlength: ^%{field} es demasiado corto.
           maxlength: ^%{field} es demasiado largo.
           endbeforestart: ^%{field} no puede terminar antes de empezar.
     attribute_options:
@@ -266,7 +267,7 @@ es:
   gravatar_help: ¿No conoces Gravatars? más sobre Gravatars
   image_file: Archivo de imagen
   image_help: El archivo de image subido se redimensionara automaticamente a 75 x 75 pixeles.
-    Los formatos soportados son GIF, JPG and PNG. 
+    Los formatos soportados son GIF, JPG and PNG.
   job_title: Titulo
   last_name: Apellido
   login_now_link: ¡Inicia Sesión Ahora!
@@ -360,7 +361,7 @@ es:
   no_start_date: no ha especificado fecha de inicio
   number_of_leads: Numero de iniciativas
   objectives: Objetivos
-  objectives_help: Porfavor, especifica el número esperado de iniciativas, se espera el ratio de conversión de 
+  objectives_help: Porfavor, especifica el número esperado de iniciativas, se espera el ratio de conversión de
     iniciativas a oportunidades, el ingreso esperado y el presupuesto de campaña. Estos numeros le permitirán el seguimiento
     real de la campaña.
   objectives_small: campañas esperadas
@@ -424,12 +425,12 @@ es:
   convert: Convertir
   convert_lead: Convertir Iniciativa
   convert_lead_permissions_intro: Los permisos de usuario se copiaran de la iniciativa cuando esta se convierta. Puede cambiar los permisos despues.
-  convert_lead_text: Convertir la iniciativa %{value} se convertira al contacto asociado en un usuario existente 
+  convert_lead_text: Convertir la iniciativa %{value} se convertira al contacto asociado en un usuario existente
     o en una nueva cuenta. El estado de la iniciativa cambiara automáticamente a convertido.
   create_lead: Crear Iniciativa
-  create_opp_for_contact: Opcionalmente, puedes crear una oportunidad para el contacto %{value} 
-    especificando el nombre, la etapa actual, la fecha estimada de cierre, la probabilidad de venta, la 
-    cantidad del acuerdo, y el descuento ofertado.  
+  create_opp_for_contact: Opcionalmente, puedes crear una oportunidad para el contacto %{value}
+    especificando el nombre, la etapa actual, la fecha estimada de cierre, la probabilidad de venta, la
+    cantidad del acuerdo, y el descuento ofertado.
   lead: Iniciativa
   lead_info_small: contacto de iniciativa
   lead_permissions_intro_private: Por defecto los permisos se copiaran de la campaña o cambiado a privado. Puede cambiar los permisos despues.
@@ -672,15 +673,15 @@ es:
 
   # Views -> Passwords.
   #----------------------------------------------------------------------------
-  confirm_password_intro: Porfavor, escribe tu nueva contraseña y confirmala. 
-  password_intro: Porfavor, facilitanos tu email y te mandaremos las instrucciones de recuperación de contraseña. 
+  confirm_password_intro: Porfavor, escribe tu nueva contraseña y confirmala.
+  password_intro: Porfavor, facilitanos tu email y te mandaremos las instrucciones de recuperación de contraseña.
   reset_password: Recuperar Contraseña
   update_password_and_login: Actualizar Contraseña e Iniciar Sesión
 
   # Views -> Admin
   #----------------------------------------------------------------------------
   back_to_crm: Volver a Fat Free CRM
-  crm_admin_page: Administración de Fat Free CRM 
+  crm_admin_page: Administración de Fat Free CRM
 
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
@@ -693,7 +694,7 @@ es:
 
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
-  confirm_group_delete: ¿Está seguro de que desea eliminar este grupo? Hay %{count} elementos que aún lo referencian 
+  confirm_group_delete: ¿Está seguro de que desea eliminar este grupo? Hay %{count} elementos que aún lo referencian
   approve: Aprobar
   create_user: Crear Usuario
   last_logged_in: Último Inicio de Sesión el %{value}
@@ -831,14 +832,14 @@ es:
   msg_cant_delete_field_group: El grupo de campo no se ha podido eliminar.
   admin_fields_info: ! 'Los campos personalizados se muestran en grupos.
     Crea un nurevo grupo de campos, o añade campos a uno de los campos existentes.
-    Puedes arrastrar campos para cambiar el orden en el que se muestran 
-    o moverlos entre grupos de campos.' 
-  
+    Puedes arrastrar campos para cambiar el orden en el que se muestran
+    o moverlos entre grupos de campos.'
+
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'Es altamente recomendable reiniciar tu servidor despues de añadir o 
+  admin_fields_info2: ! 'Es altamente recomendable reiniciar tu servidor despues de añadir o
     borrar algún campo personalizados.'
-  
+
 
   tags: Etiquetas
   tag_small: etiqueta
@@ -850,7 +851,7 @@ es:
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: Si esta etiqueta se borra, se borraran todos los registros de %{value}
-  msg_cant_delete_tag: No puede eliminarse '%{value}' ya que esta asociado a un Grupo de Campos. 
+  msg_cant_delete_tag: No puede eliminarse '%{value}' ya que esta asociado a un Grupo de Campos.
   views:
     admin:
       plugins:

@@ -1,4 +1,6 @@
-class CreateSettings < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateSettings < ActiveRecord::Migration[4.2]
   def self.up
     create_table :settings, force: true do |t|
       t.string :name, limit: 32, null: false, default: ""

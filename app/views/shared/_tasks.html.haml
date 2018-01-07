@@ -1,4 +1,4 @@
-- asset ||= instance_variable_get("@" << controller.controller_name.singularize)
+- asset ||= instance_variable_get("@" + controller.controller_name.singularize)
 - asset.tasks.each do |task|
   - if task.completed_at?
     = render "tasks/completed", :completed => task, :bucket => nil

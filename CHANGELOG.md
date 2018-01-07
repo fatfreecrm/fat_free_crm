@@ -4,12 +4,41 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased (0.15.0-beta.3)
+Unreleased (0.17.0)
+---------------------------------------------------------------------
+ - #655 Upgrade rubocop
+ - #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
+ - #658 Upgrade Bootsnap gem, fixing an issue with windows
+
+Sat Jan 6, 2018 (0.16.1)
+---------------------------------------------------------------------
+- #653 Fix regression with emails
+
+Fri Jan 5, 2018 (0.16.0)
+---------------------------------------------------------------------
+- #633 Upgrade to rails 5.1.0
+- #641 Swap default server from thin/unicorn to puma
+- #631 Clean up locale files
+- #612 DEPRECATION WARNING: #table_exists? currently checks both tables and views
+
+Thu Dec 14, 2017 (0.15.0)
 ---------------------------------------------------------------------
 This release upgrades to rails 5.0.0
- - Fixes #500 - Upgrade rails
- - Fixes #554 - Upgrade authlogic
- - A variety of other minor gem upgrades
+ - #500 - Upgrade rails
+ - #554 - Upgrade authlogic
+ - #614 - Rails5 warnings
+ - #643 Use FixtureSet instead of Fixtures module 
+ - #642 Cleanup: Use Ruby style guide syntax for arrays
+ - #640 Speed up builds with Bootsnap
+ - #639 Code cleanup: Remove block-end comments (extracted from Rubocop PR) 
+ - #637 Replace render :text with render :plain (Rails 5.1 prep) 
+ - #636 Upgrade Migrations (preparation for Rails 5.1) 
+ - #635 Fix alias_method_chain via @johnnyshields 
+ - #632 Fix Travis CI chrome runs; Travis now requiring Chrome as an addon 
+ - #628 Security Update on 2017-11-29 
+ - #626 Use headless Chrome browser for feature testing 
+ - #623 Fix license Rake task 
+ - #617 Bundle Update on 2017-07-19 
 
 Thu Feb 23, 2017 (0.15.0-beta.2)
 ---------------------------------------------------------------------

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -52,7 +54,7 @@ class Contact < ActiveRecord::Base
 
   delegate :campaign, to: :lead, allow_nil: true
 
-  has_ransackable_associations %w(account opportunities tags activities emails addresses comments tasks)
+  has_ransackable_associations %w[account opportunities tags activities emails addresses comments tasks]
   ransack_can_autocomplete
 
   serialize :subscribed_users, Set
@@ -114,7 +116,7 @@ class Contact < ActiveRecord::Base
       "#{last_name}, #{first_name}"
     end
   end
-  alias_method :name, :full_name
+  alias name full_name
 
   # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------
@@ -162,7 +164,7 @@ class Contact < ActiveRecord::Base
       assigned_to: params[:account][:assigned_to],
       access:      params[:access]
     }
-    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info).each do |name|
+    %w[first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info].each do |name|
       attributes[name] = model.send(name.intern)
     end
 
@@ -198,18 +200,18 @@ class Contact < ActiveRecord::Base
   # Make sure at least one user has been selected if the contact is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, :share_contact) if self[:access] == "Shared" && !permissions.any?
+    errors.add(:access, :share_contact) if self[:access] == "Shared" && permissions.none?
   end
 
   # Handles the saving of related accounts
   #----------------------------------------------------------------------------
   def save_account(params)
     account_params = params[:account]
-    if !account_params || account_params[:id] == "" || account_params[:name] == ""
-      self.account = nil
-    else
-      self.account = Account.create_or_select_for(self, account_params)
-    end
+    self.account = if !account_params || account_params[:id] == "" || account_params[:name] == ""
+                     nil
+                   else
+                     Account.create_or_select_for(self, account_params)
+                   end
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_contact, self)

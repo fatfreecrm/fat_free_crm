@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -21,7 +23,7 @@ def login(user_stubs = {}, session_stubs = {})
   allow(Authentication).to receive(:find).and_return(@current_user_session)
   # set_timezone
 end
-alias :require_user :login
+alias require_user login
 
 #----------------------------------------------------------------------------
 def login_and_assign(user_stubs = {}, session_stubs = {})
@@ -43,7 +45,7 @@ def logout
   @current_user_session = nil
   allow(Authentication).to receive(:find).and_return(nil)
 end
-alias :require_no_user :logout
+alias require_no_user logout
 
 #----------------------------------------------------------------------------
 def current_user

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -11,7 +13,7 @@ describe EntityObserver do
     allow(PaperTrail).to receive(:whodunnit).and_return(assigner)
   end
 
-  [:account, :contact, :lead, :opportunity].each do |entity_type|
+  %i[account contact lead opportunity].each do |entity_type|
     describe "on creation of #{entity_type}" do
       let(:assignee) { FactoryGirl.create(:user) }
       let(:assigner) { FactoryGirl.create(:user) }

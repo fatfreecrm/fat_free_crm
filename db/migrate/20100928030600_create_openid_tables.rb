@@ -1,4 +1,6 @@
-class CreateOpenidTables < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateOpenidTables < ActiveRecord::Migration[4.2]
   def self.up
     create_table :open_id_authentication_associations, force: true do |t|
       t.integer :issued

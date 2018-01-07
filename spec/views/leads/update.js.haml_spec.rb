@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -75,7 +77,7 @@ describe "/leads/update" do
         expect(rendered).to have_text("Recent Items")
       end
     end
-  end # no errors
+  end
 
   describe "validation errors :" do
     before do
@@ -120,5 +122,5 @@ describe "/leads/update" do
         expect(rendered).to include('focus()')
       end
     end
-  end # errors
+  end
 end

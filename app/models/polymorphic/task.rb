@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -29,7 +31,7 @@ class Task < ActiveRecord::Base
   include ActiveModel::Serializers::Xml
 
   attr_accessor :calendar
-  ALLOWED_VIEWS = %w(pending assigned completed)
+  ALLOWED_VIEWS = %w[pending assigned completed]
 
   belongs_to :user
   belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
@@ -112,7 +114,7 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :user
   validates_presence_of :name, message: :missing_task_name
-  validates_presence_of :calendar, if: "self.bucket == 'specific_time' && !self.completed_at"
+  validates_presence_of :calendar, if: -> { bucket == 'specific_time' && !completed_at }
   validate :specific_time, unless: :completed?
 
   before_create :set_due_date
@@ -153,16 +155,15 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def computed_bucket
     return bucket if bucket != "specific_time"
-    case
-    when overdue?
+    if overdue?
       "overdue"
-    when due_today?
+    elsif due_today?
       "due_today"
-    when due_tomorrow?
+    elsif due_tomorrow?
       "due_tomorrow"
-    when due_this_week? && !due_today? && !due_tomorrow?
+    elsif due_this_week? && !due_today? && !due_tomorrow?
       "due_this_week"
-    when due_next_week?
+    elsif due_next_week?
       "due_next_week"
     else
       "due_later"
@@ -209,20 +210,20 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def set_due_date
     self.due_at = case bucket
-    when "overdue"
-      due_at || Time.zone.now.midnight.yesterday
-    when "due_today"
-      Time.zone.now.midnight
-    when "due_tomorrow"
-      Time.zone.now.midnight.tomorrow
-    when "due_this_week"
-      Time.zone.now.end_of_week
-    when "due_next_week"
-      Time.zone.now.next_week.end_of_week
-    when "due_later"
-      Time.zone.now.midnight + 100.years
-    when "specific_time"
-      calendar ? parse_calendar_date : nil
+                  when "overdue"
+                    due_at || Time.zone.now.midnight.yesterday
+                  when "due_today"
+                    Time.zone.now.midnight
+                  when "due_tomorrow"
+                    Time.zone.now.midnight.tomorrow
+                  when "due_this_week"
+                    Time.zone.now.end_of_week
+                  when "due_next_week"
+                    Time.zone.now.next_week.end_of_week
+                  when "due_later"
+                    Time.zone.now.midnight + 100.years
+                  when "specific_time"
+                    calendar ? parse_calendar_date : nil
     end
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -50,7 +52,7 @@ FactoryGirl.define do
     zipcode             { FFaker::AddressUS.zip_code }
     country             { FFaker::AddressUK.country }
     full_address        { FactoryGirl.generate(:address) }
-    address_type        { %w(Business Billing Shipping).sample }
+    address_type        { %w[Business Billing Shipping].sample }
     updated_at          { FactoryGirl.generate(:time) }
     created_at          { FactoryGirl.generate(:time) }
     deleted_at nil

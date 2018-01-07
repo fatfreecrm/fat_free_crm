@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -81,13 +83,27 @@ class Setting < ActiveRecord::Base
       send(setting).map { |key| [key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym] }
     end
 
+    # Retrieves the value object corresponding to the each key objects repeatedly.
+    # Equivalent to the #dig method on a Hash.
+    #-------------------------------------------------------------------
+    def dig(key, *rest)
+      value = self[key]
+      if value.nil? || rest.empty?
+        value
+      elsif value.respond_to?(:dig)
+        value.dig(*rest)
+      else
+        raise TypeError, "#{value.class} does not have #dig method"
+      end
+    end
+
     def database_and_table_exists?
       # Returns false if table or database is unavailable.
       # Catches all database-related errors, so that Setting will return nil
       # instead of crashing the entire application.
 
       table_exists?
-    rescue
+    rescue StandardError
       false
     end
 

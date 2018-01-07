@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -16,14 +18,14 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def tabless_layout?
-    %w(authentications passwords).include?(controller.controller_name) ||
-      ((controller.controller_name == "users") && %w(create new).include?(controller.action_name))
+    %w[authentications passwords].include?(controller.controller_name) ||
+      ((controller.controller_name == "users") && %w[create new].include?(controller.action_name))
   end
 
   # Show existing flash or embed hidden paragraph ready for flash[:notice]
   #----------------------------------------------------------------------------
   def show_flash(options = { sticky: false })
-    [:error, :warning, :info, :notice].each do |type|
+    %i[error warning info notice].each do |type|
       if flash[type]
         html = content_tag(:div, h(flash[type]), id: "flash")
         flash[type] = nil
@@ -77,7 +79,7 @@ module ApplicationHelper
   def rating_select(name, options = {})
     stars = Hash[(1..5).map { |star| [star, "&#9733;" * star] }].sort
     options_for_select = %(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
-    options_for_select << stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
+    options_for_select += stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
     select_tag name, options_for_select.html_safe, options
   end
 
@@ -108,7 +110,7 @@ module ApplicationHelper
     link_to(t(:edit),
             options[:url] || polymorphic_url(record, action: :edit),
             remote:  true,
-            onclick: "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{h name}');".html_safe
+            onclick: "this.href = this.href.split('?')[0] + '?previous='+encodeURI(crm.find_form('edit_#{j name}'));".html_safe
     )
   end
 
@@ -159,8 +161,9 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_email(email, length = nil, &_block)
     name = (length ? truncate(email, length: length) : email)
-    if Setting.email_dropbox && Setting.email_dropbox[:address].present?
-      mailto = "#{email}?bcc=#{Setting.email_dropbox[:address]}"
+    bcc = Setting&.email_dropbox
+    if bcc && bcc[:address].present?
+      mailto = "#{email}?bcc=#{bcc[:address]}"
     else
       mailto = email
     end
@@ -175,7 +178,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def jumpbox(current)
-    tabs = [:campaigns, :accounts, :leads, :contacts, :opportunities]
+    tabs = %i[campaigns accounts leads contacts opportunities]
     current = tabs.first unless tabs.include?(current)
     tabs.map do |tab|
       link_to_function(t("tab_#{tab}"), "crm.jumper('#{tab}')", "html-data" => tab, class: (tab == current ? 'selected' : ''))
@@ -225,7 +228,7 @@ module ApplicationHelper
     yes = link_to(t(:yes_button), params[:url] || model, method: :delete)
     no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
     text = "$('#confirm').html( $('#menu').html() );\n"
-    text << "$('#menu').html('#{question} #{yes} : #{no}');"
+    text += "$('#menu').html('#{question} #{yes} : #{no}');"
     text.html_safe
   end
 
@@ -244,21 +247,21 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil, shake = nil)
     text = ""
-    text << "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
-    text << "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
+    text += "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
+    text += "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
     text.html_safe
   end
 
   # Display web presence mini-icons for Contact or Lead.
   #----------------------------------------------------------------------------
   def web_presence_icons(person)
-    [:blog, :linkedin, :facebook, :twitter, :skype].map do |site|
+    %i[blog linkedin facebook twitter skype].map do |site|
       url = person.send(site)
       unless url.blank?
         if site == :skype
-          url = "callto:" << url
+          url = "callto:" + url
         else
-          url = "http://" << url unless url =~ /^https?:\/\//
+          url = "http://" + url unless url =~ /^https?:\/\//
         end
         link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
       end
@@ -273,10 +276,10 @@ module ApplicationHelper
       value = value.last
     end
     %{
-      if ($('##{option}').html() != '#{value}') {
-        $('##{option}').html('#{value}');
+      if ($('##{option}').html() != '#{j value}') {
+        $('##{option}').html('#{j value}');
         $('#loading').show();
-        $.post('#{url}', {#{option}: '#{param || value}'}, function () {
+        $.post('#{url}', {#{option}: '#{j(param || value)}'}, function () {
           $('#loading').hide();
         });
       }
@@ -286,10 +289,10 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def options_menu_item(option, key, url = send("redraw_#{controller.controller_name}_path"))
     name = t("option_#{key}")
-    "{ name: \"#{name.titleize}\", on_select: function() {" +
+    "{ name: \"#{j name.titleize}\", on_select: function() {" +
       %{
-        if ($('##{option}').html() != '#{name}') {
-          $('##{option}').html('#{name}');
+        if ($('##{option}').html() != '#{j name}') {
+          $('##{option}').html('#{j name}');
           $('#loading').show();
           $.get('#{url}', {#{option}: '#{key}', query: $('#query').val()}, function () {
             $('#loading').hide();
@@ -324,9 +327,9 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def get_default_permissions_intro(access, text)
     case access
-      when "Private" then t(:permissions_intro_private, text)
-      when "Public"  then t(:permissions_intro_public,  text)
-      when "Shared"  then t(:permissions_intro_shared,  text)
+    when "Private" then t(:permissions_intro_private, text)
+    when "Public"  then t(:permissions_intro_public,  text)
+    when "Shared"  then t(:permissions_intro_shared,  text)
     end
   end
 
@@ -368,15 +371,15 @@ module ApplicationHelper
     url_params[:view] = @view unless @view.blank? # tasks
     url_params[:id] = params[:id] unless params[:id].blank?
 
-    exports = %w(xls csv).map do |format|
+    exports = %w[xls csv].map do |format|
       link_to(format.upcase, url_params.merge(format: format), title: I18n.t(:"to_#{format}")) unless action.to_s == "show"
     end
 
-    feeds = %w(rss atom).map do |format|
+    feeds = %w[rss atom].map do |format|
       link_to(format.upcase, url_params.merge(format: format, authentication_credentials: token), title: I18n.t(:"to_#{format}"))
     end
 
-    links = %w(perm).map do |format|
+    links = ['perm'].map do |format|
       link_to(format.upcase, url_params, title: I18n.t(:"to_#{format}"))
     end
 
@@ -505,19 +508,19 @@ module ApplicationHelper
   # Translate List name to FontAwesome icon text
   def get_icon(name)
     case name
-      when "tasks" then "fa-check-square-o"
-      when "campaigns" then "fa-bar-chart-o"
-      when "leads" then "fa-tasks"
-      when "accounts" then "fa-users"
-      when "contacts" then "fa-user"
-      when "opportunities" then "fa-money"
-      when "team" then "fa-globe"
+    when "tasks" then "fa-check-square-o"
+    when "campaigns" then "fa-bar-chart-o"
+    when "leads" then "fa-tasks"
+    when "accounts" then "fa-users"
+    when "contacts" then "fa-user"
+    when "opportunities" then "fa-money"
+    when "team" then "fa-globe"
     end
   end
 
   #----------------------------------------------------------------------------
   # Ajaxification FTW!
-  # e.g. collection = Opportunity.my.scope
+  # e.g. collection = Opportunity.my(current_user).scope
   #         options = { renderer: {...} , params: {...}
   def paginate(options = {})
     collection = options.delete(:collection)

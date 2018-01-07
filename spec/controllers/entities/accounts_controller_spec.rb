@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -38,7 +40,7 @@ describe AccountsController do
     end
 
     it "should filter out accounts by category" do
-      categories = %w(customer vendor)
+      categories = %w[customer vendor]
       controller.session[:accounts_filter] = categories.join(',')
       @accounts = [
         FactoryGirl.create(:account, user: current_user, category: categories.first),

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -8,7 +10,7 @@ require 'fat_free_crm/mail_processor/base'
 module FatFreeCRM
   module MailProcessor
     class Dropbox < Base
-      KEYWORDS = %w(account campaign contact lead opportunity).freeze
+      KEYWORDS = %w[account campaign contact lead opportunity].freeze
 
       #--------------------------------------------------------------------------------------
       def initialize

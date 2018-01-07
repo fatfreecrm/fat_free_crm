@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -21,24 +23,24 @@ describe TasksController do
         hash[due] ||= []
       end
       hash[due] << case view
-      when "pending"
-        FactoryGirl.create(:task, user: user, bucket: due.to_s)
-      when "assigned"
-        FactoryGirl.create(:task, user: user, bucket: due.to_s, assigned_to: 1)
-      when "completed"
-        completed_at = case due
-          when :completed_today
-            Date.yesterday + 1.day
-          when :completed_yesterday
-            Date.yesterday
-          when :completed_last_week
-            Date.today.beginning_of_week - 7.days
-          when :completed_this_month
-            Date.today.beginning_of_month
-          when :completed_last_month
-            Date.today.beginning_of_month - 1.day
-        end
-        FactoryGirl.create(:task, user: user, bucket: due.to_s, completed_at: completed_at)
+                   when "pending"
+                     FactoryGirl.create(:task, user: user, bucket: due.to_s)
+                   when "assigned"
+                     FactoryGirl.create(:task, user: user, bucket: due.to_s, assigned_to: 1)
+                   when "completed"
+                     completed_at = case due
+                                    when :completed_today
+                                      Date.yesterday + 1.day
+                                    when :completed_yesterday
+                                      Date.yesterday
+                                    when :completed_last_week
+                                      Date.today.beginning_of_week - 7.days
+                                    when :completed_this_month
+                                      Date.today.beginning_of_month
+                                    when :completed_last_month
+                                      Date.today.beginning_of_month - 1.day
+                     end
+                     FactoryGirl.create(:task, user: user, bucket: due.to_s, completed_at: completed_at)
       end
       hash
     end
@@ -83,7 +85,7 @@ describe TasksController do
         expect(assigns[:tasks].values.flatten - @tasks.values.flatten).to eq([])
         hash = ActiveSupport::JSON.decode(response.body)
 
-        hash.keys.each do |key|
+        hash.each_key do |key|
           hash[key].each do |attr|
             task = Task.new(attr["task"])
             expect(task).to be_instance_of(Task)
@@ -99,7 +101,7 @@ describe TasksController do
         expect(assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).to eq([])
         expect(assigns[:tasks].values.flatten - @tasks.values.flatten).to eq([])
         hash = Hash.from_xml(response.body)
-        hash["hash"].keys.each do |key|
+        hash["hash"].each_key do |key|
           hash["hash"][key].each do |attr|
             task = Task.new(attr)
             expect(task).to be_instance_of(Task)

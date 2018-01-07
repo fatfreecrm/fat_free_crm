@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -28,7 +30,7 @@ describe "/users/change_password" do
       expect(rendered).to include("#flash")
       expect(rendered).to include("crm.flash('notice')")
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     it "should redraw the [Change Password] form and shake it" do
@@ -46,5 +48,5 @@ describe "/users/change_password" do
 
       expect(rendered).to include("$('#user_password').focus();")
     end
-  end # errors
+  end
 end

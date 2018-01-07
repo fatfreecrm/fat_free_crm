@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # Uncomment the database that you have configured in config/database.yml
@@ -38,7 +40,7 @@ remove 'fat_free_crm'
 group :development do
   # don't load these gems in travis
   unless ENV["CI"]
-    gem 'thin'
+    gem 'puma'
     gem 'capistrano'
     gem 'capistrano-bundler'
     gem 'capistrano-rails'
@@ -60,7 +62,7 @@ group :development, :test do
   gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
   gem 'factory_girl_rails', '~> 4.7.0' # 4.8.0+ stubbed models are not allowed to access the database - User#destroyed?()
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.52.0' # Pinned because upgrades require regenerating rubocop_todo.yml
   gem 'rainbow'
 end
 
@@ -69,13 +71,12 @@ group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'database_cleaner'
-  gem "acts_as_fu"
-  gem 'zeus' unless ENV["CI"]
+  gem 'acts_as_fu'
+  gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
 end
 
 group :heroku do
-  gem 'unicorn', platform: :ruby
   gem 'rails_12factor'
 end
 
@@ -84,5 +85,7 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer', platform: :ruby unless ENV["CI"]
-gem 'nokogiri', '>= 1.6.8'
+gem 'nokogiri', '>= 1.8.1'
 gem 'activemodel-serializers-xml'
+gem 'bootsnap', require: false
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

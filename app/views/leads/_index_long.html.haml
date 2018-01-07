@@ -55,7 +55,7 @@
           |
       = t(:added_ago, value: timeago(lead.created_at)).html_safe
 
-    - if lead.tag_list.present?
+    - if lead.tags.present?
       %dt
         .tags= tags_for_index(lead)
 

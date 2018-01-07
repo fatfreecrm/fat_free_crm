@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -11,7 +13,7 @@ class EntityObserver < ActiveRecord::Observer
   end
 
   def after_update(item)
-    if item.assigned_to_changed? && item.assignee != current_user
+    if item.saved_change_to_assigned_to? && item.assignee != current_user
       send_notification_to_assignee(item)
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -9,7 +11,7 @@ FactoryGirl.define do
     name                { FFaker::Lorem.sentence[0, 64] }
     assigned_to nil
     access "Public"
-    status              { %w(planned started completed planned started completed on_hold called_off).sample }
+    status              { %w[planned started completed planned started completed on_hold called_off].sample }
     budget              { rand(500) }
     target_leads        { rand(200) }
     target_conversion   { rand(20) }

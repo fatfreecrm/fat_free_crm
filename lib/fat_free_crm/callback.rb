@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -98,7 +100,7 @@ module FatFreeCRM
           add_view_hook(hook, proc { "" }, :replace)
         end
       end
-    end # class Base
+    end
 
     # This makes it possible to call hook() without FatFreeCRM::Callback prefix.
     # Returns stringified data when called from within templates, and the actual
@@ -137,9 +139,9 @@ module FatFreeCRM
           FatFreeCRM::Callback.hook(method, caller, context)
         end
       end
-    end # module Helper
-  end # module Callback
-end # module FatFreeCRM
+    end
+  end
+end
 
 ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
 ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)

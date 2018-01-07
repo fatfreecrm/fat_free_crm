@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-
 class SubscriptionMailer < ActionMailer::Base
   def comment_notification(user, comment)
     @entity = comment.commentable
@@ -13,18 +14,23 @@ class SubscriptionMailer < ActionMailer::Base
     @comment = comment
     @user = comment.user
 
-    if (reply_to = Setting.email_comment_replies[:address]).blank?
-      email_host = Setting.host.present? ? Setting.host : 'example.com'
-      reply_to = "no-reply@#{email_host}"
-    end
-
     # If entity has tags, join them and wrap in parantheses
     subject = "RE: [#{@entity_type.downcase}:#{@entity.id}] #{@entity_name}"
-    subject << " (#{@entity.tag_list.join(', ')})" if @entity.tag_list.any?
+    subject += " (#{@entity.tags.join(', ')})" if @entity.tags.any?
 
     mail subject: subject,
          to: user.email,
-         from: "#{@user.full_name} <#{reply_to}>",
+         from: from_address(@user),
          date: Time.now
+  end
+
+  private
+
+  def from_address(user = nil)
+    address = Setting.dig(:email_comment_replies, :address).presence ||
+              Setting.dig(:smtp, :from).presence ||
+              "noreply@fatfreecrm.com"
+    address = "#{user.full_name} <#{address}>" if user && !address.match(/<.+>\z/)
+    address
   end
 end

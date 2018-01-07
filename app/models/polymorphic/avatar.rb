@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -36,7 +38,7 @@ class Avatar < ActiveRecord::Base
   end
   has_attached_file :image, styles: STYLES.dup, url: "/avatars/:entity_type/:id/:style_:filename", default_url: "/assets/avatar.jpg"
   validates_attachment :image, presence: true,
-                               content_type: { content_type: %w(image/jpeg image/jpg image/png image/gif) }
+                               content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] }
 
   # Convert STYLE symbols to 'w x h' format for Gravatar and Rails
   # e.g. Avatar.size_from_style(:size => :large) -> '75x75'
@@ -44,7 +46,7 @@ class Avatar < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.size_from_style!(options)
     if options[:width] && options[:height]
-      options[:size] = [:width, :height].map { |d| options[d] }.join("x")
+      options[:size] = %i[width height].map { |d| options[d] }.join("x")
       options.delete(:width)
       options.delete(:height)
     elsif Avatar::STYLES.keys.include?(options[:size])

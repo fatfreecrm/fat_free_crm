@@ -1,4 +1,6 @@
-class CreateTasks < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateTasks < ActiveRecord::Migration[4.2]
   def self.up
     create_table :tasks, force: true do |t|
       t.string :uuid, limit: 36
@@ -16,7 +18,7 @@ class CreateTasks < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :tasks, [:user_id, :name, :deleted_at], unique: true
+    add_index :tasks, %i[user_id name deleted_at], unique: true
     add_index :tasks, :assigned_to
   end
 

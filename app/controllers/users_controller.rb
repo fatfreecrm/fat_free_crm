@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class UsersController < ApplicationController
-  before_action :set_current_tab, only: [:show, :opportunities_overview] # Don't hightlight any tabs.
+  before_action :set_current_tab, only: %i[show opportunities_overview] # Don't hightlight any tabs.
 
   check_authorization
   load_and_authorize_resource # handles all security
 
-  respond_to :html, only: [:show, :new]
+  respond_to :html, only: %i[show new]
 
   # GET /users/1
   # GET /users/1.js
@@ -128,7 +130,7 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def opportunities_overview
     @users_with_opportunities = User.have_assigned_opportunities.order(:first_name)
-    @unassigned_opportunities = Opportunity.my.unassigned.pipeline.order(:stage)
+    @unassigned_opportunities = Opportunity.my(current_user).unassigned.pipeline.order(:stage).includes(:account, :user, :tags)
   end
 
   protected

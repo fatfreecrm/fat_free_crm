@@ -1,4 +1,6 @@
-class CreateLeads < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateLeads < ActiveRecord::Migration[4.2]
   def self.up
     create_table :leads, force: true do |t|
       t.string :uuid,   limit: 36
@@ -28,7 +30,7 @@ class CreateLeads < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :leads, [:user_id, :last_name, :deleted_at], unique: true
+    add_index :leads, %i[user_id last_name deleted_at], unique: true
     add_index :leads, :assigned_to
   end
 

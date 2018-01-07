@@ -1,4 +1,6 @@
-class CreateAvatars < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateAvatars < ActiveRecord::Migration[4.2]
   def self.up
     create_table :avatars do |t|
       t.references :user                         # Who uploaded the avatar.

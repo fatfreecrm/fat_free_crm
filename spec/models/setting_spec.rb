@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -50,5 +52,26 @@ describe Setting do
     Setting[:hello] = false
     expect(Setting[:hello]).to eq(false)
     expect(Setting.hello).to eq(false)
+  end
+
+  describe "#dig" do
+    it "should dig into nested hashes" do
+      Setting[:hello] = { foo: { bar: 3 } }
+      expect(Setting.dig(:hello, :foo, :bar)).to eq(3)
+    end
+
+    it "should dig into nested arrays" do
+      Setting[:hello] = [1, [2, 3]]
+      expect(Setting.dig(:hello, 1, 1)).to eq(3)
+    end
+
+    it "should return nil if nil" do
+      expect(Setting.dig(:foo, :bar)).to eq(nil)
+    end
+
+    it "should return nil if nil" do
+      Setting[:hello] = "world"
+      expect { Setting.dig(:hello, :foo) }.to raise_error(TypeError)
+    end
   end
 end

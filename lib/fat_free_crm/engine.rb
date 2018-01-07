@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -8,8 +10,8 @@ module FatFreeCRM
     config.autoload_paths += Dir[root.join("app/models/**")] +
                              Dir[root.join("app/controllers/entities")]
 
-    config.active_record.observers = [:lead_observer, :opportunity_observer,
-                                      :task_observer, :entity_observer]
+    config.active_record.observers = %i[lead_observer opportunity_observer
+                                        task_observer entity_observer]
 
     initializer "model_core.factories", after: "factory_girl.set_factory_paths" do
       FactoryGirl.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryGirl)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -14,7 +16,7 @@ FactoryGirl.define do
     access "Public"
     title               { FactoryGirl.generate(:title) }
     department          { FFaker::Name.name + " Dept." }
-    source              { %w(campaign cold_call conference online referral self web word_of_mouth other).sample }
+    source              { %w[campaign cold_call conference online referral self web word_of_mouth other].sample }
     email               { FFaker::Internet.email }
     alt_email           { FFaker::Internet.email }
     phone               { FFaker::PhoneNumber.phone_number }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -49,7 +51,7 @@ describe OpportunitiesController do
       get :index
       # Note: can't compare opportunities directly because of BigDecimal objects.
       expect(assigns[:opportunities].size).to eq(2)
-      expect(assigns[:opportunities].map(&:stage).sort).to eq(%w(negotiation prospecting))
+      expect(assigns[:opportunities].map(&:stage).sort).to eq(%w[negotiation prospecting])
     end
 
     it "should perform lookup using query string" do

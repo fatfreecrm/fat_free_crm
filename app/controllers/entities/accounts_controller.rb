@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -44,7 +46,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def edit
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Account.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
+      @previous = Account.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@account)
@@ -125,7 +127,12 @@ class AccountsController < EntitiesController
   private
 
   #----------------------------------------------------------------------------
-  alias_method :get_accounts, :get_list_of_records
+  alias get_accounts get_list_of_records
+
+  #----------------------------------------------------------------------------
+  def list_includes
+    %i[pipeline_opportunities user tags].freeze
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
@@ -148,11 +155,11 @@ class AccountsController < EntitiesController
   def get_data_for_sidebar
     @account_category_total = HashWithIndifferentAccess[
                               Setting.account_category.map do |key|
-                                [key, Account.my.where(category: key.to_s).count]
+                                [key, Account.my(current_user).where(category: key.to_s).count]
                               end
     ]
     categorized = @account_category_total.values.sum
-    @account_category_total[:all] = Account.my.count
+    @account_category_total[:all] = Account.my(current_user).count
     @account_category_total[:other] = @account_category_total[:all] - categorized
   end
 end

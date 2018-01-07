@@ -1,4 +1,6 @@
-class CreateComments < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateComments < ActiveRecord::Migration[4.2]
   def self.up
     create_table :comments, force: true do |t|
       t.references :user

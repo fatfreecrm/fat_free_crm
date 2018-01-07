@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -15,7 +17,7 @@ describe "/tasks/edit" do
     assign(:category, Setting.unroll(:task_category))
   end
 
-  %w(pending assigned).each do |view|
+  %w[pending assigned].each do |view|
     it "cancel for #{view} view: should replace [Edit Task] form with the task partial" do
       params[:cancel] = "true"
       @task = stub_task(view)

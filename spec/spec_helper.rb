@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -23,7 +25,7 @@ Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 # Load shared behavior modules to be included by Runner config.
 Dir["./spec/shared/**/*.rb"].sort.each { |f| require f }
 
-TASK_STATUSES = %w(pending assigned completed).freeze
+TASK_STATUSES = %w[pending assigned completed].freeze
 
 I18n.locale = 'en-US'
 
@@ -94,11 +96,11 @@ ActionView::Base.class_eval do
   end
 
   def called_from_index_page?(controller = controller_name)
-    if controller != "tasks"
-      request.referer =~ %r{/#{controller}$}
-    else
-      request.referer =~ /tasks\?*/
-    end
+    request.referer =~ if controller != "tasks"
+                         %r{/#{controller}$}
+                       else
+                         /tasks\?*/
+                       end
   end
 
   def called_from_landing_page?(controller = controller_name)

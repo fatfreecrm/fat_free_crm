@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -8,7 +10,7 @@
 #
 if ENV['BROWSER'] == 'chrome'
   Capybara.register_driver :selenium do |app|
-    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: %w(no-sandbox headless disable-gpu) })
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: ['no-sandbox', 'headless', 'disable-gpu'] })
     Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
   end
 else

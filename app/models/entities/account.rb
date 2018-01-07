@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -32,6 +34,7 @@ class Account < ActiveRecord::Base
   has_many :contacts, -> { distinct }, through: :account_contacts
   has_many :account_opportunities, dependent: :destroy
   has_many :opportunities, -> { order("opportunities.id DESC").distinct }, through: :account_opportunities
+  has_many :pipeline_opportunities, -> { order("opportunities.id DESC").distinct.pipeline }, through: :account_opportunities, source: :opportunity
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
   has_one :billing_address, -> { where(address_type: "Billing") }, dependent: :destroy, as: :addressable, class_name: "Address"
   has_one :shipping_address, -> { where(address_type: "Shipping") }, dependent: :destroy, as: :addressable, class_name: "Address"
@@ -67,7 +70,7 @@ class Account < ActiveRecord::Base
   exportable
   sortable by: ["name ASC", "rating DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
-  has_ransackable_associations %w(contacts opportunities tags activities emails addresses comments tasks)
+  has_ransackable_associations %w[contacts opportunities tags activities emails addresses comments tasks]
   ransack_can_autocomplete
 
   validates_presence_of :name, message: :missing_account_name
@@ -89,7 +92,7 @@ class Account < ActiveRecord::Base
   def location
     return "" unless self[:billing_address]
     location = self[:billing_address].strip.split("\n").last
-    location.gsub(/(^|\s+)\d+(:?\s+|$)/, " ").strip if location
+    location&.gsub(/(^|\s+)\d+(:?\s+|$)/, " ")&.strip
   end
 
   # Attach given attachment to the account if it hasn't been attached already.
@@ -131,7 +134,7 @@ class Account < ActiveRecord::Base
   # Make sure at least one user has been selected if the account is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, :share_account) if self[:access] == "Shared" && !permissions.any?
+    errors.add(:access, :share_account) if self[:access] == "Shared" && permissions.none?
   end
 
   def nullify_blank_category

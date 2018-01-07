@@ -19,7 +19,7 @@ nl:
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Dashboard
-  tab_tasks: Taken 
+  tab_tasks: Taken
   tab_campaigns: Campagnes
   tab_leads: Leads
   tab_accounts: Accounts
@@ -156,6 +156,7 @@ nl:
               email_in_use: ^Er bestaat reeds een gebruiker met dit email adres.
         custom_field:
           required: ^%{field} is vereist.
+          minlength: ^%{field} is te kort.
           maxlength: ^%{field} is te lang.
           endbeforestart: ^%{field} kan niet eindigen voor het begint.
     attribute_options:

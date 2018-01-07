@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -42,18 +44,13 @@ class Email < ActiveRecord::Base
     state == "Collapsed"
   end
 
-  def body
-    super
+  def body_html
+    body.to_s.gsub("\n", "<br>")
   end
 
-  def body_with_textile
-    if defined?(RedCloth)
-      RedCloth.new(body_without_textile).to_html
-    else
-      body_without_textile.to_s.gsub("\n", "<br/>")
-    end
+  def body_inline
+    body.to_s.tr("\n", " ")
   end
-  alias_method_chain :body, :textile
 
   ActiveSupport.run_load_hooks(:fat_free_crm_email, self)
 end

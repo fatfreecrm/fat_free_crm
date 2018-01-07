@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,7 +7,7 @@
 #------------------------------------------------------------------------------
 class TasksController < ApplicationController
   before_action :require_user
-  before_action :set_current_tab, only: [:index, :show]
+  before_action :set_current_tab, only: %i[index show]
   before_action :update_sidebar, only: :index
 
   # GET /tasks
@@ -38,7 +40,7 @@ class TasksController < ApplicationController
 
     if params[:related]
       model, id = params[:related].split(/_(\d+)/)
-      if related = model.classify.constantize.my.find_by_id(id)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
         instance_variable_set("@asset", related)
       else
         respond_to_related_not_found(model) && return
@@ -84,11 +86,11 @@ class TasksController < ApplicationController
     @task = Task.tracked_by(current_user).find(params[:id])
     @task_before_update = @task.dup
 
-    if @task.due_at && (@task.due_at < Date.today.to_time)
-      @task_before_update.bucket = "overdue"
-    else
-      @task_before_update.bucket = @task.computed_bucket
-    end
+    @task_before_update.bucket = if @task.due_at && (@task.due_at < Date.today.to_time)
+                                   "overdue"
+                                 else
+                                   @task.computed_bucket
+                                 end
 
     respond_with(@task) do |_format|
       if @task.update_attributes(task_params)
@@ -123,7 +125,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def complete
     @task = Task.tracked_by(current_user).find(params[:id])
-    @task.update_attributes(completed_at: Time.now, completed_by: current_user.id) if @task
+    @task&.update_attributes(completed_at: Time.now, completed_by: current_user.id)
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
     if Task.bucket_empty?(params[:bucket], current_user)
@@ -138,7 +140,7 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def uncomplete
     @task = Task.tracked_by(current_user).find(params[:id])
-    @task.update_attributes(completed_at: nil, completed_by: nil) if @task
+    @task&.update_attributes(completed_at: nil, completed_by: nil)
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
     if Task.bucket_empty?(params[:bucket], current_user, @view)

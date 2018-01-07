@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Compares two locale files and detects missing translations.
 class MissingTranslationDetector
   attr_reader :missing_translations

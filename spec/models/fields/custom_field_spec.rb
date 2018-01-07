@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -45,7 +47,7 @@ describe CustomField do
     c = FactoryGirl.build(:custom_field, label: "Test Field", field_group: field_group)
 
     columns = []
-    %w(cf_test_field cf_test_field_2 cf_test_field_3 cf_test_field_4).each do |field|
+    %w[cf_test_field cf_test_field_2 cf_test_field_3 cf_test_field_4].each do |field|
       expect(c.send(:generate_column_name)).to eq(field)
       allow(Contact).to receive(:column_names).and_return(columns << field)
     end
@@ -63,8 +65,8 @@ describe CustomField do
   end
 
   it "should return a safe list of types for the 'as' select options" do
-    { "email"   => %w(check_boxes text string email url tel select radio_buttons),
-      "integer" => %w(integer float) }.each do |type, expected_arr|
+    { "email"   => %w[check_boxes text string email url tel select radio_buttons],
+      "integer" => %w[integer float] }.each do |type, expected_arr|
       c = FactoryGirl.build(:custom_field, as: type)
       opts = c.available_as
       expect(opts.map(&:first)).to match_array(expected_arr)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -20,9 +22,7 @@ module FatFreeCRM
           #
           has_many :permissions, as: :asset
 
-          scope :my, lambda {
-            accessible_by(User.current_ability)
-          }
+          scope :my, ->(current_user) { accessible_by(current_user.ability) }
 
           include FatFreeCRM::Permissions::InstanceMethods
           extend FatFreeCRM::Permissions::SingletonMethods
@@ -33,7 +33,7 @@ module FatFreeCRM
     module InstanceMethods
       # Save shared permissions to the model, if any.
       #--------------------------------------------------------------------------
-      %w(group user).each do |model|
+      %w[group user].each do |model|
         class_eval %{
 
           def #{model}_ids=(value)
@@ -44,7 +44,7 @@ module FatFreeCRM
               permissions_to_remove = Permission.where(
                 #{model}_id: self.#{model}_ids - value,
                 asset_id: self.id,
-                asset_type: self.class
+                asset_type: self.class.name
               )
               permissions_to_remove.each {|p| (permissions.delete(p); p.destroy)}
               (value - self.#{model}_ids).each {|id| permissions.build(:#{model}_id => id)}
@@ -68,11 +68,11 @@ module FatFreeCRM
       #--------------------------------------------------------------------------
       def remove_permissions
         # we don't use dependent => :destroy so must manually remove
-        if id && self.class
-          permissions_to_remove = Permission.where(asset_id: id, asset_type: self.class.to_s).to_a
-        else
-          permissions_to_remove = []
-        end
+        permissions_to_remove = if id && self.class
+                                  Permission.where(asset_id: id, asset_type: self.class.name).to_a
+                                else
+                                  []
+                                end
 
         permissions_to_remove.each { |p| permissions.delete(p); p.destroy }
       end
@@ -103,7 +103,7 @@ module FatFreeCRM
 
     module SingletonMethods
     end
-  end # Permissions
-end # FatFreeCRM
+  end
+end
 
 ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)

@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class ContactsController < EntitiesController
-  before_action :get_accounts, only: [:new, :create, :edit, :update]
+  before_action :get_accounts, only: %i[new create edit update]
 
   # GET /contacts
   #----------------------------------------------------------------------------
@@ -35,7 +37,7 @@ class ContactsController < EntitiesController
 
     if params[:related]
       model, id = params[:related].split('_')
-      if related = model.classify.constantize.my.find_by_id(id)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
         respond_to_related_not_found(model) && return
@@ -50,7 +52,7 @@ class ContactsController < EntitiesController
   def edit
     @account = @contact.account || Account.new(user: current_user)
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Contact.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
+      @previous = Contact.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@contact)
@@ -66,17 +68,17 @@ class ContactsController < EntitiesController
         @contacts = get_contacts if called_from_index_page?
       else
         if params[:account]
-          if params[:account][:id].blank?
-            if request.referer =~ /\/accounts\/(\d+)\z/
-              @account = Account.find(Regexp.last_match[1]) # related account
-            else
-              @account = Account.new(user: current_user)
-            end
-          else
-            @account = Account.find(params[:account][:id])
-          end
+          @account = if params[:account][:id].blank?
+                       if request.referer =~ /\/accounts\/(\d+)\z/
+                         Account.find(Regexp.last_match[1]) # related account
+                       else
+                         Account.new(user: current_user)
+                                  end
+                     else
+                       Account.find(params[:account][:id])
+                     end
         end
-        @opportunity = Opportunity.my.find(params[:opportunity]) unless params[:opportunity].blank?
+        @opportunity = Opportunity.my(current_user).find(params[:opportunity]) unless params[:opportunity].blank?
       end
     end
   end
@@ -86,11 +88,11 @@ class ContactsController < EntitiesController
   def update
     respond_with(@contact) do |_format|
       unless @contact.update_with_account_and_permissions(params.permit!)
-        if @contact.account
-          @account = @contact.account
-        else
-          @account = Account.new(user: current_user)
-        end
+        @account = if @contact.account
+                     @contact.account
+                   else
+                     Account.new(user: current_user)
+                   end
       end
     end
   end
@@ -146,11 +148,16 @@ class ContactsController < EntitiesController
   private
 
   #----------------------------------------------------------------------------
-  alias_method :get_contacts, :get_list_of_records
+  alias get_contacts get_list_of_records
+
+  #----------------------------------------------------------------------------
+  def list_includes
+    %i[account tags].freeze
+  end
 
   #----------------------------------------------------------------------------
   def get_accounts
-    @accounts = Account.my.order('name')
+    @accounts = Account.my(current_user).order('name')
   end
 
   def set_options

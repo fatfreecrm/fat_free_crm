@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -69,7 +71,7 @@ class CampaignsController < EntitiesController
 
     if params[:related]
       model, id = params[:related].split('_')
-      if related = model.classify.constantize.my.find_by_id(id)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
         respond_to_related_not_found(model) && return
@@ -83,7 +85,7 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def edit
     if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Campaign.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
+      @previous = Campaign.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
     end
 
     respond_with(@campaign)
@@ -163,7 +165,12 @@ class CampaignsController < EntitiesController
   private
 
   #----------------------------------------------------------------------------
-  alias_method :get_campaigns, :get_list_of_records
+  alias get_campaigns get_list_of_records
+
+  #----------------------------------------------------------------------------
+  def list_includes
+    %i[tags].freeze
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
@@ -185,11 +192,11 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @campaign_status_total = HashWithIndifferentAccess[
-                             all: Campaign.my.count,
+                             all: Campaign.my(current_user).count,
                              other: 0
     ]
     Setting.campaign_status.each do |key|
-      @campaign_status_total[key] = Campaign.my.where(status: key.to_s).count
+      @campaign_status_total[key] = Campaign.my(current_user).where(status: key.to_s).count
       @campaign_status_total[:other] -= @campaign_status_total[key]
     end
     @campaign_status_total[:other] += @campaign_status_total[:all]

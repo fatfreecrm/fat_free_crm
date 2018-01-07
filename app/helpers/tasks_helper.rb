@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -46,7 +48,7 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def link_to_task_complete(pending, bucket)
     onclick = %{$("##{dom_id(pending, :name)}").css({textDecoration: "line-through"});}
-    onclick << %{$.ajax("#{complete_task_path(pending)}", {type: "PUT", data: {bucket: "#{bucket}"}});}
+    onclick + %{$.ajax("#{complete_task_path(pending)}", {type: "PUT", data: {bucket: "#{bucket}"}});}
   end
 
   #----------------------------------------------------------------------------
@@ -86,7 +88,7 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def hide_task_and_possibly_bucket(task, bucket)
     text = "$('##{h dom_id(task)}').remove();\n"
-    text << "$('#list_#{h bucket.to_s}').fadeOut({ duration:500 });\n" if Task.bucket_empty?(bucket, current_user, @view)
+    text += "$('#list_#{h bucket.to_s}').fadeOut({ duration:500 });\n" if Task.bucket_empty?(bucket, current_user, @view)
     text.html_safe
   end
 
@@ -95,29 +97,28 @@ module TasksHelper
     partial = task.assigned_to && task.assigned_to != current_user.id ? "assigned" : "pending"
     html = render(partial: "tasks/#{partial}", collection: [task], locals: { bucket: bucket })
     text = "$('##{dom_id(task)}').html('#{j html}');\n".html_safe
-
     text
   end
 
   #----------------------------------------------------------------------------
   def insert_content(task, bucket, view)
-    text = "$('#list_#{bucket}').show();\n"
     html = render(partial: view, collection: [task], locals: { bucket: bucket })
-    text << "$('##{h bucket.to_s}').prepend('#{j html}');\n"
-    text << "$('##{dom_id(task)}').effect('highlight', { duration:1500 });\n"
+    text = "$('#list_#{bucket}').show();\n"
+    text += "$('##{h bucket.to_s}').prepend('#{j html}');\n"
+    text += "$('##{dom_id(task)}').effect('highlight', { duration:1500 });\n"
     text.html_safe
   end
 
   #----------------------------------------------------------------------------
   def tasks_flash(message)
     text = "$('#flash').html('#{sanitize(message)}');\n"
-    text << "crm.flash('notice', true)\n"
+    text += "crm.flash('notice', true)\n"
     text.html_safe
   end
 
   #----------------------------------------------------------------------------
   def reassign(task)
-    text = "".html_safe
+    text = ''.html_safe
     if @view == "pending" && @task.assigned_to.present? && @task.assigned_to != current_user.id
       text << hide_task_and_possibly_bucket(task, @task_before_update.bucket)
       text << tasks_flash(t(:task_assigned, (h @task.assignee.try(:full_name))) + " (#{link_to(t(:view_assigned_tasks), url_for(controller: :tasks, view: :assigned))})")
@@ -134,8 +135,8 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def reschedule(task)
     text = hide_task_and_possibly_bucket(task, @task_before_update.bucket)
-    text << insert_content(task, task.bucket, @view)
-    text << refresh_sidebar(:index, :filters)
+    text += insert_content(task, task.bucket, @view)
+    text += refresh_sidebar(:index, :filters)
     text
   end
 end

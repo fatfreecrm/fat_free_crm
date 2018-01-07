@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -29,6 +31,6 @@ module CampaignsHelper
   def campaign_summary(campaign)
     status  = render file: "campaigns/_status.html.haml",  locals: { campaign: campaign }
     metrics = render file: "campaigns/_metrics.html.haml", locals: { campaign: campaign }
-    "#{t(campaign.status)}, " << [status, metrics].map { |str| strip_tags(str) }.join(' ').delete("\n")
+    "#{t(campaign.status)}, " + [status, metrics].map { |str| strip_tags(str) }.join(' ').delete("\n")
   end
 end

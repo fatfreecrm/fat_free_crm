@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -56,7 +58,7 @@ describe "/accounts/update" do
         expect(rendered).to include(%/$('#account_#{@account.id}').effect("highlight"/)
       end
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     before do
@@ -90,5 +92,5 @@ describe "/accounts/update" do
         expect(rendered).to include('focus()')
       end
     end
-  end # errors
+  end
 end

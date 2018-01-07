@@ -299,6 +299,7 @@ de:
                 an.
         custom_field:
           required: ^%{field} muss vorhanden sein.
+          minlength: ^%{field} ist zu kurz.
           maxlength: ^%{field} ist zu lang.
           endbeforestart: ^%{field} kann nicht enden bevor es beginnt.
     attribute_options:

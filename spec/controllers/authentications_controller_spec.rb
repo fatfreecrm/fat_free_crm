@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -143,6 +145,6 @@ describe AuthenticationsController do
           expect(response).to redirect_to(action: :new)
         end
       end
-    end # authentication failure
-  end # POST authenticate
+    end
+  end
 end

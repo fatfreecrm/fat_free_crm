@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -15,7 +17,7 @@ class DatePairInput < SimpleForm::Inputs::Base
     [field1, field2].compact.each do |field|
       out << '<div>'.html_safe
       label = field == field1 ? I18n.t('pair.start') : I18n.t('pair.end')
-      [:required, :disabled].each { |k| input_html_options.delete(k) } # ensure these come from field not default options
+      %i[required disabled].each { |k| input_html_options.delete(k) } # ensure these come from field not default options
       input_html_options.merge!(field.input_options)
       input_html_options[:value] = value(field)
       out << "<label#{' class="req"' if input_html_options[:required]}>#{label}</label>".html_safe

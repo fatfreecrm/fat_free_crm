@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 # http://cyber.law.harvard.edu/rss/rss.html
-item   = @items.singularize
+item = @items.singularize
 
 if item == 'task'
   @assets = @assets.values.flatten
-  title  = t(:"#{@view}_tab") << ' ' << t(@items.to_sym)
+  title = "#{t(:"#{@view}_tab")} #{t(@items.to_sym)}"
 end
 
-xml.instruct! :xml, :version => "1.0"
-xml.rss :version => "2.0" do
+xml.instruct! :xml, version: "1.0"
+xml.rss version: "2.0" do
   xml.channel do
     xml.generator  "Fat Free CRM v#{FatFreeCRM::VERSION::STRING}"
     xml.link       send(:"#{@items}_url")

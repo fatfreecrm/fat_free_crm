@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -44,5 +46,13 @@ describe Permission do
     expect(p).not_to be_valid
     expect(p.errors['user_id']).to eq(["can't be blank"])
     expect(p.errors['group_id']).to eq(["can't be blank"])
+  end
+
+  it 'should not allow duplicate records with (user_id, group_id, asset_type, asset_ids) the same' do
+    permission1 = Permission.create(user_id: 1, group_id: 1, asset_id: 1, asset_type: 'UserWithPermission')
+    permission2 = Permission.new(user_id: 1, group_id: 1, asset_id: 1, asset_type: 'UserWithPermission')
+
+    expect(permission1).to be_valid
+    expect(permission2).not_to be_valid
   end
 end

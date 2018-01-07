@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -10,7 +12,7 @@ namespace :ffcrm do
       # Load fixtures
       require 'active_record/fixtures'
       Dir.glob(FatFreeCRM.root.join('db', 'demo', '*.{yml,csv}')).each do |fixture_file|
-        ActiveRecord::Fixtures.create_fixtures(FatFreeCRM.root.join('db/demo'), File.basename(fixture_file, '.*'))
+        ActiveRecord::FixtureSet.create_fixtures(FatFreeCRM.root.join('db/demo'), File.basename(fixture_file, '.*'))
       end
 
       def create_version(options)
@@ -22,7 +24,7 @@ namespace :ffcrm do
       # Simulate random user activities.
       $stdout.sync = true
       puts "Generating user activities..."
-      %w(Account Address Campaign Comment Contact Email Lead Opportunity Task).map do |model|
+      %w[Account Address Campaign Comment Contact Email Lead Opportunity Task].map do |model|
         model.constantize.all
       end.flatten.each do |item|
         user = if item.respond_to?(:user)

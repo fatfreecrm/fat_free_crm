@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -36,7 +38,7 @@ class Address < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def blank?
     if Setting.compound_address
-      %w(street1 street2 city state zipcode country).all? { |attr| send(attr).blank? }
+      %w[street1 street2 city state zipcode country].all? { |attr| send(attr).blank? }
     else
       full_address.blank?
     end
@@ -50,7 +52,7 @@ class Address < ActiveRecord::Base
   #   accepts_nested_attributes_for :business_address, :allow_destroy => true, :reject_if => proc {|attributes| Address.reject_address(attributes)}
   def self.reject_address(attributes)
     exists = attributes['id'].present?
-    empty = %w(street1 street2 city state zipcode country full_address).map { |name| attributes[name].blank? }.all?
+    empty = %w[street1 street2 city state zipcode country full_address].map { |name| attributes[name].blank? }.all?
     attributes[:_destroy] = 1 if exists && empty
     (!exists && empty)
   end
