@@ -18,7 +18,7 @@ namespace :ffcrm do
       end
 
       # Don't continue unless user typed y(es)
-      if proceed =~ /y(?:es)*/i
+      if proceed.match?(/y(?:es)*/i)
         Rake::Task["db:migrate"].invoke
         Rake::Task["ffcrm:setup:admin"].invoke
       else
@@ -44,7 +44,7 @@ namespace :ffcrm do
 
           password ||= "manager"
           print "Password [#{password}]: "
-          echo = ->(toggle) { return if RUBY_PLATFORM =~ /mswin/; system(toggle ? "stty echo && echo" : "stty -echo") }
+          echo = ->(toggle) { return if RUBY_PLATFORM.match?(/mswin/); system(toggle ? "stty echo && echo" : "stty -echo") }
           begin
             echo.call(false)
             reply = STDIN.gets.strip
@@ -68,8 +68,8 @@ namespace :ffcrm do
             reply = STDIN.gets.strip
             break unless reply.blank?
           end
-          break if reply =~ /y(?:es)*/i
-          redo if reply =~ /no*/i
+          break if reply.match?(/y(?:es)*/i)
+          redo if reply.match?(/no*/i)
           puts "No admin user was created."
           exit
         end

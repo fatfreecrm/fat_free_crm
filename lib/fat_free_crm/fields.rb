@@ -75,7 +75,7 @@ module FatFreeCRM
       end
 
       def method_missing(method_id, *args, &block)
-        if method_id.to_s =~ /\Acf_.*[^=]\Z/
+        if method_id.to_s.match?(/\Acf_.*[^=]\Z/)
           # Refresh columns and try again.
           self.class.reset_column_information
           # If new record, create new object from class, else reload class
