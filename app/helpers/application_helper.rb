@@ -110,7 +110,7 @@ module ApplicationHelper
     link_to(t(:edit),
             options[:url] || polymorphic_url(record, action: :edit),
             remote:  true,
-            onclick: "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_#{h name}');".html_safe
+            onclick: "this.href = this.href.split('?')[0] + '?previous='+encodeURI(crm.find_form('edit_#{j name}'));".html_safe
     )
   end
 
@@ -276,10 +276,10 @@ module ApplicationHelper
       value = value.last
     end
     %{
-      if ($('##{option}').html() != '#{value}') {
-        $('##{option}').html('#{value}');
+      if ($('##{option}').html() != '#{j value}') {
+        $('##{option}').html('#{j value}');
         $('#loading').show();
-        $.post('#{url}', {#{option}: '#{param || value}'}, function () {
+        $.post('#{url}', {#{option}: '#{j(param || value)}'}, function () {
           $('#loading').hide();
         });
       }
@@ -289,10 +289,10 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def options_menu_item(option, key, url = send("redraw_#{controller.controller_name}_path"))
     name = t("option_#{key}")
-    "{ name: \"#{name.titleize}\", on_select: function() {" +
+    "{ name: \"#{j name.titleize}\", on_select: function() {" +
       %{
-        if ($('##{option}').html() != '#{name}') {
-          $('##{option}').html('#{name}');
+        if ($('##{option}').html() != '#{j name}') {
+          $('##{option}').html('#{j name}');
           $('#loading').show();
           $.get('#{url}', {#{option}: '#{key}', query: $('#query').val()}, function () {
             $('#loading').hide();
@@ -520,7 +520,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   # Ajaxification FTW!
-  # e.g. collection = Opportunity.my.scope
+  # e.g. collection = Opportunity.my(current_user).scope
   #         options = { renderer: {...} , params: {...}
   def paginate(options = {})
     collection = options.delete(:collection)

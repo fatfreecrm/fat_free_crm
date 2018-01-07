@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 # http://cyber.law.harvard.edu/rss/rss.html
-item   = @items.singularize
+item = @items.singularize
 
 if item == 'task'
   @assets = @assets.values.flatten
-  title  = t(:"#{@view}_tab") << ' ' << t(@items.to_sym)
+  title = "#{t(:"#{@view}_tab")} #{t(@items.to_sym)}"
 end
 
 xml.instruct! :xml, version: "1.0"

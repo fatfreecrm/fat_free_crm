@@ -158,6 +158,7 @@ es-CL:
               email_in_use: ^Hay otro usuario con ésta misma dirección de correo electrónico.
         custom_field:
           required: ^%{field} es requerido.
+          minlength: ^%{field} es demasiado corto.
           maxlength: ^%{field} es demasiado largo.
           endbeforestart: ^%{field} no puede ser anterior al inicio.
     attribute_options:
@@ -859,7 +860,7 @@ de agregar o remover campos personalizados.
 
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: Si la etiqueta es eliminada, será removida de 
+  tag_with_taggings_confirm_delete: Si la etiqueta es eliminada, será removida de
     %{value} registros.
   msg_cant_delete_tag: No se puede borrar '%{value}' debido a que está asociado a un Grupo de campos.
   views:

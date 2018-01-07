@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
     @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
-      @auto_complete = klass.my.text_search(@query).ransack(id_not_in: exclude_ids).result.limit(10)
+      @auto_complete = klass.my(current_user).text_search(@query).ransack(id_not_in: exclude_ids).result.limit(10)
     else
       @auto_complete = @auto_complete.last
     end
@@ -169,11 +169,11 @@ class ApplicationController < ActionController::Base
 
   #----------------------------------------------------------------------------
   def called_from_index_page?(controller = controller_name)
-    if controller != "tasks"
-      request.referer =~ %r{/#{controller}$}
-    else
-      request.referer =~ /tasks\?*/
-    end
+    request.referer =~ if controller != "tasks"
+                         %r{/#{controller}$}
+                       else
+                         /tasks\?*/
+                       end
   end
 
   #----------------------------------------------------------------------------

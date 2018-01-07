@@ -25,11 +25,11 @@ module OpportunitiesHelper
       amount << t(:probability_number, (opportunity.probability || 0).to_s + '%')
       summary << amount.join(' ')
     end
-    if opportunity.closes_on
-      summary << t(:closing_date, l(opportunity.closes_on, format: :mmddyy))
-    else
-      summary << t(:no_closing_date)
-    end
+    summary << if opportunity.closes_on
+                 t(:closing_date, l(opportunity.closes_on, format: :mmddyy))
+               else
+                 t(:no_closing_date)
+               end
     summary.compact.join(', ')
   end
 
@@ -39,7 +39,7 @@ module OpportunitiesHelper
   def opportunity_campaign_select(options = {})
     options[:selected] ||= @opportunity.campaign_id || 0
     selected_campaign = Campaign.find_by_id(options[:selected])
-    campaigns = ([selected_campaign] + Campaign.my.order(:name).limit(25)).compact.uniq
+    campaigns = ([selected_campaign] + Campaign.my(current_user).order(:name).limit(25)).compact.uniq
     collection_select :opportunity, :campaign_id, campaigns, :id, :name, options,
                       "data-placeholder": t(:select_a_campaign),
                       "data-url": auto_complete_campaigns_path(format: 'json'),
