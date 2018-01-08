@@ -207,7 +207,7 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def save_account(params)
     account_params = params[:account]
-    self.account = if account_params && account_params[:id].present? || account_params[:name].present?
+    self.account = if account_params && account_params[:id].present? && account_params[:name].present?
                      Account.create_or_select_for(self, account_params)
                    else
                      nil
