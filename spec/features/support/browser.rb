@@ -23,7 +23,6 @@ else
   end
 end
 
-
 #
 # Default timeout for extended for AJAX based application
 #
