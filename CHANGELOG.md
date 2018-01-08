@@ -31,7 +31,10 @@ Fri Jan 5, 2018 (0.16.0)
 
 Thu Dec 14, 2017 (0.15.0)
 ---------------------------------------------------------------------
-This release upgrades to rails 5.0.0
+This release upgrades to rails 5.0.0.
+
+Be aware of https://github.com/rails/sprockets/issues/426 if you were using FFCRM as an engine.
+
  - #500 - Upgrade rails
  - #554 - Upgrade authlogic
  - #614 - Rails5 warnings
