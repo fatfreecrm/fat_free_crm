@@ -9,7 +9,7 @@ require 'spec_helper'
 
 describe "/campaigns/create" do
   before do
-    login_and_assign
+    login
   end
 
   describe "create success" do

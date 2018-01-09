@@ -11,7 +11,7 @@ describe "/tasks/update" do
   include TasksHelper
 
   before do
-    login_and_assign
+    login
   end
 
   describe "Changing due date" do

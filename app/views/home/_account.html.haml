@@ -1,9 +1,9 @@
 - amount = account.opportunities.not_lost.map(&:weighted_amount).sum
 %li.highlight[account]
   - if account.category
-    .strip{:class => account.category} #{t(account.category)}
+    .strip{class: account.category} #{t(account.category)}
   - else
-    .strip{:style => "color: gray;"} #{t :other}
+    .strip{style: "color: gray;"} #{t :other}
 
   .indent
     = link_to(h(account.name), account)
@@ -12,9 +12,9 @@
       = account.location + ", " unless account.location.blank?
       - user_name = account.user.try(:full_name)
       - if user_name
-        = t(:added_by, :time_ago => timeago(account.created_at), :user => h(user_name)).html_safe
+        = t(:added_by, time_ago: timeago(account.created_at), user: h(user_name)).html_safe
       - else
-        = t(:added_ago, :value => timeago(account.created_at)).html_safe
+        = t(:added_ago, value: timeago(account.created_at)).html_safe
 
     - unless current_user.preference[:accounts_index_view] == "accounts_index_brief"
       %dt
@@ -26,4 +26,4 @@
       - if account.tags.present?
         %dt
           .tags= tags_for_dashboard(account)
-      = hook(:account_bottom, self, :account => account)
+      = hook(:account_bottom, self, account: account)

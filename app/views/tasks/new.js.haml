@@ -2,7 +2,7 @@ crm.flick('empty', 'toggle');
 crm.flip_form('create_task');
 
 - unless params[:cancel].true?
-  $('#create_task').html('#{ j render(:partial => "new") }');
+  $('#create_task').html('#{ j render(partial: "new") }');
   crm.set_title('create_task', '#{j t(:create_task) }');
 - else
   crm.set_title('create_task', '#{ @view == "assigned" ? t(:assigned_tasks) : t(:tasks) }');

@@ -32,7 +32,7 @@
 require 'spec_helper'
 
 describe Task do
-  before { login }
+  let(:current_user) { FactoryGirl.create(:user) }
 
   describe "Task/Create" do
     it "should create a new task instance given valid attributes" do
@@ -379,7 +379,7 @@ describe Task do
       it "should show tasks ordered by due_at" do
         t1 = FactoryGirl.create(:task, name: 't1', bucket: "due_asap")
         t2 = FactoryGirl.create(:task, calendar: 5.days.from_now.strftime("%Y-%m-%d %H:%M"), bucket: "specific_time")
-        t3 = FactoryGirl.create(:task, name: 't3',  bucket: "due_next_week")
+        t3 = FactoryGirl.create(:task, name: 't3', bucket: "due_next_week")
         t4 = FactoryGirl.create(:task, calendar: 20.days.from_now.strftime("%Y-%m-%d %H:%M"), bucket: "specific_time")
         expect(Task.by_due_at).to eq([t1, t2, t3, t4])
       end

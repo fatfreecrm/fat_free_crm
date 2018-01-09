@@ -25,7 +25,7 @@ FactoryGirl.define do
   end
 
   factory :email do
-    imap_message_id     { "%08x" % rand(0xFFFFFFFF) }
+    imap_message_id     { format("%08x", rand(0xFFFFFFFF)) }
     user
     mediator            { raise "Please specify :mediator for the email" }
     sent_from           { FFaker::Internet.email }

@@ -11,7 +11,7 @@ describe "/campaigns/show" do
   include CampaignsHelper
 
   before do
-    login_and_assign
+    login
     @campaign = FactoryGirl.build_stubbed(:campaign, id: 42,
                                                      leads: [FactoryGirl.build_stubbed(:lead)],
                                                      opportunities: [FactoryGirl.build_stubbed(:opportunity)])

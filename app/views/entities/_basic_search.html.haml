@@ -2,10 +2,10 @@
 - sort_by_menu_items = model.sort_by_fields.map { |field| options_menu_item(:sort_by, field) }
 - current_sort_by = t("option_" + model.sort_by_map.invert[@sort_by])
 
-%div{ :style => "margin: 0px 0px 6px 0px" }
-  = text_field_tag('query', @current_query, :size => 32, :autofocus => true, :placeholder => "Search #{controller_name}")
+%div{ style: "margin: 0px 0px 6px 0px" }
+  = text_field_tag('query', @current_query, size: 32, autofocus: true, placeholder: "Search #{controller_name}")
   %span.sorting_options
-    = t(:sort_by, :field => link_to(h(current_sort_by), "#", :id => :sort_by)).html_safe
+    = t(:sort_by, field: link_to(h(current_sort_by), "#", id: :sort_by)).html_safe
 
 :javascript
   var searchTimeout;

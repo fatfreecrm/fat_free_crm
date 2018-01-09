@@ -92,7 +92,7 @@ class Contact < ActiveRecord::Base
 
   has_fields
   exportable
-  sortable by: ["first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
+  sortable by: ["first_name ASC", "last_name ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
   validates_presence_of :first_name, message: :missing_first_name, if: -> { Setting.require_first_names }
   validates_presence_of :last_name,  message: :missing_last_name,  if: -> { Setting.require_last_names  }

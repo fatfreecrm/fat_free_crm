@@ -1,22 +1,22 @@
 - if (template = template_for_current_view)
-  = render(template, :contact => @contact)
+  = render(template, contact: @contact)
 - else
 
   -# default view
 
   = styles_for :task, :opportunity
   
-  = render 'contacts/title_bar', :contact => @contact
+  = render 'contacts/title_bar', contact: @contact
 
-  = render "comments/new", :commentable => @contact
-  = render :partial => "shared/timeline", :collection => @timeline
+  = render "comments/new", commentable: @contact
+  = render partial: "shared/timeline", collection: @timeline
 
   = hook(:show_contact_bottom, self, {entity: @contact}) do
 
-    = render :partial => "tasks/tasks", :locals => {:object => @contact}
+    = render partial: "tasks/tasks", locals: {object: @contact}
 
-    = render :partial => "opportunities/opportunities", :locals => {:object => @contact}
+    = render partial: "opportunities/opportunities", locals: {object: @contact}
     
-    = render :partial => "versions/versions", :locals => {:object => @contact}
+    = render partial: "versions/versions", locals: {object: @contact}
 
     = load_select_popups_for(@contact, :tasks, :opportunities)

@@ -3,7 +3,7 @@
 
 .per_page_options
   %span.per_page_label
-    = t('entities_per_page', :entity => t(controller_name))
+    = t('entities_per_page', entity: t(controller_name))
 
   - [ 10, 20, 30, 50 ].each do |count|
     - if count == @per_page.to_i

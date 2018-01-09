@@ -11,7 +11,7 @@ describe "/accounts/show" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
     @account = FactoryGirl.create(:account, id: 42,
                                             contacts: [FactoryGirl.create(:contact)],
                                             opportunities: [FactoryGirl.create(:opportunity)])

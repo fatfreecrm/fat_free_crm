@@ -9,7 +9,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe ContactsController do
   before(:each) do
-    require_user
+    login
     set_current_tab(:contacts)
   end
 
@@ -228,7 +228,7 @@ describe ContactsController do
       end
 
       it "should have the same count of tags" do
-        get :field_group, params: { tag:  @tag.name }, xhr: true
+        get :field_group, params: { tag: @tag.name }, xhr: true
         expect(Tag.count).to equal(1)
       end
     end

@@ -11,7 +11,7 @@ describe "/opportunities/index" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
+    login
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 

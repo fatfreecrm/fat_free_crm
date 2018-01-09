@@ -1,20 +1,20 @@
 .filters#filters
   .caption= t :opportunity_stages
   - @stage.each do |value, key|
-    .check_box{:style => "border-bottom: 1px silver dotted;"}
-      %div{:style => "float:right;"}
+    .check_box{style: "border-bottom: 1px silver dotted;"}
+      %div{style: "float:right;"}
         = @opportunity_stage_total[key]
       = opportunity_stage_checkbox(key, @opportunity_stage_total[key])
       = label_tag(key, value)
 
-  .check_box{:style => "border-bottom: 1px silver dotted;"}
-    %div{:style => "float:right;"}
+  .check_box{style: "border-bottom: 1px silver dotted;"}
+    %div{style: "float:right;"}
       = @opportunity_stage_total[:other]
     = opportunity_stage_checkbox("other", @opportunity_stage_total[:other])
     = label_tag(:other, t(:other))
 
   .check_box
-    %div{:style => "float:right;"}
+    %div{style: "float:right;"}
       %b= @opportunity_stage_total[:all]
     %b #{t :total_opportunities}
   = hook(:index_opportunity_sidebar_bottom, self)

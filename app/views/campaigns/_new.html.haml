@@ -1,15 +1,15 @@
-= simple_form_for(@campaign, :html => one_submit_only, :remote => true) do |f|
+= simple_form_for(@campaign, html: one_submit_only, remote: true) do |f|
   = link_to_close new_campaign_path
   = f.hidden_field :user_id
 
-  = f.error_messages :object_name => t('campaign')
+  = f.error_messages object_name: t('campaign')
 
-  = render "campaigns/top_section", :f => f
-  = render "fields/edit_custom_field_group", :f => f
-  = render "shared/add_comment", :f => f
-  = render "campaigns/objectives",  :f => f
-  = render "fields/groups",         :f => f
-  = render "entities/permissions",  :f => f, :entity => @campaign
+  = render "campaigns/top_section", f: f
+  = render "fields/edit_custom_field_group", f: f
+  = render "shared/add_comment", f: f
+  = render "campaigns/objectives",  f: f
+  = render "fields/groups",         f: f
+  = render "entities/permissions",  f: f, entity: @campaign
   = hook(:entity_form, self, {f: f, entity: @campaign})
 
   .buttonbar

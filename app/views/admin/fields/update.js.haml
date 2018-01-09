@@ -2,12 +2,12 @@
 - container_id = "#{@field.klass_name.downcase}_field_groups"
 
 - if @field.errors.empty?
-  html = $.parseHTML('#{ j (render :partial => "field", :collection => [@field]) }');
+  html = $.parseHTML('#{ j (render partial: "field", collection: [@field]) }');
   $('##{id}').replaceWith(html);
   $('##{id}').effect("highlight", { duration:1000 });
   $('##{container_id}').sortable('reset');
 - else
-  html = $.parseHTML('#{ j(render :partial => "form") }');
+  html = $.parseHTML('#{ j(render partial: "form") }');
   $('##{id}').find('.edit_field').replaceWith( html );
   $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{id}').find('input[type="text"]').first().focus();

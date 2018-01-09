@@ -1,6 +1,6 @@
 - asset = controller_name.singularize
 %tr
-  %td{ :valign => :top, :colspan => span }
+  %td{ valign: :top, colspan: span }
     .label= t(:tags) + ":"
 
-    = f.select :tag_list, Tag.all.map{|t| t.name}, {}, {:class => "select2_tag", :data => {:tags => true, :url => url_for(action: 'field_group'), :placeholder => t(:select_or_create_tags), :multiple => true, :asset_id => f.object.try(:id)}, :multiple => true}
+    = f.select :tag_list, Tag.all.map{|t| t.name}, {}, {class: "select2_tag", data: {tags: true, url: url_for(action: 'field_group'), placeholder: t(:select_or_create_tags), multiple: true, asset_id: f.object.try(:id)}, multiple: true}

@@ -2,9 +2,9 @@
   $('#create_user_arrow').html(crm.COLLAPSED);
   $('#create_user_title').html('#{t(:users)}');
   $('#create_user').slideUp(250);
-  $('#users').prepend('#{ j (render :partial => "user", :collection => [ @user ]) }');
+  $('#users').prepend('#{ j (render partial: "user", collection: [ @user ]) }');
   $('##{dom_id(@user)}').effect("highlight", { duration:1500 });
 - else
-  $('#create_user').html('#{ j (render :partial => "new") }');
+  $('#create_user').html('#{ j (render partial: "new") }');
   $('#create_user').effect("shake", { duration:250, distance: 6 });
   $('#group_username').focus();

@@ -1,10 +1,10 @@
 %li.highlight[task]
   - unless task.category.blank?
-    .strip{:class => task.category}= t(task.category)
+    .strip{class: task.category}= t(task.category)
   - else
     .strip.white #{t :other}
   .indent
-    %label{ :id => dom_id(task, :name) }
+    %label{ id: dom_id(task, :name) }
       - if task.user.id != current_user.id
         = t(:task_from, link_to(h(task.user.full_name), user_path(task.user))).html_safe + ':'
       = link_to(task.name, tasks_path)
@@ -26,20 +26,20 @@
             %span.warn
               = distance_of_time_in_words(task.due_at, Time.now)
               = t(:task_overdue)
-              = l(task.due_at.localtime, :format => :mmddhhss)
+              = l(task.due_at.localtime, format: :mmddhhss)
           - else
             = t(:task_due_in, distance_of_time_in_words(Time.now, task.due_at))
-            = "(#{l(task.due_at.localtime, :format => :mmddhhss)})"
+            = "(#{l(task.due_at.localtime, format: :mmddhhss)})"
 
         - else
           - if task.due_at < Date.today
             %span.warn
               = distance_of_time_in_words(task.due_at, Time.now)
               = t(:task_overdue)
-              = l(task.due_at.localtime.to_date, :format => :mmdd)
+              = l(task.due_at.localtime.to_date, format: :mmdd)
           - elsif task.due_at > Date.today
             = t(:task_due_in, distance_of_time_in_words(Time.now, task.due_at.localtime.end_of_day))
-            = " (#{l(task.due_at.localtime.to_date, :format => :mmdd)})"
+            = " (#{l(task.due_at.localtime.to_date, format: :mmdd)})"
           - else
             %span.cool= t(:task_due_today)
 

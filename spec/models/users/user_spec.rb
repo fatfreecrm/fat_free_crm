@@ -60,39 +60,31 @@ describe User do
     describe "Destroying users with and without related assets" do
       before do
         @user = FactoryGirl.build(:user)
+        @current_user = FactoryGirl.build(:user)
       end
 
       %w[account campaign lead contact opportunity].each do |asset|
         it "should not destroy the user if she owns #{asset}" do
           FactoryGirl.create(asset, user: @user)
-
-          expect(@user.destroyable?).to eq(false)
+          expect(@user.destroyable?(@current_user)).to eq(false)
         end
 
         it "should not destroy the user if she has #{asset} assigned" do
           FactoryGirl.create(asset, assignee: @user)
-          expect(@user.destroyable?).to eq(false)
+          expect(@user.destroyable?(@current_user)).to eq(false)
         end
       end
 
-      it "should not destroy the user if she owns a comment" do
-        login
-        account = build(:account, user: current_user)
-        FactoryGirl.create(:comment, user: @user, commentable: account)
-        expect(@user.destroyable?).to eq(false)
-      end
-
       it "should not destroy the current user" do
-        login
-
-        expect(current_user.destroyable?).to eq(false)
+        expect(@user.destroyable?(@user)).to eq(false)
       end
 
       it "should destroy the user" do
-        expect(@user.destroyable?).to eq(true)
+        expect(@user.destroyable?(@current_user)).to eq(true)
       end
     end
   end
+
   describe '#destroy' do
     before do
       @user = FactoryGirl.create(:user)
@@ -114,12 +106,12 @@ describe User do
     end
   end
 
-  describe '#check_if_needs_approval' do
+  describe '#suspend_if_needs_approval' do
     it "should set suspended timestamp upon creation if signups need approval and the user is not an admin" do
       allow(Setting).to receive(:user_signup).and_return(:needs_approval)
       @user = FactoryGirl.build(:user, suspended_at: nil)
 
-      @user.check_if_needs_approval
+      @user.suspend_if_needs_approval
 
       expect(@user).to be_suspended
     end
@@ -128,7 +120,7 @@ describe User do
       allow(Setting).to receive(:user_signup).and_return(:needs_approval)
       @user = FactoryGirl.build(:user, admin: true, suspended_at: nil)
 
-      @user.check_if_needs_approval
+      @user.suspend_if_needs_approval
 
       expect(@user).not_to be_suspended
     end

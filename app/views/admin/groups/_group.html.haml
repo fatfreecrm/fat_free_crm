@@ -2,13 +2,13 @@
 
   %ul.tools
     %li= link_to_edit [:admin, group]
-    - count = Permission.where(:group_id => group.id).count
+    - count = Permission.where(group_id: group.id).count
     - confirm = (count.zero? ? nil : "#{t(:confirm_group_delete, count)}")
-    %li= link_to_delete [:admin, group], :confirm => confirm
+    %li= link_to_delete [:admin, group], confirm: confirm
 
   %span
-    =link_to(group.name, {:action => :edit, :id => group.id}, {:remote  => true,
-          :onclick => "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_group');"})
+    = link_to(group.name, {action: :edit, id: group.id}, {remote: true,
+          onclick: "this.href = this.href.split('?')[0] + '?previous='+crm.find_form('edit_group');"})
   %tt
     - if (users = group.users).present?
       == #{t('group_members')}:

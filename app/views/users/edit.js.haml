@@ -2,7 +2,7 @@
   crm.flip_form('edit_profile');
   crm.set_title('edit_profile', '#{ j t(:my_profile) }');
 - else
-  $('#edit_profile').html('#{ j render(:partial => "profile") }');
+  $('#edit_profile').html('#{ j render(partial: "profile") }');
   crm.hide_form('upload_avatar');
   crm.hide_form('change_password');
   crm.flip_form('edit_profile');

@@ -40,7 +40,7 @@ class TasksController < ApplicationController
 
     if params[:related]
       model, id = params[:related].split(/_(\d+)/)
-      if related = model.classify.constantize.my.find_by_id(id)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
         instance_variable_set("@asset", related)
       else
         respond_to_related_not_found(model) && return
@@ -196,7 +196,7 @@ class TasksController < ApplicationController
     # Update filters session if we added, deleted, or completed a task.
     if @task
       update_session do |filters|
-        if @empty_bucket  # deleted, completed, rescheduled, or reassigned and need to hide a bucket
+        if @empty_bucket # deleted, completed, rescheduled, or reassigned and need to hide a bucket
           filters.delete(@empty_bucket)
         elsif !@task.deleted_at && !@task.completed_at # created new task
           filters << @task.computed_bucket

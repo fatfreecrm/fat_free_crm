@@ -1,8 +1,8 @@
 %li.highlight[lead]
   - if lead.status
-    .strip{:class => lead.status}= t lead.status
+    .strip{class: lead.status}= t lead.status
   - else
-    .strip{:style => "color: gray;"}= t :other
+    .strip{style: "color: gray;"}= t :other
 
   %ul.tools
     - if can?(:update, lead)
@@ -10,13 +10,13 @@
 
     - if %w(converted rejected).include?(lead.status)
       %li
-        %font{ :color => 'silver' }= t :convert
+        %font{ color: 'silver' }= t :convert
     - elsif can?(:update, lead)
       %li= link_to_convert(lead)
 
     - if lead.status == "rejected"
       %li
-        %font{ :color => 'silver' }= t :reject
+        %font{ color: 'silver' }= t :reject
     - elsif can?(:update, lead)
       %li= link_to_reject(lead)
 
@@ -30,7 +30,7 @@
     = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
     %tt
       - if lead.company? && lead.title?
-        = t(:works_at, :job_title => lead.title, :company => lead.company)
+        = t(:works_at, job_title: lead.title, company: lead.company)
       - else
         = lead.company if lead.company?
         = lead.title if lead.title?
@@ -38,4 +38,4 @@
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
 
-    = hook(:lead_bottom, self, :lead => lead)
+    = hook(:lead_bottom, self, lead: lead)

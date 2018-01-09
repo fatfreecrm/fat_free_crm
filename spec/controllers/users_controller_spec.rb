@@ -13,7 +13,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET show" do
     before(:each) do
-      require_user
+      login
     end
 
     it "should render [show] template" do
@@ -30,7 +30,7 @@ describe UsersController do
 
     it "should show user if admin user" do
       @user = create(:user)
-      require_user(admin: true)
+      login_admin
       get :show, params: { id: @user.id }
       expect(assigns[:user]).to eq(@user)
       expect(response).to render_template("users/show")
@@ -49,14 +49,14 @@ describe UsersController do
 
       it "should render the requested user as JSON" do
         expect(User).to receive(:find).and_return(current_user)
-        expect(current_user).to receive(:to_json).and_return("generated JSON")
+        expect_any_instance_of(User).to receive(:to_json).and_return("generated JSON")
 
         get :show, params: { id: current_user.id }
         expect(response.body).to eq("generated JSON")
       end
 
       it "should render current user as JSON if no specific user was requested" do
-        expect(current_user).to receive(:to_json).and_return("generated JSON")
+        expect_any_instance_of(User).to receive(:to_json).and_return("generated JSON")
 
         get :show
         expect(response.body).to eq("generated JSON")
@@ -70,14 +70,14 @@ describe UsersController do
 
       it "should render the requested user as XML" do
         expect(User).to receive(:find).and_return(current_user)
-        expect(current_user).to receive(:to_xml).and_return("generated XML")
+        expect_any_instance_of(User).to receive(:to_xml).and_return("generated XML")
 
         get :show, params: { id: current_user.id }
         expect(response.body).to eq("generated XML")
       end
 
       it "should render current user as XML if no specific user was requested" do
-        expect(current_user).to receive(:to_xml).and_return("generated XML")
+        expect_any_instance_of(User).to receive(:to_xml).and_return("generated XML")
 
         get :show
         expect(response.body).to eq("generated XML")
@@ -115,7 +115,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
     it "should expose current user as @user and render [edit] template" do
-      require_user
+      login
       @user = current_user
       get :edit, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(current_user)
@@ -124,13 +124,13 @@ describe UsersController do
 
     it "should not allow current user to edit another user" do
       @user = create(:user)
-      require_user
+      login
       get :edit, params: { id: @user.id }, xhr: true
       expect(response.body).to eql("window.location.reload();")
     end
 
     it "should allow admin to edit another user" do
-      require_user(admin: true)
+      login_admin
       @user = create(:user)
       get :edit, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(@user)
@@ -152,7 +152,7 @@ describe UsersController do
       end
 
       it "exposes a newly created user as @user and redirect to profile page" do
-        require_user(admin: true)
+        login_admin
         post :create, params: { user: { username: @username, email: @email, password: @password, password_confirmation: @password } }
         expect(assigns[:user]).to eq(@user)
         expect(flash[:notice]).to match(/welcome/)
@@ -171,7 +171,7 @@ describe UsersController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and renders [new] template" do
-        require_user(admin: true)
+        login_admin
         @user = FactoryGirl.build(:user, username: "", email: "")
         allow(User).to receive(:new).and_return(@user)
 
@@ -187,7 +187,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to PUT update" do
     before(:each) do
-      require_user
+      login
       @user = current_user
     end
 
@@ -217,7 +217,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before(:each) do
-      require_user
+      login
     end
 
     it "should destroy the requested user" do
@@ -232,7 +232,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET avatar" do
     before(:each) do
-      require_user
+      login
       @user = current_user
     end
 
@@ -248,7 +248,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to PUT update_avatar" do
     before(:each) do
-      require_user
+      login
       @user = current_user
     end
 
@@ -296,7 +296,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET avatar" do
     before(:each) do
-      require_user
+      login
       @user = current_user
     end
 
@@ -312,7 +312,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to PUT change_password" do
     before(:each) do
-      require_user
+      login
       allow(User).to receive(:find).and_return(current_user)
       allow(@current_user_session).to receive(:unauthorized_record=).and_return(current_user)
       allow(@current_user_session).to receive(:save).and_return(current_user)
@@ -367,7 +367,7 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to GET opportunities_overview" do
     before(:each) do
-      require_user
+      login
       @user = @current_user
       @user.update_attributes(first_name: "Apple", last_name: "Boy")
     end

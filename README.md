@@ -64,19 +64,19 @@ Visit our website at http://www.fatfreecrm.com/
 
 Please view one of the following installation guides:
 
-### [Setup Linux or Mac OS](http://guides.fatfreecrm.com/Setup-Linux-or-Mac-OS.html)
+### [Setup Linux or Mac OS](http://guides.fatfreecrm.com/Setup-Linux-or-Mac-OS)
 
 Installing Fat Free CRM on Linux or Mac OS X
 
-### [Setup Heroku](http://guides.fatfreecrm.com/Setup-Heroku.html)
+### [Setup Heroku](http://guides.fatfreecrm.com/Setup-Heroku)
 
 Setting up a Heroku instance for Fat Free CRM
 
-### [Setup Microsoft Windows](http://guides.fatfreecrm.com/Setup-Microsoft-Windows.html)
+### [Setup Microsoft Windows](http://guides.fatfreecrm.com/Setup-Microsoft-Windows)
 
 Installing Fat Free CRM on Microsoft Windows
 
-### [Running Fat Free CRM as a Rails Engine](http://guides.fatfreecrm.com/Running-as-a-Rails-Engine.html)
+### [Running Fat Free CRM as a Rails Engine](http://guides.fatfreecrm.com/Running-as-a-Rails-Engine)
 
 Run the Fat Free CRM gem within a separate Rails application.
 This is the best way to deploy Fat Free CRM if you need to add plugins or make any customizations. Note that it is not yet simple to 'bolt' Fat Free CRM into your existing rails project, but we're heading in that direction.

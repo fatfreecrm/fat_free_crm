@@ -1,9 +1,9 @@
 - id = dom_id(@tag)
 
 - if @tag.errors.empty?
-  $('##{id}').replaceWith('#{ j render(:partial => "tag", :collection => [ @tag ]) }');
+  $('##{id}').replaceWith('#{ j render(partial: "tag", collection: [ @tag ]) }');
   $('##{id}').effect('highlight', { duration: 1000 });
 - else
-  $('##{id}').html('#{ j render(:partial => "edit") }');
+  $('##{id}').html('#{ j render(partial: "edit") }');
   $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('#tag_tagname').focus();

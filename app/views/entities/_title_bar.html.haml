@@ -5,8 +5,8 @@
   #buttons
     = view_buttons
   .create_asset
-    = link_to_inline("create_#{model_name}".to_sym, send("new_#{model_name}_path"), :text => t("create_#{model_name}".to_sym))
+    = link_to_inline("create_#{model_name}".to_sym, send("new_#{model_name}_path"), text: t("create_#{model_name}".to_sym))
 
 .title
-  %span{:id => "create_#{model_name}_title"} #{t controller_name.to_sym}
-  = image_tag("loading.gif", :size => :thumb, :id => "loading", :style => "display: none;")
+  %span{id: "create_#{model_name}_title"} #{t controller_name.to_sym}
+  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")

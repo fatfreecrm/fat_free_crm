@@ -1,24 +1,24 @@
 !!!
-%html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => :en,  :lang => :en }
+%html{ xmlns: "http://www.w3.org/1999/xhtml", "xml:lang" => :en,  lang: :en }
   %head
-    %meta{ "http-equiv" => "Content-Type", :content => "text/html; charset=utf-8" }
+    %meta{ "http-equiv" => "Content-Type", content: "text/html; charset=utf-8" }
     %title= t(:crm_admin_page)
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
     = stylesheet_link_tag :application
-    = stylesheet_link_tag :print, :media => 'print'
+    = stylesheet_link_tag :print, media: 'print'
     %style= yield :styles
 
     = javascript_include_tag :application
     = hook(:javascript_includes, self) {}
 
-    %script{:type => "text/javascript"}= yield :javascript
+    %script{type: "text/javascript"}= yield :javascript
     = csrf_meta_tag
 
   %body.admin
     = render "layouts/admin/header"
     = render "layouts/tabbed"
     = render "layouts/footer"
-    %script{:type => "text/javascript"}
+    %script{type: "text/javascript"}
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset
       = yield :javascript_epilogue

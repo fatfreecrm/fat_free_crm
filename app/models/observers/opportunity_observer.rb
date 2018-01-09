@@ -23,14 +23,14 @@ class OpportunityObserver < ActiveRecord::Observer
   def after_update(item)
     original = @@opportunities.delete(item.id)
     if original
-      if original.stage != "won" && item.stage == "won"    # :other to :won -- add to total campaign revenue.
+      if original.stage != "won" && item.stage == "won" # :other to :won -- add to total campaign revenue.
         update_campaign_revenue(item.campaign, (item.amount || 0) - (item.discount || 0))
         item.update_attribute(:probability, 100) # Set probability to 100% if won
         return log_activity(item, :won)
       elsif original.stage == "won" && item.stage != "won" # :won to :other -- substract from total campaign revenue.
         update_campaign_revenue(original.campaign, -((original.amount || 0) - (original.discount || 0)))
       elsif original.stage != "lost" && item.stage == "lost"
-        item.update_attribute(:probability, 0)   # Set probability to 0% if lost
+        item.update_attribute(:probability, 0) # Set probability to 0% if lost
       end
     end
   end

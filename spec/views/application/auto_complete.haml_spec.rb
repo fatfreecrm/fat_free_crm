@@ -11,7 +11,7 @@ describe "/application/_auto_complete" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   %i[account campaign contact lead opportunity].each do |model|

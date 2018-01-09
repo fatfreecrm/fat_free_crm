@@ -15,7 +15,7 @@ describe "/contacts/index" do
     assign :per_page, Contact.per_page
     assign :sort_by,  Contact.sort_by
     assign :ransack_search, Contact.ransack
-    login_and_assign
+    login
   end
 
   it "should render a list of contacts if it's not empty" do

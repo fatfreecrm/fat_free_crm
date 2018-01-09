@@ -5,7 +5,7 @@
       -# add a new section
       %div[field_group]
         - collapsed = session[dom_id(field_group, entity_show)].nil?
-        = section_title dom_id(field_group, entity_show), collapsed, field_group.label_i18n, t('show_tag_info_small', :tag => field_group.label_i18n)
+        = section_title dom_id(field_group, entity_show), collapsed, field_group.label_i18n, t('show_tag_info_small', tag: field_group.label_i18n)
         .show_fields
-          %div{ hidden_if(collapsed).merge(:id => dom_id(field_group, entity_show)) }
-            = render "fields/group_view", :fields => fields, :entity => entity
+          %div{ hidden_if(collapsed).merge(id: dom_id(field_group, entity_show)) }
+            = render "fields/group_view", fields: fields, entity: entity

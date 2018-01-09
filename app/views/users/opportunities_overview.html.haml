@@ -4,13 +4,13 @@
 
 - if @users_with_opportunities.any? || @unassigned_opportunities.any?
   %ul
-    = render :partial => "user_report", :collection => @users_with_opportunities
+    = render partial: "user_report", collection: @users_with_opportunities
     - if @unassigned_opportunities.any?
       #unassigned
         .title
           %span#title
             = t(:unassigned_opportunities)
         %ul.list#opportunities
-          = render :partial => "opportunities/opportunity", :collection => @unassigned_opportunities
+          = render partial: "opportunities/opportunity", collection: @unassigned_opportunities
 - else
   = t(:no_opportunities_found)

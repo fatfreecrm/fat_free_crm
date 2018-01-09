@@ -47,7 +47,7 @@ class Admin::UsersController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def create
     @user = User.new(user_params)
-    @user.check_if_needs_approval
+    @user.suspend_if_needs_approval
     @user.save_without_session_maintenance
 
     respond_with(@user)
@@ -74,7 +74,7 @@ class Admin::UsersController < Admin::ApplicationController
   # DELETE /admin/users/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   def destroy
-    unless @user.destroyable? && @user.destroy
+    unless @user.destroyable?(current_user) && @user.destroy
       flash[:warning] = t(:msg_cant_delete_user, @user.full_name)
     end
 

@@ -2,7 +2,7 @@
 - id_prefix = "#{class_name}_#{@comment.commentable.id}"
 
 - if @comment.valid?
-  $('##{id_prefix}_comment_new').after('#{ j (render :partial => "comment", :locals => { :comment => @comment }) }');
+  $('##{id_prefix}_comment_new').after('#{ j (render partial: "comment", locals: { comment: @comment }) }');
   $('##{dom_id(@comment)}').effect("highlight", { duration:1500 });
   $('##{id_prefix}_post').hide();
   $('##{id_prefix}_ask').show();

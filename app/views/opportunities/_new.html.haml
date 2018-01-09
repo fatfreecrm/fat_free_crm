@@ -1,18 +1,18 @@
-= simple_form_for(@opportunity, :html => one_submit_only, :remote => true) do |f|
+= simple_form_for(@opportunity, html: one_submit_only, remote: true) do |f|
   = link_to_close new_opportunity_path
   = f.hidden_field :user_id
   = hidden_field_tag "contact",  "#{@contact.id  if @contact}"
 
-  = f.error_messages :object_name => t('opportunity')
+  = f.error_messages object_name: t('opportunity')
 
-  = render "opportunities/top_section", :f => f
-  = render "fields/edit_custom_field_group", :f => f
-  = render "shared/add_comment",        :f => f
-  = render "fields/groups",             :f => f
-  = render "entities/permissions",      :f => f, :entity => @opportunity
+  = render "opportunities/top_section", f: f
+  = render "fields/edit_custom_field_group", f: f
+  = render "shared/add_comment",        f: f
+  = render "fields/groups",             f: f
+  = render "entities/permissions",      f: f, entity: @opportunity
   = hook(:entity_form, self, {f: f, entity: @opportunity})
 
   .buttonbar
-    = f.submit t(:create_opportunity), :onclick => %/$("#account_assigned_to").val($("#opportunity_assigned_to").val()); if ($("#account_id").css('display') != 'none') { $("#account_id").enable(); }/
+    = f.submit t(:create_opportunity), onclick: %/$("#account_assigned_to").val($("#opportunity_assigned_to").val()); if ($("#account_id").css('display') != 'none') { $("#account_id").enable(); }/
     #{t :or}
     = link_to_cancel new_opportunity_path

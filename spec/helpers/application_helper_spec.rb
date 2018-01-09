@@ -41,7 +41,7 @@ describe ApplicationHelper do
 
     link = helper.link_to_discard(lead)
     expect(link).to match(%r{leads/#{lead.id}/discard})
-    expect(link).to match(%r{attachment=Lead&amp;attachment_id=#{lead.id}})
+    expect(link).to match(/attachment=Lead&amp;attachment_id=#{lead.id}/)
   end
 
   describe "shown_on_landing_page?" do

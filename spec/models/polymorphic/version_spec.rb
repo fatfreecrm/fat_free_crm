@@ -23,10 +23,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Version, versioning: true do
-  before do
-    login
-    PaperTrail.whodunnit = current_user.id.to_s
-  end
+  let(:current_user) { FactoryGirl.create(:user) }
+  before { PaperTrail.whodunnit = current_user.id.to_s }
 
   it "should create a new instance given valid attributes" do
     FactoryGirl.create(:version, whodunnit: PaperTrail.whodunnit, item: FactoryGirl.create(:lead))
@@ -202,8 +200,7 @@ describe Version, versioning: true do
       @item = FactoryGirl.create(:account,
                                  user: current_user,
                                  access: "Shared",
-                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)]
-      )
+                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)])
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -217,8 +214,7 @@ describe Version, versioning: true do
       @item = FactoryGirl.create(:account,
                                  user: current_user,
                                  access: "Shared",
-                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)]
-      )
+                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)])
       @item.destroy
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -232,8 +228,7 @@ describe Version, versioning: true do
       @item = FactoryGirl.create(:account,
                                  user: current_user,
                                  access: "Shared",
-                                 permissions: [FactoryGirl.build(:permission, user: @user, asset: @item)]
-      )
+                                 permissions: [FactoryGirl.build(:permission, user: @user, asset: @item)])
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)

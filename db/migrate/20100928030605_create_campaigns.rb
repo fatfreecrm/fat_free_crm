@@ -3,7 +3,7 @@
 class CreateCampaigns < ActiveRecord::Migration[4.2]
   def self.up
     create_table :campaigns, force: true do |t|
-      t.string :uuid,   limit: 36
+      t.string :uuid, limit: 36
       t.references :user
       t.integer :assigned_to
       t.string :name,   limit: 64, null: false, default: ""

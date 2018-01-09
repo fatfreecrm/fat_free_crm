@@ -11,7 +11,7 @@ describe "/contacts/show" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
     @contact = FactoryGirl.create(:contact, id: 42,
                                             opportunities: [FactoryGirl.create(:opportunity)])
     assign(:contact, @contact)

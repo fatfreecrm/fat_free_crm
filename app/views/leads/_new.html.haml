@@ -1,23 +1,23 @@
-= simple_form_for(@lead, :html => one_submit_only, :remote => true) do |f|
+= simple_form_for(@lead, html: one_submit_only, remote: true) do |f|
   = link_to_close new_lead_path
   = f.hidden_field :user_id
   = hidden_field_tag "campaign", "#{@campaign.id if @campaign}"
 
-  = f.error_messages :object_name => t('lead')
+  = f.error_messages object_name: t('lead')
 
-  = render "leads/top_section",    :f => f
-  = render "fields/edit_custom_field_group", :f => f
-  = render "leads/status",         :f => f
-  = render "leads/contact",        :f => f
-  = render "shared/add_comment",   :f => f
-  = render "leads/web",            :f => f
-  = render "fields/groups",        :f => f
-  = render "entities/permissions", :f => f, :entity => @lead
+  = render "leads/top_section",    f: f
+  = render "fields/edit_custom_field_group", f: f
+  = render "leads/status",         f: f
+  = render "leads/contact",        f: f
+  = render "shared/add_comment",   f: f
+  = render "leads/web",            f: f
+  = render "fields/groups",        f: f
+  = render "entities/permissions", f: f, entity: @lead
   = hook(:entity_form, self, {f: f, entity: @lead})
 
   .buttonbar
     - if Setting.compound_address
-      = f.submit t(:create_lead), :onclick => "crm.clear_all_hints()"
+      = f.submit t(:create_lead), onclick: "crm.clear_all_hints()"
     - else
       = f.submit t(:create_lead)
     #{t :or}

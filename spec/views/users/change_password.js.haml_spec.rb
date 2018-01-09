@@ -11,7 +11,7 @@ describe "/users/change_password" do
   include UsersHelper
 
   before do
-    login_and_assign
+    login
     assign(:user, @user = current_user)
   end
 

@@ -11,7 +11,7 @@ describe "/contacts/_new" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
     @account = FactoryGirl.build_stubbed(:account)
     assign(:contact, Contact.new)
     assign(:users, [current_user])

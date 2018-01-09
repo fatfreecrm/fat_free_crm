@@ -1,7 +1,7 @@
 - unless @activities.blank?
-  $('#activities').html('#{ j render(:partial => "activity", :collection => @activities) }');
+  $('#activities').html('#{ j render(partial: "activity", collection: @activities) }');
 - else
   $('#activities').html('#{ j t(:no_activity_records) }');
 
--# $('#paginate').html('#{ j render(:partial => "shared/paginate") }');
-$('#export').html('#{ j render(:partial => "shared/export") }');
+-# $('#paginate').html('#{ j render(partial: "shared/paginate") }');
+$('#export').html('#{ j render(partial: "shared/export") }');

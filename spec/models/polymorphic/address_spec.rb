@@ -28,10 +28,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Address do
-  before(:each) do
-    login
-  end
-
   it "should create a new instance given valid attributes" do
     Address.create!(street1: "street1", street2: "street2", city: "city", state: "state", zipcode: "zipcode", country: "country", full_address: "fa", address_type: "Lead", addressable: FactoryGirl.create(:lead))
   end

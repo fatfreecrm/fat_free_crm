@@ -1,4 +1,4 @@
 - class_name = entity.class.name.underscore
 - id = "#{class_name}_#{entity.id}_subscribe"
 
-$('##{id}').html('#{ j render(:partial => "comments/subscription_links", :locals => {:entity => entity}) }');
+$('##{id}').html('#{ j render(partial: "comments/subscription_links", locals: {entity: entity}) }');

@@ -4,10 +4,10 @@
       - group.each_with_index do |field, i|
         %td
           - if field.hint.present?
-            = image_tag "info_tiny.png", :title => field.hint, :class => "tooltip-icon"
+            = image_tag "info_tiny.png", title: field.hint, class: "tooltip-icon"
           - if field.as == 'check_boxes'
             - value = f.object.send(field.name)
             - checked = YAML.load(value.to_s)
-          = f.input field.name, field.input_options.merge(:checked => checked)
+          = f.input field.name, field.input_options.merge(checked: checked)
         - if i == 0
           %td= spacer

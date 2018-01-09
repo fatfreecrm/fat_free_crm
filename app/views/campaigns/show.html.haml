@@ -1,26 +1,26 @@
 - if (template = template_for_current_view)
-  = render(template, :campaign => @campaign)
+  = render(template, campaign: @campaign)
 - else
 
   -# default view
 
   = styles_for :task, :lead, :opportunity
 
-  = render 'campaigns/title_bar', :campaign => @campaign
+  = render 'campaigns/title_bar', campaign: @campaign
 
-  = render "comments/new", :commentable => @campaign
-  = render :partial => "shared/timeline", :collection => @timeline
+  = render "comments/new", commentable: @campaign
+  = render partial: "shared/timeline", collection: @timeline
 
   = hook(:show_campaign_bottom, self, {entity: @campaign}) do
 
-    = render "tasks/tasks", :object => @campaign
+    = render "tasks/tasks", object: @campaign
 
-    = render "leads/leads", :object => @campaign
+    = render "leads/leads", object: @campaign
 
-    = render "opportunities/opportunities", :object => @campaign
+    = render "opportunities/opportunities", object: @campaign
 
-    = render "versions/versions", :object => @campaign
+    = render "versions/versions", object: @campaign
 
     = load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
 
-  #export= render "shared/export", :action => :show
+  #export= render "shared/export", action: :show

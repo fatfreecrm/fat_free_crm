@@ -8,11 +8,11 @@
       - view = "pending"
     - else
       - view = "assigned"
-    $('#tasks').prepend('#{ j render(:partial => "tasks/#{view}", :collection => [ @attachment ], :locals => { :bucket => @attachment.computed_bucket }) }');
+    $('#tasks').prepend('#{ j render(partial: "tasks/#{view}", collection: [ @attachment ], locals: { bucket: @attachment.computed_bucket }) }');
 
 
   - else
-    $('##{h params[:assets]}').prepend('#{ j render(:partial => "#{params[:assets]}/#{partial}", :collection => [ @attachment ]) }');
+    $('##{h params[:assets]}').prepend('#{ j render(partial: "#{params[:assets]}/#{partial}", collection: [ @attachment ]) }');
     - if called_from_landing_page?(:accounts)
       = refresh_sidebar_for(:accounts, :show, :summary)
     - elsif called_from_landing_page?(:campaigns)

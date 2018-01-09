@@ -23,4 +23,4 @@
     - custom_field_group = contact.field_groups.select{|f| f.name == 'custom_fields'}.first
     - if custom_field_group.present?
       - fields = custom_field_group.fields.without_pairs
-      = render("fields/group_view", :fields => fields, :entity => contact) unless fields.nil?
+      = render("fields/group_view", fields: fields, entity: contact) unless fields.nil?

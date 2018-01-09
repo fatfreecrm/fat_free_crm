@@ -89,12 +89,12 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def db_transition_safety(old_type, new_type = as)
     old_col, new_col = [old_type, new_type].map { |t| column_type(t).to_s }
-    return :null if old_col == new_col  # no transition needed
+    return :null if old_col == new_col # no transition needed
     return :safe if SAFE_DB_TRANSITIONS[:one].any? do |start, final|
-      old_col == start.to_s && new_col == final.to_s  # one-to-one
+      old_col == start.to_s && new_col == final.to_s # one-to-one
     end
     return :safe if SAFE_DB_TRANSITIONS[:any].any? do |col_set|
-      [old_col, new_col].all? { |c| col_set.include?(c.to_s) }  # any-to-any
+      [old_col, new_col].all? { |c| col_set.include?(c.to_s) } # any-to-any
     end
     :unsafe # Else, unsafe.
   end
@@ -131,8 +131,7 @@ class CustomField < Field
   # Adds custom field translation for Ransack
   def add_ransack_translation
     I18n.backend.store_translations(Setting.locale.to_sym,
-                                    ransack: { attributes: { klass.model_name.singular => { name => label } } }
-    )
+                                    ransack: { attributes: { klass.model_name.singular => { name => label } } })
     # Reset Ransack cache
     # Ransack::Helpers::FormBuilder.cached_searchable_attributes_for_base = {}
   end

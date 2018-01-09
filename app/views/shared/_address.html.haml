@@ -5,7 +5,7 @@
 - same_as_billing ||= false
 
 = f.fields_for(address_attr.to_sym) do |a|
-  = a.hidden_field :address_type, :value => address_type
+  = a.hidden_field :address_type, value: address_type
   - unless Setting.compound_address
     - if same_as_billing
       %div
@@ -14,7 +14,7 @@
         .label #{t title}:
     - else
       .label #{t title}:
-    = a.text_area :full_address, :style =>"width:240px", :rows => 4
+    = a.text_area :full_address, style: "width:240px", rows: 4
   - else
     %table.address(cellpadding="0" cellspacing="0")
       %tr
@@ -41,4 +41,4 @@
           = address_field(a, address, :zipcode, "width:80px;")
         %td= spacer
         %td
-          = a.country_select(:country, priority_countries, { :include_blank => "" }, {:"data-placeholder" => t(:select_a_country), :style => "width:150px; margin-top:6px", :class => 'select2'})
+          = a.country_select(:country, priority_countries, { include_blank: "" }, {:"data-placeholder" => t(:select_a_country), style: "width:150px; margin-top:6px", class: 'select2'})

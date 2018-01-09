@@ -9,6 +9,6 @@
 - else # Completing from the Asset page -- replace task partial with completed one.
 
   $('##{dom_id(@task)}').hide();
-  $('##{dom_id(@task)}').html('#{ j render(:partial => "tasks/completed", :collection => [ @task ], :locals => { :bucket => nil }) }');
+  $('##{dom_id(@task)}').html('#{ j render(partial: "tasks/completed", collection: [ @task ], locals: { bucket: nil }) }');
   $('##{dom_id(@task)}').fadeIn({ duration:500 });
-  $('#recently').replaceWith('#{ j render(:partial => "shared/recently") }');
+  $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');

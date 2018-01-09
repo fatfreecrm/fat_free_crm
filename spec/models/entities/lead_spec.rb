@@ -41,7 +41,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Lead do
-  before { login }
+  let(:current_user) { FactoryGirl.create(:user) }
 
   it "should create a new instance given valid attributes" do
     Lead.create!(first_name: "Billy", last_name: "Bones")
