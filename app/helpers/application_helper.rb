@@ -254,7 +254,7 @@ module ApplicationHelper
       if site == :skype
         url = "callto:" + url
       else
-        url = "http://" + url unless url =~ /^https?:\/\//
+        url = "http://" + url unless url.match?(/^https?:\/\//)
       end
       link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
     end.compact.join("\n").html_safe
