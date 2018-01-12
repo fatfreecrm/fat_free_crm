@@ -17,15 +17,15 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def tabless_layout?
-    %w[authentications passwords].include?(controller.controller_name) ||
+  def tableless_layout?
+    %w[sessions passwords registrations confirmations].include?(controller.controller_name) ||
       ((controller.controller_name == "users") && %w[create new].include?(controller.action_name))
   end
 
   # Show existing flash or embed hidden paragraph ready for flash[:notice]
   #----------------------------------------------------------------------------
   def show_flash(options = { sticky: false })
-    %i[error warning info notice].each do |type|
+    %i[error warning info notice alert].each do |type|
       next unless flash[type]
       html = content_tag(:div, h(flash[type]), id: "flash")
       flash[type] = nil
@@ -352,7 +352,7 @@ module ApplicationHelper
   # Helper to display links to supported data export formats.
   #----------------------------------------------------------------------------
   def links_to_export(action = :index)
-    token = current_user.single_access_token
+    token = current_user.authentication_token
     url_params = { action: action }
     url_params[:id] = params[:id] unless params[:id].blank?
     url_params[:query] = params[:query] unless params[:query].blank?

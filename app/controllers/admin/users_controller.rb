@@ -48,7 +48,7 @@ class Admin::UsersController < Admin::ApplicationController
   def create
     @user = User.new(user_params)
     @user.suspend_if_needs_approval
-    @user.save_without_session_maintenance
+    @user.save
 
     respond_with(@user)
   end
@@ -59,7 +59,7 @@ class Admin::UsersController < Admin::ApplicationController
   def update
     @user = User.find(params[:id])
     @user.attributes = user_params
-    @user.save_without_session_maintenance
+    @user.save
 
     respond_with(@user)
   end

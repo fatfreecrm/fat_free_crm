@@ -80,7 +80,6 @@ class OpportunitiesController < EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-
         @accounts = Account.my(current_user).order('name')
         @account = if params[:account][:id].blank?
                      if request.referer =~ /\/accounts\/(\d+)\z/

@@ -1,6 +1,8 @@
 - if @user.errors.empty?
   crm.flip_form('edit_profile');
   crm.set_title('edit_profile', '#{j t(:my_profile)}');
+  $('#flash').html('#{j flash[:notice]}');
+  crm.flash('notice')
   $('#welcome_username').html('#{j current_user.name}');
   $('#profile').html('#{ j render(partial: "user") }');
 - else

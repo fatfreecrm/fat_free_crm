@@ -12,7 +12,7 @@
 
     = javascript_include_tag :application
 
-    - unless tabless_layout? || %w(en-US en-GB).include?(I18n.locale.to_s)
+    - unless tableless_layout? || %w(en-US en-GB).include?(I18n.locale.to_s)
       = javascript_include_tag "jquery_ui_datepicker/jquery.ui.datepicker-#{I18n.locale}"
       = javascript_include_tag "jquery_ui_datepicker/jquery-ui-timepicker-#{I18n.locale}"
 
@@ -35,7 +35,7 @@
 
   %body
     = render "layouts/header"
-    - if tabless_layout?
+    - if tableless_layout?
       = render "layouts/tabless"
     - else
       = render "layouts/tabbed"
