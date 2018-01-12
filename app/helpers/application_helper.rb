@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  def tableless_layout?
+  def tabless_layout?
     %w[authentications passwords].include?(controller.controller_name) ||
       ((controller.controller_name == "users") && %w[create new].include?(controller.action_name))
   end
