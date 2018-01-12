@@ -215,6 +215,7 @@ en-US:
   msg_require_admin: You must be Administrator to access this page.
   msg_successful_signup: Successful signup, welcome to Fat Free CRM!
   msg_welcome: Welcome to Fat Free CRM!
+  msg_user_updated: Profile updated successfully.
 
   # Options.
   #----------------------------------------------------------------------------
