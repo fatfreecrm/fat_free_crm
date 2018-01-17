@@ -44,7 +44,7 @@ class Admin::FieldsController < Admin::ApplicationController
   def create
     as = field_params[:as]
     @field =
-      if as =~ /pair/
+      if as.match?(/pair/)
         CustomFieldPair.create_pair(params).first
       elsif as.present?
         klass = Field.lookup_class(as).classify.constantize
@@ -60,7 +60,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # PUT /fields/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    if field_params[:as] =~ /pair/
+    if field_params[:as].match?(/pair/)
       @field = CustomFieldPair.update_pair(params).first
     else
       @field = Field.find(params[:id])

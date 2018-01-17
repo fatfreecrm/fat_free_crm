@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 module ApplicationHelper
   def tabs(tabs = nil)
-    tabs ||= controller_path =~ /admin/ ? FatFreeCRM::Tabs.admin : FatFreeCRM::Tabs.main
+    tabs ||= controller_path.match?(/admin/) ? FatFreeCRM::Tabs.admin : FatFreeCRM::Tabs.main
     if tabs
       @current_tab ||= tabs.first[:text] # Select first tab by default.
       tabs.each { |tab| tab[:active] = (@current_tab == tab[:text] || @current_tab == tab[:url][:controller]) }
@@ -250,10 +250,11 @@ module ApplicationHelper
     %i[blog linkedin facebook twitter skype].map do |site|
       url = person.send(site)
       next if url.blank?
+
       if site == :skype
         url = "callto:" + url
       else
-        url = "http://" + url unless url =~ /^https?:\/\//
+        url = "http://" + url unless url.match?(/^https?:\/\//)
       end
       link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
     end.compact.join("\n").html_safe
