@@ -25,7 +25,7 @@ module ApplicationHelper
   # Show existing flash or embed hidden paragraph ready for flash[:notice]
   #----------------------------------------------------------------------------
   def show_flash(options = { sticky: false })
-    %i[error warning info notice].each do |type|
+    %i[error warning info notice alert].each do |type|
       next unless flash[type]
       html = content_tag(:div, h(flash[type]), id: "flash")
       flash[type] = nil
