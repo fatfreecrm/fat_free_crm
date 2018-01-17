@@ -51,6 +51,9 @@ Style/Alias:
 Style/Documentation:
   Enabled: false
 
+Style/EmptyElse:
+  Enabled: false
+
 Style/EmptyMethod:
   EnforcedStyle: expanded
 

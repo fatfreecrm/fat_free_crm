@@ -207,10 +207,10 @@ class Contact < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def save_account(params)
     account_params = params[:account]
-    self.account = if !account_params || account_params[:id] == "" || account_params[:name] == ""
-                     nil
-                   else
+    self.account = if account_params && account_params[:id] != "" && account_params[:name] != ""
                      Account.create_or_select_for(self, account_params)
+                   else
+                     nil
                    end
   end
 
