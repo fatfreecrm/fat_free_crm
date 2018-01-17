@@ -783,24 +783,12 @@ ja:
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
-    comment:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
-    contact:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
-    opportunity:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
-    lead:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
-    day:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
-    login:
-      one: 1 件のコメント
-      other: ! '%{count} 件のコメント'
+    comment: '%{count}件のコメント'
+    contact: '%{count}件の取引先責任者'
+    opportunity: '%{count}件の商談'
+    lead: '%{count}件のリード'
+    day: '%{count}日'
+    login: '%{count}件のログイン'
 
   # Custom date/time formats.
   #----------------------------------------------------------------------------
