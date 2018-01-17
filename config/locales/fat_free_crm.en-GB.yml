@@ -109,7 +109,7 @@ en-GB:
             name:
               missing_account_name: ^Please specify account name.
             access:
-              share_account: ^Please specify users to share the account with.
+              share_account: ^Please specify users with whom to share the account.
         campaign:
           attributes:
             name:
@@ -118,7 +118,7 @@ en-GB:
               dates_not_in_sequence: ^Please make sure the campaign end date is after
                 the start date.
             access:
-              share_campaign: ^Please specify users to share the campaign with.
+              share_campaign: ^Please specify users with whom to share the campaign.
         contact:
           attributes:
             first_name:
@@ -126,7 +126,7 @@ en-GB:
             last_name:
               missing_last_name: ^Please specify last name.
             access:
-              share_contact: ^Please specify users to share the contact with.
+              share_contact: ^Please specify users with whom to share the contact.
         lead:
           attributes:
             first_name:
@@ -134,13 +134,13 @@ en-GB:
             last_name:
               missing_last_name: ^Please specify last name.
             access:
-              share_lead: ^Please specify users to share the lead with.
+              share_lead: ^Please specify users with whom to share the lead.
         opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Please specify opportunity name.
             access:
-              share_opportunity: ^Please specify users to share the opportunity with.
+              share_opportunity: ^Please specify users with whom to share the opportunity.
         task:
           attributes:
             name:
@@ -215,6 +215,7 @@ en-GB:
   msg_require_admin: You must be Administrator to access this page.
   msg_successful_signup: Successful signup, welcome to Fat Free CRM!
   msg_welcome: Welcome to Fat Free CRM!
+  msg_user_updated: Profile updated successfully.
 
   # Options.
   #----------------------------------------------------------------------------
