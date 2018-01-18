@@ -648,7 +648,7 @@ ja:
   about_ffc: Fat Free CRMについて
   about_ffc_resources: Fat Free CRMリソース
   about_ffc_version: Fat Free CRM バージョン
-  about_home_page: Home page
+  about_home_page: ホームページ
   about_project_page: プロジェクトページ
   about_thank_you: |
     Fat Free CRMをご利用いただきありがとうございます。
@@ -673,22 +673,22 @@ ja:
   edit_comment: コメント編集中
   show: 表示
   update: 更新
-  following_users_will_be_notified: The following users will be notified by email
-  notifications_tooltip: Subscribers will receive new comments via email
-  subscribe_via_email: Subscribe via email
-  disable_email_subscriptions: Disable email subscription
-  added_note: added note %{value}
+  following_users_will_be_notified: 以下のユーザーはEメールで通知されます
+  notifications_tooltip: 購読者はEメールで新しいコメントを受け取る
+  subscribe_via_email: メールで登録
+  disable_email_subscriptions: Eメールの購読を無効にする
+  added_note: メモを追加しました「%{value}」
 
   # Views -> Emails.
   #----------------------------------------------------------------------------
 
   # Views -> Passwords.
   #----------------------------------------------------------------------------
-  confirm_password_intro: Please type your new password and then confirm it.
-  password_intro: Please specify your email address, and the instructions to reset
-    your password will be sent to you.
-  reset_password: Reset Password
-  update_password_and_login: Update Password and Login
+  confirm_password_intro: 新しいパスワードを入力して確認してください。
+  password_intro: |
+    パスワードの再設定方法を送るために、Eメールアドレスを指定してください。
+  reset_password: パスワードの再設定
+  update_password_and_login: パスワードとログインの更新
 
   # Views -> Admin
   #----------------------------------------------------------------------------
@@ -706,11 +706,12 @@ ja:
 
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
-  confirm_group_delete: Are you sure you wish to delete this group? There are %{count}
-    items that still reference it.
-  approve: Approve
+  confirm_group_delete: |
+    このグループを本当に削除しますか？
+    関連している項目は%{count}件がまだ残っています。
+  approve: 確定
   create_user: ユーザを作成
-  last_logged_in: last logged in %{value}
+  last_logged_in: 最終ログイン時刻 %{value}
   personal_information: 個人情報
   group_memberships: グループメンバー
   reactivate: 再開
@@ -719,14 +720,14 @@ ja:
   user_active: 有効
   user_admin: 管理者
   user_awaits_approval: は承認を待っています
-  user_confirm_delete: A user can only be deleted if no related assets are left behind.
+  user_confirm_delete: 関連する項目が残っていない場合にのみ、ユーザーを削除できます。
   user_is_admin: このユーザは管理者
-  user_never_logged_in: hasn't logged in yet
-  user_signed_up: Signed Up
-  user_signed_up_on: signed up on %{value}
+  user_never_logged_in: はまだログインしたことありません。
+  user_signed_up: 登録しました
+  user_signed_up_on: ! '%{value}に登録しました'
   user_since: ! '%{value}からのユーザ'
-  user_suspended: Suspended
-  user_suspended_on: suspended on %{value}
+  user_suspended: ! '一時停止中しました'
+  user_suspended_on: ! '%{value}に一時停止中しました'
   users: ユーザ
   users_small: ユーザ
 
@@ -757,18 +758,18 @@ ja:
 
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_notification_subject: dropbox - Added email - %{subject}
-  dropbox_notification_intro: Succesfully added the email you sent to dropbox
-  dropbox_notification_to: Added to
-  subject: Subject
-  body: Body
+  dropbox_notification_subject: Dropbox - Eメールを追加 - %{subject}
+  dropbox_notification_intro: Dropboxに送信したEメールを正常に追加しました
+  dropbox_notification_to: 受信者
+  subject: 件名
+  body: 本文
 
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
-    intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
-    reply_instructions: Reply to this email directly to add a new comment, or view
-      the %{entity} online
+    intro: ! '%{user_full_name}が%{entity_type}: %{entity_name}にコメントしました'
+    reply_instructions: |
+      このメールに直接返信して新しいコメントを追加するか、オンラインで%{entity}を見てください。
 
   # Lists
   #----------------------------------------------------------------------------
@@ -776,9 +777,9 @@ ja:
   personal_lists: マイリスト
   list: リスト
   no_saved_lists: 保存されたリストはありません。
-  make_current_view_list: Make current view a list
-  list_name_info: If you use the name of an existing list, you will overwrite that
-    list with your current settings
+  make_current_view_list: 現在のビューからリストを作る
+  list_name_info: |
+    既存のリストの名前を使用する場合は、そのリストを現在の設定で上書きします。
 
   # Pluralizations.
   #----------------------------------------------------------------------------
@@ -831,35 +832,36 @@ ja:
   edit_field_group: フィールドグループを編集
   save_field_group: フィールドグループを保存
   field_group_empty: このグループにはフィールドはありません。
-  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
-  restrict_by_tag: ! 'Restrict by Tag:'
-  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
-  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
-  field_group_unrestricted: This field group applies to all %{assets}
-  field_group_confirm_delete: If a field group is deleted, any fields will be moved
-    to the default field group.
-  msg_cant_delete_field_group: Field Group could not be deleted.
-  admin_fields_info: ! 'Custom fields are displayed in groups.
-    Create a new field group, or add fields to one of the groups below.
-    You can drag and drop fields to change their display order or move them between
-    field groups.'
+  select_or_create_tags: いくつかのタグを選択するか、エンターキーを押して新しいタグを作成することが可能です。
+  restrict_by_tag: ! 'タグで制限する:'
+  restrict_by_tag_info: (以下のタグが付いた%{assets}のフィールドのみを表示)
+  field_group_tag_restriction: このフィールドグループは、「%{tag}」でタグ付けされた%{assets}に適用されます
+  field_group_unrestricted: このフィールドグループはすべての%{assets}に適用されます
+  field_group_confirm_delete: |
+    フィールドグループが削除されると、すべてのフィールドがデフォルトのフィールドグループに移動されます。
+  msg_cant_delete_field_group: フィールドグループを削除できませんでした。
+  admin_fields_info: |
+    カスタムフィールドはグループ単位で表示されます。
+    新しいフィールドグループを作成して、又は以下のグループのいずれかにフィールドを追加することも可能です。
+    フィールドをドラッグアンドドロップすると、表示順序を変更したり、フィールドグループ間で移動することができます。
 
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'It is strongly recommended you restart your server after
-    adding or removing any custom field.'
+  admin_fields_info2: |
+    カスタムフィールドの追加または削除後に、サーバーを再起動してください。
   tags: タグ
-  tag_small: tag
-  tagged: Tagged
-  create_tag: Create Tag
-  save_tag: Save Tag
-  field_group_tags: Field Groups shown for this Tag
+  tag_small: タグ
+  tagged: タグ付き
+  create_tag: タグを作成
+  save_tag: タグを保存
+  field_group_tags: このタグに表示されるフィールドグループ
 
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from
-    %{value} records.
-  msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
+  tag_with_taggings_confirm_delete: |
+    このタグが削除されると、%{value}件の項目から削除されます。
+  msg_cant_delete_tag: |
+    フィールドグループに関連付けられているため、「%{value}」削除できませんでした。
   views:
     admin:
       plugins:
