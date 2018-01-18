@@ -11,7 +11,7 @@ class CampaignsController < EntitiesController
   # GET /campaigns
   #----------------------------------------------------------------------------
   def index
-    @campaigns = get_campaigns(page: params[:page], per_page: params[:per_page])
+    @campaigns = get_campaigns(page: page_param, per_page: per_page_param)
 
     respond_with @campaigns do |format|
       format.xls { render layout: 'header' }
@@ -141,9 +141,9 @@ class CampaignsController < EntitiesController
   # GET /campaigns/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw
-    current_user.pref[:campaigns_per_page] = params[:per_page] if params[:per_page]
+    current_user.pref[:campaigns_per_page] = per_page_param if per_page_param
     current_user.pref[:campaigns_sort_by]  = Campaign.sort_by_map[params[:sort_by]] if params[:sort_by]
-    @campaigns = get_campaigns(page: 1, per_page: params[:per_page])
+    @campaigns = get_campaigns(page: 1, per_page: per_page_param)
     set_options # Refresh options
 
     respond_with(@campaigns) do |format|
@@ -155,7 +155,7 @@ class CampaignsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:campaigns_filter] = params[:status]
-    @campaigns = get_campaigns(page: 1, per_page: params[:per_page])
+    @campaigns = get_campaigns(page: 1, per_page: per_page_param)
 
     respond_with(@campaigns) do |format|
       format.js { render :index }

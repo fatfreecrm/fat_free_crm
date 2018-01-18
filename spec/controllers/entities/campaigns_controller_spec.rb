@@ -601,7 +601,7 @@ describe CampaignsController do
   describe "responding to GET redraw" do
     it "should save user selected campaign preference" do
       get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
-      expect(current_user.preference[:campaigns_per_page]).to eq("42")
+      expect(current_user.preference[:campaigns_per_page]).to eq(42)
       expect(current_user.preference[:campaigns_index_view]).to eq("brief")
       expect(current_user.preference[:campaigns_sort_by]).to eq("campaigns.name ASC")
     end

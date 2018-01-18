@@ -857,7 +857,7 @@ describe OpportunitiesController do
   describe "responding to GET redraw" do
     it "should save user selected opportunity preference" do
       get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
-      expect(current_user.preference[:opportunities_per_page]).to eq("42")
+      expect(current_user.preference[:opportunities_per_page]).to eq(42)
       expect(current_user.preference[:opportunities_index_view]).to eq("brief")
       expect(current_user.preference[:opportunities_sort_by]).to eq("opportunities.name ASC")
     end
