@@ -486,8 +486,10 @@ module ApplicationHelper
   # Generate the html for $.timeago function
   # <span class="timeago" datetime="2008-07-17T09:24:17Z">July 17, 2008</span>
   def timeago(time, options = {})
+    return unless time
     options[:class] ||= "timeago"
-    content_tag(:span, h(time.to_s), options.merge(title: time.getutc.iso8601)).html_safe if time
+    options[:title] = time.getutc.iso8601
+    content_tag(:span, h(I18n.l(time)), options).html_safe
   end
 
   #----------------------------------------------------------------------------
