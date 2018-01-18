@@ -124,7 +124,7 @@
       $("#account_name").hide()
       $("#account_name").prop('disabled', true)
 
-      # Disable chosen account select
+      # Disable select2 account select
       $("#account_id").prop('disabled', true)
       $("#account_id").trigger "liszt:updated"
       $("#s2id_account_id").show()
