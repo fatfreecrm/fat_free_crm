@@ -216,4 +216,14 @@ class EntitiesController < ApplicationController
       current_user.pref[:"#{controller}_#{action}_view"] = params['view']
     end
   end
+
+  def per_page_param
+    per_page = params[:per_page]&.to_i
+    [1, [per_page, 200].min].max if per_page
+  end
+
+  def page_param
+    page = params[:page]&.to_i
+    [0, page].max if page
+  end
 end
