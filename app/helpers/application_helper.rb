@@ -482,7 +482,7 @@ module ApplicationHelper
     return unless time
     options[:class] ||= "timeago"
     options[:title] = time.getutc.iso8601
-    content_tag(:span, h(I18n.l(time)), options).html_safe
+    content_tag(:span, I18n.l(time), options)
   end
 
   #----------------------------------------------------------------------------
