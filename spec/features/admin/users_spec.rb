@@ -27,7 +27,7 @@ feature 'Users tab', '
     fill_in 'user_last_name', with: 'Thunder'
     fill_in 'user_title', with: 'Chief'
     fill_in 'user_company', with: 'Weather Inc.'
-    chosen_select('Superheroes', from: 'user_group_ids')
+    select 'Superheroes', from: 'user_group_ids'
 
     click_button 'Create User'
     expect(find('#users')).to have_content('Captain Thunder')

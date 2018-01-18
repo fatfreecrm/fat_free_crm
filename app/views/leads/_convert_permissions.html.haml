@@ -23,9 +23,9 @@
           %td
             = label_tag :lead_user_ids, "#{t(:users)}:"
             %br
-            = select :lead, :user_ids, user_options, {}, multiple: true
+            = select :lead, :user_ids, user_options, {}, multiple: true, class: 'select2'
         %tr
           %td
             = label_tag :lead_group_ids, "#{t(:groups)}:"
             %br
-            = select :lead, :group_ids, group_options, {}, multiple: true
+            = select :lead, :group_ids, group_options, {}, multiple: true, class: 'select2'

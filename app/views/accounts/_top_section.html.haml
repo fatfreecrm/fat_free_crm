@@ -12,7 +12,7 @@
         %td= spacer
         %td
           .label #{t :category}:
-          = f.select :category, Setting.unroll(:account_category), { selected: (@account.category || "other").to_sym, include_blank: t(:other) }, { style: "width:160px" }
+          = f.select :category, Setting.unroll(:account_category), { selected: (@account.category || "other").to_sym, include_blank: t(:other) }, { style: "width:160px", class: 'select2' }
         %td= spacer
         %td
           .label #{t :rating}:

@@ -40,10 +40,8 @@ module OpportunitiesHelper
     options[:selected] ||= @opportunity.campaign_id || 0
     selected_campaign = Campaign.find_by_id(options[:selected])
     campaigns = ([selected_campaign] + Campaign.my(current_user).order(:name).limit(25)).compact.uniq
-    collection_select :opportunity, :campaign_id, campaigns, :id, :name, options,
-                      "data-placeholder": t(:select_a_campaign),
-                      "data-url": auto_complete_campaigns_path(format: 'json'),
-                      style: "width:330px; display:none;",
-                      class: 'ajax_chosen'
+    collection_select :opportunity, :campaign_id, campaigns, :id, :name,
+                      { selected: options[:selected], prompt: t(:select_a_campaign) },
+                      style: 'width:330px;', class: 'select2'
   end
 end

@@ -16,7 +16,7 @@
         %td= spacer
         %td
           .label #{t :stage}:
-          = o.select :stage, Setting.unroll(:opportunity_stage), { selected: @opportunity.stage ? @opportunity.stage.to_sym : nil }, { style: "width:160px" }
+          = o.select :stage, Setting.unroll(:opportunity_stage), { selected: @opportunity.stage ? @opportunity.stage.to_sym : nil }, { style: "width:160px", class: 'select2' }
 
     %table
       %tr
