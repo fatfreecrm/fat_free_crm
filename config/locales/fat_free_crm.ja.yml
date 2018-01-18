@@ -192,7 +192,7 @@ ja:
   msg_bad_image_file: ^指定されたファイルのアップデートもしくはリサイズができませんでした。
   msg_cant_create_related: ! '%{related}がもはや存在しないため、%{asset}を生成できません。'
   msg_cant_delete_user: ^%{value}に関連する項目があるため、ユーザーを削除できません。
-  msg_cant_do: %{asset}は現在存在しないため、%{action}を出来ません。
+  msg_cant_do: ! '%{asset}は現在存在しないため、%{action}を出来ません。'
   msg_email_not_found: そのEメールアドレスを持つユーザが見つかりませんでした。
   msg_enter_new_password: 新しいパスワードを入力してください。
   msg_goodbye: ログアウトしました。Fat Free CRMをご利用いただき、ありがとうございます!
@@ -352,8 +352,8 @@ ja:
   target_conversion: CVR目標
   create_campaign: キャンペーンを作成
   end_date: 終了日
-  finished_on: %{value}に完了
-  finishes_in: %{value}後に完了予定
+  finished_on: ! '%{value}に完了'
+  finishes_in: ! '%{value}後に完了予定'
   no_start_date: 開始日未設定
   number_of_leads: リード件数
   objectives: 目的
@@ -367,7 +367,7 @@ ja:
   save_campaign: キャンペーンを保存
   start_date: 開始日
   started_ago: ! '%{value}前に開始'
-  starts_in: %{value}後に開始予定
+  starts_in: ! '%{value}後に開始予定'
   starts_today: 本日開始!
   target: 目標
   total_campaigns: キャンペーンの合計
@@ -524,17 +524,17 @@ ja:
   related: ! 're:'
   save_task: タスクを保存
   task_assigned: タスクは%{value}に割り当てられています
-  task_assigned_to: %{value}に割り当てられています
+  task_assigned_to: ! '%{value}に割り当てられています'
   task_completed: 完了
   task_uncomplete: 戻す
   task_completed_ago: ! '%{value}前に完了'
   task_completed_by: ! '%{user}によって%{time_ago}前に完了'
   task_created: タスクが作成されました
-  task_due_in: %{value}に予定
+  task_due_in: ! '%{value}に予定'
   task_due_later: 近いうちに予定
   task_due_now: 今すぐ
   task_due_today: 今日中
-  task_from: %{value}～
+  task_from: ! '%{value}～'
   task_overdue: 遅い、予定
   task_pending: タスクが未完了ステータスに移動しました
   total_tasks: ! '%{value}の合計'
@@ -584,7 +584,7 @@ ja:
   no_opportunity_records: あなたの商談はありません。
   my_accounts: 取引先
   no_account_records: あなたの取引先はありません。
-  not_showing_hidden_entities: %{count}つの隠れた%{entity}を表示していません。
+  not_showing_hidden_entities: ! '%{count}つの隠れた%{entity}を表示していません。'
 
   # Views -> Common.
   #----------------------------------------------------------------------------
@@ -599,7 +599,7 @@ ja:
   close_form: フォームを閉じる
   comment_intro: 後でコメントを追加できます。
   confirm_delete: この%{value}を削除しますか?
-  copy_permissions: %{value}の権限をコピーする
+  copy_permissions: ! '%{value}の権限をコピーする'
   could_not_find: ! '%{value}がありません。どうぞお気軽に'
   could_not_find_matching: マッチする%{value}がありません。
   create_new: 新規作成してください -
@@ -923,6 +923,6 @@ ja:
   pair:
     start: 開始
     end: 終了
-    from_to: %{from}～%{to}
-    from_only: %{from}～
+    from_to: ! '%{from}～%{to}'
+    from_only: ! '%{from}～'
     to_only: ～%{to}
