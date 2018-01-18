@@ -41,6 +41,7 @@ feature 'Contacts', '
       expect(contacts_element).to have_content('Testy McTest')
 
       contacts_element.click_link 'Testy McTest'
+      sleep(1) # avoid CI failure
       expect(main_element).to have_content('This is a very important person.')
 
       click_link "Dashboard"

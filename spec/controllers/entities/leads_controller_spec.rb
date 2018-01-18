@@ -957,7 +957,7 @@ describe LeadsController do
   describe "responding to GET redraw" do
     it "should save user selected lead preference" do
       get :redraw, params: { per_page: 42, view: "long", sort_by: "first_name", naming: "after" }, xhr: true
-      expect(current_user.preference[:leads_per_page]).to eq("42")
+      expect(current_user.preference[:leads_per_page]).to eq(42)
       expect(current_user.preference[:leads_index_view]).to eq("long")
       expect(current_user.preference[:leads_sort_by]).to eq("leads.first_name ASC")
       expect(current_user.preference[:leads_naming]).to eq("after")
