@@ -442,28 +442,18 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  # Return name of current view
-  def current_view_name
-    controller = params['controller']
-    action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
-    current_user.pref[:"#{controller}_#{action}_view"]
-  end
-
-  #----------------------------------------------------------------------------
   # Get template in current context with current view name
   def template_for_current_view
-    controller = params['controller']
-    action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
-    template = FatFreeCRM::ViewFactory.template_for_current_view(controller: controller, action: action, name: current_view_name)
-    template
+    FatFreeCRM::ViewFactory.template_for_current_view(controller: controller.controller_name,
+                                                      action: show_or_index_action,
+                                                      name: current_view_name)
   end
 
   #----------------------------------------------------------------------------
   # Generate buttons for available views given the current context
   def view_buttons
-    controller = params['controller']
-    action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
-    views = FatFreeCRM::ViewFactory.views_for(controller: controller, action: action)
+    views = FatFreeCRM::ViewFactory.views_for(controller: controller.controller_name,
+                                              action: show_or_index_action)
     return nil unless views.size > 1
     lis = ''.html_safe
     content_tag :ul, class: 'format-buttons' do
@@ -474,8 +464,8 @@ module ApplicationHelper
                     "#{h view.name}-button"
           end
         lis << content_tag(:li) do
-          url = action == "index" ? send("redraw_#{controller}_path") : send("#{controller.singularize}_path")
-          link_to('#', title: t(view.name, default: h(view.title)), "data-view": h(view.name), "data-url": h(url), "data-context": action, class: classes) do
+          url = show_or_index_action == "index" ? send("redraw_#{controller.controller_name}_path") : send("#{controller.controller_name.singularize}_path")
+          link_to('#', title: t(view.name, default: h(view.title)), "data-view": h(view.name), "data-url": h(url), "data-context": show_or_index_action, class: classes) do
             icon = view.icon || 'fa-bars'
             content_tag(:i, nil, class: "fa #{h icon}")
           end
@@ -489,8 +479,10 @@ module ApplicationHelper
   # Generate the html for $.timeago function
   # <span class="timeago" datetime="2008-07-17T09:24:17Z">July 17, 2008</span>
   def timeago(time, options = {})
+    return unless time
     options[:class] ||= "timeago"
-    content_tag(:span, h(time.to_s), options.merge(title: time.getutc.iso8601)) if time
+    options[:title] = time.getutc.iso8601
+    content_tag(:span, h(I18n.l(time)), options).html_safe
   end
 
   #----------------------------------------------------------------------------
@@ -513,8 +505,18 @@ module ApplicationHelper
   #         options = { renderer: {...} , params: {...}
   def paginate(options = {})
     collection = options.delete(:collection)
-    options = { params: { action: 'index' } }.merge(options) if params['action'] == 'filter'
+    options = { params: { action: 'index' } }.merge(options) if controller.action_name == 'filter'
     options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
     will_paginate(collection, options)
+  end
+
+  private
+
+  def show_or_index_action
+    controller.action_name == 'show' ? 'show' : 'index'
+  end
+
+  def current_view_name
+    current_user.pref[:"#{controller.controller_name}_#{show_or_index_action}_view"]
   end
 end

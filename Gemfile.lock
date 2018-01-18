@@ -65,6 +65,7 @@ GEM
       scrypt (>= 1.2, < 4.0)
     bootsnap (1.1.8)
       msgpack (~> 1.0)
+    brakeman (4.1.1)
     builder (3.2.3)
     byebug (9.1.0)
     cancancan (2.1.2)
@@ -405,6 +406,7 @@ DEPENDENCIES
   acts_as_list
   authlogic (>= 3.4.4)
   bootsnap
+  brakeman
   byebug
   cancancan
   capistrano
@@ -470,7 +472,6 @@ DEPENDENCIES
   uglifier
   will_paginate
   zeus
-
 
 BUNDLED WITH
    1.16.0
