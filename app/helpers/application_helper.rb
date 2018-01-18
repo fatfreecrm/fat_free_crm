@@ -442,12 +442,6 @@ module ApplicationHelper
   end
 
   #----------------------------------------------------------------------------
-  # Return name of current view
-  def current_view_name
-    current_user.pref[:"#{controller.controller_name}_#{show_or_index_action}_view"]
-  end
-
-  #----------------------------------------------------------------------------
   # Get template in current context with current view name
   def template_for_current_view
     FatFreeCRM::ViewFactory.template_for_current_view(controller: controller.controller_name,
@@ -520,5 +514,9 @@ module ApplicationHelper
 
   def show_or_index_action
     controller.action_name == 'show' ? 'show' : 'index'
+  end
+
+  def current_view_name
+    current_user.pref[:"#{controller.controller_name}_#{show_or_index_action}_view"]
   end
 end

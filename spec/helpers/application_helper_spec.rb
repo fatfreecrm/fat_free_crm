@@ -80,7 +80,7 @@ describe ApplicationHelper do
 
     it "should return the contact 'show' outline stored in the user preferences" do
       expect(@user).to receive(:pref).and_return(contacts_show_view: 'long')
-      expect(helper.current_view_name).to eq('long')
+      expect(helper.send(:current_view_name)).to eq('long')
     end
   end
 end
