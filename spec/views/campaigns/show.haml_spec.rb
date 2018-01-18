@@ -20,6 +20,9 @@ describe "/campaigns/show" do
     assign(:comment, Comment.new)
     assign(:timeline, [FactoryGirl.build_stubbed(:comment, commentable: @campaign)])
     allow(view).to receive(:params) { { id: 123 } }
+
+    # controller#controller_name and controller#action_name are not set in view specs
+    allow(view).to receive(:template_for_current_view).and_return(nil)
   end
 
   it "should render campaign landing page" do
