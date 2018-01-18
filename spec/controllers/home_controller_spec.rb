@@ -133,18 +133,20 @@ describe HomeController do
   # GET /home/toggle                                                       AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET toggle" do
-    it "should toggle expand/collapse state of form section in the session (delete existing session key)" do
-      session[:hello] = "world"
+    before(:each) do
+      login
+    end
 
+    it "should toggle expand/collapse state of form section in the session (delete existing session key)" do
+      session[:toggle_states] = { hello: "world" }
       get :toggle, params: { id: "hello" }, xhr: true
-      expect(session.keys).not_to include(:hello)
+      expect(session[:toggle_states].keys).not_to include(:hello)
     end
 
     it "should toggle expand/collapse state of form section in the session (save new session key)" do
-      session.delete(:hello)
-
+      session[:toggle_states] = {}
       get :toggle, params: { id: "hello" }, xhr: true
-      expect(session[:hello]).to eq(true)
+      expect(session[:toggle_states][:hello]).to eq(true)
     end
   end
 
