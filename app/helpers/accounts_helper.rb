@@ -26,13 +26,11 @@ module AccountsHelper
   # and prepends the currently selected account, if any.
   #----------------------------------------------------------------------------
   def account_select(options = {})
-    options[:selected] = (@account&.id) || 0
-    accounts = ([@account] + Account.my(current_user).order(:name).limit(25)).compact.uniq
-    collection_select :account, :id, accounts, :id, :name, options,
-                      "data-placeholder": t(:select_an_account),
-                      "data-url": auto_complete_accounts_path(format: 'json'),
-                      style: "width:330px; display:none;",
-                      class: 'ajax_chosen'
+    options[:selected] = @account&.id || 0
+    accounts = ([@account.new_record? ? nil : @account] + Account.my(current_user).order(:name).limit(25)).compact.uniq
+    collection_select :account, :id, accounts, :id, :name,
+                      { prompt: t(:select_an_account), include_blank: false },
+                      style: 'width:330px;', class: 'select2'
   end
 
   # Select an existing account or create a new one.
@@ -44,10 +42,10 @@ module AccountsHelper
     content_tag(:div, class: 'label') do
       t(:account).html_safe +
         content_tag(:span, id: 'account_create_title') do
-          "(#{t :create_new} #{t :or} <a href='#' onclick='crm.select_account(); return false;'>#{t :select_existing}</a>):".html_safe
+          "(#{t :create_new} #{t :or} <a href='#' onclick='crm.show_select_account(); return false;'>#{t :select_existing}</a>):".html_safe
         end +
         content_tag(:span, id: 'account_select_title') do
-          "(<a href='#' onclick='crm.create_account(); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):".html_safe
+          "(<a href='#' onclick='crm.show_create_account(); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):".html_safe
         end +
         content_tag(:span, ':', id: 'account_disabled_title')
     end +

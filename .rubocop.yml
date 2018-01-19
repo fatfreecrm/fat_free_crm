@@ -1,7 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
 Bundler/OrderedGems:
   Enabled: false
@@ -49,6 +49,9 @@ Style/Alias:
   EnforcedStyle: prefer_alias
 
 Style/Documentation:
+  Enabled: false
+
+Style/EmptyElse:
   Enabled: false
 
 Style/EmptyMethod:

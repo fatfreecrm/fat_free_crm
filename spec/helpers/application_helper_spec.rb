@@ -74,12 +74,13 @@ describe ApplicationHelper do
     before(:each) do
       @user = mock_model(User)
       allow(helper).to receive(:current_user).and_return(@user)
-      allow(controller).to receive(:params).and_return('action' => 'show', 'controller' => 'contacts')
+      allow(controller).to receive(:action_name).and_return('show')
+      allow(controller).to receive(:controller_name).and_return('contacts')
     end
 
     it "should return the contact 'show' outline stored in the user preferences" do
       expect(@user).to receive(:pref).and_return(contacts_show_view: 'long')
-      expect(helper.current_view_name).to eq('long')
+      expect(helper.send(:current_view_name)).to eq('long')
     end
   end
 end

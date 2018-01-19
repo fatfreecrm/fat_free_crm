@@ -69,7 +69,7 @@ feature 'Opportunities', '
       click_link 'A Cool Opportunity'
       click_link 'Edit'
       fill_in 'opportunity_name', with: 'An Even Cooler Opportunity'
-      chosen_select('Other Example Account', from: 'account_id')
+      select 'Other Example Account', from: 'account_id'
       select 'Analysis', from: 'opportunity_stage'
       click_button 'Save Opportunity'
       expect(page).to have_content('An Even Cooler Opportunity')

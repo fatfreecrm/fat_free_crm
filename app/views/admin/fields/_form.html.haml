@@ -21,7 +21,7 @@
           %td= spacer
           %td
             .label.top.req Field type:
-            = select :field, :as, field_edit_as_options(@field), include_blank: true, id: nil
+            = select :field, :as, field_edit_as_options(@field), include_blank: true, id: nil, class: 'select2'
 
       .subform
         = render(partial: 'admin/fields/subform') unless new_field

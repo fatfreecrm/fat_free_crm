@@ -16,6 +16,9 @@ describe "/leads/show" do
     assign(:users, [current_user])
     assign(:comment, Comment.new)
     assign(:timeline, [FactoryGirl.build_stubbed(:comment, commentable: @lead)])
+
+    # controller#controller_name and controller#action_name are not set in view specs
+    allow(view).to receive(:template_for_current_view).and_return(nil)
   end
 
   it "should render lead landing page" do

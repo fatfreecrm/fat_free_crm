@@ -563,7 +563,7 @@ describe AccountsController do
   describe "responding to GET redraw" do
     it "should save user selected account preference" do
       get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
-      expect(current_user.preference[:accounts_per_page]).to eq("42")
+      expect(current_user.preference[:accounts_per_page]).to eq(42)
       expect(current_user.preference[:accounts_index_view]).to eq("brief")
       expect(current_user.preference[:accounts_sort_by]).to eq("accounts.name ASC")
     end

@@ -61,6 +61,7 @@ GEM
     bcrypt (3.1.11)
     bootsnap (1.1.8)
       msgpack (~> 1.0)
+    brakeman (4.1.1)
     builder (3.2.3)
     byebug (9.1.0)
     cancancan (2.1.2)
@@ -410,6 +411,7 @@ DEPENDENCIES
   acts_as_fu
   acts_as_list
   bootsnap
+  brakeman
   byebug
   cancancan
   capistrano

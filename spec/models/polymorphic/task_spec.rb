@@ -50,7 +50,7 @@ describe Task do
         task = FactoryGirl.create(:task, due_at: Time.now.end_of_week, bucket: "due_this_week")
         expect(task.errors).to be_empty
         expect(task.bucket).to eq("due_this_week")
-        expect(task.due_at).to eq(Time.zone.now.end_of_week)
+        expect(task.due_at.change(usec: 0)).to eq(Time.zone.now.end_of_week.change(usec: 0))
       end
 
       it "should create a task with due date selected from the calendar within #{offset ? 'different' : 'current'} timezone" do
@@ -106,7 +106,7 @@ describe Task do
         task.update_attributes(bucket: "due_this_week")
         expect(task.errors).to be_empty
         expect(task.bucket).to eq("due_this_week")
-        expect(task.due_at).to eq(Time.zone.now.end_of_week)
+        expect(task.due_at.change(usec: 0)).to eq(Time.zone.now.end_of_week.change(usec: 0))
       end
 
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do

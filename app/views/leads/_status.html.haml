@@ -14,7 +14,7 @@
         %td= spacer
         %td
           .label.top #{t :status}:
-          = f.select :status, lead_status_codes_for(@lead), { selected: (@lead.status || "new").to_sym }, { style: "width:160px" }
+          = f.select :status, lead_status_codes_for(@lead), { selected: (@lead.status || "new").to_sym }, { style: "width:160px", class: 'select2' }
         %td= spacer
         %td
           .label.top #{t :rating}:
@@ -23,14 +23,14 @@
         %td
           .label #{t :source}:
           - if @campaign && !edit # Create a lead from Campaign landing page: select :campaign as a source and disable the dropdown.
-            = f.select :source, Setting.unroll(:lead_source), { selected: :campaign }, { style: "width:160px;", disabled: true }
+            = f.select :source, Setting.unroll(:lead_source), { selected: :campaign }, { style: "width:160px;", disabled: true, class: 'select2' }
             = hidden_field_tag "lead[source]", "campaign"
           - else
-            = f.select :source, Setting.unroll(:lead_source), { selected: (@lead.source || "other").to_sym }, { style: "width:160px" }
+            = f.select :source, Setting.unroll(:lead_source), { selected: (@lead.source || "other").to_sym }, { style: "width:160px", class: 'select2' }
         %td= spacer
         %td{ colspan: 3 }
           .label #{t :campaign}:
           - if @campaign && !edit # Create a lead from Campaign landing page: select current campaign and disable the dropdown.
-            = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @campaign.id }, { style: "width:100%", disabled: true }
+            = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @campaign.id }, { style: "width:100%", disabled: true, class: 'select2' }
           - else
-            = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @lead.campaign_id, include_blank: t(:select_none) }, { style: "width:100%", onchange: "crm.flip_campaign_permissions(this.value)" }
+            = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @lead.campaign_id, include_blank: t(:select_none) }, { style: "width:100%", onchange: "crm.flip_campaign_permissions(this.value)", class: 'select2' }

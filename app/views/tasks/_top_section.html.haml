@@ -10,10 +10,10 @@
         - bucket = (params[:bucket].blank? ? @task.bucket : params[:bucket]) || "due_asap"
         - with_time = Setting.task_calendar_with_time
         - if @task.bucket != "specific_time"
-          = f.select :bucket, @bucket, { selected: bucket.to_sym }, { style: "width:160px;", onchange: "crm.flip_calendar(this.value)" }
+          = f.select :bucket, @bucket, { selected: bucket.to_sym }, { style: "width:160px;", onchange: "crm.flip_calendar(this.value)", class: 'select2' }
           = f.text_field :calendar, style: "width:160px; display:none;", autocomplete: :off, class: (with_time ? 'datetime' : 'date')
         - else
-          = f.select :bucket, @bucket, { selected: :specific_time }, { style: "width:160px; display:none;", onchange: "crm.flip_calendar(this.value)" }
+          = f.select :bucket, @bucket, { selected: :specific_time }, { style: "width:160px; display:none;", onchange: "crm.flip_calendar(this.value)", class: 'select2' }
           - fmt = with_time ? '%Y-%m-%d %H:%M' : '%Y-%m-%d'
           = f.text_field :calendar, value: f.object.due_at.strftime(fmt), style: "width:160px;", autocomplete: :off, class: (with_time ? 'datetime' : 'date')
       %td= spacer
@@ -23,7 +23,7 @@
       %td= spacer
       %td
         .label.req #{t :category}:
-        = f.select :category, @category, { selected: @task.category.blank? ? nil : @task.category.to_sym, include_blank: t(:select_blank) }, { style: "width:160px" }
+        = f.select :category, @category, { selected: @task.category.blank? ? nil : @task.category.to_sym, include_blank: t(:select_blank) }, { style: "width:160px", class: 'select2' }
 
     - if Setting.background_info && Setting.background_info.include?(:task)
       %tr

@@ -18,6 +18,9 @@ describe "/contacts/show" do
     assign(:users, [current_user])
     assign(:comment, Comment.new)
     assign(:timeline, [FactoryGirl.create(:comment, commentable: @contact)])
+
+    # controller#controller_name and controller#action_name are not set in view specs
+    allow(view).to receive(:template_for_current_view).and_return(nil)
   end
 
   it "should render contact landing page" do

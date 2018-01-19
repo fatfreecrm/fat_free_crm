@@ -12,7 +12,7 @@ class LeadsController < EntitiesController
   # GET /leads
   #----------------------------------------------------------------------------
   def index
-    @leads = get_leads(page: params[:page])
+    @leads = get_leads(page: page_param)
 
     respond_with @leads do |format|
       format.xls { render layout: 'header' }
@@ -161,7 +161,7 @@ class LeadsController < EntitiesController
   # GET /leads/redraw                                                      AJAX
   #----------------------------------------------------------------------------
   def redraw
-    current_user.pref[:leads_per_page] = params[:per_page] if params[:per_page]
+    current_user.pref[:leads_per_page] = per_page_param if per_page_param
 
     # Sorting and naming only: set the same option for Contacts if the hasn't been set yet.
     if params[:sort_by]
@@ -175,7 +175,7 @@ class LeadsController < EntitiesController
       current_user.pref[:contacts_naming] ||= params[:naming]
     end
 
-    @leads = get_leads(page: 1, per_page: params[:per_page]) # Start one the first page.
+    @leads = get_leads(page: 1, per_page: per_page_param) # Start one the first page.
     set_options # Refresh options
 
     respond_with(@leads) do |format|
@@ -187,7 +187,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:leads_filter] = params[:status]
-    @leads = get_leads(page: 1, per_page: params[:per_page]) # Start one the first page.
+    @leads = get_leads(page: 1, per_page: per_page_param) # Start one the first page.
 
     respond_with(@leads) do |format|
       format.js { render :index }

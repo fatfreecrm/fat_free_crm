@@ -51,7 +51,7 @@ group :development do
     gem 'rb-inotify', require: false
     gem 'rb-fsevent', require: false
     gem 'rb-fchange', require: false
-    gem 'devise-i18n'
+    gem 'brakeman', require: false
   end
 end
 
@@ -89,4 +89,5 @@ gem 'therubyracer', platform: :ruby unless ENV["CI"]
 gem 'nokogiri', '>= 1.8.1'
 gem 'activemodel-serializers-xml'
 gem 'bootsnap', require: false
+gem 'devise-i18n'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
