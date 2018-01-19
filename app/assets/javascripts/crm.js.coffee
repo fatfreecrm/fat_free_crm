@@ -90,13 +90,13 @@
 
     # Hide accounts dropdown and show create new account edit field instead.
     #----------------------------------------------------------------------------
-    create_account: ->
-      crm.makeAjaxChosen()
+    show_create_account: ->
       $("#account_disabled_title").hide()
-      $("#account_select_title").hide()
       $("#account_create_title").show()
-      $("#account_id_chzn").hide()
+      $("#account_select_title").hide()
       $("#account_id").prop('disabled', true)
+      $("#account_id").next(".select2-container").disable()
+      $("#account_id").next(".select2-container").hide()
       $("#account_name").prop('disabled', false)
       $("#account_name").html ""
       $("#account_name").show()
@@ -104,45 +104,41 @@
 
     # Hide create account edit field and show accounts dropdown instead.
     #----------------------------------------------------------------------------
-    select_account: ->
-      crm.makeAjaxChosen()
+    show_select_account: ->
       $("#account_disabled_title").hide()
       $("#account_create_title").hide()
       $("#account_select_title").show()
       $("#account_name").hide()
       $("#account_name").prop('disabled', true)
       $("#account_id").prop('disabled', false)
-      $("#account_id_chzn").show()
+      $("#account_id").next(".select2-container").enable()
+      $("#account_id").next(".select2-container").show()
 
 
     # Show accounts dropdown and disable it to prevent changing the account.
     #----------------------------------------------------------------------------
-    select_existing_account: ->
-      crm.makeAjaxChosen()
+    show_disabled_select_account: ->
+      $("#account_disabled_title").show()
       $("#account_create_title").hide()
       $("#account_select_title").hide()
-      $("#account_id").hide()
-      $("#account_disabled_title").show()
       $("#account_name").hide()
       $("#account_name").prop('disabled', true)
 
-      # Disable chosen account select
-      $("#account_id").prop('disabled', true)
-      $("#account_id").trigger "liszt:updated"
-      $("#account_id_chzn").show()
-
-      # Enable hidden account id select so that value is POSTed
+      # Disable select2 account select but enable hidden
+      # account_id select so that value is POSTed
+      $("#account_id").next(".select2-container").disable()
+      $("#account_id").next(".select2-container").show()
       $("#account_id").prop('disabled', false)
 
 
     #----------------------------------------------------------------------------
     create_or_select_account: (selector) ->
       if selector isnt true and selector > 0
-        @select_existing_account() # disabled accounts dropdown
+        @show_disabled_select_account() # disabled accounts dropdown
       else if selector
-        @create_account() # create account edit field
+        @show_create_account() # create account edit field
       else
-        @select_account() # accounts dropdown
+        @show_select_account() # accounts dropdown
 
 
     #----------------------------------------------------------------------------

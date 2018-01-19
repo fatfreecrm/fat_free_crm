@@ -31,6 +31,8 @@ feature 'Accounts', '
       click_link 'Create Account'
       expect(page).to have_selector('#account_name', visible: true)
       fill_in 'account_name', with: 'My new account'
+      select 'Affiliate', from: 'account_category'
+      select 'Myself', from: 'account_assigned_to'
       click_link 'Contact Information'
       fill_in 'account_phone', with: '+1 2345 6789'
       fill_in 'account_website', with: 'http://www.example.com'
@@ -43,6 +45,7 @@ feature 'Accounts', '
       expect(page).to have_content('+1 2345 6789')
       expect(page).to have_content('http://www.example.com')
       expect(page).to have_content('This account is very important')
+      expect(page).to have_content('Affiliate')
 
       click_link "Dashboard"
       expect(page).to have_content("Bill Murray created account My new account")
