@@ -6,6 +6,10 @@ then you win. –- Mahatma Gandhi
 
 Unreleased (0.17.0)
 ---------------------------------------------------------------------
+This release replaces Chozen with Select2 consistently across the app.
+This may break plugins which rely on Chozen. To fix any issues please
+migrate to Select2 or add Chozen to your plugins.
+
  - #678 Find an account by name when name is in params (fixes #397) 
  - #673 Improve JS escaping 
  - #671 Devise Readiness (+ thread-safety): Refactor User.my scope 
