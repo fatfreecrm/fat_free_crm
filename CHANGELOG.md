@@ -4,8 +4,17 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased (0.17.0)
+Sun Jan 21, 2018 (0.17.0)
 ---------------------------------------------------------------------
+ - #691 Wording
+ - #688 Preparation for Devise
+ - #686 Bundle update
+ - #683 Rubocop: Refactoring
+ - #680 Alternative build setup
+ - #682 Rubocop: Hashrockets
+ - #693 Update Japanese translations
+ - #697 Minor security improvements
+ - #703 #696 Replace Chozen with select2
  - #678 Find an account by name when name is in params (fixes #397) 
  - #673 Improve JS escaping 
  - #671 Devise Readiness (+ thread-safety): Refactor User.my scope 
