@@ -6,12 +6,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module SelectorHelpers
-  def chosen_select(item_text, options)
-    field_id = find_field(options[:from], visible: false)[:id]
-    option_value = page.evaluate_script("$(\"##{field_id} option:contains('#{item_text}')\").val()")
-    page.execute_script("$('##{field_id}').val('#{option_value}')")
-  end
-
   def click_filter_tab(filter_name)
     tab = find(:xpath, "//div[@class='filters']//td[contains(text(), '#{filter_name}')]")
     tab.click
