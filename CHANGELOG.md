@@ -6,6 +6,10 @@ then you win. –- Mahatma Gandhi
 
 Sun Jan 21, 2018 (0.17.0)
 ---------------------------------------------------------------------
+This release replaces Chozen with Select2 consistently across the app.
+This may break plugins which rely on Chozen. To fix any issues please
+migrate to Select2 or add Chozen to your plugins.
+
  - #691 Wording
  - #688 Preparation for Devise
  - #686 Bundle update
