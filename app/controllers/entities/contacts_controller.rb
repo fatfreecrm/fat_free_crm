@@ -69,11 +69,11 @@ class ContactsController < EntitiesController
       else
         if params[:account]
           @account = if params[:account][:id].blank?
-                       if request.referer =~ /\/accounts\/(\d+)\z/
+                    if request.referer =~ /\/accounts\/(\d+)\z/
                          Account.find(Regexp.last_match[1]) # related account
                        else
                          Account.new(user: current_user)
-                                  end
+                        end
                      else
                        Account.find(params[:account][:id])
                      end
@@ -88,11 +88,7 @@ class ContactsController < EntitiesController
   def update
     respond_with(@contact) do |_format|
       unless @contact.update_with_account_and_permissions(params.permit!)
-        @account = if @contact.account
-                     @contact.account
-                   else
-                     Account.new(user: current_user)
-                   end
+        @account = @contact.account || Account.new(user: current_user)
       end
     end
   end

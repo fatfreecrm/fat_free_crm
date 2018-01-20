@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 class LeadsController < EntitiesController
   before_action :get_data_for_sidebar, only: :index
+  before_action :get_accounts, only: %i[new create edit update]
   autocomplete :account, :name, full: true
 
   # GET /leads
@@ -33,6 +34,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def new
     @lead.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
+    @account = Account.new(user: current_user)
     get_campaigns
 
     if params[:related]
@@ -50,6 +52,7 @@ class LeadsController < EntitiesController
   # GET /leads/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   def edit
+    @account = @lead.account || Account.new(user: current_user)
     get_campaigns
 
     if params[:previous].to_s =~ /(\d+)\z/
@@ -66,13 +69,25 @@ class LeadsController < EntitiesController
     @comment_body = params[:comment_body]
 
     respond_with(@lead) do |_format|
-      if @lead.save_with_permissions(params.permit!)
+      if @lead.save_with_account_and_permissions(params.permit!)
         @lead.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
           @leads = get_leads
           get_data_for_sidebar
         else
           get_data_for_sidebar(:campaign)
+        end
+      else
+        if params[:account]
+          @account = if params[:account][:id].blank?
+                    if request.referer =~ /\/accounts\/(\d+)\z/
+                         Account.find(Regexp.last_match[1]) # related account
+                       else
+                         Account.new(user: current_user)
+                        end
+                     else
+                       Account.find(params[:account][:id])
+                     end
         end
       end
     end
@@ -82,6 +97,7 @@ class LeadsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@lead) do |_format|
+      @account = @lead.account || Account.new(user: current_user)
       # Must set access before user_ids, because user_ids= method depends on access value.
       @lead.access = resource_params[:access] if resource_params[:access]
       if @lead.update_with_lead_counters(resource_params)
@@ -263,5 +279,9 @@ class LeadsController < EntitiesController
     else
       get_data_for_sidebar(:campaign)
     end
+  end
+
+  def get_accounts
+    @accounts = Account.my(current_user).order('name')
   end
 end
