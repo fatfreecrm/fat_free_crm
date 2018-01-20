@@ -29,6 +29,8 @@
   .indent
     = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
     %tt
+      - if lead.account
+        = brief_account_info(lead)
       - if lead.company? && lead.title?
         = t(:works_at, job_title: lead.title, company: lead.company)
       - else
