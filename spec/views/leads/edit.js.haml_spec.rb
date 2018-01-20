@@ -12,6 +12,9 @@ describe "/leads/edit" do
 
   before do
     login
+    @account = FactoryGirl.build_stubbed(:account)
+    assign(:account, @account)
+    assign(:accounts, [@account])
     assign(:lead, @lead = FactoryGirl.build_stubbed(:lead, status: "new", user: current_user))
     assign(:users, [current_user])
     assign(:campaigns, [FactoryGirl.build_stubbed(:campaign)])
