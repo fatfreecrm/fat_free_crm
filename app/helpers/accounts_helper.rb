@@ -29,8 +29,9 @@ module AccountsHelper
     options[:selected] = @account&.id || 0
     accounts = ([@account.new_record? ? nil : @account] + Account.my(current_user).order(:name).limit(25)).compact.uniq
     collection_select :account, :id, accounts, :id, :name,
-                      { prompt: t(:select_an_account), include_blank: false },
+                      { include_blank: true },
                       style: 'width:330px;', class: 'select2',
+                      placeholder: t(:select_an_account),
                       "data-url": auto_complete_accounts_path(format: 'json')
   end
 
