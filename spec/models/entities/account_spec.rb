@@ -36,14 +36,14 @@ describe Account do
 
   describe "Attach" do
     before do
-      @account = FactoryGirl.create(:account)
+      @account = create(:account)
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, asset: @account)
-      @contact = FactoryGirl.create(:contact)
+      @task = create(:task, asset: @account)
+      @contact = create(:contact)
       @account.contacts << @contact
-      @opportunity = FactoryGirl.create(:opportunity)
+      @opportunity = create(:opportunity)
       @account.opportunities << @opportunity
 
       expect(@account.attach!(@task)).to eq(nil)
@@ -52,9 +52,9 @@ describe Account do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task)
-      @contact = FactoryGirl.create(:contact)
-      @opportunity = FactoryGirl.create(:opportunity)
+      @task = create(:task)
+      @contact = create(:contact)
+      @opportunity = create(:opportunity)
 
       expect(@account.attach!(@task)).to eq([@task])
       expect(@account.attach!(@contact)).to eq([@contact])
@@ -64,11 +64,11 @@ describe Account do
 
   describe "Discard" do
     before do
-      @account = FactoryGirl.create(:account)
+      @account = create(:account)
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, asset: @account)
+      @task = create(:task, asset: @account)
       expect(@account.tasks.count).to eq(1)
 
       @account.discard!(@task)
@@ -77,7 +77,7 @@ describe Account do
     end
 
     it "should discard a contact" do
-      @contact = FactoryGirl.create(:contact)
+      @contact = create(:contact)
       @account.contacts << @contact
       expect(@account.contacts.count).to eq(1)
 
@@ -89,7 +89,7 @@ describe Account do
     # Commented out this test. "super from singleton method that is defined to multiple classes is not supported;"
     # ------------------------------------------------------
     #    it "should discard an opportunity" do
-    #      @opportunity = FactoryGirl.create(:opportunity)
+    #      @opportunity = create(:opportunity)
     #      @account.opportunities << @opportunity
     #      @account.opportunities.count.should == 1
 
@@ -101,16 +101,16 @@ describe Account do
 
   describe "Exportable" do
     describe "assigned account" do
-      let(:account1) { FactoryGirl.build(:account, assignee: FactoryGirl.create(:user)) }
-      let(:account2) { FactoryGirl.build(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
+      let(:account1) { build(:account, assignee: create(:user)) }
+      let(:account2) { build(:account, user: create(:user, first_name: nil, last_name: nil), assignee: create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
         let(:exported) { [account1, account2] }
       end
     end
 
     describe "unassigned account" do
-      let(:account1) { FactoryGirl.build(:account, assignee: nil) }
-      let(:account2) { FactoryGirl.build(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
+      let(:account1) { build(:account, assignee: nil) }
+      let(:account2) { build(:account, user: create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
         let(:exported) { [account1, account2] }
       end
@@ -119,13 +119,13 @@ describe Account do
 
   describe "Before save" do
     it "create new: should replace empty category string with nil" do
-      account = FactoryGirl.build(:account, category: '')
+      account = build(:account, category: '')
       account.save
       expect(account.category).to eq(nil)
     end
 
     it "update existing: should replace empty category string with nil" do
-      account = FactoryGirl.create(:account, category: '')
+      account = create(:account, category: '')
       account.save
       expect(account.category).to eq(nil)
     end
@@ -138,13 +138,13 @@ describe Account do
   describe "scopes" do
     context "visible_on_dashboard" do
       before do
-        @another_user = FactoryGirl.create(:user)
-        @user = FactoryGirl.create(:user)
-        @a1 = FactoryGirl.create(:account, user: @user)
-        @a2 = FactoryGirl.create(:account, user: @user, assignee: @another_user)
-        @a3 = FactoryGirl.create(:account, assignee: @user)
-        @a4 = FactoryGirl.create(:account, assignee: @another_user)
-        @a5 = FactoryGirl.create(:account, assignee: @user)
+        @another_user = create(:user)
+        @user = create(:user)
+        @a1 = create(:account, user: @user)
+        @a2 = create(:account, user: @user, assignee: @another_user)
+        @a3 = create(:account, assignee: @user)
+        @a4 = create(:account, assignee: @another_user)
+        @a5 = create(:account, assignee: @user)
       end
 
       it "should show accounts which have been created by the user and are unassigned" do
@@ -166,11 +166,11 @@ describe Account do
 
     context "by_name" do
       it "should show accounts ordered by name" do
-        @a1 = FactoryGirl.create(:account, name: "Account A")
-        @a2 = FactoryGirl.create(:account, name: "Account Z")
-        @a3 = FactoryGirl.create(:account, name: "Account J")
-        @a4 = FactoryGirl.create(:account, name: "Account X")
-        @a5 = FactoryGirl.create(:account, name: "Account L")
+        @a1 = create(:account, name: "Account A")
+        @a2 = create(:account, name: "Account Z")
+        @a3 = create(:account, name: "Account J")
+        @a4 = create(:account, name: "Account X")
+        @a5 = create(:account, name: "Account L")
 
         expect(Account.by_name).to eq([@a1, @a3, @a5, @a4, @a2])
       end

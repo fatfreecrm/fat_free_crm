@@ -18,7 +18,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "GET index" do
     it "assigns all users as @users and renders [index] template" do
-      @users = [current_user, FactoryGirl.create(:user)]
+      @users = [current_user, create(:user)]
 
       get :index
       expect(assigns[:users].first).to eq(@users.last) # get_users() sorts by id DESC
@@ -27,8 +27,8 @@ describe Admin::UsersController do
     end
 
     it "performs lookup using query string" do
-      @amy = FactoryGirl.create(:user, username: "amy_anderson")
-      @bob = FactoryGirl.create(:user, username: "bob_builder")
+      @amy = create(:user, username: "amy_anderson")
+      @bob = create(:user, username: "bob_builder")
 
       get :index, params: { query: "amy_anderson" }
       expect(assigns[:users]).to eq([@amy])
@@ -42,7 +42,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "GET show" do
     it "assigns the requested user as @user and renders [show] template" do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
 
       get :show, params: { id: @user.id }
       expect(assigns[:user]).to eq(@user)
@@ -65,7 +65,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "GET edit" do
     it "assigns the requested user as @user and renders [edit] template" do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
 
       get :edit, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(@user)
@@ -74,15 +74,15 @@ describe Admin::UsersController do
     end
 
     it "assigns the previous user as @previous when necessary" do
-      @user = FactoryGirl.create(:user)
-      @previous = FactoryGirl.create(:user)
+      @user = create(:user)
+      @previous = create(:user)
 
       get :edit, params: { id: @user.id, previous: @previous.id }, xhr: true
       expect(assigns[:previous]).to eq(@previous)
     end
 
     it "reloads current page with the flash message if user got deleted" do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       @user.destroy
 
       get :edit, params: { id: @user.id }, xhr: true
@@ -91,8 +91,8 @@ describe Admin::UsersController do
     end
 
     it "notifies the view if previous user got deleted" do
-      @user = FactoryGirl.create(:user)
-      @previous = FactoryGirl.create(:user)
+      @user = create(:user)
+      @previous = create(:user)
       @previous.destroy
 
       get :edit, params: { id: @user.id, previous: @previous.id }, xhr: true
@@ -114,7 +114,7 @@ describe Admin::UsersController do
       end
 
       it "assigns a newly created user as @user and renders [create] template" do
-        @user = FactoryGirl.build(:user, username: @username, email: @email)
+        @user = build(:user, username: @username, email: @email)
         allow(User).to receive(:new).and_return(@user)
 
         post :create, params: { user: { username: @username, email: @email, password: @password, password_confirmation: @password } }, xhr: true
@@ -137,7 +137,7 @@ describe Admin::UsersController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and re-renders [create] template" do
-        @user = FactoryGirl.build(:user, username: "", email: "")
+        @user = build(:user, username: "", email: "")
         allow(User).to receive(:new).and_return(@user)
 
         post :create, params: { user: {} }, xhr: true
@@ -153,7 +153,7 @@ describe Admin::UsersController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested user, assigns it to @user, and renders [update] template" do
-        @user = FactoryGirl.create(:user, username: "flip", email: "flip@example.com")
+        @user = create(:user, username: "flip", email: "flip@example.com")
 
         put :update, params: { id: @user.id, user: { username: "flop", email: "flop@example.com" } }, xhr: true
         expect(assigns[:user]).to eq(@user.reload)
@@ -162,7 +162,7 @@ describe Admin::UsersController do
       end
 
       it "reloads current page is the user got deleted" do
-        @user = FactoryGirl.create(:user)
+        @user = create(:user)
         @user.destroy
 
         put :update, params: { id: @user.id, user: { username: "flop", email: "flop@example.com" } }, xhr: true
@@ -171,7 +171,7 @@ describe Admin::UsersController do
       end
 
       it "assigns admin rights when requested so" do
-        @user = FactoryGirl.create(:user, admin: false)
+        @user = create(:user, admin: false)
         put :update, params: { id: @user.id, user: { admin: "1", username: @user.username, email: @user.email } }, xhr: true
         expect(assigns[:user]).to eq(@user.reload)
         expect(assigns[:user].admin).to eq(true)
@@ -179,7 +179,7 @@ describe Admin::UsersController do
       end
 
       it "revokes admin rights when requested so" do
-        @user = FactoryGirl.create(:user, admin: true)
+        @user = create(:user, admin: true)
         put :update, params: { id: @user.id, user: { admin: "0", username: @user.username, email: @user.email } }, xhr: true
         expect(assigns[:user]).to eq(@user.reload)
         expect(assigns[:user].admin).to eq(false)
@@ -189,7 +189,7 @@ describe Admin::UsersController do
 
     describe "with invalid params" do
       it "doesn't update the requested user, but assigns it to @user and renders [update] template" do
-        @user = FactoryGirl.create(:user, username: "flip", email: "flip@example.com")
+        @user = create(:user, username: "flip", email: "flip@example.com")
 
         put :update, params: { id: @user.id, user: {} }, xhr: true
         expect(assigns[:user]).to eq(@user.reload)
@@ -203,7 +203,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "GET confirm" do
     it "assigns the requested user as @user and renders [confirm] template" do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
 
       get :confirm, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(@user)
@@ -211,7 +211,7 @@ describe Admin::UsersController do
     end
 
     it "reloads current page is the user got deleted" do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       @user.destroy
 
       get :confirm, params: { id: @user.id }, xhr: true
@@ -225,7 +225,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "DELETE destroy" do
     it "destroys the requested user and renders [destroy] template" do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
 
       delete :destroy, params: { id: @user.id }, xhr: true
       expect { User.find(@user.id) }.to raise_error(ActiveRecord::RecordNotFound)
@@ -233,8 +233,8 @@ describe Admin::UsersController do
     end
 
     it "handles the case when the requested user can't be deleted" do
-      @user = FactoryGirl.create(:user)
-      @account = FactoryGirl.create(:account, user: @user) # Plant artifact to prevent the user from being deleted.
+      @user = create(:user)
+      @account = create(:account, user: @user) # Plant artifact to prevent the user from being deleted.
 
       delete :destroy, params: { id: @user.id }, xhr: true
       expect(flash[:warning]).not_to eq(nil)
@@ -247,7 +247,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [FactoryGirl.create(:user, first_name: "Hello")]
+      @auto_complete_matches = [create(:user, first_name: "Hello")]
     end
 
     it_should_behave_like("auto complete")
@@ -258,7 +258,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "PUT suspend" do
     it "suspends the requested user" do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
 
       put :suspend, params: { id: @user.id }, xhr: true
       expect(assigns[:user].suspended?).to eq(true)
@@ -274,7 +274,7 @@ describe Admin::UsersController do
     end
 
     it "reloads current page is the user got deleted" do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       @user.destroy
 
       put :suspend, params: { id: @user.id }, xhr: true
@@ -288,7 +288,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "PUT reactivate" do
     it "re-activates the requested user" do
-      @user = FactoryGirl.create(:user, suspended_at: Time.now.yesterday)
+      @user = create(:user, suspended_at: Time.now.yesterday)
 
       put :reactivate, params: { id: @user.id }, xhr: true
       expect(assigns[:user].suspended?).to eq(false)
@@ -296,7 +296,7 @@ describe Admin::UsersController do
     end
 
     it "reloads current page is the user got deleted" do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       @user.destroy
 
       put :reactivate, params: { id: @user.id }, xhr: true

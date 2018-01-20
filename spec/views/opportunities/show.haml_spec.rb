@@ -12,12 +12,12 @@ describe "/opportunities/show" do
 
   before do
     login
-    @opportunity = FactoryGirl.create(:opportunity, id: 42,
-                                                    contacts: [FactoryGirl.create(:contact)])
+    @opportunity = create(:opportunity, id: 42,
+                                        contacts: [create(:contact)])
     assign(:opportunity, @opportunity)
     assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [FactoryGirl.create(:comment, commentable: @opportunity)])
+    assign(:timeline, [create(:comment, commentable: @opportunity)])
 
     # controller#controller_name and controller#action_name are not set in view specs
     allow(view).to receive(:template_for_current_view).and_return(nil)

@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 describe PasswordsController do
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { build(:user) }
 
   describe "update" do
     before(:each) do

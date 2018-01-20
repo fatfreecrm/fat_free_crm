@@ -17,7 +17,7 @@ feature 'Opportunities', '
   end
 
   scenario 'should view a list of opportunities' do
-    3.times { |i| FactoryGirl.create(:opportunity, name: "Opportunity #{i}") }
+    3.times { |i| create(:opportunity, name: "Opportunity #{i}") }
     visit opportunities_page
     expect(page).to have_content('Opportunity 0')
     expect(page).to have_content('Opportunity 1')
@@ -26,7 +26,7 @@ feature 'Opportunities', '
   end
 
   scenario 'should create a new opportunity', js: true do
-    FactoryGirl.create(:account, name: 'Example Account')
+    create(:account, name: 'Example Account')
     with_versioning do
       visit opportunities_page
       click_link 'Create Opportunity'
@@ -61,9 +61,9 @@ feature 'Opportunities', '
   end
 
   scenario 'should view and edit an opportunity', js: true do
-    FactoryGirl.create(:account, name: 'Example Account')
-    FactoryGirl.create(:account, name: 'Other Example Account')
-    FactoryGirl.create(:opportunity, name: 'A Cool Opportunity')
+    create(:account, name: 'Example Account')
+    create(:account, name: 'Other Example Account')
+    create(:opportunity, name: 'A Cool Opportunity')
     with_versioning do
       visit opportunities_page
       click_link 'A Cool Opportunity'
@@ -79,7 +79,7 @@ feature 'Opportunities', '
   end
 
   scenario 'should delete an opportunity', js: true do
-    FactoryGirl.create(:opportunity, name: 'Outdated Opportunity')
+    create(:opportunity, name: 'Outdated Opportunity')
     visit opportunities_page
     click_link 'Outdated Opportunity'
     click_link 'Delete?'
@@ -89,7 +89,7 @@ feature 'Opportunities', '
   end
 
   scenario 'should search for an opportunity', js: true do
-    2.times { |i| FactoryGirl.create(:opportunity, name: "Opportunity #{i}") }
+    2.times { |i| create(:opportunity, name: "Opportunity #{i}") }
     visit opportunities_page
     expect(find('#opportunities')).to have_content("Opportunity 0")
     expect(find('#opportunities')).to have_content("Opportunity 1")

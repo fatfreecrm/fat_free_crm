@@ -19,7 +19,7 @@ describe "/contacts/index" do
   end
 
   it "should render a list of contacts if it's not empty" do
-    assign(:contacts, [FactoryGirl.build_stubbed(:contact)].paginate)
+    assign(:contacts, [build_stubbed(:contact)].paginate)
 
     render
     expect(view).to render_template(partial: "_contact")

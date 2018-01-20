@@ -9,7 +9,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FatFreeCRM::CommentExtensions do
   describe "add_comment_by_user" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { create(:user) }
 
     before :each do
       build_model(:commentable_entity) do
