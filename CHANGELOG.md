@@ -4,12 +4,21 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Sun Jan 21, 2018 (0.17.0)
+Sat Jan 20, 2018 (0.17.0)
 ---------------------------------------------------------------------
-This release replaces Chozen with Select2 consistently across the app.
+
+### Important changes
+#### Select2 for select boxes
+This release replaces [Chozen](https://harvesthq.github.io/chosen/) with [Select2](https://select2.org/) consistently across the app.
 This may break plugins which rely on Chozen. To fix any issues please
 migrate to Select2 or add Chozen to your plugins.
 
+#### Counter caches
+To improve performance, a number of [counter caches](http://guides.rubyonrails.org/association_basics.html#options-for-belongs-to-counter-cache) have been added.
+
+Users with large amounts of records may find certain [database migrations](https://github.com/fatfreecrm/fat_free_crm/blob/master/db/migrate/20180102075234_add_account_counter_caches.rb) taking a large amount of time, as each record is cached upfront.
+
+#### Other changes
  - #691 Wording
  - #688 Preparation for Devise
  - #686 Bundle update
