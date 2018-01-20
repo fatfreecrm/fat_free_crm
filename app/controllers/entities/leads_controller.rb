@@ -77,18 +77,17 @@ class LeadsController < EntitiesController
         else
           get_data_for_sidebar(:campaign)
         end
-      else
-        if params[:account]
-          @account = if params[:account][:id].blank?
-                       if request.referer =~ /\/accounts\/(\d+)\z/
-                         Account.find(Regexp.last_match[1]) # related account
-                       else
-                         Account.new(user: current_user)
-                           end
+      elsif params[:account]
+        @account = if params[:account][:id].blank?
+                     if request.referer =~ %r{\/accounts\/(\d+)\z}
+                       Account.find(Regexp.last_match[1]) # related account
                      else
-                       Account.find(params[:account][:id])
-                     end
-        end
+                       Account.new(user: current_user)
+                         end
+                   else
+                     Account.find(params[:account][:id])
+                   end
+
       end
     end
   end
