@@ -4,6 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat Jan 20, 2018 (0.17.1)
+---------------------------------------------------------------------
+ - #709 Revert accidental minimum ruby version 2.4 changes (#665)
+
+
 Sat Jan 20, 2018 (0.17.0)
 ---------------------------------------------------------------------
 
@@ -17,6 +22,9 @@ migrate to Select2 or add Chozen to your plugins.
 To improve performance, a number of [counter caches](http://guides.rubyonrails.org/association_basics.html#options-for-belongs-to-counter-cache) have been added.
 
 Users with large amounts of records may find certain [database migrations](https://github.com/fatfreecrm/fat_free_crm/blob/master/db/migrate/20180102075234_add_account_counter_caches.rb) taking a large amount of time, as each record is cached upfront.
+
+#### Minimum ruby version is now Ruby 2.3
+See #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
 
 #### Other changes
  - #691 Wording
@@ -37,7 +45,7 @@ Users with large amounts of records may find certain [database migrations](https
  - #666 Various rubocop corrected items 
  - #661 Bundle Update on 2018-01-06 
  - #655 Upgrade rubocop
- - #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
+
  - #658 Upgrade Bootsnap gem, fixing an issue with windows
 
 Sat Jan 6, 2018 (0.16.1)
