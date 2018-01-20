@@ -7,5 +7,6 @@ crm.flip_form('#{create_id}');
 - unless params[:cancel].true?
   $('##{create_id}').html('#{ j render(partial: "new") }');
   crm.set_title('#{create_id}', '#{ j t(create_id) }');
+  crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
 - else
   crm.set_title('#{create_id}', '#{ j t(entity_name.pluralize) }');
