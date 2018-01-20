@@ -137,12 +137,13 @@ describe Account do
 
   describe "scopes" do
     context "visible_on_dashboard" do
-      before :each do
+      before do
+        @another_user = FactoryGirl.create(:user)
         @user = FactoryGirl.create(:user)
         @a1 = FactoryGirl.create(:account, user: @user)
-        @a2 = FactoryGirl.create(:account, user: @user, assignee: FactoryGirl.create(:user))
+        @a2 = FactoryGirl.create(:account, user: @user, assignee: @another_user)
         @a3 = FactoryGirl.create(:account, assignee: @user)
-        @a4 = FactoryGirl.create(:account, assignee: FactoryGirl.create(:user))
+        @a4 = FactoryGirl.create(:account, assignee: @another_user)
         @a5 = FactoryGirl.create(:account, assignee: @user)
       end
 
