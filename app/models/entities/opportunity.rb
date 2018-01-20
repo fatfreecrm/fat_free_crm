@@ -53,7 +53,7 @@ class Opportunity < ActiveRecord::Base
 
   # Search by name OR id
   scope :text_search, ->(query) {
-    if query.match?(/\A\d+\z/)
+    if query =~ /\A\d+\z/
       where('upper(name) LIKE upper(:name) OR opportunities.id = :id', name: "%#{query}%", id: query)
     else
       ransack('name_cont' => query).result
