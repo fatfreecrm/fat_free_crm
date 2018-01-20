@@ -30,10 +30,8 @@
 require 'spec_helper'
 
 describe Account do
-  let(:current_user) { FactoryGirl.create(:user) }
-
   it "should create a new instance given valid attributes" do
-    Account.create!(name: "Test Account", user: FactoryGirl.create(:user))
+    Account.create!(name: "Test Account")
   end
 
   describe "Attach" do
@@ -42,7 +40,7 @@ describe Account do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, asset: @account, user: current_user)
+      @task = FactoryGirl.create(:task, asset: @account)
       @contact = FactoryGirl.create(:contact)
       @account.contacts << @contact
       @opportunity = FactoryGirl.create(:opportunity)
@@ -54,7 +52,7 @@ describe Account do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, user: current_user)
+      @task = FactoryGirl.create(:task)
       @contact = FactoryGirl.create(:contact)
       @opportunity = FactoryGirl.create(:opportunity)
 
@@ -70,7 +68,7 @@ describe Account do
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, asset: @account, user: current_user)
+      @task = FactoryGirl.create(:task, asset: @account)
       expect(@account.tasks.count).to eq(1)
 
       @account.discard!(@task)
@@ -103,7 +101,7 @@ describe Account do
 
   describe "Exportable" do
     describe "assigned account" do
-      let(:account1) { FactoryGirl.build(:account, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user)) }
+      let(:account1) { FactoryGirl.build(:account, assignee: FactoryGirl.create(:user)) }
       let(:account2) { FactoryGirl.build(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
         let(:exported) { [account1, account2] }
@@ -111,7 +109,7 @@ describe Account do
     end
 
     describe "unassigned account" do
-      let(:account1) { FactoryGirl.build(:account, user: FactoryGirl.create(:user), assignee: nil) }
+      let(:account1) { FactoryGirl.build(:account, assignee: nil) }
       let(:account2) { FactoryGirl.build(:account, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
         let(:exported) { [account1, account2] }
@@ -139,13 +137,14 @@ describe Account do
 
   describe "scopes" do
     context "visible_on_dashboard" do
-      before :each do
+      before do
+        @another_user = FactoryGirl.create(:user)
         @user = FactoryGirl.create(:user)
         @a1 = FactoryGirl.create(:account, user: @user)
-        @a2 = FactoryGirl.create(:account, user: @user, assignee: FactoryGirl.create(:user))
-        @a3 = FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: @user)
-        @a4 = FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
-        @a5 = FactoryGirl.create(:account, user: FactoryGirl.create(:user), assignee: @user)
+        @a2 = FactoryGirl.create(:account, user: @user, assignee: @another_user)
+        @a3 = FactoryGirl.create(:account, assignee: @user)
+        @a4 = FactoryGirl.create(:account, assignee: @another_user)
+        @a5 = FactoryGirl.create(:account, assignee: @user)
       end
 
       it "should show accounts which have been created by the user and are unassigned" do
