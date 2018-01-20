@@ -40,7 +40,7 @@ RSpec.configure do |config|
 
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.before(:each) do
     # Overwrite locale settings within "config/settings.yml" if necessary.

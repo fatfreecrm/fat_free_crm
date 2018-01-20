@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-FactoryGirl.define do
+FactoryBot.define do
   factory :campaign do
     user
     name                { FFaker::Lorem.sentence[0, 64] }
@@ -19,12 +19,12 @@ FactoryGirl.define do
     leads_count         { rand(200) }
     opportunities_count { rand(20) }
     revenue             { rand(1000) }
-    ends_on             { FactoryGirl.generate(:date) }
-    starts_on           { FactoryGirl.generate(:date) }
+    ends_on             { FactoryBot.generate(:date) }
+    starts_on           { FactoryBot.generate(:date) }
     objectives          { FFaker::Lorem.paragraph[0, 255] }
     background_info     { FFaker::Lorem.paragraph[0, 255] }
     deleted_at nil
-    updated_at          { FactoryGirl.generate(:time) }
-    created_at          { FactoryGirl.generate(:time) }
+    updated_at          { FactoryBot.generate(:time) }
+    created_at          { FactoryBot.generate(:time) }
   end
 end

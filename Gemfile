@@ -62,7 +62,7 @@ group :development, :test do
   gem 'headless'
   gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'rubocop', '~> 0.52.0' # Pinned because upgrades require regenerating rubocop_todo.yml
   gem 'rainbow'
 end

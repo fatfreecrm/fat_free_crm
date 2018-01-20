@@ -44,8 +44,8 @@ describe FatFreeCRM::Permissions do
     end
 
     it "should replace existing permissions" do
-      @entity.permissions << FactoryGirl.create(:permission, user_id: 1, asset: @entity)
-      @entity.permissions << FactoryGirl.create(:permission, user_id: 2, asset: @entity)
+      @entity.permissions << create(:permission, user_id: 1, asset: @entity)
+      @entity.permissions << create(:permission, user_id: 2, asset: @entity)
       @entity.user_ids = %w[2 3]
       @entity.save!
       expect(@entity.permissions.size).to eq(2)
@@ -73,8 +73,8 @@ describe FatFreeCRM::Permissions do
     end
 
     it "should replace existing permissions" do
-      @entity.permissions << FactoryGirl.build(:permission, group_id: 1, user_id: nil, asset: @entity)
-      @entity.permissions << FactoryGirl.build(:permission, group_id: 2, user_id: nil, asset: @entity)
+      @entity.permissions << build(:permission, group_id: 1, user_id: nil, asset: @entity)
+      @entity.permissions << build(:permission, group_id: 2, user_id: nil, asset: @entity)
       expect(@entity.permissions.size).to eq(2)
       @entity.group_ids = ['3']
       @entity.save!
@@ -89,19 +89,19 @@ describe FatFreeCRM::Permissions do
       @entity = UserWithPermission.create
     end
     it "should delete all permissions if access is set to Public" do
-      perm = FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      perm = create(:permission, user_id: 1, asset: @entity)
       expect(perm).to receive(:destroy)
       expect(Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
       @entity.update_attribute(:access, 'Public')
     end
     it "should delete all permissions if access is set to Private" do
-      perm = FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      perm = create(:permission, user_id: 1, asset: @entity)
       expect(perm).to receive(:destroy)
       expect(Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
       @entity.update_attribute(:access, 'Private')
     end
     it "should not remove permissions if access is set to Shared" do
-      perm = FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      perm = create(:permission, user_id: 1, asset: @entity)
       expect(perm).not_to receive(:destroy)
       @entity.permissions << perm
       expect(Permission).not_to receive(:find_all_by_asset_id)

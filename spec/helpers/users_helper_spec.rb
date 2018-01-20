@@ -8,9 +8,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersHelper do
-  let(:myself) { FactoryGirl.create(:user, id: 54) }
-  let(:user1) { FactoryGirl.create(:user,  id: 60, first_name: 'Bob', last_name: "Hope") }
-  let(:user2) { FactoryGirl.create(:user,  id: 75, first_name: 'Billy', last_name: "Joel") }
+  let(:myself) { create(:user, id: 54) }
+  let(:user1) { create(:user,  id: 60, first_name: 'Bob', last_name: "Hope") }
+  let(:user2) { create(:user,  id: 75, first_name: 'Billy', last_name: "Joel") }
 
   describe "user_options_for_select" do
     it "includes 'myself'" do

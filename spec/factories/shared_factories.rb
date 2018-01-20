@@ -5,23 +5,23 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-FactoryGirl.define do
+FactoryBot.define do
   factory :version do
     whodunnit ""
     item                { raise "Please specify :item for the version" }
     event "create"
-    created_at          { FactoryGirl.generate(:time) }
+    created_at          { FactoryBot.generate(:time) }
   end
 
   factory :comment do
     user
     commentable         { raise "Please specify :commentable for the comment" }
-    title               { FactoryGirl.generate(:title) }
+    title               { FactoryBot.generate(:title) }
     private false
     comment             { FFaker::Lorem.paragraph }
     state "Expanded"
-    updated_at          { FactoryGirl.generate(:time) }
-    created_at          { FactoryGirl.generate(:time) }
+    updated_at          { FactoryBot.generate(:time) }
+    created_at          { FactoryBot.generate(:time) }
   end
 
   factory :email do
@@ -35,12 +35,12 @@ FactoryGirl.define do
     subject             { FFaker::Lorem.sentence }
     body                { FFaker::Lorem.paragraph[0, 255] }
     header nil
-    sent_at             { FactoryGirl.generate(:time) }
-    received_at         { FactoryGirl.generate(:time) }
+    sent_at             { FactoryBot.generate(:time) }
+    received_at         { FactoryBot.generate(:time) }
     deleted_at nil
     state "Expanded"
-    updated_at          { FactoryGirl.generate(:time) }
-    created_at          { FactoryGirl.generate(:time) }
+    updated_at          { FactoryBot.generate(:time) }
+    created_at          { FactoryBot.generate(:time) }
   end
 
   factory :address do
@@ -51,10 +51,10 @@ FactoryGirl.define do
     state               { FFaker::AddressUS.state_abbr }
     zipcode             { FFaker::AddressUS.zip_code }
     country             { FFaker::AddressUK.country }
-    full_address        { FactoryGirl.generate(:address) }
+    full_address        { FactoryBot.generate(:address) }
     address_type        { %w[Business Billing Shipping].sample }
-    updated_at          { FactoryGirl.generate(:time) }
-    created_at          { FactoryGirl.generate(:time) }
+    updated_at          { FactoryBot.generate(:time) }
+    created_at          { FactoryBot.generate(:time) }
     deleted_at nil
   end
 
@@ -62,7 +62,7 @@ FactoryGirl.define do
     user
     entity              { raise "Please specify :entity for the avatar" }
     image               { File.new(Rails.root.join('spec', 'fixtures', 'rails.png')) }
-    updated_at          { FactoryGirl.generate(:time) }
-    created_at          { FactoryGirl.generate(:time) }
+    updated_at          { FactoryBot.generate(:time) }
+    created_at          { FactoryBot.generate(:time) }
   end
 end

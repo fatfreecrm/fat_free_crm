@@ -36,7 +36,7 @@ describe ApplicationHelper do
   end
 
   it "link_to_discard" do
-    lead = FactoryGirl.create(:lead)
+    lead = create(:lead)
     allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
 
     link = helper.link_to_discard(lead)
