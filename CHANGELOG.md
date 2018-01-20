@@ -10,6 +10,9 @@ Unreleased (0.18.0)
 #### Mininium ruby version
 #665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
 
+#### Removed methods
+lead.update_with_permissions is removed, use user_ids and group_ids inside attributes instead and call lead.update_with_account_and_lead_counters
+
 #### Other changes
 TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
 
