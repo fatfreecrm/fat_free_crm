@@ -92,7 +92,7 @@ describe UsersController do
     describe "if user is allowed to sign up" do
       it "should expose a new user as @user and render [new] template" do
         expect(User).to receive(:can_signup?).and_return(true)
-        @user = FactoryGirl.build(:user)
+        @user = build(:user)
         allow(User).to receive(:new).and_return(@user)
 
         get :new
@@ -147,7 +147,7 @@ describe UsersController do
         @username = "none"
         @email = @username + "@example.com"
         @password = "secret"
-        @user = FactoryGirl.build(:user, username: @username, email: @email)
+        @user = build(:user, username: @username, email: @email)
         allow(User).to receive(:new).and_return(@user)
       end
 
@@ -172,7 +172,7 @@ describe UsersController do
     describe "with invalid params" do
       it "assigns a newly created but unsaved user as @user and renders [new] template" do
         login_admin
-        @user = FactoryGirl.build(:user, username: "", email: "")
+        @user = build(:user, username: "", email: "")
         allow(User).to receive(:new).and_return(@user)
 
         post :create, params: { user: {} }
@@ -253,7 +253,7 @@ describe UsersController do
     end
 
     it "should delete avatar if user chooses to use Gravatar" do
-      @avatar = FactoryGirl.create(:avatar, user: @user, entity: @user)
+      @avatar = create(:avatar, user: @user, entity: @user)
 
       put :upload_avatar, params: { id: @user.id, gravatar: 1 }, xhr: true
       expect(@user.reload.avatar).to eq(nil)
@@ -261,7 +261,7 @@ describe UsersController do
     end
 
     it "should do nothing if user hasn't specified the avatar file to upload" do
-      @avatar = FactoryGirl.create(:avatar, user: @user, entity: @user)
+      @avatar = create(:avatar, user: @user, entity: @user)
 
       put :upload_avatar, params: { id: @user.id }, xhr: true
       expect(@user.avatar).to eq(@avatar)
@@ -373,19 +373,19 @@ describe UsersController do
     end
 
     it "should assign @users_with_opportunities" do
-      FactoryGirl.create(:opportunity, stage: "prospecting", assignee: @user)
+      create(:opportunity, stage: "prospecting", assignee: @user)
       get :opportunities_overview, xhr: true
       expect(assigns[:users_with_opportunities]).to eq([@current_user])
     end
 
     it "@users_with_opportunities should be ordered by name" do
-      FactoryGirl.create(:opportunity, stage: "prospecting", assignee: @user)
+      create(:opportunity, stage: "prospecting", assignee: @user)
 
-      user1 = FactoryGirl.create(:user, first_name: "Zebra", last_name: "Stripes")
-      FactoryGirl.create(:opportunity, stage: "prospecting", assignee: user1)
+      user1 = create(:user, first_name: "Zebra", last_name: "Stripes")
+      create(:opportunity, stage: "prospecting", assignee: user1)
 
-      user2 = FactoryGirl.create(:user, first_name: "Bilbo", last_name: "Magic")
-      FactoryGirl.create(:opportunity, stage: "prospecting", assignee: user2)
+      user2 = create(:user, first_name: "Bilbo", last_name: "Magic")
+      create(:opportunity, stage: "prospecting", assignee: user2)
 
       get :opportunities_overview, xhr: true
 
@@ -393,9 +393,9 @@ describe UsersController do
     end
 
     it "should assign @unassigned_opportunities with only open unassigned opportunities" do
-      @o1 = FactoryGirl.create(:opportunity, stage: "prospecting", assignee: nil)
-      @o2 = FactoryGirl.create(:opportunity, stage: "won", assignee: nil)
-      @o3 = FactoryGirl.create(:opportunity, stage: "prospecting", assignee: nil)
+      @o1 = create(:opportunity, stage: "prospecting", assignee: nil)
+      @o2 = create(:opportunity, stage: "won", assignee: nil)
+      @o3 = create(:opportunity, stage: "prospecting", assignee: nil)
 
       get :opportunities_overview, xhr: true
 
@@ -404,9 +404,9 @@ describe UsersController do
     end
 
     it "@unassigned_opportunities should be ordered by stage" do
-      @o1 = FactoryGirl.create(:opportunity, stage: "proposal", assignee: nil)
-      @o2 = FactoryGirl.create(:opportunity, stage: "prospecting", assignee: nil)
-      @o3 = FactoryGirl.create(:opportunity, stage: "negotiation", assignee: nil)
+      @o1 = create(:opportunity, stage: "proposal", assignee: nil)
+      @o2 = create(:opportunity, stage: "prospecting", assignee: nil)
+      @o3 = create(:opportunity, stage: "negotiation", assignee: nil)
 
       get :opportunities_overview, xhr: true
 
@@ -419,7 +419,7 @@ describe UsersController do
     end
 
     it "should not include users who have no open assigned opportunities" do
-      FactoryGirl.create(:opportunity, stage: "won", assignee: @user)
+      create(:opportunity, stage: "won", assignee: @user)
 
       get :opportunities_overview, xhr: true
       expect(assigns[:users_with_opportunities]).to eq([])
