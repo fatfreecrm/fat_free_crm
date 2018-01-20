@@ -15,7 +15,7 @@ describe "/home/index" do
   end
 
   it "should render [activity] template with @activities collection" do
-    assign(:activities, [FactoryGirl.build_stubbed(:version, id: 42, event: "update", item: FactoryGirl.build_stubbed(:account), whodunnit: current_user.id.to_s)])
+    assign(:activities, [build_stubbed(:version, id: 42, event: "update", item: build_stubbed(:account), whodunnit: current_user.id.to_s)])
 
     render template: 'home/index', formats: [:js]
 

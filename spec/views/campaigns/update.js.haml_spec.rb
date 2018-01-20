@@ -10,7 +10,7 @@ require 'spec_helper'
 describe "/campaigns/update" do
   before do
     login
-    assign(:campaign, @campaign = FactoryGirl.build_stubbed(:campaign, user: current_user))
+    assign(:campaign, @campaign = build_stubbed(:campaign, user: current_user))
     assign(:users, [current_user])
     assign(:status, Setting.campaign_status)
     assign(:campaign_status_total, Hash.new(1))

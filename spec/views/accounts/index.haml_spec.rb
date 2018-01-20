@@ -19,13 +19,13 @@ describe "/accounts/index" do
   end
 
   it "should render account name" do
-    assign(:accounts, [FactoryGirl.build_stubbed(:account, name: 'New Media Inc'), FactoryGirl.build_stubbed(:account)].paginate)
+    assign(:accounts, [build_stubbed(:account, name: 'New Media Inc'), build_stubbed(:account)].paginate)
     render
     expect(rendered).to have_tag('a', text: "New Media Inc")
   end
 
   it "should render list of accounts if list of accounts is not empty" do
-    assign(:accounts, [FactoryGirl.build_stubbed(:account), FactoryGirl.build_stubbed(:account)].paginate)
+    assign(:accounts, [build_stubbed(:account), build_stubbed(:account)].paginate)
 
     render
     expect(view).to render_template(partial: "_account")

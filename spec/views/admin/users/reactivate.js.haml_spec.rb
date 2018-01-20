@@ -10,7 +10,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 describe "admin/users/reactivate" do
   before do
     login_admin
-    assign(:user, @user = FactoryGirl.build_stubbed(:user, suspended_at: Time.now.yesterday))
+    assign(:user, @user = build_stubbed(:user, suspended_at: Time.now.yesterday))
   end
 
   it "reloads the requested user partial" do

@@ -19,7 +19,7 @@ describe "/home/options" do
     assign(:user, "all_users")
     assign(:action, "all_actions")
     assign(:duration, "two_days")
-    assign(:all_users, [FactoryGirl.build_stubbed(:user)])
+    assign(:all_users, [build_stubbed(:user)])
 
     render
 
@@ -35,7 +35,7 @@ describe "/home/options" do
     assign(:action, "all_actions")
     assign(:user, "all_users")
     assign(:duration, "two_days")
-    assign(:all_users, [FactoryGirl.build_stubbed(:user)])
+    assign(:all_users, [build_stubbed(:user)])
 
     render
 

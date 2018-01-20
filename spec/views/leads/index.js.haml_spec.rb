@@ -15,7 +15,7 @@ describe "/leads/index" do
   end
 
   it "should render [lead] template with @leads collection if there are leads" do
-    assign(:leads, [FactoryGirl.build_stubbed(:lead, id: 42)].paginate(page: 1, per_page: 20))
+    assign(:leads, [build_stubbed(:lead, id: 42)].paginate(page: 1, per_page: 20))
 
     render template: 'leads/index', formats: [:js]
 

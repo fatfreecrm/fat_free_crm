@@ -12,7 +12,7 @@ describe "/accounts/destroy" do
 
   before do
     login
-    assign(:account, @account = FactoryGirl.build_stubbed(:account))
+    assign(:account, @account = build_stubbed(:account))
     assign(:accounts, [@account].paginate)
     assign(:account_category_total, Hash.new(1))
     render

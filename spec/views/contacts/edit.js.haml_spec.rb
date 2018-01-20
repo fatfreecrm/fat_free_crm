@@ -12,9 +12,9 @@ describe "/contacts/edit" do
 
   before do
     login
-    assign(:contact, @contact = FactoryGirl.build_stubbed(:contact, user: current_user))
+    assign(:contact, @contact = build_stubbed(:contact, user: current_user))
     assign(:users, [current_user])
-    assign(:account, @account = FactoryGirl.build_stubbed(:account))
+    assign(:account, @account = build_stubbed(:account))
     assign(:accounts, [@account])
   end
 
@@ -35,7 +35,7 @@ describe "/contacts/edit" do
 
   it "edit: should hide previously open [Edit Contact] for and replace it with contact partial" do
     params[:cancel] = nil
-    assign(:previous, previous = FactoryGirl.build_stubbed(:contact, user: current_user))
+    assign(:previous, previous = build_stubbed(:contact, user: current_user))
 
     render
     expect(rendered).to include("$('#contact_#{previous.id}').replaceWith")

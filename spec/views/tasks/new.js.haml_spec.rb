@@ -12,7 +12,7 @@ describe "/tasks/new" do
 
   before do
     login
-    assign(:task, FactoryGirl.build(:task))
+    assign(:task, build(:task))
     assign(:users, [current_user])
     assign(:bucket, Setting.task_bucket[1..-1] << ["On Specific Date...", :specific_time])
     assign(:category, Setting.unroll(:task_category))
