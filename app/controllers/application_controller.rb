@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
-    @query = params[:auto_complete_query] || ''
+    @query = params[:term] || ''
     @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
