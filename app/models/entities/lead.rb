@@ -104,13 +104,6 @@ class Lead < ActiveRecord::Base
     end
   end
 
-  # Deprecated: see update_with_lead_counters
-  #----------------------------------------------------------------------------
-  def update_with_permissions(attributes, _users = nil)
-    ActiveSupport::Deprecation.warn "lead.update_with_permissions is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead and call lead.update_with_lead_counters"
-    update_with_lead_counters(attributes)
-  end
-
   # Update lead attributes taking care of campaign lead counters when necessary.
   #----------------------------------------------------------------------------
   def update_with_lead_counters(attributes)

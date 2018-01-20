@@ -110,24 +110,6 @@ describe FatFreeCRM::Permissions do
     end
   end
 
-  describe "save_with_permissions" do
-    it "should raise deprecation warning and call save" do
-      entity = UserWithPermission.new
-      expect(ActiveSupport::Deprecation).to receive(:warn)
-      expect(entity).to receive(:save)
-      entity.save_with_permissions
-    end
-  end
-
-  describe "update_with_permissions" do
-    it "should raise deprecation warning and call update_attributes" do
-      entity = UserWithPermission.new
-      expect(ActiveSupport::Deprecation).to receive(:warn)
-      expect(entity).to receive(:update_attributes).with({})
-      entity.update_with_permissions({})
-    end
-  end
-
   describe "save_with_model_permissions" do
     it "should copy permissions from original model" do
       entity = UserWithPermission.new

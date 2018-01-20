@@ -13,6 +13,10 @@ Unreleased (0.18.0)
 #### Swap to FactoryBot
 If you consume fat free crm as an engine and re-use any factories, you'll need to [upgrade to FactoryBot](https://github.com/thoughtbot/factory_bot/blob/4-9-0-stable/UPGRADE_FROM_FACTORY_GIRL.md).
 
+#### Removed methods
+`Lead.update_with_permissions` is removed, use user_ids and group_ids inside attributes instead and call lead.update_with_account_and_lead_counters
+`FatFreeCRM::Permissions.save_with_permissions` is removed, use user_ids and group_ids inside attributes and call save
+`FatFreeCRM::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
 
 #### Other changes
 TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
