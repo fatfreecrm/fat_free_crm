@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
         results = @auto_complete.map do |a|
           {
             id: a.id,
-            text: a.respond_to?(:full_name) ? h(a.full_name) : h(a.name)
+            text: a.respond_to?(:full_name) ? a.full_name : a.name
           }
         end
         render json: {
