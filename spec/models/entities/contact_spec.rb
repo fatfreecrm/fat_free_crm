@@ -179,7 +179,7 @@ describe Contact do
   end
 
   describe "text_search" do
-    before(:each) do
+    before do
       @contact = FactoryGirl.create(:contact, first_name: "Bob", last_name: "Dillion", email: 'bob_dillion@example.com', phone: '+1 123 456 789')
     end
 
