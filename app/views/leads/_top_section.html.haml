@@ -19,6 +19,17 @@
           .label #{t :phone}:
           = f.text_field :phone
 
+    %table
+      = fields_for(@account) do |a|
+        = a.hidden_field :user_id
+        = a.hidden_field :assigned_to
+        = a.hidden_field :access, value: Setting.default_access
+        %tr
+          %td
+            != account_select_or_create(a) do |options|
+              - # Add [-- None --] account choice when editing existing lead that has an account.
+              - options[:include_blank] = "" unless @lead.new_record? || @lead.account.blank?
+
       - if Setting.background_info && Setting.background_info.include?(:lead)
         %tr
           %td(colspan="3")
