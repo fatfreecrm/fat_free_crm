@@ -30,10 +30,8 @@
 require 'spec_helper'
 
 describe Account do
-  let(:current_user) { create(:user) }
-
   it "should create a new instance given valid attributes" do
-    Account.create!(name: "Test Account", user: create(:user))
+    Account.create!(name: "Test Account")
   end
 
   describe "Attach" do
@@ -42,7 +40,7 @@ describe Account do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = create(:task, asset: @account, user: current_user)
+      @task = create(:task, asset: @account)
       @contact = create(:contact)
       @account.contacts << @contact
       @opportunity = create(:opportunity)
@@ -54,7 +52,7 @@ describe Account do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = create(:task, user: current_user)
+      @task = create(:task)
       @contact = create(:contact)
       @opportunity = create(:opportunity)
 
@@ -70,7 +68,7 @@ describe Account do
     end
 
     it "should discard a task" do
-      @task = create(:task, asset: @account, user: current_user)
+      @task = create(:task, asset: @account)
       expect(@account.tasks.count).to eq(1)
 
       @account.discard!(@task)
@@ -103,7 +101,7 @@ describe Account do
 
   describe "Exportable" do
     describe "assigned account" do
-      let(:account1) { build(:account, user: create(:user), assignee: create(:user)) }
+      let(:account1) { build(:account, assignee: create(:user)) }
       let(:account2) { build(:account, user: create(:user, first_name: nil, last_name: nil), assignee: create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
         let(:exported) { [account1, account2] }
@@ -111,7 +109,7 @@ describe Account do
     end
 
     describe "unassigned account" do
-      let(:account1) { build(:account, user: create(:user), assignee: nil) }
+      let(:account1) { build(:account, assignee: nil) }
       let(:account2) { build(:account, user: create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
         let(:exported) { [account1, account2] }
@@ -139,13 +137,14 @@ describe Account do
 
   describe "scopes" do
     context "visible_on_dashboard" do
-      before :each do
+      before do
+        @another_user = create(:user)
         @user = create(:user)
         @a1 = create(:account, user: @user)
-        @a2 = create(:account, user: @user, assignee: create(:user))
-        @a3 = create(:account, user: create(:user), assignee: @user)
-        @a4 = create(:account, user: create(:user), assignee: create(:user))
-        @a5 = create(:account, user: create(:user), assignee: @user)
+        @a2 = create(:account, user: @user, assignee: @another_user)
+        @a3 = create(:account, assignee: @user)
+        @a4 = create(:account, assignee: @another_user)
+        @a5 = create(:account, assignee: @user)
       end
 
       it "should show accounts which have been created by the user and are unassigned" do

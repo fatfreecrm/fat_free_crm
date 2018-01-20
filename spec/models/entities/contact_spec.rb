@@ -41,16 +41,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Contact do
-  let(:current_user) { create(:user) }
-
   it "should create a new instance given valid attributes" do
     Contact.create!(first_name: "Billy", last_name: "Bones")
   end
 
   describe "Update existing contact" do
     before(:each) do
-      @account = create(:account)
-      @contact = create(:contact, account: @account)
+      @contact = create(:contact, account: create(:account))
     end
 
     it "should create new account if requested so" do
@@ -117,7 +114,7 @@ describe Contact do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = create(:task, asset: @contact, user: current_user)
+      @task = create(:task, asset: @contact)
       @opportunity = create(:opportunity)
       @contact.opportunities << @opportunity
 
@@ -126,7 +123,7 @@ describe Contact do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = create(:task, user: current_user)
+      @task = create(:task)
       @opportunity = create(:opportunity)
 
       expect(@contact.attach!(@task)).to eq([@task])
@@ -140,7 +137,7 @@ describe Contact do
     end
 
     it "should discard a task" do
-      @task = create(:task, asset: @contact, user: current_user)
+      @task = create(:task, asset: @contact)
       expect(@contact.tasks.count).to eq(1)
 
       @contact.discard!(@task)
@@ -161,7 +158,7 @@ describe Contact do
 
   describe "Exportable" do
     describe "assigned contact" do
-      let(:contact1) { build(:contact, user: create(:user), assignee: create(:user)) }
+      let(:contact1) { build(:contact, assignee: create(:user)) }
       let(:contact2) { build(:contact, user: create(:user, first_name: nil, last_name: nil), assignee: create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
         let(:exported) { [contact1, contact2] }
@@ -169,7 +166,7 @@ describe Contact do
     end
 
     describe "unassigned contact" do
-      let(:contact1) { build(:contact, user: create(:user), assignee: nil) }
+      let(:contact1) { build(:contact, assignee: nil) }
       let(:contact2) { build(:contact, user: create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
         let(:exported) { [contact1, contact2] }
@@ -182,7 +179,7 @@ describe Contact do
   end
 
   describe "text_search" do
-    before(:each) do
+    before do
       @contact = create(:contact, first_name: "Bob", last_name: "Dillion", email: 'bob_dillion@example.com', phone: '+1 123 456 789')
     end
 

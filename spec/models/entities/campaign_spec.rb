@@ -34,10 +34,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Campaign do
-  let(:current_user) { create(:user) }
-
   it "should create a new instance given valid attributes" do
-    Campaign.create!(name: "Campaign", user: create(:user))
+    Campaign.create!(name: "Campaign")
   end
 
   describe "Attach" do
@@ -46,17 +44,13 @@ describe Campaign do
     end
 
     it "should return nil when attaching existing asset" do
-      @task = create(:task, asset: @campaign, user: current_user)
-      @lead = create(:lead, campaign: @campaign)
-      @opportunity = create(:opportunity, campaign: @campaign)
-
-      expect(@campaign.attach!(@task)).to eq(nil)
-      expect(@campaign.attach!(@lead)).to eq(nil)
-      expect(@campaign.attach!(@opportunity)).to eq(nil)
+      expect(@campaign.attach!(create(:task, asset: @campaign))).to eq(nil)
+      expect(@campaign.attach!(create(:lead, campaign: @campaign))).to eq(nil)
+      expect(@campaign.attach!(create(:opportunity, campaign: @campaign))).to eq(nil)
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = create(:task, user: current_user)
+      @task = create(:task)
       @lead = create(:lead)
       @opportunity = create(:opportunity)
 
@@ -67,9 +61,8 @@ describe Campaign do
 
     it "should increment leads count when attaching a new lead" do
       @leads_count = @campaign.leads_count
-      @lead = create(:lead)
 
-      @campaign.attach!(@lead)
+      @campaign.attach!(create(:lead))
       expect(@campaign.reload.leads_count).to eq(@leads_count + 1)
     end
 
@@ -87,7 +80,7 @@ describe Campaign do
     end
 
     it "should discard a task" do
-      @task = create(:task, asset: @campaign, user: current_user)
+      @task = create(:task, asset: @campaign)
       expect(@campaign.tasks.count).to eq(1)
 
       @campaign.discard!(@task)
