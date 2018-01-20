@@ -53,24 +53,24 @@ describe User do
   end
 
   it "should have a valid factory" do
-    expect(FactoryGirl.build(:user)).to be_valid
+    expect(build(:user)).to be_valid
   end
 
   describe '#destroyable?' do
     describe "Destroying users with and without related assets" do
       before do
-        @user = FactoryGirl.build(:user)
-        @current_user = FactoryGirl.build(:user)
+        @user = build(:user)
+        @current_user = build(:user)
       end
 
       %w[account campaign lead contact opportunity].each do |asset|
         it "should not destroy the user if she owns #{asset}" do
-          FactoryGirl.create(asset, user: @user)
+          create(asset, user: @user)
           expect(@user.destroyable?(@current_user)).to eq(false)
         end
 
         it "should not destroy the user if she has #{asset} assigned" do
-          FactoryGirl.create(asset, assignee: @user)
+          create(asset, assignee: @user)
           expect(@user.destroyable?(@current_user)).to eq(false)
         end
       end
@@ -87,19 +87,19 @@ describe User do
 
   describe '#destroy' do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
     end
     it "once the user gets deleted all her permissions must be deleted too" do
-      FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:account))
-      FactoryGirl.create(:permission, user: @user, asset: FactoryGirl.create(:contact))
+      create(:permission, user: @user, asset: create(:account))
+      create(:permission, user: @user, asset: create(:contact))
       expect(@user.permissions.count).to eq(2)
       @user.destroy
       expect(@user.permissions.count).to eq(0)
     end
 
     it "once the user gets deleted all her preferences must be deleted too" do
-      FactoryGirl.create(:preference, user: @user, name: "Hello", value: "World")
-      FactoryGirl.create(:preference, user: @user, name: "World", value: "Hello")
+      create(:preference, user: @user, name: "Hello", value: "World")
+      create(:preference, user: @user, name: "World", value: "Hello")
       expect(@user.preferences.count).to eq(2)
       @user.destroy
       expect(@user.preferences.count).to eq(0)
@@ -109,7 +109,7 @@ describe User do
   describe '#suspend_if_needs_approval' do
     it "should set suspended timestamp upon creation if signups need approval and the user is not an admin" do
       allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-      @user = FactoryGirl.build(:user, suspended_at: nil)
+      @user = build(:user, suspended_at: nil)
 
       @user.suspend_if_needs_approval
 
@@ -118,7 +118,7 @@ describe User do
 
     it "should not set suspended timestamp upon creation if signups need approval and the user is an admin" do
       allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-      @user = FactoryGirl.build(:user, admin: true, suspended_at: nil)
+      @user = build(:user, admin: true, suspended_at: nil)
 
       @user.suspend_if_needs_approval
 
@@ -129,16 +129,16 @@ describe User do
   context "scopes" do
     describe "have_assigned_opportunities" do
       before do
-        @user1 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user1, stage: 'analysis', account: nil, campaign: nil, user: nil)
+        @user1 = create(:user)
+        create(:opportunity, assignee: @user1, stage: 'analysis', account: nil, campaign: nil, user: nil)
 
-        @user2 = FactoryGirl.create(:user)
+        @user2 = create(:user)
 
-        @user3 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user3, stage: 'won', account: nil, campaign: nil, user: nil)
+        @user3 = create(:user)
+        create(:opportunity, assignee: @user3, stage: 'won', account: nil, campaign: nil, user: nil)
 
-        @user4 = FactoryGirl.create(:user)
-        FactoryGirl.create(:opportunity, assignee: @user4, stage: 'lost', account: nil, campaign: nil, user: nil)
+        @user4 = create(:user)
+        create(:opportunity, assignee: @user4, stage: 'lost', account: nil, campaign: nil, user: nil)
 
         @result = User.have_assigned_opportunities
       end
@@ -161,10 +161,10 @@ describe User do
   context "instance methods" do
     describe "assigned_opportunities" do
       before do
-        @user = FactoryGirl.create(:user)
+        @user = create(:user)
 
-        @opportunity1 = FactoryGirl.create(:opportunity, assignee: @user, account: nil, campaign: nil, user: nil)
-        @opportunity2 = FactoryGirl.create(:opportunity, assignee: FactoryGirl.create(:user), account: nil, campaign: nil, user: nil)
+        @opportunity1 = create(:opportunity, assignee: @user, account: nil, campaign: nil, user: nil)
+        @opportunity2 = create(:opportunity, assignee: create(:user), account: nil, campaign: nil, user: nil)
 
         @result = @user.assigned_opportunities
       end
@@ -181,7 +181,7 @@ describe User do
 
   describe "Setting I18n.locale" do
     before do
-      @user = FactoryGirl.build(:user)
+      @user = build(:user)
       @locale = I18n.locale
     end
 
@@ -204,14 +204,14 @@ describe User do
 
   describe "Setting single access token" do
     it "should update single_access_token attribute if it is not set already" do
-      @user = FactoryGirl.build(:user, single_access_token: nil)
+      @user = build(:user, single_access_token: nil)
 
       @user.set_single_access_token
       expect(@user.single_access_token).not_to eq(nil)
     end
 
     it "should not update single_access_token attribute if it is set already" do
-      @user = FactoryGirl.build(:user, single_access_token: "token")
+      @user = build(:user, single_access_token: "token")
 
       @user.set_single_access_token
       expect(@user.single_access_token).to eq("token")
@@ -219,7 +219,7 @@ describe User do
   end
 
   describe "serialization" do
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { build(:user) }
 
     it "to json" do
       expect(user.to_json).to eql([user.name].to_json)
