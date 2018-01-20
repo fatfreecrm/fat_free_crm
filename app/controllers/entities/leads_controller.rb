@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 class LeadsController < EntitiesController
   before_action :get_data_for_sidebar, only: :index
-  before_action :get_accounts, only: %i[new create edit update]
+  before_action :get_accounts, only: %i[new create edit update convert]
   autocomplete :account, :name, full: true
 
   # GET /leads
@@ -121,7 +121,7 @@ class LeadsController < EntitiesController
   # GET /leads/1/convert
   #----------------------------------------------------------------------------
   def convert
-    @account = Account.new(user: current_user, name: @lead.company, access: "Lead")
+    @account = @lead.account || Account.new(user: current_user, name: @lead.company, access: "Lead")
     @accounts = Account.my(current_user).order('name')
     @opportunity = Opportunity.new(user: current_user, access: "Lead", stage: "prospecting", campaign: @lead.campaign, source: @lead.source)
 
