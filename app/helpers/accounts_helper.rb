@@ -34,7 +34,6 @@ module AccountsHelper
                       "data-url": auto_complete_accounts_path(format: 'json')
   end
 
-
   # Select an existing account or create a new one.
   #----------------------------------------------------------------------------
   def account_select_or_create(form, &_block)
