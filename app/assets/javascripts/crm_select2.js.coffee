@@ -10,9 +10,13 @@
   window.crm ||= {}
 
   crm.make_select2 = ->
-    $(".select2").not(".select2-container, .select2-offscreen").each ->
+    $(".select2").not(".select2-container, .select2-offscreen, .select2-hidden-accessible").each ->
     #$(".select2").each ->
-      $(this).select2 'width':'resolve'
+      $(this).select2 
+        'width':'resolve'
+        ajax:
+          url: $(this).data("url")
+          dataType: 'json'
 
     $(".select2_tag").not(".select2-container, .select2-offscreen").each ->
     #$(".select2_tag").each ->
