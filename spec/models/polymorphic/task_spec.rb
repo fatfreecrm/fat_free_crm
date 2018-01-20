@@ -157,7 +157,7 @@ describe Task do
     it "completion should preserve original due date" do
       due_at = Time.now - 42.days
       task = create(:task, due_at: due_at, bucket: "specific_time",
-                                       calendar: due_at.strftime('%Y-%m-%d %H:%M'))
+                           calendar: due_at.strftime('%Y-%m-%d %H:%M'))
       task.update_attributes(completed_at: Time.now, completed_by: task.user.id, calendar: '')
 
       expect(task.completed?).to eq(true)
