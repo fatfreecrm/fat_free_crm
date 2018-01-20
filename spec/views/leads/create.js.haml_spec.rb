@@ -11,15 +11,15 @@ describe "/leads/create" do
   before do
     controller.controller_path = 'leads'
     login
-    assign(:campaigns, [FactoryGirl.build_stubbed(:campaign)])
-    @account = FactoryGirl.build_stubbed(:account)
+    assign(:campaigns, [build_stubbed(:campaign)])
+    @account = build_stubbed(:account)
     assign(:account, @account)
     assign(:accounts, [@account])
   end
 
   describe "create success" do
     before do
-      assign(:lead, @lead = FactoryGirl.build_stubbed(:lead))
+      assign(:lead, @lead = build_stubbed(:lead))
       assign(:leads, [@lead].paginate)
       assign(:lead_status_total, Hash.new(1))
     end
@@ -49,7 +49,7 @@ describe "/leads/create" do
     end
 
     it "should update related asset sidebar from related asset" do
-      assign(:campaign, campaign = FactoryGirl.create(:campaign))
+      assign(:campaign, campaign = create(:campaign))
       controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
       render
 
@@ -61,8 +61,8 @@ describe "/leads/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_lead div" do
-      assign(:lead, FactoryGirl.build(:lead, first_name: nil)) # make it invalid
-      assign(:users, [FactoryGirl.build_stubbed(:user)])
+      assign(:lead, build(:lead, first_name: nil)) # make it invalid
+      assign(:users, [build_stubbed(:user)])
 
       render
 

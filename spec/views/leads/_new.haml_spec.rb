@@ -12,12 +12,12 @@ describe "/leads/_new" do
 
   before do
     login
-    @account = FactoryGirl.build_stubbed(:account)
+    @account = build_stubbed(:account)
     assign(:account, @account)
     assign(:accounts, [@account])
-    assign(:lead, FactoryGirl.build(:lead))
+    assign(:lead, build(:lead))
     assign(:users, [current_user])
-    assign(:campaign, @campaign = FactoryGirl.build_stubbed(:campaign))
+    assign(:campaign, @campaign = build_stubbed(:campaign))
     assign(:campaigns, [@campaign])
   end
 

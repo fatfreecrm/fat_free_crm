@@ -10,12 +10,12 @@ require 'spec_helper'
 describe "/leads/update" do
   before do
     login
-    @account = FactoryGirl.build_stubbed(:account)
+    @account = build_stubbed(:account)
     assign(:account, @account)
     assign(:accounts, [@account])
-    assign(:lead, @lead = FactoryGirl.build_stubbed(:lead, user: current_user, assignee: FactoryGirl.build_stubbed(:user)))
+    assign(:lead, @lead = build_stubbed(:lead, user: current_user, assignee: build_stubbed(:user)))
     assign(:users, [current_user])
-    assign(:campaigns, [FactoryGirl.build_stubbed(:campaign)])
+    assign(:campaigns, [build_stubbed(:campaign)])
     assign(:lead_status_total, Hash.new(1))
   end
 
@@ -61,7 +61,7 @@ describe "/leads/update" do
 
     describe "on related asset page -" do
       before do
-        assign(:campaign, FactoryGirl.build_stubbed(:campaign))
+        assign(:campaign, build_stubbed(:campaign))
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 
@@ -72,7 +72,7 @@ describe "/leads/update" do
       end
 
       it "should update campaign sidebar" do
-        assign(:campaign, FactoryGirl.build_stubbed(:campaign))
+        assign(:campaign, build_stubbed(:campaign))
         render
 
         expect(rendered).to include("sidebar")
