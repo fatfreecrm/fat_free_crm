@@ -16,12 +16,14 @@
         if $(this).data("url")
           $(this).select2 
             'width':'resolve'
+            placeholder: $(this).attr("placeholder")
             ajax:
               url: $(this).data("url")
               dataType: 'json'
         else
           $(this).select2 
             'width':'resolve'
+            placeholder: $(this).attr("placeholder")
 
     $(".select2_tag").not(".select2-container, .select2-offscreen").each ->
     #$(".select2_tag").each ->
