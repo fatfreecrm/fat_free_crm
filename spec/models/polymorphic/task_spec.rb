@@ -32,8 +32,6 @@
 require 'spec_helper'
 
 describe Task do
-  let(:current_user) { FactoryGirl.create(:user) }
-
   describe "Task/Create" do
     it "should create a new task instance given valid attributes" do
       task = FactoryGirl.create(:task)
@@ -120,45 +118,45 @@ describe Task do
   end
 
   describe "Task/Complete" do
-    it "should comlete a task that is overdue" do
+    it "should complete a task that is overdue" do
       task = FactoryGirl.create(:task, due_at: 2.days.ago, bucket: "overdue")
-      task.update_attributes(completed_at: Time.now, completed_by: current_user.id)
+      task.update_attributes(completed_at: Time.now, completed_by: task.user.id)
       expect(task.errors).to be_empty
       expect(task.completed_at).not_to eq(nil)
-      expect(task.completor).to eq(current_user)
+      expect(task.completor).to eq(task.user)
     end
 
     it "should complete a task due sometime in the future" do
       task = FactoryGirl.create(:task, due_at: Time.now.midnight.tomorrow, bucket: "due_tomorrow")
-      task.update_attributes(completed_at: Time.now, completed_by: current_user.id)
+      task.update_attributes(completed_at: Time.now, completed_by: task.user.id)
       expect(task.errors).to be_empty
       expect(task.completed_at).not_to eq(nil)
-      expect(task.completor).to eq(current_user)
+      expect(task.completor).to eq(task.user)
     end
 
     it "should complete a task that is due on specific date in the future" do
       task = FactoryGirl.create(:task, calendar: "10/10/2022 12:00 AM", bucket: "specific_time")
       task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
-      task.update_attributes(completed_at: Time.now, completed_by: current_user.id)
+      task.update_attributes(completed_at: Time.now, completed_by: task.user.id)
       expect(task.errors).to be_empty
       expect(task.completed_at).not_to eq(nil)
-      expect(task.completor).to eq(current_user)
+      expect(task.completor).to eq(task.user)
     end
 
     it "should complete a task that is due on specific date in the past" do
       task = FactoryGirl.create(:task, calendar: "10/10/1992 12:00 AM", bucket: "specific_time")
       task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
-      task.update_attributes(completed_at: Time.now, completed_by: current_user.id)
+      task.update_attributes(completed_at: Time.now, completed_by: task.user.id)
       expect(task.errors).to be_empty
       expect(task.completed_at).not_to eq(nil)
-      expect(task.completor).to eq(current_user)
+      expect(task.completor).to eq(task.user)
     end
 
     it "completion should preserve original due date" do
       due_at = Time.now - 42.days
       task = FactoryGirl.create(:task, due_at: due_at, bucket: "specific_time",
                                        calendar: due_at.strftime('%Y-%m-%d %H:%M'))
-      task.update_attributes(completed_at: Time.now, completed_by: current_user.id, calendar: '')
+      task.update_attributes(completed_at: Time.now, completed_by: task.user.id, calendar: '')
       expect(task.completed?).to eq(true)
       expect(task.due_at).to eq(due_at.utc.strftime('%Y-%m-%d %H:%M'))
     end
@@ -166,6 +164,8 @@ describe Task do
 
   # named_scope :my, lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
   describe "task.my?" do
+    let(:current_user) { FactoryGirl.create(:user) }
+
     it "should match a task created by the user" do
       task = FactoryGirl.create(:task, user: current_user, assignee: nil)
       expect(task.my?(current_user)).to eq(true)
@@ -189,6 +189,8 @@ describe Task do
 
   # named_scope :assigned_by, lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?", user.id, user.id ], :include => :assignee } }
   describe "task.assigned_by?" do
+    let(:current_user) { FactoryGirl.create(:user) }
+
     it "should match a task assigned by the user to somebody else" do
       task = FactoryGirl.create(:task, user: current_user, assignee: FactoryGirl.create(:user))
       expect(task.assigned_by?(current_user)).to eq(true)
@@ -212,6 +214,8 @@ describe Task do
 
   # named_scope :tracked_by, lambda { |user| { :conditions => [ "user_id = ? OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
   describe "task.tracked_by?" do
+    let(:current_user) { FactoryGirl.create(:user) }
+
     it "should match a task created by the user" do
       task = FactoryGirl.create(:task, user: current_user)
       expect(task.tracked_by?(current_user)).to eq(true)
