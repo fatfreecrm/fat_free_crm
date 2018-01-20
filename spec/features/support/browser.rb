@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-Capaybara.app_host = ENV['APP_HOST'] if ENV['APP_HOST']
+Capaybara.app_host = ENV['APP_URL'] if ENV['APP_URL']
 Capybara.default_max_wait_time = 7
 
 if ENV['BROWSER'] == 'chrome'
