@@ -4,6 +4,15 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Unreleased (0.18.0)
+---------------------------------------------------------------------
+### Important changes
+#### Mininium ruby version
+#665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
+
+#### Other changes
+TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
+
 Sat Jan 20, 2018 (0.17.1)
 ---------------------------------------------------------------------
  - #709 Revert accidental minimum ruby version 2.4 changes (#665)
