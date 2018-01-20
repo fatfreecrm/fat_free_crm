@@ -10,6 +10,10 @@ Unreleased (0.18.0)
 #### Mininium ruby version
 #665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
 
+#### Swap to FactoryBot
+If you consume fat free crm as an engine and re-use any factories, you'll need to [upgrade to FactoryBot](https://github.com/thoughtbot/factory_bot/blob/4-9-0-stable/UPGRADE_FROM_FACTORY_GIRL.md).
+
+
 #### Other changes
 TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
 
