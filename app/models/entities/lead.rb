@@ -95,7 +95,8 @@ class Lead < ActiveRecord::Base
 
   # Save the lead along with its permissions.
   #----------------------------------------------------------------------------
-  def save_with_permissions(params)
+  def save_with_account_and_permissions(params)
+    save_account(params)
     self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
     if params[:lead][:access] == "Campaign" && campaign # Copy campaign permissions.
       save_with_model_permissions(Campaign.find(campaign_id))
@@ -108,13 +109,14 @@ class Lead < ActiveRecord::Base
   # Deprecated: see update_with_lead_counters
   #----------------------------------------------------------------------------
   def update_with_permissions(attributes, _users = nil)
-    ActiveSupport::Deprecation.warn "lead.update_with_permissions is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead and call lead.update_with_lead_counters"
-    update_with_lead_counters(attributes)
+    ActiveSupport::Deprecation.warn "lead.update_with_account_and_lead_counters is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead and call lead.update_with_lead_counters"
+    update_with_account_and_lead_counters(attributes)
   end
 
   # Update lead attributes taking care of campaign lead counters when necessary.
   #----------------------------------------------------------------------------
-  def update_with_lead_counters(attributes)
+  def update_with_account_and_lead_counters(attributes)
+    save_account(attributes)
     if campaign_id == attributes[:campaign_id] # Same campaign (if any).
       self.attributes = attributes
       save
@@ -189,6 +191,17 @@ class Lead < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def users_for_shared_access
     errors.add(:access, :share_lead) if self[:access] == "Shared" && permissions.none?
+  end
+
+  # Handles the saving of related accounts
+  #----------------------------------------------------------------------------
+  def save_account(params)
+    account_params = params[:account]
+    self.account = if account_params && account_params[:id] != "" && account_params[:name] != ""
+                     Account.create_or_select_for(self, account_params)
+                   else
+                     nil
+                   end
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_lead, self)

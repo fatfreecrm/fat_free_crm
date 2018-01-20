@@ -100,7 +100,7 @@ class LeadsController < EntitiesController
       @account = @lead.account || Account.new(user: current_user)
       # Must set access before user_ids, because user_ids= method depends on access value.
       @lead.access = resource_params[:access] if resource_params[:access]
-      if @lead.update_with_lead_counters(resource_params)
+      if @lead.update_with_account_and_lead_counters(resource_params)
         update_sidebar
       else
         @campaigns = Campaign.my(current_user).order('name')
