@@ -12,7 +12,7 @@ describe "/leads/new" do
 
   before do
     login
-  
+
     @account = build_stubbed(:account)
     assign(:account, @account)
     assign(:accounts, [@account])
