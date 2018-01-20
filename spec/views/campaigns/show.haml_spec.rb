@@ -13,8 +13,8 @@ describe "/campaigns/show" do
   before do
     login
     @campaign = build_stubbed(:campaign, id: 42,
-                                                     leads: [build_stubbed(:lead)],
-                                                     opportunities: [build_stubbed(:opportunity)])
+                                         leads: [build_stubbed(:lead)],
+                                         opportunities: [build_stubbed(:opportunity)])
     assign(:campaign, @campaign)
     assign(:users, [current_user])
     assign(:comment, Comment.new)

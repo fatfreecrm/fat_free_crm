@@ -712,7 +712,7 @@ describe LeadsController do
       @lead = create(:lead, id: 42, user: current_user, campaign: nil)
       @account = create(:account, id: 123, user: current_user)
       @opportunity = build(:opportunity, user: current_user, campaign: @lead.campaign,
-                                                     account: @account)
+                                         account: @account)
       allow(Opportunity).to receive(:new).and_return(@opportunity)
       @contact = build(:contact, user: current_user, lead: @lead)
       allow(Contact).to receive(:new).and_return(@contact)

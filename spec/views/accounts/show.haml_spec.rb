@@ -13,8 +13,8 @@ describe "/accounts/show" do
   before do
     login
     @account = create(:account, id: 42,
-                                            contacts: [create(:contact)],
-                                            opportunities: [create(:opportunity)])
+                                contacts: [create(:contact)],
+                                opportunities: [create(:opportunity)])
     assign(:account, @account)
     assign(:users, [current_user])
     assign(:comment, Comment.new)

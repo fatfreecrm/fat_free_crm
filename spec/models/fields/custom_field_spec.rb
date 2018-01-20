@@ -36,10 +36,10 @@ describe CustomField do
     expect(Contact).to receive(:serialize_custom_fields!)
 
     create(:custom_field,
-                       as: "string",
-                       name: "cf_test_field",
-                       label: "Test Field",
-                       field_group: create(:field_group, klass_name: "Contact"))
+           as: "string",
+           name: "cf_test_field",
+           label: "Test Field",
+           field_group: create(:field_group, klass_name: "Contact"))
   end
 
   it "should generate a unique column name for a custom field" do
@@ -83,10 +83,10 @@ describe CustomField do
 
     field_group = create(:field_group, klass_name: "Contact")
     c = create(:custom_field,
-                           label: "Test Field",
-                           name: nil,
-                           as: "email",
-                           field_group: field_group)
+               label: "Test Field",
+               name: nil,
+               as: "email",
+               field_group: field_group)
     c.as = "text"
     c.save
   end

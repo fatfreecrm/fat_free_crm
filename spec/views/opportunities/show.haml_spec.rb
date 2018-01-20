@@ -13,7 +13,7 @@ describe "/opportunities/show" do
   before do
     login
     @opportunity = create(:opportunity, id: 42,
-                                                    contacts: [create(:contact)])
+                                        contacts: [create(:contact)])
     assign(:opportunity, @opportunity)
     assign(:users, [current_user])
     assign(:comment, Comment.new)

@@ -198,9 +198,9 @@ describe Version, versioning: true do
 
     it "should not show create/update versions if the item was not shared with the user" do
       @item = create(:account,
-                                 user: current_user,
-                                 access: "Shared",
-                                 permissions: [build(:permission, user: current_user, asset: @item)])
+                     user: current_user,
+                     access: "Shared",
+                     permissions: [build(:permission, user: current_user, asset: @item)])
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -212,9 +212,9 @@ describe Version, versioning: true do
 
     it "should not show the destroy version if the item was not shared with the user" do
       @item = create(:account,
-                                 user: current_user,
-                                 access: "Shared",
-                                 permissions: [build(:permission, user: current_user, asset: @item)])
+                     user: current_user,
+                     access: "Shared",
+                     permissions: [build(:permission, user: current_user, asset: @item)])
       @item.destroy
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -226,9 +226,9 @@ describe Version, versioning: true do
 
     it "should show create/update versions if the item was shared with the user" do
       @item = create(:account,
-                                 user: current_user,
-                                 access: "Shared",
-                                 permissions: [build(:permission, user: @user, asset: @item)])
+                     user: current_user,
+                     access: "Shared",
+                     permissions: [build(:permission, user: @user, asset: @item)])
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)

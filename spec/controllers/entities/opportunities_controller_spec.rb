@@ -269,7 +269,7 @@ describe OpportunitiesController do
       # effect of creating an extra (campaign) user.
       @account = create(:account, user: current_user)
       @opportunity = create(:opportunity, id: 42, user: current_user, campaign: nil,
-                                                      account: @account)
+                                          account: @account)
       @stage = Setting.unroll(:opportunity_stage)
       @accounts = [@account]
 
@@ -442,7 +442,7 @@ describe OpportunitiesController do
       it "should expose a newly created but unsaved opportunity as @opportunity with blank @account and render [create] template" do
         @account = Account.new(user: current_user)
         @opportunity = build(:opportunity, name: nil, campaign: nil, user: current_user,
-                                                       account: @account)
+                                           account: @account)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
         @accounts = [create(:account, user: current_user)]
@@ -458,7 +458,7 @@ describe OpportunitiesController do
       it "should expose a newly created but unsaved opportunity as @opportunity with existing @account and render [create] template" do
         @account = create(:account, id: 42, user: current_user)
         @opportunity = build(:opportunity, name: nil, campaign: nil, user: current_user,
-                                                       account: @account)
+                                           account: @account)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
 

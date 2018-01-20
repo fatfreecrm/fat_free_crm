@@ -13,7 +13,7 @@ describe "/contacts/show" do
   before do
     login
     @contact = create(:contact, id: 42,
-                                            opportunities: [create(:opportunity)])
+                                opportunities: [create(:opportunity)])
     assign(:contact, @contact)
     assign(:users, [current_user])
     assign(:comment, Comment.new)
