@@ -17,7 +17,7 @@ describe "/tasks/complete" do
 
   describe "complete from Tasks tab (pending view)" do
     before do
-      @task = FactoryGirl.build_stubbed(:task)
+      @task = build_stubbed(:task)
       assign(:task, @task)
       assign(:view, "pending")
       assign(:empty_bucket, :due_asap)
@@ -33,7 +33,7 @@ describe "/tasks/complete" do
     end
 
     it "should update tasks sidebar" do
-      assign(:task, FactoryGirl.build_stubbed(:task))
+      assign(:task, build_stubbed(:task))
       assign(:view, "pending")
       assign(:empty_bucket, :due_asap)
       controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
@@ -48,7 +48,7 @@ describe "/tasks/complete" do
 
   describe "complete from related asset" do
     it "should replace pending partial with the completed one" do
-      @task = FactoryGirl.build_stubbed(:task, completed_at: Time.now, completor: current_user)
+      @task = build_stubbed(:task, completed_at: Time.now, completor: current_user)
       assign(:task, @task)
 
       render
@@ -57,7 +57,7 @@ describe "/tasks/complete" do
     end
 
     it "should update recently viewed items" do
-      @task = FactoryGirl.build_stubbed(:task, completed_at: Time.now, completor: current_user)
+      @task = build_stubbed(:task, completed_at: Time.now, completor: current_user)
       assign(:task, @task)
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 

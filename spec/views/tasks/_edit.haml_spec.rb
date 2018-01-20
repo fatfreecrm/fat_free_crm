@@ -12,7 +12,7 @@ describe "/tasks/_edit" do
 
   before do
     login
-    assign(:task, FactoryGirl.build_stubbed(:task, asset: FactoryGirl.build_stubbed(:account), bucket: "due_asap"))
+    assign(:task, build_stubbed(:task, asset: build_stubbed(:account), bucket: "due_asap"))
     assign(:users, [current_user])
     assign(:bucket, %w[due_asap due_today])
     assign(:category, %w[meeting money])

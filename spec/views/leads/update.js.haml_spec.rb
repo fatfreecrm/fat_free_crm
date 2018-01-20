@@ -11,9 +11,10 @@ describe "/leads/update" do
   before do
     login
     @account = build_stubbed(:account)
+    @lead = build_stubbed(:lead, user: current_user, assignee: build_stubbed(:user))
     assign(:account, @account)
     assign(:accounts, [@account])
-    assign(:lead, @lead = build_stubbed(:lead, user: current_user, assignee: build_stubbed(:user)))
+    assign(:lead, @lead)
     assign(:users, [current_user])
     assign(:campaigns, [build_stubbed(:campaign)])
     assign(:lead_status_total, Hash.new(1))

@@ -48,7 +48,7 @@ describe "/tasks/create" do
 
   it "should show flash message when assigning a task from pending tasks view" do
     assign(:view, "pending")
-    assign(:task, FactoryGirl.build_stubbed(:task, id: 42, assignee: FactoryGirl.build_stubbed(:user)))
+    assign(:task, build_stubbed(:task, id: 42, assignee: build_stubbed(:user)))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
@@ -58,7 +58,7 @@ describe "/tasks/create" do
 
   it "should update recent items when assigning a task from pending tasks view" do
     assign(:view, "pending")
-    assign(:task, FactoryGirl.build_stubbed(:task, id: 42, assignee: FactoryGirl.build_stubbed(:user)))
+    assign(:task, build_stubbed(:task, id: 42, assignee: build_stubbed(:user)))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
@@ -68,7 +68,7 @@ describe "/tasks/create" do
 
   it "should show flash message when creating a pending task from assigned tasks view" do
     assign(:view, "assigned")
-    assign(:task, FactoryGirl.build_stubbed(:task, id: 42, assignee: nil))
+    assign(:task, build_stubbed(:task, id: 42, assignee: nil))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
@@ -78,7 +78,7 @@ describe "/tasks/create" do
 
   it "should update recent items when creating a pending task from assigned tasks view" do
     assign(:view, "assigned")
-    assign(:task, FactoryGirl.build_stubbed(:task, id: 42, assignee: nil))
+    assign(:task, build_stubbed(:task, id: 42, assignee: nil))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
@@ -89,7 +89,7 @@ describe "/tasks/create" do
   (TASK_STATUSES - ['assigned']).each do |status|
     describe "create from outside the Tasks tab" do
       before do
-        @task = FactoryGirl.build_stubbed(:task, id: 42)
+        @task = build_stubbed(:task, id: 42)
         assign(:view, status)
         assign(:task, @task)
         render
@@ -112,7 +112,7 @@ describe "/tasks/create" do
   end
 
   it "create failure: should re-render [create] template in :create_task div" do
-    assign(:task, FactoryGirl.build(:task, name: nil)) # make it invalid
+    assign(:task, build(:task, name: nil)) # make it invalid
     render
 
     expect(rendered).to include(%/$('#create_task').effect("shake"/)

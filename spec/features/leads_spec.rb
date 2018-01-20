@@ -17,7 +17,7 @@ feature 'Leads', '
   end
 
   scenario 'should view a list of leads' do
-    4.times { |i| FactoryGirl.create(:lead, first_name: "L", last_name: "Ead #{i}") }
+    4.times { |i| create(:lead, first_name: "L", last_name: "Ead #{i}") }
     visit leads_page
     expect(leads_element).to have_content('L Ead 0')
     expect(leads_element).to have_content('L Ead 1')
@@ -70,7 +70,7 @@ feature 'Leads', '
   end
 
   scenario 'should view and edit a lead', js: true do
-    FactoryGirl.create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
+    create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
     with_versioning do
       visit leads_page
       click_link 'Mr Lead'
@@ -89,7 +89,7 @@ feature 'Leads', '
   end
 
   scenario 'should delete a lead', js: true do
-    FactoryGirl.create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
+    create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
     visit leads_page
     click_link 'Mr Lead'
     click_link 'Delete?'
@@ -101,7 +101,7 @@ feature 'Leads', '
   end
 
   scenario 'should search for a lead', js: true do
-    2.times { |i| FactoryGirl.create(:lead, first_name: "Lead", last_name: "\##{i}", email: "lead#{i}@example.com") }
+    2.times { |i| create(:lead, first_name: "Lead", last_name: "\##{i}", email: "lead#{i}@example.com") }
     visit leads_page
     expect(leads_element).to have_content('Lead #0')
     expect(leads_element).to have_content('Lead #1')

@@ -12,8 +12,8 @@ describe "/opportunities/_new" do
 
   before do
     login
-    assign(:opportunity, FactoryGirl.build(:opportunity))
-    @account = FactoryGirl.build_stubbed(:account)
+    assign(:opportunity, build(:opportunity))
+    @account = build_stubbed(:account)
     assign(:account, @account)
     assign(:accounts, [@account])
     assign(:users, [current_user])

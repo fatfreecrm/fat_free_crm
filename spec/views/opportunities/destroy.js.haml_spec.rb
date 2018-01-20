@@ -10,7 +10,7 @@ require 'spec_helper'
 describe "/opportunities/destroy" do
   before do
     login
-    assign(:opportunity, @opportunity = FactoryGirl.build_stubbed(:opportunity))
+    assign(:opportunity, @opportunity = build_stubbed(:opportunity))
     assign(:stage, Setting.unroll(:opportunity_stage))
     assign(:opportunity_stage_total, Hash.new(1))
   end
@@ -39,7 +39,7 @@ describe "/opportunities/destroy" do
   end
 
   it "should update related account sidebar when called from related account" do
-    assign(:account, account = FactoryGirl.build_stubbed(:account))
+    assign(:account, account = build_stubbed(:account))
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
     render
 
@@ -49,7 +49,7 @@ describe "/opportunities/destroy" do
   end
 
   it "should update related campaign sidebar when called from related campaign" do
-    assign(:campaign, campaign = FactoryGirl.build_stubbed(:campaign))
+    assign(:campaign, campaign = build_stubbed(:campaign))
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 

@@ -23,7 +23,7 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
   #------------------------------------------------------------------------------
   describe "Processing new emails" do
     before do
-      FactoryGirl.create(:user, email: "aaron@example.com")
+      create(:user, email: "aaron@example.com")
     end
 
     before(:each) do
@@ -32,7 +32,7 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
     end
 
     it "should attach a new comment to a contact" do
-      @contact = FactoryGirl.create(:contact)
+      @contact = create(:contact)
       comment_reply = "This is a new comment reply via email"
 
       mail = Mail.new from:    "Aaron Assembler <aaron@example.com>",
@@ -50,7 +50,7 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
     end
 
     it "should attach a new comment to an opportunity, using the 'op' shortcut in subject" do
-      @opportunity = FactoryGirl.create(:opportunity)
+      @opportunity = create(:opportunity)
       comment_reply = "This is a new comment reply via email"
 
       mail = Mail.new from:    "Aaron Assembler <aaron@example.com>",

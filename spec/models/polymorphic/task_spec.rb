@@ -34,7 +34,7 @@ require 'spec_helper'
 describe Task do
   describe "Task/Create" do
     it "should create a new task instance given valid attributes" do
-      task = FactoryGirl.create(:task)
+      task = create(:task)
       expect(task).to be_valid
       expect(task.errors).to be_empty
     end
@@ -45,14 +45,14 @@ describe Task do
       end
 
       it "should create a task with due date selected from dropdown within #{offset ? 'different' : 'current'} timezone" do
-        task = FactoryGirl.create(:task, due_at: Time.now.end_of_week, bucket: "due_this_week")
+        task = create(:task, due_at: Time.now.end_of_week, bucket: "due_this_week")
         expect(task.errors).to be_empty
         expect(task.bucket).to eq("due_this_week")
         expect(task.due_at.change(usec: 0)).to eq(Time.zone.now.end_of_week.change(usec: 0))
       end
 
       it "should create a task with due date selected from the calendar within #{offset ? 'different' : 'current'} timezone" do
-        task = FactoryGirl.create(:task, bucket: "specific_time", calendar: "2020-03-20")
+        task = create(:task, bucket: "specific_time", calendar: "2020-03-20")
         expect(task.errors).to be_empty
         expect(task.bucket).to eq("specific_time")
         expect(task.due_at.to_i).to eq(Time.parse("2020-03-20").to_i)
@@ -62,23 +62,23 @@ describe Task do
 
   describe "Task/Update" do
     it "should update task name" do
-      task = FactoryGirl.create(:task, name: "Hello")
+      task = create(:task, name: "Hello")
       task.update_attributes(name: "World")
       expect(task.errors).to be_empty
       expect(task.name).to eq("World")
     end
 
     it "should update task category" do
-      task = FactoryGirl.create(:task, category: "call")
+      task = create(:task, category: "call")
       task.update_attributes(category: "email")
       expect(task.errors).to be_empty
       expect(task.category).to eq("email")
     end
 
     it "should reassign the task to another person" do
-      him = FactoryGirl.create(:user)
-      her = FactoryGirl.create(:user)
-      task = FactoryGirl.create(:task, assigned_to: him.id)
+      him = create(:user)
+      her = create(:user)
+      task = create(:task, assigned_to: him.id)
       task.update_attributes(assigned_to: her.id)
       expect(task.errors).to be_empty
       expect(task.assigned_to).to eq(her.id)
@@ -86,8 +86,8 @@ describe Task do
     end
 
     it "should reassign the task from another person to myself" do
-      him = FactoryGirl.create(:user)
-      task = FactoryGirl.create(:task, assigned_to: him.id)
+      him = create(:user)
+      task = create(:task, assigned_to: him.id)
       task.update_attributes(assigned_to: "")
       expect(task.errors).to be_empty
       expect(task.assigned_to).to eq(nil)
@@ -100,7 +100,7 @@ describe Task do
       end
 
       it "should update due date based on selected bucket within #{offset ? 'different' : 'current'} timezone" do
-        task = FactoryGirl.create(:task, due_at: Time.now.midnight.tomorrow, bucket: "due_tomorrow")
+        task = create(:task, due_at: Time.now.midnight.tomorrow, bucket: "due_tomorrow")
         task.update_attributes(bucket: "due_this_week")
         expect(task.errors).to be_empty
         expect(task.bucket).to eq("due_this_week")
@@ -108,7 +108,7 @@ describe Task do
       end
 
       it "should update due date if specific calendar date selected within #{offset ? 'different' : 'current'} timezone" do
-        task = FactoryGirl.create(:task, due_at: Time.now.midnight.tomorrow, bucket: "due_tomorrow")
+        task = create(:task, due_at: Time.now.midnight.tomorrow, bucket: "due_tomorrow")
         task.update_attributes(bucket: "specific_time", calendar: "2020-03-20")
         expect(task.errors).to be_empty
         expect(task.bucket).to eq("specific_time")
@@ -119,23 +119,25 @@ describe Task do
 
   describe "Task/Complete" do
     it "should complete a task that is overdue" do
-      task = FactoryGirl.create(:task, due_at: 2.days.ago, bucket: "overdue")
+      task = create(:task, due_at: 2.days.ago, bucket: "overdue")
       task.update_attributes(completed_at: Time.now, completed_by: task.user.id)
+
       expect(task.errors).to be_empty
       expect(task.completed_at).not_to eq(nil)
       expect(task.completor).to eq(task.user)
     end
 
     it "should complete a task due sometime in the future" do
-      task = FactoryGirl.create(:task, due_at: Time.now.midnight.tomorrow, bucket: "due_tomorrow")
+      task = create(:task, due_at: Time.now.midnight.tomorrow, bucket: "due_tomorrow")
       task.update_attributes(completed_at: Time.now, completed_by: task.user.id)
+
       expect(task.errors).to be_empty
       expect(task.completed_at).not_to eq(nil)
       expect(task.completor).to eq(task.user)
     end
 
     it "should complete a task that is due on specific date in the future" do
-      task = FactoryGirl.create(:task, calendar: "10/10/2022 12:00 AM", bucket: "specific_time")
+      task = create(:task, calendar: "10/10/2022 12:00 AM", bucket: "specific_time")
       task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
       task.update_attributes(completed_at: Time.now, completed_by: task.user.id)
       expect(task.errors).to be_empty
@@ -144,7 +146,7 @@ describe Task do
     end
 
     it "should complete a task that is due on specific date in the past" do
-      task = FactoryGirl.create(:task, calendar: "10/10/1992 12:00 AM", bucket: "specific_time")
+      task = create(:task, calendar: "10/10/1992 12:00 AM", bucket: "specific_time")
       task.calendar = nil # Calendar is not saved in the database; we need it only to set the :due_at.
       task.update_attributes(completed_at: Time.now, completed_by: task.user.id)
       expect(task.errors).to be_empty
@@ -154,9 +156,10 @@ describe Task do
 
     it "completion should preserve original due date" do
       due_at = Time.now - 42.days
-      task = FactoryGirl.create(:task, due_at: due_at, bucket: "specific_time",
-                                       calendar: due_at.strftime('%Y-%m-%d %H:%M'))
+      task = create(:task, due_at: due_at, bucket: "specific_time",
+                           calendar: due_at.strftime('%Y-%m-%d %H:%M'))
       task.update_attributes(completed_at: Time.now, completed_by: task.user.id, calendar: '')
+
       expect(task.completed?).to eq(true)
       expect(task.due_at).to eq(due_at.utc.strftime('%Y-%m-%d %H:%M'))
     end
@@ -164,70 +167,70 @@ describe Task do
 
   # named_scope :my, lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
   describe "task.my?" do
-    let(:current_user) { FactoryGirl.create(:user) }
+    let(:current_user) { create(:user) }
 
     it "should match a task created by the user" do
-      task = FactoryGirl.create(:task, user: current_user, assignee: nil)
+      task = create(:task, user: current_user, assignee: nil)
       expect(task.my?(current_user)).to eq(true)
     end
 
     it "should match a task assigned to the user" do
-      task = FactoryGirl.create(:task, user: FactoryGirl.create(:user), assignee: current_user)
+      task = create(:task, user: create(:user), assignee: current_user)
       expect(task.my?(current_user)).to eq(true)
     end
 
     it "should Not match a task not created by the user" do
-      task = FactoryGirl.create(:task, user: FactoryGirl.create(:user))
+      task = create(:task, user: create(:user))
       expect(task.my?(current_user)).to eq(false)
     end
 
     it "should Not match a task created by the user but assigned to somebody else" do
-      task = FactoryGirl.create(:task, user: current_user, assignee: FactoryGirl.create(:user))
+      task = create(:task, user: current_user, assignee: create(:user))
       expect(task.my?(current_user)).to eq(false)
     end
   end
 
   # named_scope :assigned_by, lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?", user.id, user.id ], :include => :assignee } }
   describe "task.assigned_by?" do
-    let(:current_user) { FactoryGirl.create(:user) }
+    let(:current_user) { create(:user) }
 
     it "should match a task assigned by the user to somebody else" do
-      task = FactoryGirl.create(:task, user: current_user, assignee: FactoryGirl.create(:user))
+      task = create(:task, user: current_user, assignee: create(:user))
       expect(task.assigned_by?(current_user)).to eq(true)
     end
 
     it "should Not match a task not created by the user" do
-      task = FactoryGirl.create(:task, user: FactoryGirl.create(:user))
+      task = create(:task, user: create(:user))
       expect(task.assigned_by?(current_user)).to eq(false)
     end
 
     it "should Not match a task not assigned to anybody" do
-      task = FactoryGirl.create(:task, assignee: nil)
+      task = create(:task, assignee: nil)
       expect(task.assigned_by?(current_user)).to eq(false)
     end
 
     it "should Not match a task assigned to the user" do
-      task = FactoryGirl.create(:task, assignee: current_user)
+      task = create(:task, assignee: current_user)
       expect(task.assigned_by?(current_user)).to eq(false)
     end
   end
 
   # named_scope :tracked_by, lambda { |user| { :conditions => [ "user_id = ? OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
   describe "task.tracked_by?" do
-    let(:current_user) { FactoryGirl.create(:user) }
+    let(:current_user) { create(:user) }
 
     it "should match a task created by the user" do
-      task = FactoryGirl.create(:task, user: current_user)
+      task = create(:task, user: current_user)
       expect(task.tracked_by?(current_user)).to eq(true)
     end
 
     it "should match a task assigned to the user" do
-      task = FactoryGirl.create(:task, assignee: current_user)
+      task = create(:task, assignee: current_user)
       expect(task.tracked_by?(current_user)).to eq(true)
     end
 
     it "should Not match a task that is neither created nor assigned to the user" do
-      task = FactoryGirl.create(:task, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
+      task = create(:task, user: create(:user), assignee: create(:user))
       expect(task.tracked_by?(current_user)).to eq(false)
     end
   end
@@ -314,24 +317,24 @@ describe Task do
 
   describe "Exportable" do
     describe "unassigned tasks" do
-      let(:task1) { FactoryGirl.build(:task, user: FactoryGirl.create(:user), assignee: nil) }
-      let(:task2) { FactoryGirl.build(:task, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
+      let(:task1) { build(:task, user: create(:user), assignee: nil) }
+      let(:task2) { build(:task, user: create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
         let(:exported) { [task1, task2] }
       end
     end
 
     describe "assigned tasks" do
-      let(:task1) { FactoryGirl.build(:task, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user)) }
-      let(:task2) { FactoryGirl.build(:task, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
+      let(:task1) { build(:task, user: create(:user), assignee: create(:user)) }
+      let(:task2) { build(:task, user: create(:user, first_name: nil, last_name: nil), assignee: create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
         let(:exported) { [task1, task2] }
       end
     end
 
     describe "completed tasks" do
-      let(:task1) { FactoryGirl.build(:task, user: FactoryGirl.create(:user), completor: FactoryGirl.create(:user), completed_at: 1.day.ago) }
-      let(:task2) { FactoryGirl.build(:task, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), completor: FactoryGirl.create(:user, first_name: nil, last_name: nil), completed_at: 1.day.ago) }
+      let(:task1) { build(:task, user: create(:user), completor: create(:user), completed_at: 1.day.ago) }
+      let(:task2) { build(:task, user: create(:user, first_name: nil, last_name: nil), completor: create(:user, first_name: nil, last_name: nil), completed_at: 1.day.ago) }
       it_should_behave_like("exportable") do
         let(:exported) { [task1, task2] }
       end
@@ -349,13 +352,13 @@ describe Task do
   describe "scopes" do
     context "visible_on_dashboard" do
       before :each do
-        @user = FactoryGirl.create(:user)
-        @t1 = FactoryGirl.create(:task, user: @user)
-        @t2 = FactoryGirl.create(:task, user: @user, assignee: FactoryGirl.create(:user))
-        @t3 = FactoryGirl.create(:task, user: FactoryGirl.create(:user), assignee: @user)
-        @t4 = FactoryGirl.create(:task, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user))
-        @t5 = FactoryGirl.create(:task, user: FactoryGirl.create(:user), assignee: @user)
-        @t6 = FactoryGirl.create(:completed_task, assignee: @user)
+        @user = create(:user)
+        @t1 = create(:task, user: @user)
+        @t2 = create(:task, user: @user, assignee: create(:user))
+        @t3 = create(:task, user: create(:user), assignee: @user)
+        @t4 = create(:task, user: create(:user), assignee: create(:user))
+        @t5 = create(:task, user: create(:user), assignee: @user)
+        @t6 = create(:completed_task, assignee: @user)
       end
 
       it "should show tasks which have been created by the user and are unassigned" do
@@ -381,10 +384,10 @@ describe Task do
 
     context "by_due_at" do
       it "should show tasks ordered by due_at" do
-        t1 = FactoryGirl.create(:task, name: 't1', bucket: "due_asap")
-        t2 = FactoryGirl.create(:task, calendar: 5.days.from_now.strftime("%Y-%m-%d %H:%M"), bucket: "specific_time")
-        t3 = FactoryGirl.create(:task, name: 't3', bucket: "due_next_week")
-        t4 = FactoryGirl.create(:task, calendar: 20.days.from_now.strftime("%Y-%m-%d %H:%M"), bucket: "specific_time")
+        t1 = create(:task, name: 't1', bucket: "due_asap")
+        t2 = create(:task, calendar: 5.days.from_now.strftime("%Y-%m-%d %H:%M"), bucket: "specific_time")
+        t3 = create(:task, name: 't3', bucket: "due_next_week")
+        t4 = create(:task, calendar: 20.days.from_now.strftime("%Y-%m-%d %H:%M"), bucket: "specific_time")
         expect(Task.by_due_at).to eq([t1, t2, t3, t4])
       end
     end

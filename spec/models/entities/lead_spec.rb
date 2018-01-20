@@ -47,17 +47,17 @@ describe Lead do
 
   describe "Attach" do
     before do
-      @lead = FactoryGirl.create(:lead)
+      @lead = create(:lead)
     end
 
     it "should return nil when attaching existing task" do
-      @task = FactoryGirl.create(:task, asset: @lead)
+      @task = create(:task, asset: @lead)
 
       expect(@lead.attach!(@task)).to eq(nil)
     end
 
     it "should return non-empty list of tasks when attaching new task" do
-      @task = FactoryGirl.create(:task)
+      @task = create(:task)
 
       expect(@lead.attach!(@task)).to eq([@task])
     end
@@ -65,11 +65,11 @@ describe Lead do
 
   describe "Discard" do
     before do
-      @lead = FactoryGirl.create(:lead)
+      @lead = create(:lead)
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, asset: @lead)
+      @task = create(:task, asset: @lead)
       expect(@lead.tasks.count).to eq(1)
 
       @lead.discard!(@task)
@@ -80,16 +80,16 @@ describe Lead do
 
   describe "Exportable" do
     describe "assigned lead" do
-      let(:lead1) { FactoryGirl.build(:lead, assignee: FactoryGirl.create(:user)) }
-      let(:lead2) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
+      let(:lead1) { build(:lead, assignee: create(:user)) }
+      let(:lead2) { build(:lead, user: create(:user, first_name: nil, last_name: nil), assignee: create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
         let(:exported) { [lead1, lead2] }
       end
     end
 
     describe "unassigned lead" do
-      let(:lead1) { FactoryGirl.build(:lead, assignee: nil) }
-      let(:lead2) { FactoryGirl.build(:lead, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
+      let(:lead1) { build(:lead, assignee: nil) }
+      let(:lead2) { build(:lead, user: create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
         let(:exported) { [lead1, lead2] }
       end

@@ -10,6 +10,9 @@ Unreleased (0.18.0)
 #### Mininium ruby version
 #665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
 
+#### Swap to FactoryBot
+If you consume fat free crm as an engine and re-use any factories, you'll need to [upgrade to FactoryBot](https://github.com/thoughtbot/factory_bot/blob/4-9-0-stable/UPGRADE_FROM_FACTORY_GIRL.md).
+
 #### Removed methods
 `Lead.update_with_permissions` is removed, use user_ids and group_ids inside attributes instead and call lead.update_with_account_and_lead_counters
 `FatFreeCRM::Permissions.save_with_permissions` is removed, use user_ids and group_ids inside attributes and call save

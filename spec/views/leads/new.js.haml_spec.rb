@@ -12,11 +12,10 @@ describe "/leads/new" do
 
   before do
     login
-
     @account = build_stubbed(:account)
+    @campaign = build_stubbed(:campaign)
     assign(:account, @account)
     assign(:accounts, [@account])
-    @campaign = build_stubbed(:campaign)
     assign(:lead, Lead.new(user: current_user))
     assign(:users, [current_user])
     assign(:campaign, @campaign)

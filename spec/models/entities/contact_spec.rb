@@ -62,7 +62,7 @@ describe Contact do
     end
 
     it "should change account if another account was selected" do
-      @another_account = FactoryGirl.create(:account)
+      @another_account = create(:account)
       expect do
         @contact.update_with_account_and_permissions(
           account: { id: @another_account.id },
@@ -96,7 +96,7 @@ describe Contact do
     end
 
     it "should change account if entered name of another account was found" do
-      @another_account = FactoryGirl.create(:account, name: "Another name")
+      @another_account = create(:account, name: "Another name")
       expect do
         @contact.update_with_account_and_permissions(
           account: { name: "Another name" },
@@ -110,12 +110,12 @@ describe Contact do
 
   describe "Attach" do
     before do
-      @contact = FactoryGirl.create(:contact)
+      @contact = create(:contact)
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, asset: @contact)
-      @opportunity = FactoryGirl.create(:opportunity)
+      @task = create(:task, asset: @contact)
+      @opportunity = create(:opportunity)
       @contact.opportunities << @opportunity
 
       expect(@contact.attach!(@task)).to eq(nil)
@@ -123,8 +123,8 @@ describe Contact do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task)
-      @opportunity = FactoryGirl.create(:opportunity)
+      @task = create(:task)
+      @opportunity = create(:opportunity)
 
       expect(@contact.attach!(@task)).to eq([@task])
       expect(@contact.attach!(@opportunity)).to eq([@opportunity])
@@ -133,11 +133,11 @@ describe Contact do
 
   describe "Discard" do
     before do
-      @contact = FactoryGirl.create(:contact)
+      @contact = create(:contact)
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, asset: @contact)
+      @task = create(:task, asset: @contact)
       expect(@contact.tasks.count).to eq(1)
 
       @contact.discard!(@task)
@@ -146,7 +146,7 @@ describe Contact do
     end
 
     it "should discard an opportunity" do
-      @opportunity = FactoryGirl.create(:opportunity)
+      @opportunity = create(:opportunity)
       @contact.opportunities << @opportunity
       expect(@contact.opportunities.count).to eq(1)
 
@@ -158,16 +158,16 @@ describe Contact do
 
   describe "Exportable" do
     describe "assigned contact" do
-      let(:contact1) { FactoryGirl.build(:contact, assignee: FactoryGirl.create(:user)) }
-      let(:contact2) { FactoryGirl.build(:contact, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
+      let(:contact1) { build(:contact, assignee: create(:user)) }
+      let(:contact2) { build(:contact, user: create(:user, first_name: nil, last_name: nil), assignee: create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
         let(:exported) { [contact1, contact2] }
       end
     end
 
     describe "unassigned contact" do
-      let(:contact1) { FactoryGirl.build(:contact, assignee: nil) }
-      let(:contact2) { FactoryGirl.build(:contact, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
+      let(:contact1) { build(:contact, assignee: nil) }
+      let(:contact2) { build(:contact, user: create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
         let(:exported) { [contact1, contact2] }
       end
@@ -180,7 +180,7 @@ describe Contact do
 
   describe "text_search" do
     before do
-      @contact = FactoryGirl.create(:contact, first_name: "Bob", last_name: "Dillion", email: 'bob_dillion@example.com', phone: '+1 123 456 789')
+      @contact = create(:contact, first_name: "Bob", last_name: "Dillion", email: 'bob_dillion@example.com', phone: '+1 123 456 789')
     end
 
     it "should search first_name" do
@@ -208,7 +208,7 @@ describe Contact do
     end
 
     it "should not break with a single quote" do
-      contact2 = FactoryGirl.create(:contact, first_name: "Shamus", last_name: "O'Connell", email: 'bob_dillion@example.com', phone: '+1 123 456 789')
+      contact2 = create(:contact, first_name: "Shamus", last_name: "O'Connell", email: 'bob_dillion@example.com', phone: '+1 123 456 789')
       expect(Contact.text_search("O'Connell")).to eq([contact2])
     end
 

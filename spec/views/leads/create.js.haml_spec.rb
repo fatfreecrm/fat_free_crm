@@ -11,10 +11,10 @@ describe "/leads/create" do
   before do
     controller.controller_path = 'leads'
     login
-    assign(:campaigns, [build_stubbed(:campaign)])
     @account = build_stubbed(:account)
     assign(:account, @account)
     assign(:accounts, [@account])
+    assign(:campaigns, [build_stubbed(:campaign)])
   end
 
   describe "create success" do

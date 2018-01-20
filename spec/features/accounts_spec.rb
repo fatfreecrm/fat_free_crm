@@ -17,7 +17,7 @@ feature 'Accounts', '
   end
 
   scenario 'should view a list of accounts' do
-    2.times { |i| FactoryGirl.create(:account, name: "Account #{i}") }
+    2.times { |i| create(:account, name: "Account #{i}") }
     visit accounts_page
     expect(page).to have_content('Account 0')
     expect(page).to have_content('Account 1')
@@ -70,7 +70,7 @@ feature 'Accounts', '
   end
 
   scenario 'should view and edit an account', js: true, versioning: true do
-    FactoryGirl.create(:account, name: "A new account")
+    create(:account, name: "A new account")
     with_versioning do
       visit accounts_page
       find('div#accounts').click_link('A new account')
@@ -86,7 +86,7 @@ feature 'Accounts', '
   end
 
   scenario 'should delete an account', js: true do
-    FactoryGirl.create(:account, name: "My new account")
+    create(:account, name: "My new account")
     visit accounts_page
     find('div#accounts').click_link('My new account')
     click_link 'Delete?'
@@ -96,7 +96,7 @@ feature 'Accounts', '
   end
 
   scenario 'should search for an account', js: true do
-    2.times { |i| FactoryGirl.create(:account, name: "Account #{i}") }
+    2.times { |i| create(:account, name: "Account #{i}") }
     visit accounts_page
     expect(find('#accounts')).to have_content("Account 0")
     expect(find('#accounts')).to have_content("Account 1")

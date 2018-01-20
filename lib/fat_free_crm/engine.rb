@@ -13,8 +13,8 @@ module FatFreeCRM
     config.active_record.observers = %i[lead_observer opportunity_observer
                                         task_observer entity_observer]
 
-    initializer "model_core.factories", after: "factory_girl.set_factory_paths" do
-      FactoryGirl.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryGirl)
+    initializer "model_core.factories", after: "factory_bot.set_factory_paths" do
+      FactoryBot.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryBot)
     end
 
     initializer :append_migrations do |app|

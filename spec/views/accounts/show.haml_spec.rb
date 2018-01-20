@@ -12,13 +12,13 @@ describe "/accounts/show" do
 
   before do
     login
-    @account = FactoryGirl.create(:account, id: 42,
-                                            contacts: [FactoryGirl.create(:contact)],
-                                            opportunities: [FactoryGirl.create(:opportunity)])
+    @account = create(:account, id: 42,
+                                contacts: [create(:contact)],
+                                opportunities: [create(:opportunity)])
     assign(:account, @account)
     assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [FactoryGirl.create(:comment, commentable: @account)])
+    assign(:timeline, [create(:comment, commentable: @account)])
 
     # controller#controller_name and controller#action_name are not set in view specs
     allow(view).to receive(:template_for_current_view).and_return(nil)
