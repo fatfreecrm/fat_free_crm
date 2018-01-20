@@ -48,12 +48,12 @@ class ApplicationController < ActionController::Base
       format.any(:js, :html) { render partial: 'auto_complete' }
       format.json do
         results = []
-        @auto_complete.each_with_object({}) { |a, h|
-           results << {
-             id: a.id, 
-             text: a.respond_to?(:full_name) ? h(a.full_name) : h(a.name)
-           }
-         }
+        @auto_complete.each_with_object({}) do |a, _h|
+          results << {
+            id: a.id,
+            text: a.respond_to?(:full_name) ? h(a.full_name) : h(a.name)
+          }
+        end
         render json: {
           results: results
         }
