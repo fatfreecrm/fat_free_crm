@@ -7,6 +7,7 @@ then you win. –- Mahatma Gandhi
 Sat Jan 20, 2018 (0.17.1)
 ---------------------------------------------------------------------
  - #709 Revert accidental minimum ruby version 2.4 changes (#665)
+ - Fix #687
 
 
 Sat Jan 20, 2018 (0.17.0)
