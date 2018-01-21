@@ -24,6 +24,7 @@ TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
 Sat Jan 20, 2018 (0.17.1)
 ---------------------------------------------------------------------
  - #709 Revert accidental minimum ruby version 2.4 changes (#665)
+ - Fix #687
 
 
 Sat Jan 20, 2018 (0.17.0)
