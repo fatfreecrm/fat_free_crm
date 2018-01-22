@@ -15,9 +15,9 @@ describe EntityObserver do
 
   %i[account contact lead opportunity].each do |entity_type|
     describe "on creation of #{entity_type}" do
-      let(:assignee) { FactoryGirl.create(:user) }
-      let(:assigner) { FactoryGirl.create(:user) }
-      let!(:entity)  { FactoryGirl.build(entity_type, user: assigner, assignee: assignee) }
+      let(:assignee) { create(:user) }
+      let(:assigner) { create(:user) }
+      let!(:entity)  { build(entity_type, user: assigner, assignee: assignee) }
       let(:mail) { double('mail', deliver_now: true) }
 
       after :each do
@@ -45,9 +45,9 @@ describe EntityObserver do
     end
 
     describe "on update of #{entity_type}" do
-      let(:assignee) { FactoryGirl.create(:user) }
-      let(:assigner) { FactoryGirl.create(:user) }
-      let!(:entity)  { FactoryGirl.create(entity_type, user: FactoryGirl.create(:user)) }
+      let(:assignee) { create(:user) }
+      let(:assigner) { create(:user) }
+      let!(:entity)  { create(entity_type, user: create(:user)) }
       let(:mail) { double('mail', deliver_now: true) }
 
       it "notifies the new owner if the entity is re-assigned" do

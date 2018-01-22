@@ -12,7 +12,7 @@ describe "/leads/new" do
 
   before do
     login
-    @campaign = FactoryGirl.build_stubbed(:campaign)
+    @campaign = build_stubbed(:campaign)
     assign(:lead, Lead.new(user: current_user))
     assign(:users, [current_user])
     assign(:campaign, @campaign)

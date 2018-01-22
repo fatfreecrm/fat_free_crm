@@ -15,7 +15,7 @@ describe "/campaigns/index" do
   end
 
   it "should render [campaign] template with @campaigns collection if there are campaigns" do
-    assign(:campaigns, [FactoryGirl.build_stubbed(:campaign, id: 42)].paginate)
+    assign(:campaigns, [build_stubbed(:campaign, id: 42)].paginate)
 
     render template: 'campaigns/index', formats: [:js]
 

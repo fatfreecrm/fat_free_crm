@@ -1,4 +1,4 @@
-- if (params['controller'] == 'leads') and (template = template_for_current_view).present?
+- if (controller.controller_name == 'leads') and (template = template_for_current_view).present?
   = render(template, lead: lead)
 - else
   -# default view

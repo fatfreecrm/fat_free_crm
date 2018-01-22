@@ -4,8 +4,60 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased (0.17.0)
+
+Unreleased (0.18.0)
 ---------------------------------------------------------------------
+### Important changes
+#### Mininium ruby version
+#665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
+
+#### Swap to FactoryBot
+If you consume fat free crm as an engine and re-use any factories, you'll need to [upgrade to FactoryBot](https://github.com/thoughtbot/factory_bot/blob/4-9-0-stable/UPGRADE_FROM_FACTORY_GIRL.md).
+
+#### Removed methods
+`Lead.update_with_permissions` is removed, use user_ids and group_ids inside attributes instead and call lead.update_with_account_and_lead_counters
+`FatFreeCRM::Permissions.save_with_permissions` is removed, use user_ids and group_ids inside attributes and call save
+`FatFreeCRM::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
+
+#### Other changes
+TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
+
+Sat Jan 20, 2018 (0.17.1)
+---------------------------------------------------------------------
+ - #709 Revert accidental minimum ruby version 2.4 changes (#665)
+ - Fix #687
+
+Mon Jan 22, 2018 (0.16.2)
+---------------------------------------------------------------------
+Fix #687
+
+Sat Jan 20, 2018 (0.17.0)
+---------------------------------------------------------------------
+
+### Important changes
+#### Select2 for select boxes
+This release replaces [Chozen](https://harvesthq.github.io/chosen/) with [Select2](https://select2.org/) consistently across the app.
+This may break plugins which rely on Chozen. To fix any issues please
+migrate to Select2 or add Chozen to your plugins.
+
+#### Counter caches
+To improve performance, a number of [counter caches](http://guides.rubyonrails.org/association_basics.html#options-for-belongs-to-counter-cache) have been added.
+
+Users with large amounts of records may find certain [database migrations](https://github.com/fatfreecrm/fat_free_crm/blob/master/db/migrate/20180102075234_add_account_counter_caches.rb) taking a large amount of time, as each record is cached upfront.
+
+#### Minimum ruby version is now Ruby 2.3
+See #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
+
+#### Other changes
+ - #691 Wording
+ - #688 Preparation for Devise
+ - #686 Bundle update
+ - #683 Rubocop: Refactoring
+ - #680 Alternative build setup
+ - #682 Rubocop: Hashrockets
+ - #693 Update Japanese translations
+ - #697 Minor security improvements
+ - #703 #696 Replace Chozen with select2
  - #678 Find an account by name when name is in params (fixes #397) 
  - #673 Improve JS escaping 
  - #671 Devise Readiness (+ thread-safety): Refactor User.my scope 
@@ -15,7 +67,7 @@ Unreleased (0.17.0)
  - #666 Various rubocop corrected items 
  - #661 Bundle Update on 2018-01-06 
  - #655 Upgrade rubocop
- - #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
+
  - #658 Upgrade Bootsnap gem, fixing an issue with windows
 
 Sat Jan 6, 2018 (0.16.1)
@@ -31,7 +83,10 @@ Fri Jan 5, 2018 (0.16.0)
 
 Thu Dec 14, 2017 (0.15.0)
 ---------------------------------------------------------------------
-This release upgrades to rails 5.0.0
+This release upgrades to rails 5.0.0.
+
+Be aware of https://github.com/rails/sprockets/issues/426 if you were using FFCRM as an engine.
+
  - #500 - Upgrade rails
  - #554 - Upgrade authlogic
  - #614 - Rails5 warnings

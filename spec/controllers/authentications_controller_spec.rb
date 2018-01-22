@@ -34,7 +34,7 @@ describe AuthenticationsController do
 
     describe "user must not be logged in" do
       before(:each) do
-        @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass")
+        @user = create(:user, username: "user", password: "pass", password_confirmation: "pass")
         allow(@controller).to receive(:current_user).and_return(@user)
       end
 
@@ -74,7 +74,7 @@ describe AuthenticationsController do
       end
 
       it "displays welcome message and redirects to the home page" do
-        @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", login_count: 0)
+        @user = create(:user, username: "user", password: "pass", password_confirmation: "pass", login_count: 0)
         allow(@authentication).to receive(:user).and_return(@user)
 
         post :create, params: { authentication: @login }
@@ -84,7 +84,7 @@ describe AuthenticationsController do
       end
 
       it "displays last login time if it's not the first login" do
-        @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", login_count: 42)
+        @user = create(:user, username: "user", password: "pass", password_confirmation: "pass", login_count: 42)
         allow(@authentication).to receive(:user).and_return(@user)
 
         post :create, params: { authentication: @login }
@@ -96,7 +96,7 @@ describe AuthenticationsController do
     describe "authenticaion failure" do
       describe "user is not suspended" do
         it "redirects to login page if username or password are invalid" do
-          @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass")
+          @user = create(:user, username: "user", password: "pass", password_confirmation: "pass")
           allow(@authentication).to receive(:user).and_return(@user)
           allow(@authentication).to receive(:save).and_return(false) # <--- Authentication failure.
           allow(Authentication).to receive(:new).and_return(@authentication)
@@ -115,7 +115,7 @@ describe AuthenticationsController do
 
         # This tests :before_save update_info callback in Authentication model.
         it "keeps user login attributes intact" do
-          @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", suspended_at: Date.yesterday, login_count: 0, last_login_at: nil, last_login_ip: nil)
+          @user = create(:user, username: "user", password: "pass", password_confirmation: "pass", suspended_at: Date.yesterday, login_count: 0, last_login_at: nil, last_login_ip: nil)
           allow(@authentication).to receive(:user).and_return(@user)
 
           post :create, params: { authentication: @login }
@@ -125,7 +125,7 @@ describe AuthenticationsController do
         end
 
         it "redirects to login page if user is suspended" do
-          @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", suspended_at: Date.yesterday)
+          @user = create(:user, username: "user", password: "pass", password_confirmation: "pass", suspended_at: Date.yesterday)
           allow(@authentication).to receive(:user).and_return(@user)
 
           post :create, params: { authentication: @login }
@@ -136,7 +136,7 @@ describe AuthenticationsController do
 
         it "redirects to login page with the message if signup needs approval and user hasn't been activated yet" do
           allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-          @user = FactoryGirl.create(:user, username: "user", password: "pass", password_confirmation: "pass", suspended_at: Date.yesterday, login_count: 0)
+          @user = create(:user, username: "user", password: "pass", password_confirmation: "pass", suspended_at: Date.yesterday, login_count: 0)
           allow(@authentication).to receive(:user).and_return(@user)
 
           post :create, params: { authentication: @login }

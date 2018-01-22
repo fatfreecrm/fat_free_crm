@@ -11,7 +11,7 @@ class AccountsController < EntitiesController
   # GET /accounts
   #----------------------------------------------------------------------------
   def index
-    @accounts = get_accounts(page: params[:page], per_page: params[:per_page])
+    @accounts = get_accounts(page: page_param, per_page: per_page_param)
 
     respond_with @accounts do |format|
       format.xls { render layout: 'header' }
@@ -103,9 +103,9 @@ class AccountsController < EntitiesController
   # GET /accounts/redraw                                                   AJAX
   #----------------------------------------------------------------------------
   def redraw
-    current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
+    current_user.pref[:accounts_per_page] = per_page_param if per_page_param
     current_user.pref[:accounts_sort_by]  = Account.sort_by_map[params[:sort_by]] if params[:sort_by]
-    @accounts = get_accounts(page: 1, per_page: params[:per_page])
+    @accounts = get_accounts(page: 1, per_page: per_page_param)
     set_options # Refresh options
 
     respond_with(@accounts) do |format|
@@ -117,7 +117,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:accounts_filter] = params[:category]
-    @accounts = get_accounts(page: 1, per_page: params[:per_page])
+    @accounts = get_accounts(page: 1, per_page: per_page_param)
 
     respond_with(@accounts) do |format|
       format.js { render :index }

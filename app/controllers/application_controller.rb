@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  protect_from_forgery with: :exception
 
   before_action :set_paper_trail_whodunnit
 
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
-    @query = params[:auto_complete_query] || ''
+    @query = params[:term] || ''
     @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
@@ -47,9 +47,15 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.any(:js, :html) { render partial: 'auto_complete' }
       format.json do
-        render json: @auto_complete.each_with_object({}) { |a, h|
-                       h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
-                     }
+        results = @auto_complete.map do |a|
+          {
+            id: a.id,
+            text: a.respond_to?(:full_name) ? a.full_name : a.name
+          }
+        end
+        render json: {
+          results: results
+        }
       end
     end
   end

@@ -17,6 +17,6 @@ Ransack.configure do |config|
   config.ajax_options = {
     url: '/:controller/auto_complete.json',
     type: 'POST',
-    key: 'auto_complete_query'
+    key: 'term'
   }
 end

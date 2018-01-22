@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-FactoryGirl.define do
+FactoryBot.define do
   factory :contact do
     user
     lead
@@ -14,7 +14,7 @@ FactoryGirl.define do
     first_name          { FFaker::Name.first_name }
     last_name           { FFaker::Name.last_name }
     access "Public"
-    title               { FactoryGirl.generate(:title) }
+    title               { FactoryBot.generate(:title) }
     department          { FFaker::Name.name + " Dept." }
     source              { %w[campaign cold_call conference online referral self web word_of_mouth other].sample }
     email               { FFaker::Internet.email }
@@ -22,16 +22,16 @@ FactoryGirl.define do
     phone               { FFaker::PhoneNumber.phone_number }
     mobile              { FFaker::PhoneNumber.phone_number }
     fax                 { FFaker::PhoneNumber.phone_number }
-    blog                { FactoryGirl.generate(:website) }
-    facebook            { FactoryGirl.generate(:website) }
-    linkedin            { FactoryGirl.generate(:website) }
-    twitter             { FactoryGirl.generate(:website) }
+    blog                { FactoryBot.generate(:website) }
+    facebook            { FactoryBot.generate(:website) }
+    linkedin            { FactoryBot.generate(:website) }
+    twitter             { FactoryBot.generate(:website) }
     do_not_call false
     born_on "1992-10-10"
     background_info     { FFaker::Lorem.paragraph[0, 255] }
     deleted_at nil
-    updated_at          { FactoryGirl.generate(:time) }
-    created_at          { FactoryGirl.generate(:time) }
+    updated_at          { FactoryBot.generate(:time) }
+    created_at          { FactoryBot.generate(:time) }
   end
 
   factory :contact_opportunity do
@@ -39,7 +39,7 @@ FactoryGirl.define do
     opportunity
     role "foo"
     deleted_at nil
-    updated_at          { FactoryGirl.generate(:time) }
-    created_at          { FactoryGirl.generate(:time) }
+    updated_at          { FactoryBot.generate(:time) }
+    created_at          { FactoryBot.generate(:time) }
   end
 end

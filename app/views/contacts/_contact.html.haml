@@ -1,4 +1,4 @@
-- if (params['controller'] == 'contacts') and (template = template_for_current_view).present?
+- if (controller.controller_name == 'contacts') and (template = template_for_current_view).present?
   = render(template, contact: contact)
 - else
   -# default view

@@ -9,7 +9,7 @@ require 'spec_helper'
 
 describe UserMailer do
   describe "password_reset_instructions" do
-    let(:user) { FactoryGirl.build(:user, email: "forgot_my_password@example.com") }
+    let(:user) { build(:user, email: "forgot_my_password@example.com") }
     let(:mail) { UserMailer.password_reset_instructions(user) }
 
     before(:each) do
@@ -35,11 +35,11 @@ describe UserMailer do
   end
 
   describe "assigned_entity_notification" do
-    let(:assigner) { FactoryGirl.build(:user, first_name: "Bob", last_name: "Hope") }
-    let(:assignee) { FactoryGirl.build(:user, email: "assignee@example.com") }
+    let(:assigner) { build(:user, first_name: "Bob", last_name: "Hope") }
+    let(:assignee) { build(:user, email: "assignee@example.com") }
 
     context "for an account" do
-      let(:account) { FactoryGirl.build_stubbed(:account, id: 16, name: 'Ghostbusters', user: assigner, assignee: assignee) }
+      let(:account) { build_stubbed(:account, id: 16, name: 'Ghostbusters', user: assigner, assignee: assignee) }
       let(:mail) { UserMailer.assigned_entity_notification(account, assigner) }
 
       it "sets fatfree as the sender" do
@@ -64,7 +64,7 @@ describe UserMailer do
     end
 
     context "for a contact" do
-      let(:contact) { FactoryGirl.build_stubbed(:contact, id: 56, first_name: 'Harold', last_name: 'Ramis', user: assigner, assignee: assignee) }
+      let(:contact) { build_stubbed(:contact, id: 56, first_name: 'Harold', last_name: 'Ramis', user: assigner, assignee: assignee) }
       let(:mail) { UserMailer.assigned_entity_notification(contact, assigner) }
 
       it "sets fatfree as the sender" do
@@ -89,7 +89,7 @@ describe UserMailer do
     end
 
     context "for a lead" do
-      let(:lead) { FactoryGirl.build_stubbed(:lead, id: 42, first_name: 'Bill', last_name: 'Murray', user: assigner, assignee: assignee) }
+      let(:lead) { build_stubbed(:lead, id: 42, first_name: 'Bill', last_name: 'Murray', user: assigner, assignee: assignee) }
       let(:mail) { UserMailer.assigned_entity_notification(lead, assigner) }
 
       it "sets fatfree as the sender" do
@@ -114,7 +114,7 @@ describe UserMailer do
     end
 
     context "for an opportunity" do
-      let(:opportunity) { FactoryGirl.create(:opportunity, id: 24, name: 'Big', user: assigner, assignee: assignee) }
+      let(:opportunity) { create(:opportunity, id: 24, name: 'Big', user: assigner, assignee: assignee) }
       let(:mail) { UserMailer.assigned_entity_notification(opportunity, assigner) }
 
       it "sets fatfree as the sender" do

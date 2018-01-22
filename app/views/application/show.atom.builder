@@ -13,8 +13,8 @@ atom_feed do |feed|
   feed.updated    @assets.any? ? @assets.max_by(&:updated_at).updated_at : Time.now
   feed.generator  "Fat Free CRM v#{FatFreeCRM::VERSION::STRING}"
   feed.author do |author|
-    author.name  @current_user.full_name
-    author.email @current_user.email
+    author.name  current_user.full_name
+    author.email current_user.email
   end
 
   @assets.each do |asset|

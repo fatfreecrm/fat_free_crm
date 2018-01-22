@@ -17,7 +17,7 @@ feature 'Users tab', '
   end
 
   scenario 'should create a new user', js: true do
-    FactoryGirl.create(:group, name: "Superheroes")
+    create(:group, name: "Superheroes")
     visit admin_users_path
     click_link 'Create User'
     expect(page).to have_selector('#user_username', visible: true)

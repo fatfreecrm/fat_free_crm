@@ -6,8 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::FieldsController < Admin::ApplicationController
-  before_action "set_current_tab('admin/fields')", only: [:index]
-
+  before_action :setup_current_tab, only: [:index]
   load_resource except: %i[create subform]
 
   # GET /fields
@@ -44,7 +43,7 @@ class Admin::FieldsController < Admin::ApplicationController
   def create
     as = field_params[:as]
     @field =
-      if as =~ /pair/
+      if as.match?(/pair/)
         CustomFieldPair.create_pair(params).first
       elsif as.present?
         klass = Field.lookup_class(as).classify.constantize
@@ -60,7 +59,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # PUT /fields/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    if field_params[:as] =~ /pair/
+    if field_params[:as].match?(/pair/)
       @field = CustomFieldPair.update_pair(params).first
     else
       @field = Field.find(params[:id])
@@ -116,5 +115,9 @@ class Admin::FieldsController < Admin::ApplicationController
 
   def field_params
     params[:field].permit!
+  end
+
+  def setup_current_tab
+    set_current_tab('admin/fields')
   end
 end

@@ -1,4 +1,4 @@
-- if (params['controller'] == 'accounts') and (template = template_for_current_view).present?
+- if (controller.controller_name == 'accounts') and (template = template_for_current_view).present?
   = render(template, account: account)
 - else
   -# default view

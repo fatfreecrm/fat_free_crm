@@ -46,7 +46,7 @@
         %tr
           %td
             .label #{t :campaign}:
-            = opportunity_campaign_select( selected: (@campaign.try(:id) || @opportunity.campaign_id), include_blank: true )
+            = opportunity_campaign_select(selected: (@campaign.try(:id) || @opportunity.campaign_id), include_blank: true)
 
         - if Setting.background_info && Setting.background_info.include?(:opportunity)
           %tr

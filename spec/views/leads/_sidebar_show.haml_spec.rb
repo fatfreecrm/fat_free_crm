@@ -14,11 +14,11 @@ describe "/leads/_sidebar_show" do
     login
     assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:lead, FactoryGirl.build_stubbed(:lead,
-                                            blog: 'http://www.blogger.com/home',
-                                            linkedin: 'www.linkedin.com',
-                                            twitter: 'twitter.com/account',
-                                            facebook: ''))
+    assign(:lead, build_stubbed(:lead,
+                                blog: 'http://www.blogger.com/home',
+                                linkedin: 'www.linkedin.com',
+                                twitter: 'twitter.com/account',
+                                facebook: ''))
   end
 
   it "should render working web presence links whether a protocol is provided or not" do

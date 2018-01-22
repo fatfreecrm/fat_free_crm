@@ -1,4 +1,4 @@
-- if (params['controller'] == 'campaigns') and (template = template_for_current_view).present?
+- if (controller.controller_name == 'campaigns') and (template = template_for_current_view).present?
   = render(template, campaign: campaign)
 - else
   -# default view

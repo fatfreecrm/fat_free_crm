@@ -14,7 +14,8 @@ class AddAccountCounterCaches < ActiveRecord::Migration[5.1]
 
   def data
     Account.all.each do |account|
-      account.update_columns(
+      Account.update_counters(
+        account.id,
         contacts_count: account.contacts.count,
         opportunities_count: account.opportunities.count
       )

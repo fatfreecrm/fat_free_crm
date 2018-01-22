@@ -13,7 +13,7 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities
   #----------------------------------------------------------------------------
   def index
-    @opportunities = get_opportunities(page: params[:page], per_page: params[:per_page])
+    @opportunities = get_opportunities(page: page_param, per_page: per_page_param)
 
     respond_with @opportunities do |format|
       format.xls { render layout: 'header' }
@@ -80,7 +80,6 @@ class OpportunitiesController < EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-
         @accounts = Account.my(current_user).order('name')
         @account = if params[:account][:id].blank?
                      if request.referer =~ /\/accounts\/(\d+)\z/
@@ -151,7 +150,7 @@ class OpportunitiesController < EntitiesController
   # GET /opportunities/redraw                                              AJAX
   #----------------------------------------------------------------------------
   def redraw
-    @opportunities = get_opportunities(page: 1, per_page: params[:per_page])
+    @opportunities = get_opportunities(page: 1, per_page: per_page_param)
     set_options # Refresh options
 
     respond_with(@opportunities) do |format|
@@ -162,7 +161,7 @@ class OpportunitiesController < EntitiesController
   # POST /opportunities/filter                                             AJAX
   #----------------------------------------------------------------------------
   def filter
-    @opportunities = get_opportunities(page: 1, per_page: params[:per_page])
+    @opportunities = get_opportunities(page: 1, per_page: per_page_param)
     respond_with(@opportunities) do |format|
       format.js { render :index }
     end
@@ -223,7 +222,7 @@ class OpportunitiesController < EntitiesController
 
   #----------------------------------------------------------------------------
   def set_params
-    current_user.pref[:opportunities_per_page] = params[:per_page] if params[:per_page]
+    current_user.pref[:opportunities_per_page] = per_page_param if per_page_param
     current_user.pref[:opportunities_sort_by]  = Opportunity.sort_by_map[params[:sort_by]] if params[:sort_by]
     session[:opportunities_filter] = params[:stage] if params[:stage]
   end

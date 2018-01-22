@@ -12,7 +12,7 @@ describe "/accounts/_edit" do
 
   before do
     login
-    assign(:account, @account = FactoryGirl.create(:account))
+    assign(:account, @account = create(:account))
   end
 
   it "should render [edit account] form" do

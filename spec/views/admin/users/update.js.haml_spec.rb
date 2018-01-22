@@ -10,7 +10,7 @@ require 'spec_helper'
 describe "admin/users/update" do
   before do
     login_admin
-    assign(:user, @user = FactoryGirl.build_stubbed(:user))
+    assign(:user, @user = build_stubbed(:user))
   end
 
   describe "no errors:" do
