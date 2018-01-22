@@ -18,6 +18,9 @@ env:
 
 matrix:
   fast_finish: true
+  exclude:
+    - rvm: 2.5.0
+      env: DB=postgres TEST_SUITE=rubocop
   allow_failures:
     - rvm: 2.4.2
       env: DB=mysql TEST_SUITE="rake spec:models"
