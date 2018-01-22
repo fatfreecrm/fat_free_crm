@@ -12,13 +12,13 @@ shared_examples "auto complete" do
   end
 
   it "should do the search and find records that match autocomplete query" do
-    get :auto_complete, params: { auto_complete_query: @query }
+    get :auto_complete, params: { term: @query }
     expect(assigns[:query]).to eq(@query)
     expect(assigns[:auto_complete]).to eq(@auto_complete_matches) # Each controller must define it.
   end
 
   it "should save current autocomplete controller in a session" do
-    get :auto_complete, params: { auto_complete_query: @query }
+    get :auto_complete, params: { term: @query }
 
     # We don't save Admin/Users autocomplete controller in a session since Users are not
     # exposed through the Jumpbox.
@@ -28,7 +28,7 @@ shared_examples "auto complete" do
   end
 
   it "should render application/_auto_complete template" do
-    post :auto_complete, params: { auto_complete_query: @query }
+    post :auto_complete, params: { term: @query }
     expect(response).to render_template("application/_auto_complete")
   end
 end
