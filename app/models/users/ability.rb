@@ -49,7 +49,7 @@ class Ability
 
         permissions = Permission.select(:asset_type, :asset_id).where(scope).where(asset_type: entities.map { |k| k.name.to_s })
         permissions.each do |p|
-          can :manage, p.asset_type, id: p.asset_id
+          can :manage, p.asset_type.constantize, id: p.asset_id
         end
       end
 
