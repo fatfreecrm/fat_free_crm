@@ -69,7 +69,7 @@ class LeadsController < EntitiesController
       if @lead.save_with_permissions(params.permit!)
         @lead.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
-          @leads = get_leads
+          @leads = get_leads(page: page_param, per_page: per_page_param)
           get_data_for_sidebar
         else
           get_data_for_sidebar(:campaign)
@@ -219,7 +219,7 @@ class LeadsController < EntitiesController
     if method == :ajax
       if called_from_index_page? # Called from Leads index.
         get_data_for_sidebar
-        @leads = get_leads
+        @leads = get_leads(page: page_param, per_page: per_page_param)
         if @leads.blank?
           # If no lead on this page then try the previous one.
           # and reload the whole list even if it's empty.
@@ -248,9 +248,11 @@ class LeadsController < EntitiesController
                            all: Lead.my(current_user).count,
                            other: 0
       ]
-      Setting.lead_status.each do |key|
-        @lead_status_total[key] = Lead.my(current_user).where(status: key.to_s).count
-        @lead_status_total[:other] -= @lead_status_total[key]
+
+      status_counts = Lead.my(current_user).where(status: Setting.lead_status.map(&:to_s)).group_by(:status).count
+      status_counts.each do |key, total|
+        @lead_status_total[key] = total
+        @lead_status_total[:other] -= total
       end
       @lead_status_total[:other] += @lead_status_total[:all]
     end
