@@ -249,11 +249,16 @@ class LeadsController < EntitiesController
                            other: 0
       ]
 
-      status_counts = Lead.my(current_user).where(status: Setting.lead_status.map(&:to_s)).group_by(:status).count
+      Setting.lead_status.each do |key|
+        @lead_status_total[key] = 0
+      end
+
+      status_counts = Lead.my(current_user).where(status: Setting.lead_status.map(&:to_s)).group(:status).count
       status_counts.each do |key, total|
         @lead_status_total[key] = total
         @lead_status_total[:other] -= total
       end
+
       @lead_status_total[:other] += @lead_status_total[:all]
     end
   end
