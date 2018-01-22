@@ -4,16 +4,17 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon Jan 22, 2018 (0.17.2)
+---------------------------------------------------------------------
+ - Fix #687
+
 Mon Jan 22, 2018 (0.16.2)
 ---------------------------------------------------------------------
-Fix #687
-
+ - Fix #687
 
 Sat Jan 20, 2018 (0.17.1)
 ---------------------------------------------------------------------
  - #709 Revert accidental minimum ruby version 2.4 changes (#665)
- - Fix #687
-
 
 Sat Jan 20, 2018 (0.17.0)
 ---------------------------------------------------------------------
