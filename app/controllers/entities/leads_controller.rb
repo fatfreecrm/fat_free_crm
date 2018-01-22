@@ -69,7 +69,7 @@ class LeadsController < EntitiesController
       if @lead.save_with_permissions(params.permit!)
         @lead.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
-          @leads = get_leads(page: page_param, per_page: per_page_param)
+          @leads = get_leads
           get_data_for_sidebar
         else
           get_data_for_sidebar(:campaign)
@@ -219,7 +219,7 @@ class LeadsController < EntitiesController
     if method == :ajax
       if called_from_index_page? # Called from Leads index.
         get_data_for_sidebar
-        @leads = get_leads(page: page_param, per_page: per_page_param)
+        @leads = get_leads
         if @leads.blank?
           # If no lead on this page then try the previous one.
           # and reload the whole list even if it's empty.
