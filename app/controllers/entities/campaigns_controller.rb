@@ -199,7 +199,7 @@ class CampaignsController < EntitiesController
       @campaign_status_total[key] = 0
     end
 
-    status_counts = Campaign.my(current_user).where(status: Setting.campaign_status.map(&:to_s)).group(:status).count
+    status_counts = Campaign.my(current_user).where(status: Setting.campaign_status).group(:status).count
     status_counts.each do |key, total|
       @campaign_status_total[key.to_sym] = total
       @campaign_status_total[:other] -= total
