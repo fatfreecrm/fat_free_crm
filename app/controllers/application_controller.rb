@@ -8,6 +8,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
   before_action :set_context
@@ -231,6 +232,12 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Max-Age'] = '1728000'
 
       render plain: ''
+    end
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+      user_params.permit(:username, :email, :password, :password_confirmation)
     end
   end
 end

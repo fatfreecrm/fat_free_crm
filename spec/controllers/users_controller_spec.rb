@@ -299,7 +299,7 @@ describe UsersController do
   describe "responding to GET opportunities_overview" do
     before(:each) do
       login
-      @user = @current_user
+      @user = current_user
       @user.update_attributes(first_name: "Apple", last_name: "Boy")
     end
 

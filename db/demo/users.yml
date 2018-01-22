@@ -55,6 +55,7 @@ aaron:
   deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
 
 ben:
   id: 2
@@ -78,6 +79,7 @@ ben:
   deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
 
 cindy:
   id: 3
@@ -101,6 +103,7 @@ cindy:
   deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
 
 dan:
   id: 4
@@ -124,6 +127,7 @@ dan:
   deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
 
 elizabeth:
   id: 5
@@ -147,6 +151,7 @@ elizabeth:
   deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
 
 frank:
   id: 6
@@ -170,6 +175,7 @@ frank:
   deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
 
 george:
   id: 7
@@ -193,6 +199,7 @@ george:
   deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
 
 heather:
   id: 8
@@ -216,3 +223,4 @@ heather:
   deleted_at:
   created_at: <%= login - rand(5).days %>
   updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>

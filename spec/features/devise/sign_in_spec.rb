@@ -12,7 +12,7 @@ feature 'Devise Sign-in' do
 
   scenario 'without confirmation' do
     login_process('john', 'password')
-    page.should have_content("You have to confirm your account before continuing.")
+    page.should have_content("You have to confirm your email address before continuing.")
   end
 
   scenario 'without approval' do

@@ -23,7 +23,7 @@ describe HomeController do
     end
 
     it "should not include views in the list of activities" do
-      FactoryGirl.create(:version, item: FactoryGirl.create(:account, user: @current_user), event: "view")
+      FactoryGirl.create(:version, item: FactoryGirl.create(:account, user: current_user), event: "view")
       expect(controller).to receive(:get_activities).once.and_return([])
 
       get :index

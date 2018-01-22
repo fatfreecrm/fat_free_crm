@@ -43,6 +43,7 @@ feature 'Opportunities Overview', "
 
     visit opportunity_overview_page
 
+    binding.pry
     within "#user_#{user1.id}" do
       expect(page).to have_selector('.title', text: 'Brian Doyle-Murray')
       expect(page).to have_content('Acting')
@@ -79,7 +80,7 @@ feature 'Opportunities Overview', "
 
     visit opportunity_overview_page
 
-    expect(page).to have_content('There are currently no outstanding opportunities.')
+    expect(page).to have_content('You have no opportunities')
     within "#main" do
       expect(page).not_to have_content("Presenting")
       expect(page).not_to have_content("Eating")
