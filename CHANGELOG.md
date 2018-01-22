@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Mon Jan 22, 2018 (0.16.2)
+---------------------------------------------------------------------
+Fix #687
+
 Sat Jan 6, 2018 (0.16.1)
 ---------------------------------------------------------------------
 - #653 Fix regression with emails
