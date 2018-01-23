@@ -11,22 +11,23 @@
 
   crm.make_select2 = ->
     $(".select2").not(".select2-container, .select2-offscreen, .select2-hidden-accessible").each ->
+      if $(this).data("url")
+        $(this).select2
+          'width':'resolve'
+          placeholder: $(this).attr("placeholder")
+          ajax:
+            url: $(this).data("url")
+            dataType: 'json'
+      else
+        $(this).select2
+          'width':'resolve'
+          placeholder: $(this).attr("placeholder")
 
-      #$(".select2").each ->
-        if $(this).data("url")
-          $(this).select2 
-            'width':'resolve'
-            placeholder: $(this).attr("placeholder")
-            ajax:
-              url: $(this).data("url")
-              dataType: 'json'
-        else
-          $(this).select2 
-            'width':'resolve'
-            placeholder: $(this).attr("placeholder")
+      if $(this).prop("disabled") == true
+        $(this).next('.select2-container').disable()
+        $(this).next('.select2-container').hide()    
 
     $(".select2_tag").not(".select2-container, .select2-offscreen").each ->
-    #$(".select2_tag").each ->
       $(this).select2
         'width':'resolve'
         placeholder: $(this).data("placeholder")
