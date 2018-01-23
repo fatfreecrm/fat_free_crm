@@ -24,7 +24,9 @@
           $(this).select2 
             'width':'resolve'
             placeholder: $(this).attr("placeholder")
-
+				if $(this).prop( "disabled") == true
+					$(this).next('.select2-container').disable()
+					$(this).next('.select2-container').hide()
     $(".select2_tag").not(".select2-container, .select2-offscreen").each ->
     #$(".select2_tag").each ->
       $(this).select2
