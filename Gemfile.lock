@@ -162,7 +162,7 @@ GEM
       tilt
     headless (2.3.1)
     htmlentities (4.3.4)
-    i18n (0.9.1)
+    i18n (0.9.3)
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
     io-like (0.3.0)
@@ -208,7 +208,7 @@ GEM
     paper_trail (6.0.2)
       activerecord (>= 4.0, < 5.2)
       request_store (~> 1.1)
-    paperclip (5.1.0)
+    paperclip (5.2.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
       cocaine (~> 0.5.5)
@@ -474,4 +474,4 @@ DEPENDENCIES
   zeus
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
