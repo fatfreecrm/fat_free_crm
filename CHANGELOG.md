@@ -5,7 +5,7 @@ First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
 Unreleased (0.18.0)
----------------------------------------------------------------------
+=======
 ### Important changes
 #### Mininium ruby version
 #665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
@@ -20,6 +20,10 @@ If you consume fat free crm as an engine and re-use any factories, you'll need t
 
 #### Other changes
 TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
+
+Wed Jan 24, 2018 (0.17.2)
+---------------------------------------------------------------------
+CVE-2017-0889
 
 Wed Jan 24, 2018 (0.16.3)
 ---------------------------------------------------------------------
