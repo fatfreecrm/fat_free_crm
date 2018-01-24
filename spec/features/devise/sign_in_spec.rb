@@ -17,6 +17,7 @@ feature 'Devise Sign-in' do
 
   scenario 'without approval' do
     @user.confirm
+    @user.update_attribute(:suspended_at, Time.now)
     login_process('john', 'password')
     page.should have_content("Your account has not been approved yet.")
   end

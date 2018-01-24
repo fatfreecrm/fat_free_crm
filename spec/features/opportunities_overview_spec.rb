@@ -79,7 +79,7 @@ feature 'Opportunities Overview', "
 
     visit opportunity_overview_page
 
-    expect(page).to have_content('You have no opportunities')
+    expect(page).to have_content('There are currently no outstanding opportunities.')
     within "#main" do
       expect(page).not_to have_content("Presenting")
       expect(page).not_to have_content("Eating")

@@ -66,25 +66,25 @@ describe User do
     describe "Destroying users with and without related assets" do
       before do
         @user = build(:user)
-        current_user = build(:user)
+        @current_user = build(:user)
       end
 
       %w[account campaign lead contact opportunity].each do |asset|
         it "should not destroy the user if she owns #{asset}" do
           create(asset, user: @user)
-          expect(@user.destroyable?(current_user)).to eq(false)
+          expect(@user.destroyable?(@current_user)).to eq(false)
         end
 
         it "should not destroy the user if she has #{asset} assigned" do
           create(asset, assignee: @user)
-          expect(@user.destroyable?(current_user)).to eq(false)
+          expect(@user.destroyable?(@current_user)).to eq(false)
         end
       end
 
       it "should not destroy the user if she owns a comment" do
-        account = build(:account, user: current_user)
+        account = build(:account, user: @current_user)
         FactoryBot.create(:comment, user: @user, commentable: account)
-        expect(@user.destroyable?(current_user)).to eq(false)
+        expect(@user.destroyable?(@current_user)).to eq(false)
       end
 
       it "should not destroy the current user" do
@@ -92,7 +92,7 @@ describe User do
       end
 
       it "should destroy the user" do
-        expect(@user.destroyable?(current_user)).to eq(true)
+        expect(@user.destroyable?(@current_user)).to eq(true)
       end
     end
   end

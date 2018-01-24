@@ -16,7 +16,11 @@ Rails.application.routes.draw do
                                    confirmations: 'confirmations'}
 
   devise_scope :user do
-    resources :users, only: [:index, :show]
+    resources :users , only: [:index, :show] do
+      collection do
+        get :opportunities_overview
+      end
+    end
   end
 
   get 'activities' => 'home#index'
@@ -143,7 +147,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, id: /\d+/, except: %i[index destroy, :create] do
+  resources :users, id: /\d+/, except: %i[index destroy create] do
     member do
       get :avatar
       get :password
@@ -153,7 +157,6 @@ Rails.application.routes.draw do
     end
     collection do
       match :auto_complete, via: %i[get post]
-      get :opportunities_overview
     end
   end
 
