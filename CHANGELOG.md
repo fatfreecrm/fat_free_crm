@@ -23,7 +23,9 @@ TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
 
 Wed Jan 24, 2018 (0.17.2)
 ---------------------------------------------------------------------
-CVE-2017-0889
+ - CVE-2017-0889
+ - #724 Fixes #589 Autocomplete regression
+ - #723 Fixes #687 Passing string to define a callback is not supported.
 
 Wed Jan 24, 2018 (0.16.3)
 ---------------------------------------------------------------------
@@ -32,7 +34,7 @@ CVE-2017-0889
 Sat Jan 20, 2018 (0.17.1)
 ---------------------------------------------------------------------
  - #709 Revert accidental minimum ruby version 2.4 changes (#665)
- - Fix #687
+ - Fix #687 Passing string to define a callback is not supported.
 
 Mon Jan 22, 2018 (0.16.2)
 ---------------------------------------------------------------------
