@@ -18,7 +18,7 @@ describe "/accounts/create" do
   # core object Account partial is not embedded.
   describe "create success" do
     before do
-      assign(:account, @account = FactoryGirl.build_stubbed(:account))
+      assign(:account, @account = build_stubbed(:account))
       assign(:accounts, [@account].paginate)
       assign(:account_category_total, Hash.new(1))
       render
@@ -42,7 +42,7 @@ describe "/accounts/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_account div" do
-      assign(:account, FactoryGirl.build(:account, name: nil)) # make it invalid
+      assign(:account, build(:account, name: nil)) # make it invalid
       assign(:users, [current_user])
       render
 

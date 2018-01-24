@@ -13,7 +13,7 @@ describe "admin/field_groups/destroy" do
     assign(:field_group, field_group)
   end
 
-  let(:field_group) { FactoryGirl.build(:field_group) }
+  let(:field_group) { build(:field_group) }
 
   it "renders destroy javascript" do
     allow(field_group).to receive(:destroyed?).and_return(true)

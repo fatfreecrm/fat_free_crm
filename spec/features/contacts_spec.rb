@@ -17,7 +17,7 @@ feature 'Contacts', '
   end
 
   scenario 'should view a list of contacts' do
-    4.times { |i| FactoryGirl.create(:contact, first_name: "Test", last_name: "Subject \##{i}") }
+    4.times { |i| create(:contact, first_name: "Test", last_name: "Subject \##{i}") }
     visit contacts_page
     expect(contacts_element).to have_content('Test Subject #0')
     expect(contacts_element).to have_content('Test Subject #1')
@@ -30,6 +30,9 @@ feature 'Contacts', '
     with_versioning do
       visit contacts_page
       click_link 'Create Contact'
+      select = find('#account_name', visible: true)
+      expect(select).to have_text("")
+      expect(page).to have_selector('#select2-account_id-container', visible: false)
       expect(page).to have_selector('#contact_first_name', visible: true)
       fill_in 'contact_first_name', with: 'Testy'
       fill_in 'contact_last_name', with: 'McTest'
@@ -62,11 +65,14 @@ feature 'Contacts', '
   end
 
   scenario 'should view and edit a contact', js: true do
-    FactoryGirl.create(:contact, first_name: "Testy", last_name: "McTest")
+    create(:contact, first_name: "Testy", last_name: "McTest", account: create(:account, name: "Toast"))
     with_versioning do
       visit contacts_page
       click_link 'Testy McTest'
       click_link 'Edit'
+      select = find('#select2-account_id-container', visible: true)
+      expect(select).to have_text("Toast")
+      expect(page).to have_selector('#account_name', visible: false)
       fill_in 'contact_first_name', with: 'Test'
       fill_in 'contact_last_name', with: 'Subject'
       fill_in 'contact_email', with: "test.subject@example.com"
@@ -79,7 +85,7 @@ feature 'Contacts', '
   end
 
   scenario 'should delete a contact', js: true do
-    FactoryGirl.create(:contact, first_name: "Test", last_name: "Subject")
+    create(:contact, first_name: "Test", last_name: "Subject")
     visit contacts_page
     click_link 'Test Subject'
     click_link 'Delete?'
@@ -90,7 +96,7 @@ feature 'Contacts', '
   end
 
   scenario 'should search for a contact', js: true do
-    2.times { |i| FactoryGirl.create(:contact, first_name: "Test", last_name: "Subject \##{i}") }
+    2.times { |i| create(:contact, first_name: "Test", last_name: "Subject \##{i}") }
     visit contacts_page
     expect(contacts_element).to have_content('Test Subject #0')
     expect(contacts_element).to have_content('Test Subject #1')

@@ -13,8 +13,8 @@ describe "admin/users/index" do
   end
 
   it "renders [admin/user] template with @users collection" do
-    amy = FactoryGirl.build_stubbed(:user)
-    bob = FactoryGirl.build_stubbed(:user)
+    amy = build_stubbed(:user)
+    bob = build_stubbed(:user)
     assign(:users, [amy, bob].paginate)
 
     render template: 'admin/users/index', formats: [:js]

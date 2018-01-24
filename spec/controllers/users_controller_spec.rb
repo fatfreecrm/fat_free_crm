@@ -183,7 +183,7 @@ describe UsersController do
     end
 
     it "should delete avatar if user chooses to use Gravatar" do
-      @avatar = FactoryGirl.create(:avatar, user: @user, entity: @user)
+      @avatar = create(:avatar, user: @user, entity: @user)
 
       put :upload_avatar, params: { id: @user.id, gravatar: 1 }, xhr: true
       expect(@user.reload.avatar).to eq(nil)
@@ -191,7 +191,7 @@ describe UsersController do
     end
 
     it "should do nothing if user hasn't specified the avatar file to upload" do
-      @avatar = FactoryGirl.create(:avatar, user: @user, entity: @user)
+      @avatar = create(:avatar, user: @user, entity: @user)
 
       put :upload_avatar, params: { id: @user.id }, xhr: true
       expect(@user.avatar).to eq(@avatar)
@@ -243,7 +243,7 @@ describe UsersController do
   describe "responding to PUT change_password" do
     before(:each) do
       @old_password = 'foobar123'
-      @user = FactoryGirl.create(:user, password: @old_password, password_confirmation: @old_password)
+      @user = FactoryBot.create(:user, password: @old_password, password_confirmation: @old_password)
       perform_login(@user)
       @old_encrypted_password = @user.encrypted_password
       @new_password = 'secret?!'
@@ -304,19 +304,19 @@ describe UsersController do
     end
 
     it "should assign @users_with_opportunities" do
-      FactoryGirl.create(:opportunity, stage: "prospecting", assignee: @user)
+      create(:opportunity, stage: "prospecting", assignee: @user)
       get :opportunities_overview, xhr: true
       expect(assigns[:users_with_opportunities]).to eq([@user])
     end
 
     it "@users_with_opportunities should be ordered by name" do
-      FactoryGirl.create(:opportunity, stage: "prospecting", assignee: @user)
+      create(:opportunity, stage: "prospecting", assignee: @user)
 
-      user1 = FactoryGirl.create(:user, first_name: "Zebra", last_name: "Stripes")
-      FactoryGirl.create(:opportunity, stage: "prospecting", assignee: user1)
+      user1 = create(:user, first_name: "Zebra", last_name: "Stripes")
+      create(:opportunity, stage: "prospecting", assignee: user1)
 
-      user2 = FactoryGirl.create(:user, first_name: "Bilbo", last_name: "Magic")
-      FactoryGirl.create(:opportunity, stage: "prospecting", assignee: user2)
+      user2 = create(:user, first_name: "Bilbo", last_name: "Magic")
+      create(:opportunity, stage: "prospecting", assignee: user2)
 
       get :opportunities_overview, xhr: true
 
@@ -324,9 +324,9 @@ describe UsersController do
     end
 
     it "should assign @unassigned_opportunities with only open unassigned opportunities" do
-      @o1 = FactoryGirl.create(:opportunity, stage: "prospecting", assignee: nil)
-      @o2 = FactoryGirl.create(:opportunity, stage: "won", assignee: nil)
-      @o3 = FactoryGirl.create(:opportunity, stage: "prospecting", assignee: nil)
+      @o1 = create(:opportunity, stage: "prospecting", assignee: nil)
+      @o2 = create(:opportunity, stage: "won", assignee: nil)
+      @o3 = create(:opportunity, stage: "prospecting", assignee: nil)
 
       get :opportunities_overview, xhr: true
 
@@ -335,9 +335,9 @@ describe UsersController do
     end
 
     it "@unassigned_opportunities should be ordered by stage" do
-      @o1 = FactoryGirl.create(:opportunity, stage: "proposal", assignee: nil)
-      @o2 = FactoryGirl.create(:opportunity, stage: "prospecting", assignee: nil)
-      @o3 = FactoryGirl.create(:opportunity, stage: "negotiation", assignee: nil)
+      @o1 = create(:opportunity, stage: "proposal", assignee: nil)
+      @o2 = create(:opportunity, stage: "prospecting", assignee: nil)
+      @o3 = create(:opportunity, stage: "negotiation", assignee: nil)
 
       get :opportunities_overview, xhr: true
 
@@ -350,7 +350,7 @@ describe UsersController do
     end
 
     it "should not include users who have no open assigned opportunities" do
-      FactoryGirl.create(:opportunity, stage: "won", assignee: @user)
+      create(:opportunity, stage: "won", assignee: @user)
 
       get :opportunities_overview, xhr: true
       expect(assigns[:users_with_opportunities]).to eq([])

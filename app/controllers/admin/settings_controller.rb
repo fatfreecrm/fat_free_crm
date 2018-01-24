@@ -6,11 +6,15 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::SettingsController < Admin::ApplicationController
-  before_action "set_current_tab('admin/settings')", only: [:index]
+  before_action :setup_current_tab, only: [:index]
 
   # GET /admin/settings
   # GET /admin/settings.xml
   #----------------------------------------------------------------------------
   def index
+  end
+
+  def setup_current_tab
+    set_current_tab('admin/settings')
   end
 end

@@ -17,7 +17,7 @@ feature 'Tasks', '
   end
 
   scenario 'should view a list of tasks which are assigned to the logged in user' do
-    4.times { |i| FactoryGirl.create(:task, name: "Task #{i}", user: @user) }
+    4.times { |i| create(:task, name: "Task #{i}", user: @user) }
     visit tasks_page
     expect(page).to have_content('Task 0')
     expect(page).to have_content('Task 1')
@@ -45,7 +45,7 @@ feature 'Tasks', '
   end
 
   scenario 'creating a task for another user', js: true do
-    FactoryGirl.create(:user, first_name: 'Another', last_name: 'User')
+    create(:user, first_name: 'Another', last_name: 'User')
     with_versioning do
       visit tasks_page
       click_link 'Create Task'
@@ -72,7 +72,7 @@ feature 'Tasks', '
   end
 
   scenario 'should view and edit a task', js: true do
-    FactoryGirl.create(:task, id: 42, name: 'Example Task', user: @user)
+    create(:task, id: 42, name: 'Example Task', user: @user)
     with_versioning do
       visit tasks_page
       click_edit_for_task_id(42)
@@ -85,7 +85,7 @@ feature 'Tasks', '
   end
 
   scenario 'should delete a task', js: true do
-    FactoryGirl.create(:task, id: 42, name: 'Outdated Task', user: @user)
+    create(:task, id: 42, name: 'Outdated Task', user: @user)
     visit tasks_page
     click_delete_for_task_id(42)
     click_link 'Tasks'

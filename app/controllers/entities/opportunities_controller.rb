@@ -207,9 +207,16 @@ class OpportunitiesController < EntitiesController
                                  all: Opportunity.my(current_user).count,
                                  other: 0
       ]
+      stages = []
       @stage.each do |_value, key|
-        @opportunity_stage_total[key] = Opportunity.my(current_user).where(stage: key.to_s).count
-        @opportunity_stage_total[:other] -= @opportunity_stage_total[key]
+        stages << key
+        @opportunity_stage_total[key] = 0
+      end
+
+      stage_counts = Opportunity.my(current_user).where(stage: stages).group(:stage).count
+      stage_counts.each do |key, total|
+        @opportunity_stage_total[key.to_sym] = total
+        @opportunity_stage_total[:other] -= total
       end
       @opportunity_stage_total[:other] += @opportunity_stage_total[:all]
     end

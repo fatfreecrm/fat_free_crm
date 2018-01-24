@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-FactoryGirl.define do
+FactoryBot.define do
   sequence :address do |_n|
     FFaker::Address.street_address + " " + FFaker::Address.secondary_address + "\n" + FFaker::Address.city + ", " + FFaker::AddressUS.state_abbr + " " + FFaker::AddressUS.zip_code
   end

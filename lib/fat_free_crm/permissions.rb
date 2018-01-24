@@ -76,20 +76,6 @@ module FatFreeCRM
         permissions_to_remove.each { |p| permissions.delete(p); p.destroy }
       end
 
-      # Save the model along with its permissions if any.
-      #--------------------------------------------------------------------------
-      def save_with_permissions(_users = nil)
-        ActiveSupport::Deprecation.warn "save_with_permissions is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead."
-        save
-      end
-
-      # Update the model along with its permissions if any.
-      #--------------------------------------------------------------------------
-      def update_with_permissions(attributes, _users = nil)
-        ActiveSupport::Deprecation.warn "update_with_permissions is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead."
-        update_attributes(attributes)
-      end
-
       # Save the model copying other model's permissions.
       #--------------------------------------------------------------------------
       def save_with_model_permissions(model)

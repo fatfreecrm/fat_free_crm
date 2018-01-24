@@ -5,9 +5,9 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-#
-# Allow tests to run in Chrome browser
-#
+Capaybara.app_host = ENV['APP_URL'] if ENV['APP_URL']
+Capybara.default_max_wait_time = 7
+
 if ENV['BROWSER'] == 'chrome'
   Capybara.register_driver :selenium do |app|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: ['no-sandbox', 'headless', 'disable-gpu'] })
@@ -21,8 +21,3 @@ else
     Capybara::Selenium::Driver.new(app, browser: :firefox, options: options, desired_capabilities: capabilities)
   end
 end
-
-#
-# Default timeout for extended for AJAX based application
-#
-Capybara.default_max_wait_time = 7

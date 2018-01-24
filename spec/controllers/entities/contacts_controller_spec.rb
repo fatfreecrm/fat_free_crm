@@ -18,7 +18,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
     it "should expose all contacts as @contacts and render [index] template" do
-      @contacts = [FactoryGirl.create(:contact, user: current_user)]
+      @contacts = [create(:contact, user: current_user)]
       get :index
       expect(assigns[:contacts].count).to eq(@contacts.count)
       expect(assigns[:contacts]).to eq(@contacts)
@@ -26,8 +26,8 @@ describe ContactsController do
     end
 
     it "should perform lookup using query string" do
-      @billy_bones   = FactoryGirl.create(:contact, user: current_user, first_name: "Billy",   last_name: "Bones")
-      @captain_flint = FactoryGirl.create(:contact, user: current_user, first_name: "Captain", last_name: "Flint")
+      @billy_bones   = create(:contact, user: current_user, first_name: "Billy",   last_name: "Bones")
+      @captain_flint = create(:contact, user: current_user, first_name: "Captain", last_name: "Flint")
 
       get :index, params: { query: @billy_bones.email }
       expect(assigns[:contacts]).to eq([@billy_bones])
@@ -37,7 +37,7 @@ describe ContactsController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @contacts = [FactoryGirl.create(:contact, user: current_user)]
+        @contacts = [create(:contact, user: current_user)]
         get :index, params: { page: 42 }, xhr: true
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -48,7 +48,7 @@ describe ContactsController do
 
       it "should pick up saved page number from session" do
         session[:contacts_current_page] = 42
-        @contacts = [FactoryGirl.create(:contact, user: current_user)]
+        @contacts = [create(:contact, user: current_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
@@ -59,7 +59,7 @@ describe ContactsController do
       it "should reset current_page when query is altered" do
         session[:contacts_current_page] = 42
         session[:contacts_current_query] = "bill"
-        @contacts = [FactoryGirl.create(:contact, user: current_user)]
+        @contacts = [create(:contact, user: current_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
@@ -97,7 +97,7 @@ describe ContactsController do
   describe "responding to GET show" do
     describe "with mime type of HTML" do
       before(:each) do
-        @contact = FactoryGirl.create(:contact, id: 42)
+        @contact = create(:contact, id: 42)
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
@@ -118,7 +118,7 @@ describe ContactsController do
 
     describe "with mime type of JSON" do
       it "should render the requested contact as JSON" do
-        @contact = FactoryGirl.create(:contact, id: 42)
+        @contact = create(:contact, id: 42)
         expect(Contact).to receive(:find).and_return(@contact)
         expect(@contact).to receive(:to_json).and_return("generated JSON")
 
@@ -130,7 +130,7 @@ describe ContactsController do
 
     describe "with mime type of XML" do
       it "should render the requested contact as xml" do
-        @contact = FactoryGirl.create(:contact, id: 42)
+        @contact = create(:contact, id: 42)
         expect(Contact).to receive(:find).and_return(@contact)
         expect(@contact).to receive(:to_xml).and_return("generated XML")
 
@@ -142,7 +142,7 @@ describe ContactsController do
 
     describe "contact got deleted or otherwise unavailable" do
       it "should redirect to contact index if the contact got deleted" do
-        @contact = FactoryGirl.create(:contact, user: current_user)
+        @contact = create(:contact, user: current_user)
         @contact.destroy
 
         get :show, params: { id: @contact.id }
@@ -151,7 +151,7 @@ describe ContactsController do
       end
 
       it "should redirect to contact index if the contact is protected" do
-        @private = FactoryGirl.create(:contact, user: FactoryGirl.create(:user), access: "Private")
+        @private = create(:contact, user: create(:user), access: "Private")
 
         get :show, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
@@ -159,7 +159,7 @@ describe ContactsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @contact = FactoryGirl.create(:contact, user: current_user)
+        @contact = create(:contact, user: current_user)
         @contact.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -177,7 +177,7 @@ describe ContactsController do
       @contact = Contact.new(user: current_user,
                              access: Setting.default_access)
       @account = Account.new(user: current_user)
-      @accounts = [FactoryGirl.create(:account, user: current_user)]
+      @accounts = [create(:account, user: current_user)]
 
       get :new, xhr: true
       expect(assigns[:contact].attributes).to eq(@contact.attributes)
@@ -188,7 +188,7 @@ describe ContactsController do
     end
 
     it "should created an instance of related object when necessary" do
-      @opportunity = FactoryGirl.create(:opportunity)
+      @opportunity = create(:opportunity)
 
       get :new, params: { related: "opportunity_#{@opportunity.id}" }, xhr: true
       expect(assigns[:opportunity]).to eq(@opportunity)
@@ -196,7 +196,7 @@ describe ContactsController do
 
     describe "(when creating related contact)" do
       it "should redirect to parent asset's index page with the message if parent asset got deleted" do
-        @account = FactoryGirl.create(:account)
+        @account = create(:account)
         @account.destroy
 
         get :new, params: { related: "account_#{@account.id}" }, xhr: true
@@ -205,7 +205,7 @@ describe ContactsController do
       end
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
-        @account = FactoryGirl.create(:account, access: "Private")
+        @account = create(:account, access: "Private")
 
         get :new, params: { related: "account_#{@account.id}" }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
@@ -219,7 +219,7 @@ describe ContactsController do
   describe "responding to GET field_group" do
     context "with an existing tag" do
       before :each do
-        @tag = FactoryGirl.create(:tag)
+        @tag = create(:tag)
       end
 
       it "should return with an existing tag name" do
@@ -252,7 +252,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
     it "should expose the requested contact as @contact and render [edit] template" do
-      @contact = FactoryGirl.create(:contact, id: 42, user: current_user, lead: nil)
+      @contact = create(:contact, id: 42, user: current_user, lead: nil)
       @account = Account.new(user: current_user)
 
       get :edit, params: { id: 42 }, xhr: true
@@ -263,9 +263,9 @@ describe ContactsController do
     end
 
     it "should expose the requested contact as @contact and linked account as @account" do
-      @account = FactoryGirl.create(:account, id: 99)
-      @contact = FactoryGirl.create(:contact, id: 42, user: current_user, lead: nil)
-      FactoryGirl.create(:account_contact, account: @account, contact: @contact)
+      @account = create(:account, id: 99)
+      @contact = create(:contact, id: 42, user: current_user, lead: nil)
+      create(:account_contact, account: @account, contact: @contact)
 
       get :edit, params: { id: 42 }, xhr: true
       expect(assigns[:contact]).to eq(@contact)
@@ -273,8 +273,8 @@ describe ContactsController do
     end
 
     it "should expose previous contact as @previous when necessary" do
-      @contact = FactoryGirl.create(:contact, id: 42)
-      @previous = FactoryGirl.create(:contact, id: 1992)
+      @contact = create(:contact, id: 42)
+      @previous = create(:contact, id: 1992)
 
       get :edit, params: { id: 42, previous: 1992 }, xhr: true
       expect(assigns[:previous]).to eq(@previous)
@@ -282,7 +282,7 @@ describe ContactsController do
 
     describe "(contact got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the contact got deleted" do
-        @contact = FactoryGirl.create(:contact, user: current_user)
+        @contact = create(:contact, user: current_user)
         @contact.destroy
 
         get :edit, params: { id: @contact.id }, xhr: true
@@ -291,7 +291,7 @@ describe ContactsController do
       end
 
       it "should reload current page with the flash message if the contact is protected" do
-        @private = FactoryGirl.create(:contact, user: FactoryGirl.create(:user), access: "Private")
+        @private = create(:contact, user: create(:user), access: "Private")
 
         get :edit, params: { id: @private.id }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
@@ -301,8 +301,8 @@ describe ContactsController do
 
     describe "(previous contact got deleted or is otherwise unavailable)" do
       before(:each) do
-        @contact = FactoryGirl.create(:contact, user: current_user)
-        @previous = FactoryGirl.create(:contact, user: FactoryGirl.create(:user))
+        @contact = create(:contact, user: current_user)
+        @previous = create(:contact, user: create(:user))
       end
 
       it "should notify the view if previous contact got deleted" do
@@ -331,7 +331,7 @@ describe ContactsController do
   describe "responding to POST create" do
     describe "with valid params" do
       it "should expose a newly created contact as @contact and render [create] template" do
-        @contact = FactoryGirl.build(:contact, first_name: "Billy", last_name: "Bones")
+        @contact = build(:contact, first_name: "Billy", last_name: "Bones")
         allow(Contact).to receive(:new).and_return(@contact)
 
         post :create, params: { contact: { first_name: "Billy", last_name: "Bones" }, account: { name: "Hello world" } }, xhr: true
@@ -341,8 +341,8 @@ describe ContactsController do
       end
 
       it "should be able to associate newly created contact with the opportunity" do
-        @opportunity = FactoryGirl.create(:opportunity, id: 987)
-        @contact = FactoryGirl.build(:contact)
+        @opportunity = create(:opportunity, id: 987)
+        @contact = build(:contact)
         allow(Contact).to receive(:new).and_return(@contact)
 
         post :create, params: { contact: { first_name: "Billy" }, account: {}, opportunity: 987 }, xhr: true
@@ -351,7 +351,7 @@ describe ContactsController do
       end
 
       it "should reload contacts to update pagination if called from contacts index" do
-        @contact = FactoryGirl.build(:contact, user: current_user)
+        @contact = build(:contact, user: current_user)
         allow(Contact).to receive(:new).and_return(@contact)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts"
@@ -360,7 +360,7 @@ describe ContactsController do
       end
 
       it "should add a new comment to the newly created contact when specified" do
-        @contact = FactoryGirl.build(:contact, user: current_user)
+        @contact = build(:contact, user: current_user)
         allow(Contact).to receive(:new).and_return(@contact)
 
         post :create, params: { contact: { first_name: "Testy", last_name: "McTest" }, account: { name: "Hello world" }, comment_body: "Awesome comment is awesome" }, xhr: true
@@ -370,13 +370,13 @@ describe ContactsController do
 
     describe "with invalid params" do
       before(:each) do
-        @contact = FactoryGirl.build(:contact, first_name: nil, user: current_user, lead: nil)
+        @contact = build(:contact, first_name: nil, user: current_user, lead: nil)
         allow(Contact).to receive(:new).and_return(@contact)
       end
 
       # Redraw [create] form with selected account.
       it "should redraw [Create Contact] form with selected account" do
-        @account = FactoryGirl.create(:account, id: 42, user: current_user)
+        @account = create(:account, id: 42, user: current_user)
 
         # This redraws [create] form with blank account.
         post :create, params: { contact: {}, account: { id: 42, user_id: current_user.id } }, xhr: true
@@ -388,7 +388,7 @@ describe ContactsController do
 
       # Redraw [create] form with related account.
       it "should redraw [Create Contact] form with related account" do
-        @account = FactoryGirl.create(:account, id: 123, user: current_user)
+        @account = create(:account, id: 123, user: current_user)
 
         request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
         post :create, params: { contact: { first_name: nil }, account: { name: nil, user_id: current_user.id } }, xhr: true
@@ -399,7 +399,7 @@ describe ContactsController do
       end
 
       it "should redraw [Create Contact] form with blank account" do
-        @accounts = [FactoryGirl.create(:account, user: current_user)]
+        @accounts = [create(:account, user: current_user)]
         @account = Account.new(user: current_user)
 
         post :create, params: { contact: { first_name: nil }, account: { name: nil, user_id: current_user.id } }, xhr: true
@@ -410,7 +410,7 @@ describe ContactsController do
       end
 
       it "should preserve Opportunity when called from Oppotuunity page" do
-        @opportunity = FactoryGirl.create(:opportunity, id: 987)
+        @opportunity = create(:opportunity, id: 987)
 
         post :create, params: { contact: {}, account: {}, opportunity: 987 }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
@@ -425,7 +425,7 @@ describe ContactsController do
   describe "responding to PUT update" do
     describe "with valid params" do
       it "should update the requested contact and render [update] template" do
-        @contact = FactoryGirl.create(:contact, id: 42, first_name: "Billy")
+        @contact = create(:contact, id: 42, first_name: "Billy")
 
         put :update, params: { id: 42, contact: { first_name: "Bones" }, account: {} }, xhr: true
         expect(assigns[:contact].first_name).to eq("Bones")
@@ -434,7 +434,7 @@ describe ContactsController do
       end
 
       it "should be able to create a new account and link it to the contact" do
-        @contact = FactoryGirl.create(:contact, id: 42, first_name: "Billy")
+        @contact = create(:contact, id: 42, first_name: "Billy")
 
         put :update, params: { id: 42, contact: { first_name: "Bones" }, account: { name: "new account" } }, xhr: true
         expect(assigns[:contact].first_name).to eq("Bones")
@@ -442,8 +442,8 @@ describe ContactsController do
       end
 
       it "should be able to link existing account with the contact" do
-        @account = FactoryGirl.create(:account, id: 99, name: "Hello world")
-        @contact = FactoryGirl.create(:contact, id: 42, first_name: "Billy")
+        @account = create(:account, id: 99, name: "Hello world")
+        @contact = create(:contact, id: 42, first_name: "Billy")
 
         put :update, params: { id: 42, contact: { first_name: "Bones" }, account: { id: 99 } }, xhr: true
         expect(assigns[:contact].first_name).to eq("Bones")
@@ -451,7 +451,7 @@ describe ContactsController do
       end
 
       it "should update contact permissions when sharing with specific users" do
-        @contact = FactoryGirl.create(:contact, id: 42, access: "Public")
+        @contact = create(:contact, id: 42, access: "Public")
 
         put :update, params: { id: 42, contact: { first_name: "Hello", access: "Shared", user_ids: [7, 8] }, account: {} }, xhr: true
         expect(assigns[:contact].access).to eq("Shared")
@@ -461,7 +461,7 @@ describe ContactsController do
 
       describe "contact got deleted or otherwise unavailable" do
         it "should reload current page is the contact got deleted" do
-          @contact = FactoryGirl.create(:contact, user: current_user)
+          @contact = create(:contact, user: current_user)
           @contact.destroy
 
           put :update, params: { id: @contact.id }, xhr: true
@@ -470,7 +470,7 @@ describe ContactsController do
         end
 
         it "should reload current page with the flash message if the contact is protected" do
-          @private = FactoryGirl.create(:contact, user: FactoryGirl.create(:user), access: "Private")
+          @private = create(:contact, user: create(:user), access: "Private")
 
           put :update, params: { id: @private.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
@@ -481,7 +481,7 @@ describe ContactsController do
 
     describe "with invalid params" do
       it "should not update the contact, but still expose it as @contact and render [update] template" do
-        @contact = FactoryGirl.create(:contact, id: 42, user: current_user, first_name: "Billy", lead: nil)
+        @contact = create(:contact, id: 42, user: current_user, first_name: "Billy", lead: nil)
 
         put :update, params: { id: 42, contact: { first_name: nil }, account: {} }, xhr: true
         expect(assigns[:contact].reload.first_name).to eq("Billy")
@@ -490,8 +490,8 @@ describe ContactsController do
       end
 
       it "should expose existing account as @account if selected" do
-        @account = FactoryGirl.create(:account, id: 99)
-        @contact = FactoryGirl.create(:contact, id: 42, account: @account)
+        @account = create(:account, id: 99)
+        @contact = create(:contact, id: 42, account: @account)
 
         put :update, params: { id: 42, contact: { first_name: nil }, account: { id: 99 } }, xhr: true
         expect(assigns[:account]).to eq(@account)
@@ -504,7 +504,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before(:each) do
-      @contact = FactoryGirl.create(:contact, user: current_user)
+      @contact = create(:contact, user: current_user)
     end
 
     describe "AJAX request" do
@@ -549,7 +549,7 @@ describe ContactsController do
 
       describe "contact got deleted or otherwise unavailable" do
         it "should reload current page is the contact got deleted" do
-          @contact = FactoryGirl.create(:contact, user: current_user)
+          @contact = create(:contact, user: current_user)
           @contact.destroy
 
           delete :destroy, params: { id: @contact.id }, xhr: true
@@ -558,7 +558,7 @@ describe ContactsController do
         end
 
         it "should reload current page with the flash message if the contact is protected" do
-          @private = FactoryGirl.create(:contact, user: FactoryGirl.create(:user), access: "Private")
+          @private = create(:contact, user: create(:user), access: "Private")
 
           delete :destroy, params: { id: @private.id }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
@@ -576,7 +576,7 @@ describe ContactsController do
       end
 
       it "should redirect to contact index with the flash message is the contact got deleted" do
-        @contact = FactoryGirl.create(:contact, user: current_user)
+        @contact = create(:contact, user: current_user)
         @contact.destroy
 
         delete :destroy, params: { id: @contact.id }
@@ -585,7 +585,7 @@ describe ContactsController do
       end
 
       it "should redirect to contact index with the flash message if the contact is protected" do
-        @private = FactoryGirl.create(:contact, user: FactoryGirl.create(:user), access: "Private")
+        @private = create(:contact, user: create(:user), access: "Private")
 
         delete :destroy, params: { id: @private.id }
         expect(flash[:warning]).not_to eq(nil)
@@ -600,16 +600,16 @@ describe ContactsController do
   describe "responding to PUT attach" do
     describe "tasks" do
       before do
-        @model = FactoryGirl.create(:contact)
-        @attachment = FactoryGirl.create(:task, asset: nil)
+        @model = create(:contact)
+        @attachment = create(:task, asset: nil)
       end
       it_should_behave_like("attach")
     end
 
     describe "opportunities" do
       before do
-        @model = FactoryGirl.create(:contact)
-        @attachment = FactoryGirl.create(:opportunity)
+        @model = create(:contact)
+        @attachment = create(:opportunity)
       end
       it_should_behave_like("attach")
     end
@@ -621,16 +621,16 @@ describe ContactsController do
   describe "responding to PUT attach" do
     describe "tasks" do
       before do
-        @model = FactoryGirl.create(:contact)
-        @attachment = FactoryGirl.create(:task, asset: nil)
+        @model = create(:contact)
+        @attachment = create(:task, asset: nil)
       end
       it_should_behave_like("attach")
     end
 
     describe "opportunities" do
       before do
-        @model = FactoryGirl.create(:contact)
-        @attachment = FactoryGirl.create(:opportunity)
+        @model = create(:contact)
+        @attachment = create(:opportunity)
       end
       it_should_behave_like("attach")
     end
@@ -642,16 +642,16 @@ describe ContactsController do
   describe "responding to POST discard" do
     describe "tasks" do
       before do
-        @model = FactoryGirl.create(:contact)
-        @attachment = FactoryGirl.create(:task, asset: @model)
+        @model = create(:contact)
+        @attachment = create(:task, asset: @model)
       end
       it_should_behave_like("discard")
     end
 
     describe "opportunities" do
       before do
-        @attachment = FactoryGirl.create(:opportunity)
-        @model = FactoryGirl.create(:contact)
+        @attachment = create(:opportunity)
+        @model = create(:contact)
         @model.opportunities << @attachment
       end
       it_should_behave_like("discard")
@@ -662,7 +662,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [FactoryGirl.create(:contact, first_name: "Hello", last_name: "World", user: current_user)]
+      @auto_complete_matches = [create(:contact, first_name: "Hello", last_name: "World", user: current_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -692,8 +692,8 @@ describe ContactsController do
 
     it "should select @contacts and render [index] template" do
       @contacts = [
-        FactoryGirl.create(:contact, first_name: "Alice", user: current_user),
-        FactoryGirl.create(:contact, first_name: "Bobby", user: current_user)
+        create(:contact, first_name: "Alice", user: current_user),
+        create(:contact, first_name: "Bobby", user: current_user)
       ]
 
       get :redraw, params: { per_page: 1, sort_by: "first_name" }, xhr: true

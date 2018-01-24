@@ -17,7 +17,7 @@ feature 'Campaigns', '
   end
 
   scenario 'should view a list of campaigns' do
-    3.times { |i| FactoryGirl.create(:campaign, name: "Campaign #{i}") }
+    3.times { |i| create(:campaign, name: "Campaign #{i}") }
     visit campaigns_page
     expect(page).to have_content('Campaign 0')
     expect(page).to have_content('Campaign 1')
@@ -60,7 +60,7 @@ feature 'Campaigns', '
   end
 
   scenario 'should view and edit a campaign', js: true do
-    FactoryGirl.create(:campaign, name: "My Cool Campaign")
+    create(:campaign, name: "My Cool Campaign")
     with_versioning do
       visit campaigns_page
       click_link 'My Cool Campaign'
@@ -76,7 +76,7 @@ feature 'Campaigns', '
   end
 
   scenario 'should delete a campaign', js: true do
-    FactoryGirl.create(:campaign, name: "Old Campaign")
+    create(:campaign, name: "Old Campaign")
     visit campaigns_page
     click_link 'Old Campaign'
     click_link 'Delete?'
@@ -87,7 +87,7 @@ feature 'Campaigns', '
   end
 
   scenario 'should search for a campaign', js: true do
-    2.times { |i| FactoryGirl.create(:campaign, name: "Campaign #{i}") }
+    2.times { |i| create(:campaign, name: "Campaign #{i}") }
     visit campaigns_page
     expect(find('#campaigns')).to have_content("Campaign 0")
     expect(find('#campaigns')).to have_content("Campaign 1")

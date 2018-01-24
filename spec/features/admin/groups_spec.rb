@@ -17,7 +17,7 @@ feature 'Groups tab', '
   end
 
   scenario 'should create a new group', js: true do
-    FactoryGirl.create(:user, first_name: "Mr", last_name: "Spock")
+    create(:user, first_name: "Mr", last_name: "Spock")
     visit admin_groups_path
     expect(page).to have_content("Couldn't find any Groups.")
     click_link 'create a new group'

@@ -21,7 +21,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Preference do
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @user = create(:user)
     @magoody = Base64.encode64(Marshal.dump("magoody"))
   end
 
@@ -31,7 +31,7 @@ describe Preference do
 
   describe "get user preference" do
     it "should find and decode existing user preference by its name" do
-      @preference = FactoryGirl.create(:preference, user: @user, name: "thingymabob", value: @magoody)
+      @preference = create(:preference, user: @user, name: "thingymabob", value: @magoody)
       expect(@user.preference[:thingymabob]).to eq("magoody")
       expect(@user.preference["thingymabob"]).to eq("magoody")
     end
@@ -41,17 +41,17 @@ describe Preference do
     end
 
     it "should return correct user_id" do
-      @preference = FactoryGirl.create(:preference, user: @user, name: "thingymabob", value: @magoody)
+      @preference = create(:preference, user: @user, name: "thingymabob", value: @magoody)
       expect(@user.preference[:user_id]).to eq(@user.id)
     end
 
     it "should disregard other user's preference with the same name" do
-      @preference = FactoryGirl.create(:preference, user: FactoryGirl.create(:user), name: "thingymabob", value: @magoody)
+      @preference = create(:preference, user: create(:user), name: "thingymabob", value: @magoody)
       expect(@user.preference[:thingymabob]).to eq(nil)
     end
 
     it "should not fail is user is nil" do
-      @preference = FactoryGirl.create(:preference, user: nil, name: "thingymabob", value: @magoody)
+      @preference = create(:preference, user: nil, name: "thingymabob", value: @magoody)
       expect(@preference[:thingymabob]).to eq(nil)
     end
   end
@@ -63,7 +63,7 @@ describe Preference do
     end
 
     it "should update existing user preference" do
-      @preference = FactoryGirl.create(:preference, user: @user, name: "thingymabob", value: @magoody)
+      @preference = create(:preference, user: @user, name: "thingymabob", value: @magoody)
       @user.preference[:thingymabob] = "thingy"
       expect(@user.reload.preference[:thingymabob]).to eq("thingy")
     end

@@ -16,7 +16,7 @@ describe "/opportunities/index" do
   end
 
   it "should render [opportunity] template with @opportunities collection if there are opportunities" do
-    assign(:opportunities, [FactoryGirl.build_stubbed(:opportunity, id: 42)].paginate)
+    assign(:opportunities, [build_stubbed(:opportunity, id: 42)].paginate)
 
     render template: 'opportunities/index', formats: [:js]
 

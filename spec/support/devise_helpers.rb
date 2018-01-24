@@ -10,7 +10,7 @@ module DeviseHelpers
   end
 
   def login_admin
-    admin = FactoryGirl.create(:user, admin: true)
+    admin = FactoryBot.create(:user, admin: true)
     perform_login(admin)
   end
 
