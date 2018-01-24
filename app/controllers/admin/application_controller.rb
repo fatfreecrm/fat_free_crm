@@ -14,7 +14,7 @@ class Admin::ApplicationController < ApplicationController
   # Autocomplete handler for all admin controllers.
   #----------------------------------------------------------------------------
   def auto_complete
-    @query = params[:auto_complete_query]
+    @query = params[:term]
     @auto_complete = klass.text_search(@query).limit(10)
     render partial: 'auto_complete'
   end
