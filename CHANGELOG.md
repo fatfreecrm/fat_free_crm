@@ -4,7 +4,6 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-
 Unreleased (0.18.0)
 ---------------------------------------------------------------------
 ### Important changes
@@ -21,6 +20,10 @@ If you consume fat free crm as an engine and re-use any factories, you'll need t
 
 #### Other changes
 TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
+
+Wed Jan 24, 2018 (0.16.3)
+---------------------------------------------------------------------
+CVE-2017-0889
 
 Sat Jan 20, 2018 (0.17.1)
 ---------------------------------------------------------------------
