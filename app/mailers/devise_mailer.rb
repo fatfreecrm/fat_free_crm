@@ -9,8 +9,4 @@ class DeviseMailer < Devise::Mailer
   def template_paths
     ["devise/mailer"]
   end
-
-  def subject_for(l)
-    I18n.t(l)
-  end
 end

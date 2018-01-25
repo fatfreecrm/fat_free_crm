@@ -13,7 +13,6 @@ describe DeviseMailer do
     let(:mail) { DeviseMailer.reset_password_instructions(user, user.reset_password_token) }
 
     before(:each) do
-      allow(I18n).to receive(:t).with(:reset_password_instructions).and_return("Fat Free CRM: Password Reset Instructions")
       allow(user).to receive(:reset_password_token).and_return("62fe5299b45513f9d22a2e1454f35dd43d62ba50")
     end
 
@@ -26,7 +25,7 @@ describe DeviseMailer do
     end
 
     it "sets the subject" do
-      expect(mail.subject).to eq("Fat Free CRM: Password Reset Instructions")
+      expect(mail.subject).to eq("Reset password instructions")
     end
 
     it "includes password reset link in body" do
