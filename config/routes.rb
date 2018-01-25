@@ -16,7 +16,7 @@ Rails.application.routes.draw do
                                    confirmations: 'confirmations'}
 
   devise_scope :user do
-    resources :users , only: [:index, :show] do
+    resources :users , only: %i[index show] do
       collection do
         get :opportunities_overview
       end
