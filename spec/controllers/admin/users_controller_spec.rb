@@ -50,7 +50,6 @@ describe Admin::UsersController do
     end
   end
 
-
   # GET /admin/users/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   describe "GET edit" do

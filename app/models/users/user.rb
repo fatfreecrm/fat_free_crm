@@ -83,14 +83,18 @@ class User < ActiveRecord::Base
       .select('DISTINCT(users.id), users.*')
   }
 
-  validates :email, presence: { message: :missing_email },
+  validates :email,
+            presence: { message: :missing_email },
             length: { minimum: 3, maximum: 254 },
             uniqueness: { message: :email_in_use, case_sensitive: false },
             format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
-  validates :username, uniqueness: { message: :username_taken, case_sensitive: false },
+  validates :username,
+            uniqueness: { message: :username_taken, case_sensitive: false },
             presence: { message: :missing_username },
             format: { with: /[a-z0-9_-]+/i }
-  validates :password, presence: { if: :password_required? }, confirmation: true
+  validates :password,
+            presence: { if: :password_required? },
+            confirmation: true
 
   #----------------------------------------------------------------------------
   def name
@@ -109,19 +113,19 @@ class User < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def awaits_approval?
-    self.suspended? && self.sign_in_count == 0 && Setting.user_signup == :needs_approval
+    suspended? && sign_in_count == 0 && Setting.user_signup == :needs_approval
   end
 
   def active_for_authentication?
-    super and self.confirmed? and !self.awaits_approval? and !self.suspended?
+    super && confirmed? && !awaits_approval? && !suspended?
   end
 
   def inactive_message
-    if !self.confirmed?
+    if !confirmed?
       super
-    elsif self.awaits_approval?
+    elsif awaits_approval?
       I18n.t(:msg_account_not_approved)
-    elsif self.suspended?
+    elsif suspended?
       I18n.t(:msg_invalig_login)
     else
       super

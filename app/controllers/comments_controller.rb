@@ -6,7 +6,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CommentsController < ApplicationController
-
   # GET /comments
   # GET /comments.json
   # GET /comments.xml

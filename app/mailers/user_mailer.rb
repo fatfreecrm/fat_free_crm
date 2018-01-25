@@ -6,7 +6,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class UserMailer < ActionMailer::Base
-
   def assigned_entity_notification(entity, assigner)
     @entity_url = url_for(entity)
     @entity_name = entity.name

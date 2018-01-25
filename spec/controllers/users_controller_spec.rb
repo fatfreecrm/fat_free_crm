@@ -50,7 +50,6 @@ describe UsersController do
       it "should render the requested user as JSON" do
         expect(User).to receive(:find).and_return(current_user)
         expect_any_instance_of(User).to receive(:to_json).and_return("generated JSON")
-
         get :show, params: { id: current_user.id }
         expect(response.body).to eq("generated JSON")
       end

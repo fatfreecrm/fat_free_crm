@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AuthlogicToDevise < ActiveRecord::Migration[5.1]
   def self.up
     add_column :users, :unconfirmed_email, :string, limit: 254
