@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180103223438) do
+ActiveRecord::Schema.define(version: 20180107082701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.text "subscribed_users"
     t.integer "contacts_count", default: 0
     t.integer "opportunities_count", default: 0
-    t.integer "pipeline_opportunities_count", default: 0
     t.index ["assigned_to"], name: "index_accounts_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_accounts_on_user_id_and_name_and_deleted_at", unique: true
   end
@@ -400,24 +399,32 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.string "yahoo", limit: 32
     t.string "google", limit: 32
     t.string "skype", limit: 32
-    t.string "password_hash", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
     t.string "password_salt", default: "", null: false
-    t.string "persistence_token", default: "", null: false
-    t.string "perishable_token", default: "", null: false
-    t.datetime "last_login_at"
-    t.datetime "current_login_at"
-    t.string "last_login_ip"
-    t.string "current_login_ip"
-    t.integer "login_count", default: 0, null: false
+    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at"
+    t.string "last_sign_in_ip"
+    t.string "current_sign_in_ip"
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean "admin", default: false, null: false
     t.datetime "suspended_at"
-    t.string "single_access_token"
+    t.string "unconfirmed_email", limit: 254
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.string "remember_token"
+    t.datetime "remember_created_at"
+    t.string "authentication_token"
+    t.string "confirmation_token", limit: 255
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
-    t.index ["perishable_token"], name: "index_users_on_perishable_token"
-    t.index ["persistence_token"], name: "index_users_on_persistence_token"
+    t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username", "deleted_at"], name: "index_users_on_username_and_deleted_at", unique: true
   end
 

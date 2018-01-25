@@ -8,8 +8,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
-
   before_action :set_context
   before_action :clear_setting_cache
   before_action :cors_preflight_check
@@ -17,7 +18,6 @@ class ApplicationController < ActionController::Base
   after_action { hook(:app_after_filter, self) }
   after_action :cors_set_access_control_headers
 
-  helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
   helper_method :klass
 
@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
   end
 
   #
-  # Takes { :related => 'campaigns/7' } or { :related => '5' }
+  # Takes { related: 'campaigns/7' } or { related: '5' }
   #   and returns array of object ids that should be excluded from search
   #   assumes controller_name is a method on 'related' class that returns a collection
   #----------------------------------------------------------------------------
@@ -112,47 +112,6 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def set_current_tab(tab = controller_name)
     @current_tab = tab
-  end
-
-  #----------------------------------------------------------------------------
-  def current_user_session
-    @current_user_session ||= Authentication.find
-    @current_user_session = nil if @current_user_session&.record&.suspended?
-    @current_user_session
-  end
-
-  #----------------------------------------------------------------------------
-  def current_user
-    unless @current_user
-      @current_user = (current_user_session&.record)
-      if @current_user
-        @current_user.set_individual_locale
-        @current_user.set_single_access_token
-      end
-      User.current_user = @current_user
-    end
-    @current_user
-  end
-
-  #----------------------------------------------------------------------------
-  def require_user
-    unless current_user
-      store_location
-      flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
-      respond_to do |format|
-        format.html { redirect_to login_url }
-        format.js   { render plain: "window.location = '#{login_url}';" }
-      end
-    end
-  end
-
-  #----------------------------------------------------------------------------
-  def require_no_user
-    if current_user
-      store_location
-      flash[:notice] = t(:msg_logout_needed)
-      redirect_to profile_url
-    end
   end
 
   #----------------------------------------------------------------------------
@@ -279,6 +238,12 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Max-Age'] = '1728000'
 
       render plain: ''
+    end
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+      user_params.permit(:username, :email, :password, :password_confirmation)
     end
   end
 end

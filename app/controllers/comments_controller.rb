@@ -6,8 +6,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CommentsController < ApplicationController
-  before_action :require_user
-
   # GET /comments
   # GET /comments.json
   # GET /comments.xml

@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class HomeController < ApplicationController
-  before_action :require_user, except: %i[timezone]
+  skip_before_action :authenticate_user!, only: %i[timezone]
   before_action :set_current_tab, only: :index
 
   #----------------------------------------------------------------------------

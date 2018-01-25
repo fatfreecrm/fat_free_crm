@@ -11,7 +11,7 @@
 #
 #  id                  :integer         not null, primary key
 #  username            :string(32)      default(""), not null
-#  email               :string(64)      default(""), not null
+#  email               :string(254)     default(""), not null
 #  first_name          :string(32)
 #  last_name           :string(32)
 #  title               :string(64)
@@ -23,21 +23,27 @@
 #  yahoo               :string(32)
 #  google              :string(32)
 #  skype               :string(32)
-#  password_hash       :string(255)     default(""), not null
+#  encrypted_password  :string(255)     default(""), not null
 #  password_salt       :string(255)     default(""), not null
-#  persistence_token   :string(255)     default(""), not null
-#  perishable_token    :string(255)     default(""), not null
-#  last_login_at       :datetime
-#  current_login_at    :datetime
-#  last_login_ip       :string(255)
-#  current_login_ip    :string(255)
-#  login_count         :integer         default(0), not null
+#  last_sign_in_at     :datetime
+#  current_sign_in_at  :datetime
+#  last_sign_in_ip     :string(255)
+#  current_sign_in_ip  :string(255)
+#  sign_in_count       :integer         default(0), not null
 #  deleted_at          :datetime
 #  created_at          :datetime
 #  updated_at          :datetime
 #  admin               :boolean         default(FALSE), not null
 #  suspended_at        :datetime
-#  single_access_token :string(255)
+#  unconfirmed_email   :string(254)     default(""), not null
+#  reset_password_token    :string(255)
+#  reset_password_sent_at  :datetime
+#  remember_token          :string(255)
+#  remember_created_at     :datetime
+#  authentication_token    :string(255)
+#  confirmation_token      :string(255)
+#  confirmed_at            :datetime
+#  confirmation_sent_at    :datetime
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
@@ -73,6 +79,12 @@ describe User do
           create(asset, assignee: @user)
           expect(@user.destroyable?(@current_user)).to eq(false)
         end
+      end
+
+      it "should not destroy the user if she owns a comment" do
+        account = build(:account, user: @current_user)
+        FactoryBot.create(:comment, user: @user, commentable: account)
+        expect(@user.destroyable?(@current_user)).to eq(false)
       end
 
       it "should not destroy the current user" do
@@ -199,22 +211,6 @@ describe User do
       @user.preference[:locale] = nil
       @user.set_individual_locale
       expect(I18n.locale).to eq(@locale)
-    end
-  end
-
-  describe "Setting single access token" do
-    it "should update single_access_token attribute if it is not set already" do
-      @user = build(:user, single_access_token: nil)
-
-      @user.set_single_access_token
-      expect(@user.single_access_token).not_to eq(nil)
-    end
-
-    it "should not update single_access_token attribute if it is set already" do
-      @user = build(:user, single_access_token: "token")
-
-      @user.set_single_access_token
-      expect(@user.single_access_token).to eq("token")
     end
   end
 
