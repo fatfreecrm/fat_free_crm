@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
+  # Deprecated: Compatibility with legacy Authlogic routes
+  get '/login',  to: redirect('/users/sign_in')
+  get '/signup', to: redirect('/users/sign_up')
+
   devise_for :users, controllers: { registrations: 'registrations',
                                     sessions: 'sessions',
                                     passwords: 'passwords',
