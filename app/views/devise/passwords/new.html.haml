@@ -1,10 +1,10 @@
 .standalone#standalone
   = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-    .title #{t :forgot_password}
-    .intro #{t :password_intro}
+    .title= t(:forgot_password)
+    .intro= t(:password_intro)
     .section
-      .label #{t :email}:
-      = f.input :email, required: true, autofocus: true, label: false, input_html: { size: 46 }
+      .label= t(:email)
+      = f.input_field :email, required: true, autofocus: true, size: 46
     %br
     .buttonbar
-      = f.button :submit, t(:reset_password), :id => "passwords_submit"
+      = f.button :submit, t(:reset_password), id: 'passwords_submit'

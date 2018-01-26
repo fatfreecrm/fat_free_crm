@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @user.update_attributes(user_params)
-    flash[:notice] = t(:profile_update)
+    flash[:notice] = t(:msg_user_updated)
     respond_with(@user)
   end
 
