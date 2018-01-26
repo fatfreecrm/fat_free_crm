@@ -21,16 +21,13 @@ FactoryBot.define do
     google nil
     skype nil
     admin false
-    password_hash       { SecureRandom.hex(64) }
+    encrypted_password  { SecureRandom.hex(64) }
     password_salt       { SecureRandom.hex(64) }
-    persistence_token   { SecureRandom.hex(64) }
-    perishable_token    { SecureRandom.hex(10) }
-    single_access_token nil
-    current_login_at    { FactoryBot.generate(:time) }
-    last_login_at       { FactoryBot.generate(:time) }
-    last_login_ip "127.0.0.1"
-    current_login_ip "127.0.0.1"
-    login_count         { rand(1..100) }
+    last_sign_in_at     { FactoryBot.generate(:time) }
+    current_sign_in_at  { FactoryBot.generate(:time) }
+    last_sign_in_ip "127.0.0.1"
+    current_sign_in_ip "127.0.0.1"
+    sign_in_count       { rand(1..100) }
     deleted_at nil
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }

@@ -69,7 +69,7 @@ module FatFreeCRM
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += %i[password password_hash password_salt password_confirmation]
+    config.filter_parameters += %i[password encrypted_password password_salt password_confirmation]
   end
 end
 

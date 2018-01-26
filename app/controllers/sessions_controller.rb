@@ -5,15 +5,11 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+class SessionsController < Devise::SessionsController
+  respond_to :html
+  append_view_path 'app/views/devise'
 
-describe Authentication do
-  before(:each) do
-    @valid_attributes = {
-    }
+  def after_sign_out_path_for(*)
+    new_user_session_path
   end
-
-  # it "should create a new instance given valid attributes" do
-  #   Authentication.create!(@valid_attributes)
-  # end
 end

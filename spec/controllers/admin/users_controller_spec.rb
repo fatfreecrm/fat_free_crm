@@ -50,17 +50,6 @@ describe Admin::UsersController do
     end
   end
 
-  # GET /admin/users/new
-  # GET /admin/users/new.xml                                               AJAX
-  #----------------------------------------------------------------------------
-  describe "GET new" do
-    it "assigns a new user as @user and renders [new] template" do
-      get :new, xhr: true
-      expect(assigns[:user]).to be_new_record
-      expect(response).to render_template("admin/users/new")
-    end
-  end
-
   # GET /admin/users/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   describe "GET edit" do
@@ -99,51 +88,6 @@ describe Admin::UsersController do
       expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
       expect(assigns[:previous]).to eq(@previous.id)
       expect(response).to render_template("admin/users/edit")
-    end
-  end
-
-  # POST /admin/users
-  # POST /admin/users.xml                                                  AJAX
-  #----------------------------------------------------------------------------
-  describe "POST create" do
-    describe "with valid params" do
-      before(:each) do
-        @username = "none"
-        @email = @username + "@example.com"
-        @password = "secret"
-      end
-
-      it "assigns a newly created user as @user and renders [create] template" do
-        @user = build(:user, username: @username, email: @email)
-        allow(User).to receive(:new).and_return(@user)
-
-        post :create, params: { user: { username: @username, email: @email, password: @password, password_confirmation: @password } }, xhr: true
-        expect(assigns[:user]).to eq(@user)
-        expect(response).to render_template("admin/users/create")
-      end
-
-      it "creates admin user when requested so" do
-        post :create, params: { user: { username: @username, email: @email, admin: "1", password: @password, password_confirmation: @password } }, xhr: true
-        expect(assigns[:user].admin).to eq(true)
-        expect(response).to render_template("admin/users/create")
-      end
-
-      it "doesn't create admin user unless requested so" do
-        post :create, params: { user: { username: @username, email: @email, admin: "0", password: @password, password_confirmation: @password } }, xhr: true
-        expect(assigns[:user].admin).to eq(false)
-        expect(response).to render_template("admin/users/create")
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved user as @user and re-renders [create] template" do
-        @user = build(:user, username: "", email: "")
-        allow(User).to receive(:new).and_return(@user)
-
-        post :create, params: { user: {} }, xhr: true
-        expect(assigns[:user]).to eq(@user)
-        expect(response).to render_template("admin/users/create")
-      end
     end
   end
 
