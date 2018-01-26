@@ -13,7 +13,9 @@
 .standalone#standalone
   = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     - if User.can_signup?
-      .title_tools= "#{t(:no_account)} #{link_to(t(:sign_up_now), new_registration_path(resource_name))}"
+      .title_tools
+        = t(:no_account)
+        = link_to(t(:sign_up_now), new_registration_path(resource_name))
     .title= t(:login)
     .section
       .label= t(:username)
