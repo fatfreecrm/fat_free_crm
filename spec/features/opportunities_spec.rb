@@ -48,6 +48,17 @@ feature 'Opportunities', '
     end
   end
 
+  scenario 'should not display ammount with zero value', js: true do
+    with_amount = create(:opportunity, name: 'With Amount', amount: 3000, probability: 90, discount: nil, stage: 'proposal')
+    without_amount = create(:opportunity, name: 'Without Amount', amount: nil, probability: nil, discount: nil, stage: 'proposal')
+    with_versioning do
+      visit opportunities_page
+      click_link 'Long format'
+      expect(find("#opportunity_#{with_amount.id}")).to have_content('3,000 with no discount and 90% probability')
+      expect(find("#opportunity_#{without_amount.id}")).not_to have_content('0 with no discount and 0% probability')
+    end
+  end
+
   scenario "remembers the comment field when the creation was unsuccessful", js: true do
     visit opportunities_page
     click_link 'Create Opportunity'
