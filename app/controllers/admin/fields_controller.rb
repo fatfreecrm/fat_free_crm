@@ -46,7 +46,7 @@ class Admin::FieldsController < Admin::ApplicationController
       if as.match?(/pair/)
         CustomFieldPair.create_pair(params).first
       elsif as.present?
-        klass = Field.lookup_class(as).classify.constantize
+        klass = find_class(Field.lookup_class(as))
         klass.create(field_params)
       else
         Field.new(field_params).tap(&:valid?)
@@ -102,7 +102,7 @@ class Admin::FieldsController < Admin::ApplicationController
                Field.find(id).tap { |f| f.as = as }
              else
                field_group_id = field[:field_group_id]
-               klass = Field.lookup_class(as).classify.constantize
+               klass = find_class(Field.lookup_class(as))
                klass.new(field_group_id: field_group_id, as: as)
       end
 
@@ -114,7 +114,22 @@ class Admin::FieldsController < Admin::ApplicationController
   protected
 
   def field_params
-    params[:field].permit!
+    params.require(:field).permit(
+      :type,
+      :field_group_id,
+      :position,
+      :pair_id,
+      :name,
+      :label,
+      :hint,
+      :placeholder,
+      :as,
+      :collection,
+      :disabled,
+      :required,
+      :maxlength,
+      :minlength
+    )
   end
 
   def setup_current_tab

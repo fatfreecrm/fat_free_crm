@@ -22,7 +22,7 @@ class EntitiesController < ApplicationController
   # Common attach handler for all core controllers.
   #----------------------------------------------------------------------------
   def attach
-    @attachment = params[:assets].classify.constantize.find(params[:asset_id])
+    @attachment = find_class(params[:assets]).find(params[:asset_id])
     @attached = entity.attach!(@attachment)
     entity.reload
 
@@ -32,7 +32,7 @@ class EntitiesController < ApplicationController
   # Common discard handler for all core controllers.
   #----------------------------------------------------------------------------
   def discard
-    @attachment = params[:attachment].constantize.find(params[:attachment_id])
+    @attachment = find_class(params[:attachment]).find(params[:attachment_id])
     entity.discard!(@attachment)
     entity.reload
 

@@ -281,4 +281,14 @@ class ApplicationController < ActionController::Base
       render plain: ''
     end
   end
+
+  def find_class(asset)
+    classes = ActiveRecord::Base.connection.tables.map(&:classify)
+    find = classes.find { |m| m == asset.classify }
+    if find
+      find.safe_constantize
+    else
+      raise "Unknown resourse"
+    end
+  end
 end
