@@ -103,6 +103,14 @@ class Opportunity < ActiveRecord::Base
     ((amount || 0) - (discount || 0)) * (probability || 0) / 100.0
   end
 
+  def have_amount_to_display?
+    !!(
+      (amount && amount != 0) ||
+      (weighted_amount != 0) ||
+      (probability && probability != 0)
+    )
+  end
+
   # Backend handler for [Create New Opportunity] form (see opportunity/create).
   #----------------------------------------------------------------------------
   def save_with_account_and_permissions(params)
