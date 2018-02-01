@@ -114,22 +114,7 @@ class Admin::FieldsController < Admin::ApplicationController
   protected
 
   def field_params
-    params.require(:field).permit(
-      :type,
-      :field_group_id,
-      :position,
-      :pair_id,
-      :name,
-      :label,
-      :hint,
-      :placeholder,
-      :as,
-      :collection,
-      :disabled,
-      :required,
-      :maxlength,
-      :minlength
-    )
+    params[:field].permit!
   end
 
   def setup_current_tab
