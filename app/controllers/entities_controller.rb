@@ -158,7 +158,7 @@ class EntitiesController < ApplicationController
     # Ignore this order when doing advanced search
     unless advanced_search
       order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
-      scope = scope.order(order)
+      scope = respond_to?('order_by_attributes', true) ? order_by_attributes(scope, order) : scope.order(order)
     end
 
     @search_results_count = scope.count
