@@ -105,9 +105,9 @@ class Opportunity < ActiveRecord::Base
 
   def have_amount_to_display?
     !!(
-      (amount && amount != 0) ||
+      (amount.to_f != 0) ||
       (weighted_amount != 0) ||
-      (probability && probability != 0)
+      (probability.to_i != 0)
     )
   end
 
