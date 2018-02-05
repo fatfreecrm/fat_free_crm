@@ -161,7 +161,7 @@ class EntitiesController < ApplicationController
       scope = order_by_attributes(scope, order)
     end
 
-    @search_results_count = scope.count
+    @search_results_count = scope.size
 
     # Pagination is disabled for xls and csv requests
     unless wants.xls? || wants.csv?
@@ -177,7 +177,7 @@ class EntitiesController < ApplicationController
 
     scope
   end
-  
+
   #----------------------------------------------------------------------------
   def order_by_attributes(scope, order)
     scope.order(order)

@@ -170,7 +170,7 @@ class OpportunitiesController < EntitiesController
   private
 
   def order_by_attributes(scope, order)
-    scope.distinct(false).order(order)
+    scope.weighted_sort.order(order)
   end
 
   #----------------------------------------------------------------------------
