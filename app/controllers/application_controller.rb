@@ -281,4 +281,15 @@ class ApplicationController < ActionController::Base
       render plain: ''
     end
   end
+
+  def find_class(asset)
+    Rails.application.eager_load! unless Rails.application.config.cache_classes
+    classes = ActiveRecord::Base.descendants.map(&:name)
+    find = classes.find { |m| m == asset.classify }
+    if find
+      find.safe_constantize
+    else
+      raise "Unknown resource"
+    end
+  end
 end
