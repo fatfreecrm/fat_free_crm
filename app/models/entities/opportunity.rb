@@ -100,7 +100,7 @@ class Opportunity < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def weighted_amount
-    ((amount || 0) - (discount || 0)) * (probability || 0) / 100.0
+    (amount.to_f - discount.to_f) * probability.to_i / 100.0
   end
 
   # Backend handler for [Create New Opportunity] form (see opportunity/create).

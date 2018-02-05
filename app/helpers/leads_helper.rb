@@ -11,7 +11,7 @@ module LeadsHelper
   #----------------------------------------------------------------------------
   def stars_for(lead)
     star = '&#9733;'
-    rating = lead.rating || 0
+    rating = lead.rating.to_i
     (star * rating).html_safe + content_tag(:font, (star * (RATING_STARS - rating)).html_safe, color: 'gainsboro')
   end
 

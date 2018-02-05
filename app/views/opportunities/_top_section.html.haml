@@ -37,7 +37,7 @@
           %td
             != account_select_or_create(a) do |options|
               -# Add [-- None --] account choice when editing existing opportunity that has an account.
-              - options[:selected] = @account.id || 0
+              - options[:selected] = @account.id.to_i
 
           %td= spacer
           %td
