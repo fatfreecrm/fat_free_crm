@@ -103,12 +103,27 @@ class Opportunity < ActiveRecord::Base
     ((amount || 0) - (discount || 0)) * (probability || 0) / 100.0
   end
 
-  def have_amount_to_display?
-    !!(
-      (amount.to_f != 0) ||
-      (weighted_amount != 0) ||
-      (probability.to_i != 0)
-    )
+  def value_to_display
+    have_amount = amount.to_f != 0
+    have_discount = discount.to_f != 0
+    have_probability = probability.to_i != 0
+    if have_amount && have_discount && have_probability
+      :all
+    elsif have_amount && have_discount
+      :amount_discount
+    elsif have_amount && have_probability
+      :amount_probability
+    elsif have_discount && have_probability
+      :discount_probability
+    elsif have_amount
+      :amount
+    elsif have_discount
+      :discount
+    elsif have_probability
+      :probability
+    else
+      false
+    end
   end
 
   # Backend handler for [Create New Opportunity] form (see opportunity/create).
