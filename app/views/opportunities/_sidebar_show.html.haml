@@ -19,16 +19,16 @@
     %dt= @opportunity.probability ? @opportunity.probability.to_s + "%" : t(:n_a)
     %tt #{t :probability}:
   %li
-    %dt= @opportunity.amount ? number_to_currency(@opportunity.amount || 0, precision: 0) : t(:n_a)
+    %dt= @opportunity.amount ? number_to_currency(@opportunity.amount.to_f, precision: 0) : t(:n_a)
     %tt #{t :amount}:
   %li
-    %dt= @opportunity.discount ? number_to_currency(@opportunity.discount || 0, precision: 0) : t(:n_a)
+    %dt= @opportunity.discount ? number_to_currency(@opportunity.discount.to_f, precision: 0) : t(:n_a)
     - if @opportunity.amount && @opportunity.discount
       %tt== Discount (#{number_to_percentage(@opportunity.discount / @opportunity.amount * 100, precision: 1)}):
     - else
       %tt #{t :discount}:
   %li
-    %dt= @opportunity.amount ? number_to_currency(@opportunity.weighted_amount || 0, precision: 0) : t(:n_a)
+    %dt= @opportunity.amount ? number_to_currency(@opportunity.weighted_amount.to_f, precision: 0) : t(:n_a)
     %tt #{t :weighted_amount}:
   %li
     %dt= @opportunity.assigned_to ? truncate(@opportunity.assignee.full_name, length: 16) : nil

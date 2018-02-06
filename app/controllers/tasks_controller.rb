@@ -173,7 +173,21 @@ class TasksController < ApplicationController
 
   def task_params
     return {} unless params[:task]
-    params[:task].permit!
+    params.require(:task).permit(
+      :user_id,
+      :assigned_to,
+      :completed_by,
+      :name,
+      :asset_id,
+      :asset_type,
+      :priority,
+      :category,
+      :bucket,
+      :due_at,
+      :completed_at,
+      :deleted_at,
+      :background_info
+    )
   end
 
   private
