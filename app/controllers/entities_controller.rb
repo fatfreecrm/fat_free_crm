@@ -21,7 +21,7 @@ class EntitiesController < ApplicationController
   # Common attach handler for all core controllers.
   #----------------------------------------------------------------------------
   def attach
-    @attachment = params[:assets].classify.constantize.find(params[:asset_id])
+    @attachment = find_class(params[:assets]).find(params[:asset_id])
     @attached = entity.attach!(@attachment)
     entity.reload
 
@@ -31,7 +31,7 @@ class EntitiesController < ApplicationController
   # Common discard handler for all core controllers.
   #----------------------------------------------------------------------------
   def discard
-    @attachment = params[:attachment].constantize.find(params[:attachment_id])
+    @attachment = find_class(params[:attachment]).find(params[:attachment_id])
     entity.discard!(@attachment)
     entity.reload
 
@@ -151,16 +151,16 @@ class EntitiesController < ApplicationController
       scope = scope.state(filter) if filter.present?
     end
 
-    scope = scope.text_search(query)              if query.present?
+    scope = scope.text_search(query) if query.present?
     scope = scope.tagged_with(tags, on: :tags) if tags.present?
 
     # Ignore this order when doing advanced search
     unless advanced_search
       order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
-      scope = scope.order(order)
+      scope = order_by_attributes(scope, order)
     end
 
-    @search_results_count = scope.count
+    @search_results_count = scope.size
 
     # Pagination is disabled for xls and csv requests
     unless wants.xls? || wants.csv?
@@ -175,6 +175,11 @@ class EntitiesController < ApplicationController
     scope = scope.includes(*list_includes) if respond_to?(:list_includes, true)
 
     scope
+  end
+
+  #----------------------------------------------------------------------------
+  def order_by_attributes(scope, order)
+    scope.order(order)
   end
 
   #----------------------------------------------------------------------------
