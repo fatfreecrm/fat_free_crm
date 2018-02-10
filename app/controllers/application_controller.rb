@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
-    @query = params[:auto_complete_query] || ''
+    @query = params[:term] || ''
     @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
@@ -47,9 +47,15 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.any(:js, :html) { render partial: 'auto_complete' }
       format.json do
-        render json: @auto_complete.each_with_object({}) { |a, h|
-                       h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
-                     }
+        results = @auto_complete.map do |a|
+          {
+            id: a.id,
+            text: a.respond_to?(:full_name) ? a.full_name : a.name
+          }
+        end
+        render json: {
+          results: results
+        }
       end
     end
   end
@@ -273,6 +279,17 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Max-Age'] = '1728000'
 
       render plain: ''
+    end
+  end
+
+  def find_class(asset)
+    Rails.application.eager_load! unless Rails.application.config.cache_classes
+    classes = ActiveRecord::Base.descendants.map(&:name)
+    find = classes.find { |m| m == asset.classify }
+    if find
+      find.safe_constantize
+    else
+      raise "Unknown resource"
     end
   end
 end

@@ -20,9 +20,9 @@ module OpportunitiesHelper
     summary << (opportunity.stage ? t(opportunity.stage) : t(:other))
     summary << number_to_currency(opportunity.weighted_amount, precision: 0)
     unless %w[won lost].include?(opportunity.stage)
-      amount << number_to_currency(opportunity.amount || 0, precision: 0)
+      amount << number_to_currency(opportunity.amount.to_f, precision: 0)
       amount << (opportunity.discount ? t(:discount_number, number_to_currency(opportunity.discount, precision: 0)) : t(:no_discount))
-      amount << t(:probability_number, (opportunity.probability || 0).to_s + '%')
+      amount << t(:probability_number, opportunity.probability.to_i.to_s + '%')
       summary << amount.join(' ')
     end
     summary << if opportunity.closes_on
@@ -37,7 +37,7 @@ module OpportunitiesHelper
   # and prepends the currently selected campaign, if any.
   #----------------------------------------------------------------------------
   def opportunity_campaign_select(options = {})
-    options[:selected] ||= @opportunity.campaign_id || 0
+    options[:selected] ||= @opportunity.campaign_id.to_i
     selected_campaign = Campaign.find_by_id(options[:selected])
     campaigns = ([selected_campaign] + Campaign.my(current_user).order(:name).limit(25)).compact.uniq
     collection_select :opportunity, :campaign_id, campaigns, :id, :name,
