@@ -169,6 +169,10 @@ class OpportunitiesController < EntitiesController
 
   private
 
+  def order_by_attributes(scope, order)
+    scope.weighted_sort.order(order)
+  end
+
   #----------------------------------------------------------------------------
   alias get_opportunities get_list_of_records
 
