@@ -23,7 +23,7 @@ describe HomeController do
     end
 
     it "should not include views in the list of activities" do
-      create(:version, item: create(:account, user: @current_user), event: "view")
+      create(:version, item: create(:account, user: current_user), event: "view")
       expect(controller).to receive(:get_activities).once.and_return([])
 
       get :index
@@ -158,14 +158,14 @@ describe HomeController do
 
     it "should find a user by email" do
       allow(@cur_user).to receive(:pref).and_return(activity_user: 'billy@example.com')
-      controller.instance_variable_set(:@current_user, @cur_user)
+      allow(controller).to receive(:current_user).and_return(@cur_user)
       expect(User).to receive(:where).with(email: 'billy@example.com').and_return([@user])
       expect(controller.send(:activity_user)).to eq(1)
     end
 
     it "should find a user by first name or last name" do
       allow(@cur_user).to receive(:pref).and_return(activity_user: 'Billy')
-      controller.instance_variable_set(:@current_user, @cur_user)
+      allow(controller).to receive(:current_user).and_return(@cur_user)
       expect(User).to receive(:where).with(first_name: 'Billy').and_return([@user])
       expect(User).to receive(:where).with(last_name: 'Billy').and_return([@user])
       expect(controller.send(:activity_user)).to eq(1)
@@ -173,7 +173,7 @@ describe HomeController do
 
     it "should find a user by first name and last name" do
       allow(@cur_user).to receive(:pref).and_return(activity_user: 'Billy Elliot')
-      controller.instance_variable_set(:@current_user, @cur_user)
+      allow(controller).to receive(:current_user).and_return(@cur_user)
       expect(User).to receive(:where).with(first_name: 'Billy', last_name: "Elliot").and_return([@user])
       expect(User).to receive(:where).with(first_name: 'Elliot', last_name: "Billy").and_return([@user])
       expect(controller.send(:activity_user)).to eq(1)
@@ -181,7 +181,7 @@ describe HomeController do
 
     it "should return nil when 'all_users' is specified" do
       allow(@cur_user).to receive(:pref).and_return(activity_user: 'all_users')
-      controller.instance_variable_set(:@current_user, @cur_user)
+      allow(controller).to receive(:current_user).and_return(@cur_user)
       expect(User).not_to receive(:where)
       expect(controller.send(:activity_user)).to eq(nil)
     end

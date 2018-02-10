@@ -8,32 +8,6 @@
 require 'spec_helper'
 
 describe UserMailer do
-  describe "password_reset_instructions" do
-    let(:user) { build(:user, email: "forgot_my_password@example.com") }
-    let(:mail) { UserMailer.password_reset_instructions(user) }
-
-    before(:each) do
-      allow(I18n).to receive(:t).with(:password_reset_instruction).and_return("Password Reset Instructions")
-      allow(user).to receive(:perishable_token).and_return("62fe5299b45513f9d22a2e1454f35dd43d62ba50")
-    end
-
-    it "sets fatfree as the sender" do
-      expect(mail.from).to eql(["noreply@fatfreecrm.com"])
-    end
-
-    it "sets user 'forgot_my_password@example.com' as recipient" do
-      expect(mail.to).to eq(["forgot_my_password@example.com"])
-    end
-
-    it "sets the subject" do
-      expect(mail.subject).to eq("Fat Free CRM: Password Reset Instructions")
-    end
-
-    it "includes password reset link in body" do
-      expect(mail.body.encoded).to match("http://www.example.com/passwords/62fe5299b45513f9d22a2e1454f35dd43d62ba50/edit")
-    end
-  end
-
   describe "assigned_entity_notification" do
     let(:assigner) { build(:user, first_name: "Bob", last_name: "Hope") }
     let(:assignee) { build(:user, email: "assignee@example.com") }

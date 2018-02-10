@@ -34,14 +34,14 @@
       = " " + t(:at) + " " + user.company unless user.company.blank?
 
       %span.black= "|"
-      - if user.current_login_at && user.login_count > 0
-        = t('pluralize.login', user.login_count)
+      - if user.last_sign_in_at && user.sign_in_count > 0
+        = t('pluralize.login', user.sign_in_count)
         %span.black= "|"
 
       - if user.awaits_approval?
         %b.cool= t(:user_awaits_approval)
-      - elsif user.current_login_at
-        %span.cool= t(:last_logged_in, timeago(user.current_login_at)).html_safe
+      - elsif user.last_sign_in_at
+        %span.cool= t(:last_logged_in, timeago(user.current_sign_in_at)).html_safe
       - else
         %span.warn= t(:user_never_logged_in)
     %dt{ style: "padding: 2px 0px 0px 0px" }

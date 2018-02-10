@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   before_action :set_current_tab, only: %i[show opportunities_overview] # Don't hightlight any tabs.
 
   check_authorization
+
   load_and_authorize_resource # handles all security
 
   respond_to :html, only: %i[show new]
@@ -19,30 +20,6 @@ class UsersController < ApplicationController
   def show
     @user = current_user if params[:id].nil?
     respond_with(@user)
-  end
-
-  # GET /users/new
-  # GET /users/new.js
-  #----------------------------------------------------------------------------
-  def new
-    respond_with(@user)
-  end
-
-  # POST /users
-  # POST /users.js
-  #----------------------------------------------------------------------------
-  def create
-    if @user.save
-      if Setting.user_signup == :needs_approval
-        flash[:notice] = t(:msg_account_created)
-        redirect_to login_url
-      else
-        flash[:notice] = t(:msg_successful_signup)
-        redirect_back_or_default profile_url
-      end
-    else
-      render :new
-    end
   end
 
   # GET /users/1/edit.js
@@ -104,7 +81,7 @@ class UsersController < ApplicationController
   # PUT /users/1/change_password.js
   #----------------------------------------------------------------------------
   def change_password
-    if @user.valid_password?(params[:current_password], true) || @user.password_hash.blank?
+    if @user.valid_password?(params[:current_password])
       if params[:user][:password].blank?
         flash[:notice] = t(:msg_password_not_changed)
       else

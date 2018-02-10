@@ -1,0 +1,4 @@
+- require 'devise/version'
+%p= t('.greeting', recipient: @resource.email)
+%p= t('.instruction')
+%p= link_to t('.action'), confirmation_url(@resource, confirmation_token: resource_confirmation_token)
