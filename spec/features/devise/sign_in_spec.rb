@@ -25,7 +25,6 @@ feature 'Devise Sign-in' do
 
   scenario 'without approval' do
     @user.confirm
-    @user.update_attribute(:suspended_at, Time.now)
     login_process('john', 'password')
     expect(page).to have_content("Your account has not been approved yet.")
   end
@@ -43,8 +42,9 @@ feature 'Devise Sign-in' do
     expect(page).to have_content("Invalid Email or password")
   end
 
-  scenario 'with email' do
+  scenario 'login with email' do
     @user.confirm
+    @user.update_attribute(:suspended_at, nil)
     login_process('john@example.com', 'password')
     expect(page).to have_content("Signed in successfully")
   end

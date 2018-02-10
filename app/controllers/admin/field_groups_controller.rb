@@ -80,6 +80,13 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   protected
 
   def field_group_params
-    params[:field_group].permit!
+    params.require(:field_group).permit(
+      :name,
+      :label,
+      :position,
+      :hint,
+      :tag_id,
+      :klass_name
+    )
   end
 end

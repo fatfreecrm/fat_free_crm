@@ -68,7 +68,7 @@ class Admin::TagsController < Admin::ApplicationController
   protected
 
   def tag_params
-    params[:tag].permit!
+    params.require(:tag).permit(:name, :taggings_count)
   end
 
   def setup_current_tab
