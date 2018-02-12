@@ -62,9 +62,7 @@ module OpportunitiesHelper
         end
 
         if opportunity.discount.to_f != 0
-          msg << t(:discount_number, number_to_currency(opportunity.discount, precision: 0))
-        elsif opportunity.amount.to_f != 0 || opportunity.probability.to_i != 0
-          msg << t(:no_discount)
+          msg << t(:discount) + ' ' + number_to_currency(opportunity.discount, precision: 0)
         end
       end
 
@@ -73,14 +71,14 @@ module OpportunitiesHelper
       end
     end
 
-    msg << opportunity_closes_on_message(opportunity)
+    msg << opportunity_closes_on_message(opportunity, won_or_lost)
 
-    msg.join(' | ')
+    msg.join(' | ').html_safe
   end
 
   private
 
-  def opportunity_closes_on_message(opportunity)
+  def opportunity_closes_on_message(opportunity, won_or_lost)
     if opportunity.closes_on
       if won_or_lost
         if opportunity.closes_on >= Date.today
@@ -89,7 +87,7 @@ module OpportunitiesHelper
           t(:closed_ago_on, time_ago: distance_of_time_in_words(opportunity.closes_on, Date.today), date: l(opportunity.closes_on, format: :mmddyy))
         end
       elsif opportunity.closes_on > Date.today
-        t(:expected_to_close,  time: distance_of_time_in_words(Date.today, opportunity.closes_on), date: l(opportunity.closes_on, format: :mmddyy))
+        t(:expected_to_close, time: distance_of_time_in_words(Date.today, opportunity.closes_on), date: l(opportunity.closes_on, format: :mmddyy))
       elsif opportunity.closes_on == Date.today
         content_tag(:span, t(:closes_today), class: 'warn')
       else
