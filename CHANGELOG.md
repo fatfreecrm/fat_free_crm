@@ -11,9 +11,10 @@ Unreleased (0.19.0)
 
 #### Devise replaces Authlogic for user authentication
 Ticket #742 replaces Authlogic with the latest Devise (4.3.0) which has wider adoption.
-This change requires a database migration; Authlogic passwords will continue to work and
-the migration can be rolled back. Users will be forced logger out however;
-existing user sessions will not be kept.
+This change requires a database migration on the User model. Please note:
+ - Most User fields are renamed and can hence be rolled back. Existing Authlogic passwords will continue to work.
+ - Users will be forced logged out. Existing user sessions will not be kept and the fields `persistence_token, single_access_token, perishable_token` will be dropped from the database.
+ - Though the migration is generally safe **we recommend to make a backup of your database** before migrating.
 
 #### Existing OAuth broken
 The Devise change will break any OAuth login plugins which depend on Authlogic.
