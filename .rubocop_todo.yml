@@ -39,6 +39,11 @@ Lint/BooleanSymbol:
     - 'config/initializers/ransack.rb'
 
 # Offense count: 1
+Lint/Debugger:
+  Exclude:
+    - 'app/controllers/entities/opportunities_controller.rb'
+
+# Offense count: 1
 Lint/DuplicateMethods:
   Exclude:
     - 'lib/gravatar_image_tag.rb'
@@ -155,7 +160,7 @@ Naming/HeredocDelimiterNaming:
   Exclude:
     - 'app/controllers/passwords_controller.rb'
 
-# Offense count: 4
+# Offense count: 5
 # Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist, MethodDefinitionMacros.
 # NamePrefix: is_, has_, have_
 # NamePrefixBlacklist: is_, has_, have_
@@ -165,6 +170,7 @@ Naming/PredicateName:
   Exclude:
     - 'spec/**/*'
     - 'app/inputs/date_time_input.rb'
+    - 'app/models/entities/opportunity.rb'
     - 'app/models/users/user.rb'
     - 'lib/fat_free_crm/fields.rb'
     - 'lib/fat_free_crm/mail_processor/base.rb'
@@ -234,10 +240,11 @@ Style/CommentedKeyword:
     - 'app/models/users/authentication.rb'
     - 'db/migrate/20100928030617_drop_openid_tables.rb'
 
-# Offense count: 3
+# Offense count: 4
 Style/DoubleNegation:
   Exclude:
     - 'app/helpers/application_helper.rb'
+    - 'app/models/entities/opportunity.rb'
     - 'app/models/polymorphic/task.rb'
     - 'lib/gravatar_image_tag.rb'
 
@@ -245,6 +252,14 @@ Style/DoubleNegation:
 Style/EvalWithLocation:
   Exclude:
     - 'lib/fat_free_crm/permissions.rb'
+
+# Offense count: 1
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: when_needed, always, never
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'db/schema.rb'
 
 # Offense count: 3
 # Configuration parameters: AllowedVariables.
