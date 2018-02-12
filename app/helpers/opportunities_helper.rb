@@ -44,4 +44,59 @@ module OpportunitiesHelper
                       { selected: options[:selected], prompt: t(:select_a_campaign) },
                       style: 'width:330px;', class: 'select2'
   end
+
+  # Generates the inline revenue message for the opportunity list table.
+  #----------------------------------------------------------------------------
+  def opportunity_revenue_message(opportunity, detailed = false)
+    msg = []
+    won_or_lost = %w[won lost].include?(opportunity.stage)
+
+    if opportunity.weighted_amount != 0
+      msg << content_tag(:b, number_to_currency(opportunity.weighted_amount, precision: 0))
+    end
+
+    unless won_or_lost
+      if detailed
+        if opportunity.amount.to_f != 0
+          msg << number_to_currency(opportunity.amount.to_f, precision: 0)
+        end
+
+        if opportunity.discount.to_f != 0
+          msg << t(:discount_number, number_to_currency(opportunity.discount, precision: 0))
+        elsif opportunity.amount.to_f != 0 || opportunity.probability.to_i != 0
+          msg << t(:no_discount)
+        end
+      end
+
+      if opportunity.probability.to_i != 0
+        msg << t(:probability) + ' ' + opportunity.probability.to_s + '%'
+      end
+    end
+
+    msg << opportunity_closes_on_message(opportunity)
+
+    msg.join(' | ')
+  end
+
+  private
+
+  def opportunity_closes_on_message(opportunity)
+    if opportunity.closes_on
+      if won_or_lost
+        if opportunity.closes_on >= Date.today
+          t(:closing_date, l(opportunity.closes_on, format: :mmddyy))
+        else
+          t(:closed_ago_on, time_ago: distance_of_time_in_words(opportunity.closes_on, Date.today), date: l(opportunity.closes_on, format: :mmddyy))
+        end
+      elsif opportunity.closes_on > Date.today
+        t(:expected_to_close,  time: distance_of_time_in_words(Date.today, opportunity.closes_on), date: l(opportunity.closes_on, format: :mmddyy))
+      elsif opportunity.closes_on == Date.today
+        content_tag(:span, t(:closes_today), class: 'warn')
+      else
+        content_tag(:span, t(:past_due, distance_of_time_in_words(opportunity.closes_on, Date.today)), class: 'warn')
+      end
+    else
+      t(:no_closing_date)
+    end
+  end
 end
