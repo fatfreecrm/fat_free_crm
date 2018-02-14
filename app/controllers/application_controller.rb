@@ -49,8 +49,7 @@ class ApplicationController < ActionController::Base
       format.json do
         results = {}
         @auto_complete.each do |a|
-          text = a.respond_to?(:full_name) ? a.full_name : a.name
-          results.merge!(a.id => text)
+          results[a.id] = a.respond_to?(:full_name) ? a.full_name : a.name
         end
         render json: results
       end
