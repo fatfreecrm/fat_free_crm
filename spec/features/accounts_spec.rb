@@ -110,4 +110,17 @@ feature 'Accounts', '
     expect(find('#accounts')).not_to have_content("Account 0")
     expect(find('#accounts')).not_to have_content("Account 1")
   end
+
+  scenario 'should attach task to account', js: true, versioning: true do
+    create(:task, name: 'Task', user: @user)
+    create(:account, name: 'Account')
+    with_versioning do
+      visit accounts_page
+      expect(find('#accounts')).to have_content("Account")
+      click_link 'Account'
+      click_link 'Select Task'
+      fill_autocomplete('auto_complete_query', with: 'Ta')
+      expect(find('#tasks')).to have_content('Task re: Account')
+    end
+  end
 end
