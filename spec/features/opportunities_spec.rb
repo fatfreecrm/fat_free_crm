@@ -35,7 +35,7 @@ feature 'Opportunities', '
       click_link 'select existing'
       find('#select2-account_id-container').click
       find('.select2-search--dropdown').find('input').set('Example Account')
-      sleep (1)
+      sleep(1)
       find('li', text: 'Example Account').click
       expect(page).to have_content('Example Account')
       select 'Prospecting', from: 'opportunity_stage'
