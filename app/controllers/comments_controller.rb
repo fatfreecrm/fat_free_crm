@@ -57,7 +57,7 @@ class CommentsController < ApplicationController
       @comment.save
       respond_with(@comment)
     else
-      respond_to_related_not_found(model.downcase)
+      respond_to_related_not_found(model.name.downcase)
     end
   end
 
@@ -88,6 +88,7 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(
       :user_id,
       :commentable_type,
+      :commentable_id,
       :private,
       :title,
       :comment,
