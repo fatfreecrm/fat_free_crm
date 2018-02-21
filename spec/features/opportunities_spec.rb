@@ -119,4 +119,14 @@ feature 'Opportunities', '
     expect(find('#opportunities')).not_to have_content("Opportunity 0")
     expect(find('#opportunities')).not_to have_content("Opportunity 1")
   end
+
+  scenario 'should add note to opportunity', js: true do
+    opportunity = create(:opportunity, name: 'Awesome Opportunity')
+    visit opportunities_page
+    click_link 'Awesome Opportunity'
+    find("#opportunity_#{opportunity.id}_post_new_note").click
+    fill_in 'comment[comment]', with: 'Most awesome opportunity'
+    click_button 'Add Note'
+    expect(page).to have_content('Most awesome opportunity')
+  end
 end
