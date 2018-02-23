@@ -21,16 +21,12 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 2.4.0'
   gem.license = 'MIT'
 
-  gem.add_dependency 'rails', '~> 5.1.0'
+  gem.add_dependency 'rails', '>= 5.1'
   gem.add_dependency 'rails-i18n'
   gem.add_dependency 'rails-observers'
   gem.add_dependency 'activemodel-serializers-xml'
   gem.add_dependency 'sprockets-rails',     '>= 3.0.0'
   gem.add_dependency 'responders',          '~> 2.0'
-  gem.add_dependency 'jquery-rails'
-  gem.add_dependency 'jquery-migrate-rails'
-  gem.add_dependency 'jquery-ui-rails'
-  gem.add_dependency 'select2-rails'
   gem.add_dependency 'simple_form'
   gem.add_dependency 'will_paginate'
   gem.add_dependency 'paperclip'
@@ -46,14 +42,11 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'acts_as_list'
   gem.add_dependency 'ffaker', '>= 2'
   gem.add_dependency 'cancancan'
-  gem.add_dependency 'font-awesome-rails'
   gem.add_dependency 'premailer'
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'responds_to_parent'
-  gem.add_dependency 'rails3-jquery-autocomplete'
   gem.add_dependency 'thor'
   gem.add_dependency 'rails_autolink'
-  gem.add_dependency 'coffee-script-source', '~> 1.8', '>= 1.8.0' # pegged until https://github.com/jashkenas/coffeescript/issues/3829 is resolved
   gem.add_dependency 'country_select'
 
   # FatFreeCRM has released it's own versions of the following gems:

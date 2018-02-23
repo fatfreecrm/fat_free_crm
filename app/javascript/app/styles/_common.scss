@@ -140,7 +140,7 @@ $sidebar_width: 210px;
   margin: 5px 0px 0px 0px; }
 
 .req, label.required {
-  background: image-url("asterisk.gif") no-repeat scroll center right transparent;
+  background: image-url("../images/asterisk.gif") no-repeat scroll center right transparent;
   color: navy;
   display: inline-block; }
 
@@ -543,7 +543,7 @@ $sidebar_width: 210px;
     bottom-right-radius: 9px;
     top-right-radius: 9px; }; }
 
-// Dropdown menu.
+// Dropdown menu
 //------------------------------------------------------------------------------
 .menu {
   background: #f4f5eb;
@@ -576,55 +576,8 @@ $sidebar_width: 210px;
     background: mediumblue;
     color: white; }; }
 
-// Star ratings.
-//------------------------------------------------------------------------------
-// .rating .stars {
-//   width: 125px;
-//   height: 25px;
-//   float: left;
-//   background: transparent url('/assets/stars.gif') repeat-x right top;
-//   margin-right: 5px;
-// }
-//
-// .rating .clearer {
-//   clear: left;
-// }
-//
-// .rating .label {
-//   line-height: 16px;
-//   font-size: 90%;
-// }
-//
-// .rating .stars .star {
-//   width: 25px;
-//   height: 25px;
-//   cursor: pointer;
-//   background: transparent url('/assets/stars.gif') no-repeat 0 0;
-//   float: left;
-// }
-//
-// .rating .stars .star.on {
-//   background-position: 0 -25px;
-// }
-//
-// .rating.selected .stars .star.on {
-//   background-position: 0 -50px;
-// }
-//
-// .rating .stars .star.on.half {
-//   background-position: 0 -25px;
-//   width: 12px;
-//   margin-right: 12px;
-// }
-//
-// .rating.selected .stars .star.on.half {
-//   width: 25px;
-//   margin-right: 0px;
-//   background-position: 0 -50px;
-// }
-
 // Admin Tabs
-
+//------------------------------------------------------------------------------
 .inline_tabs ul {
   margin: 20px 0;
   li {
@@ -751,7 +704,7 @@ table.asset_attributes {
 }
 
 // Jumpbox
-
+//------------------------------------------------------------------------------
 .ui-menu-item > a:not(.ui-state-focus) {
   span.jumpbox-highlight {
     background-color: lightyellow;
