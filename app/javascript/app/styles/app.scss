@@ -6,13 +6,15 @@
  *------------------------------------------------------------------------------
  */
 
-// TODO:
-//@import "jquery-ui.custom"
-//@import "jquery-ui/dialog"
-//@import "select2"
-//@import "modalbox"  ???
-//@import "_font-awesome";
+// Node modules css import
+@import "~select2/dist/css/select2.min";
+@import "~font-awesome/scss/font-awesome";
 
+// Vendor css import
+@import "~stylesheets/jquery-ui.custom";
+@import "~stylesheets/modalbox";
+
+// Application css import
 @import "_rails";
 @import "_safari";
 @import "_base";

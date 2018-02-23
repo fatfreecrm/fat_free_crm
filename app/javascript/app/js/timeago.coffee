@@ -8,11 +8,11 @@
   # Run function on page load
   $ ->
     $.timeago.settings.allowFuture = true
-    
+
     # our modification to choose correct language
     $.timeago.settings.strings = $.timeago.settings.locales[crm.language]
     $("span.timeago").timeago()
-    
+
     # update every minute
     setInterval (->
       $("span.timeago").timeago()
