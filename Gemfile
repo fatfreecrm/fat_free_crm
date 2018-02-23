@@ -85,6 +85,10 @@ group :heroku do
   gem 'rails_12factor'
 end
 
+gem 'rails', github: 'rails', branch: '5-2-stable'
+gem 'webpacker'
+gem 'foreman'
+gem 'rack-mini-profiler'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'

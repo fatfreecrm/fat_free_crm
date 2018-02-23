@@ -1,12 +1,5 @@
-config/*.yml
 config/deploy.rb
-!config/settings.default.yml
-!config/database.mysql.mac.yml
-!config/database.mysql.yml
-!config/database.postgres.yml
-!config/database.postgres.docker.yml
-!config/database.sqlite.yml
-!config/settings.default.yml
+config/database.yml
 
 .rspec
 spec/reports
@@ -37,3 +30,8 @@ Design
 
 .passenger
 .vagrant
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity
