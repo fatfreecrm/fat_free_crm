@@ -615,10 +615,10 @@ span.handle img {
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eaeaea), color-stop(0.7, #f2f2f2));
     background-image: -webkit-linear-gradient(center bottom, #eaeaea 0%, #f2f2f2 70%);
     background-image: -moz-linear-gradient(center bottom, #eaeaea 0%, #f2f2f2 70%);
-    background-image: -o-linear-gradient(bottom, #eaeaea 0%, #f2f2f2 70%);
-    background-image: -ms-linear-gradient(top, #eaeaea 0%, #f2f2f2 70%);
+    background-image: -o-linear-gradient(to top, #eaeaea 0%, #f2f2f2 70%);
+    background-image: -ms-linear-gradient(to bottom, #eaeaea 0%, #f2f2f2 70%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eaeaea', endColorstr='#f2f2f2',GradientType=0 );
-    background-image: linear-gradient(top, #eaeaea 0%, #f2f2f2 70%);
+    background-image: linear-gradient(to bottom, #eaeaea 0%, #f2f2f2 70%);
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px; }

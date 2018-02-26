@@ -6,6 +6,9 @@
   have that issue https://github.com/jquery/jquery-migrate/issues/287
 */
 
+// Images
+import 'jquery-ui/ui-bg_flat_55_ffffff_40x100';
+
 // Node modules import
 import $ from 'jquery/dist/jquery.min';
 global.$ = global.jQuery = $;
@@ -39,7 +42,6 @@ import './js/format_buttons.coffee';
 import './js/lists.coffee';
 import './js/pagination.coffee';
 import './js/search.coffee';
-
 
 // CSS import
 import './styles/app';

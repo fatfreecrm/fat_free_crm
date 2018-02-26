@@ -13,6 +13,7 @@
 // Vendor css import
 @import "~stylesheets/jquery-ui.custom";
 @import "~stylesheets/modalbox";
+@import "~stylesheets/ransack_ui_bootstrap/search";
 
 // Application css import
 @import "_rails";
@@ -27,3 +28,4 @@
 @import "_format_buttons";
 @import "_lists";
 @import "_about";
+@import "_print";
