@@ -8,6 +8,7 @@
     "jquery-migrate": "^3.0.1",
     "jquery-ujs": "^1.2.2",
     "rails-erb-loader": "^5.2.1",
+    "rails-ujs": "^5.1.5",
     "resolve-url-loader": "^2.2.1",
     "select2": "^4.0.6-rc.1",
     "webpack-jquery-ui": "^1.0.0",

@@ -280,6 +280,8 @@ GEM
     rails-i18n (5.1.0)
       i18n (>= 0.7, < 2)
       railties (>= 5.0, < 6)
+    rails-jquery-autocomplete (1.0.3)
+      rails (>= 3.2)
     rails-observers (0.1.5)
       activemodel (>= 4.0)
     rails_12factor (0.0.3)
@@ -460,6 +462,7 @@ DEPENDENCIES
   rails!
   rails-controller-testing
   rails-i18n
+  rails-jquery-autocomplete
   rails-observers
   rails_12factor
   rails_autolink

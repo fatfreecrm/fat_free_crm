@@ -69,6 +69,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rubocop', '~> 0.52.0' # Pinned because upgrades require regenerating rubocop_todo.yml
   gem 'rainbow'
+  gem 'rack-mini-profiler'
 end
 
 group :test do
@@ -88,7 +89,7 @@ end
 gem 'rails', github: 'rails', branch: '5-2-stable'
 gem 'webpacker'
 gem 'foreman'
-gem 'rack-mini-profiler'
+gem 'rails-jquery-autocomplete'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'

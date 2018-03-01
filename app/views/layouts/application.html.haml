@@ -15,8 +15,7 @@
     = javascript_pack_tag 'app'
 
     - unless tabless_layout? || %w(en-US en-GB).include?(I18n.locale.to_s)
-      = javascript_pack_tag "#{I18n.locale}"
-      = javascript_pack_tag "#{I18n.locale}"
+      = javascript_pack_tag "locales/#{I18n.locale}"
 
     = csrf_meta_tag
     = hook(:javascript_includes, self)

@@ -6,25 +6,22 @@
   have that issue https://github.com/jquery/jquery-migrate/issues/287
 */
 
-// Images
-import 'jquery-ui/ui-bg_flat_55_ffffff_40x100';
-
 // Node modules import
-import $ from 'jquery/dist/jquery.min';
+import $ from 'jquery/dist/jquery'; // for some reasons importing jquery.min will break csrf, effects() ...
 global.$ = global.jQuery = $;
-import './js/browser_fix'
 import 'jquery-ujs/src/rails';
+import './js/browser_fix';
 import 'webpack-jquery-ui'; // CSS and JS for jquery-ui here
-import 'select2/dist/js/select2.full.min';
+import 'select2/dist/js/select2.full';
 
 // Vendor js import
-import 'javascripts/autocomplete-rails'
+import 'javascripts/autocomplete-rails';
 import 'javascripts/jquery.disable';
 import 'javascripts/jquery_timeago';
 import 'javascripts/jquery_ui_datepicker/jquery-ui-timepicker-addon';
 import 'javascripts/textarea_autocomplete';
-import 'javascripts/ransack/predicates'
-import 'javascripts/ransack_ui_jquery/search_form'
+import 'javascripts/ransack/predicates';
+import 'javascripts/ransack_ui_jquery/search_form';
 
 // Application js import
 import './js/timeago.coffee';
