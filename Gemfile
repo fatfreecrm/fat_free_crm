@@ -87,6 +87,7 @@ group :heroku do
 end
 
 gem 'rails', github: 'rails', branch: '5-2-stable'
+gem 'cancancan', github: 'lizzyaustad/cancancan', branch: 'rails_5_2_upgrade_fixes'
 gem 'webpacker'
 gem 'foreman'
 gem 'rails-jquery-autocomplete'

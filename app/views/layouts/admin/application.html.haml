@@ -4,11 +4,10 @@
     %meta{ "http-equiv" => "Content-Type", content: "text/html; charset=utf-8" }
     %title= t(:crm_admin_page)
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
-    = stylesheet_link_tag :application
-    = stylesheet_link_tag :print, media: 'print'
+    = stylesheet_pack_tag 'app'
     %style= yield :styles
 
-    = javascript_include_tag :application
+    = javascript_pack_tag 'app'
     = hook(:javascript_includes, self) {}
 
     %script{type: "text/javascript"}= yield :javascript

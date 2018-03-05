@@ -30,7 +30,6 @@ module FatFreeCRM
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-
     # Models are organized in sub-directories
     config.autoload_paths += Dir[Rails.root.join("app/models/**")] +
                              Dir[Rails.root.join("app/controllers/entities")]

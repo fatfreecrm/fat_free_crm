@@ -4,6 +4,9 @@ rvm:
   - 2.4.2
   - 2.5.0
 
+node_js:
+  - "9.1"
+
 env:
   global:
     - BROWSER=chrome
@@ -36,8 +39,19 @@ addons:
 
 bundler_args: --path=vendor/bundle --without heroku
 
-cache: bundler
+cache:
+  bundler: true
+  directories:
+    - node_modules
+  yarn: true
 
+install:
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn
+  
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
