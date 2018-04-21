@@ -5,7 +5,7 @@ First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
 Unreleased (0.19.0)
-=======
+======
 
 ### Important changes
 
@@ -26,8 +26,9 @@ The login URL routes have been changed to use the defaults of Devise.
 #### User mailers changed
 Mailers related to user password reset, etc. are changed to use the defaults of Devise.
 
-Unreleased (0.18.0)
-=======
+
+Sat Apr 21, 2018 (0.18.0)
+---------------------------------------------------------------------
 
 ### Important changes
 
@@ -43,7 +44,13 @@ If you consume fat free crm as an engine and re-use any factories, you'll need t
 `FatFreeCRM::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
 
 #### Other changes
-TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
+ - CVE-2018-8048 (loofah gem)
+ - CVE-2018-3741 (rails-html-sanitizer gem)
+ - #768 Fix comment creation on entities
+ - #762 #764 Fix bug in select menu
+ - #759 Improve zero revenue display
+ - #753 Opportunities sort by weighted amount
+ - #749 Fix unsafe reflection and mass assignment
 
 Wed Jan 24, 2018 (0.17.2)
 ---------------------------------------------------------------------
