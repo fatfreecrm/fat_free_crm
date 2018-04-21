@@ -116,15 +116,18 @@ Tests can easily be run by typing 'rake' but please note that they do take a whi
 ## Main contributors
 
 * [Michael Dvorkin (@michaeldv)](https://github.com/michaeldv) - Founding creator
-* [Steve Kenworthy (@steveyken)](https://github.com/steveyken) - Maintainer
-* [Nathan Broadbent (@ndbroadbent)](https://github.com/ndbroadbent)
+* CloCkWeRX
+* johnnyshield
+* DmitryAvramec
+* steveyken
+
 
 See the [contributors graph](https://github.com/fatfreecrm/fat_free_crm/graphs/contributors) and the [contributors file](https://github.com/fatfreecrm/fat_free_crm/blob/master/CONTRIBUTORS) for further details.
 
 ## License
 
 Fat Free CRM
-Copyright (c) 2008-2014 Michael Dvorkin and contributors.
+Copyright (c) 2008-2018 Michael Dvorkin and contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
