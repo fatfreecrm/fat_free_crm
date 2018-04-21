@@ -4,8 +4,13 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased (0.18.0)
+Unreleased (0.19.0)
 =======
+
+
+Sat Apr 21, 2018 (0.18.0)
+---------------------------------------------------------------------
+
 ### Important changes
 #### Mininium ruby version
 #665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
@@ -19,7 +24,13 @@ If you consume fat free crm as an engine and re-use any factories, you'll need t
 `FatFreeCRM::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
 
 #### Other changes
-TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
+ - CVE-2018-8048 (loofah gem)
+ - CVE-2018-3741 (rails-html-sanitizer gem)
+ - #768 Fix comment creation on entities
+ - #762 #764 Fix bug in select menu
+ - #759 Improve zero revenue display
+ - #753 Opportunities sort by weighted amount
+ - #749 Fix unsafe reflection and mass assignment
 
 Wed Jan 24, 2018 (0.17.2)
 ---------------------------------------------------------------------
