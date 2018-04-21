@@ -2,91 +2,133 @@ The following people have contributed code, patches, bug fixes, and language
 translations to the Fat Free CRM:
 
   * Aaron Brethorst
+  * Adis Osmonov ªº
   * Adrian Klingel
-  * Alexander Kabanov (USA)
+  * Ain Tohvri
+  * Alejandro
+  * Aleksander Madland Stapnes
+  * Alexander Kabanov
   * Alex Tomlins
-  * Andrew Neil (United Kingdom)
-  * Apirak Panatkool (Thailand)
-  * Avery Pennarun (Canada)
-  * Beatriz Garcia Parrilla (Spain)
-  * Ben Tillman (Hong Kong)
+  * AndrewsHerrera
+  * Anton Oslyak
+  * Apirak
+  * Apirak Panatkool
+  * Ashwin Phatak
+  * Avery Pennarun
+  * Ben Tillman
   * Brook
-  * Cédric Brancourt (France)
+  * Bryan Helmkamp
   * Chris Carter
   * Codemis
-  * Craig Ulliott (USA)
-  * Daniel Jabbour (USA)
-  * Daniel O'Connor (@CloCkWeRX)
+  * Cody Swann
+  * Daniel Jabbour
+  * Daniel O'Connor
+  * Danilo Lacoste
+  * David Chua
   * David Cornu
   * David Keita
-  * Dirk Kelly (Australia)
-  * Dmitry Dudin (Russia)
-  * Douglas Campos (Brasil)
+  * David Westerink
+  * deppbot
+  * Dirk Kelly
+  * DmitriySalko
+  * Dmitry
+  * Dmitry Avramets
+  * Dmitry Dudin
+  * Douglas Campos
   * Drew Neil
-  * Dr. Nic Williams (Australia)
   * dup2
-  * Elad Meidar (Israel)
   * Electron-libre
-  * Enderson Maia (Brasil)
-  * Eric Davis (USA)
-  * Eric Shelley (USA)
-  * Fritz Thielemann (Germany)
-  * Gavin Baker (USA)
+  * Enderson Maia
+  * Eric Shelley
+  * François Koessler
+  * Fritz Thielemann
+  * Gaston Arbeletche -VAIRIX-
+  * Gavin Baker
+  * Grzegorz Unijewski
   * guesxy
-  * Hamish Rickerby (United Kingdom)
-  * Jack Tang (China)
-  * James Zhang (China)
+  * James Cook
+  * James Zhang
   * Jan Schulz-Hofen
-  * Jim Gay (USA)
-  * Johnny Shields (@jonnyshields)
+  * Jim Gay
+  * johnnyshields
+  * Johnny Shields
+  * John W. M. Carneiro
   * Josef Chmel
-  * Jose Luis Gordo Romero (Spain)
+  * jose-gordo
+  * jose.gordo
+  * Jose Luis Gordo
+  * Jose Luis Gordo Romero
   * Joseph Near
-  * Kamil Politowicz (Germany)
+  * Josh Adams
+  * Kamil Politowicz
+  * ken-wong
   * Kevin Fullerton
   * Kiran Jonnalagadda
   * Kouichi Kishikami
-  * Lana Dvorkin (USA)
-  * Leonid Dinershtein (Russia)
-  * Louis Nyffenegger (Australia)
-  * Lukasz Kosewski (Canada)
+  * Koustubh Sinkar
+  * Lana Dvorkin
+  * Lincoln Lee
+  * Louis Nyffenegger
+  * Lukasz Kosewski
+  * m
+  * Malachai
+  * Marcelo M. Leal
   * Marian Mrózek
   * Mark Friedgan
-  * Martin Gajdos (Switzerland)
-  * Martin Trejo (Mexico)
+  * Martin Gajdos
+  * Martin Trejo
+  * Martin Villero
   * Masaki Muranaka
-  * Matt Beedle (Spain)
+  * Matthew Lehner
   * Mauro Alloro
-  * Michael Dvorkin (USA)
-  * Miles Togoe (USA)
-  * Nathan Broadbent (Hong Kong)
+  * Michael Dvorkin
+  * Mike Dvorkin
+  * Murray Steele
+  * Nathan B
+  * Nathan Broadbent
   * Nicholas Fine
-  * Nicholas Rowe (USA)
-  * Nobuhito Okada (Japan)
-  * Olmo Maldonado (USA)
-  * Patrick Mulder (Germany)
+  * Nicholas Rowe
+  * Nicolas Leger
+  * nigh7m4r3
+  * Nobuhito OKADA
+  * Olle Jonsson
+  * Olmo Maldonado
+  * orthographic-pedant
+  * papilip
+  * Patrick Mulder
   * Paul
-  * Peter McCurdy (Canada)
+  * Peter McCurdy
   * Philipp Ullmann
-  * Ralf Ebert (Germany)
+  * Ralf Ebert
+  * Reuben Salagaras
   * rickerbh
-  * Rit Li (USA)
+  * Rit Li
+  * Road Tang
   * Robert Fletcher
   * Rob Esposito
-  * Roman Smirnov (Russia)
-  * Russell Niller (USA)
-  * Ryan Stenhouse (Scotland)
-  * Scott Miller (USA)
+  * Roman Smirnov
+  * Ryan Stenhouse
+  * Satoru Ishikawa
+  * Scott
+  * Scott Dudley
+  * Scott Miller
   * Sebastian Castro
   * Seb Jacobs
   * Serafim Junior Dos Santos Fagundes
-  * Steve Kenworthy (Hong Kong)
+  * Stanley Hansen
+  * Steve Kenworthy
+  * steveyken
+  * Szeto Bo
   * tarbalazs
-  * Todd Makinster (USA)
-  * Tom Meier (Australia)
-  * Trevor Oke (Canada)
+  * Thomas Pike
+  * Tim Adler
+  * Todd Makinster
+  * Tom Meier
+  * Trevor Oke
   * William Lawson
   * Xughaa
-  * Yury Kotlyarov (Russia)
+  * Yann Hourdel
+  * Yury Kotlyarov
+  * Zlatko Zahariev
 
 Generated using "git shortlog -s -n | cut -f 2 | sort"
