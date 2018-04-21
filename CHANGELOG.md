@@ -5,14 +5,34 @@ First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
 Unreleased (0.19.0)
-=======
+======
+
+### Important changes
+
+#### Devise replaces Authlogic for user authentication
+Ticket #742 replaces Authlogic with the latest Devise (4.3.0) which has wider adoption.
+This change requires a database migration on the User model. Please note:
+ - Most User fields are renamed and can hence be rolled back. Existing Authlogic passwords will continue to work.
+ - Users will be forced logged out. Existing user sessions will not be kept and the fields `persistence_token, single_access_token, perishable_token` will be dropped from the database.
+ - Though the migration is generally safe **we recommend to make a backup of your database** before migrating.
+
+#### Existing OAuth broken
+The Devise change will break any OAuth login plugins which depend on Authlogic.
+You can [configure OAuth for Devise using the guides here](https://github.com/plataformatec/devise/wiki/omniauth:-overview).
+
+#### Login and user-related routes changed
+The login URL routes have been changed to use the defaults of Devise.
+
+#### User mailers changed
+Mailers related to user password reset, etc. are changed to use the defaults of Devise.
 
 
 Sat Apr 21, 2018 (0.18.0)
 ---------------------------------------------------------------------
 
 ### Important changes
-#### Mininium ruby version
+
+#### Minimum Ruby version
 #665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
 
 #### Swap to FactoryBot
@@ -63,6 +83,7 @@ Sat Jan 20, 2018 (0.17.0)
 ---------------------------------------------------------------------
 
 ### Important changes
+
 #### Select2 for select boxes
 This release replaces [Chozen](https://harvesthq.github.io/chosen/) with [Select2](https://select2.org/) consistently across the app.
 This may break plugins which rely on Chozen. To fix any issues please

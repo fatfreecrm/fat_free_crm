@@ -41,6 +41,14 @@ RSpec.configure do |config|
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Devise::Test::IntegrationHelpers, type: :features
+  config.include Warden::Test::Helpers
+  config.include DeviseHelpers
+  config.include FeatureHelpers
+
+  Warden.test_mode!
 
   config.before(:each) do
     # Overwrite locale settings within "config/settings.yml" if necessary.

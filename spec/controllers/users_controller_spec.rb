@@ -50,7 +50,6 @@ describe UsersController do
       it "should render the requested user as JSON" do
         expect(User).to receive(:find).and_return(current_user)
         expect_any_instance_of(User).to receive(:to_json).and_return("generated JSON")
-
         get :show, params: { id: current_user.id }
         expect(response.body).to eq("generated JSON")
       end
@@ -85,32 +84,6 @@ describe UsersController do
     end
   end
 
-  # GET /users/new
-  # GET /users/new.xml                                                     HTML
-  #----------------------------------------------------------------------------
-  describe "responding to GET new" do
-    describe "if user is allowed to sign up" do
-      it "should expose a new user as @user and render [new] template" do
-        expect(User).to receive(:can_signup?).and_return(true)
-        @user = build(:user)
-        allow(User).to receive(:new).and_return(@user)
-
-        get :new
-        expect(assigns[:user]).to eq(@user)
-        expect(response).to render_template("users/new")
-      end
-    end
-
-    describe "if user is not allowed to sign up" do
-      it "should redirect to login_path" do
-        expect(User).to receive(:can_signup?).and_return(false)
-
-        get :new
-        expect(response).to redirect_to(login_path)
-      end
-    end
-  end
-
   # GET /users/1/edit                                                      AJAX
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
@@ -135,50 +108,6 @@ describe UsersController do
       get :edit, params: { id: @user.id }, xhr: true
       expect(assigns[:user]).to eq(@user)
       expect(response).to render_template("users/edit")
-    end
-  end
-
-  # POST /users
-  # POST /users.xml                                                        HTML
-  #----------------------------------------------------------------------------
-  describe "responding to POST create" do
-    describe "with valid params" do
-      before(:each) do
-        @username = "none"
-        @email = @username + "@example.com"
-        @password = "secret"
-        @user = build(:user, username: @username, email: @email)
-        allow(User).to receive(:new).and_return(@user)
-      end
-
-      it "exposes a newly created user as @user and redirect to profile page" do
-        login_admin
-        post :create, params: { user: { username: @username, email: @email, password: @password, password_confirmation: @password } }
-        expect(assigns[:user]).to eq(@user)
-        expect(flash[:notice]).to match(/welcome/)
-        expect(response).to redirect_to(profile_path)
-      end
-
-      it "should redirect to login page if user signup needs approval" do
-        allow(Setting).to receive(:user_signup).and_return(:needs_approval)
-
-        post :create, params: { user: { username: @username, email: @email, password: @password, password_confirmation: @password } }
-        expect(assigns[:user]).to eq(@user)
-        expect(flash[:notice]).to match(/approval/)
-        expect(response).to redirect_to(login_path)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved user as @user and renders [new] template" do
-        login_admin
-        @user = build(:user, username: "", email: "")
-        allow(User).to receive(:new).and_return(@user)
-
-        post :create, params: { user: {} }
-        expect(assigns[:user]).to eq(@user)
-        expect(response).to render_template("users/new")
-      end
     end
   end
 
@@ -312,52 +241,53 @@ describe UsersController do
   #----------------------------------------------------------------------------
   describe "responding to PUT change_password" do
     before(:each) do
-      login
-      allow(User).to receive(:find).and_return(current_user)
-      allow(@current_user_session).to receive(:unauthorized_record=).and_return(current_user)
-      allow(@current_user_session).to receive(:save).and_return(current_user)
-      @user = current_user
-      @new_password = "secret?!"
+      @old_password = 'foobar123'
+      @user = FactoryBot.create(:user, password: @old_password, password_confirmation: @old_password)
+      perform_login(@user)
+      @old_encrypted_password = @user.encrypted_password
+      @new_password = 'secret?!'
     end
 
     it "should set new user password" do
-      put :change_password, params: { id: @user.id, current_password: @user.password, user: { password: @new_password, password_confirmation: @new_password } }, xhr: true
-      expect(assigns[:user]).to eq(current_user)
-      expect(current_user.password).to eq(@new_password)
-      expect(current_user.errors).to be_empty
-      expect(flash[:notice]).not_to eq(nil)
+      put :change_password, params: { id: @user.id, current_password: @old_password, user: { password: @new_password, password_confirmation: @new_password } }, xhr: true
+      expect(assigns[:user]).to eq(@user)
+      expect(assigns[:user].password).to eq('secret?!')
+      expect(assigns[:user].errors).to be_empty
+      expect(assigns[:user].reload.encrypted_password).to_not eq(@old_encrypted_password) # password change
       expect(response).to render_template("users/change_password")
     end
 
-    it "should allow to change password if current password is blank" do
-      @user.password_hash = nil
+    it "should not allow to change password if current password is blank" do
+      current_user.encrypted_password = nil
       put :change_password, params: { id: @user.id, current_password: "", user: { password: @new_password, password_confirmation: @new_password } }, xhr: true
-      expect(current_user.password).to eq(@new_password)
-      expect(current_user.errors).to be_empty
-      expect(flash[:notice]).not_to eq(nil)
+      expect(assigns[:user].password).to eq(nil)
+      expect(assigns[:user].errors.size).to eq(1) # .error_on(:current_password)
+      expect(assigns[:user].reload.encrypted_password).to eq(@old_encrypted_password) # password stays the same
       expect(response).to render_template("users/change_password")
     end
 
     it "should not change user password if password field is blank" do
-      put :change_password, params: { id: @user.id, current_password: @user.password, user: { password: "", password_confirmation: "" } }, xhr: true
+      put :change_password, params: { id: @user.id, current_password: @old_password, user: { password: "", password_confirmation: "" } }, xhr: true
       expect(assigns[:user]).to eq(current_user)
-      expect(current_user.password).to eq(@user.password) # password stays the same
-      expect(current_user.errors).to be_empty # no errors
-      expect(flash[:notice]).not_to eq(nil)
+      expect(assigns[:user].password).to eq(nil)
+      expect(assigns[:user].errors).to be_empty # no errors
+      expect(assigns[:user].reload.encrypted_password).to eq(@old_encrypted_password) # password stays the same
       expect(response).to render_template("users/change_password")
     end
 
     it "should require valid current password" do
       put :change_password, params: { id: @user.id, current_password: "what?!", user: { password: @new_password, password_confirmation: @new_password } }, xhr: true
-      expect(current_user.password).to eq(@user.password) # password stays the same
-      expect(current_user.errors.size).to eq(1) # .error_on(:current_password)
+      expect(assigns[:user].password).to eq(nil)
+      expect(assigns[:user].errors.size).to eq(1) # .error_on(:current_password)
+      expect(assigns[:user].reload.encrypted_password).to eq(@old_encrypted_password) # password stays the same
       expect(response).to render_template("users/change_password")
     end
 
     it "should require new password and password confirmation to match" do
-      put :change_password, params: { id: @user.id, current_password: @user.password, user: { password: @new_password, password_confirmation: "none" } }, xhr: true
-      expect(current_user.password).to eq(@user.password) # password stays the same
-      expect(current_user.errors.size).to eq(1) # .error_on(:current_password)
+      put :change_password, params: { id: @user.id, current_password: @old_password, user: { password: @new_password, password_confirmation: "none" } }, xhr: true
+      expect(assigns[:user].password).to eq('secret?!')
+      expect(assigns[:user].errors.size).to eq(1) # .error_on(:current_password)
+      expect(assigns[:user].reload.encrypted_password).to eq(@old_encrypted_password) # password stays the same
       expect(response).to render_template("users/change_password")
     end
   end
@@ -368,14 +298,14 @@ describe UsersController do
   describe "responding to GET opportunities_overview" do
     before(:each) do
       login
-      @user = @current_user
+      @user = current_user
       @user.update_attributes(first_name: "Apple", last_name: "Boy")
     end
 
     it "should assign @users_with_opportunities" do
       create(:opportunity, stage: "prospecting", assignee: @user)
       get :opportunities_overview, xhr: true
-      expect(assigns[:users_with_opportunities]).to eq([@current_user])
+      expect(assigns[:users_with_opportunities]).to eq([@user])
     end
 
     it "@users_with_opportunities should be ordered by name" do
