@@ -5,7 +5,7 @@
 - if @entity.errors.empty?
   - if called_from_landing_page?
     crm.flip_form('edit_#{entity_name}');
-    crm.set_title('edit_#{entity_name}', '#{h @entity.name}');
+    crm.set_title('edit_#{entity_name}', '#{j @entity.name}');
     = refresh_sidebar(:show, :summary)
   - else
     $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
