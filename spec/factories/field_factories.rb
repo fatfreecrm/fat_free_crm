@@ -29,6 +29,7 @@ FactoryBot.define do
     label               { FactoryBot.generate(:field_label) }
     name                { |f| f.label.downcase.gsub(/[^a-z0-9]+/, '_') }
     as "string"
+    minlength           { rand(100) }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end
