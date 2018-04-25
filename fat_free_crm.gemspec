@@ -11,11 +11,11 @@ require 'fat_free_crm/version'
 
 Gem::Specification.new do |gem|
   gem.name = 'fat_free_crm'
-  gem.authors = ['Michael Dvorkin', 'Ben Tillman', 'Nathan Broadbent', 'Stephen Kenworthy', "Daniel O'Connor"]
+  gem.authors = ['Michael Dvorkin', 'Stephen Kenworthy', "Daniel O'Connor"]
   gem.summary = 'Fat Free CRM'
   gem.description = 'An open source, Ruby on Rails customer relationship management platform'
   gem.homepage = 'http://fatfreecrm.com'
-  gem.email = ['mike@fatfreecrm.com', 'nathan@fatfreecrm.com', 'warp@fatfreecrm.com', 'steveyken@gmail.com', 'daniel.oconnor@gmail.com']
+  gem.email = ['mike@fatfreecrm.com', 'steveyken@gmail.com', 'daniel.oconnor@gmail.com']
   gem.files = files
   gem.version = FatFreeCRM::VERSION::STRING
   gem.required_ruby_version = '>= 2.4.0'
@@ -34,8 +34,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'simple_form'
   gem.add_dependency 'will_paginate'
   gem.add_dependency 'paperclip'
-  # Manually added paperclip gem dependency "cocaine" in order to fix load error: "no such file to load -- cocaine"
-  gem.add_dependency 'cocaine'
   gem.add_dependency 'paper_trail',         '~> 6.0.0'
   gem.add_dependency 'devise',              '~> 4.3.0'
   gem.add_dependency 'devise-encryptable',  '~> 0.2.0'
