@@ -26,6 +26,10 @@ The login URL routes have been changed to use the defaults of Devise.
 #### User mailers changed
 Mailers related to user password reset, etc. are changed to use the defaults of Devise.
 
+#### PaperClip version updated from 5.2.1 to 6.0.0
+PaperClip now only depends on `aws-sdk-s3` instead of `aws-sdk`. For more info see https://github.com/thoughtbot/paperclip/pull/2481.
+Replace the Cocaine gem with Terrapin. https://github.com/thoughtbot/terrapin/ Apart from the namespace change, this is a drop in replacement.
+
 
 Sat Apr 21, 2018 (0.18.0)
 ---------------------------------------------------------------------

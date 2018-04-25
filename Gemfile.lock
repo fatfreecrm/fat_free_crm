@@ -93,8 +93,6 @@ GEM
       nokogiri (~> 1.8)
     chronic (0.10.2)
     climate_control (0.2.0)
-    cocaine (0.6.0)
-      terrapin (= 0.6.0)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -212,12 +210,12 @@ GEM
     paper_trail (6.0.2)
       activerecord (>= 4.0, < 5.2)
       request_store (~> 1.1)
-    paperclip (5.2.1)
+    paperclip (6.0.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
-      cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+      terrapin (~> 0.6.0)
     parallel (1.12.1)
     parser (2.5.0.0)
       ast (~> 2.4.0)
@@ -420,7 +418,6 @@ DEPENDENCIES
   capistrano-rvm
   capybara
   chromedriver-helper
-  cocaine
   coffee-rails
   coffee-script-source (~> 1.8, >= 1.8.0)
   country_select
