@@ -217,3 +217,17 @@ describe Contact do
     end
   end
 end
+
+describe "field validations" do
+  it "validate first_name max_length" do
+    new_record = Contact.create!(first_name: "ChristopherChristopherChristopherChristopherChristopherChristopherChristopher", last_name: "Bones")
+    new_record.valid?
+    new_record.errors[:first_name].eq to("First name is too long (maximum is 64 characters)")
+  end
+
+  it "validate last_name max_length" do
+    new_record = Contact.create!(first_name: "Christopher", last_name: "BonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBones")
+    new_record.valid?
+    new_record.errors[:first_name].eq to("Last name is too long (maximum is 64 characters)")
+  end
+end
