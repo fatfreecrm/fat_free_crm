@@ -219,21 +219,23 @@ describe Contact do
 end
 
 describe "field validations" do
-
-  let(:new_record) { Contact.new(first_name: "ChristopherChristopherChristopherChristopherChristopherChristopherChristopher",
-    last_name: "BonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBones",
-    title: 'This is a really long title for the contact and it should thow an error.',
-    department: 'This is a really long name for the department and it should thow an error.',
-    email: 'bob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillion@example.com',
-    alt_email: 'bob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillion@example.com',
-    phone: '+1 123 456 7891 123 456 7891 123 456 7891 123 456 7891 123 456 789',
-    mobile: '+1 123 456 7891 123 456 7891 123 456 7891 123 456 7891 123 456 789',
-    fax: '+1 123 456 7891 123 456 7891 123 456 789 123 456 7891 123 456 789',
-    blog: 'This is a test of how many characters before it throws an error message.This is a test of how many characters before it throws an error message.This is a test of how many characters before it throws an error message.',
-    linkedin: 'This is my linkedin name and it is way to long. This is my linkedin name and it is way to long. This is my linkedin name and it is way to long.',
-    twitter: 'This is my twitter name and it is way to long. This is my twitter name and it is way to long. This is my twitter name and it is way to long.',
-    skype: 'This is my skype name and it is way to long. This is my skype name and it is way to long. This is my skype name and it is way to long.'
-      )}
+  let(:new_record) {
+    Contact.new(
+      first_name: "ChristopherChristopherChristopherChristopherChristopherChristopherChristopher",
+      last_name: "BonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBones",
+      title: 'This is a really long title for the contact and it should thow an error.',
+      department: 'This is a really long name for the department and it should thow an error.',
+      email: 'bob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillion@example.com',
+      alt_email: 'bob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillion@example.com',
+      phone: '+1 123 456 7891 123 456 7891 123 456 7891 123 456 7891 123 456 789',
+      mobile: '+1 123 456 7891 123 456 7891 123 456 7891 123 456 7891 123 456 789',
+      fax: '+1 123 456 7891 123 456 7891 123 456 789 123 456 7891 123 456 789',
+      blog: 'This is a test of how many characters before it throws an error message.This is a test of how many characters before it throws an error message.This is a test of how many characters before it throws an error message.',
+      linkedin: 'This is my linkedin name and it is way to long. This is my linkedin name and it is way to long. This is my linkedin name and it is way to long.',
+      twitter: 'This is my twitter name and it is way to long. This is my twitter name and it is way to long. This is my twitter name and it is way to long.',
+      skype: 'This is my skype name and it is way to long. This is my skype name and it is way to long. This is my skype name and it is way to long.'
+      )
+    }
 
   it "validate first_name max_length 64" do
     expect(new_record).to_not be_valid
