@@ -219,7 +219,7 @@ describe Contact do
 end
 
 describe "field validations" do
-  let(:new_record) {
+  let(:new_record) do
     Contact.new(
       first_name: "ChristopherChristopherChristopherChristopherChristopherChristopherChristopher",
       last_name: "BonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBones",
@@ -234,8 +234,8 @@ describe "field validations" do
       linkedin: 'This is my linkedin name and it is way to long. This is my linkedin name and it is way to long. This is my linkedin name and it is way to long.',
       twitter: 'This is my twitter name and it is way to long. This is my twitter name and it is way to long. This is my twitter name and it is way to long.',
       skype: 'This is my skype name and it is way to long. This is my skype name and it is way to long. This is my skype name and it is way to long.'
-      )
-    }
+    )
+  end
 
   it "validate first_name max_length 64" do
     expect(new_record).to_not be_valid
