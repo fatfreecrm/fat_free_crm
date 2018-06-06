@@ -98,13 +98,14 @@ class Contact < ActiveRecord::Base
   validates_presence_of :last_name,  message: :missing_last_name,  if: -> { Setting.require_last_names  }
   validate :users_for_shared_access
 
-  validates_length_of :first_name, :maximum => 5
+  validates_length_of :first_name, :maximum => 64
   validates_length_of :last_name, :maximum => 64
   validates_length_of :title, :maximum => 64
   validates_length_of :department, :maximum => 64
   validates_length_of :email, :maximum => 254
   validates_length_of :alt_email, :maximum => 254
   validates_length_of :phone, :maximum => 32
+  validates_length_of :mobile, :maximum => 32
   validates_length_of :fax, :maximum => 32
   validates_length_of :blog, :maximum => 128
   validates_length_of :linkedin, :maximum => 128
