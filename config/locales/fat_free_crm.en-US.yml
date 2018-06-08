@@ -593,10 +593,10 @@ en-US:
 
   # Views -> Common.
   #----------------------------------------------------------------------------
-  add_note: Add Note
-  save_note: Save Note
-  add_note_help: Add a new note...
-  edit_note: Edit Note
+  add_note: Add Comment
+  save_note: Save Comment
+  add_note_help: Add a new comment...
+  edit_note: Edit Comment
   added_ago: added %{value}
   added_by: added %{time_ago} by %{user}
   back: Back
@@ -682,7 +682,7 @@ en-US:
   notifications_tooltip: Subscribers will receive new comments via email
   subscribe_via_email: Subscribe via email
   disable_email_subscriptions: Disable email subscription
-  added_note: added note %{value}
+  added_note: added comment %{value}
 
   # Views -> Emails.
   #----------------------------------------------------------------------------
