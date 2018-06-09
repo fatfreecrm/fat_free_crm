@@ -76,6 +76,8 @@ namespace :ffcrm do
       end
       User.reset_column_information # Reload the class since we've added new fields in migrations.
       user = User.find_by_username(username) || User.new
+      user.skip_confirmation!
+      user.confirm!
       user.update_attributes(username: username, password: password, email: email)
       user.update_attribute(:confirmed_at, Time.now.utc) # Skip confirmation
       user.update_attribute(:admin, true) # Mass assignments don't work for :admin because of the attr_protected
