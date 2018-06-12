@@ -83,6 +83,7 @@ end
 
 group :heroku do
   gem 'rails_12factor'
+  gem 'puma'
 end
 
 gem 'sass-rails'
