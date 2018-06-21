@@ -2,16 +2,25 @@ version: '3'
 services:
   web:
     build: .
+    container_name: fat_free_crm_web
     links:
       - db
     ports:
-      - "80:80"
-    volumes:
-      - gems:/usr/local/rvm/gems
+      - "8080:8080"
     environment:
       RAILS_ENV: 'production'
-      PASSENGER_APP_ENV: 'production'
+      DATABASE_ADAPTER: 'mysql2'
+      DATABASE_USERNAME: 'root'
+      DATABASE_PASSWORD: 'changeme'
+      DATABASE_HOST: db
+      USERNAME: admin
+      PASSWORD: changeme
+      EMAIL: will@paynelabs.io
+
   db:
-    image: postgres:9.5
-volumes:
-  gems: {}
+    image: mariadb:10
+    container_name: fat_free_crm_db
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme

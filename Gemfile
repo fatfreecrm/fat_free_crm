@@ -68,7 +68,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rubocop', '~> 0.52.0' # Pinned because upgrades require regenerating rubocop_todo.yml
   gem 'rainbow'
-  gem 'puma' # used by capybara 3
+  gem 'puma' unless ENV["DOCKER"] # used by capybara 3 and Docker
 end
 
 group :test do
