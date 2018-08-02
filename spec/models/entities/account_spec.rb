@@ -34,6 +34,33 @@ describe Account do
     Account.create!(name: "Test Account")
   end
 
+  describe "Creating or selecting" do
+    it "must create a new account" do
+      @account = Account.create_or_select_for(nil, name: "Account T")
+
+      expect(Account.count).to eq(1)
+      expect(Account.first).to eq(@account)
+    end
+
+    it "must select an existing account based on id" do
+      @account = create(:account)
+
+      expect(Account.create_or_select_for(nil, id: @account.id)).to eq(@account)
+    end
+
+    it "must select an existing account based on name" do
+      @account = create(:account)
+
+      expect(Account.create_or_select_for(nil, name: @account.name)).to eq(@account)
+    end
+
+    it "must create a new account based on existing model" do
+      @contact = create(:contact)
+      @account = Account.create_or_select_for(@contact, name: "Account T")
+      expect(@account.user).to eq(@contact.user)
+    end
+  end
+
   describe "Attach" do
     before do
       @account = create(:account)
