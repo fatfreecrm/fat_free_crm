@@ -160,7 +160,7 @@ class Contact < ActiveRecord::Base
   def self.create_for(model, account, opportunity, params)
     attributes = {
       lead_id:     model.id,
-      user_id:     params[:account][:user_id],
+      user_id:     params[:account][:user_id] || account.user_id,
       assigned_to: params[:account][:assigned_to],
       access:      params[:access]
     }
