@@ -11,7 +11,7 @@ ADD . /home/app
 WORKDIR /home/app
 
 RUN apt-get update \
-  && apt-get install -y imagemagick firefox \
+  && apt-get install -y imagemagick firefox tzdata \
   && apt-get autoremove -y \
   && cp config/database.postgres.docker.yml config/database.yml \
   && chown -R app:app /home/app \
