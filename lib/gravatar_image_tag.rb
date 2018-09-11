@@ -14,7 +14,7 @@ module GravatarImageTag
   end
 
   class Configuration
-    attr_accessor :default_image, :filetype, :rating, :size, :secure
+    attr_accessor :default_image, :filetype, :rating, :size
    end
 
   def self.included(base)
@@ -36,16 +36,15 @@ module GravatarImageTag
       default:     GravatarImageTag.configuration.default_image,
       filetype:    GravatarImageTag.configuration.filetype,
       rating:      GravatarImageTag.configuration.rating,
-      secure:      GravatarImageTag.configuration.secure,
       size:        GravatarImageTag.configuration.size
     }.merge(overrides).delete_if { |_key, value| value.nil? }
-    "#{gravatar_url_base(gravatar_params.delete(:secure))}/#{gravatar_id(email, gravatar_params.delete(:filetype))}#{url_params(gravatar_params)}"
+    "#{gravatar_url_base()}/#{gravatar_id(email, gravatar_params.delete(:filetype))}#{url_params(gravatar_params)}"
   end
 
   private
 
-  def self.gravatar_url_base(secure = false)
-    'http' + (!!secure ? 's://secure.' : '://') + 'gravatar.com/avatar'
+  def self.gravatar_url_base()
+    'https://gravatar.com/avatar'
   end
 
   def self.gravatar_id(email, filetype = nil)
