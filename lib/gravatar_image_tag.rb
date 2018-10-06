@@ -43,7 +43,7 @@ module GravatarImageTag
 
   private
 
-  def self.gravatar_url_base()
+  def self.gravatar_url_base
     'https://gravatar.com/avatar'
   end
 
