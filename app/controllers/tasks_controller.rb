@@ -185,7 +185,8 @@ class TasksController < ApplicationController
       :due_at,
       :completed_at,
       :deleted_at,
-      :background_info
+      :background_info,
+      :calendar
     )
   end
 
