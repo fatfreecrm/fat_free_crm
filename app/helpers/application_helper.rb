@@ -303,7 +303,7 @@ module ApplicationHelper
 
   # Entities can have associated avatars or gravatars. Only calls Gravatar
   # in production env. Gravatar won't serve default images if they are not
-  # publically available: http://en.gravatar.com/site/implement/images
+  # publically available: https://en.gravatar.com/site/implement/images
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { class: 'gravatar', size: :large }.merge(args)
