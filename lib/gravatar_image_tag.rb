@@ -38,7 +38,7 @@ module GravatarImageTag
       rating:      GravatarImageTag.configuration.rating,
       size:        GravatarImageTag.configuration.size
     }.merge(overrides).delete_if { |_key, value| value.nil? }
-    "#{gravatar_url_base()}/#{gravatar_id(email, gravatar_params.delete(:filetype))}#{url_params(gravatar_params)}"
+    "#{gravatar_url_base}/#{gravatar_id(email, gravatar_params.delete(:filetype))}#{url_params(gravatar_params)}"
   end
 
   private
