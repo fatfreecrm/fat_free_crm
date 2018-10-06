@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 Capaybara.app_host = ENV['APP_URL'] if ENV['APP_URL']
 Capybara.default_max_wait_time = 7
+Capybara.server = :webrick
 
 if ENV['BROWSER'] == 'chrome'
   Capybara.register_driver :selenium do |app|
