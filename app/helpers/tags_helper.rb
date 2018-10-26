@@ -17,7 +17,7 @@ module TagsHelper
       elsif !query.include?(hashtag)
         query += " #{hashtag}"
       end
-      out << link_to_function(tag, "crm.search_tagged('#{query}', '#{model.class.to_s.tableize}')", title: tag)
+      out << link_to_function(tag, "crm.search_tagged('#{escape_javascript(query)}', '#{model.class.to_s.tableize}')", title: tag)
     end
   end
 
