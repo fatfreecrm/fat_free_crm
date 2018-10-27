@@ -4,8 +4,11 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased (0.19.0)
-=======
+Sat Oct 27, 2018 (0.18.1)
+---------------------------------------------------------------------
+
+#### Fixed XSS flaw in tags_helper
+Credit Antonin Steinhauser (asteinhauser) for discovery and responsible disclosure.
 
 
 Sat Apr 21, 2018 (0.18.0)
