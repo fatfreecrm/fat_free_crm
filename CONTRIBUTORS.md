@@ -11,6 +11,7 @@ translations to the Fat Free CRM:
   * Alex Tomlins
   * AndrewsHerrera
   * Anton Oslyak
+  * Antonin Steinhauser
   * Apirak
   * Apirak Panatkool
   * Ashwin Phatak

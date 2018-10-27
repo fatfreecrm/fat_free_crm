@@ -9,6 +9,9 @@ Unreleased (0.19.0)
 
 ### Important changes
 
+#### Fixed XSS flaw in tags_helper
+Credit Antonin Steinhauser (asteinhauser) for discovery and responsible disclosure.
+
 #### Devise replaces Authlogic for user authentication
 Ticket #742 replaces Authlogic with the latest Devise (4.3.0) which has wider adoption.
 This change requires a database migration on the User model. Please note:
