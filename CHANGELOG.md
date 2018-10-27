@@ -4,6 +4,12 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat Oct 27, 2018 (0.17.3)
+---------------------------------------------------------------------
+
+#### Fixed XSS flaw in tags_helper
+Credit Antonin Steinhauser (asteinhauser) for discovery and responsible disclosure.
+
 Wed Jan 24, 2018 (0.17.2)
 ---------------------------------------------------------------------
  - Fix CVE-2017-0889
