@@ -7,9 +7,9 @@
 #------------------------------------------------------------------------------
 FactoryBot.define do
   factory :version do
-    whodunnit ""
+    whodunnit           { "" }
     item                { raise "Please specify :item for the version" }
-    event "create"
+    event               { "create" }
     created_at          { FactoryBot.generate(:time) }
   end
 
@@ -17,9 +17,11 @@ FactoryBot.define do
     user
     commentable         { raise "Please specify :commentable for the comment" }
     title               { FactoryBot.generate(:title) }
-    private false
+
+    private             { false }
+
     comment             { FFaker::Lorem.paragraph }
-    state "Expanded"
+    state               { "Expanded" }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end
@@ -31,14 +33,14 @@ FactoryBot.define do
     sent_from           { FFaker::Internet.email }
     sent_to             { FFaker::Internet.email }
     cc                  { FFaker::Internet.email }
-    bcc nil
+    bcc                 { nil }
     subject             { FFaker::Lorem.sentence }
     body                { FFaker::Lorem.paragraph[0, 255] }
-    header nil
+    header              { nil }
     sent_at             { FactoryBot.generate(:time) }
     received_at         { FactoryBot.generate(:time) }
-    deleted_at nil
-    state "Expanded"
+    deleted_at          { nil }
+    state               { "Expanded" }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end
@@ -55,7 +57,7 @@ FactoryBot.define do
     address_type        { %w[Business Billing Shipping].sample }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
-    deleted_at nil
+    deleted_at          { nil }
   end
 
   factory :avatar do

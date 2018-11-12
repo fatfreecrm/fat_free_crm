@@ -9,8 +9,8 @@ FactoryBot.define do
   factory :campaign do
     user
     name                { FFaker::Lorem.sentence[0, 64] }
-    assigned_to nil
-    access "Public"
+    assigned_to         { nil }
+    access              { "Public" }
     status              { %w[planned started completed planned started completed on_hold called_off].sample }
     budget              { rand(500) }
     target_leads        { rand(200) }
@@ -23,7 +23,7 @@ FactoryBot.define do
     starts_on           { FactoryBot.generate(:date) }
     objectives          { FFaker::Lorem.paragraph[0, 255] }
     background_info     { FFaker::Lorem.paragraph[0, 255] }
-    deleted_at nil
+    deleted_at          { nil }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end

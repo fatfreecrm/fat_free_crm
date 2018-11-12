@@ -23,18 +23,18 @@ FactoryBot.define do
   end
 
   factory :field do
-    type "Field"
+    type { "Field" }
     field_group
     position            { FactoryBot.generate(:field_position) }
     label               { FactoryBot.generate(:field_label) }
     name                { |f| f.label.downcase.gsub(/[^a-z0-9]+/, '_') }
-    as "string"
+    as { "string" }
     minlength           { rand(100) }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end
 
   factory :custom_field do
-    type "CustomField"
+    type { "CustomField" }
   end
 end
