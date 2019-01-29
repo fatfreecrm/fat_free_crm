@@ -11,6 +11,11 @@ services:
     environment:
       RAILS_ENV: 'production'
       PASSENGER_APP_ENV: 'production'
+      DB_DATABASE: 'fat_free_crm_production'
+      DB_USERNAME: 'postgres'
+      DB_PASSWORD: ''
+      DB_HOST: 'db'
+      DB_PORT: 5432
   db:
     image: postgres:9.5
 volumes:
