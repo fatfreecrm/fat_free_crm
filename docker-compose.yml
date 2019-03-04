@@ -5,6 +5,7 @@ services:
     links:
       - db
     ports:
+      - "3000:3000"
       - "80:80"
     volumes:
       - gems:/usr/local/rvm/gems
@@ -18,5 +19,9 @@ services:
       DB_PORT: 5432
   db:
     image: postgres:9.5
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 volumes:
+  pgdata: {}
   gems: {}
