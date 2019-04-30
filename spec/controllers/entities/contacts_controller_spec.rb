@@ -334,7 +334,7 @@ describe ContactsController do
         @contact = build(:contact, first_name: "Billy", last_name: "Bones")
         allow(Contact).to receive(:new).and_return(@contact)
 
-        post :create, params: { contact: { first_name: "Billy", last_name: "Bones" }, account: { name: "Hello world" } }, xhr: true
+        post :create, params: { contact: { first_name: "Billy", last_name: "Bones" }, account: { id: "", name: "Hello world" } }, xhr: true
         expect(assigns(:contact)).to eq(@contact)
         expect(assigns(:contact).reload.account.name).to eq("Hello world")
         expect(assigns(:contact).account.user).to eq(assigns(:contact).user)
