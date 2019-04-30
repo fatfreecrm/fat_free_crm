@@ -42,7 +42,7 @@ feature 'Accounts', '
 
       expect(find('div#accounts')).to have_content('My new account')
       # avoid recent items link
-      # Be more relaxed in allowing the loading here. 
+      # Be more relaxed in allowing the loading here.
       find('div#accounts').click_link('My new account', wait: 2 * Capybara.default_max_wait_time)
       expect(page).to have_content('+1 2345 6789')
       expect(page).to have_content('http://www.example.com')
