@@ -41,8 +41,18 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Contact do
+  let(:user) { create(:user) }
+
   it "should create a new instance given valid attributes" do
-    Contact.create!(first_name: "Billy", last_name: "Bones")
+    Contact.create!(first_name: "Billy", last_name: "Bones", user: user)
+  end
+
+  it "must create a new instance for a given model" do
+    lead = create(:lead)
+    account = create(:account)
+    opportunity = create(:opportunity)
+    @contact = Contact.create_for(lead, account, opportunity, account: {})
+    expect(@contact.valid?).to eq true
   end
 
   describe "Update existing contact" do
