@@ -119,12 +119,15 @@ class Account < ActiveRecord::Base
     # Attempt to find existing account
     if params[:id].present?
       return Account.find(params[:id])
-    elsif params[:name].present?
+    end
+
+    if params[:name].present?
       account = Account.find_by(name: params[:name])
       return account if account
     end
 
     # Fallback to create new account
+    params[:user] = model.user if model
     account = Account.new(params)
     if account.access != "Lead" || model.nil?
       account.save
