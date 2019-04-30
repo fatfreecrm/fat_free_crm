@@ -35,7 +35,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'will_paginate'
   gem.add_dependency 'paperclip'
   gem.add_dependency 'paper_trail',         '~> 6.0.0'
-  gem.add_dependency 'devise',              '~> 4.4.0'
+  gem.add_dependency 'devise',              '~> 4.6'
   gem.add_dependency 'devise-encryptable',  '~> 0.2.0'
   gem.add_dependency 'acts_as_commentable'
   gem.add_dependency 'acts-as-taggable-on', '>= 3.4.3'
