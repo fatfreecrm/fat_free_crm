@@ -46,7 +46,8 @@ feature 'Leads', '
       click_button 'Create Lead'
       expect(leads_element).to have_content('Mr Lead')
 
-      leads_element.click_link('Mr Lead')
+      # Allow for slower loading than normal
+      leads_element.click_link('Mr Lead', wait: 2 * Capybara.default_max_wait_time)
       expect(summary_element).to have_content('Contacted')
       expect(summary_element).to have_content('mr_lead@example.com')
       expect(summary_element).to have_content('+44 1234 567890')
