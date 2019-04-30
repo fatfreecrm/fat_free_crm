@@ -810,7 +810,7 @@ fr:
       mmddyy: ! '%e %b %Y'
   time:
     formats:
-      mmddhhss: ! '%b %e à %H:%M%'
+      mmddhhss: ! '%b %e à %H:%M'
       mmddyyyy_hhmm: ! '%d/%m/%Y à %H:%M'
 
   # will_paginate translations copied for 'en-US'

@@ -98,3 +98,4 @@ gem 'devise', '~>4.4.0'
 gem 'devise-i18n'
 gem "devise-encryptable"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'activejob', '~> 5.1.6.1'
