@@ -43,7 +43,9 @@ feature 'Leads', '
       fill_in 'comment_body', with: 'This is an important lead.'
       click_link 'Status'
       select 'Contacted', from: 'lead_status'
-      click_button 'Create Lead'
+
+      # Allow for slower loading than normal
+      click_button 'Create Lead', wait: 2 * Capybara.default_max_wait_time
       expect(leads_element).to have_content('Mr Lead')
 
       # Allow for slower loading than normal
