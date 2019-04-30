@@ -46,6 +46,7 @@ before_script:
   # gem update --system is a workaround for travis-ci/travis-ci#8978
   - "gem update --system"
   # See https://github.com/fatfreecrm/fat_free_crm/issues/818
+  - gem install chromedriver-helper -v 1.2.0
   - chromedriver-update 73.0.3683.68
   - sh -c "cp config/database.$DB.yml config/database.yml"
   - sh -c "if [ \"$DB\" = 'postgres' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
