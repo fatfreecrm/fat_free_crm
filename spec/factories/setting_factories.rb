@@ -7,8 +7,8 @@
 #------------------------------------------------------------------------------
 FactoryBot.define do
   factory :setting do
-    name "foo"
-    value nil
+    name                { "foo" }
+    value               { nil }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end

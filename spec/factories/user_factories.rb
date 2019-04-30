@@ -16,28 +16,28 @@ FactoryBot.define do
     alt_email           { FFaker::Internet.email }
     phone               { FFaker::PhoneNumber.phone_number }
     mobile              { FFaker::PhoneNumber.phone_number }
-    aim nil
-    yahoo nil
-    google nil
-    skype nil
-    admin false
+    aim                 { nil }
+    yahoo               { nil }
+    google              { nil }
+    skype               { nil }
+    admin               { false }
     encrypted_password  { SecureRandom.hex(64) }
     password_salt       { SecureRandom.hex(64) }
     last_sign_in_at     { FactoryBot.generate(:time) }
     current_sign_in_at  { FactoryBot.generate(:time) }
-    last_sign_in_ip "127.0.0.1"
-    current_sign_in_ip "127.0.0.1"
+    last_sign_in_ip     { "127.0.0.1" }
+    current_sign_in_ip  { "127.0.0.1" }
     sign_in_count       { rand(1..100) }
-    deleted_at nil
+    deleted_at          { nil }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
-    suspended_at nil
-    password "password"
-    password_confirmation "password"
+    suspended_at        { nil }
+    password            { "password" }
+    password_confirmation { "password" }
   end
 
   factory :admin do
-    admin true
+    admin { true }
   end
 
   factory :permission do

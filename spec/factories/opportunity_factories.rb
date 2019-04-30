@@ -18,9 +18,9 @@ FactoryBot.define do
     user
     campaign
     account
-    assigned_to nil
+    assigned_to         { nil }
     name                { FFaker::Lorem.sentence[0, 64] }
-    access "Public"
+    access              { "Public" }
     source              { %w[campaign cold_call conference online referral self web word_of_mouth other].sample }
     stage               { FactoryBot.generate(:opportunity_status) }
     probability         { rand(50) }
@@ -28,7 +28,7 @@ FactoryBot.define do
     discount            { rand(100) }
     closes_on           { FactoryBot.generate(:date) }
     background_info     { FFaker::Lorem.paragraph[0, 255] }
-    deleted_at nil
+    deleted_at          { nil }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end
