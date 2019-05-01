@@ -227,3 +227,88 @@ describe Contact do
     end
   end
 end
+
+describe "field validations" do
+  let(:new_record) do
+    Contact.new(
+      first_name: "ChristopherChristopherChristopherChristopherChristopherChristopherChristopher",
+      last_name: "BonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBones",
+      title: 'This is a really long title for the contact and it should thow an error.',
+      department: 'This is a really long name for the department and it should thow an error.',
+      email: 'bob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillion@example.com',
+      alt_email: 'bob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillion@example.com',
+      phone: '+1 123 456 7891 123 456 7891 123 456 7891 123 456 7891 123 456 789',
+      mobile: '+1 123 456 7891 123 456 7891 123 456 7891 123 456 7891 123 456 789',
+      fax: '+1 123 456 7891 123 456 7891 123 456 789 123 456 7891 123 456 789',
+      blog: 'This is a test of how many characters before it throws an error message.This is a test of how many characters before it throws an error message.This is a test of how many characters before it throws an error message.',
+      linkedin: 'This is my linkedin name and it is way to long. This is my linkedin name and it is way to long. This is my linkedin name and it is way to long.',
+      twitter: 'This is my twitter name and it is way to long. This is my twitter name and it is way to long. This is my twitter name and it is way to long.',
+      skype: 'This is my skype name and it is way to long. This is my skype name and it is way to long. This is my skype name and it is way to long.'
+    )
+  end
+
+  it "validate first_name max_length 64" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:first_name]).to include("is too long (maximum is 64 characters)")
+  end
+
+  it "validate last_name max_length 64" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:last_name]).to include("is too long (maximum is 64 characters)")
+  end
+
+  it "validate title max_length 64" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:title]).to include("is too long (maximum is 64 characters)")
+  end
+
+  it "validate department max_length 254" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:department]).to include("is too long (maximum is 64 characters)")
+  end
+
+  it "validate email max_length 254" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:email]).to include("is too long (maximum is 254 characters)")
+  end
+
+  it "validate alt_email max_length 254" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:alt_email]).to include("is too long (maximum is 254 characters)")
+  end
+
+  it "validate phone max_length 32" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:phone]).to include("is too long (maximum is 32 characters)")
+  end
+
+  it "validate mobile max_length 32" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:mobile]).to include("is too long (maximum is 32 characters)")
+  end
+
+  it "validate fax max_length 32" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:fax]).to include("is too long (maximum is 32 characters)")
+  end
+
+  it "validate blog max_length 128" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:blog]).to include("is too long (maximum is 128 characters)")
+  end
+
+  it "validate linkedin max_length 128" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:linkedin]).to include("is too long (maximum is 128 characters)")
+  end
+
+  it "validate twitter max_length 128" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:twitter]).to include("is too long (maximum is 128 characters)")
+  end
+
+  it "validate skype max_length 128" do
+    expect(new_record).to_not be_valid
+    expect(new_record.errors.messages[:skype]).to include("is too long (maximum is 128 characters)")
+  end
+end
