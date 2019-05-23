@@ -8,7 +8,7 @@ class CreateCampaigns < ActiveRecord::Migration[4.2]
       t.integer :assigned_to
       t.string :name,   limit: 64, null: false, default: ""
       t.string :access, limit: 8, default: "Public" # %w(Private Public Shared)
-      t.string :status, limit: 64
+      t.string :status, limit: 64, null: false
       t.decimal :budget, precision: 12, scale: 2
       # Target metrics.
       t.integer :target_leads

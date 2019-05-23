@@ -14,7 +14,7 @@
 #  assigned_to         :integer
 #  name                :string(64)      default(""), not null
 #  access              :string(8)       default("Public")
-#  status              :string(64)
+#  status              :string(64)      not null
 #  budget              :decimal(12, 2)
 #  target_leads        :integer
 #  target_conversion   :float
@@ -65,7 +65,7 @@ class Campaign < ActiveRecord::Base
   validates_uniqueness_of :name, scope: %i[user_id deleted_at]
   validate :start_and_end_dates
   validate :users_for_shared_access
-  validates :status, inclusion: { in: proc { Setting.unroll(:campaign_status).map { |s| s.last.to_s } } }, allow_blank: true
+  validates :status, inclusion: { in: proc { Setting.unroll(:campaign_status).map { |s| s.last.to_s } } }, presence: true
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
