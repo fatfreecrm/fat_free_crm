@@ -61,3 +61,5 @@ notifications:
 dist: xenial
 services:
   - xvfb
+  - postgresql
+  - mysql
