@@ -110,7 +110,7 @@ GEM
       countries (~> 2.0)
       sort_alphabetical (~> 1.0)
     crass (1.0.5)
-    css_parser (1.6.0)
+    css_parser (1.7.0)
       addressable
     database_cleaner (1.7.0)
     devise (4.7.1)
