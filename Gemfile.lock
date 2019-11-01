@@ -61,7 +61,7 @@ GEM
     bcrypt (3.1.13)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
-    brakeman (4.2.1)
+    brakeman (4.7.1)
     builder (3.2.3)
     byebug (10.0.2)
     cancancan (2.2.0)
