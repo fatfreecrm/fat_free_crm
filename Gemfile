@@ -86,7 +86,7 @@ group :heroku do
   gem 'puma'
 end
 
-gem 'sass-rails'
+gem 'sass-rails', '~> 5.0.3' # sass-rails 6 requires GCC 4.5+
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
