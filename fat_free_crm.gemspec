@@ -44,7 +44,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'sass'
   gem.add_dependency 'acts_as_list'
   gem.add_dependency 'ffaker', '>= 2'
-  gem.add_dependency 'cancancan',           '~> 2.2.0' # See Issue #844
+  gem.add_dependency 'cancancan', '~> 2.2.0' # See Issue #844
   gem.add_dependency 'font-awesome-rails'
   gem.add_dependency 'premailer'
   gem.add_dependency 'nokogiri'
