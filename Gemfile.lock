@@ -63,7 +63,7 @@ GEM
       msgpack (~> 1.0)
     brakeman (4.7.1)
     builder (3.2.3)
-    byebug (10.0.2)
+    byebug (11.0.1)
     cancancan (2.2.0)
     capistrano (3.10.2)
       airbrussh (>= 1.0.0)
@@ -409,7 +409,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   byebug
-  cancancan
+  cancancan (~> 2.2.0)
   capistrano
   capistrano-bundler
   capistrano-rails
