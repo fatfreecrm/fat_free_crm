@@ -26,6 +26,7 @@
 # `config/settings.default.yml`, and settings in the database table have the highest priority.
 
 class Setting < ActiveRecord::Base
+  validates :name, allow_nil: false
   serialize :value
 
   # Use class variables for cache and yaml settings.
