@@ -69,7 +69,7 @@ class Setting < ActiveRecord::Base
     # Set setting value
     #-------------------------------------------------------------------
     def []=(name, value)
-      raise ArgumentError.new("name cannot be nil") if name.nil?
+      raise ArgumentError, "name cannot be nil" if name.nil?
 
       return nil unless database_and_table_exists?
       setting = find_by_name(name.to_s) || new(name: name.to_s)
