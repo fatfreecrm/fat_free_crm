@@ -239,4 +239,12 @@ class EntitiesController < ApplicationController
       Account.new(user: user)
     end
   end
+
+  def assign_related_model!(related_params)
+    if related_params
+      model, id = related_params.split('_')
+      instance_variable_set("@#{model}", model.classify.constantize.find(id))
+    end
+  end
+
 end

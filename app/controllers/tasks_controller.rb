@@ -37,6 +37,7 @@ class TasksController < ApplicationController
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [t(:due_specific_date, default: 'On Specific Date...'), :specific_time]
     @category = Setting.unroll(:task_category)
 
+    # TODO why does this differ from assign_related_model!
     if params[:related]
       model, id = params[:related].split(/_(\d+)/)
       if related = model.classify.constantize.my(current_user).find_by_id(id)

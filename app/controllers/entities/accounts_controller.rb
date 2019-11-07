@@ -34,11 +34,7 @@ class AccountsController < EntitiesController
   def new
     @account.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
 
-    if params[:related]
-      model, id = params[:related].split('_')
-      instance_variable_set("@#{model}", model.classify.constantize.find(id))
-    end
-
+    assign_related_model!(params[:related])
     respond_with(@account)
   end
 

@@ -69,11 +69,10 @@ class CampaignsController < EntitiesController
   def new
     @campaign.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
 
+    assign_related_model!(params[:related])
     if params[:related]
       model, id = params[:related].split('_')
-      if related = model.classify.constantize.my(current_user).find_by_id(id)
-        instance_variable_set("@#{model}", related)
-      else
+      unless related = model.classify.constantize.my(current_user).find_by_id(id)
         respond_to_related_not_found(model) && return
       end
     end
