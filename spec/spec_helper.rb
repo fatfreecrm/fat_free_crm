@@ -13,7 +13,6 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'paper_trail/frameworks/rspec'
 
-require 'acts_as_fu'
 require 'factory_bot_rails'
 require 'ffaker'
 require 'timecop'
