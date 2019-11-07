@@ -202,8 +202,8 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
-    paper_trail (8.0.1)
-      activerecord (>= 4.2, < 5.2)
+    paper_trail (9.0.2)
+      activerecord (>= 4.2, < 5.3)
       request_store (~> 1.1)
     paperclip (6.1.0)
       activemodel (>= 4.2.0)
@@ -437,7 +437,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   nokogiri (>= 1.8.1)
-  paper_trail (~> 8.0.0)
+  paper_trail (~> 9.0.0)
   paperclip
   pg (~> 0.21.0)
   premailer
