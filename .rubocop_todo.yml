@@ -29,14 +29,6 @@ Layout/AlignHash:
 Layout/EndAlignment:
   Enabled: false
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Layout/SpaceAroundOperators:
-  Exclude:
-    - 'spec/controllers/entities/campaigns_controller_spec.rb'
-    - 'spec/controllers/entities/leads_controller_spec.rb'
-
 # Offense count: 7
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBrackets.
