@@ -375,5 +375,3 @@ Style/Semicolon:
 Style/WordArray:
   Exclude:
     - 'db/schema.rb'
-    - 'lib/tasks/ffcrm/update_data.rake'
-    - 'spec/features/support/browser.rb'
