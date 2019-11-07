@@ -30,7 +30,7 @@ end
 # Bundler no longer treats runtime dependencies as base dependencies.
 # The following code restores this behaviour.
 # (See https://github.com/carlhuda/bundler/issues/1041)
-spec = Bundler.load_gemspec(File.expand_path("../fat_free_crm.gemspec", __FILE__))
+spec = Bundler.load_gemspec(File.expand_path('fat_free_crm.gemspec', __dir__))
 spec.runtime_dependencies.each do |dep|
   gem dep.name, *dep.requirement.as_list
 end
