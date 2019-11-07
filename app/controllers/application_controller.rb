@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
 
     related_class, id = related.split('/')
     obj = related_class.classify.constantize.find_by_id(id)
-    if obj && obj.respond_to?(controller_name)
+    if obj&.respond_to?(controller_name)
       obj.send(controller_name).map(&:id)
     else
       []

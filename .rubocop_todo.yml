@@ -356,15 +356,6 @@ Style/RegexpLiteral:
     - 'spec/views/contacts/update.js.haml_spec.rb'
     - 'spec/views/opportunities/update.js.haml_spec.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil, Whitelist.
-# Whitelist: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'lib/fat_free_crm/tabs.rb'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAsExpressionSeparator.
