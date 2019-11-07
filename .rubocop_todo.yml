@@ -223,11 +223,6 @@ Style/DoubleNegation:
     - 'app/models/polymorphic/task.rb'
 
 # Offense count: 1
-Style/EvalWithLocation:
-  Exclude:
-    - 'lib/fat_free_crm/permissions.rb'
-
-# Offense count: 1
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: annotated, template, unannotated
 Style/FormatStringToken:
