@@ -171,7 +171,7 @@ module FatFreeCRM
           email: email_address.downcase
         )
           # Set the PaperTrail user for versions (if user is found)
-          PaperTrail.whodunnit = @sender.id.to_s
+          PaperTrail.request.whodunnit = @sender.id.to_s
         end
       end
 

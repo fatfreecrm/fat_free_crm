@@ -24,10 +24,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Version, versioning: true do
   let(:current_user) { create(:user) }
-  before { PaperTrail.whodunnit = current_user.id.to_s }
+  before { PaperTrail.request.whodunnit = current_user.id.to_s }
 
   it "should create a new instance given valid attributes" do
-    create(:version, whodunnit: PaperTrail.whodunnit, item: create(:lead))
+    create(:version, whodunnit: PaperTrail.request.whodunnit, item: create(:lead))
   end
 
   describe "with multiple version records" do
@@ -35,7 +35,7 @@ describe Version, versioning: true do
       @lead = create(:lead)
 
       %w[create destroy update view].each do |event|
-        create(:version, event: event, item: @lead, whodunnit: PaperTrail.whodunnit)
+        create(:version, event: event, item: @lead, whodunnit: PaperTrail.request.whodunnit)
         create(:version, event: event, item: @lead, whodunnit: "1")
       end
     end
@@ -72,7 +72,7 @@ describe Version, versioning: true do
     describe "Create, update, and delete (#{item})" do
       before :each do
         @item = create(item.to_sym, user: current_user)
-        @conditions = { item_id: @item.id, item_type: @item.class.name, whodunnit: PaperTrail.whodunnit }
+        @conditions = { item_id: @item.id, item_type: @item.class.name, whodunnit: PaperTrail.request.whodunnit }
       end
 
       it "should add a version when creating new #{item}" do
@@ -101,7 +101,7 @@ describe Version, versioning: true do
       it "should add a version when commenting on a #{item}" do
         @comment = create(:comment, commentable: @item, user: current_user)
 
-        @version = Version.where(related_id: @item.id, related_type: @item.class.name, whodunnit: PaperTrail.whodunnit, event: 'create').first
+        @version = Version.where(related_id: @item.id, related_type: @item.class.name, whodunnit: PaperTrail.request.whodunnit, event: 'create').first
         expect(@version).not_to eq(nil)
       end
     end
@@ -129,7 +129,7 @@ describe Version, versioning: true do
   describe "Action refinements for task updates" do
     before do
       @task = create(:task, user: current_user)
-      @conditions = { item_id: @task.id, item_type: @task.class.name, whodunnit: PaperTrail.whodunnit }
+      @conditions = { item_id: @task.id, item_type: @task.class.name, whodunnit: PaperTrail.request.whodunnit }
     end
 
     it "should create 'completed' task event" do
@@ -157,7 +157,7 @@ describe Version, versioning: true do
   describe "Rejecting a lead" do
     before do
       @lead = create(:lead, user: current_user, status: "new")
-      @conditions = { item_id: @lead.id, item_type: @lead.class.name, whodunnit: PaperTrail.whodunnit }
+      @conditions = { item_id: @lead.id, item_type: @lead.class.name, whodunnit: PaperTrail.request.whodunnit }
     end
 
     it "should create 'rejected' lead event" do
