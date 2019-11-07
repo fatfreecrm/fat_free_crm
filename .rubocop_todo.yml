@@ -22,12 +22,6 @@ Bundler/DuplicatedGem:
 Layout/AlignHash:
   Enabled: false
 
-# Offense count: 7
-# Cop supports --auto-correct.
-Layout/ClosingHeredocIndentation:
-  Exclude:
-    - 'spec/lib/mail_processor/sample_emails/dropbox.rb'
-
 # Offense count: 33
 # Cop supports --auto-correct.
 Layout/EmptyLineAfterGuardClause:
