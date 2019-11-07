@@ -240,11 +240,23 @@ class EntitiesController < ApplicationController
     end
   end
 
+  def model_name_from_params(related_params)
+    related_params.split('_')[0]
+  end
+
+  def id_from_params(related_params)
+    related_params.split('_')[1]
+  end
+
   def assign_related_model!(related_params)
-    if related_params
-      model, id = related_params.split('_')
-      instance_variable_set("@#{model}", model.classify.constantize.find(id))
-    end
+    return nil unless related_params
+
+    model = model_name_from_params(related_params)
+    id = id_from_params(related_params)
+    record = model.classify.constantize.find(id)
+    instance_variable_set("@#{model}", record)
+
+    record
   end
 
 end

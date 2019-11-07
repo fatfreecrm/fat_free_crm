@@ -35,10 +35,10 @@ class LeadsController < EntitiesController
     @lead.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
     get_campaigns
 
-    assign_related_model!(params[:related])
     if params[:related]
-      model, id = params[:related].split('_')
-      unless related = model.classify.constantize.my(current_user).find_by_id(id)
+      related = assign_related_model!(params[:related])
+      unless related
+        model = model_name_from_params(params[:related])
         respond_to_related_not_found(model) && return
       end
     end
