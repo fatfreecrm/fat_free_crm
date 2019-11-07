@@ -68,15 +68,7 @@ class ContactsController < EntitiesController
         @contacts = get_contacts if called_from_index_page?
       else
         if params[:account]
-          @account = if params[:account][:id].blank?
-                       if request.referer =~ /\/accounts\/(\d+)\z/
-                         Account.find(Regexp.last_match[1]) # related account
-                       else
-                         Account.new(user: current_user)
-                                  end
-                     else
-                       Account.find(params[:account][:id])
-                     end
+          @account = guess_related_account(params[:account][:id], request.referer, current_user)
         end
         @opportunity = Opportunity.my(current_user).find(params[:opportunity]) unless params[:opportunity].blank?
       end

@@ -230,4 +230,13 @@ class EntitiesController < ApplicationController
     page = params[:page]&.to_i
     [0, page].max if page
   end
+
+  def guess_related_account(id, url, user)
+    return Account.find(id) unless id.blank?
+    if url =~ /\/accounts\/(\d+)\z/
+      Account.find(Regexp.last_match[1]) # related account
+    else
+      Account.new(user: user)
+    end
+  end
 end
