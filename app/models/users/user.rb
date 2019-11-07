@@ -188,8 +188,6 @@ class User < ActiveRecord::Base
     !sum.nil?
   end
 
-  private
-
   # Define class methods
   #----------------------------------------------------------------------------
   class << self

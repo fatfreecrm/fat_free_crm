@@ -89,15 +89,6 @@ Lint/UriEscapeUnescape:
   Exclude:
     - 'lib/gravatar_image_tag.rb'
 
-# Offense count: 4
-# Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
-Lint/UselessAccessModifier:
-  Exclude:
-    - 'app/models/fields/field.rb'
-    - 'app/models/users/user.rb'
-    - 'db/migrate/20100928030620_remove_uuid.rb'
-    - 'lib/gravatar_image_tag.rb'
-
 # Offense count: 3
 Lint/UselessAssignment:
   Exclude:

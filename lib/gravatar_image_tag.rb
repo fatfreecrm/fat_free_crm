@@ -42,8 +42,6 @@ module GravatarImageTag
     "#{gravatar_url_base}/#{gravatar_id(email, gravatar_params.delete(:filetype))}#{url_params(gravatar_params)}"
   end
 
-  private
-
   def self.gravatar_url_base
     'https://gravatar.com/avatar'
   end
