@@ -25,6 +25,7 @@ module GravatarImageTag
   module InstanceMethods
     def gravatar_image_tag(email, options = {})
       raise ArgumentError, "Options must be a hash, got #{options.inspect}" unless options.is_a? Hash
+
       options[:alt] ||= 'Gravatar'
       image_tag(GravatarImageTag.gravatar_url(email, options.delete(:gravatar)), options)
     end
@@ -53,6 +54,7 @@ module GravatarImageTag
 
   def self.url_params(gravatar_params)
     return nil if gravatar_params.keys.empty?
+
     "?#{gravatar_params.map { |key, value| "#{key}=#{URI.escape(value.is_a?(String) ? value : value.to_s, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))}" }.join('&amp;')}"
   end
 end

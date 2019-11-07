@@ -172,6 +172,7 @@ class TasksController < ApplicationController
 
   def task_params
     return {} unless params[:task]
+
     params.require(:task).permit(
       :user_id,
       :assigned_to,

@@ -27,6 +27,7 @@ module ApplicationHelper
   def show_flash(options = { sticky: false })
     %i[error warning info notice alert].each do |type|
       next unless flash[type]
+
       html = content_tag(:div, h(flash[type]), id: "flash")
       flash[type] = nil
       return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})".html_safe, type: "text/javascript")
@@ -455,6 +456,7 @@ module ApplicationHelper
     views = FatFreeCRM::ViewFactory.views_for(controller: controller.controller_name,
                                               action: show_or_index_action)
     return nil unless views.size > 1
+
     lis = ''.html_safe
     content_tag :ul, class: 'format-buttons' do
       views.collect do |view|
@@ -480,6 +482,7 @@ module ApplicationHelper
   # <span class="timeago" datetime="2008-07-17T09:24:17Z">July 17, 2008</span>
   def timeago(time, options = {})
     return unless time
+
     options[:class] ||= "timeago"
     options[:title] = time.getutc.iso8601
     content_tag(:span, I18n.l(time), options)

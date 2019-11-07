@@ -155,6 +155,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def computed_bucket
     return bucket if bucket != "specific_time"
+
     if overdue?
       "overdue"
     elsif due_today?
@@ -174,6 +175,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)
     return {} unless ALLOWED_VIEWS.include?(view)
+
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     Hash[
       settings.map do |key, _value|
@@ -186,6 +188,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.bucket_empty?(bucket, user, view = "pending")
     return false if bucket.blank? || !ALLOWED_VIEWS.include?(view)
+
     if view == "assigned"
       assigned_by(user).send(bucket).pending.count
     else
@@ -197,6 +200,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.totals(user, view = "pending")
     return {} unless ALLOWED_VIEWS.include?(view)
+
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     settings.each_with_object(HashWithIndifferentAccess[all: 0]) do |key, hash|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)

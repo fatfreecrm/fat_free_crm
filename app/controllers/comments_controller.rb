@@ -83,6 +83,7 @@ class CommentsController < ApplicationController
 
   def comment_params
     return {} unless params[:comment]
+
     params.require(:comment).permit(
       :user_id,
       :commentable_type,

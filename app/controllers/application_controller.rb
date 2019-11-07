@@ -80,6 +80,7 @@ class ApplicationController < ActionController::Base
   def auto_complete_ids_to_exclude(related)
     return [] if related.blank?
     return [related.to_i].compact unless related.index('/')
+
     related_class, id = related.split('/')
     obj = related_class.classify.constantize.find_by_id(id)
     if obj && obj.respond_to?(controller_name)

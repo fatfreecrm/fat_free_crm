@@ -22,6 +22,7 @@ namespace :ffcrm do
         detector.detect
 
         next unless detector.missing_translations?
+
         puts
         puts "Detected missing translations within \"config/locales/#{locale_file_names.last}.yml\":"
         puts

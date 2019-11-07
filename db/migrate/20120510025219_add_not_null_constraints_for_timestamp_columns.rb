@@ -15,6 +15,7 @@ class AddNotNullConstraintsForTimestampColumns < ActiveRecord::Migration[4.2]
     ActiveRecord::Base.connection.tables.each do |table|
       # If table has both timestamp columns, set not null constraints on both columns.
       next unless %i[created_at updated_at].all? { |column| column_exists?(table, column) }
+
       %i[created_at updated_at].each do |column|
         change_column table, column, :datetime, constraints
       end

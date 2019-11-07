@@ -107,6 +107,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def user_params
     return {} unless params[:user]
+
     params[:user][:email].try(:strip!)
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
 
