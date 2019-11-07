@@ -190,11 +190,6 @@ Naming/VariableNumber:
     - 'spec/controllers/home_controller_spec.rb'
 
 # Offense count: 1
-Security/Eval:
-  Exclude:
-    - 'lib/development_tasks/gem.rake'
-
-# Offense count: 1
 Security/MarshalLoad:
   Exclude:
     - 'app/models/users/preference.rb'
