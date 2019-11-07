@@ -339,13 +339,6 @@ Style/NumericPredicate:
     - 'app/models/users/user.rb'
     - 'lib/tasks/ffcrm/demo.rake'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/RedundantCondition:
-  Exclude:
-    - 'app/controllers/entities/contacts_controller.rb'
-    - 'app/models/entities/lead.rb'
-
 # Offense count: 16
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, AllowInnerSlashes.
