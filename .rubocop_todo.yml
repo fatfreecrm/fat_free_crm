@@ -368,14 +368,6 @@ Style/Semicolon:
     - 'spec/models/fields/custom_field_spec.rb'
     - 'spec/support/macros.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Exclude:
-    - 'spec/lib/mail_processor/sample_emails/dropbox.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.

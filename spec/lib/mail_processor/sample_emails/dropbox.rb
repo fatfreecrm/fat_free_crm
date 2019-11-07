@@ -97,7 +97,7 @@ DROPBOX_EMAILS = {
     Ben
   EMAIL
 
-  multipart: <<~EMAIL,
+  multipart: <<~EMAIL
     From: Aaron Assembler <aaron@example.com>
     To: Ben Bootloader <ben@example.com>
     Subject: Hi there
