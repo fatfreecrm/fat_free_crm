@@ -44,7 +44,11 @@ namespace :ffcrm do
 
           password ||= "manager"
           print "Password [#{password}]: "
-          echo = ->(toggle) { return if RUBY_PLATFORM.match?(/mswin/); system(toggle ? "stty echo && echo" : "stty -echo") }
+          echo = lambda { |toggle|
+            return if RUBY_PLATFORM.match?(/mswin/)
+
+            system(toggle ? "stty echo && echo" : "stty -echo")
+          }
 
           begin
             echo.call(false)

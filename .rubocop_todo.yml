@@ -303,8 +303,6 @@ Style/NumericPredicate:
 Style/Semicolon:
   Exclude:
     - 'app/controllers/entities/leads_controller.rb'
-    - 'lib/fat_free_crm/permissions.rb'
-    - 'lib/tasks/ffcrm/setup.rake'
     - 'spec/models/fields/custom_field_date_pair_spec.rb'
     - 'spec/models/fields/custom_field_spec.rb'
     - 'spec/support/macros.rb'

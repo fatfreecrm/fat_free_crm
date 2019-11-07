@@ -73,7 +73,10 @@ module FatFreeCRM
                                   []
                                 end
 
-        permissions_to_remove.each { |p| permissions.delete(p); p.destroy }
+        permissions_to_remove.each do |p|
+          permissions.delete(p)
+          p.destroy
+        end
       end
 
       # Save the model copying other model's permissions.
