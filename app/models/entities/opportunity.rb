@@ -135,9 +135,7 @@ class Opportunity < ActiveRecord::Base
   # Attach given attachment to the opportunity if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      send(attachment.class.name.tableize) << attachment
-    end
+    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the opportunity.

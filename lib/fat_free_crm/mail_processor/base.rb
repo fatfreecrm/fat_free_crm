@@ -50,9 +50,7 @@ module FatFreeCRM
 
       #--------------------------------------------------------------------------------------
       def run(dry_run = false)
-        if @dry_run = dry_run
-          log "Not discarding or archiving any new messages..."
-        end
+        log "Not discarding or archiving any new messages..." if @dry_run = dry_run
         connect! || (return nil)
         with_new_emails do |uid, email|
           # Subclasses must define a #process method that takes arguments: uid, email
@@ -127,9 +125,7 @@ module FatFreeCRM
         if @dry_run
           log "Not discarding message"
         else
-          if @settings[:move_invalid_to_folder]
-            @imap.uid_copy(uid, @settings[:move_invalid_to_folder])
-          end
+          @imap.uid_copy(uid, @settings[:move_invalid_to_folder]) if @settings[:move_invalid_to_folder]
           @imap.uid_store(uid, "+FLAGS", [:Deleted])
         end
         @discarded += 1
@@ -141,9 +137,7 @@ module FatFreeCRM
         if @dry_run
           log "Not archiving message"
         else
-          if @settings[:move_to_folder]
-            @imap.uid_copy(uid, @settings[:move_to_folder])
-          end
+          @imap.uid_copy(uid, @settings[:move_to_folder]) if @settings[:move_to_folder]
           @imap.uid_store(uid, "+FLAGS", [:Seen])
         end
         @archived += 1

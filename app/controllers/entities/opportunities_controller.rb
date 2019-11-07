@@ -57,9 +57,7 @@ class OpportunitiesController < EntitiesController
     @account  = @opportunity.account || Account.new(user: current_user)
     @accounts = Account.my(current_user).order('name')
 
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Opportunity.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Opportunity.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@opportunity)
   end

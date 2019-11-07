@@ -99,9 +99,7 @@ class Account < ActiveRecord::Base
   # Attach given attachment to the account if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      send(attachment.class.name.tableize) << attachment
-    end
+    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the account.
@@ -118,9 +116,7 @@ class Account < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.create_or_select_for(model, params)
     # Attempt to find existing account
-    if params[:id].present?
-      return Account.find(params[:id])
-    end
+    return Account.find(params[:id]) if params[:id].present?
 
     if params[:name].present?
       account = Account.find_by(name: params[:name])

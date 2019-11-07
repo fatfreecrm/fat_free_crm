@@ -155,9 +155,7 @@ class Contact < ActiveRecord::Base
   # Attach given attachment to the contact if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      send(attachment.class.name.tableize) << attachment
-    end
+    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the contact.
@@ -188,9 +186,7 @@ class Contact < ActiveRecord::Base
     # Set custom fields.
     if model.class.respond_to?(:fields)
       model.class.fields.each do |field|
-        if contact.respond_to?(field.name)
-          contact.send "#{field.name}=", model.send(field.name)
-        end
+        contact.send "#{field.name}=", model.send(field.name) if contact.respond_to?(field.name)
       end
     end
 

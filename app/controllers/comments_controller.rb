@@ -35,9 +35,7 @@ class CommentsController < ApplicationController
 
     model = find_class(@comment.commentable_type)
     id = @comment.commentable_id
-    unless model.my(current_user).find_by_id(id)
-      respond_to_related_not_found(model.downcase)
-    end
+    respond_to_related_not_found(model.downcase) unless model.my(current_user).find_by_id(id)
   end
 
   # POST /comments

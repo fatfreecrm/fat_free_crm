@@ -297,9 +297,7 @@ module ApplicationHelper
   # Ajax helper to pass browser timezone offset to the server.
   #----------------------------------------------------------------------------
   def get_browser_timezone_offset
-    unless session[:timezone_offset]
-      raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
-    end
+    raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});" unless session[:timezone_offset]
   end
 
   # Entities can have associated avatars or gravatars. Only calls Gravatar
