@@ -101,7 +101,6 @@ Lint/UselessAccessModifier:
 # Offense count: 3
 Lint/UselessAssignment:
   Exclude:
-    - 'app/helpers/application_helper.rb'
     - 'app/views/home/index.atom.builder'
 
 # Offense count: 132
