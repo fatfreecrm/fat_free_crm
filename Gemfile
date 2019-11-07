@@ -65,7 +65,7 @@ group :development, :test do
   gem 'headless'
   gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 4.0' # Pinned due to minor failing view tests
   gem 'rubocop', '~> 0.52.0' # Pinned because upgrades require regenerating rubocop_todo.yml
   gem 'rainbow'
   gem 'puma' # used by capybara 3
