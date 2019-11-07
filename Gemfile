@@ -11,9 +11,9 @@ when 'sqlite'
 when 'mysql'
   gem 'mysql2'
 when 'postgres'
-  gem 'pg', '~> 0.21.0' # Pinned, see https://github.com/fatfreecrm/fat_free_crm/pull/689
+  gem 'pg'
 else
-  gem 'pg', '~> 0.21.0'
+  gem 'pg'
 end
 
 # Removes a gem dependency

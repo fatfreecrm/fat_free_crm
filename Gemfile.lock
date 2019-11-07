@@ -215,7 +215,8 @@ GEM
     parallel (1.18.0)
     parser (2.6.5.0)
       ast (~> 2.4.0)
-    pg (0.21.0)
+    pg (1.1.4)
+    powerpack (0.1.2)
     premailer (1.11.1)
       addressable
       css_parser (>= 1.6.0)
@@ -436,7 +437,7 @@ DEPENDENCIES
   nokogiri (>= 1.8.1)
   paper_trail (~> 6.0.0)
   paperclip
-  pg (~> 0.21.0)
+  pg
   premailer
   pry-rails
   puma
