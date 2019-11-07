@@ -274,11 +274,6 @@ Style/GlobalVars:
 Style/GuardClause:
   Enabled: false
 
-# Offense count: 2
-Style/IdenticalConditionalBranches:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-
 # Offense count: 16
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.

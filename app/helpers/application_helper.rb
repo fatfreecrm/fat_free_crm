@@ -326,17 +326,12 @@ module ApplicationHelper
 
   # Render a text field that is part of compound address.
   #----------------------------------------------------------------------------
-  def address_field(form, object, attribute, extra_styles)
+  def address_field(form, _object, attribute, extra_styles)
     hint = "#{t(attribute)}..."
-    if object.send(attribute).blank?
-      form.text_field(attribute,
-                      style:   "margin-top: 6px; #{extra_styles}",
-                      placeholder: hint)
-    else
-      form.text_field(attribute,
-                      style:   "margin-top: 6px; #{extra_styles}",
-                      placeholder: hint)
-    end
+
+    form.text_field(attribute,
+                    style:   "margin-top: 6px; #{extra_styles}",
+                    placeholder: hint)
   end
 
   # Return true if:
