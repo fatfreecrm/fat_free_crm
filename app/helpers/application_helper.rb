@@ -77,7 +77,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def rating_select(name, options = {})
     stars = Hash[(1..5).map { |star| [star, "&#9733;" * star] }].sort
-    options_for_select = %(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
+    options_for_select = %(<option value="0"#{options[:selected].to_i.zero? ? ' selected="selected"' : ''}>#{t :select_none}</option>)
     options_for_select += stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
     select_tag name, options_for_select.html_safe, options
   end
@@ -383,7 +383,7 @@ module ApplicationHelper
   end
 
   def entity_filter_checkbox(name, value, count)
-    checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
+    checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i.positive?)
     url = url_for(action: :filter)
     onclick = %{
       var query = $('#query').val(),

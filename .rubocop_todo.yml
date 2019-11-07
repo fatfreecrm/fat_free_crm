@@ -312,10 +312,6 @@ Style/MultipleComparison:
 Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
-    - 'app/helpers/admin/users_helper.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/campaigns_helper.rb'
-    - 'app/helpers/tasks_helper.rb'
     - 'app/models/fields/custom_field.rb'
     - 'app/models/polymorphic/task.rb'
     - 'app/models/users/user.rb'
