@@ -34,8 +34,8 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   def new
     @opportunity.attributes = { user: current_user, stage: Opportunity.default_stage, access: Setting.default_access, assigned_to: nil }
-    @account     = Account.new(user: current_user, access: Setting.default_access)
-    @accounts    = Account.my(current_user).order('name')
+    @account = Account.new(user: current_user, access: Setting.default_access)
+    @accounts = Account.my(current_user).order('name')
 
     if params[:related]
       model, id = params[:related].split('_')

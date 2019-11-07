@@ -47,8 +47,8 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def section(related, assets)
     asset = assets.to_s.singularize
-    create_id  = "create_#{asset}"
-    select_id  = "select_#{asset}"
+    create_id = "create_#{asset}"
+    select_id = "select_#{asset}"
     create_url = controller.send(:"new_#{asset}_path")
 
     html = tag(:br)

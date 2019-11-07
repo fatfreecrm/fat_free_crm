@@ -34,8 +34,6 @@ Layout/EndAlignment:
 # Configuration parameters: AllowForAlignment.
 Layout/SpaceAroundOperators:
   Exclude:
-    - 'app/controllers/entities/opportunities_controller.rb'
-    - 'app/helpers/application_helper.rb'
     - 'spec/controllers/entities/campaigns_controller_spec.rb'
     - 'spec/controllers/entities/leads_controller_spec.rb'
 
