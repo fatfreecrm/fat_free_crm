@@ -67,7 +67,7 @@ class ContactsController < EntitiesController
       else
         if params[:account]
           @account = if params[:account][:id].blank?
-                       if request.referer =~ /\/accounts\/(\d+)\z/
+                       if request.referer =~ %r{/accounts/(\d+)\z}
                          Account.find(Regexp.last_match[1]) # related account
                        else
                          Account.new(user: current_user)

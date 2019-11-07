@@ -254,7 +254,7 @@ module ApplicationHelper
       if site == :skype
         url = "callto:" + url
       else
-        url = "http://" + url unless url.match?(/^https?:\/\//)
+        url = "http://" + url unless url.match?(%r{^https?://})
       end
       link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
     end.compact.join("\n").html_safe
@@ -414,7 +414,7 @@ module ApplicationHelper
       fmt_value = if email
                     link_to_email(fmt_value)
                   else
-                    fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
+                    fmt_value.gsub(%r{((http|ftp|https)://[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/\+#]*[\w\-\@?^=%&amp;/\+#])?)}, "<a href=\"\\1\">\\1</a>")
       end
       out << content_tag(:td, fmt_value, class: last_class)
     end

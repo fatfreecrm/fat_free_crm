@@ -297,23 +297,6 @@ Style/NumericPredicate:
     - 'app/models/users/user.rb'
     - 'lib/tasks/ffcrm/demo.rake'
 
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'app/controllers/entities/contacts_controller.rb'
-    - 'app/controllers/entities/opportunities_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/models/list.rb'
-    - 'lib/development_tasks/license.rake'
-    - 'lib/fat_free_crm/core_ext/string.rb'
-    - 'spec/helpers/users_helper_spec.rb'
-    - 'spec/lib/mail_processor/dropbox_spec.rb'
-    - 'spec/views/contacts/update.js.haml_spec.rb'
-    - 'spec/views/opportunities/update.js.haml_spec.rb'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAsExpressionSeparator.
