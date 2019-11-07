@@ -64,7 +64,7 @@ class Contact < ActiveRecord::Base
   scope :created_by,  ->(user) { where(user_id: user.id) }
   scope :assigned_to, ->(user) { where(assigned_to: user.id) }
 
-  scope :text_search, ->(query) {
+  scope :text_search, lambda { |query|
     t = Contact.arel_table
     # We can't always be sure that names are entered in the right order, so we must
     # split the query into all possible first/last name permutations.

@@ -42,7 +42,7 @@ class Task < ActiveRecord::Base
 
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
-  scope :my, ->(*args) {
+  scope :my, lambda { |*args|
     options = args[0] || {}
     user_option = (options.is_a?(Hash) ? options[:user] : options) || User.current_user
     includes(:assignee)
@@ -55,24 +55,24 @@ class Task < ActiveRecord::Base
   scope :assigned_to, ->(user) { where(assigned_to: user.id) }
 
   # Tasks assigned by the user to others. That's what we see on Tasks/Assigned.
-  scope :assigned_by, ->(user) {
+  scope :assigned_by, lambda { |user|
     includes(:assignee)
       .where('user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?', user.id, user.id)
   }
 
   # Tasks created by the user or assigned to the user, i.e. the union of the two
   # scopes above. That's the tasks the user is allowed to see and track.
-  scope :tracked_by, ->(user) {
+  scope :tracked_by, lambda { |user|
     includes(:assignee)
       .where('user_id = ? OR assigned_to = ?', user.id, user.id)
   }
 
   # Show tasks which either belong to the user and are unassigned, or are assigned to the user
-  scope :visible_on_dashboard, ->(user) {
+  scope :visible_on_dashboard, lambda { |user|
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where('completed_at IS NULL')
   }
 
-  scope :by_due_at, -> {
+  scope :by_due_at, lambda {
     order({
       "MySQL"      => "due_at NOT NULL, due_at ASC",
       "PostgreSQL" => "due_at ASC NULLS FIRST"
@@ -101,7 +101,7 @@ class Task < ActiveRecord::Base
   scope :completed_this_month, -> { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days) }
   scope :completed_last_month, -> { where('completed_at >= ? AND completed_at < ?', (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc) }
 
-  scope :text_search, ->(query) {
+  scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(name) LIKE upper(?)', "%#{query}%")
   }

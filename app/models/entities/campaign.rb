@@ -41,7 +41,7 @@ class Campaign < ActiveRecord::Base
 
   serialize :subscribed_users, Set
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where('status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters)
   }
   scope :created_by,  ->(user) { where(user_id: user.id) }

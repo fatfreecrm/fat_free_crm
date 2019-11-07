@@ -249,20 +249,6 @@ Style/GlobalVars:
 Style/GuardClause:
   Enabled: false
 
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: line_count_dependent, lambda, literal
-Style/Lambda:
-  Exclude:
-    - 'app/models/entities/account.rb'
-    - 'app/models/entities/campaign.rb'
-    - 'app/models/entities/contact.rb'
-    - 'app/models/entities/lead.rb'
-    - 'app/models/entities/opportunity.rb'
-    - 'app/models/polymorphic/task.rb'
-    - 'app/models/users/user.rb'
-
 # Offense count: 2
 Style/MissingRespondToMissing:
   Exclude:

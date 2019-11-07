@@ -52,7 +52,7 @@ class Lead < ActiveRecord::Base
 
   accepts_nested_attributes_for :business_address, allow_destroy: true
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where(['status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters])
   }
   scope :converted,    ->       { where(status: 'converted') }

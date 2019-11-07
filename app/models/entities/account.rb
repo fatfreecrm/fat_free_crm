@@ -46,7 +46,7 @@ class Account < ActiveRecord::Base
   accepts_nested_attributes_for :billing_address,  allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
   accepts_nested_attributes_for :shipping_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where('category IN (?)' + (filters.delete('other') ? ' OR category IS NULL' : ''), filters)
   }
   scope :created_by,  ->(user) { where(user_id: user.id) }
@@ -54,7 +54,7 @@ class Account < ActiveRecord::Base
 
   scope :text_search, ->(query) { ransack('name_or_email_cont' => query).result }
 
-  scope :visible_on_dashboard, ->(user) {
+  scope :visible_on_dashboard, lambda { |user|
     # Show accounts which either belong to the user and are unassigned, or are assigned to the user
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id)
   }
