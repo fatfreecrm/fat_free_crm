@@ -74,7 +74,7 @@ end
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
   gem 'database_cleaner'
   gem 'acts_as_fu'
   gem 'zeus', platform: :ruby unless ENV["CI"]
