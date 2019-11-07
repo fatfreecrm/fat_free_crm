@@ -138,7 +138,10 @@ class LeadsController < EntitiesController
     update_sidebar
 
     respond_with(@lead) do |format|
-      format.html { flash[:notice] = t(:msg_asset_rejected, @lead.full_name); redirect_to leads_path }
+      format.html do
+        flash[:notice] = t(:msg_asset_rejected, @lead.full_name)
+        redirect_to leads_path
+      end
     end
   end
 
