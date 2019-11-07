@@ -176,13 +176,6 @@ Naming/PredicateName:
     - 'lib/fat_free_crm/fields.rb'
     - 'lib/fat_free_crm/mail_processor/base.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredName.
-Naming/RescuedExceptionsVariableName:
-  Exclude:
-    - 'spec/support/assert_select.rb'
-
 # Offense count: 3
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: io, id, to, by, on, in, at, ip, db, os
