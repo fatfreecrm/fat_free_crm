@@ -27,4 +27,4 @@ module FatFreeCRM
   end
 end
 
-ActiveRecord::Base.send(:include, FatFreeCRM::CommentExtensions)
+ActiveRecord::Base.include FatFreeCRM::CommentExtensions

@@ -91,4 +91,4 @@ module FatFreeCRM
   end
 end
 
-ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
+ActiveRecord::Base.include FatFreeCRM::Permissions

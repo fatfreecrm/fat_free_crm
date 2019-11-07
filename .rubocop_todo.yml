@@ -94,20 +94,6 @@ Lint/ReturnInVoidContext:
     - 'app/models/setting.rb'
     - 'app/models/users/preference.rb'
 
-# Offense count: 11
-# Cop supports --auto-correct.
-Lint/SendWithMixinArgument:
-  Exclude:
-    - 'lib/fat_free_crm/callback.rb'
-    - 'lib/fat_free_crm/comment_extensions.rb'
-    - 'lib/fat_free_crm/errors.rb'
-    - 'lib/fat_free_crm/exportable.rb'
-    - 'lib/fat_free_crm/fields.rb'
-    - 'lib/fat_free_crm/i18n.rb'
-    - 'lib/fat_free_crm/permissions.rb'
-    - 'lib/fat_free_crm/sortable.rb'
-    - 'lib/gravatar_image_tag.rb'
-
 # Offense count: 1
 Lint/UriEscapeUnescape:
   Exclude:
