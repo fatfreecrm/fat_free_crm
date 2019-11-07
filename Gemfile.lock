@@ -214,7 +214,7 @@ GEM
     parallel (1.18.0)
     parser (2.6.5.0)
       ast (~> 2.4.0)
-    pg (0.21.0)
+    pg (1.1.4)
     polyamorous (2.3.0)
       activerecord (>= 5.0)
     powerpack (0.1.2)
@@ -439,7 +439,7 @@ DEPENDENCIES
   nokogiri (>= 1.8.1)
   paper_trail (~> 10.0.0)
   paperclip
-  pg (~> 0.21.0)
+  pg
   premailer
   pry-rails
   puma
