@@ -36,7 +36,7 @@ class OpportunityObserver < ActiveRecord::Observer
   private
 
   def log_activity(item, event)
-    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.whodunnit)
+    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.request.whodunnit)
   end
 
   def update_campaign_revenue(campaign, revenue)

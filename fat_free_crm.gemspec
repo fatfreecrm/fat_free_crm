@@ -34,7 +34,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'simple_form'
   gem.add_dependency 'will_paginate'
   gem.add_dependency 'paperclip'
-  gem.add_dependency 'paper_trail',         '~> 6.0.0'
+  gem.add_dependency 'paper_trail',         '~> 10.0.0'
   gem.add_dependency 'devise',              '~> 4.6'
   gem.add_dependency 'devise-encryptable',  '~> 0.2.0'
   gem.add_dependency 'acts_as_commentable'
@@ -57,7 +57,7 @@ Gem::Specification.new do |gem|
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
-  gem.add_dependency 'ransack_ui',          '~> 1.3', '>= 1.3.1'
-  gem.add_dependency 'ransack',             '~> 1.7', '>= 1.6.2'
+  gem.add_dependency 'ransack_ui', '~> 1.3', '>= 1.3.1'
+  gem.add_dependency 'ransack', '>= 1.6.2'
   gem.add_dependency 'email_reply_parser_ffcrm'
 end
