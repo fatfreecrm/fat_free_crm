@@ -26,7 +26,6 @@ if defined?(FatFreeCRM::Application)
     config.consider_all_requests_local       = true
     config.action_controller.perform_caching = false
 
-
     # Raise exceptions instead of rendering exception templates
     config.action_dispatch.show_exceptions = false
 
@@ -50,7 +49,6 @@ if defined?(FatFreeCRM::Application)
     # Store uploaded files on the local file system in a temporary directory
     config.active_storage.service = :test
 
-
     config.action_mailer.perform_caching = false
     # Raises error for missing translations
     # config.action_view.raise_on_missing_translations = true
@@ -63,4 +61,3 @@ if defined?(FatFreeCRM::Application)
   rescue LoadError
   end
 end
-
