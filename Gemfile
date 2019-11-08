@@ -65,7 +65,7 @@ group :development, :test do
   gem 'headless'
   gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
-  gem 'factory_bot_rails', '~> 4.0' # Pinned due to minor failing view tests
+  gem 'factory_bot_rails', '~> 5.0' # Pinned due to minor failing view tests
   gem 'rubocop', '~> 0.76.0' # Pinned because upgrades require regenerating rubocop_todo.yml
   gem 'rainbow'
   gem 'puma' # used by capybara 3
@@ -98,4 +98,4 @@ gem 'devise', '~>4.6'
 gem 'devise-i18n'
 gem "devise-encryptable"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'activejob', '~> 5.1.6.1'
+gem 'activejob', '~> 5.2.0'
