@@ -71,14 +71,14 @@ class User < ActiveRecord::Base
   scope :without, ->(user) { where('id != ?', user.id).by_name }
   scope :by_name, -> { order('first_name, last_name, email') }
 
-  scope :text_search, ->(query) {
+  scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(username) LIKE upper(:s) OR upper(email) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', s: "%#{query}%")
   }
 
   scope :my, ->(current_user) { accessible_by(current_user.ability) }
 
-  scope :have_assigned_opportunities, -> {
+  scope :have_assigned_opportunities, lambda {
     joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to")
       .where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
       .select('DISTINCT(users.id), users.*')
@@ -187,8 +187,6 @@ class User < ActiveRecord::Base
     end
     !sum.nil?
   end
-
-  private
 
   # Define class methods
   #----------------------------------------------------------------------------

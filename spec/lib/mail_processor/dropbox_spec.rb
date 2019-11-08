@@ -280,7 +280,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
     it "should extract text and strip tags from multipart text/html" do
       text = @dropbox.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:html]))
       expect(text).to be_present
-      expect(text).not_to match(/<\/?[^>]*>/)
+      expect(text).not_to match(%r{</?[^>]*>})
     end
   end
 

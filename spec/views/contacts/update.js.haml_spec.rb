@@ -118,7 +118,7 @@ describe "/contacts/update" do
 
       it "errors: should show disabled accounts dropdown" do
         render
-        expect(rendered).to include("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
+        expect(rendered).to include("crm.create_or_select_account(#{@referer =~ %r{/accounts/}})")
       end
 
       it "should redraw the [edit_contact] form and shake it" do

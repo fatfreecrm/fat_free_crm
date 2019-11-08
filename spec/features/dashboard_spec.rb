@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path("../acceptance_helper.rb", __FILE__)
+require File.expand_path('acceptance_helper.rb', __dir__)
 
 feature 'Dashboard', '
   In order to monitor activity

@@ -48,4 +48,4 @@ module FatFreeCRM
   end
 end
 
-ActiveRecord::Base.send(:include, FatFreeCRM::Exportable)
+ActiveRecord::Base.include FatFreeCRM::Exportable

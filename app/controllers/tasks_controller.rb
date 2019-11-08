@@ -58,9 +58,7 @@ class TasksController < ApplicationController
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?
 
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Task.tracked_by(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Task.tracked_by(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@task)
   end
@@ -95,9 +93,7 @@ class TasksController < ApplicationController
       if @task.update_attributes(task_params)
         @task.bucket = @task.computed_bucket
         if called_from_index_page?
-          if Task.bucket_empty?(@task_before_update.bucket, current_user, @view)
-            @empty_bucket = @task_before_update.bucket
-          end
+          @empty_bucket = @task_before_update.bucket if Task.bucket_empty?(@task_before_update.bucket, current_user, @view)
           update_sidebar
         end
       end
@@ -112,9 +108,7 @@ class TasksController < ApplicationController
     @task.destroy
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-    if Task.bucket_empty?(params[:bucket], current_user, @view)
-      @empty_bucket = params[:bucket]
-    end
+    @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_user, @view)
 
     update_sidebar if called_from_index_page?
     respond_with(@task)
@@ -127,9 +121,7 @@ class TasksController < ApplicationController
     @task&.update_attributes(completed_at: Time.now, completed_by: current_user.id)
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
-    if Task.bucket_empty?(params[:bucket], current_user)
-      @empty_bucket = params[:bucket]
-    end
+    @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_user)
 
     update_sidebar unless params[:bucket].blank?
     respond_with(@task)
@@ -142,9 +134,7 @@ class TasksController < ApplicationController
     @task&.update_attributes(completed_at: nil, completed_by: nil)
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-    if Task.bucket_empty?(params[:bucket], current_user, @view)
-      @empty_bucket = params[:bucket]
-    end
+    @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_user, @view)
 
     update_sidebar
     respond_with(@task)
@@ -172,6 +162,7 @@ class TasksController < ApplicationController
 
   def task_params
     return {} unless params[:task]
+
     params.require(:task).permit(
       :user_id,
       :assigned_to,

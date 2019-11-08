@@ -40,7 +40,7 @@ class Opportunity < ActiveRecord::Base
 
   serialize :subscribed_users, Set
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where('stage IN (?)' + (filters.delete('other') ? ' OR stage IS NULL' : ''), filters)
   }
   scope :created_by,  ->(user) { where('user_id = ?', user.id) }
@@ -53,7 +53,7 @@ class Opportunity < ActiveRecord::Base
   scope :weighted_sort, -> { select('*, amount*probability') }
 
   # Search by name OR id
-  scope :text_search, ->(query) {
+  scope :text_search, lambda { |query|
     if query.match?(/\A\d+\z/)
       where('upper(name) LIKE upper(:name) OR opportunities.id = :id', name: "%#{query}%", id: query)
     else
@@ -61,7 +61,7 @@ class Opportunity < ActiveRecord::Base
     end
   }
 
-  scope :visible_on_dashboard, ->(user) {
+  scope :visible_on_dashboard, lambda { |user|
     # Show opportunities which either belong to the user and are unassigned, or are assigned to the user and haven't been closed (won/lost)
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where("opportunities.stage != 'won'").where("opportunities.stage != 'lost'")
   }
@@ -135,9 +135,7 @@ class Opportunity < ActiveRecord::Base
   # Attach given attachment to the opportunity if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      send(attachment.class.name.tableize) << attachment
-    end
+    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the opportunity.

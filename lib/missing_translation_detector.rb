@@ -39,6 +39,7 @@ class MissingTranslationDetector
 
     keys.each do |key|
       return true if !h.is_a?(Hash) || !h.key?(key)
+
       h = h[key]
     end
 
