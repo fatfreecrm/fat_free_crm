@@ -65,9 +65,7 @@ class ContactsController < EntitiesController
         @contact.add_comment_by_user(@comment_body, current_user)
         @contacts = get_contacts if called_from_index_page?
       else
-        if params[:account]
-          @account = guess_related_account(params[:account][:id], request.referer, current_user)
-        end
+        @account = guess_related_account(params[:account][:id], request.referer, current_user) if params[:account]
         @opportunity = Opportunity.my(current_user).find(params[:opportunity]) unless params[:opportunity].blank?
       end
     end
