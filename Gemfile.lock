@@ -62,7 +62,7 @@ GEM
     brakeman (4.7.1)
     builder (3.2.3)
     byebug (11.0.1)
-    cancancan (2.2.0)
+    cancancan (3.0.1)
     capistrano (3.11.2)
       airbrussh (>= 1.0.0)
       i18n
@@ -159,7 +159,6 @@ GEM
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
-    io-like (0.3.0)
     jaro_winkler (1.5.4)
     jquery-migrate-rails (1.2.1)
     jquery-rails (4.3.5)
@@ -213,7 +212,6 @@ GEM
     pg (1.1.4)
     polyamorous (2.3.0)
       activerecord (>= 5.0)
-    powerpack (0.1.2)
     premailer (1.11.1)
       addressable
       css_parser (>= 1.6.0)
@@ -408,7 +406,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   byebug
-  cancancan (~> 2.2.0)
+  cancancan (~> 3.0.0)
   capistrano
   capistrano-bundler
   capistrano-rails
