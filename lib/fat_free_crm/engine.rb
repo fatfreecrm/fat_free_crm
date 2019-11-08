@@ -14,7 +14,7 @@ module FatFreeCRM
                                         task_observer entity_observer]
 
     initializer "model_core.factories", after: "factory_bot.set_factory_paths" do
-      FactoryBot.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryBot)
+      FactoryBot.definition_file_paths << File.expand_path('../../spec/factories', __dir__) if defined?(FactoryBot)
     end
 
     initializer :append_migrations do |app|

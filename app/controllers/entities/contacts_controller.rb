@@ -51,9 +51,7 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def edit
     @account = @contact.account || Account.new(user: current_user)
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Contact.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Contact.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@contact)
   end
@@ -69,7 +67,7 @@ class ContactsController < EntitiesController
       else
         if params[:account]
           @account = if params[:account][:id].blank?
-                       if request.referer =~ /\/accounts\/(\d+)\z/
+                       if request.referer =~ %r{/accounts/(\d+)\z}
                          Account.find(Regexp.last_match[1]) # related account
                        else
                          Account.new(user: current_user)
@@ -87,13 +85,7 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@contact) do |_format|
-      unless @contact.update_with_account_and_permissions(params.permit!)
-        @account = if @contact.account
-                     @contact.account
-                   else
-                     Account.new(user: current_user)
-                   end
-      end
+      @account = @contact.account || Account.new(user: current_user) unless @contact.update_with_account_and_permissions(params.permit!)
     end
   end
 
@@ -128,9 +120,7 @@ class ContactsController < EntitiesController
     # Sorting and naming only: set the same option for Leads if the hasn't been set yet.
     if params[:sort_by]
       current_user.pref[:contacts_sort_by] = Contact.sort_by_map[params[:sort_by]]
-      if Lead.sort_by_fields.include?(params[:sort_by])
-        current_user.pref[:leads_sort_by] ||= Lead.sort_by_map[params[:sort_by]]
-      end
+      current_user.pref[:leads_sort_by] ||= Lead.sort_by_map[params[:sort_by]] if Lead.sort_by_fields.include?(params[:sort_by])
     end
     if params[:naming]
       current_user.pref[:contacts_naming] = params[:naming]

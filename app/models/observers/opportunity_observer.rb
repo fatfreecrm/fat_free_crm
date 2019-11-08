@@ -11,9 +11,7 @@ class OpportunityObserver < ActiveRecord::Observer
   @@opportunities = {}
 
   def after_create(item)
-    if item.campaign && item.stage == "won"
-      update_campaign_revenue(item.campaign, item.amount.to_f - item.discount.to_f)
-    end
+    update_campaign_revenue(item.campaign, item.amount.to_f - item.discount.to_f) if item.campaign && item.stage == "won"
   end
 
   def before_update(item)

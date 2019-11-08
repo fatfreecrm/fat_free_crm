@@ -111,7 +111,8 @@ describe CustomField do
     it "should have errors if custom field is required" do
       event = CustomField.new(name: 'cf_event', required: true)
       foo = double(cf_event: nil)
-      err = double(:errors); allow(err).to receive(:add)
+      err = double(:errors)
+      allow(err).to receive(:add)
       expect(foo).to receive(:errors).and_return(err)
       event.custom_validator(foo)
     end
@@ -119,7 +120,8 @@ describe CustomField do
     it "should have errors if custom field is longer than maxlength" do
       event = CustomField.new(name: 'cf_event', maxlength: 5)
       foo = double(cf_event: "This is too long")
-      err = double(:errors); allow(err).to receive(:add)
+      err = double(:errors)
+      allow(err).to receive(:add)
       expect(foo).to receive(:errors).and_return(err)
       event.custom_validator(foo)
     end

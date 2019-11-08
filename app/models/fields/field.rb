@@ -105,8 +105,6 @@ class Field < ActiveRecord::Base
     end
   end
 
-  protected
-
   class << self
     # Provides access to registered field_types
     #------------------------------------------------------------------------------

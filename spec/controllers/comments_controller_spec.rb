@@ -25,12 +25,12 @@ describe CommentsController do
         end
 
         it "should redirect to the asset landing page if the asset is found" do
-          get :index, params: { :"#{asset}_id" => @asset.id }
+          get :index, params: { "#{asset}_id": @asset.id }
           expect(response).to redirect_to(controller: asset.to_s.pluralize, action: :show, id: @asset.id)
         end
 
         it "should redirect to root url with warning if the asset is not found" do
-          get :index, params: { :"#{asset}_id" => @asset.id + 42 }
+          get :index, params: { "#{asset}_id": @asset.id + 42 }
           expect(flash[:warning]).not_to eq(nil)
           expect(response).to redirect_to(root_path)
         end
@@ -44,12 +44,12 @@ describe CommentsController do
         end
 
         it "should render all comments as JSON if the asset is found found" do
-          get :index, params: { :"#{asset}_id" => @asset.id }
+          get :index, params: { "#{asset}_id": @asset.id }
           expect(response.body).to eq(assigns[:comments].to_json)
         end
 
         it "JSON: should return 404 (Not Found) JSON error if the asset is not found" do
-          get :index, params: { :"#{asset}_id" => @asset.id + 42 }
+          get :index, params: { "#{asset}_id": @asset.id + 42 }
           expect(flash[:warning]).not_to eq(nil)
           expect(response.code).to eq("404")
         end
@@ -63,12 +63,12 @@ describe CommentsController do
         end
 
         it "should render all comments as XML if the asset is found found" do
-          get :index, params: { :"#{asset}_id" => @asset.id }
+          get :index, params: { "#{asset}_id": @asset.id }
           expect(response.body).to eq(assigns[:comments].to_xml)
         end
 
         it "XML: should return 404 (Not Found) XML error if the asset is not found" do
-          get :index, params: { :"#{asset}_id" => @asset.id + 42 }
+          get :index, params: { "#{asset}_id": @asset.id + 42 }
           expect(flash[:warning]).not_to eq(nil)
           expect(response.code).to eq("404")
         end
