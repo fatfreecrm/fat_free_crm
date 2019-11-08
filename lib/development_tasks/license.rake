@@ -44,8 +44,8 @@ namespace :license do
                css: "/*\n" + LICENSE_RB.gsub(/^#/, ' *').sub(/---\n/, "---\n */\n") }
 
   REGEXPS  = { ruby: /^# Copyright \(c\).*?\n(?:#.*\n)*?#-{10}-*\n/,
-               js: /^\/\/ Copyright \(c\).*?\n(?:\/\/.*\n)*?\/\/-{10}-*\n/,
-               css: /^\/\*\n \* Copyright \(c\).*?\n(?: \*.*\n)*? \*-{10}-*\n \*\/\n/ }
+               js: %r{^// Copyright \(c\).*?\n(?://.*\n)*?//-{10}-*\n},
+               css: %r{^/\*\n \* Copyright \(c\).*?\n(?: \*.*\n)*? \*-{10}-*\n \*/\n} }
 
   def expand_globs(globs)
     globs.map { |f| Dir.glob(f) }.flatten.uniq

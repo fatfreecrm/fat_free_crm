@@ -21,7 +21,7 @@ class String
   end
 
   def to_url
-    match?(/^https?:\/\//) ? self : "http://#{self}"
+    match?(%r{^https?://}) ? self : "http://#{self}"
   end
 
   def true?

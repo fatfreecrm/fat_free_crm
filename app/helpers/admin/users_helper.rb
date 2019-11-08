@@ -27,7 +27,7 @@ module Admin::UsersHelper
     summary = []
     title_and_company = user_summary_title_and_company(user)
     summary << title_and_company unless title_and_company.blank?
-    summary << t('pluralize.login', user.sign_in_count) if user.last_sign_in_at && user.sign_in_count > 0
+    summary << t('pluralize.login', user.sign_in_count) if user.last_sign_in_at && user.sign_in_count.positive?
     summary << user.email
     summary << "#{t :phone_small}: #{user.phone}" unless user.phone.blank?
     summary << "#{t :mobile_small}: #{user.mobile}" unless user.mobile.blank?

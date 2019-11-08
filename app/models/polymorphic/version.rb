@@ -35,6 +35,7 @@ class Version < PaperTrail::Version
                 .default_order
 
         break if query.empty?
+
         versions += query.select { |v| v.item.present? }
         versions.uniq! { |v| [v.item_id, v.item_type] }
         offset += limit * 2

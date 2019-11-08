@@ -160,9 +160,7 @@ class HomeController < ApplicationController
     duration = current_user.pref[:activity_duration]
     if duration
       words = duration.split("_") # "two_weeks" => 2.weeks
-      if %w[one two].include?(words.first) && %w[hour day days week weeks month].include?(words.last)
-        %w[zero one two].index(words.first).send(words.last)
-      end
+      %w[zero one two].index(words.first).send(words.last) if %w[one two].include?(words.first) && %w[hour day days week weeks month].include?(words.last)
     end
   end
 end

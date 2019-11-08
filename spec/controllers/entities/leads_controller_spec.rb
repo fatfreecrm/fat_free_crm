@@ -465,7 +465,7 @@ describe LeadsController do
 
       it "should update shared permissions for the lead" do
         @lead = create(:lead, user: current_user)
-        he  = create(:user, id: 7)
+        he = create(:user, id: 7)
         she = create(:user, id: 8)
 
         put :update, params: { id: @lead.id, lead: { access: "Shared", user_ids: %w[7 8] } }, xhr: true

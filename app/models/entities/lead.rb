@@ -52,7 +52,7 @@ class Lead < ActiveRecord::Base
 
   accepts_nested_attributes_for :business_address, allow_destroy: true
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where(['status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters])
   }
   scope :converted,    ->       { where(status: 'converted') }
@@ -123,8 +123,8 @@ class Lead < ActiveRecord::Base
   # successful promotion Lead status gets set to :converted.
   #----------------------------------------------------------------------------
   def promote(params)
-    account_params = params[:account] ? params[:account] : {}
-    opportunity_params = params[:opportunity] ? params[:opportunity] : {}
+    account_params = params[:account] || {}
+    opportunity_params = params[:opportunity] || {}
 
     account     = Account.create_or_select_for(self, account_params)
     opportunity = Opportunity.create_for(self, account, opportunity_params)

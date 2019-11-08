@@ -84,9 +84,7 @@ class CampaignsController < EntitiesController
   # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Campaign.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Campaign.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@campaign)
   end
