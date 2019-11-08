@@ -11,9 +11,7 @@ class OpportunityObserver < ActiveRecord::Observer
   @@opportunities = {}
 
   def after_create(item)
-    if item.campaign && item.stage == "won"
-      update_campaign_revenue(item.campaign, item.amount.to_f - item.discount.to_f)
-    end
+    update_campaign_revenue(item.campaign, item.amount.to_f - item.discount.to_f) if item.campaign && item.stage == "won"
   end
 
   def before_update(item)
@@ -38,7 +36,7 @@ class OpportunityObserver < ActiveRecord::Observer
   private
 
   def log_activity(item, event)
-    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.whodunnit)
+    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.request.whodunnit)
   end
 
   def update_campaign_revenue(campaign, revenue)

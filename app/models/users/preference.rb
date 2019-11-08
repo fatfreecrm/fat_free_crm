@@ -26,6 +26,7 @@ class Preference < ActiveRecord::Base
     return super(name) if name.to_s == "user_id" # get the value of belongs_to
 
     return cached_prefs[name.to_s] if cached_prefs.key?(name.to_s)
+
     cached_prefs[name.to_s] = if user.present? && pref = Preference.find_by_name_and_user_id(name.to_s, user.id)
                                 Marshal.load(Base64.decode64(pref.value))
     end

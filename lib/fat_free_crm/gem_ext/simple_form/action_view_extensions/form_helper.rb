@@ -13,9 +13,7 @@ module SimpleForm
       def simple_form_for(record, options = {}, &block)
         options[:builder] ||= SimpleForm::FormBuilder
         options[:html] ||= {}
-        unless options[:html].key?(:novalidate)
-          options[:html][:novalidate] = !SimpleForm.browser_validations
-        end
+        options[:html][:novalidate] = !SimpleForm.browser_validations unless options[:html].key?(:novalidate)
 
         with_simple_form_field_error_proc do
           form_for(record, options, &block)

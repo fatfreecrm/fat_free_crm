@@ -17,7 +17,7 @@ DROPBOX_EMAILS = {
     #{FFaker::Lorem.paragraph}
 
     Aaron
-EMAIL
+  EMAIL
 
   html: <<~EMAIL,
     From: Aaron Assembler <aaron@example.com>
@@ -34,7 +34,7 @@ EMAIL
         <p>Aaron</p>
       </body>
     </html>
-EMAIL
+  EMAIL
 
   first_line: <<~EMAIL,
     From: Aaron Assembler <aaron@example.com>
@@ -48,7 +48,7 @@ EMAIL
     #{FFaker::Lorem.paragraph}
 
     Aaron
-EMAIL
+  EMAIL
 
   first_line_lead: <<~EMAIL,
     From: Aaron Assembler <aaron@example.com>
@@ -62,7 +62,7 @@ EMAIL
     #{FFaker::Lorem.paragraph}
 
     Aaron
-EMAIL
+  EMAIL
 
   first_line_contact: <<~EMAIL,
     From: Aaron Assembler <aaron@example.com>
@@ -76,7 +76,7 @@ EMAIL
     #{FFaker::Lorem.paragraph}
 
     Aaron
-EMAIL
+  EMAIL
 
   forwarded: <<~EMAIL,
     From: Aaron Assembler <aaron@example.com>
@@ -95,9 +95,9 @@ EMAIL
     #{FFaker::Lorem.paragraph}
 
     Ben
-EMAIL
+  EMAIL
 
-  multipart: <<~EMAIL,
+  multipart: <<~EMAIL
     From: Aaron Assembler <aaron@example.com>
     To: Ben Bootloader <ben@example.com>
     Subject: Hi there
@@ -169,5 +169,5 @@ EMAIL
     ADpMhSwQ4p2Bz9o8V84oX868ufPn0KNLn64hAgA7
 
     --_006_200DA2FF7EAFC04BAD979DB9CF293BB365151E88CLEARWATERtesta_--
-EMAIL
+  EMAIL
 }

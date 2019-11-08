@@ -51,24 +51,16 @@ module OpportunitiesHelper
     msg = []
     won_or_lost = %w[won lost].include?(opportunity.stage)
 
-    if opportunity.weighted_amount != 0
-      msg << content_tag(:b, number_to_currency(opportunity.weighted_amount, precision: 0))
-    end
+    msg << content_tag(:b, number_to_currency(opportunity.weighted_amount, precision: 0)) if opportunity.weighted_amount != 0
 
     unless won_or_lost
       if detailed
-        if opportunity.amount.to_f != 0
-          msg << number_to_currency(opportunity.amount.to_f, precision: 0)
-        end
+        msg << number_to_currency(opportunity.amount.to_f, precision: 0) if opportunity.amount.to_f != 0
 
-        if opportunity.discount.to_f != 0
-          msg << t(:discount) + ' ' + number_to_currency(opportunity.discount, precision: 0)
-        end
+        msg << t(:discount) + ' ' + number_to_currency(opportunity.discount, precision: 0) if opportunity.discount.to_f != 0
       end
 
-      if opportunity.probability.to_i != 0
-        msg << t(:probability) + ' ' + opportunity.probability.to_s + '%'
-      end
+      msg << t(:probability) + ' ' + opportunity.probability.to_s + '%' if opportunity.probability.to_i != 0
     end
 
     msg << opportunity_closes_on_message(opportunity, won_or_lost)

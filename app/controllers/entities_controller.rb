@@ -184,7 +184,7 @@ class EntitiesController < ApplicationController
 
   #----------------------------------------------------------------------------
   def update_recently_viewed
-    entity.versions.create(event: :view, whodunnit: PaperTrail.whodunnit)
+    entity.versions.create(event: :view, whodunnit: PaperTrail.request.whodunnit)
   end
 
   # Somewhat simplistic parser that extracts query and hash-prefixed tags from
@@ -194,6 +194,7 @@ class EntitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def parse_query_and_tags(search_string)
     return ['', ''] if search_string.blank?
+
     query = []
     tags = []
     search_string.strip.split(/\s+/).each do |token|
@@ -229,5 +230,15 @@ class EntitiesController < ApplicationController
   def page_param
     page = params[:page]&.to_i
     [0, page].max if page
+  end
+
+  def guess_related_account(id, url, user)
+    return Account.find(id) unless id.blank?
+
+    if url =~ %r{/accounts/(\d+)\z}
+      Account.find(Regexp.last_match[1]) # related account
+    else
+      Account.new(user: user)
+    end
   end
 end

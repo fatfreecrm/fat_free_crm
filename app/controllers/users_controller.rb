@@ -115,6 +115,7 @@ class UsersController < ApplicationController
 
   def user_params
     return {} unless params[:user]
+
     params[:user][:email].try(:strip!)
     params[:user].permit(
       :username,
@@ -135,6 +136,7 @@ class UsersController < ApplicationController
 
   def avatar_params
     return {} unless params[:avatar]
+
     params[:avatar]
       .permit(:image)
       .merge(entity: @user)

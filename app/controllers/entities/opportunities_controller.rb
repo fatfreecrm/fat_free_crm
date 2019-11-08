@@ -34,8 +34,8 @@ class OpportunitiesController < EntitiesController
   #----------------------------------------------------------------------------
   def new
     @opportunity.attributes = { user: current_user, stage: Opportunity.default_stage, access: Setting.default_access, assigned_to: nil }
-    @account     = Account.new(user: current_user, access: Setting.default_access)
-    @accounts    = Account.my(current_user).order('name')
+    @account = Account.new(user: current_user, access: Setting.default_access)
+    @accounts = Account.my(current_user).order('name')
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -57,9 +57,7 @@ class OpportunitiesController < EntitiesController
     @account  = @opportunity.account || Account.new(user: current_user)
     @accounts = Account.my(current_user).order('name')
 
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Opportunity.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Opportunity.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@opportunity)
   end
@@ -81,15 +79,7 @@ class OpportunitiesController < EntitiesController
         end
       else
         @accounts = Account.my(current_user).order('name')
-        @account = if params[:account][:id].blank?
-                     if request.referer =~ /\/accounts\/(\d+)\z/
-                       Account.find(Regexp.last_match[1]) # related account
-                     else
-                       Account.new(user: current_user)
-                     end
-                   else
-                     Account.find(params[:account][:id])
-                   end
+        @account = guess_related_account(params[:account][:id], request.referer, current_user)
         @contact = Contact.find(params[:contact]) unless params[:contact].blank?
         @campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
       end
