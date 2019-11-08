@@ -14,7 +14,7 @@ module CampaignsHelper
 
   #----------------------------------------------------------------------------
   def performance(actual, target)
-    if target.to_i > 0 && actual.to_i > 0
+    if target.to_i.positive? && actual.to_i.positive?
       if target > actual
         n = 100 - actual * 100 / target
         html = content_tag(:span, "(-#{number_to_percentage(n, precision: 1)})", class: "warn")

@@ -27,6 +27,7 @@ module ApplicationHelper
   def show_flash(options = { sticky: false })
     %i[error warning info notice alert].each do |type|
       next unless flash[type]
+
       html = content_tag(:div, h(flash[type]), id: "flash")
       flash[type] = nil
       return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})".html_safe, type: "text/javascript")
@@ -49,8 +50,8 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def section(related, assets)
     asset = assets.to_s.singularize
-    create_id  = "create_#{asset}"
-    select_id  = "select_#{asset}"
+    create_id = "create_#{asset}"
+    select_id = "select_#{asset}"
     create_url = controller.send(:"new_#{asset}_path")
 
     html = tag(:br)
@@ -79,7 +80,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def rating_select(name, options = {})
     stars = Hash[(1..5).map { |star| [star, "&#9733;" * star] }].sort
-    options_for_select = %(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
+    options_for_select = %(<option value="0"#{options[:selected].to_i.zero? ? ' selected="selected"' : ''}>#{t :select_none}</option>)
     options_for_select += stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
     select_tag name, options_for_select.html_safe, options
   end
@@ -115,7 +116,6 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_delete(record, options = {})
-    object = record.is_a?(Array) ? record.last : record
     confirm = options[:confirm] || nil
 
     link_to(t(:delete) + "!",
@@ -257,7 +257,7 @@ module ApplicationHelper
       if site == :skype
         url = "callto:" + url
       else
-        url = "http://" + url unless url.match?(/^https?:\/\//)
+        url = "http://" + url unless url.match?(%r{^https?://})
       end
       link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
     end.compact.join("\n").html_safe
@@ -299,9 +299,7 @@ module ApplicationHelper
   # Ajax helper to pass browser timezone offset to the server.
   #----------------------------------------------------------------------------
   def get_browser_timezone_offset
-    unless session[:timezone_offset]
-      raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
-    end
+    raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});" unless session[:timezone_offset]
   end
 
   # Entities can have associated avatars or gravatars. Only calls Gravatar
@@ -330,17 +328,12 @@ module ApplicationHelper
 
   # Render a text field that is part of compound address.
   #----------------------------------------------------------------------------
-  def address_field(form, object, attribute, extra_styles)
+  def address_field(form, attribute, extra_styles)
     hint = "#{t(attribute)}..."
-    if object.send(attribute).blank?
-      form.text_field(attribute,
-                      style:   "margin-top: 6px; #{extra_styles}",
-                      placeholder: hint)
-    else
-      form.text_field(attribute,
-                      style:   "margin-top: 6px; #{extra_styles}",
-                      placeholder: hint)
-    end
+
+    form.text_field(attribute,
+                    style:   "margin-top: 6px; #{extra_styles}",
+                    placeholder: hint)
   end
 
   # Return true if:
@@ -392,7 +385,7 @@ module ApplicationHelper
   end
 
   def entity_filter_checkbox(name, value, count)
-    checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
+    checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i.positive?)
     url = url_for(action: :filter)
     onclick = %{
       var query = $('#query').val(),
@@ -424,7 +417,7 @@ module ApplicationHelper
       fmt_value = if email
                     link_to_email(fmt_value)
                   else
-                    fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
+                    fmt_value.gsub(%r{((http|ftp|https)://[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/\+#]*[\w\-\@?^=%&amp;/\+#])?)}, "<a href=\"\\1\">\\1</a>")
       end
       out << content_tag(:td, fmt_value, class: last_class)
     end
@@ -455,6 +448,7 @@ module ApplicationHelper
     views = FatFreeCRM::ViewFactory.views_for(controller: controller.controller_name,
                                               action: show_or_index_action)
     return nil unless views.size > 1
+
     lis = ''.html_safe
     content_tag :ul, class: 'format-buttons' do
       views.collect do |view|
@@ -480,6 +474,7 @@ module ApplicationHelper
   # <span class="timeago" datetime="2008-07-17T09:24:17Z">July 17, 2008</span>
   def timeago(time, options = {})
     return unless time
+
     options[:class] ||= "timeago"
     options[:title] = time.getutc.iso8601
     content_tag(:span, I18n.l(time), options)

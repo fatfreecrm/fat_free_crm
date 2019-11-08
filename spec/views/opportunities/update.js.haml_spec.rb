@@ -137,7 +137,7 @@ describe "/opportunities/update" do
 
       it "should show disabled accounts dropdown when called from accounts landing page" do
         render
-        expect(rendered).to include("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
+        expect(rendered).to include("crm.create_or_select_account(#{@referer =~ %r{/accounts/}})")
       end
 
       it "should redraw the [edit_opportunity] form and shake it" do

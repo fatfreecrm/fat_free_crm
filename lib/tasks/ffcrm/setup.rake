@@ -44,7 +44,12 @@ namespace :ffcrm do
 
           password ||= "manager"
           print "Password [#{password}]: "
-          echo = ->(toggle) { return if RUBY_PLATFORM.match?(/mswin/); system(toggle ? "stty echo && echo" : "stty -echo") }
+          echo = lambda { |toggle|
+            return if RUBY_PLATFORM.match?(/mswin/)
+
+            system(toggle ? "stty echo && echo" : "stty -echo")
+          }
+
           begin
             echo.call(false)
             reply = STDIN.gets.strip
@@ -69,6 +74,7 @@ namespace :ffcrm do
             break unless reply.blank?
           end
           break if reply.match?(/y(?:es)*/i)
+
           redo if reply.match?(/no*/i)
           puts "No admin user was created."
           exit

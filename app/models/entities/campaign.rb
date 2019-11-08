@@ -41,7 +41,7 @@ class Campaign < ActiveRecord::Base
 
   serialize :subscribed_users, Set
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where('status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters)
   }
   scope :created_by,  ->(user) { where(user_id: user.id) }
@@ -103,9 +103,7 @@ class Campaign < ActiveRecord::Base
   # Make sure end date > start date.
   #----------------------------------------------------------------------------
   def start_and_end_dates
-    if (starts_on && ends_on) && (starts_on > ends_on)
-      errors.add(:ends_on, :dates_not_in_sequence)
-    end
+    errors.add(:ends_on, :dates_not_in_sequence) if (starts_on && ends_on) && (starts_on > ends_on)
   end
 
   # Make sure at least one user has been selected if the campaign is being shared.

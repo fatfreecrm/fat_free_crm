@@ -54,9 +54,7 @@ module FatFreeCRM
       #--------------------------------------------------------------------------------------
       def with_explicit_keyword(email)
         first_line = plain_text_body(email).split("\n").first
-        if first_line =~ /(#{KEYWORDS.join('|')})[^a-zA-Z0-9]+(.+)$/i
-          yield Regexp.last_match[1].capitalize, Regexp.last_match[2].strip
-        end
+        yield Regexp.last_match[1].capitalize, Regexp.last_match[2].strip if first_line =~ /(#{KEYWORDS.join('|')})[^a-zA-Z0-9]+(.+)$/i
       end
 
       # Checks the email to detect assets on to/bcc addresses
@@ -68,9 +66,7 @@ module FatFreeCRM
 
         # Ignore the dropbox email address, and any address aliases
         ignored_addresses = [@settings[:address]]
-        if @settings[:address_aliases].is_a?(Array)
-          ignored_addresses += @settings[:address_aliases]
-        end
+        ignored_addresses += @settings[:address_aliases] if @settings[:address_aliases].is_a?(Array)
         recipients -= ignored_addresses
 
         # Process each recipient until email has been attached
@@ -83,9 +79,7 @@ module FatFreeCRM
       # Checks the email to detect valid email address in body (first email), detect forwarded emails
       #----------------------------------------------------------------------------------------
       def with_forwarded_recipient(email, _options = {})
-        if plain_text_body(email) =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
-          yield Regexp.last_match[1]
-        end
+        yield Regexp.last_match[1] if plain_text_body(email) =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
       end
 
       # Process pipe_separated_data or explicit keyword.
@@ -132,9 +126,7 @@ module FatFreeCRM
           asset = klass.where(["(lower(email) = ?)", recipient.downcase]).first
 
           # Leads and Contacts have an alt_email: try it if lookup by primary email has failed.
-          if !asset && klass.column_names.include?("alt_email")
-            asset = klass.where(["(lower(alt_email) = ?)", recipient.downcase]).first
-          end
+          asset = klass.where(["(lower(alt_email) = ?)", recipient.downcase]).first if !asset && klass.column_names.include?("alt_email")
 
           if asset && sender_has_permissions_for?(asset)
             attach(email, asset)
@@ -176,9 +168,7 @@ module FatFreeCRM
         )
         asset.touch
 
-        if asset.is_a?(Lead) && asset.status == "new"
-          asset.update_attribute(:status, "contacted")
-        end
+        asset.update_attribute(:status, "contacted") if asset.is_a?(Lead) && asset.status == "new"
 
         if @settings[:attach_to_account] && asset.respond_to?(:account) && asset.account
           Email.create(
