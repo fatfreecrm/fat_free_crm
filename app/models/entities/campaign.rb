@@ -32,8 +32,8 @@
 #
 
 class Campaign < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
+  belongs_to :user, optional: true # TODO: Is this really optional?
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
   has_many :leads, -> { order "id DESC" }, dependent: :destroy
   has_many :opportunities, -> { order "id DESC" }, dependent: :destroy
