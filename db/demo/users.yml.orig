@@ -1,0 +1,226 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                  :integer         not null, primary key
+#  username            :string(32)      default(""), not null
+#  email               :string(64)      default(""), not null
+#  first_name          :string(32)
+#  last_name           :string(32)
+#  title               :string(64)
+#  company             :string(64)
+#  alt_email           :string(64)
+#  phone               :string(32)
+#  mobile              :string(32)
+#  aim                 :string(32)
+#  yahoo               :string(32)
+#  google              :string(32)
+#  skype               :string(32)
+#  encrypted_password       :string(255)     default(""), not null
+#  password_salt       :string(255)     default(""), not null
+#  last_sign_in_at       :datetime
+#  current_sign_in_at    :datetime
+#  last_sign_in_ip       :string(255)
+#  current_sign_in_ip    :string(255)
+#  sign_in_count         :integer         default(0), not null
+#  deleted_at          :datetime
+#  created_at          :datetime
+#  updated_at          :datetime
+#  admin               :boolean         default(FALSE), not null
+#  suspended_at        :datetime
+#
+
+<%
+  puts "Loading users..."
+%>
+aaron:
+  id: 1
+  username: aaron
+  email: aaron@example.com
+  first_name: Aaron
+  last_name: Assembler
+  title: VP of Sales
+  company: Example International
+  alt_email:
+  phone: (800)555-1210
+  mobile: (800)555-1211
+  admin: true
+  encrypted_password: 56d91c9f1a9c549304768982fd4e2d8bc2700b403b4524c0f14136dbbe2ce4cd923156ad69f9acce8305dba4e63faa884e61fb7a256cf8f5fc7c2ce176e68e8f
+  password_salt: ce6e0200c96f4dd326b91f3967115a31421a0e7dcddc9ffb63a77f598a9fcb5326fe532dbd9836a2446e46840d398fa32c81f8f4da1a0fcfe931989e9639a013
+  last_sign_in_at: <%= login = Date.today - rand(15).days %>
+  current_sign_in_at:
+  last_sign_in_ip: 127.0.0.1
+  current_sign_in_ip: 127.0.0.1
+  sign_in_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
+
+ben:
+  id: 2
+  username: ben
+  email: ben@example.com
+  first_name: Ben
+  last_name: Bootloader
+  title: Customer Support
+  company: Example International
+  alt_email:
+  phone: (800)555-1220
+  mobile: (800)555-1221
+  admin: true
+  encrypted_password: 3b23bde6e4f766450a36f30c5076db4164ab4edf957fe602858086feb833251149a2505b8ec00330fa6d9b531ff32ec7619b2b413b5c5380007c4a021f3546c2
+  password_salt: fce13d8b784003b4fb8d030866b5c3a003a914b9d52832d02b5f85db53413bcc8dd078d3e57e6c50b9bb8e8eb520e04a5f79cfb089a8bbe224e15e840b0dc594
+  last_sign_in_at: <%= login = Date.today - rand(15).days %>
+  current_sign_in_at:
+  last_sign_in_ip: 127.0.0.1
+  current_sign_in_ip: 127.0.0.1
+  sign_in_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
+
+cindy:
+  id: 3
+  username: cindy
+  email: cindy@example.com
+  first_name: Cindy
+  last_name: Cluster
+  title: Product Manager
+  company: Example International
+  alt_email:
+  phone: (800)555-1230
+  mobile: (800)555-1231
+  admin: true
+  encrypted_password: f323dc706086eeffee9997239f6fdfbd13ef0f62b0817cea1ef199912a64601e05e3a6c9074d2248b22e9e4ce5c817a9d9339839c2ae9502c9c1350f267f7b1f
+  password_salt: bc41b1a96c66ac155c79cf68ff3a16dd97d4730bc3476575fcab3c2ae7751776cc48e6faa036961be40ed04a27690b6f5189234968d4a6fff981105f040d9014
+  last_sign_in_at: <%= login = Date.today - rand(15).days %>
+  current_sign_in_at:
+  last_sign_in_ip: 127.0.0.1
+  current_sign_in_ip: 127.0.0.1
+  sign_in_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
+
+dan:
+  id: 4
+  username: dan
+  email: dan@example.com
+  first_name: Dan
+  last_name: Debugger
+  title: Marketing Manager
+  company: Example International
+  alt_email:
+  phone: (800)555-1240
+  mobile: (800)555-1241
+  admin: true
+  encrypted_password: 508f242629443dae3777e945d59213e7f81084be9f8c71b6d06b81295e9ffac145a3c2a8870cc17598e2a7908e2107f838d29ae275cfbe4a135c67c4f27e2e58
+  password_salt: e01633b1b2396fa3be0f689b87d68a55a831c043faffba0401131338e6aab5a8492a0b47a6947f0d96dd7188f51ecc530a2d72603802c7b409f1c42ce138de0b
+  last_sign_in_at: <%= login = Date.today - rand(15).days %>
+  current_sign_in_at:
+  last_sign_in_ip: 127.0.0.1
+  current_sign_in_ip: 127.0.0.1
+  sign_in_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
+
+elizabeth:
+  id: 5
+  username: elizabeth
+  email: elizabeth@example.com
+  first_name: Elizabeth
+  last_name: Emulator
+  title: Sales Associate
+  company: Example International
+  alt_email:
+  phone: (800)555-1250
+  mobile: (800)555-1251
+  admin: true
+  encrypted_password: 5e90a6f2f5be66010c8a0eb6f2089780f453d1400e3aa4d271520f8e2a2e26d00d98d3ae2ba36854b897cbbe1f51343f4e9ce96dd4da8705ba3db5bd8b0ed0e7
+  password_salt: 80caf26a2981892f70acbc0ddb8fdd19c789163bfdefa3809355aef4bd989c8c6aa251c05b0923ef307e7b5269b6efdca380b0c28b8bf8f72ee5385a8557ed9b
+  last_sign_in_at: <%= login = Date.today - rand(15).days %>
+  current_sign_in_at:
+  last_sign_in_ip: 127.0.0.1
+  current_sign_in_ip: 127.0.0.1
+  sign_in_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
+
+frank:
+  id: 6
+  username: frank
+  email: frank@example.com
+  first_name: Frank
+  last_name: Formatter
+  title: Project Manager
+  company: Example International
+  alt_email:
+  phone: (800)555-1260
+  mobile: (800)555-1261
+  admin: true
+  encrypted_password: 1471e9dc79b636f465a529d89460fcefc8dbb0d2a14308349bd060d00dab4d35f1d91d201dbe37da4aa8c18a4430a09a6bca5babe05fb18ef3f02342dcf4e4ca
+  password_salt: 805983077fdba9438de1d84007e093f658620211e1d0087d33662a5ca387b04206d098e152aeea896ab65aa026ac1fb9ce69dbe22a45fb9b21c3b6dcad4909f3
+  last_sign_in_at: <%= login = Date.today - rand(15).days %>
+  current_sign_in_at:
+  last_sign_in_ip: 127.0.0.1
+  current_sign_in_ip: 127.0.0.1
+  sign_in_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
+
+george:
+  id: 7
+  username: george
+  email: george@example.com
+  first_name: George
+  last_name: Globals
+  title: Sales Manager
+  company: Example International
+  alt_email:
+  phone: (800)555-1270
+  mobile: (800)555-1271
+  admin: true
+  encrypted_password: 23ed19767095ab24c1c560393b5a577455ab49d595781f931905f0df072533c485b1902337ffb426dae1e70889557f5b531da8e7b782a0575cc7bd419d6a91b9
+  password_salt: 80b5c87fb4c9fa5c50815016bc0160eb08c4e22e88fee558b5e739557d5178c61b06fcbebf6c4c62f37f0f7984ccc0d025e2f073880cd655b57542343e4981b6
+  last_sign_in_at: <%= login = Date.today - rand(15).days %>
+  current_sign_in_at:
+  last_sign_in_ip: 127.0.0.1
+  current_sign_in_ip: 127.0.0.1
+  sign_in_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>
+
+heather:
+  id: 8
+  username: heather
+  email: heather@example.com
+  first_name: Heather
+  last_name: Hash
+  title: Account Manager
+  company: Example International
+  alt_email:
+  phone: (800)555-1280
+  mobile: (800)555-1281
+  admin: true
+  encrypted_password: cdd2e9ec69c553c1f690b885c1cd1fd4e976c94a28693b793eba41796b0a96ce6f7cdd05ded8a84b30a96a37d18ad7fddd7435314bd612d033ead1c43bcde4d2
+  password_salt: 729ab318245afa827a8c29e36c885c7b0d07e15193727b68a7cf5edac517e4d6fcafa4e5ddfff9c9305d3ccd37ef735823ba66ba8e2876fd2b06c7c27f3c9482
+  last_sign_in_at: <%= login = Date.today - rand(15).days %>
+  current_sign_in_at:
+  last_sign_in_ip: 127.0.0.1
+  current_sign_in_ip: 127.0.0.1
+  sign_in_count: <%= 1 + rand(100) %>
+  deleted_at:
+  created_at: <%= login - rand(5).days %>
+  updated_at: <%= login + rand(5).days %>
+  confirmed_at: <%= Time.now.utc %>

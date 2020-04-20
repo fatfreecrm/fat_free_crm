@@ -22,9 +22,9 @@ en-US:
   tab_tasks: Tasks
   tab_campaigns: Campaigns
   tab_leads: Leads
-  tab_accounts: Accounts
+  tab_accounts: Cases
   tab_contacts: Contacts
-  tab_opportunities: Opportunities
+  tab_opportunities: Traces
   tab_team: Team
   admin_tab_groups: Groups
   admin_tab_users: Users
@@ -45,6 +45,26 @@ en-US:
   called_off: Called Off
   new: New
   contacted: Contacted
+
+  contacted: Contacted
+  symptomatic: Symptomatic
+  infected: Tested-Infected
+  not_infected: Tested-Not Infected
+  quarantined: Quarantined
+  hospitalized: Hospitalized
+  recovered: Recovered
+  deceased: Deceased
+  employed_onsite: Employed-Onsite
+  employed_remote: Employed Remote
+  unemployed_covid: Unemployed-Covid
+  unemployed_non_covid: Unemployed-Non Covid
+
+  contact_trace: Contract Trace
+  provider: Provider
+  agency: Agency
+  immediate_family: Immediate Family
+  friend: Friend
+  
   converted: Converted
   rejected: Rejected
   cold_call: Cold Call
@@ -55,6 +75,9 @@ en-US:
   web: Website
   word_of_mouth: Word of Mouth
   other: Other
+
+
+  discovery: Discovery
   prospecting: Prospecting
   analysis: Analysis
   presentation: Presentation
@@ -63,8 +86,13 @@ en-US:
   final_review: Final Review
   won: Closed/Won
   lost: Closed/Lost
+
   call: Call
   email: Email
+
+  home_interview: Home Interview 
+  work_interview: Work Interview
+
   follow_up: Follow-up
   lunch: Lunch
   meeting: Meeting
@@ -107,9 +135,9 @@ en-US:
         account:
           attributes:
             name:
-              missing_account_name: ^Please specify account name.
+              missing_account_name: ^Please specify case name.
             access:
-              share_account: ^Please specify users with whom to share the account.
+              share_account: ^Please specify users with whom to share the case.
         campaign:
           attributes:
             name:
@@ -138,9 +166,9 @@ en-US:
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: ^Please specify opportunity name.
+              missing_opportunity_name: ^Please specify trace name.
             access:
-              share_opportunity: ^Please specify users with whom to share the opportunity.
+              share_opportunity: ^Please specify users with whom to share the trace.
         task:
           attributes:
             name:
@@ -163,14 +191,15 @@ en-US:
     attribute_options:
       opportunity:
         stage:
-          prospecting: Prospecting
+          discovery: Discovery
+          # prospecting: Prospecting
           analysis: Analysis
-          presentation: Presentation
-          proposal: Proposal
-          negotiation: Negotiation
+          # presentation: Presentation
+          # proposal: Proposal
+          # negotiation: Negotiation
           final_review: Final Review
-          won: Closed/Won
-          lost: Closed/Lost
+          won: Closed/Concluded
+          lost: Closed/Inconclusive
       account:
         rating:
           "0": "-"
@@ -201,7 +230,7 @@ en-US:
   msg_cant_do: Can't %{action} the %{asset} since it's no longer available.
   msg_email_not_found: No user was found with that email address.
   msg_enter_new_password: Please enter your new password.
-  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
+  msg_goodbye: You have been logged out. Thank you for using DC COVID-19 Exchange!
   msg_invalid_password: ^Please specify valid current password
   msg_invalig_login: Invalid username or password.
   msg_last_login: Your last login was on %{value}.
@@ -213,8 +242,8 @@ en-US:
   msg_pwd_instructions_sent: Instructions to reset your password have been sent to
     you. Please check your email.
   msg_require_admin: You must be Administrator to access this page.
-  msg_successful_signup: Successful signup, welcome to Fat Free CRM!
-  msg_welcome: Welcome to Fat Free CRM!
+  msg_successful_signup: Successful signup, welcome to DC COVID-19 Exchange!
+  msg_welcome: Welcome to DC COVID-19 Exchange!
   msg_user_updated: Profile updated successfully.
 
   # Options.
@@ -309,18 +338,18 @@ en-US:
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------
-  account: Account
-  account_id: Account
-  select_an_account: Select an Account
-  account_small: account
-  account_summary: Account Summary
-  account_categories: Account Categories
-  accounts: Accounts
-  accounts_options: Accounts Options
-  accounts_small: accounts
+  account: Case
+  account_id: Case
+  select_an_account: Select a Case
+  account_small: case
+  account_summary: Case Summary
+  account_categories: Case Categories
+  accounts: Cases
+  accounts_options: Cases Options
+  accounts_small: cases
   assigned_to: Assigned to
   billing_address: Billing address
-  create_account: Create Account
+  create_account: Create Case
   date_created: Date Created
   date_updated: Date Updated
   fax: Fax
@@ -334,10 +363,10 @@ en-US:
   phone_toll_free: Toll-free
   pipeline: Pipeline
   same_as_billing: same as billing
-  save_account: Save Account
+  save_account: Save Case
   share_with: Share it with the following people
   shipping_address: Shipping address
-  total_accounts: Total Accounts
+  total_accounts: Total Cases
   website: Website
   account_with_title_department: ! '%{title}, %{department} at %{account}'
   account_with_title: ! '%{title} at %{account}'
@@ -436,10 +465,10 @@ en-US:
   convert_lead_permissions_intro: Contact permissions will be copied from the lead
     being converted. You can change contact permissions later.
   convert_lead_text: By converting the lead %{value} will become a contact associated
-    with the existing or newly created account. Lead status will be automatically
+    with the existing or newly created case. Lead status will be automatically
     set to converted.
   create_lead: Create Lead
-  create_opp_for_contact: You can optionally create an opportunity for the %{value}
+  create_opp_for_contact: You can optionally create a Trace for the %{value}
     contact by specifying the name, current stage, estimated closing date, sale probability,
     amount of the deal, and the discount offered.
   lead: Lead
@@ -476,7 +505,7 @@ en-US:
   closed_ago_on: closed %{time_ago} ago on %{date}
   closes_today: expected to close today!
   closing_date: closing date is %{value}
-  create_opportunity: Create Opportunity
+  create_opportunity: Create Trace
   currency: ($)
   days_late: Late by
   days_left: Days left
@@ -486,21 +515,21 @@ en-US:
   from: from
   no_closing_date: no expected closing date
   no_discount: with no discount
-  opportunities: Opportunities
-  opportunities_options: Opportunities Options
-  opportunities_small: opportunities
-  opportunity: Opportunity
-  opportunity_small: opportunity
-  opportunity_stages: Opportunity Stages
-  opportunity_summary: Opportunity At a Glance
+  opportunities: Traces
+  opportunities_options: Traces Options
+  opportunities_small: traces
+  opportunity: Trace
+  opportunity_small: trace
+  opportunity_stages: Trace Stages
+  opportunity_summary: Trace At a Glance
   opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability}
     probability'
   past_due: past due, was expected to close %{value} ago
   probability: Probability
   probability_number: and %{value} probability
-  save_opportunity: Save Opportunity
+  save_opportunity: Save Trace
   stage: Stage
-  total_opportunities: Total Opportunities
+  total_opportunities: Total Traces
   weighted_amount: Weighted amount
 
   # Views -> Tasks.
@@ -566,14 +595,14 @@ en-US:
   no_activity_records: No activity records found.
   recent_activity: Recent Activity
   recent_activity_options: Recent Activity Options
-  subject_account: account
+  subject_account: case
   subject_address: address on
   subject_campaign: campaign
   subject_comment: comment on
   subject_contact: contact
   subject_email: email on
   subject_lead: lead
-  subject_opportunity: opportunity
+  subject_opportunity: trace
   subject_task: task
   subject_user: user
   tag_list: Tags
@@ -585,10 +614,10 @@ en-US:
   action_create_comment: ! '- &quot;%{comment}&quot;'
   my_tasks: My Tasks
   no_task_records: You have no tasks.
-  my_opportunities: My Opportunities
-  no_opportunity_records: You have no opportunities.
-  my_accounts: My Accounts
-  no_account_records: You have no accounts
+  my_opportunities: My Traces
+  no_opportunity_records: You have no traces.
+  my_accounts: My Cases
+  no_account_records: You have no cases
   not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
 
   # Views -> Common.
@@ -628,7 +657,7 @@ en-US:
   select_contact: Select Contact
   select_lead: Select Lead
   select_task: Select Task
-  select_opportunity: Select Opportunity
+  select_opportunity: Select Trace
   search_assets: Search %{value}
   time_ago: ! '%{value} ago'
   background_info: Background
@@ -650,12 +679,12 @@ en-US:
   about: About
   about_dev_group: Discussion group for developers
   about_features: Features and bugs
-  about_ffc: About Fat Free CRM
-  about_ffc_resources: Fat Free CRM resources (links open a new window)
-  about_ffc_version: Fat Free CRM version
+  about_ffc: About COVID-19 Exchange
+  about_ffc_resources: COVID-19 Exchange resources (links open a new window)
+  about_ffc_version: COVID-19 Exchange version
   about_home_page: Home page
   about_project_page: Project page
-  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and
+  about_thank_you: Thank you for using COVID-19 Exchange! We appreciate your business and
     hope you enjoy using the software.
   about_twitter: Twitter commit updates
   about_user_group: Discussion group for users
@@ -665,7 +694,7 @@ en-US:
   welcome: Welcome
 
   # Advanced search
-  accounts_advanced_search: Accounts Advanced search
+  accounts_advanced_search: Cases Advanced search
   advanced_search: Advanced search
   basic_search: Basic search
   search_results_count:
@@ -697,8 +726,8 @@ en-US:
 
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  back_to_crm: Back to COVID-19 Exchange
+  crm_admin_page: COVID-19 Exchange Administration
 
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
@@ -795,8 +824,8 @@ en-US:
       one: 1 contact
       other: ! '%{count} contacts'
     opportunity:
-      one: 1 opportunity
-      other: ! '%{count} opportunities'
+      one: 1 trace
+      other: ! '%{count} traces'
     lead:
       one: 1 lead
       other: ! '%{count} leads'
