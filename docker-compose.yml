@@ -10,9 +10,9 @@ services:
     volumes:
       - gems:/usr/local/rvm/gems
     environment:
-      RAILS_ENV: 'production'
-      PASSENGER_APP_ENV: 'production'
-      DB_DATABASE: 'fat_free_crm_production'
+      RAILS_ENV: 'development'
+      PASSENGER_APP_ENV: 'development'
+      DB_DATABASE: 'fat_free_crm_development'
       DB_USERNAME: 'postgres'
       DB_PASSWORD: ''
       DB_HOST: 'db'
@@ -22,6 +22,9 @@ services:
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
 volumes:
   pgdata: {}
   gems: {}

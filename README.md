@@ -1,3 +1,9 @@
+# Ideacrew Quickstart Instructions
+`docker-compose build # build the containers`
+`docker-compose run web rake db:create # create the DB`
+`docker-compose run web rake db:migrate # migrate the DB`
+`docker-compose up # start the DB and Rails`
+
 # Fat Free CRM [![TravisCI][travis-img-url]][travis-ci-url]  [![Code Climate][codeclimate-img-url]][codeclimate-url]
 
 [travis-img-url]: https://secure.travis-ci.org/fatfreecrm/fat_free_crm.svg?branch=master

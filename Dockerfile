@@ -22,7 +22,7 @@ RUN apt-get update && \
 	bundle install --deployment && \
 	bundle exec rails assets:precompile
 
-CMD ["bundle","exec","rails","s"]
+CMD ["bundle","exec","rails","s","-b","0.0.0.0"]
 
 EXPOSE 3000
 
