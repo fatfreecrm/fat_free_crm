@@ -7,7 +7,7 @@ class DropOpenidTables < ActiveRecord::Migration[4.2]
   end
 
   def self.down # see 003_create_openid_tables.rb
-    create_table :open_id_authentication_associations, force: true do |t|
+    create_table :open_id_authentication_associations do |t|
       t.integer :issued
       t.integer :lifetime
       t.string :handle
@@ -16,7 +16,7 @@ class DropOpenidTables < ActiveRecord::Migration[4.2]
       t.binary :secret
     end
 
-    create_table :open_id_authentication_nonces, force: true do |t|
+    create_table :open_id_authentication_nonces do |t|
       t.integer :timestamp, null: false
       t.string :server_url, null: true
       t.string :salt,       null: false

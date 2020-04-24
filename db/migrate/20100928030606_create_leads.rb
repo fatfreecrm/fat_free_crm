@@ -2,7 +2,7 @@
 
 class CreateLeads < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :leads, force: true do |t|
+    create_table :leads do |t|
       t.string :uuid, limit: 36
       t.references :user
       t.references :campaign

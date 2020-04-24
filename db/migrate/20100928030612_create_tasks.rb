@@ -2,7 +2,7 @@
 
 class CreateTasks < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :tasks, force: true do |t|
+    create_table :tasks do |t|
       t.string :uuid, limit: 36
       t.references :user
       t.integer :assigned_to

@@ -2,7 +2,7 @@
 
 class CreateActivities < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :activities, force: true do |t|
+    create_table :activities do |t|
       t.references :user                                # User who's activity gets recorded.
       t.references :subject, polymorphic: true          # Points to related asset (account, contact, etc.).
       t.string :action,  limit: 32, default: "created"  # Action taken: created, updated, deleted.

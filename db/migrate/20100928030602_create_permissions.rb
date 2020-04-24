@@ -2,7 +2,7 @@
 
 class CreatePermissions < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :permissions, force: true do |t|
+    create_table :permissions do |t|
       t.references :user                      # User who is allowed to access the asset.
       t.references :asset, polymorphic: true  # Creates asset_id and asset_type.
       t.timestamps

@@ -2,7 +2,7 @@
 
 class CreateOpportunities < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :opportunities, force: true do |t|
+    create_table :opportunities do |t|
       t.string :uuid, limit: 36
       t.references :user
       t.references :campaign

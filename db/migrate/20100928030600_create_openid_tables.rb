@@ -2,7 +2,7 @@
 
 class CreateOpenidTables < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :open_id_authentication_associations, force: true do |t|
+    create_table :open_id_authentication_associations do |t|
       t.integer :issued
       t.integer :lifetime
       t.string :handle
@@ -11,7 +11,7 @@ class CreateOpenidTables < ActiveRecord::Migration[4.2]
       t.binary :secret
     end
 
-    create_table :open_id_authentication_nonces, force: true do |t|
+    create_table :open_id_authentication_nonces do |t|
       t.integer :timestamp, null: false
       t.string :server_url, null: true
       t.string :salt,       null: false

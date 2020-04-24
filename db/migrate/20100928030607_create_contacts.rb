@@ -2,7 +2,7 @@
 
 class CreateContacts < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :contacts, force: true do |t|
+    create_table :contacts do |t|
       t.string :uuid, limit: 36
       t.references :user
       t.references :lead

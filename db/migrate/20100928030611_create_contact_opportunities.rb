@@ -2,7 +2,7 @@
 
 class CreateContactOpportunities < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :contact_opportunities, force: true do |t|
+    create_table :contact_opportunities do |t|
       t.references :contact
       t.references :opportunity
       t.string :role, limit: 32

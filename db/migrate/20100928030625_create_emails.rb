@@ -2,7 +2,7 @@
 
 class CreateEmails < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :emails, force: true do |t|
+    create_table :emails do |t|
       t.string :imap_message_id, null: false     # IMAP internal message identifier.
       t.references :user                         # User who created the email.
       t.references :mediator, polymorphic: true  # Identifies where the email is attached to.

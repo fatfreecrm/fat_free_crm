@@ -2,7 +2,7 @@
 
 class CreateAccountOpportunities < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :account_opportunities, force: true do |t|
+    create_table :account_opportunities do |t|
       t.references :account
       t.references :opportunity
       t.datetime :deleted_at

@@ -2,7 +2,7 @@
 
 class CreateAccounts < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :accounts, force: true do |t|
+    create_table :accounts do |t|
       t.string :uuid, limit: 36
       t.references :user
       t.integer :assigned_to

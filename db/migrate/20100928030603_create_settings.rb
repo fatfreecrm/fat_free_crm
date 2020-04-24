@@ -2,7 +2,7 @@
 
 class CreateSettings < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :settings, force: true do |t|
+    create_table :settings do |t|
       t.string :name, limit: 32, null: false, default: ""
       t.text :value
       t.text :default_value

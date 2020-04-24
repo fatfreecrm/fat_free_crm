@@ -2,7 +2,7 @@
 
 class CreateUsers < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :users, force: true do |t|
+    create_table :users do |t|
       t.string :uuid,             limit: 36
       t.string :username,         null: false, default: "", limit: 32
       t.string :email,            null: false, default: "", limit: 64

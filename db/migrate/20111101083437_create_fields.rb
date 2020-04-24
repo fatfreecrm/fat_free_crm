@@ -2,7 +2,7 @@
 
 class CreateFields < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :fields, force: true do |t|
+    create_table :fields do |t|
       t.string :type
       t.references :field_group
       t.string :klass_name,  limit: 32
