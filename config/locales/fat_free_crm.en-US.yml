@@ -22,9 +22,9 @@ en-US:
   tab_tasks: Tasks
   tab_campaigns: Campaigns
   tab_leads: Leads
-  tab_accounts: Cases
+  tab_accounts: Index Cases
   tab_contacts: Contacts
-  tab_opportunities: Traces
+  tab_opportunities: Resources
   tab_team: Team
   admin_tab_groups: Groups
   admin_tab_users: Users
@@ -50,18 +50,18 @@ en-US:
 
   non_responsive: Non-Responsive
   symptomatic: Symptomatic
-  test_positive: Tested Positive
-  test_negative: Tested Negative
+  tested: Tested
   hospitalized: Hospitalized
   recovered: Recovered
   deceased: Deceased
+  presumptive: Presumptive
 
   employed_onsite: Employed-Onsite
   employed_remote: Employed Remote
   unemployed_covid: Unemployed-Covid
   unemployed_non_covid: Unemployed-Non Covid
 
-  contact_trace: Contract Trace
+  contact_opportunity: Contact Resource
   provider: Provider
   agency: Agency
   immediate_family: Immediate Family
@@ -91,6 +91,10 @@ en-US:
   final_review: Final Review
   won: Closed/Won
   lost: Closed/Lost
+
+  referred: Referred
+  completed: Closed/Comp
+  not_completed: Closed/InComp
 
   call: Call
   email: Email
@@ -171,9 +175,9 @@ en-US:
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: ^Please specify trace name.
+              missing_opportunity_name: ^Please specify resource name.
             access:
-              share_opportunity: ^Please specify users with whom to share the trace.
+              share_opportunity: ^Please specify users with whom to share the resource.
         task:
           attributes:
             name:
@@ -473,7 +477,7 @@ en-US:
     with the existing or newly created Index Case. Lead status will be automatically
     set to converted.
   create_lead: Create Lead
-  create_opp_for_contact: You can optionally create a Contact Trace for the %{value}
+  create_opp_for_contact: You can optionally create a Contact Resource for the %{value}
     contact by specifying the name and current stage.
   lead: Lead
   lead_info_small: lead contact
@@ -509,7 +513,7 @@ en-US:
   closed_ago_on: closed %{time_ago} ago on %{date}
   closes_today: expected to close today!
   closing_date: closing date is %{value}
-  create_opportunity: Create Trace
+  create_opportunity: Create Resource
   currency: ($)
   days_late: Late by
   days_left: Days left
@@ -519,21 +523,21 @@ en-US:
   from: from
   no_closing_date: no expected closing date
   no_discount: with no discount
-  opportunities: Traces
-  opportunities_options: Traces Options
-  opportunities_small: traces
-  opportunity: Trace
-  opportunity_small: trace
-  opportunity_stages: Trace Stages
-  opportunity_summary: Trace At a Glance
+  opportunities: Resources
+  opportunities_options: Resources Options
+  opportunities_small: resources
+  opportunity: Resource
+  opportunity_small: resource
+  opportunity_stages: Resource Stages
+  opportunity_summary: Resource At a Glance
   opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability}
     probability'
   past_due: past due, was expected to close %{value} ago
   probability: Probability
   probability_number: and %{value} probability
-  save_opportunity: Save Trace
+  save_opportunity: Save Resource
   stage: Stage
-  total_opportunities: Total Traces
+  total_opportunities: Total Resources
   weighted_amount: Weighted amount
 
   # Views -> Tasks.
@@ -606,7 +610,7 @@ en-US:
   subject_contact: contact
   subject_email: email on
   subject_lead: lead
-  subject_opportunity: trace
+  subject_opportunity: resource
   subject_task: task
   subject_user: user
   tag_list: Tags
@@ -618,8 +622,8 @@ en-US:
   action_create_comment: ! '- &quot;%{comment}&quot;'
   my_tasks: My Tasks
   no_task_records: You have no tasks.
-  my_opportunities: My Traces
-  no_opportunity_records: You have no traces.
+  my_opportunities: My Resources
+  no_opportunity_records: You have no resources.
   my_accounts: My Cases
   no_account_records: You have no cases
   not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
@@ -661,7 +665,7 @@ en-US:
   select_contact: Select Contact
   select_lead: Select Lead
   select_task: Select Task
-  select_opportunity: Select Trace
+  select_opportunity: Select Resource
   search_assets: Search %{value}
   time_ago: ! '%{value} ago'
   background_info: Background
@@ -828,8 +832,8 @@ en-US:
       one: 1 contact
       other: ! '%{count} contacts'
     opportunity:
-      one: 1 trace
-      other: ! '%{count} traces'
+      one: 1 resource
+      other: ! '%{count} resources'
     lead:
       one: 1 lead
       other: ! '%{count} leads'
