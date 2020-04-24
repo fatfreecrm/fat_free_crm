@@ -19,3 +19,7 @@ Rails.application.config.assets.precompile += ['print.css', 'jquery-ui/*', 'jque
 
 # Don't initialize Rails environment
 Rails.application.config.assets.initialize_on_precompile = false
+Rails.application.config.assets.precompile += %w(1x1.gif avatar.jpg facebook.gif info_tiny.png loading.gif skype.gif stars.gif)
+Rails.application.config.assets.precompile += %w(asterisk.gif blog.gif info.png linkedin.gif notifications.png sortable.gif twitter.gif)
+Rails.application.config.assets.precompile += %w(application.js)
+Rails.application.config.assets.precompile += %w(application.css)

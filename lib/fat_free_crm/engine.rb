@@ -30,5 +30,11 @@ module FatFreeCRM
         require_dependency(c)
       end
     end
+
+    initializer 'fat_free_crm.assets.precompile' do |config|
+      #app.config.assets.precompile += %w( admin.js admin.css )
+      Rails.application.config.assets.paths << root.join("app", "assets", "javascripts")
+      Rails.application.config.assets.paths << root.join("app", "assets", "stylesheets")
+    end
   end
 end

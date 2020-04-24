@@ -1,0 +1,1 @@
+//= link loading.gif
