@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   has_many :permissions, dependent: :destroy
   has_many :preferences, dependent: :destroy
   has_many :lists
-  has_and_belongs_to_many :groups
+  has_and_belongs_to_many :groups, optional: true
 
   has_paper_trail class_name: 'Version', ignore: [:last_sign_in_at]
 
