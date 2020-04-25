@@ -9,7 +9,7 @@ $color_logo: greenyellow;
 $color_tab: white;
 $color_tab_background: #466bb1;
 $color_active_tab: black;
-$color_active_tab_background: #E5E5E5;
+$color_active_tab_background: #e5e5e5;
 $color_hover_tab: navy;
 $color_hover_tab_background: #97baff;
 $size_tab_height: 26px;
@@ -26,7 +26,8 @@ $color_footer: grey;
     background: $color_header_background;
     color: $color_logo;
     font: normal 15px "Lucida Grande", Arial, Helvetica, sans-serif;
-    text-decoration: none; }
+    text-decoration: none;
+  }
   #welcome {
     float: right;
     font-size: 11px;
@@ -36,16 +37,22 @@ $color_footer: grey;
       text-decoration: none;
       &:hover {
         background: $color_header_background;
-        color: yellow; } }
+        color: yellow;
+      }
+    }
     a.selected {
       background: steelblue;
       color: lightyellow;
       -moz-border-radius: {
         topleft: 2px;
-        topright: 2px; };
+        topright: 2px;
+      }
       -webkit-border: {
         top-left-radius: 2px;
-        top-right-radius: 2px; }; } }
+        top-right-radius: 2px;
+      }
+    }
+  }
   #jumpbox {
     background: steelblue;
     margin: 2px 0px 0px 0px;
@@ -53,22 +60,32 @@ $color_footer: grey;
     position: absolute;
     -moz-border-radius: {
       bottomleft: 6px;
-      bottomright: 6px; };
+      bottomright: 6px;
+    }
     -webkit-border: {
       bottom-left-radius: 6px;
-      bottom-right-radius: 6px; };
+      bottom-right-radius: 6px;
+    }
     #jumpbox_menu {
       a {
         color: white;
         padding: 0px 0px 4px 0px;
         &.selected {
-          color: navy; }
+          color: navy;
+        }
         &:hover {
-          background: steelblue; } } }
+          background: steelblue;
+        }
+      }
+    }
     #jumpbox_label {
-      color: white; }
+      color: white;
+    }
     input {
-      margin: 2px 0px 0px 0px; } } }
+      margin: 2px 0px 0px 0px;
+    }
+  }
+}
 
 .tabs {
   background: $color_header_background;
@@ -76,24 +93,30 @@ $color_footer: grey;
   padding: 0px;
   text-align: center;
   width: 100%;
-  i.fa { 
-    font-size: 130%; 
-    vertical-align:text-top; }
+  i.fa {
+    font-size: 130%;
+    vertical-align: text-top;
+  }
   ul {
     // :margin 0px 25%,  18% for 5th tab
-    margin-left: 15px; }
+    margin-left: 15px;
+    margin-bottom: 0;
+  }
   li {
     float: left;
     font-size: 12px;
     line-height: 16px;
     list-style: none;
-    margin: 0px 4px 0px 1px; }
-  a:link, a:visited {
+    margin: 0px 4px 0px 1px;
+  }
+  a:link,
+  a:visited {
     img {
       background: none;
       vertical-align: bottom;
       float: none;
-      margin-right: 7px; }
+      margin-right: 7px;
+    }
     background: $color_tab_background;
     color: white;
     float: left;
@@ -102,20 +125,28 @@ $color_footer: grey;
     text-decoration: none;
     -moz-border-radius: {
       topleft: 3px;
-      topright: 3px; };
+      topright: 3px;
+    }
     -webkit-border-top: {
       left-radius: 3px;
-      right-radius: 3px; }; }
+      right-radius: 3px;
+    }
+  }
   a:hover {
     background: $color_hover_tab_background;
-    color: $color_hover_tab; }
-  a:link.active, a:visited.active {
+    color: $color_hover_tab;
+  }
+  a:link.active,
+  a:visited.active {
     background: $color_active_tab_background;
     color: $color_active_tab;
-    text-decoration: none; } }
+    text-decoration: none;
+  }
+}
 
 #footer {
   color: $color_footer;
   font-size: 10px;
   padding: 0px 0px 0px 16px;
-  text-align: center; }
+  text-align: center;
+}

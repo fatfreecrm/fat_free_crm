@@ -12,46 +12,72 @@ $color_link_image_background: white;
 
 // Standard HTML tags.
 //------------------------------------------------------------------------------
-html, body {
+html,
+body {
   background: $color_body;
   font: {
     size-adjust: none;
     stretch: normal;
     style: normal;
     variant: normal;
-    weight: normal; };
+    weight: normal;
+  }
   height: 100%;
-  line-height: normal; }
+  line-height: normal;
+}
 
-body, ol, ul, li, dt, tt, label, input, select, textarea {
+body,
+ol,
+ul,
+li,
+dt,
+tt,
+label,
+input,
+select,
+textarea {
   font: {
     size: 12px;
-    family: "Lucida Grande", Geneva, Arial, Helvetica, sans-serif; }; }
+    family: "Lucida Grande", Geneva, Arial, Helvetica, sans-serif;
+  }
+}
 
-body, h1, h2, h3, h4, h5, h6, ol, ul, li {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+ul,
+li {
   margin: 0px;
-  padding: 0px; }
+  padding: 0px;
+}
 
 form {
-  margin: 0px; }
+  margin: 0px;
+}
 
 ul li {
-  list-style-type: none; }
+  list-style-type: none;
+}
 
 // Links.
 //------------------------------------------------------------------------------
-a {
-  text-decoration: none;
-  &:link, &:visited {
-    color: $color_link; }
-  &:hover {
-    background: $color_link_hover_background;
-    color: $color_link_hover; }
-  img {
-    background-color: $color_link_image_background;
-    border: none;
-    color: $color_link_image;
-    text-decoration: none; } }
+// a {
+//   text-decoration: none;
+//   &:link, &:visited {
+//     color: $color_link; }
+//   &:hover {
+//     background: $color_link_hover_background;
+//     color: $color_link_hover; }
+//   img {
+//     background-color: $color_link_image_background;
+//     border: none;
+//     color: $color_link_image;
+//     text-decoration: none; } }
 
 #options {
   a {
@@ -61,18 +87,25 @@ a {
     &:hover {
       background: $color_body;
       border-bottom: 1px dotted darkblue;
-      color: darkblue; } } }
+      color: darkblue;
+    }
+  }
+}
 
 // Smaller fonts.
 //------------------------------------------------------------------------------
 abbr {
-  font-size: 9px; }
+  font-size: 9px;
+}
 
 small {
-  font-size: 10px; }
+  font-size: 10px;
+}
 
 dt {
-  font-size: 11px; }
+  font-size: 11px;
+}
 
 tt {
-  font-size: 12px; }
+  font-size: 12px;
+}
