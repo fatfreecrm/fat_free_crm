@@ -15,5 +15,4 @@
 
     .buttonbar
       = f.submit t(:save_contact), onclick: "crm.save_contact()", :class => 'btn btn-primary'
-      #{t :or}
       = link_to_cancel edit_contact_path(@contact), :class => 'btn btn-link'

@@ -27,6 +27,5 @@
       = f.input :remember_me, as: :boolean, inline_label: t('remember_me')
     %br
     .buttonbar
-      = f.submit t(:login)
-      = t(:or)
-      = link_to t(:forgot_password) + '?', new_password_path(resource_name)
+      = f.submit t(:login), :class => 'btn btn-primary'
+      = link_to t(:forgot_password) + '?', new_password_path(resource_name), :class => 'btn btn-link'

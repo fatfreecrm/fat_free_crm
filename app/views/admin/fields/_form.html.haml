@@ -28,8 +28,7 @@
 
     .buttonbar
       - if new_field
-        = f.submit t(:create_field), id: :field_submit
+        = f.submit t(:create_field), id: :field_submit, :class => 'btn btn-primary'
       - else
-        = f.submit t(:save_field), id: :field_submit
-      or
-      = link_to( t(:cancel), '#', class: 'cancel' )
+        = f.submit t(:save_field), id: :field_submit, :class => 'btn btn-primary'
+      = link_to( t(:cancel), '#', class: 'cancel btn btn-link' )

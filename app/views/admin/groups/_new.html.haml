@@ -7,6 +7,5 @@
   = render "admin/groups/form", f: f
 
   .buttonbar
-    = f.submit t(:create_group)
-    #{t :or}
-    = link_to_cancel new_admin_group_path
+    = f.submit t(:create_group), :class => 'btn btn-primary'
+    = link_to_cancel new_admin_group_path, :class => 'btn btn-link'

@@ -9,6 +9,5 @@
   = render "fields/groups", f: f
 
   .buttonbar
-    = f.submit t :create_task
-    #{t :or}
-    = link_to_cancel new_task_path + "?view=#{@view}"
+    = f.submit t(:create_task), :class => 'btn btn-primary'
+    = link_to_cancel new_task_path + "?view=#{@view}", :class => 'btn btn-link'

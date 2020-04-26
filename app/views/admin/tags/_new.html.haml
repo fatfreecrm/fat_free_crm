@@ -5,6 +5,5 @@
   = f.error_messages
   = render partial: "top_section", locals: { f: f }
   .buttonbar
-    = f.submit t(:create_tag), id: :tag_submit
-    or
-    = link_to_cancel path
+    = f.submit t(:create_tag), id: :tag_submit, :class => 'btn btn-primary'
+    = link_to_cancel path, :class => 'btn btn-link'

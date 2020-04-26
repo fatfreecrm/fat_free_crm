@@ -30,7 +30,8 @@ module AccountsHelper
     accounts = ([@account.new_record? ? nil : @account] + Account.my(current_user).order(:name).limit(25)).compact.uniq
     collection_select :account, :id, accounts, :id, :name,
                       { include_blank: true },
-                      style: 'width:330px;', class: 'select2',
+                      style: 'display: none;',
+                      class: 'form-control',
                       placeholder: t(:select_an_account),
                       "data-url": auto_complete_accounts_path(format: 'json')
   end
@@ -41,7 +42,7 @@ module AccountsHelper
     options = {}
     yield options if block_given?
 
-    content_tag(:div, class: 'label') do
+    content_tag(:label, class: 'label') do
       t(:account).html_safe +
         content_tag(:span, id: 'account_create_title') do
           " (#{t :create_new} #{t :or} <a href='#' onclick='crm.show_select_account(); return false;'>#{t :select_existing}</a>):".html_safe
@@ -52,7 +53,7 @@ module AccountsHelper
         content_tag(:span, ':', id: 'account_disabled_title')
     end +
       account_select(options) +
-      form.text_field(:name, style: 'width:324px; display:none;')
+      form.text_field(:name, style: 'display:none;', class: "form-control" )
   end
 
   # Output account url for a given contact

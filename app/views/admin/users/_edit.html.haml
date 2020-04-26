@@ -6,6 +6,5 @@
 
     = render "admin/users/profile", f: f, edit: true
     .buttonbar
-      = f.submit t(:save_user)
-      #{t :or}
-      = link_to_cancel edit_admin_user_path(@user)
+      = f.submit t(:save_user), :class => 'btn btn-primary'
+      = link_to_cancel edit_admin_user_path(@user), :class => 'btn btn-link'

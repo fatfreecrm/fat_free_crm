@@ -12,9 +12,6 @@
 
     .buttonbar
       %small.cool{style: "float:right"}== #{t :gravatar_help} #{link_to(t(:here), "https://en.gravatar.com", :"data-popup" => true)}.
-      = f.submit t(:upload_picture), id: "user_avatar_submit"
-      #{t :or}
-      = link_to(t(:use_gravatar), upload_avatar_user_path(@user) + '?gravatar=1', method: :put, remote: true)
-      #{t :or}
-      = link_to_cancel avatar_user_path(@user)
-%br
+      = f.submit t(:upload_picture), id: "user_avatar_submit", :class => 'btn btn-primary'
+      = link_to(t(:use_gravatar), upload_avatar_user_path(@user) + '?gravatar=1', method: :put, remote: true), :class => 'btn btn-link'
+      = link_to_cancel avatar_user_path(@user), :class => 'btn btn-link'

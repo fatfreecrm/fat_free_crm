@@ -20,6 +20,5 @@
     = render "leads/opportunity"
     = render "leads/convert_permissions"
     .buttonbar
-      = f.submit t(:convert_lead)
-      #{t :or}
-      = link_to_cancel convert_lead_path(@lead)
+      = f.submit t(:convert_lead), :class => 'btn btn-primary'
+      = link_to_cancel convert_lead_path(@lead), :class => 'btn btn-link'

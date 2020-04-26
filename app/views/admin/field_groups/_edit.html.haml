@@ -3,6 +3,5 @@
   = f.error_messages
   = render partial: "top_section", locals: { f: f, edit: true }
   .buttonbar
-    = f.submit t(:save_field_group), id: :field_group_submit
-    or
-    = link_to_cancel edit_admin_field_group_path(@field_group)
+    = f.submit t(:save_field_group), id: :field_group_submit, :class => 'btn btn-primary'
+    = link_to_cancel edit_admin_field_group_path(@field_group), :class => 'btn btn-link'

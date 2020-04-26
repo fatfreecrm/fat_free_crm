@@ -13,6 +13,5 @@
   = hook(:entity_form, self, {f: f, entity: @campaign})
 
   .buttonbar
-    = f.submit t(:create_campaign)
-    #{t :or}
-    = link_to_cancel new_campaign_path
+    = f.submit t(:create_campaign), :class => 'btn btn-primary'
+    = link_to_cancel new_campaign_path, :class => 'btn btn-link'

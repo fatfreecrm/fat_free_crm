@@ -25,8 +25,7 @@ module UsersHelper
     user_options = user_options_for_select(users, myself)
     select(asset, :assigned_to, user_options,
            { include_blank: t(:unassigned) },
-           style: 'width: 160px;',
-           class: 'select2')
+           class: 'form-control')
   end
 
   def user_options_for_select(users, myself)

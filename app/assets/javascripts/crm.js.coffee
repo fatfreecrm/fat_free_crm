@@ -95,8 +95,7 @@
       $("#account_create_title").show()
       $("#account_select_title").hide()
       $("#account_id").prop('disabled', true)
-      $("#account_id").next(".select2-container").disable()
-      $("#account_id").next(".select2-container").hide()
+      $("#account_id").hide()
       $("#account_name").prop('disabled', false)
       $("#account_name").html ""
       $("#account_name").show()
@@ -111,8 +110,8 @@
       $("#account_name").hide()
       $("#account_name").prop('disabled', true)
       $("#account_id").prop('disabled', false)
-      $("#account_id").next(".select2-container").enable()
-      $("#account_id").next(".select2-container").show()
+      # $("#account_id").next(".select2-container").enable()
+      $("#account_id").show()
 
 
     # Show accounts dropdown and disable it to prevent changing the account.
