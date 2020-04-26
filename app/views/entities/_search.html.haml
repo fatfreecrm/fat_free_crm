@@ -1,10 +1,10 @@
 #search
   .tabs
-    %ul
-      %li
-        = link_to t('basic_search'), '#',    :"data-search-form" => "basic_search",    class: (params[:q]  ? "" : " active")
-      %li
-        = link_to t('advanced_search'), '#', :"data-search-form" => "advanced_search", class: (!params[:q] ? "" : " active")
+    %ul{ :class => "nav nav-tabs"}
+      %li{ :class => "nav-item"}
+        = link_to t('basic_search'), '#',    :"data-search-form" => "basic_search",    class: (params[:q]  ? "nav-link" : "nav-link active")
+      %li{ :class => "nav-item"}
+        = link_to t('advanced_search'), '#', :"data-search-form" => "advanced_search", class: (!params[:q] ? "nav-link" : "nav-link active")
 
     #search_results_count
       = t('search_results_count', count: @search_results_count)

@@ -141,7 +141,7 @@ module ApplicationHelper
     url = params[:url] if params[:url]
     link_to(t(:cancel),
             url + "#{url.include?('?') ? '&' : '?'}cancel=true",
-            remote: true)
+            remote: true, class: params[:class])
   end
 
   #----------------------------------------------------------------------------
