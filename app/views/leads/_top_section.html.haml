@@ -1,30 +1,24 @@
 
 = hook(:lead_top_section, self, f: f) do
   .section
-    %table
-      %tr
-        %td
-          .label.top{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
-          = f.text_field :first_name, autofocus: true
-        %td= spacer
-        %td
-          .label.top{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
-          = f.text_field :last_name
-      %tr
-        %td
-          .label #{t :email}:
-          = f.text_field :email
-        %td= spacer
-        %td
-          .label #{t :phone}:
-          = f.text_field :phone
+    .form-group
+      %label{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
+      = f.text_field :first_name, autofocus: true, :class => 'form-control'
+    .form-group
+      %label{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
+      = f.text_field :last_name, :class => 'form-control'
+    .form-group
+      %label #{t :email}:
+      = f.text_field :email, :class => 'form-control'
+    .form-group
+      %label #{t :phone}:
+      = f.text_field :phone, :class => 'form-control'
 
-      - if Setting.background_info && Setting.background_info.include?(:lead)
-        %tr
-          %td(colspan="3")
-            .label= t(:background_info) + ':'
-            = f.text_area :background_info, style: "width:500px", rows: 3
+    - if Setting.background_info && Setting.background_info.include?(:lead)
+      .form-group
+        %label= t(:background_info) + ':'
+        = f.text_area :background_info, style: "width:500px", rows: 3, class: 'form-control'
 
-      = render partial: "/shared/tags", locals: {f: f, span: 3}
+    = render partial: "/shared/tags", locals: {f: f, span: 3}
 
-      = hook(:lead_top_section_bottom, self, f: f)
+    = hook(:lead_top_section_bottom, self, f: f)

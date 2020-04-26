@@ -80,25 +80,6 @@ $sidebar_width: 210px;
   float: right;
 }
 
-.radio_box {
-  line-height: 20px;
-  input {
-    position: relative;
-    top: -2px;
-  }
-}
-
-.check_box {
-  line-height: 20px;
-  input {
-    position: relative;
-    top: -3px;
-  }
-  label {
-    font-size: 11px;
-  }
-}
-
 // Main area (page and form).
 //------------------------------------------------------------------------------
 .tabless {
@@ -112,20 +93,8 @@ $sidebar_width: 210px;
   margin: 75px auto 6px auto;
   padding: 20px;
   width: 400px;
-  -moz-border-radius: 6px;
-  -moz-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
-  -webkit-border-radius: 6px;
-  -webkit-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    font-size: 16px;
-    padding: 2px;
-    width: 355px;
-  }
-  input[type="submit"] {
-    font-size: 14px;
-  }
+  border-radius: 6px;
+  box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
 }
 
 .tabbed {
@@ -135,10 +104,8 @@ $sidebar_width: 210px;
 .main {
   background: white;
   padding: 8px 15px 15px 15px;
-  -moz-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
-  -webkit-border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
 }
 
 .info {
@@ -206,58 +173,6 @@ $sidebar_width: 210px;
   color: #3f3f3f;
   margin: 0px 0px 2px 0px;
   padding: 4px 15px 8px 15px;
-  table {
-    width: 500px;
-    &.address {
-      width: 240px;
-    }
-    border-spacing: 0px;
-    border-collapse: collapse;
-    td {
-      vertical-align: top;
-      padding: 0px;
-      div.input {
-        display: inline;
-        padding: 3px;
-      }
-      img.tooltip-icon {
-        display: inline;
-        vertical-align: bottom;
-      }
-      input,
-      select,
-      textarea {
-        width: 240px;
-        display: block;
-      }
-      input[type="checkbox"],
-      input[type="radio"] {
-        display: inline;
-        width: auto;
-      }
-      label {
-        vertical-align: bottom;
-      }
-      div.input.check_boxes > span {
-        display: block;
-        padding-top: 2px;
-        input {
-          margin-right: 5px;
-        }
-      }
-      div.input.radio_buttons > span {
-        display: block;
-        padding-top: 2px;
-        label {
-          vertical-align: middle;
-          margin-left: 5px;
-        }
-        input {
-          margin-left: 5px;
-        }
-      }
-    }
-  }
 }
 
 .remote {
@@ -302,19 +217,6 @@ $sidebar_width: 210px;
   }
 }
 
-.section input,
-.sidebar input,
-.inline input,
-.section select,
-.sidebar select,
-.inline select,
-.section textarea,
-.sidebar textarea,
-.inline textarea {
-  margin: 3px 0px 0px 0px;
-  vertical-align: middle;
-}
-
 .cool {
   color: darkgreen;
 }
@@ -345,13 +247,13 @@ $sidebar_width: 210px;
   font-size: 11px;
   text-align: center;
   padding: 0px 3px 0px 3px;
-  -moz-border-radius: {
+  border-radius: {
     topleft: 3px;
     topright: 3px;
     bottomleft: 3px;
     bottomright: 3px;
   }
-  -webkit-border: {
+  border: {
     top-left-radius: 3px;
     top-right-radius: 3px;
     bottom-left-radius: 3px;
@@ -368,11 +270,11 @@ $sidebar_width: 210px;
   padding: 1px 4px 1px 3px;
   text-align: right;
   width: 75px;
-  -moz-border-radius: {
+  border-radius: {
     topleft: 7px;
     bottomleft: 7px;
   }
-  -webkit-border: {
+  border: {
     top-left-radius: 7px;
     bottom-left-radius: 7px;
   }
@@ -415,23 +317,16 @@ $sidebar_width: 210px;
   overflow: hidden;
   padding: 4px;
   list-style: none;
-  //  -moz-border-radius:
+  //  border-radius:
   //    bottomleft: 8px
   //    bottomright: 8px
-  //  -webkit-border-radius:
+  //  border-radius:
   //    bottom-left-radius: 8px
   //    bottom-right-radius: 8px
   &#comment_new {
     margin: 3px 0px 0px 0px;
   }
-  input[type="text"] {
-    border: 1px #cfcfcf solid;
-    color: grey;
-    font-size: 11px;
-    margin: 3px 0px 0px 0px;
-    padding: 3px;
-    width: 500px;
-  }
+
   .gravatar {
     float: left;
     margin: 3px 10px 3px 3px;
@@ -561,10 +456,6 @@ textarea#comment_body {
       font-size: 11px;
     }
   }
-  input[type="checkbox"] {
-    float: left;
-    margin: 0px 4px 0px 0px;
-  }
 }
 
 // Two-row lists.
@@ -600,10 +491,10 @@ textarea#comment_body {
   background: snow;
   margin: 0px 0px 12px 0px;
   padding: 6px 8px 6px 8px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
-  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  border-radius: 4px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
+  box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
 
   .caption {
     border-bottom: 1px grey solid;
@@ -622,9 +513,6 @@ textarea#comment_body {
     color: navy;
     font-size: 12px;
     font-weight: bold;
-  }
-  input[type="text"] {
-    margin-bottom: 4px;
   }
 }
 
@@ -687,22 +575,22 @@ textarea#comment_body {
 }
 
 .left {
-  -moz-border-radius: {
+  border-radius: {
     bottomleft: 9px;
     topleft: 9px;
   }
-  -webkit-border: {
+  border: {
     bottom-left-radius: 9px;
     top-left-radius: 9px;
   }
 }
 
 .right {
-  -moz-border-radius: {
+  border-radius: {
     bottomright: 9px;
     topright: 9px;
   }
-  -webkit-border: {
+  border: {
     bottom-right-radius: 9px;
     top-right-radius: 9px;
   }
@@ -839,29 +727,21 @@ span.handle img {
     padding: 2px 6px 1px 6px;
     margin: 4px 0 3px 4px;
     border: 1px solid #bdbdbd;
-    background-image: -webkit-gradient(
+    background-image: gradient(
       linear,
       left bottom,
       left top,
       color-stop(0, #eaeaea),
       color-stop(0.7, #f2f2f2)
     );
-    background-image: -webkit-linear-gradient(
-      center bottom,
-      #eaeaea 0%,
-      #f2f2f2 70%
-    );
-    background-image: -moz-linear-gradient(
-      center bottom,
-      #eaeaea 0%,
-      #f2f2f2 70%
-    );
+    background-image: linear-gradient(center bottom, #eaeaea 0%, #f2f2f2 70%);
+    background-image: linear-gradient(center bottom, #eaeaea 0%, #f2f2f2 70%);
     background-image: -o-linear-gradient(bottom, #eaeaea 0%, #f2f2f2 70%);
     background-image: -ms-linear-gradient(top, #eaeaea 0%, #f2f2f2 70%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eaeaea', endColorstr='#f2f2f2',GradientType=0 );
     background-image: linear-gradient(top, #eaeaea 0%, #f2f2f2 70%);
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border-radius: 3px;
     border-radius: 3px;
   }
   a:hover {

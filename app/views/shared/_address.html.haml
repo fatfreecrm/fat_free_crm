@@ -16,29 +16,28 @@
       .label #{t title}:
     = a.text_area :full_address, style: "width:240px", rows: 4
   - else
-    %table.address(cellpadding="0" cellspacing="0")
-      %tr
-        %td
-          - if same_as_billing
-            %div
-              %span(style="float:right")
-                = link_to_function(t(:same_as_billing), "crm.copy_compound_address('account_billing_address', 'account_shipping_address')")
-              .label #{t title}:
-          - else
-            .label #{t title}:
-          = address_field(a, :street1, "width:240px; margin-top:3px")
-          = address_field(a, :street2, "width:240px;")
-    %table.address(cellpadding="0" cellspacing="0")
-      %tr
-        %td
-          = address_field(a, :city, "width:165px;")
-        %td= spacer
-        %td
-          = address_field(a, :state, "width:60px;")
-    %table.address(cellpadding="0" cellspacing="0")
-      %tr
-        %td
-          = address_field(a, :zipcode, "width:80px;")
-        %td= spacer
-        %td
-          = a.country_select(:country, priority_countries, { include_blank: "" }, {:"data-placeholder" => t(:select_a_country), style: "width:150px; margin-top:6px", class: 'select2'})
+    .form-group
+      - if same_as_billing
+        %div
+          %span(style="float:right")
+            = link_to_function(t(:same_as_billing), "crm.copy_compound_address('account_billing_address', 'account_shipping_address')")
+          .label #{t title}:
+      - else
+        .label #{t title}:
+      %label #{t :street1}
+      = address_field(a, :street1)
+    .form-group
+      %label #{t :street2}
+      = address_field(a, :street2)
+    .form-group
+      %label #{t :city}
+      = address_field(a, :city)
+    .form-group
+      %label #{t :state}
+      = address_field(a, :state)
+    .form-group
+      %label #{t :zipcode}
+      = address_field(a, :zipcode)
+    .form-group
+      %label #{t :country}
+      = a.country_select(:country, priority_countries, { include_blank: "" }, {:"data-placeholder" => t(:select_a_country), class: 'form-control'})

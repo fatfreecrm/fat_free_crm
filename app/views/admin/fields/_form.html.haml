@@ -18,7 +18,7 @@
             .label.top.req Field label:
             = f.text_field :label, id: nil
 
-          %td= spacer
+          
           %td
             .label.top.req Field type:
             = select :field, :as, field_edit_as_options(@field), include_blank: true, id: nil, class: 'select2'

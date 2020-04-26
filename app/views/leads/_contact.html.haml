@@ -5,31 +5,23 @@
   %small#lead_contact_intro{ hidden_if(!collapsed) }
     = t(:intro, t(:lead_info_small)) unless edit
   #lead_contact{ hidden_if(collapsed) }
-    %table
-      %tr
-        %td
-          .label.top #{t :job_title}:
-          = f.text_field :title
-        %td= spacer
-        %td
-          .label.top #{t :company}:
-          = f.autocomplete_field :company, autocomplete_account_name_leads_path
-      %tr
-        %td
-          .label #{t :alt_email}:
-          = f.text_field :alt_email
-        %td= spacer
-        %td
-          .label #{t :mobile}:
-          = f.text_field :mobile
-      %tr
-        %td
-          = render "shared/address", f: f, asset: @lead, type: 'business', title: :address
-        %td= spacer
-        %td
-          .label #{t :referred_by}:
-          = f.text_field :referred_by
-          %div{style: "margin-top:6px"}
-            .check_box
-              = f.check_box :do_not_call, {}, true
-              #{t :do_not_call}
+    .form-group
+      %label.top #{t :job_title}:
+      = f.text_field :title, :class => 'form-control'
+    .form-group
+      %label.top #{t :company}:
+      = f.autocomplete_field :company, autocomplete_account_name_leads_path, :class => 'form-control'
+    .form-group
+      %label #{t :alt_email}:
+      = f.text_field :alt_email, :class => 'form-control'
+    .form-group
+      %label #{t :mobile}:
+      = f.text_field :mobile, :class => 'form-control'
+    .form-group
+      = render "shared/address", f: f, asset: @lead, type: 'business', title: :address, :class => 'form-control'
+    .form-group
+      %label #{t :referred_by}:
+      = f.text_field :referred_by, :class => 'form-control'
+      .form-check
+        = f.check_box(:do_not_call, { class: 'form-check-input'}, true)
+        %label.form-check-label #{t :do_not_call}

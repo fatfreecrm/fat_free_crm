@@ -13,7 +13,7 @@
         %table
           %tr
             %td= account_select_or_create(a)
-            %td= spacer
+            
             %td
               .label.req #{t :assigned_to}:
               = user_select(:account, all_users, current_user)
