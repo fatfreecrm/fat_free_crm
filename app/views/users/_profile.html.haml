@@ -5,58 +5,44 @@
     = f.error_messages object_name: t('user')
 
     .section
-      %table
-        %tr
-          %td
-            .label.top #{t :first_name}:
-            = f.text_field :first_name
-          
-          %td
-            .label.top #{t :last_name}:
-            = f.text_field :last_name
-        %tr
-          %td
-            .label.top #{t :job_title}:
-            = f.text_field :title
-          
-          %td
-            .label.top #{t :company}:
-            = f.text_field :company
+      .form-group
+        %label #{t :first_name}:
+        = f.text_field(:first_name, { class: 'form-control'})
+      .form-group
+        %label #{t :last_name}:
+        = f.text_field(:last_name, { class: 'form-control'})
+      .form-group
+        %label #{t :job_title}:
+        = f.text_field(:title, { class: 'form-control'})
+      .form-group
+        %label #{t :company}:
+        = f.text_field(:company, { class: 'form-control'})
     .subtitle #{t :contact_info}
     .section
-      %table
-        %tr
-          %td{ colspan: 3 }
-            .label.top.req #{t :email}:
-            = f.text_field :email
-          
-          %td{ colspan: 3 }
-            .label.top #{t :alt_email}:
-            = f.text_field :alt_email
-        %tr
-          %td{ colspan: 3 }
-            .label #{t :phone}:
-            = f.text_field :phone
-          
-          %td{ colspan: 3 }
-            .label #{t :mobile}:
-            = f.text_field :mobile
-        %tr
-          %td
-            .label #{t :aim}:
-            = f.text_field :aim, style: "width:112px"
-          
-          %td
-            .label #{t :yahoo}:
-            = f.text_field :yahoo, style: "width:112px"
-          
-          %td
-            .label #{t :google}:
-            = f.text_field :google, style: "width:112px"
-          
-          %td
-            .label #{t :skype}:
-            = f.text_field :skype, style: "width:112px"
+      .form-groupp
+        %label.req #{t :email}:
+        = f.text_field(:email, { class: 'form-control'})
+      .form-groupp
+        %label #{t :alt_email}:
+        = f.text_field(:alt_email, { class: 'form-control'})
+      .form-groupp
+        %label #{t :phone}:
+        = f.text_field(:phone, { class: 'form-control'})
+      .form-groupp
+        %label #{t :mobile}:
+        = f.text_field(:mobile, { class: 'form-control'})
+      .form-group
+        %label #{t :aim}:
+        = f.text_field(:aim, {class: 'form-control'})
+      .form-group
+        %label #{t :yahoo}:
+        = f.text_field(:yahoo, {class: 'form-control'})
+      .form-group
+        %label #{t :google}:
+        = f.text_field(:google, {class: 'form-control'})
+      .form-group
+        %label #{t :skype}:
+        = f.text_field(:skype, {class: 'form-control'})
 
     .buttonbar
       = f.submit t(:save_profile), :class => 'btn btn-primary'

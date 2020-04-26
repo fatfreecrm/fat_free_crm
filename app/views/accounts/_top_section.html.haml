@@ -1,8 +1,8 @@
 = hook(:account_top_section, self, f: f) do
-  .section
+  .container-fluid
     .form-group
       %label.req #{t :name}:
-      = f.text_field :name, autofocus: true, style: "width:500px", :class => 'form-control'
+      = f.text_field(:name, { autofocus: true, class: 'form-control' })
     .form-group
       %label #{t :assigned_to}:
       = user_select(:account, User.without_user(current_user), current_user)
@@ -16,7 +16,7 @@
     - if Setting.background_info && Setting.background_info.include?(:account)
       .form-group
         %label= t(:background_info) + ':'
-        = f.text_area :background_info, style: "width:500px", rows: 3
+        = f.text_area(:background_info, {})
 
     = render partial: "/shared/tags", locals: {f: f, span: 3}
 

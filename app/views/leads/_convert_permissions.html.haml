@@ -17,15 +17,10 @@
       = radio_button_tag "access", "Shared", false, onclick: "$('#people').show(); $('#account_access').val('Shared'); $('#opportunity_access').val('Shared');"
       = label :access, :Shared, t(:share_with), style: "cursor:pointer"
 
-    #people{ hidden_if(@lead.access != "Shared") }
-      %table
-        %tr
-          %td
-            = label_tag :lead_user_ids, "#{t(:users)}:"
-            %br
-            = select :lead, :user_ids, user_options, {}, multiple: true, class: 'select2'
-        %tr
-          %td
-            = label_tag :lead_group_ids, "#{t(:groups)}:"
-            %br
-            = select :lead, :group_ids, group_options, {}, multiple: true, class: 'select2'
+    .outline-red#people{ hidden_if(@lead.access != "Shared") }
+      .form-group
+        = label_tag :lead_user_ids, "#{t(:users)}:"
+        = select :lead, :user_ids, user_options, {}, multiple: true, class: 'select2'
+      .form-group
+        = label_tag :lead_group_ids, "#{t(:groups)}:"
+        = select :lead, :group_ids, group_options, {}, multiple: true, class: 'select2'

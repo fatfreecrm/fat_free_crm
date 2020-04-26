@@ -7,9 +7,8 @@
           = t(tab[:text])
 
 = show_flash
-%table{ width: "100%", height: "100%", cellpadding: 0, cellspacing: 0, class: :tabbed }
-  %tr
-    %td{ class: :sidebar, id: :sidebar, valign: :top }
-      = render "layouts/sidebar"
-    %td{ class: :main, id: :main, valign: :top }
-      = yield
+.idc-page-layout
+  %aside{ class: :sidebar, id: :sidebar }
+    = render "layouts/sidebar"
+  %main{ class: :main, id: :main }
+    = yield

@@ -5,9 +5,9 @@
 //------------------------------------------------------------------------------
 $color_title: #342d7e;
 $color_subtitle: darkslateblue;
-$sidebar_width: 210px;
 
 :root {
+  --sidebar-width: 210px;
   --title-color: red;
 }
 
@@ -46,39 +46,39 @@ $sidebar_width: 210px;
   }
 }
 
-.subtitle {
-  border-bottom: 1px silver solid;
-  color: #2f2f2f;
-  font: {
-    size: 14px;
-    weight: bold;
-  }
-  small {
-    font-weight: normal;
-    font-size: 11px;
-    padding-left: 5px;
-  }
-  a:link,
-  a:visited {
-    color: $color_subtitle;
-    text-decoration: none;
-  }
-  a:hover {
-    background: none;
-  }
-  &.show_attributes {
-    margin-top: 6px;
-  }
-}
+// .subtitle {
+//   border-bottom: 1px silver solid;
+//   color: #2f2f2f;
+//   font: {
+//     size: 14px;
+//     weight: bold;
+//   }
+//   small {
+//     font-weight: normal;
+//     font-size: 11px;
+//     padding-left: 5px;
+//   }
+//   a:link,
+//   a:visited {
+//     color: $color_subtitle;
+//     text-decoration: none;
+//   }
+//   a:hover {
+//     background: none;
+//   }
+//   &.show_attributes {
+//     margin-top: 6px;
+//   }
+// }
 
-.subtitle_inline_info {
-  margin-left: 5px;
-}
+// .subtitle_inline_info {
+//   margin-left: 5px;
+// }
 
-.subtitle_tools {
-  font-size: 11px;
-  float: right;
-}
+// .subtitle_tools {
+//   font-size: 11px;
+//   float: right;
+// }
 
 // Main area (page and form).
 //------------------------------------------------------------------------------
@@ -103,21 +103,11 @@ $sidebar_width: 210px;
 
 .main {
   background: white;
-  padding: 8px 15px 15px 15px;
-  border-radius: 4px;
-  box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
 }
 
 .info {
   padding-top: 12px;
   width: 700px;
-}
-
-.sidebar {
-  color: #3f3f3f;
-  font-size: 11px;
-  padding: 0px 12px 0px 0px;
-  width: $sidebar_width;
 }
 
 .form {
@@ -126,6 +116,12 @@ $sidebar_width: 210px;
     font-size: 18px;
     height: 30px;
   }
+}
+
+.idc-page-layout {
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-template-columns: var(--sidebar-width) 1fr;
 }
 
 .tools {
@@ -178,37 +174,14 @@ $sidebar_width: 210px;
 .remote {
   padding: 1rem;
   border-radius: 2px;
-  border: 5px lightblue solid;
   background: whitesmoke;
   margin: 0;
   position: relative;
-  a.close {
-    display: block;
-    background: lightblue;
-    border: {
-      top: 1px gainsboro solid;
-      left: 1px gainsboro solid;
-      bottom: 1px grey solid;
-      right: 1px grey solid;
-    }
-    color: navy;
-    cursor: pointer;
-    height: 16px;
-    margin: 3px;
-    position: absolute;
-    right: 0px;
-    text-align: center;
-    top: 0px;
-    width: 17px;
-    &:hover {
-      background: #1e4262;
-      color: white;
-    }
-  }
 }
 
 .buttonbar {
-  border-top: 1px gray solid;
+  border-top: 2px gray solid;
+  padding-top: 0.5rem;
   display: flex;
   align-items: center;
 
@@ -481,38 +454,6 @@ textarea#comment_body {
       font-size: 11px;
       padding: 2px 0px 0px 0px;
     }
-  }
-}
-
-// Sidebar, filters, and selectors.
-//------------------------------------------------------------------------------
-.filters,
-.panel {
-  background: snow;
-  margin: 0px 0px 12px 0px;
-  padding: 6px 8px 6px 8px;
-  border-radius: 4px;
-  border-radius: 4px;
-  box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
-  box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
-
-  .caption {
-    border-bottom: 1px grey solid;
-    color: navy;
-    font: {
-      size: 12px;
-      weight: bold;
-    }
-    margin: 4px 0px 5px 0px;
-    padding: 2px 0px 2px 0px;
-  }
-}
-
-.filters {
-  h4 {
-    color: navy;
-    font-size: 12px;
-    font-weight: bold;
   }
 }
 
@@ -851,4 +792,20 @@ table.asset_attributes {
   span.jumpbox-highlight {
     background-color: darkgray;
   }
+}
+
+.ransack_search {
+  .row {
+    margin: 0;
+  }
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.outline-red {
+  outline: 2px solid red;
 }

@@ -397,7 +397,7 @@ module ApplicationHelper
         $('#loading').hide();
       });
     }.html_safe
-    check_box_tag("#{name}[]", value, checked, id: value, onclick: onclick)
+    check_box_tag("#{name}[]", value, checked, id: value, onclick: onclick, class: 'form-check-input')
   end
 
   # Create a column in the 'asset_attributes' table.
