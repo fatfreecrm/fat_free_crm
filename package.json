@@ -1,0 +1,26 @@
+{
+  "name": "fat_free_crm",
+  "version": "1.0.0",
+  "description": "`docker-compose build # build the containers` `docker-compose run web rake db:create # create the DB` `docker-compose run web rake db:migrate # migrate the DB` `docker-compose up # start the DB and Rails`",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "decaffeinate": "^6.0.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ideacrew/fat_free_crm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ideacrew/fat_free_crm/issues"
+  },
+  "homepage": "https://github.com/ideacrew/fat_free_crm#readme"
+}

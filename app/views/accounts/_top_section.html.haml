@@ -1,29 +1,23 @@
 = hook(:account_top_section, self, f: f) do
   .section
-    %table
-      %tr
-        %td(colspan="5")
-          .label.top.req #{t :name}:
-          = f.text_field :name, autofocus: true, style: "width:500px"
-      %tr
-        %td
-          .label #{t :assigned_to}:
-          = user_select(:account, User.without(current_user), current_user)
-        %td= spacer
-        %td
-          .label #{t :category}:
-          = f.select :category, Setting.unroll(:account_category), { selected: (@account.category || "other").to_sym, include_blank: t(:other) }, { style: "width:160px", class: 'select2' }
-        %td= spacer
-        %td
-          .label #{t :rating}:
-          = rating_select "account[rating]", { id: :account_rating, selected: @account.rating, style: "width:160px" }
+    .form-group
+      %label.req #{t :name}:
+      = f.text_field :name, autofocus: true, style: "width:500px", :class => 'form-control'
+    .form-group
+      %label #{t :assigned_to}:
+      = user_select(:account, User.without_user(current_user), current_user)
+    .form-group
+      %label #{t :category}:
+      = f.select :category, Setting.unroll(:account_category), { selected: (@account.category || "other").to_sym, include_blank: t(:other) }, { style: "width:160px", class: 'form-control' }
+    .form-group
+      %label #{t :rating}:
+      = rating_select "account[rating]", { id: :account_rating, selected: @account.rating, style: "width:160px", class: 'form-control' }
 
-      - if Setting.background_info && Setting.background_info.include?(:account)
-        %tr
-          %td(colspan="5")
-            .label= t(:background_info) + ':'
-            = f.text_area :background_info, style: "width:500px", rows: 3
+    - if Setting.background_info && Setting.background_info.include?(:account)
+      .form-group
+        %label= t(:background_info) + ':'
+        = f.text_area :background_info, style: "width:500px", rows: 3
 
-      = render partial: "/shared/tags", locals: {f: f, span: 3}
+    = render partial: "/shared/tags", locals: {f: f, span: 3}
 
-      = hook(:account_top_section_bottom, self, f: f)
+    = hook(:account_top_section_bottom, self, f: f)

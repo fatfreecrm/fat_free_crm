@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   has_paper_trail class_name: 'Version', ignore: [:last_sign_in_at]
 
   scope :by_id, -> { order('id DESC') }
-  #scope :without, ->(user) { where('id != ?', user.id).by_name }
+  scope :without_user, ->(user) { where('id != ?', user.id).by_name }
   scope :by_name, -> { order('first_name, last_name, email') }
 
   scope :text_search, lambda { |query|

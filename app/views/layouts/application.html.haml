@@ -5,7 +5,6 @@
     %title COVID-19 Exchange
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
     = stylesheet_link_tag :application
-    = stylesheet_link_tag :print, media: 'print'
     = hook(:stylesheet_includes, self) do
       #{yield :stylesheet_includes}
     %style= yield :styles

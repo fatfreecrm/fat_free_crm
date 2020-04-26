@@ -722,8 +722,8 @@ textarea#comment_body {
   padding: 2px 0px;
   position: absolute;
   top: 0px;
-  width: 12em;
-  -webkit-box-shadow: 10px 10px 15px gainsboro;
+  width: 12rem;
+  box-shadow: 10px 10px 15px gainsboro;
   ul {
     list-style: none;
     margin: 0px;
@@ -741,7 +741,7 @@ textarea#comment_body {
     padding: 4px 15px;
     text-decoration: none;
   }
-  ahover: {
+  a:hover {
     background: mediumblue;
     color: white;
   }
