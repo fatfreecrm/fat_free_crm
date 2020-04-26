@@ -19,7 +19,7 @@ module TasksHelper
         $('#loading').hide();
       });
     }
-    check_box_tag("filters[]", filter, checked, onclick: onclick, id: "filters_#{filter.to_s.underscore}")
+    check_box_tag("filters[]", filter, checked, onclick: onclick, id: "filters_#{filter.to_s.underscore}", class: 'form-check-input')
   end
 
   #----------------------------------------------------------------------------

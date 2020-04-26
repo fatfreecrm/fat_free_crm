@@ -7,8 +7,8 @@ $color_title: #342d7e;
 $color_subtitle: darkslateblue;
 
 :root {
-  --sidebar-width: 210px;
   --title-color: red;
+  --sidebar-width: 15rem;
 }
 
 // Common page elements.
@@ -26,25 +26,21 @@ $color_subtitle: darkslateblue;
     position: relative;
     top: 2px;
   }
-
-  h1 {
-    font-size: 2rem;
-  }
 }
 
-.title_tools {
-  font-size: 12px;
-  float: right;
-  margin: 0;
-  margin-top: 4px;
+// .title_tools {
+//   font-size: 12px;
+//   float: right;
+//   margin: 0;
+//   margin-top: 4px;
 
-  .sorting_options,
-  .create_asset {
-    margin-left: 24px;
-    display: inline-block;
-    vertical-align: top;
-  }
-}
+//   .sorting_options,
+//   .create_asset {
+//     margin-left: 24px;
+//     display: inline-block;
+//     vertical-align: top;
+//   }
+// }
 
 // .subtitle {
 //   border-bottom: 1px silver solid;
@@ -99,10 +95,6 @@ $color_subtitle: darkslateblue;
 
 .tabbed {
   padding: 12px 12px 12px 16px;
-}
-
-.main {
-  background: white;
 }
 
 .info {
@@ -493,50 +485,6 @@ textarea#comment_body {
   }
 }
 
-.selector {
-  color: black;
-  cursor: pointer;
-  font-size: 10px;
-  text-align: center;
-}
-
-.on {
-  background: lightgoldenrodyellow;
-  border: 1px silver inset;
-}
-
-.off {
-  background: lightgrey;
-  border: 1px silver outset;
-}
-
-.arrow {
-  font-size: 9px;
-  padding: 0px 2px 3px 0px;
-}
-
-.left {
-  border-radius: {
-    bottomleft: 9px;
-    topleft: 9px;
-  }
-  border: {
-    bottom-left-radius: 9px;
-    top-left-radius: 9px;
-  }
-}
-
-.right {
-  border-radius: {
-    bottomright: 9px;
-    topright: 9px;
-  }
-  border: {
-    bottom-right-radius: 9px;
-    top-right-radius: 9px;
-  }
-}
-
 // Dropdown menu.
 //------------------------------------------------------------------------------
 .menu {
@@ -808,4 +756,18 @@ table.asset_attributes {
 
 .outline-red {
   outline: 2px solid red;
+}
+
+.filters .btn-group-sm {
+  width: 100%;
+  margin-bottom: var(--s-1);
+}
+
+.filters .btn-group-sm > .btn {
+  padding: 0.15rem 0.4rem;
+  font-size: 0.75rem;
+}
+
+.space-between h1 {
+  margin: 0;
 }

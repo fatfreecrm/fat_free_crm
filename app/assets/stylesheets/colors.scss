@@ -1,0 +1,77 @@
+:root {
+  // Neutrals
+  --neutral-100: hsl(209 61% 16%);
+  --neutral-090: hsl(211 39% 23%);
+  --neutral-080: hsl(209 34% 30%);
+  --neutral-070: hsl(209 28% 39%);
+  --neutral-060: hsl(210 22% 49%);
+  --neutral-050: hsl(209 23% 60%);
+  --neutral-040: hsl(211 27% 70%);
+  --neutral-030: hsl(210 31% 80%);
+  --neutral-020: hsl(212 33% 89%);
+  --neutral-010: hsl(210 36% 96%);
+
+  // Blues
+  --blue-100: hsl(205 100% 21%);
+  --blue-090: hsl(205 87% 29%);
+  --blue-080: hsl(205 82% 33%);
+  --blue-070: hsl(205 76% 39%);
+  --blue-060: hsl(205 67% 45%);
+  --blue-050: hsl(205 65% 55%);
+  --blue-040: hsl(205 74% 65%);
+  --blue-030: hsl(205 84% 74%);
+  --blue-020: hsl(205 97% 85%);
+  --blue-010: hsl(205 79% 92%);
+
+  // Reds
+  --red-100: hsl(360 92% 20%);
+  --red-090: hsl(360 95% 25%);
+  --red-080: hsl(360 79% 32%);
+  --red-070: hsl(360 72% 38%);
+  --red-060: hsl(360 67% 44%);
+  --red-050: hsl(360 64% 55%);
+  --red-040: hsl(360 71% 66%);
+  --red-030: hsl(360 77% 78%);
+  --red-020: hsl(360 82% 89%);
+  --red-010: hsl(360 100% 97%);
+
+  // Yellows
+  --yellow-100: hsl(43 86% 17%);
+  --yellow-090: hsl(43 77% 27%);
+  --yellow-080: hsl(43 72% 37%);
+  --yellow-070: hsl(42 63% 48%);
+  --yellow-060: hsl(42 78% 60%);
+  --yellow-050: hsl(43 89% 70%);
+  --yellow-040: hsl(43 74% 65%);
+  --yellow-030: hsl(45 90% 76%);
+  --yellow-020: hsl(45 86% 81%);
+  --yellow-010: hsl(45 100% 96%);
+
+  // Greens
+  --green-100: hsl(125 86% 14%);
+  --green-090: hsl(125 73% 20%);
+  --green-080: hsl(125 56% 29%);
+  --green-070: hsl(122 47% 35%);
+  --green-060: hsl(122 39% 41%);
+  --green-050: hsl(123 35% 51%);
+  --green-040: hsl(123 38% 63%);
+  --green-030: hsl(124 42% 75%);
+  --green-020: hsl(126 49% 84%);
+  --green-010: hsl(125 65% 93%);
+  --text-color: var(--neutral-100);
+  --link-color: var(--blue-080);
+  --link-focus-background-color: var(--yellow-050);
+
+  // The only purple color in the set, used
+  // exclusively for visited links
+  --link-visited-color: hsl(245 76% 39%);
+
+  --white: hsl(205 0% 99%);
+
+
+  
+}
+
+body {
+  color: var(--text-color);
+}

@@ -3,38 +3,38 @@
 // Fat Free CRM is freely distributable under the terms of MIT license.
 // See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 //------------------------------------------------------------------------------
-#buttons {
-  display: inline-block;
-  .create_asset, ul { display: inline; }
-  .create_asset {
-    margin-left: 24px;
-    display: inline-block;
-    vertical-align: top;
-    padding-top: 1px;
-    span.arrow {
-      display: inline-block;
-      vertical-align: middle;
-    }
-  }
-}
+// #buttons {
+//   display: inline-block;
+//   .create_asset, ul { display: inline; }
+//   .create_asset {
+//     margin-left: 24px;
+//     display: inline-block;
+//     vertical-align: top;
+//     padding-top: 1px;
+//     span.arrow {
+//       display: inline-block;
+//       vertical-align: middle;
+//     }
+//   }
+// }
 
-ul.format-buttons li {
-  display: inline;
-  margin: 3px;
-  a {
-    color: gray;
-    i.fa {
-      font-size: 160%;
-      opacity: 0.3;
-    }
-  }
-  a.active i.fa { opacity: 1; }
-  a:hover i.fa {
-    opacity: 1;
-  }
-  a:active i.fa { opacity: 1; }
-  a:hover {
-    background:none;
-    color:gray;
-  }
-}
+// ul.format-buttons li {
+//   display: inline;
+//   margin: 3px;
+//   a {
+//     color: gray;
+//     i.fa {
+//       font-size: 160%;
+//       opacity: 0.3;
+//     }
+//   }
+//   a.active i.fa { opacity: 1; }
+//   a:hover i.fa {
+//     opacity: 1;
+//   }
+//   a:active i.fa { opacity: 1; }
+//   a:hover {
+//     background:none;
+//     color:gray;
+//   }
+// }

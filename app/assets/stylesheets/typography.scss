@@ -1,0 +1,13 @@
+:root {
+  --heading-line-height: 1.15;
+  --heading-font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: var(--heading-line-height);
+  margin-bottom: var(--s0);
+  font-weight: var(--heading-font-weight);
+}

@@ -4,19 +4,19 @@
     .space-between
       .form-check
         = account_category_checkbox(key, @account_category_total[key])
-        = label_tag(key, t(key))
-      %div.status-total
+        = label_tag(key, t(key), class: 'form-check-label')
+      .status-total
         = @account_category_total[key]
 
   .space-between
     .form-check
       = account_category_checkbox("other", @account_category_total[:other])
-      = label_tag(:other, t(:other))
-    %div.status-total
+      = label_tag(:other, t(:other), class: 'form-check-label')
+    .status-total
       = @account_category_total[:other]
 
   .space-between
     %b #{t :total_accounts}
-    %div.status-total
+    .status-total
       %b= @account_category_total[:all]
   = hook(:index_account_sidebar_bottom, self)

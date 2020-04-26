@@ -2,17 +2,21 @@
   = render "selector"
   - if @view == "pending" || @view == "assigned"
     - Setting.unroll(:task_bucket).each do |value, key|
-      .check_box{style: "border-bottom: 1px silver dotted;"}
-        %div{style: "float:right;"}
+      .space-between
+        .form-check
+          = task_filter_checkbox(@view, key, @task_total[key])
+          = label_tag(key, t(key), class: 'form-check-label')
+        .status-total
           = @task_total[key]
-        = task_filter_checkbox(@view, key, @task_total[key]) + " " + t(value)
   - else # @view == "completed"
     - Setting.unroll(:task_completed).each do |value, key|
-      .check_box{style: "border-bottom: 1px silver dotted;"}
-        %div{style: "float:right;"}
+      .space-between
+        .form-check
+          = task_filter_checkbox(@view, key, @task_total[key])
+          = label_tag(key, t(key), class: 'form-check-label')
+        .status-total
           = @task_total[key]
-        = task_filter_checkbox(@view, key, @task_total[key]) + " " + t(value)
-  .check_box
-    %div{style: "float:right;"}
-      %b= @task_total[:all]
-    %b== #{t(:total_tasks, t(@view + '_tasks'))}
+  .space-between
+    .status-total
+      %b== #{t(:total_tasks, t(@view + '_tasks'))}
+    %b= @task_total[:all]
