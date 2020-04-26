@@ -5,27 +5,21 @@
   %small#lead_presence_intro{ hidden_if(!collapsed) }
     = t(:intro, t(:web_presence_small)) unless edit
   #lead_presence{ hidden_if(collapsed) }
-    %table
-      %tr
-        %td
-          .label.top #{t :blog}:
-          = f.text_field :blog
-        
-        %td
-          .label.top #{t :twitter}:
-          = f.text_field :twitter
-      %tr
-        %td
-          .label #{t :linked_in}:
-          = f.text_field :linkedin
-        
-        %td
-          .label #{t :facebook}:
-          = f.text_field :facebook
-      %tr
-        %td
-          .label #{t :skype}:
-          = f.text_field :skype
+    .form-group
+      %label #{t :blog}:
+      = f.text_field :blog, :class => 'form-control'
+    .form-group
+      %label #{t :twitter}:
+      = f.text_field :twitter, :class => 'form-control'
+    .form-group
+      %label #{t :linked_in}:
+      = f.text_field :linkedin, :class => 'form-control'
+    .form-group
+      %label #{t :facebook}:
+      = f.text_field :facebook, :class => 'form-control'
+    .form-group
+      %label #{t :skype}:
+      = f.text_field :skype, :class => 'form-control'
         
         
 
