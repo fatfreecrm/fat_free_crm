@@ -1,8 +1,8 @@
 %li.highlight[opportunity]
   - if opportunity.stage
-    .strip{class: opportunity.stage}= t(opportunity.stage)
+    .badge.badge-primary{class: opportunity.stage}= t(opportunity.stage)
   - else
-    .strip.white #{t :other}
+    .badge.badge-light #{t :other}
 
   .indent
     = link_to(h(opportunity.name), opportunity)
