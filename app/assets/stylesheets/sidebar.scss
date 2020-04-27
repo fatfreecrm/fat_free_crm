@@ -1,3 +1,7 @@
+:root {
+  --sidebar-width: 20rem;
+}
+
 .sidebar {
   padding: 1rem;
 
@@ -36,5 +40,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .heading:not(:first-child) {
+    margin-top: var(--s-1);
   }
 }

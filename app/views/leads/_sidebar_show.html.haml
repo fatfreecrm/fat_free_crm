@@ -1,6 +1,7 @@
 .panel#summary
-  %span{style: "float:right"}= avatar_for(@lead, size: "50x50")
-  %h4.heading= h(@lead.full_name)
+  %h4.heading.space-between= h(@lead.full_name)
+  -# %span{style: "float:right"}= avatar_for(@lead, size: "50x50")
+
   - if !@lead.title.blank? && !@lead.company.blank?
     -# works_at: "{{job_title}} at {{company}}"
     %div= t(:works_at, job_title: @lead.title, company: @lead.company)
@@ -21,7 +22,7 @@
       == #{t :other}: <b>#{link_to_email(@lead.alt_email)}</b><br />
   = web_presence_icons(@lead)
 
-  .caption #{t :lead_summary}
+  .caption.heading #{t :lead_summary}
   %ul
     %li
       %span #{t :status}:
@@ -54,7 +55,7 @@
           #{t :n_a}
 
   - unless @lead.background_info.blank?
-    .caption #{t :background_info}
+    .caption.heading #{t :background_info}
     = auto_link(simple_format @lead.background_info)
 
   = render "fields/sidebar_show", asset: @lead

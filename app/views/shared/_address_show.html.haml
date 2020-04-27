@@ -6,19 +6,14 @@
   - if Setting.compound_address
     %div
       - if title
-        %b #{t title}
-        %br
+        %div #{t title}
       = h address.street1
       - unless address.street2.blank?
-        %br
         = h address.street2
-      %br
       = h "#{address.city}, #{address.state} #{address.zipcode}"
       - unless address.country.blank?
-        %br
         = h address.country
   - else
     %div
-      %b #{t title}
-      %br
+      %div #{t title}
       = h(address.full_address).n2br
