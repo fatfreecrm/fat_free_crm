@@ -1,11 +1,26 @@
+.idc-page-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  min-height: calc(100vh - 42px - 40px);
+}
+
 .main {
   padding: var(--s0);
   background-color: var(--neutral-010);
+  height: 100%;
 }
 
 .remote {
   margin-bottom: var(--s2);
   position: relative;
+}
+
+.idc-form-group,
+.idc-panel,
+.idc-addresses {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 1rem;
 }
 
 .idc-panel {
@@ -17,8 +32,45 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 }
 
+.idc-addresses {
+  grid-column: -1 / 1;
+}
+
+.idc-form-group {
+  grid-column: -1 / 1;
+}
+
+.full-width {
+  grid-column: -1 / 1;
+}
+
+.one-half {
+  grid-column: span 6;
+}
+
+.one-third {
+  grid-column: span 4;
+}
+
+.one-quarter {
+  grid-column: span 3;
+}
+
+.one-sixth {
+  grid-column: span 2;
+}
+
+.one-column {
+  grid-column: span 1;
+}
+
 .close {
   position: absolute;
   right: 10px;
   top: 10px;
+}
+
+.sidebar {
+  background-color: var(--neutral-010);
+  height: 100%;
 }

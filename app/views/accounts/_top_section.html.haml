@@ -1,20 +1,20 @@
 = hook(:account_top_section, self, f: f) do
   .idc-panel
-    .form-group
+    .form-group.one-half
       %label.req #{t :name}:
       = f.text_field(:name, { autofocus: true, class: 'form-control' })
-    .form-group
+    .form-group.one-half
       %label #{t :assigned_to}:
       = user_select(:account, User.without_user(current_user), current_user)
-    .form-group
+    .form-group.one-quarter
       %label #{t :category}:
-      = f.select :category, Setting.unroll(:account_category), { selected: (@account.category || "other").to_sym, include_blank: t(:other) }, { style: "width:160px", class: 'form-control' }
-    .form-group
+      = f.select :category, Setting.unroll(:account_category), { selected: (@account.category || "other").to_sym, include_blank: t(:other) }, { class: 'form-control' }
+    .form-group.one-quarter
       %label #{t :rating}:
-      = rating_select "account[rating]", { id: :account_rating, selected: @account.rating, style: "width:160px", class: 'form-control' }
+      = rating_select "account[rating]", { id: :account_rating, selected: @account.rating, class: 'form-control' }
 
     - if Setting.background_info && Setting.background_info.include?(:account)
-      .form-group
+      .form-group.one-third
         %label= t(:background_info) + ':'
         = f.text_area(:background_info, {})
 

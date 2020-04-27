@@ -2,7 +2,7 @@
 - caption = personal ? :personal_lists : :global_lists
 
 .panel.lists
-  .caption #{t caption}
+  %h4.caption.heading #{t caption}
   %ul
     - if lists.none?
       %div #{t :no_saved_lists}

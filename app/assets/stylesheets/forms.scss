@@ -1,4 +1,10 @@
-.idc-panel input[type="text"],
 #search input[type="text"] {
   background-color: var(--neutral-010);
+}
+
+.idc-panel {
+  input[type="text"],
+  select {
+    background-color: var(--neutral-010);
+  }
 }

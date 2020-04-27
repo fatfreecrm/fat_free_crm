@@ -1,3 +1,40 @@
 .sidebar {
   padding: 1rem;
+
+  .heading {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    margin-bottom: var(--s-2);
+    color: var(--neutral-070);
+  }
+}
+
+.sidebar .filters,
+.sidebar .panel.lists,
+.sidebar #summary {
+  margin-bottom: var(--s1);
+  padding-bottom: var(--s0);
+  border-bottom: 1px solid var(--neutral-030);
+}
+
+.sidebar #recently {
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+}
+
+.sidebar #summary {
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  ul > li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

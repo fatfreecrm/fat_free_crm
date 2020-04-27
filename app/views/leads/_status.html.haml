@@ -2,29 +2,29 @@
 - collapsed = session[:lead_status].nil? # && @lead.errors.empty?
 = subtitle :lead_status, collapsed, t(:status)
 
-.section
-  %small#lead_status_intro{ hidden_if(!collapsed) }
+.idc-panel
+  %small#lead_status_intro.full-width{ hidden_if(!collapsed) }
     = t(:intro, t(:lead_status_small)) unless edit
-  #lead_status{ hidden_if(collapsed) }
-    .form-group
-      %label.top #{t :assigned_to}:
+  .idc-form-group#lead_status{ hidden_if(collapsed) }
+    .form-group.one-third
+      %label #{t :assigned_to}:
       = user_select(:lead, all_users, current_user)
-    .form-group
-      %label.top #{t :status}:
+    .form-group.one-third
+      %label #{t :status}:
       = f.select :status, lead_status_codes_for(@lead), { selected: (@lead.status || "new").to_sym }, { class: 'form-control' }
-    .form-group
-      %label.top #{t :rating}:
+    .form-group.one-third
+      %label #{t :rating}:
       = rating_select "lead[rating]", { id: :lead_rating, selected: @lead.rating, class: 'form-control' }
-    .form-group
+    .form-group.one-half
       %label #{t :source}:
       - if @campaign && !edit # Create a lead from Campaign landing page: select :campaign as a source and disable the dropdown.
-        = f.select :source, Setting.unroll(:lead_source), { selected: :campaign }, { style: "width:160px;", disabled: true, class: 'form-control' }
+        = f.select :source, Setting.unroll(:lead_source), { selected: :campaign }, { style: "width:160px;", disabled: true, class: 'custom-select form-control' }
         = hidden_field_tag "lead[source]", "campaign"
       - else
-        = f.select :source, Setting.unroll(:lead_source), { selected: (@lead.source || "other").to_sym }, { class: 'form-control' }
-    .form-group
+        = f.select :source, Setting.unroll(:lead_source), { selected: (@lead.source || "other").to_sym }, { class: 'custom-select form-control' }
+    .form-group.one-half
       %label #{t :campaign}:
       - if @campaign && !edit # Create a lead from Campaign landing page: select current campaign and disable the dropdown.
-        = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @campaign.id }, { disabled: true, class: 'form-control' }
+        = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @campaign.id }, { disabled: true, class: 'custom-select form-control' }
       - else
-        = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @lead.campaign_id, include_blank: t(:select_none) }, { onchange: "crm.flip_campaign_permissions(this.value)", class: 'form-control' }
+        = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @lead.campaign_id, include_blank: t(:select_none) }, { onchange: "crm.flip_campaign_permissions(this.value)", class: 'custom-select form-control' }

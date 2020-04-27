@@ -1,27 +1,26 @@
 - edit ||= false
 - collapsed = session[:lead_contact].nil? # && @lead.errors.empty?
 = subtitle :lead_contact, collapsed, t(:contact_info)
-.section
-  %small#lead_contact_intro{ hidden_if(!collapsed) }
+.idc-panel
+  %small#lead_contact_intro.full-width{ hidden_if(!collapsed) }
     = t(:intro, t(:lead_info_small)) unless edit
-  #lead_contact{ hidden_if(collapsed) }
-    .form-group
+  .idc-form-group#lead_contact{ hidden_if(collapsed) }
+    .form-group.one-quarter
       %label.top #{t :job_title}:
-      = f.text_field :title, :class => 'form-control'
-    .form-group
+      = f.text_field(:title, {class: 'form-control'})
+    .form-group.one-quarter
       %label.top #{t :company}:
-      = f.autocomplete_field :company, autocomplete_account_name_leads_path, :class => 'form-control'
-    .form-group
+      = f.autocomplete_field(:company, autocomplete_account_name_leads_path, {class: 'form-control'})
+    .form-group.one-quarter
       %label #{t :alt_email}:
-      = f.text_field :alt_email, :class => 'form-control'
-    .form-group
+      = f.text_field(:alt_email, {class: 'form-control'})
+    .form-group.one-quarter
       %label #{t :mobile}:
-      = f.text_field :mobile, :class => 'form-control'
-    .form-group
-      = render "shared/address", f: f, asset: @lead, type: 'business', title: :address, :class => 'form-control'
-    .form-group
+      = f.text_field(:mobile, {class: 'form-control'})
+    = render "shared/address", f: f, asset: @lead, type: 'business', title: :address, :class => 'form-control'
+    .form-group.one-quarter
       %label #{t :referred_by}:
-      = f.text_field :referred_by, :class => 'form-control'
+      = f.text_field(:referred_by, {class: 'form-control'})
       .form-check
         = f.check_box(:do_not_call, { class: 'form-check-input'}, true)
         %label.form-check-label #{t :do_not_call}

@@ -114,12 +114,6 @@ $color_subtitle: darkslateblue;
   }
 }
 
-.idc-page-layout {
-  display: grid;
-  grid-gap: 0.5rem;
-  grid-template-columns: var(--sidebar-width) 1fr;
-}
-
 .tools {
   font-size: 10px;
   float: right;
@@ -161,7 +155,6 @@ $color_subtitle: darkslateblue;
 }
 
 .buttonbar {
-  border-top: 2px gray solid;
   padding-top: 0.5rem;
   display: flex;
   align-items: center;
@@ -434,42 +427,6 @@ textarea#comment_body {
       color: #3f3f3f;
       font-size: 11px;
       padding: 2px 0px 0px 0px;
-    }
-  }
-}
-
-.panel {
-  div {
-    margin: 0px 0px 10px 0px;
-  }
-  h4 {
-    font-size: 13px;
-    font-weight: bold;
-  }
-  li {
-    border-bottom: 1px silver dotted;
-    font-size: 12px;
-    list-style: none;
-    padding: 2px 0px 3px 0px;
-    dt {
-      float: right;
-      font-size: 11px;
-      font-weight: bold;
-    }
-    tt {
-      font-size: 11px;
-    }
-    &.last {
-      border-bottom: none;
-    }
-  }
-  &#recently {
-    background: floralwhite;
-  }
-  &#summary {
-    background: oldlace;
-    p {
-      margin: 4px 0px 4px 0px;
     }
   }
 }

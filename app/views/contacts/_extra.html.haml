@@ -1,36 +1,27 @@
 - edit ||= false
 - collapsed = session[:contact_extra].nil? # && @contact.errors.empty?
 = subtitle :contact_extra, collapsed, t(:extra_info)
-.section
-  %small#contact_extra_intro{ hidden_if(!collapsed) }
+.idc-panel
+  %small#contact_extra_intro.full-width{ hidden_if(!collapsed) }
     = t(:intro, t(:extra_info_small)) unless edit
-  #contact_extra{ hidden_if(collapsed) }
-    %table
-      = hook(:contact_extra_details_form, self, f: f) do
-        %tr
-          %td
-            .label #{t :job_title}:
-            = f.text_field :title
-          
-          %td
-            .label #{t :department}:
-            = f.text_field :department
-        %tr
-          %td
-            .label #{t :alt_email}:
-            = f.text_field :alt_email
-          
-          %td
-            .label #{t :mobile}:
-            = f.text_field :mobile
-        %tr
-          %td
-            = render "shared/address", f: f, asset: @contact, type: 'business', title: :address
-          
-          %td
-            .label #{t :fax}:
-            = f.text_field :fax
-            %div{style: "margin-top:6px"}
-              .check_box
-                = f.check_box :do_not_call, {}, true
-                #{t :do_not_call}
+  .idc-form-group#contact_extra{ hidden_if(collapsed) }
+    = hook(:contact_extra_details_form, self, f: f) do
+      .form-group.one-quarter
+        %label #{t :job_title}:
+        = f.text_field(:title, { class: 'form-control'})
+      .form-group.one-quarter
+        %label #{t :department}:
+        = f.text_field(:department, { class: 'form-control'})
+      .form-group.one-quarter
+        %label #{t :alt_email}:
+        = f.text_field(:alt_email, { class: 'form-control'})
+      .form-group.one-quarter
+        %label #{t :mobile}:
+        = f.text_field(:mobile, { class: 'form-control'})
+      = render "shared/address", f: f, asset: @contact, type: 'business', title: :address
+      .form-group.one-quarter
+        %label #{t :fax}:
+        = f.text_field(:fax, { class: 'form-control'})
+        .form-check
+          = f.check_box(:do_not_call, { class: 'form-check-input'}, true)
+          %label.form-check-label #{t :do_not_call}

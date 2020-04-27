@@ -1,34 +1,35 @@
 
 = hook(:contact_top_section, self, f: f) do
   .idc-panel
-    .form-group
+    .form-group.one-quarter
       %label{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
       = f.text_field :first_name, autofocus: true, :class => "form-control"
-    .form-group
+    .form-group.one-quarter
       %label{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
       = f.text_field :last_name, :class => "form-control"
-    .form-group
+    .form-group.one-quarter
       %label #{t :email}:
       = f.text_field :email, :class => "form-control"
-    .form-group
+    .form-group.one-quarter
       %label #{t :phone}:
       = f.text_field :phone, :class => "form-control"
-    = fields_for(@account) do |a|
-      = a.hidden_field :user_id
-      = a.hidden_field :assigned_to
-      = a.hidden_field :access, value: Setting.default_access
-      != account_select_or_create(a) do |options|
-        - # Add [-- None --] account choice when editing existing contact that has an account.
-        - options[:include_blank] = "" unless @contact.new_record? || @contact.account.blank?
-      .form-group
-        %label #{t :assigned_to}:
-        = user_select(:contact, all_users, current_user)
+    .form-group.one-third
+      = fields_for(@account) do |a|
+        = a.hidden_field :user_id
+        = a.hidden_field :assigned_to
+        = a.hidden_field :access, value: Setting.default_access
+        != account_select_or_create(a) do |options|
+          - # Add [-- None --] account choice when editing existing contact that has an account.
+          - options[:include_blank] = "" unless @contact.new_record? || @contact.account.blank?
+    .form-group.one-quarter
+      %label #{t :assigned_to}:
+      = user_select(:contact, all_users, current_user)
 
-      - if Setting.background_info && Setting.background_info.include?(:contact)
-        .form-group
-          %label= t(:background_info) + ':'
-          = f.text_area :background_info, style: "width:500px", rows: 3
+    - if Setting.background_info && Setting.background_info.include?(:contact)
+      .form-group.one-third
+        %label= t(:background_info) + ':'
+        = f.text_area :background_info
 
-      = render partial: "/shared/tags", locals: {f: f, span: 3}
+    = render partial: "/shared/tags", locals: {f: f}
 
-      = hook(:contact_top_section_bottom, self, f: f)
+    = hook(:contact_top_section_bottom, self, f: f)

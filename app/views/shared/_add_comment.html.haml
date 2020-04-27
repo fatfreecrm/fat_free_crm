@@ -1,8 +1,8 @@
 - edit ||= false
 - collapsed = @comment_body.nil?  && f.object.errors.empty?
 = subtitle :comment, collapsed, t(:comment)
-.section
-  %small#comment_intro{ hidden_if(!collapsed) }
+.idc-panel
+  %small#comment_intro.full-width{ hidden_if(!collapsed) }
     = t(:comment_intro)
   .form-group#campaign_comment{ hidden_if(collapsed) }
     = text_area_tag(:comment_body, @comment_body, { class: 'form-control'})

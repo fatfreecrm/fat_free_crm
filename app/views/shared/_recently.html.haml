@@ -1,7 +1,7 @@
 - @versions = Version.recent_for_user(current_user)
 .panel#recently
-  .caption #{t :recent_items}
+  %h4.caption.heading #{t :recent_items}
   - if @versions.present?
-    = render partial: "shared/recent", collection: @versions
+    %ul.recent-list= render partial: "shared/recent", collection: @versions
   - else
     %div #{t :no_recent_items}

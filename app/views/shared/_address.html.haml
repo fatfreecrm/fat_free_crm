@@ -9,35 +9,35 @@
   - unless Setting.compound_address
     - if same_as_billing
       %div
-        %span(style="float:right")
-          = link_to_function(t(:same_as_billing), "crm.copy_address('account_shipping_address', 'account_billing_address')")
         .label #{t title}:
+        %span
+          = link_to_function(t(:same_as_billing), "crm.copy_address('account_shipping_address', 'account_billing_address')")
     - else
       .label #{t title}:
-    = a.text_area :full_address, style: "width:240px", rows: 4
+    = a.text_area :full_address
   - else
-    .form-group
-      - if same_as_billing
-        %div
-          %span(style="float:right")
-            = link_to_function(t(:same_as_billing), "crm.copy_compound_address('account_billing_address', 'account_shipping_address')")
-          .label #{t title}:
-      - else
+    - if same_as_billing
+      %div.full-width
         .label #{t title}:
+        %span
+          = link_to_function(t(:same_as_billing), "crm.copy_compound_address('account_billing_address', 'account_shipping_address')")
+    - else
+      .label.full-width #{t title}:
+    .form-group.one-half
       %label #{t :street1}
       = address_field(a, :street1)
-    .form-group
+    .form-group.one-half
       %label #{t :street2}
       = address_field(a, :street2)
-    .form-group
+    .form-group.one-quarter
       %label #{t :city}
       = address_field(a, :city)
-    .form-group
+    .form-group.one-column
       %label #{t :state}
       = address_field(a, :state)
-    .form-group
+    .form-group.one-sixth
       %label #{t :zipcode}
       = address_field(a, :zipcode)
-    .form-group
+    .form-group.one-half
       %label #{t :country}
       = a.country_select(:country, priority_countries, { include_blank: "" }, {:"data-placeholder" => t(:select_a_country), class: 'form-control'})

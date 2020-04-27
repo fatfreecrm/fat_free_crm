@@ -1,25 +1,25 @@
 - edit ||= false
 - collapsed = session[:contact_presence].nil? # && @contact.errors.empty?
 = subtitle :contact_presence, collapsed, t(:web_presence)
-.section
-  %small#contact_presence_intro{ hidden_if(!collapsed) }
+.idc-panel
+  %small#contact_presence_intro.full-width{ hidden_if(!collapsed) }
     = t(:intro, t(:web_presence_small)) unless edit
-  #contact_presence{ hidden_if(collapsed) }
-    .form-group
+  .idc-form-group#contact_presence{ hidden_if(collapsed) }
+    .form-group.one-third
       %label #{t :blog}:
-      = f.text_field :blog, :class => 'form-control'
-    .form-group
+      = f.text_field(:blog, { class: 'form-control'})
+    .form-group.one-third
       %label #{t :twitter}:
-      = f.text_field :twitter, :class => 'form-control'
-    .form-group
+      = f.text_field(:twitter, { class: 'form-control'})
+    .form-group.one-third
       %label #{t :linked_in}:
-      = f.text_field :linkedin, :class => 'form-control'
-    .form-group
+      = f.text_field(:linkedin, { class: 'form-control'})
+    .form-group.one-half
       %label #{t :facebook}:
-      = f.text_field :facebook, :class => 'form-control'
-    .form-group
+      = f.text_field(:facebook, { class: 'form-control'})
+    .form-group.one-half
       %label #{t :skype}:
-      = f.text_field :skype, :class => 'form-control'
+      = f.text_field(:skype, { class: 'form-control'})
       
         
 
