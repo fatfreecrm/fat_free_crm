@@ -1,3 +1,24 @@
 .main {
   padding: var(--s0);
+  background-color: var(--neutral-010);
+}
+
+.remote {
+  margin-bottom: var(--s2);
+  position: relative;
+}
+
+.idc-panel {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  border-top: 4px solid var(--blue-040);
+  margin-top: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }

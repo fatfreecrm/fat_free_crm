@@ -1,7 +1,7 @@
 - model_name = controller_name.singularize
 - model_klass = model_name.camelcase.constantize
 
-.space-between
+.space-between.page-heading
   .title
     %h1{id: "create_#{model_name}_title"} #{t controller_name.to_sym}
     = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")

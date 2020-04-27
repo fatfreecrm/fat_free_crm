@@ -42,6 +42,10 @@ $color_subtitle: darkslateblue;
 //   }
 // }
 
+.subtitle {
+  margin-top: var(--s0);
+}
+
 // .subtitle {
 //   border-bottom: 1px silver solid;
 //   color: #2f2f2f;
@@ -71,10 +75,10 @@ $color_subtitle: darkslateblue;
 //   margin-left: 5px;
 // }
 
-// .subtitle_tools {
-//   font-size: 11px;
-//   float: right;
-// }
+.subtitle_tools {
+  font-size: 11px;
+  float: right;
+}
 
 // Main area (page and form).
 //------------------------------------------------------------------------------
@@ -154,21 +158,6 @@ $color_subtitle: darkslateblue;
   color: dimgray;
   font-size: 12px;
   padding-top: 5px;
-}
-
-.section {
-  background-color: whitesmoke;
-  color: #3f3f3f;
-  margin: 0px 0px 2px 0px;
-  padding: 4px 15px 8px 15px;
-}
-
-.remote {
-  padding: 1rem;
-  border-radius: 2px;
-  background: whitesmoke;
-  margin: 0;
-  position: relative;
 }
 
 .buttonbar {
@@ -752,6 +741,10 @@ table.asset_attributes {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  h1 {
+    margin: 0;
+  }
 }
 
 .outline-red {
@@ -768,6 +761,6 @@ table.asset_attributes {
   font-size: 0.75rem;
 }
 
-.space-between h1 {
-  margin: 0;
+.page-heading {
+  margin-bottom: var(--s2);
 }
