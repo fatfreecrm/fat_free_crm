@@ -17,15 +17,14 @@
         = t(:no_account)
         = link_to(t(:sign_up_now), new_registration_path(resource_name))
     .title= t(:login)
-    .section
+    .form-group
       .label= t(:username)
-      = f.input_field :email, as: :string
+      = f.input_field :email, as: :string, :class => 'form-control'
       .label= t(:password)
-      = f.input_field :password
+      = f.input_field :password, :class => 'form-control'
 
-    %div(style="margin-left:12px")
+    .form-check
       = f.input :remember_me, as: :boolean, inline_label: t('remember_me')
-    %br
     .buttonbar
       = f.submit t(:login), :class => 'btn btn-primary'
       = link_to t(:forgot_password) + '?', new_password_path(resource_name), :class => 'btn btn-link'

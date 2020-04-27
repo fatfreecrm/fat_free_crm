@@ -1,46 +1,47 @@
 
 = styles_for :task, :opportunity, :account
 
-.title
-  %span#title #{t :my_tasks}
-%ul.list#tasks
-  - unless @my_tasks.empty?
-    = render partial: "home/task", collection: @my_tasks.limit(10)
-    = show_hidden_entities_message(@my_tasks.count, 'task', 10)
-  - else
-    #{t :no_task_records}
+.idc-panel
+  %h4#title.full-width #{t :my_tasks}
+  %ul.list.full-width#tasks
+    - unless @my_tasks.empty?
+      = render partial: "home/task", collection: @my_tasks.limit(10)
+      = show_hidden_entities_message(@my_tasks.count, 'task', 10)
+    - else
+      #{t :no_task_records}
 
-.title
-  %span#title #{t :my_opportunities}
-%ul.list#opportunities
-  - unless @my_opportunities.empty?
-    = render partial: "home/opportunity", collection: @my_opportunities.limit(10)
-    = show_hidden_entities_message(@my_opportunities.count, 'opportunity', 10)
-  - else
-    #{t :no_opportunity_records}
+.idc-panel
+  %h4.full-width#title #{t :my_opportunities}
+  %ul.list.full-width#opportunities
+    - unless @my_opportunities.empty?
+      = render partial: "home/opportunity", collection: @my_opportunities.limit(10)
+      = show_hidden_entities_message(@my_opportunities.count, 'opportunity', 10)
+    - else
+      #{t :no_opportunity_records}
 
-.title
-  %span#title #{t :my_accounts}
-%ul.list#accounts
-  - unless @my_accounts.empty?
-    = render partial: "home/account", collection: @my_accounts.limit(10)
-    = show_hidden_entities_message(@my_accounts.count, 'account', 10)
-  - else
-    #{t :no_account_records}
+.idc-panel
+  %h4.full-width#title #{t :my_accounts}
+  %ul.list.full-width#accounts
+    - unless @my_accounts.empty?
+      = render partial: "home/account", collection: @my_accounts.limit(10)
+      = show_hidden_entities_message(@my_accounts.count, 'account', 10)
+    - else
+      #{t :no_account_records}
 
-.title_tools
-  = link_to_inline(:options, url_for(action: :options), text: t(:options))
 
-.title
-  %span#title #{t :recent_activity}
+
+.idc-panel
+  %h4.full-width#title
+    #{t :recent_activity}
+    %small.title_tools
+      = link_to_inline(:options, url_for(action: :options), text: t(:options))
   = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
-.remote#options{ hidden }
-
-%ul.list#activities
-  - unless @activities.empty?
-    = render partial: "activity", collection: @activities
-  - else
-    #{t :no_activity_records}
+  .remote.full-width#options{ hidden }
+  %ul.list.full-width#activities
+    - unless @activities.empty?
+      = render partial: "activity", collection: @activities
+    - else
+      #{t :no_activity_records}
 
 
 #export= render "shared/export"

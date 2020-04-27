@@ -82,8 +82,8 @@ $color_subtitle: darkslateblue;
 // Main area (page and form).
 //------------------------------------------------------------------------------
 .tabless {
-  margin: auto;
-  width: 480px;
+  display: flex;
+  justify-content: center;
 }
 
 .standalone {
@@ -114,9 +114,7 @@ $color_subtitle: darkslateblue;
 }
 
 .tools {
-  font-size: 10px;
-  float: right;
-  padding: 0px 0px 0px 4px;
+  font-size: 0.75rem;
   &#comment_new_tools {
     margin: 8px 0px 0px 0px;
   }
