@@ -1,10 +1,8 @@
-- edit ||= false
-- collapsed = session[:contact_extra].nil? # && @contact.errors.empty?
-= subtitle :contact_extra, collapsed, t(:extra_info)
-.idc-panel
-  %small#contact_extra_intro.full-width{ hidden_if(!collapsed) }
-    = t(:intro, t(:extra_info_small)) unless edit
-  .idc-form-group#contact_extra{ hidden_if(collapsed) }
+%details.idc-panel
+  %summary #{t :extra_info}
+  %small#contact_extra_intro.full-width
+    = t(:intro, t(:extra_info_small))
+  .idc-form-group#contact_extra
     = hook(:contact_extra_details_form, self, f: f) do
       .form-group.one-quarter
         %label #{t :job_title}:

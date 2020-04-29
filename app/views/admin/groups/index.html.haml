@@ -1,11 +1,12 @@
 = styles_for :group
 
-.title_tools
-  = link_to_inline(:create_group, new_admin_group_path, text: t(:create_group))
+.space-between.page-heading
+  .title
+    %h1#create_group_title #{t :groups}
+    = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
+  .title_tools
+    = link_to_inline(:create_group, new_admin_group_path, {text: t(:create_group), class: 'btn btn-primary'})
 
-.title
-  %span#create_group_title #{t :groups}
-  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
 
 .remote#create_group{ hidden }
 

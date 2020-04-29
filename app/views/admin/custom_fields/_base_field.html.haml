@@ -1,23 +1,18 @@
-%table
-  %tr
-    %td
-      .label.top Minlength:
-      = f.text_field :minlength
-      .label.top Maxlength:
-      = f.text_field :maxlength
-    
-    %td
-      .label.top
-        = f.check_box :required
-        = f.label :required
-        %br
-        = f.check_box :disabled
-        = f.label :disabled
-  %tr
-    %td
-      = f.label :hint, class: "label top"
-      = f.text_field :hint
-    
-    %td
-      = f.label :placeholder, class: "label top"
-      = f.text_field :placeholder
+.form-group.one-sixth
+  %label Minlength:
+  = f.text_field( :minlength, {class: 'form-control'})
+.form-group.one-sixth
+  %label Maxlength:
+  = f.text_field( :maxlength, {class: 'form-control'})
+.form-group.one-third
+  = f.label :hint
+  = f.text_field( :hint, {class: 'form-control'})
+.form-group.one-third
+  = f.label :placeholder
+  = f.text_field( :placeholder, {class: 'form-control'})
+.form-check.one-sixth
+  = f.check_box( :required, { class: 'form-check-input'})
+  = f.label( :required, { class: 'form-check-label'})
+.form-check.one-sixth
+  = f.check_box( :disabled, { class: 'form-check-input'})
+  = f.label( :disabled, { class: 'form-check-label'})

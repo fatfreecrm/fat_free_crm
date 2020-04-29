@@ -1,54 +1,41 @@
 - edit ||= false
-.section
-  %table
-    %tr
-      %td
-        .label.top.req #{t :username}:
-        = f.text_field :username
-      
-      %td
-        .label.top.req #{t :email}:
-        = f.text_field :email
-    %tr
-      %td
-        .label #{t :password}:
-        = f.password_field :password
-      
-      %td
-        .label #{t :password_confirmation}:
-        = f.password_field :password_confirmation
-    %tr
-      %td(colspan=3)
-        .check_box(style="margin-top:6px")
-          -# Sorry, you can't revoke Admin rights from yourself.
-          = f.check_box(:admin, { disabled: edit && @user == current_user })
-          %label{for: 'user_admin'}
-            = t(:user_is_admin)
+.idc-panel
+  %h2.full-width
+    Account Information
+  .form-group.one-quarter
+    %label #{t :username}:
+    = f.text_field(:username, { class: 'form-control'})
+  .form-group.one-quarter
+    %label #{t :email}:
+    = f.text_field(:email, { class: 'form-control'})
+  .form-group.one-quarter
+    %label #{t :password}:
+    = f.password_field(:password, { class: 'form-control' })
+  .form-group.one-quarter
+    %label #{t :password_confirmation}:
+    = f.password_field(:password_confirmation, { class: 'form-control' })
+  .form-check.one-third
+    = f.check_box(:admin, { disabled: edit && @user == current_user, class: 'form-check-input' })
+    %label{for: 'user_admin', class: 'form-check-label'}
+      = t(:user_is_admin)
 
-.subtitle #{t :personal_information}
-.section
-  %table
-    %tr
-      %td
-        .label #{t :first_name}:
-        = f.text_field :first_name
-      
-      %td
-        .label #{t :last_name}:
-        = f.text_field :last_name
-    %tr
-      %td
-        .label #{t :job_title}:
-        = f.text_field :title
-      
-      %td
-        .label #{t :company}:
-        = f.text_field :company
+.idc-panel
+  %h2.full-width #{t :personal_information}
+  .form-group.one-quarter
+    %label #{t :first_name}:
+    = f.text_field(:first_name, { class: 'form-control'})
+  .form-group.one-quarter
+    %label #{t :last_name}:
+    = f.text_field(:last_name, { class: 'form-control'})
+  .form-group.one-quarter
+    %label #{t :job_title}:
+    = f.text_field(:title, { class: 'form-control'})
+  .form-group.one-quarter
+    %label #{t :company}:
+    = f.text_field(:company, { class: 'form-control'})
 
-.subtitle #{t :group_memberships}
-.section
-  %table
-    %tr
-      %td
-        .label #{t :groups}:
-        = f.select :group_ids, Group.all.map {|g| [g.name, g.id]}, {}, multiple: true, class: 'select2'
+.idc-panel
+  %h2.full-width #{t :group_memberships}
+  .form-group.full-width
+    %label #{t :groups}:
+    = f.select :group_ids, Group.all.map {|g| [g.name, g.id]}, {}, multiple: true, class: 'custom-select'

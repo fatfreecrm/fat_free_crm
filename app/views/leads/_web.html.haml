@@ -1,10 +1,8 @@
-- edit ||= false
-- collapsed = session[:lead_presence].nil? # && @lead.errors.empty?
-= subtitle :lead_presence, collapsed, t(:web_presence)
-.idc-panel
-  %small#lead_presence_intro.full-width{ hidden_if(!collapsed) }
-    = t(:intro, t(:web_presence_small)) unless edit
-  .idc-form-group#lead_presence{ hidden_if(collapsed) }
+%details.idc-panel
+  %summary #{t :web_presence}
+  %small#lead_presence_intro.full-width
+    = t(:intro, t(:web_presence_small))
+  .idc-form-group#lead_presence
     .form-group.one-third
       %label #{t :blog}:
       = f.text_field(:blog, {class: 'form-control'})

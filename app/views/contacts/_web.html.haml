@@ -1,10 +1,8 @@
-- edit ||= false
-- collapsed = session[:contact_presence].nil? # && @contact.errors.empty?
-= subtitle :contact_presence, collapsed, t(:web_presence)
-.idc-panel
-  %small#contact_presence_intro.full-width{ hidden_if(!collapsed) }
-    = t(:intro, t(:web_presence_small)) unless edit
-  .idc-form-group#contact_presence{ hidden_if(collapsed) }
+%details.idc-panel
+  %summary #{t :web_presence}
+  %small#contact_presence_intro.full-width
+    = t(:intro, t(:web_presence_small)) 
+  .idc-form-group#contact_presence
     .form-group.one-third
       %label #{t :blog}:
       = f.text_field(:blog, { class: 'form-control'})

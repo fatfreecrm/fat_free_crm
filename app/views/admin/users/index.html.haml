@@ -1,13 +1,14 @@
 = styles_for :user
 
-.title_tools
-  = link_to_inline(:create_user, new_admin_user_path, text: t(:create_user))
-
-.title
-  %span#create_user_title #{t :users}
-  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
+.space-between.page-heading
+  .title
+    %h1#create_user_title #{t :users}
+    = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
+  .title_tools
+    = link_to_inline(:create_user, new_admin_user_path, { text: t(:create_user), class: 'btn btn-primary'})
+  
 .remote#create_user{ hidden }
 
-.list#users= render partial: "admin/users/user", collection: @users
+%ul.list#users= render partial: "admin/users/user", collection: @users
 #paginate= render "shared/paginate"
 #export= render "shared/export"

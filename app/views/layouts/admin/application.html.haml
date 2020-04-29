@@ -1,12 +1,19 @@
-!!!
+!!!5
 %html{ xmlns: "http://www.w3.org/1999/xhtml", "xml:lang" => :en,  lang: :en }
   %head
     %meta{ "http-equiv" => "Content-Type", content: "text/html; charset=utf-8" }
     %title= t(:crm_admin_page)
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
+    %link{ :rel => "stylesheet", 
+      :href => "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", 
+      :integrity => "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh", 
+      :crossorigin => "anonymous" }
     = stylesheet_link_tag :application
-    = stylesheet_link_tag :print, media: 'print'
-    %style= yield :styles
+    -# = stylesheet_link_tag :print, media: 'print'
+    -# %style= yield :styles
+
+    %link{ :href => "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap", 
+      :rel => "stylesheet" }
 
     = javascript_include_tag :application
     = hook(:javascript_includes, self) {}

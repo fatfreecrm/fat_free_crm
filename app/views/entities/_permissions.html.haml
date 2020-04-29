@@ -1,11 +1,9 @@
-- edit ||= false
 - model = entity.class.name.underscore
-- collapsed = session[:entity_permissions].nil?
-= subtitle :entity_permissions, collapsed, t(:permissions)
-.idc-panel
-  %small#entity_permissions_intro.full-width{ hidden_if(!collapsed) }
-    = get_default_permissions_intro(entity.access, t("#{model}_small")) unless edit
-  #entity_permissions.full-width{ hidden_if(collapsed) }
+%details.idc-panel
+  %summary #{t :permissions}
+  %small#entity_permissions_intro.full-width
+    = get_default_permissions_intro(entity.access, t("#{model}_small"))
+  #entity_permissions.full-width
     .form-check
       = f.radio_button(:access, "Private", { onclick: "$('#people').hide()", class: 'form-check-input' })
       = f.label( :access_private, t(:keep_private), { style: "cursor:pointer", class: 'form-check-label' })
@@ -24,7 +22,7 @@
         = f.label :group_ids, "#{t(:groups)}:"
         = f.select(:group_ids, group_options, {}, { multiple: true, class: "custom-select" })
 
-    - if !edit and entity.is_a?(Lead)
+    - if entity.is_a?(Lead)
       .form-check
         = f.radio_button(:access, t(:campaign), { onclick: "$('#people').hide(); $('#lead_access_campaign').val('Campaign');", disabled: true, class: 'form-check-input'})
         %font{ id: :copy_permissions, color: :grey }

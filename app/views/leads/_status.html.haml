@@ -1,11 +1,9 @@
-- edit ||= false
-- collapsed = session[:lead_status].nil? # && @lead.errors.empty?
-= subtitle :lead_status, collapsed, t(:status)
 
-.idc-panel
-  %small#lead_status_intro.full-width{ hidden_if(!collapsed) }
-    = t(:intro, t(:lead_status_small)) unless edit
-  .idc-form-group#lead_status{ hidden_if(collapsed) }
+%details.idc-panel
+  %summary #{ t :status}
+  %small#lead_status_intro.full-width
+    = t(:intro, t(:lead_status_small))
+  .idc-form-group#lead_status
     .form-group.one-third
       %label #{t :assigned_to}:
       = user_select(:lead, all_users, current_user)
@@ -18,13 +16,13 @@
     .form-group.one-half
       %label #{t :source}:
       - if @campaign && !edit # Create a lead from Campaign landing page: select :campaign as a source and disable the dropdown.
-        = f.select :source, Setting.unroll(:lead_source), { selected: :campaign }, { style: "width:160px;", disabled: true, class: 'custom-select form-control' }
+        = f.select :source, Setting.unroll(:lead_source), { selected: :campaign }, { style: "width:160px;", disabled: true, class: 'custom-select' }
         = hidden_field_tag "lead[source]", "campaign"
       - else
-        = f.select :source, Setting.unroll(:lead_source), { selected: (@lead.source || "other").to_sym }, { class: 'custom-select form-control' }
+        = f.select :source, Setting.unroll(:lead_source), { selected: (@lead.source || "other").to_sym }, { class: 'custom-select' }
     .form-group.one-half
       %label #{t :campaign}:
       - if @campaign && !edit # Create a lead from Campaign landing page: select current campaign and disable the dropdown.
-        = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @campaign.id }, { disabled: true, class: 'custom-select form-control' }
+        = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @campaign.id }, { disabled: true, class: 'custom-select' }
       - else
         = collection_select :lead, :campaign_id, @campaigns, :id, :name, { selected: @lead.campaign_id, include_blank: t(:select_none) }, { onchange: "crm.flip_campaign_permissions(this.value)", class: 'custom-select form-control' }

@@ -1,6 +1,5 @@
-%div
-  .label.top.req
-    = "Select Options (pipe separated):"
-= f.text_field :collection_string, class: 'field_collection_string', size: 78
+.full-width
+  = "Select Options (pipe separated):"
+= f.text_field :collection_string, class: 'full-width form-control field_collection_string'
 
 = render partial: 'admin/custom_fields/base_field', locals: {f: f}

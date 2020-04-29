@@ -1,14 +1,10 @@
-%table
-  %tr
-    %td
-      .label.top Hint:
-      = f.text_field :hint
-    
-    %td
-      .label.top
-        %span Required:
-        = f.check_box :required
-        %br
-        %span Disabled:
-        = f.check_box :disabled
-        %div{style: 'width: 240px;'}
+.form-group.one-half
+  %label Hint:
+  = f.text_field(:hint, { class: 'form-control' })
+.form-group.one-half
+  .form-check
+    = f.check_box( :required, { class: 'form-check-input'})
+    %label.form-check-label Required
+  .form-check
+    = f.check_box( :disabled, { class: 'form-check-input'})
+    %label.form-check-label Disabled

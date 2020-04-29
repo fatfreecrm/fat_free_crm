@@ -1,19 +1,20 @@
 
 = styles_for :fields
 
-.title
-  %span#create_field_title= t(:admin_tab_fields)
+.page-heading
+  .title
+    %h1#create_field_title= t(:admin_tab_fields)
 
 .info= t(:admin_fields_info)
 
 .info2= t(:admin_fields_info2)
 
-.inline_tabs
-  %ul
+%nav
+  %ul{ class: 'nav nav-tabs' }
     - list_of_entities.each do |entity|
       - asset = entity.downcase
-      %li{ "data-tab-class" => asset, class: ("selected" if entity == 'Contact') }
-        = link_to t(entity), "#"
+      %li{ "data-tab-class" => asset, class: 'nav-item' }
+        = link_to(t(entity), "#", { class: 'nav-link active' })
 
 - list_of_entities.each do |entity|
   - asset = entity.downcase
@@ -22,11 +23,12 @@
 
     - create_form_id = "#{asset}_create_field_group"
 
-    .title_tools
-      = link_to_inline(create_form_id, new_admin_field_group_path(klass_name: klass.name), text: t(:create_field_group))
+    .space-between
+      %h2.title
+        = t(asset)
+      .title_tools
+        = link_to_inline(create_form_id, new_admin_field_group_path(klass_name: klass.name), { text: t(:create_field_group), class: 'btn btn-primary' })
 
-    .title
-      = t(asset)
 
     .list{ id: "#{asset}_field_groups", 'data-sortable' =>  sort_admin_field_groups_path(asset: asset) }
       = render partial: "admin/field_groups/field_group", collection: klass.field_groups, locals: {asset: asset, klass: klass}

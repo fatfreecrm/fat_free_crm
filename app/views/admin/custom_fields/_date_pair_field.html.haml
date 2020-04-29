@@ -4,18 +4,16 @@
 %table{class: :pairs}
   = fields_for("pair[0]", field1) do |first|
     = fields_for("pair[1]", field2) do |second|
-      %tr
-        %td
-          .label.top Hint:
-          = first.text_field :hint
-        
-        %td
-          .label.top
-            %span Required:
-            = first.check_box :required
-            %br
-            %span Disabled:
-            = first.check_box :disabled
-            = first.hidden_field :id
-            = second.hidden_field :id
-            %div{style: 'width: 240px;'}
+      .form-group.one-quarter
+        %label Hint:
+        = f.text_field(:hint, { class: 'form-control' })
+      
+      .form-group.one-quarter
+        .form-check
+          = f.check_box( :required, { class: 'form-check-input'})
+          %label.form-check-label Required
+        .form-check
+          = f.check_box( :disabled, { class: 'form-check-input'})
+          %label.form-check-label Disabled
+          = first.hidden_field :id
+          = second.hidden_field :id

@@ -1,25 +1,17 @@
-%div
-  .label.top.req
-    = "Select Options (pipe separated):"
-= f.text_field :collection_string, class: 'field_collection_string', size: 78
 
-%table
-  %tr
-    %td
-      
-    
-    %td
-      .label.top
-        %span Required:
-        = f.check_box :required
-        %br
-        %span Disabled:
-        = f.check_box :disabled
-  %tr
-    %td
-      .label.top Hint:
-      = f.text_field :hint
-    
-    %td
-      .label.top Placeholder:
-      = f.text_field :placeholder
+.full-width
+  = "Select Options (pipe separated):"
+= f.text_field :collection_string, class: 'full-width form-control field_collection_string'
+.form-group.one-third
+  %label Hint:
+  = f.text_field(:hint, { class: 'form-control'})
+.form-group.one-third
+  %label Placeholder:
+  = f.text_field(:placeholder, { class: 'form-control'})
+.form-group.one-third
+  .form-check
+    = f.check_box(:required, {class: 'form-check-input'})
+    %label.form-check-label Required
+  .form-check
+    = f.check_box(:disabled, {class: 'form-check-input'})
+    %label.form-check-label Disabled

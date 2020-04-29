@@ -1,10 +1,8 @@
-- edit ||= false
-- collapsed = (@account.errors.empty? && session[:account_contact].nil?)
-= subtitle :account_contact, collapsed, t(:contact_info)
-.idc-panel
-  %small#account_contact_intro.full-width{ hidden_if(!collapsed) }
-    = t(:intro, t(:account_small)) unless edit
-  .idc-form-group#account_contact{ hidden_if(collapsed) }
+%details.idc-panel
+  %summary #{t :contact_info}
+  %small#account_contact_intro.full-width
+    = t(:intro, t(:account_small))
+  .idc-form-group#account_contact
     .form-group.one-sixth
       %label #{t :phone_toll_free}:
       = f.text_field(:toll_free_phone, {class: 'form-control'})
@@ -21,6 +19,6 @@
       %label Email:
       = f.text_field(:email, {class: 'form-control'})
   
-  .idc-addresses{ hidden_if(collapsed) }
+  .idc-addresses
     = render "shared/address", f: f, asset: @account, type: :billing, title: :billing_address
     = render "shared/address", f: f, asset: @account, type: :shipping, title: :shipping_address, same_as_billing: true

@@ -4,16 +4,17 @@
   - edit_form_id = dom_id(field_group, :edit)
   - create_form_id = dom_id(field_group, :create_field)
 
-  .subtitle_tools
-    - unless field_group.name == "custom_fields"
-      = link_to_inline(edit_form_id, edit_admin_field_group_path(field_group), text: t(:edit_field_group))
-      |
-    = link_to(arrow_for(create_form_id) + t(:create_field), '#', class: 'create')
-    - unless field_group.name == "custom_fields"
-      |
-      = link_to_confirm(field_group)
+  .space-between
+    .subtitle{ id: "#{dom_id(field_group)}_title" }= field_group_subtitle(field_group)
+    .subtitle_tools
+      - unless field_group.name == "custom_fields"
+        = link_to_inline(edit_form_id, edit_admin_field_group_path(field_group), text: t(:edit_field_group))
+        |
+      = link_to(t(:create_field), '#', class: 'create btn btn-primary')
+      - unless field_group.name == "custom_fields"
+        |
+        = link_to_confirm(field_group)
 
-  .subtitle{ id: "#{dom_id(field_group)}_title" }= field_group_subtitle(field_group)
 
   .remote{ hidden.merge(id: edit_form_id) }
 

@@ -41,10 +41,6 @@ $color_subtitle: darkslateblue;
 //   }
 // }
 
-.subtitle {
-  margin-top: var(--s0);
-}
-
 // .subtitle {
 //   border-bottom: 1px silver solid;
 //   color: #2f2f2f;
@@ -98,11 +94,6 @@ $color_subtitle: darkslateblue;
 
 .tabbed {
   padding: 12px 12px 12px 16px;
-}
-
-.info {
-  padding-top: 12px;
-  width: 700px;
 }
 
 .form {
@@ -515,28 +506,6 @@ textarea#comment_body {
 // }
 
 // Admin Tabs
-
-.inline_tabs ul {
-  margin: 20px 0;
-  li {
-    display: inline;
-    a {
-      display: inline-block;
-      background: #fafafa;
-      padding: 5px;
-      border: 1px solid #bbbbbb;
-      margin-right: 5px;
-      width: 75px;
-      text-align: center;
-      color: black;
-    }
-    &.selected a {
-      background: #1e4262;
-      color: white;
-      font-weight: bold;
-    }
-  }
-}
 
 .list li.position {
   cursor: move;
