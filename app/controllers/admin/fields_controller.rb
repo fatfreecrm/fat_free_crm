@@ -44,7 +44,7 @@ class Admin::FieldsController < Admin::ApplicationController
     as = field_params[:as]
     @field =
       if as.match?(/pair/)
-        CustomFieldPair.create_pair(params).first
+        CustomFieldPair.create_pair(params.permit!).first
       elsif as.present?
         klass = find_class(Field.lookup_class(as))
         klass.create(field_params)
