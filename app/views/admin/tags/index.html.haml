@@ -1,11 +1,12 @@
 = styles_for :tag
 
-.title_tools
-  = link_to_inline(:create_tag, new_admin_tag_path, text: t(:create_tag))
+.space-between.page-heading
+  .title
+    %h1#create_tag_title #{t :tags}
+    = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
+  .title_tools
+    = link_to_inline(:create_tag, new_admin_tag_path, {text: t(:create_tag), class: 'btn btn-primary'})
 
-.title
-  %span#create_tag_title #{t :tags}
-  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
 .remote#create_tag{ hidden }
 
 .list#tags
