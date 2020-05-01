@@ -1,9 +1,9 @@
-.section
-  .form-gropup
-    %label.top.req #{t :name}:
+.idc-panel
+  .form-group.one-quarter
+    %label #{t :name}:
     = f.text_field :name, autofocus: true, :class => "form-control"
-  .form-gropup
-    %label.req #{t :due}:
+  .form-group.one-quarter
+    %label #{t :due}:
     - bucket = (params[:bucket].blank? ? @task.bucket : params[:bucket]) || "due_asap"
     - with_time = Setting.task_calendar_with_time
     - if @task.bucket != "specific_time"
@@ -13,11 +13,11 @@
       = f.select :bucket, @bucket, { selected: :specific_time }, { style: " display:none;", onchange: "crm.flip_calendar(this.value)", class: 'form-control' }
       - fmt = with_time ? '%Y-%m-%d %H:%M' : '%Y-%m-%d'
       = f.text_field :calendar, value: f.object.due_at.strftime(fmt),  autocomplete: :off, class: (with_time ? 'datetime' : 'date')
-  .form-gropup
-    %label.req #{t :assign_to}:
+  .form-group.one-quarter
+    %label #{t :assign_to}:
     = user_select(:task, all_users, current_user)
-  .form-gropup
-    %label.req #{t :category}:
+  .form-group.one-quarter
+    %label #{t :category}:
     = f.select :category, @category, { selected: @task.category.blank? ? nil : @task.category.to_sym, include_blank: t(:select_blank) }, { class: 'form-control' }
 
   - if Setting.background_info && Setting.background_info.include?(:task)

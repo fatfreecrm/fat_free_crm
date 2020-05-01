@@ -13,7 +13,7 @@
   - buckets.each do |value, key|
     %div{ hidden_if(filtered_out?(@view, key)), id: "list_#{key}" }
       %h3{class: key}= t(value)
-      .bucket{id: key}= render partial: @view, collection: @tasks[key] || [], locals: { bucket: key }
+      %ul.bucket{id: key}= render partial: @view, collection: @tasks[key] || [], locals: { bucket: key }
   - if @tasks.values.flatten.blank?
     = render "empty"
 

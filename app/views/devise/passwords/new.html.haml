@@ -2,9 +2,9 @@
   = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
     .title= t(:forgot_password)
     .intro= t(:password_intro)
-    .section
+    .form-group
       .label= t(:email)
-      = f.input_field :email, required: true, autofocus: true
+      = f.input_field(:email,{ required: true, autofocus: true, class: 'form-control'})
     %br
     .buttonbar
       = f.button :submit, t(:reset_password), id: 'passwords_submit', :class => 'btn btn-primary'
