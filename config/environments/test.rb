@@ -45,6 +45,8 @@ if defined?(FatFreeCRM::Application)
 
     # Print deprecation notices to the stderr
     config.active_support.deprecation = :stderr
+    # Store uploaded files on the local file system in a temporary directory.
+    config.active_storage.service = :test
   end
 
   # Optionally load 'awesome_print' for debugging in development mode.

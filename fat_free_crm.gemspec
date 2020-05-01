@@ -60,4 +60,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'ransack_ui', '~> 1.3', '>= 1.3.1'
   gem.add_dependency 'ransack', '>= 1.6.2'
   gem.add_dependency 'email_reply_parser_ffcrm'
+  gem.add_dependency 'aws-sdk-s3'
 end
