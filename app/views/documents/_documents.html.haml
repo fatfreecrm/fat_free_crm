@@ -1,15 +1,5 @@
-%p Documents
+= section(object, :documents)
 %div
-  = form_for(:document, {url: documents_path}) do |form|
-    = form.hidden_field 'record_id', value: object.id.to_s
-    = form.hidden_field 'record_klass', value: object.class
-    = form.file_field :file
-    = form.submit 'Upload', class: 'btn btn-primary'
-%div
-  %p List
-  - @documents.each_with_index do |document, i|
-    %strong>= i + 1
-    \.#{document.created_at.strftime("Document Created on %m/%d/%Y")}
-    %small= link_to 'download', rails_blob_path(document.file, disposition: "attachment")
-    %small= link_to 'delete', document_path(document.id), method: :delete, data: { confirm: 'Are you sure?' }
-    %br/
+  = content_tag(:div, "&nbsp;|&nbsp;".html_safe, class: "subtitle_tools")
+  = content_tag(:div, link_to('View Documents', documents_path(id: object.id, klass: object.class.to_s), remote: true, id: 'select_id'), class: "subtitle_tools")
+#documents
