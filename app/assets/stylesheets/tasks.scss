@@ -1,0 +1,23 @@
+#tasks {
+  li {
+    display: grid;
+    grid-template-columns: repeat(3, max-content) 1fr;
+    grid-gap: 1rem;
+    align-items: center;
+  }
+
+  li + ul,
+  li + li {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--neutral-030);
+  }
+
+  li .remote {
+    grid-column: -1 / 1;
+  }
+
+  .remote form {
+    position: relative;
+  }
+}

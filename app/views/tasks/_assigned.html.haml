@@ -1,21 +1,21 @@
 %li.highlight[assigned]
   - unless assigned.category.blank?
-    .strip{class: assigned.category}= t(assigned.category)
+    .badge.badge-info.strip{class: assigned.category}= t(assigned.category)
   - else
-    .strip.white #{t :other}
+    .badge.badge-info.strip.white #{t :other}
 
   .tools
     = link_to_task_edit(assigned, bucket) + " | "
     = link_to_discard(assigned) + " | " if shown_on_landing_page?
     = link_to_task_delete(assigned, bucket)
 
-  .indent
+  .details
     = link_to(assigned.assignee.full_name, user_path(assigned.assignee)) + ": "
     = auto_link h(assigned.name)
     - if assigned.asset_id?
       == #{t :related} #{link_to(h(assigned.asset.name), polymorphic_url(assigned.asset))}
     &ndash;
-    %tt
+    %span
       - if assigned.bucket == "due_asap"
         %span.urgent= t(:task_due_now)
 
