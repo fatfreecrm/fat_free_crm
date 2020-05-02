@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCRM
+module FatFreeCrm
   module Permissions
     def self.included(base)
       base.extend(ClassMethods)
@@ -24,8 +24,8 @@ module FatFreeCRM
 
           scope :my, ->(current_user) { accessible_by(current_user.ability) }
 
-          include FatFreeCRM::Permissions::InstanceMethods
-          extend FatFreeCRM::Permissions::SingletonMethods
+          include FatFreeCrm::Permissions::InstanceMethods
+          extend FatFreeCrm::Permissions::SingletonMethods
         end
       end
     end
@@ -94,4 +94,4 @@ module FatFreeCRM
   end
 end
 
-ActiveRecord::Base.include FatFreeCRM::Permissions
+ActiveRecord::Base.include FatFreeCrm::Permissions

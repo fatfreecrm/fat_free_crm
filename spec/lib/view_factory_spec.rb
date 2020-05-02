@@ -8,9 +8,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require "fat_free_crm/view_factory"
 
-describe FatFreeCRM::ViewFactory do
+describe FatFreeCrm::ViewFactory do
   before(:each) do
-    FatFreeCRM::ViewFactory.send(:class_variable_set, '@@views', [])
+    FatFreeCrm::ViewFactory.send(:class_variable_set, '@@views', [])
   end
 
   describe "initialization" do
@@ -19,7 +19,7 @@ describe FatFreeCRM::ViewFactory do
     end
 
     it "should initialize with required parameters" do
-      view = FatFreeCRM::ViewFactory.new @view_params
+      view = FatFreeCrm::ViewFactory.new @view_params
       expect(view.name).to eq('brief')
       expect(view.title).to eq('Brief View')
       expect(view.controllers).to include('contacts')
@@ -28,42 +28,42 @@ describe FatFreeCRM::ViewFactory do
     end
 
     it "should register view with ViewFactory" do
-      expect(FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views').size).to eq(0)
-      FatFreeCRM::ViewFactory.new @view_params
-      expect(FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views').size).to eq(1)
+      expect(FatFreeCrm::ViewFactory.send(:class_variable_get, '@@views').size).to eq(0)
+      FatFreeCrm::ViewFactory.new @view_params
+      expect(FatFreeCrm::ViewFactory.send(:class_variable_get, '@@views').size).to eq(1)
     end
 
     it "should not register the same view twice" do
-      FatFreeCRM::ViewFactory.new @view_params
-      FatFreeCRM::ViewFactory.new @view_params
-      views = FatFreeCRM::ViewFactory.send(:class_variable_get, '@@views')
+      FatFreeCrm::ViewFactory.new @view_params
+      FatFreeCrm::ViewFactory.new @view_params
+      views = FatFreeCrm::ViewFactory.send(:class_variable_get, '@@views')
       expect(views.size).to eq(1)
     end
   end
 
   describe "views_for" do
     before(:each) do
-      @v1 = FatFreeCRM::ViewFactory.new name: 'brief', title: 'Brief View', controllers: ['contacts'], actions: %w[show index]
-      @v2 = FatFreeCRM::ViewFactory.new name: 'long', title: 'Long View', controllers: ['contacts'], actions: ['show']
-      @v3 = FatFreeCRM::ViewFactory.new name: 'full', title: 'Full View', controllers: ['accounts'], actions: ['show']
+      @v1 = FatFreeCrm::ViewFactory.new name: 'brief', title: 'Brief View', controllers: ['contacts'], actions: %w[show index]
+      @v2 = FatFreeCrm::ViewFactory.new name: 'long', title: 'Long View', controllers: ['contacts'], actions: ['show']
+      @v3 = FatFreeCrm::ViewFactory.new name: 'full', title: 'Full View', controllers: ['accounts'], actions: ['show']
     end
 
     it "should return 'brief' view for ContactsController#index" do
-      expect(FatFreeCRM::ViewFactory.views_for(controller: 'contacts', action: 'index')).to eq([@v1])
+      expect(FatFreeCrm::ViewFactory.views_for(controller: 'contacts', action: 'index')).to eq([@v1])
     end
 
     it "should return 'brief' and 'long' view for ContactsController#show" do
-      views = FatFreeCRM::ViewFactory.views_for(controller: 'contacts', action: 'show')
+      views = FatFreeCrm::ViewFactory.views_for(controller: 'contacts', action: 'show')
       expect(views).to include(@v1)
       expect(views).to include(@v2)
     end
 
     it "should return 'full' view for AccountsController#show" do
-      expect(FatFreeCRM::ViewFactory.views_for(controller: 'accounts', action: 'show')).to eq([@v3])
+      expect(FatFreeCrm::ViewFactory.views_for(controller: 'accounts', action: 'show')).to eq([@v3])
     end
 
     it "should return no views for TasksController#show" do
-      expect(FatFreeCRM::ViewFactory.views_for(controller: 'tasks', action: 'show')).to eq([])
+      expect(FatFreeCrm::ViewFactory.views_for(controller: 'tasks', action: 'show')).to eq([])
     end
   end
 end

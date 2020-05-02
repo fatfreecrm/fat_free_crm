@@ -7,15 +7,15 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe 'FatFreeCRM::Fields' do
+describe 'FatFreeCrm::Fields' do
   class Foo
-    include FatFreeCRM::Fields
+    include FatFreeCrm::Fields
     include ActiveModel::Validations
     has_fields
   end
 
   class Bar
-    include FatFreeCRM::Fields
+    include FatFreeCrm::Fields
     include ActiveModel::Validations
   end
 

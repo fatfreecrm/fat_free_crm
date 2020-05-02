@@ -5,36 +5,9 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCRM
+puts "fat free crm module"
+module FatFreeCrm
   class Engine < ::Rails::Engine
-    config.autoload_paths += Dir[root.join("app/models/**")] +
-                             Dir[root.join("app/controllers/entities")]
-
-    config.active_record.observers = %i[lead_observer opportunity_observer
-                                        task_observer entity_observer]
-
-    initializer "model_core.factories", after: "factory_bot.set_factory_paths" do
-      FactoryBot.definition_file_paths << File.expand_path('../../spec/factories', __dir__) if defined?(FactoryBot)
-    end
-
-    initializer :append_migrations do |app|
-      unless app.root.to_s == root.to_s
-        config.paths["db/migrate"].expanded.each do |expanded_path|
-          app.config.paths["db/migrate"] << expanded_path
-        end
-      end
-    end
-
-    config.to_prepare do
-      Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|
-        require_dependency(c)
-      end
-    end
-
-    initializer 'fat_free_crm.assets.precompile' do |config|
-      #app.config.assets.precompile += %w( admin.js admin.css )
-      Rails.application.config.assets.paths << root.join("app", "assets", "javascripts")
-      Rails.application.config.assets.paths << root.join("app", "assets", "stylesheets")
-    end
+    isolate_namespace FatFreeCrm
   end
 end

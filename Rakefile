@@ -6,6 +6,6 @@
 
 require File.expand_path('config/application', __dir__)
 
-FatFreeCRM::Application.load_tasks
+FatFreeCrm::Application.load_tasks
 
 task default: ['spec']

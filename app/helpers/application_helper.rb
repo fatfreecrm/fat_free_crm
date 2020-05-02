@@ -7,12 +7,12 @@
 #------------------------------------------------------------------------------
 module ApplicationHelper
   def tabs(tabs = nil)
-    tabs ||= controller_path.match?(/admin/) ? FatFreeCRM::Tabs.admin : FatFreeCRM::Tabs.main
+    tabs ||= controller_path.match?(/admin/) ? FatFreeCrm::Tabs.admin : FatFreeCrm::Tabs.main
     if tabs
       @current_tab ||= tabs.first[:text] # Select first tab by default.
       tabs.each { |tab| tab[:active] = (@current_tab == tab[:text] || @current_tab == tab[:url][:controller]) }
     else
-      raise FatFreeCRM::MissingSettings, "Tab settings are missing, please run <b>rake ffcrm:setup</b> command."
+      raise FatFreeCrm::MissingSettings, "Tab settings are missing, please run <b>rake ffcrm:setup</b> command."
     end
   end
 
@@ -438,7 +438,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   # Get template in current context with current view name
   def template_for_current_view
-    FatFreeCRM::ViewFactory.template_for_current_view(controller: controller.controller_name,
+    FatFreeCrm::ViewFactory.template_for_current_view(controller: controller.controller_name,
                                                       action: show_or_index_action,
                                                       name: current_view_name)
   end
@@ -446,7 +446,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   # Generate buttons for available views given the current context
   def view_buttons
-    views = FatFreeCRM::ViewFactory.views_for(controller: controller.controller_name,
+    views = FatFreeCrm::ViewFactory.views_for(controller: controller.controller_name,
                                               action: show_or_index_action)
     return nil unless views.size > 1
 

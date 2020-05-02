@@ -10,7 +10,7 @@ require File.dirname(__FILE__) + '/sample_emails/dropbox'
 
 require "fat_free_crm/mail_processor/base"
 
-describe FatFreeCRM::MailProcessor::Base do
+describe FatFreeCrm::MailProcessor::Base do
   include MockIMAP
 
   before do
@@ -18,7 +18,7 @@ describe FatFreeCRM::MailProcessor::Base do
   end
 
   before(:each) do
-    @crawler = FatFreeCRM::MailProcessor::Base.new
+    @crawler = FatFreeCrm::MailProcessor::Base.new
     # MailProcessor::Base doesn't load any settings by default
     @crawler.instance_variable_set "@settings",
                                    server:   "example.com",

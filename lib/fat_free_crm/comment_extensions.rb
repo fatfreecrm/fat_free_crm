@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCRM
+module FatFreeCrm
   module CommentExtensions
     def self.included(base)
       base.extend(ClassMethods)
@@ -13,7 +13,7 @@ module FatFreeCRM
 
     module ClassMethods
       def uses_comment_extensions
-        include FatFreeCRM::CommentExtensions::InstanceMethods unless included_modules.include?(InstanceMethods)
+        include FatFreeCrm::CommentExtensions::InstanceMethods unless included_modules.include?(InstanceMethods)
       end
     end
 
@@ -25,4 +25,4 @@ module FatFreeCRM
   end
 end
 
-ActiveRecord::Base.include FatFreeCRM::CommentExtensions
+ActiveRecord::Base.include FatFreeCrm::CommentExtensions

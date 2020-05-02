@@ -8,7 +8,7 @@
 
 require 'securerandom'
 
-module FatFreeCRM
+module FatFreeCrm
   class SecretTokenGenerator
     class << self
       #
@@ -20,7 +20,7 @@ module FatFreeCRM
           new_token!
         end
         # If db isn't setup yet, token will return nil, provide a randomly generated one for now.
-        FatFreeCRM::Application.config.secret_key_base = (token || generate_token)
+        FatFreeCrm::Application.config.secret_key_base = (token || generate_token)
       end
 
       private

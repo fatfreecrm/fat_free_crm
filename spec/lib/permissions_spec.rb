@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe FatFreeCRM::Permissions do
+describe FatFreeCrm::Permissions do
   before do
     ActiveRecord::Base.connection.create_table(:user_with_permissions) do |t|
       t.string :access

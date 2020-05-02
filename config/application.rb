@@ -25,7 +25,7 @@ Bundler.require(*Rails.groups)
 # Override Rails Engines so that plugins have higher priority than the Application
 require 'fat_free_crm/gem_ext/rails/engine'
 
-module FatFreeCRM
+module FatFreeCrm
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -71,6 +71,6 @@ module FatFreeCRM
   end
 end
 
-# Require fat_free_crm after FatFreeCRM::Application class is defined,
-# so that FatFreeCRM::Engine is skipped.
+# Require fat_free_crm after FatFreeCrm::Application class is defined,
+# so that FatFreeCrm::Engine is skipped.
 require 'fat_free_crm'

@@ -9,7 +9,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 require "fat_free_crm/mail_processor/comment_replies"
 
-describe FatFreeCRM::MailProcessor::CommentReplies do
+describe FatFreeCrm::MailProcessor::CommentReplies do
   include MockIMAP
 
   before do
@@ -17,7 +17,7 @@ describe FatFreeCRM::MailProcessor::CommentReplies do
   end
 
   before(:each) do
-    @crawler = FatFreeCRM::MailProcessor::CommentReplies.new
+    @crawler = FatFreeCrm::MailProcessor::CommentReplies.new
   end
 
   #------------------------------------------------------------------------------

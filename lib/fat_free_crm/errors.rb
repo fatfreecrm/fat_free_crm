@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCRM
+module FatFreeCrm
   module ActiveModel
     module Errors
       # Override ActiveModel::Errors#each so we could display validation
@@ -36,4 +36,4 @@ module FatFreeCRM
   end
 end
 
-ActiveModel::Errors.include FatFreeCRM::ActiveModel::Errors
+ActiveModel::Errors.include FatFreeCrm::ActiveModel::Errors

@@ -5,14 +5,14 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCRM
+module FatFreeCrm
   class MissingSettings < StandardError; end
   class ObsoleteSettings < StandardError; end
 end
 
 class ActionController::Base
-  rescue_from FatFreeCRM::MissingSettings,  with: :render_fat_free_crm_exception
-  rescue_from FatFreeCRM::ObsoleteSettings, with: :render_fat_free_crm_exception
+  rescue_from FatFreeCrm::MissingSettings,  with: :render_fat_free_crm_exception
+  rescue_from FatFreeCrm::ObsoleteSettings, with: :render_fat_free_crm_exception
 
   private
 

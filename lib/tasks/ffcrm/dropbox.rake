@@ -10,21 +10,21 @@ namespace :ffcrm do
     desc "Run dropbox crawler and process incoming emails"
     task run: :environment do
       require "fat_free_crm/mail_processor/dropbox"
-      FatFreeCRM::MailProcessor::Dropbox.new.run(false)
+      FatFreeCrm::MailProcessor::Dropbox.new.run(false)
     end
 
     namespace :run do
       desc "[Dry run] - Run dropbox crawler and process incoming emails"
       task dry: :environment do
         require "fat_free_crm/mail_processor/dropbox"
-        FatFreeCRM::MailProcessor::Dropbox.new.run(true)
+        FatFreeCrm::MailProcessor::Dropbox.new.run(true)
       end
     end
 
     desc "Set up email dropbox based on currently loaded settings"
     task setup: :environment do
       require "fat_free_crm/mail_processor/dropbox"
-      FatFreeCRM::MailProcessor::Dropbox.new.setup
+      FatFreeCrm::MailProcessor::Dropbox.new.setup
     end
   end
 end

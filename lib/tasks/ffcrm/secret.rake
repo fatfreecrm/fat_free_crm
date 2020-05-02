@@ -12,6 +12,6 @@ namespace :ffcrm do
     require 'securerandom'
     secret = SecureRandom.hex(64)
     filename = File.join(Rails.root, 'config', 'initializers', 'secret_token.rb')
-    File.open(filename, 'w') { |f| f.puts "FatFreeCRM::Application.config.secret_token = '#{secret}'" }
+    File.open(filename, 'w') { |f| f.puts "FatFreeCrm::Application.config.secret_token = '#{secret}'" }
   end
 end

@@ -12,7 +12,7 @@ class Admin::PluginsController < Admin::ApplicationController
   # GET /admin/plugins.xml
   #----------------------------------------------------------------------------
   def index
-    @plugins = FatFreeCRM::Plugin.list
+    @plugins = FatFreeCrm::Plugin.list
 
     respond_with(@plugins)
   end

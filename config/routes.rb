@@ -12,18 +12,6 @@ Rails.application.routes.draw do
   get '/login',  to: redirect('/users/sign_in')
   get '/signup', to: redirect('/users/sign_up')
 
-  devise_for :users, controllers: { registrations: 'registrations',
-                                    sessions: 'sessions',
-                                    passwords: 'passwords',
-                                    confirmations: 'confirmations' }
-
-  devise_scope :user do
-    resources :users, only: %i[index show] do
-      collection do
-        get :opportunities_overview
-      end
-    end
-  end
 
   get 'activities' => 'home#index'
   get 'admin'      => 'admin/users#index',       as: :admin

@@ -70,6 +70,22 @@ GEM
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.0)
+    aws-eventstream (1.1.0)
+    aws-partitions (1.308.0)
+    aws-sdk-core (3.94.0)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.239.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.30.0)
+      aws-sdk-core (~> 3, >= 3.71.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.63.0)
+      aws-sdk-core (~> 3, >= 3.83.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.1.3)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     backport (1.1.2)
     bcrypt (3.1.13)
     bootsnap (1.4.6)
@@ -175,6 +191,7 @@ GEM
       concurrent-ruby (~> 1.0)
     i18n_data (0.10.0)
     jaro_winkler (1.5.4)
+    jmespath (1.4.0)
     jquery-migrate-rails (1.2.1)
     jquery-rails (4.3.5)
       rails-dom-testing (>= 1, < 3)
@@ -438,6 +455,7 @@ DEPENDENCIES
   acts-as-taggable-on
   acts_as_commentable
   acts_as_list
+  aws-sdk-s3
   bootsnap
   brakeman
   byebug

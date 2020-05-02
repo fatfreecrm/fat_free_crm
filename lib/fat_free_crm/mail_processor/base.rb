@@ -11,7 +11,7 @@ require 'email_reply_parser'
 require 'premailer'
 require 'nokogiri'
 
-module FatFreeCRM
+module FatFreeCrm
   module MailProcessor
     class Base
       KEYWORDS = %w[account campaign contact lead opportunity].freeze

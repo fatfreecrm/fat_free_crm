@@ -54,8 +54,8 @@ If you consume fat free crm as an engine and re-use any factories, you'll need t
 
 #### Removed methods
 `Lead.update_with_permissions` is removed, use user_ids and group_ids inside attributes instead and call lead.update_with_account_and_lead_counters
-`FatFreeCRM::Permissions.save_with_permissions` is removed, use user_ids and group_ids inside attributes and call save
-`FatFreeCRM::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
+`FatFreeCrm::Permissions.save_with_permissions` is removed, use user_ids and group_ids inside attributes and call save
+`FatFreeCrm::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
 
 #### Other changes
  - CVE-2018-8048 (loofah gem)
@@ -849,7 +849,7 @@ Tue, Oct 20, 2009
 - Added Language option stubs to user's profile.
 - Disabled tab highlighting when showing user's profile.
 - Include all Fat Free CRM modules from Rails initializer.
-- Added FatFreeCRM::I18n module.
+- Added FatFreeCrm::I18n module.
 
 Sun, Oct 18, 2009
 ---------------------------------------------------------------------
@@ -944,7 +944,7 @@ Mon, Sep 14, 2009
 Sun, Sep 13, 2009
 ---------------------------------------------------------------------
 - Added [get_*] controller hooks.
-- Refactored FatFreeCRM::Callback.hook to simplify and support hook chains.
+- Refactored FatFreeCrm::Callback.hook to simplify and support hook chains.
 - Implemented controller hooks in [crm_tags] plugin.
 
 Sat, Sep 12, 2009
@@ -1952,7 +1952,7 @@ Sun, Jan 18, 2009
 
 Sat, Jan 17, 2009
 ---------------------------------------------------------------------
-- Implemented FatFreeCRM::Plugin and FatFreeCRM::Callback modules.
+- Implemented FatFreeCrm::Plugin and FatFreeCrm::Callback modules.
 - Created first sample Fat Free CRM plugin!
 - Uninstalled Searchlogic plugin and added Rails Engines.
 - Fixed :my scope to use LEFT OUTER JOINs with permissions.

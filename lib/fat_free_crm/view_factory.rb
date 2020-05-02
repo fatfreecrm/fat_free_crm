@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 
-module FatFreeCRM
+module FatFreeCrm
   # A view factory keeps track of views and the contexts in which they are available.
   #----------------------------------------------------------------------------
   #

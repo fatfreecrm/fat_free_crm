@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe FatFreeCRM::CommentExtensions do
+describe FatFreeCrm::CommentExtensions do
   describe "add_comment_by_user" do
     let(:user) { create(:user) }
 

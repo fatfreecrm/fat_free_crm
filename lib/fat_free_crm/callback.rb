@@ -5,14 +5,14 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCRM
+module FatFreeCrm
   module Callback
-    @@classes   = []  # Classes that inherit from FatFreeCRM::Callback::Base.
+    @@classes   = []  # Classes that inherit from FatFreeCrm::Callback::Base.
     @@responder = {}  # Class instances that respond to (i.e. implement) hook methods.
     # Also includes class instances that implement a
     # set of view hook operations (insert_after, replace, etc).
 
-    # Adds a class inherited from from FatFreeCRM::Callback::Base.
+    # Adds a class inherited from from FatFreeCrm::Callback::Base.
     #--------------------------------------------------------------------------
     def self.add(klass)
       @@classes << klass
@@ -68,7 +68,7 @@ module FatFreeCRM
     class Base
       include Singleton
       def self.inherited(child)
-        FatFreeCRM::Callback.add(child)
+        FatFreeCrm::Callback.add(child)
         # Positioning hash to determine where content is placed.
         child.class_eval do
           @view_hooks = Hash.new([])
@@ -102,7 +102,7 @@ module FatFreeCRM
       end
     end
 
-    # This makes it possible to call hook() without FatFreeCRM::Callback prefix.
+    # This makes it possible to call hook() without FatFreeCrm::Callback prefix.
     # Returns stringified data when called from within templates, and the actual
     # data otherwise.
     #--------------------------------------------------------------------------
@@ -112,7 +112,7 @@ module FatFreeCRM
 
         # If a block was given, hooks are able to replace, append or prepend view content.
         if is_view_hook
-          hooks = FatFreeCRM::Callback.view_hook(method, caller, context)
+          hooks = FatFreeCrm::Callback.view_hook(method, caller, context)
           # Add content to the view in the following order:
           # -- before
           # -- replace || original block
@@ -125,7 +125,7 @@ module FatFreeCRM
                            capture(&block)
                          else
                            # legacy view hooks
-                           FatFreeCRM::Callback.hook(method, caller, context)
+                           FatFreeCrm::Callback.hook(method, caller, context)
               end
           else
             hooks[:replace].each { |data| view_data << data }
@@ -136,12 +136,12 @@ module FatFreeCRM
 
         else
           # Hooks called without blocks are either controller or legacy view hooks
-          FatFreeCRM::Callback.hook(method, caller, context)
+          FatFreeCrm::Callback.hook(method, caller, context)
         end
       end
     end
   end
 end
 
-ActionView::Base.include FatFreeCRM::Callback::Helper
-ActionController::Base.include FatFreeCRM::Callback::Helper
+ActionView::Base.include FatFreeCrm::Callback::Helper
+ActionController::Base.include FatFreeCrm::Callback::Helper
