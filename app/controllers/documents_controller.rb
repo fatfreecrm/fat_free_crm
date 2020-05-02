@@ -1,4 +1,23 @@
 class DocumentsController < ApplicationController
+  def index
+    @documents = Document.where(record_id: params[:id], record_klass: params[:klass])
+  end
+
+  def new
+    @document = Document.new
+
+    if params[:related]
+      model, id = params[:related].split(/_(\d+)/)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
+        instance_variable_set("@asset", related)
+      else
+        respond_to_related_not_found(model) && return
+      end
+    end
+
+    respond_with(@document)
+  end
+
   def create
     @document = Document.new(document_params)
     if document_params[:file].present? && @document.save
