@@ -23,7 +23,7 @@ require 'ransack'
 Bundler.require(*Rails.groups)
 
 # Override Rails Engines so that plugins have higher priority than the Application
-require 'fat_free_crm/gem_ext/rails/engine'
+# require 'fat_free_crm/gem_ext/rails/engine'
 
 module FatFreeCrm
   class Application < Rails::Application

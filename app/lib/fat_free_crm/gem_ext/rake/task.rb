@@ -5,16 +5,13 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class Admin::SettingsController < Admin::ApplicationController
-  before_action :setup_current_tab, only: [:index]
+require 'rake/task'
 
-  # GET /admin/settings
-  # GET /admin/settings.xml
-  #----------------------------------------------------------------------------
-  def index
-  end
-
-  def setup_current_tab
-    set_current_tab('admin/settings')
+module Rake
+  Task.class_eval do
+    # Removes a Rake task
+    def self.remove(task_name)
+      Rake.application.instance_variable_get('@tasks').delete(task_name.to_s)
+    end
   end
 end

@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 # This migration comes from fat_free_crm (originally 20111201030535)
+puts FatFreeCrm::Permissions.inspect
+puts FatFreeCrm::CommentExtensions.inspect
+puts FatFreeCrm::Fields.inspect
+puts FatFreeCrm::Exportable.inspect
+puts FatFreeCrm::Sortable.inspect
 
 class AddFieldGroupsKlassName < ActiveRecord::Migration[4.2]
   def up
@@ -7,7 +12,7 @@ class AddFieldGroupsKlassName < ActiveRecord::Migration[4.2]
 
     # Add a default field group for each model
     %w[Account Campaign Contact Lead Opportunity].each do |entity|
-      klass = "FatFreeCrm::#{entity.classify}".constantize
+      klass = "FatFreeCrm::#{entity}".classify.constantize
       field_group = FatFreeCrm::FieldGroup.new
       field_group.label = 'Custom Fields'
       field_group.klass_name = klass.name

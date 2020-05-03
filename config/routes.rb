@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-Rails.application.routes.draw do
+FatFreeCrm::Engine.routes.draw do
   resources :lists
 
   # Deprecated: Compatibility with legacy Authlogic routes
