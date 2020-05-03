@@ -96,14 +96,6 @@ $color_subtitle: darkslateblue;
   padding: 12px 12px 12px 16px;
 }
 
-.form {
-  background: white;
-  h4 {
-    font-size: 18px;
-    height: 30px;
-  }
-}
-
 .tools {
   font-size: 0.75rem;
   &#comment_new_tools {
@@ -196,24 +188,24 @@ $color_subtitle: darkslateblue;
   }
 }
 
-.strip {
-  background: gainsboro;
-  color: black;
-  float: left;
-  font-size: 11px;
-  margin: 0px 6px 0px 0px;
-  padding: 1px 4px 1px 3px;
-  text-align: right;
-  width: 75px;
-  border-radius: {
-    topleft: 7px;
-    bottomleft: 7px;
-  }
-  border: {
-    top-left-radius: 7px;
-    bottom-left-radius: 7px;
-  }
-}
+// .strip {
+//   background: gainsboro;
+//   color: black;
+//   float: left;
+//   font-size: 11px;
+//   margin: 0px 6px 0px 0px;
+//   padding: 1px 4px 1px 3px;
+//   text-align: right;
+//   width: 75px;
+//   border-radius: {
+//     topleft: 7px;
+//     bottomleft: 7px;
+//   }
+//   border: {
+//     top-left-radius: 7px;
+//     bottom-left-radius: 7px;
+//   }
+// }
 
 // Indentation classes:
 //   - indent: for use with strip (regular indentation).
@@ -228,16 +220,13 @@ $color_subtitle: darkslateblue;
   margin-left: 38px;
 }
 
-.indentwide {
-  margin-left: 106px;
-}
-
 .indentfull {
   margin-left: 126px;
 }
 
-.bucket {
-  margin: 0px 0px 10px 0px;
+ul.bucket {
+  padding: 0;
+  list-style: none;
 }
 
 .prefix {
@@ -357,35 +346,6 @@ textarea#comment_body {
   font-size: 11px;
   margin: 0px 0px 6px 0px;
   padding: 6px;
-}
-
-// Single-row lists.
-//------------------------------------------------------------------------------
-.log {
-  padding: 8px 0px 0px 0px;
-  h3 {
-    border-bottom: 1px #2f2f2f dotted;
-    color: #2f2f2f;
-    &.overdue {
-      color: crimson;
-    }
-    &.due_asap {
-      color: darkred;
-    }
-    &.due_today {
-      color: darkgreen;
-    }
-  }
-  li {
-    color: #3f3f3f;
-    font-size: 12px;
-    list-style: none;
-    padding: 3px 0px 3px 0px;
-    tt {
-      color: dimgray;
-      font-size: 11px;
-    }
-  }
 }
 
 // Two-row lists.
@@ -575,24 +535,10 @@ ul.tools {
   }
 }
 
-.highlight {
-  background-color: white;
-  .tools {
-    visibility: hidden;
-  }
-}
-
 .mail.highlight,
 .comment.highlight {
   background-color: #f2f2f2;
   word-break: break-all;
-}
-
-.highlight:hover {
-  background-color: seashell;
-  .tools {
-    visibility: visible;
-  }
 }
 
 table.asset_attributes {

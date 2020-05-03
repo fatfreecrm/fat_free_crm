@@ -10,9 +10,9 @@
       = f.select :bucket, @bucket, { selected: bucket.to_sym }, {  onchange: "crm.flip_calendar(this.value)", class: 'form-control' }
       = f.text_field :calendar, style: "display:none;", autocomplete: :off, class: (with_time ? 'datetime' : 'date'), :class => 'form-control'
     - else
-      = f.select :bucket, @bucket, { selected: :specific_time }, { style: " display:none;", onchange: "crm.flip_calendar(this.value)", class: 'form-control' }
+      = f.select :bucket, @bucket, { selected: :specific_time }, { style: " display:none;", onchange: "crm.flip_calendar(this.value)", class: 'custom-select form-control' }
       - fmt = with_time ? '%Y-%m-%d %H:%M' : '%Y-%m-%d'
-      = f.text_field :calendar, value: f.object.due_at.strftime(fmt),  autocomplete: :off, class: (with_time ? 'datetime' : 'date')
+      = f.text_field :calendar, value: f.object.due_at.strftime(fmt),  autocomplete: :off, class: (with_time ? 'form-control datetime' : 'form-control date')
   .form-group.one-quarter
     %label #{t :assign_to}:
     = user_select(:task, all_users, current_user)
