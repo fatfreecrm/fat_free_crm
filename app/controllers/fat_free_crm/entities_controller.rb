@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module FatFreeCrm
-  class EntitiesController < ApplicationController
+  class EntitiesController < FatFreeCrm::ApplicationController
     before_action :set_current_tab, only: %i[index show]
     before_action :set_view, only: %i[index show redraw]
 

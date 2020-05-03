@@ -9,6 +9,10 @@ require 'paper_trail'
 
 module FatFreeCrm
   class Version < PaperTrail::Version
+    def self.table_name
+      'fat_free_crm_versions'
+    end
+
     ASSETS = %w[all tasks campaigns leads accounts contacts opportunities comments emails]
     EVENTS = %w[all_events create view update destroy]
     DURATION = %w[one_hour one_day two_days one_week two_weeks one_month]

@@ -6,16 +6,32 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 FatFreeCrm::Engine.routes.draw do
+
+  root 'fat_free_crm/home#index'
   resources :lists
 
   # Deprecated: Compatibility with legacy Authlogic routes
   get '/login',  to: redirect('/users/sign_in')
   get '/signup', to: redirect('/users/sign_up')
 
+  devise_for :users, class_name: 'FatFreeCrm::User',
+                     path: '/users',
+                     controllers: { registrations: 'fat_free_crm/registrations',
+                                    sessions: 'fat_free_crm/sessions',
+                                    passwords: 'fat_free_crm/passwords',
+                                    confirmations: 'fat_free_crm/confirmations' } 
 
-  get 'activities' => 'home#index'
-  get 'admin'      => 'admin/users#index',       as: :admin
-  get 'profile'    => 'users#show',              as: :profile
+  devise_scope :user do
+    resources :users, only: %i[index show] do
+      collection do
+        get :opportunities_overview
+      end
+    end
+  end
+
+  get 'activities' => 'fat_free_crm/home#index'
+  get 'admin'      => 'fat_free_crm/admin/users#index',       as: :admin
+  get 'profile'    => 'fat_free_crm/users#show',              as: :profile
 
   get '/home/options',  as: :options
   get '/home/toggle',   as: :toggle

@@ -16,5 +16,5 @@
       = render "/layouts/jumpbox"
     - else
       = link_to(t(:login), new_user_session_path) << " |"
-      = link_to(t(:sign_up), new_user_registration_path) << " |" if User.can_signup?
+      = link_to(t(:sign_up), new_user_registration_path) << " |" if FatFreeCrm::User.can_signup?
       = link_to(t(:about), "#", title: t(:about_ffc), onclick: "$('#about').dialog({ title: this.title, modal: true }); return false;")

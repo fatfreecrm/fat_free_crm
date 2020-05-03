@@ -10,6 +10,9 @@ module FatFreeCrm
     isolate_namespace FatFreeCrm
 
     config.after_initialize do
+      ActionView::Base.include FatFreeCrm::Callback::Helper
+      ActionController::Base.include FatFreeCrm::Callback::Helper
+      
       if FatFreeCrm::Setting.database_and_table_exists?
         setting_files = [FatFreeCrm::Engine.root.join("config", "settings.default.yml")]
         setting_files << FatFreeCrm::Engine.root.join("config", "settings.yml") unless Rails.env == 'test'

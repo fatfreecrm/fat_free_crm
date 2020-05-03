@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module FatFreeCrm
-  class Admin::ApplicationController < ApplicationController
+  class Admin::ApplicationController < FatFreeCrm::ApplicationController
     before_action :require_admin_user
 
     layout "admin/application"

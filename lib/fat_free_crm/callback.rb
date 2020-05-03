@@ -142,3 +142,6 @@ module FatFreeCrm
     end
   end
 end
+
+ActionView::Base.include FatFreeCrm::Callback::Helper
+ActionController::Base.include FatFreeCrm::Callback::Helper
