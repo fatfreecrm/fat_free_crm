@@ -1,0 +1,22 @@
+ul#contacts {
+  list-style: none;
+  padding: 0;
+
+  li + li {
+    margin-top: 1rem;
+  }
+}
+
+li.contact {
+  padding: 1rem;
+}
+
+li.contact > * + * {
+  margin-top: 0.5rem;
+}
+
+.detail-content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+}

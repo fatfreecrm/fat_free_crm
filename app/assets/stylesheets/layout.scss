@@ -4,6 +4,35 @@
   min-height: calc(100vh - 42px - 40px);
 }
 
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+  }
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+  }
+
+  .tools {
+    margin-left: 1rem;
+  }
+}
+
 .main {
   padding: var(--s0);
   background-color: var(--neutral-010);
