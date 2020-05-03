@@ -212,9 +212,6 @@ $color_subtitle: darkslateblue;
 //   - indentslim: for use with avatar and no strip (Contacts).
 //   - indentwide: for use with strip + checkbox (Tasks).
 //   - indentfull: for use with strip + avatar (Admin/Users).
-.indent {
-  margin-left: 88px;
-}
 
 .indentslim {
   margin-left: 38px;
@@ -350,29 +347,29 @@ textarea#comment_body {
 
 // Two-row lists.
 //------------------------------------------------------------------------------
-.list {
-  padding: 8px 0px 7px 0px;
-  li {
-    border-bottom: 1px silver dotted;
-    color: #3f3f3f;
-    font-size: 12px;
-    list-style: none;
-    padding: 6px 0px 6px 0px;
-    .gravatar {
-      float: left;
-      padding: 0px 8px 0px 0px;
-    }
-    tt {
-      color: dimgray;
-      font-size: 11px;
-    }
-    dt {
-      color: #3f3f3f;
-      font-size: 11px;
-      padding: 2px 0px 0px 0px;
-    }
-  }
-}
+// .list {
+//   padding: 8px 0px 7px 0px;
+//   li {
+//     border-bottom: 1px silver dotted;
+//     color: #3f3f3f;
+//     font-size: 12px;
+//     list-style: none;
+//     padding: 6px 0px 6px 0px;
+//     .gravatar {
+//       float: left;
+//       padding: 0px 8px 0px 0px;
+//     }
+//     tt {
+//       color: dimgray;
+//       font-size: 11px;
+//     }
+//     dt {
+//       color: #3f3f3f;
+//       font-size: 11px;
+//       padding: 2px 0px 0px 0px;
+//     }
+//   }
+// }
 
 // Dropdown menu.
 //------------------------------------------------------------------------------
@@ -627,4 +624,15 @@ table.asset_attributes {
 
 .page-heading {
   margin-bottom: var(--s2);
+}
+
+#activities,
+#accounts,
+#opportunities {
+  padding: 0;
+  list-style: none;
+
+  li + li {
+    margin-top: 0.25rem;
+  }
 }
