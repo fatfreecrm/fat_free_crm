@@ -1,26 +1,24 @@
 %li.highlight[opportunity]
-  - if opportunity.stage
-    .badge.badge-primary{class: opportunity.stage}= t(opportunity.stage)
-  - else
-    .badge.badge-light #{t :other}
-
-  .indent
+  .flex-container
+    - if opportunity.stage
+      .badge.badge-primary{class: opportunity.stage}= t(opportunity.stage)
+    - else
+      .badge.badge-light #{t :other}
     = link_to(h(opportunity.name), opportunity)
     - if opportunity.account
-      == #{t :from} #{link_to(h(opportunity.account.name), account_path(opportunity.account))}
-    %tt
-      &ndash;
+      %span
+        == #{t :from} #{link_to(h(opportunity.account.name), account_path(opportunity.account))}
+    %span
       - user_name = opportunity.user.try(:full_name)
       - if user_name
-        = t(:added_by, time_ago: timeago(opportunity.created_at), user: h(user_name)).html_safe
+        = t(:added_by, time_ago: opportunity.created_at, user: h(user_name)).html_safe
       - else
-        = t(:added_ago, value: timeago(opportunity.created_at)).html_safe
-    - unless current_user.preference[:opportunities_index_view] == "opportunities_index_brief"
-      %dt
-        = opportunity_revenue_message(opportunity)
+        = t(:added_ago, value: opportunity.created_at).html_safe
+  - unless current_user.preference[:opportunities_index_view] == "opportunities_index_brief"
+    .revenue-message
+      = opportunity_revenue_message(opportunity)
 
-      - if opportunity.tags.present?
-        %dt
-          .tags= tags_for_dashboard(opportunity)
+    - if opportunity.tags.present?
+      .tags= tags_for_dashboard(opportunity)
 
-      = hook(:opportunity_bottom, self, opportunity: opportunity)
+    = hook(:opportunity_bottom, self, opportunity: opportunity)

@@ -1,5 +1,5 @@
 = section(object, :opportunities)
-.list#opportunities
+%ul.list#opportunities
   - opportunities = object.opportunities.order('updated_at desc').paginate(page: 1, per_page: 20)
   = render partial: "opportunities/opportunity", collection: opportunities
 

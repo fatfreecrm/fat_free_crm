@@ -1,36 +1,30 @@
-%li.highlight[opportunity]
-  - if opportunity.stage
-    .strip{class: opportunity.stage}= t(opportunity.stage)
-  - else
-    .strip.white #{t :other}
-
-  %ul.tools
-    - if can?(:update, opportunity)
-      %li= link_to_edit(opportunity)
-
-    - if shown_on_landing_page?
-      %li= link_to_discard(opportunity)
-
-    - if can?(:destroy, opportunity)
-      %li= link_to_delete(opportunity)
-
-  .indent
+%li.long.highlight[opportunity]
+  .flex-container
+    - if opportunity.stage
+      .strip.badge.badge-primary{class: opportunity.stage}= t(opportunity.stage)
+    - else
+      .strip.badge.badge-light #{t :other}
+    .tools
+      - if can?(:update, opportunity)
+        = link_to_edit(opportunity)
+      - if shown_on_landing_page?
+        = link_to_discard(opportunity)
+      - if can?(:destroy, opportunity)
+        = link_to_delete(opportunity)
+  .flex-container
     = link_to_if can?(:read, opportunity), opportunity.name, opportunity
     - if (account = opportunity.account) && account.id
-      == #{t :from} #{link_to_if can?(:read, account), account.name, account_path(account)}
-    %tt
-      &ndash;
+      %span
+        == #{t :from} #{link_to_if can?(:read, account), account.name, account_path(account)}
+    %span
       - user_name = opportunity.user.try(:full_name)
       - if user_name
-        = t(:added_by, time_ago: timeago(opportunity.created_at), user: h(user_name)).html_safe
+        = t(:added_by, time_ago: opportunity.created_at, user: h(user_name)).html_safe
       - else
-        = t(:added_ago, value: timeago(opportunity.created_at)).html_safe
-
-    %dt
-      = opportunity_revenue_message(opportunity, true)
-
-      - if opportunity.tags.present?
-        %dt
-          .tags= tags_for_index(opportunity)
-
-    = hook(:opportunity_bottom, self, opportunity: opportunity)
+        = t(:added_ago, value: opportunity.created_at).html_safe
+  
+  %span
+    = opportunity_revenue_message(opportunity, true)
+    - if opportunity.tags.present?
+      .tags= tags_for_index(opportunity)
+  = hook(:opportunity_bottom, self, opportunity: opportunity)
