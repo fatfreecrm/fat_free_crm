@@ -35,7 +35,7 @@ class DocumentsController < ApplicationController
   private
 
   def document_params
-    params.require(:document).permit(:record_id, :record_klass, :file)
+    params.require(:document).permit(:record_id, :record_klass, :file, :uploaded_by_id)
   end
 
   def redirection_url

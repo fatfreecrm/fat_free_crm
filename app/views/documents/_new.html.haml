@@ -1,13 +1,12 @@
 = simple_form_for(@document, html: one_submit_only) do |f|
   = link_to_close new_document_path
-  = hidden_field_tag "document[user_id]", current_user.id
+  = hidden_field_tag "document[uploaded_by_id]", current_user.id
   = hidden_field_tag "document[record_id]", "#{@asset.id if @asset}"
   = hidden_field_tag "document[record_klass]", "#{@asset.class if @asset}"
 
   .idc-panel
     .form-group.one-half
-      %label #{t :file}
-      = f.file_field :file, autofocus: true, :class => "form-control"
+      = f.file_field :file, autofocus: true
 
   .buttonbar
     = f.submit 'Create Document', :class => 'btn btn-primary'
