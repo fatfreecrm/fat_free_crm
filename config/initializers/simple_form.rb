@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require 'simple_form'
+# require 'simple_form'
 
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|

@@ -13,19 +13,30 @@ require 'ransack/adapters'
 module FatFreeCrm
   class Engine < ::Rails::Engine
     isolate_namespace FatFreeCrm
+    
+    ActiveSupport.on_load(:action_controller) do
+      wrap_parameters format: [:json] if respond_to?(:wrap_parameters)
+    end
+    
+    # To enable root element in JSON for ActiveRecord objects.
+    ActiveSupport.on_load(:active_record) do
+      self.include_root_in_json = true
+    end
 
     config.after_initialize do
       ActionView::Base.include FatFreeCrm::Callback::Helper
       ActionController::Base.include FatFreeCrm::Callback::Helper
       
-      if FatFreeCrm::Setting.database_and_table_exists?
+      if Setting.database_and_table_exists?
         setting_files = [FatFreeCrm::Engine.root.join("config", "settings.default.yml")]
         setting_files << FatFreeCrm::Engine.root.join("config", "settings.yml") unless Rails.env == 'test'
         setting_files << Rails.root.join("config", "settings.yml") unless Rails.env == 'test'
         setting_files.each do |settings_file|
-          FatFreeCrm::Setting.load_settings_from_yaml(settings_file) if File.exist?(settings_file)
+          Setting.load_settings_from_yaml(settings_file) if File.exist?(settings_file)
         end
 
+        I18n.default_locale = Setting.locale
+        I18n.fallbacks[:en] = [:"en-US"]
         I18n.backend.load_translations
     
         translations = { ransack: { attributes: {} } }
@@ -37,7 +48,7 @@ module FatFreeCrm
           end
         end
     
-        I18n.backend.store_translations(FatFreeCrm::Setting.locale.to_sym, translations)
+        I18n.backend.store_translations(Setting.locale.to_sym, translations)
       end
     
     end
