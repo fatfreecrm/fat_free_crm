@@ -44,9 +44,9 @@ shared_examples_for "exportable" do
   end
 end
 
-shared_examples Ability do |klass|
+shared_examples FatFreeCrm::Ability do |klass|
   subject { ability }
-  let(:ability) { Ability.new(user) }
+  let(:ability) { FatFreeCrm::Ability.new(user) }
   let(:user) { create(:user) }
   let(:factory) { klass.model_name.to_s.underscore }
 

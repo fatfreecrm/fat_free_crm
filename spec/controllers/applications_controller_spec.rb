@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe ApplicationController do
   describe "auto_complete_ids_to_exclude" do
     it "should return [] when related is nil" do
@@ -40,4 +41,5 @@ describe ApplicationController do
       expect(controller.send(:auto_complete_ids_to_exclude, 'campaigns/7')).to eq([])
     end
   end
+end
 end

@@ -54,7 +54,7 @@ RSpec.configure do |config|
     # Overwrite locale settings within "config/settings.yml" if necessary.
     # In order to ensure that test still pass if "Setting.locale" is not set to "en-US".
     I18n.locale = 'en-US'
-    Setting.locale = 'en-US' unless Setting.locale == 'en-US'
+    FatFreeCrm::Setting.locale = 'en-US' unless FatFreeCrm::Setting.locale == 'en-US'
   end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

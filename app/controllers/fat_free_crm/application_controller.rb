@@ -84,7 +84,8 @@ module FatFreeCrm
       return [related.to_i].compact unless related.index('/')
 
       related_class, id = related.split('/')
-      obj = related_class.classify.constantize.find_by_id(id)
+      lookup_class = "FatFreeCrm::" + related_class.classify
+      obj = lookup_class.classify.constantize.find_by_id(id)
       if obj&.respond_to?(controller_name)
         obj.send(controller_name).map(&:id)
       else
@@ -99,7 +100,7 @@ module FatFreeCrm
 
     #----------------------------------------------------------------------------
     def clear_setting_cache
-      Setting.clear_cache!
+      FatFreeCrm::Setting.clear_cache!
     end
 
     #----------------------------------------------------------------------------
@@ -107,7 +108,7 @@ module FatFreeCrm
       Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
       if current_user.present? && (locale = current_user.preference[:locale]).present?
         I18n.locale = locale
-      elsif Setting.locale.present?
+      elsif FatFreeCrm::Setting.locale.present?
         I18n.locale = Setting.locale
       end
     end
