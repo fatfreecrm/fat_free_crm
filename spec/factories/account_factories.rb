@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 FactoryBot.define do
-  factory :account do
+  factory :account, class: FatFreeCrm::Account do
     user
     assigned_to         { nil }
     name                { FFaker::Company.name + rand(100).to_s }

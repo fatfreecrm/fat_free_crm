@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 FactoryBot.define do
-  factory :campaign do
+  factory :campaign, class: FatFreeCrm::Campaign do
     user
     name                { FFaker::Lorem.sentence[0, 64] }
     assigned_to         { nil }

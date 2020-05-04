@@ -55,7 +55,7 @@ FactoryBot.define do
     created_at          { FactoryBot.generate(:time) }
   end
 
-  factory :group do
+  factory :group, class: FatFreeCrm::Group do
     name                { FFaker::Company.name }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }

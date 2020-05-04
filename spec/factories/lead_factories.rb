@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 FactoryBot.define do
-  factory :lead do
+  factory :lead, class: FatFreeCrm::Lead do
     user
     campaign
     assigned_to         { nil }

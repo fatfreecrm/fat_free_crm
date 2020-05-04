@@ -48,7 +48,7 @@ shared_examples FatFreeCrm::Ability do |klass|
   subject { ability }
   let(:ability) { FatFreeCrm::Ability.new(user) }
   let(:user) { create(:user) }
-  let(:factory) { klass.model_name.to_s.underscore }
+  let(:factory) { klass.model_name.to_s.split("::").last.underscore }
 
   context "create" do
     it { is_expected.to be_able_to(:create, klass) }
@@ -87,21 +87,21 @@ shared_examples FatFreeCrm::Ability do |klass|
 
   context "when shared access with permission" do
     let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
-    let(:permission) { Permission.new(user: user) }
+    let(:permission) { FatFreeCrm::Permission.new(user: user) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when shared access with no permission" do
     let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
-    let(:permission) { Permission.new(user: create(:user)) }
+    let(:permission) { FatFreeCrm::Permission.new(user: create(:user)) }
 
     it { is_expected.not_to be_able_to(:manage, asset) }
   end
 
   context "when shared access with no permission but administrator" do
     let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
-    let(:permission) { Permission.new(user: create(:user)) }
+    let(:permission) { FatFreeCrm::Permission.new(user: create(:user)) }
     let(:user) { create(:user, admin: true) }
 
     it { is_expected.to be_able_to(:manage, asset) }
@@ -109,14 +109,14 @@ shared_examples FatFreeCrm::Ability do |klass|
 
   context "when shared access with no permission but assigned" do
     let!(:asset) { create(factory, access: 'Shared', permissions: [permission], assigned_to: user.id) }
-    let(:permission) { Permission.new(user: create(:user)) }
+    let(:permission) { FatFreeCrm::Permission.new(user: create(:user)) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when shared access with group permission" do
     let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
-    let(:permission) { Permission.new(group: group) }
+    let(:permission) { FatFreeCrm::Permission.new(group: group) }
     let(:group) { create(:group, users: [user]) }
 
     it { is_expected.to be_able_to(:manage, asset) }
@@ -124,7 +124,7 @@ shared_examples FatFreeCrm::Ability do |klass|
 
   context "when shared access with several group permissions" do
     let!(:asset) { create(factory, access: 'Shared', permissions: permissions) }
-    let(:permissions) { [Permission.new(group: group1), Permission.new(group: group2)] }
+    let(:permissions) { [FatFreeCrm::Permission.new(group: group1), FatFreeCrm::Permission.new(group: group2)] }
     let(:group1) { create(:group, users: [user]) }
     let(:group2) { create(:group, users: [user]) }
 
@@ -133,7 +133,7 @@ shared_examples FatFreeCrm::Ability do |klass|
 
   context "when shared access with no group permission" do
     let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
-    let(:permission) { Permission.new(group: group) }
+    let(:permission) { FatFreeCrm::Permission.new(group: group) }
     let(:group) { create(:group) }
 
     it { is_expected.not_to be_able_to(:manage, asset) }
