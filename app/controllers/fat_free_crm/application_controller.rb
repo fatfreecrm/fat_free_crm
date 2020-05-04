@@ -5,7 +5,6 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-puts "fat free crm app controller"
 module FatFreeCrm
   class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
@@ -100,7 +99,7 @@ module FatFreeCrm
 
     #----------------------------------------------------------------------------
     def clear_setting_cache
-      FatFreeCrm::Setting.clear_cache!
+      Setting.clear_cache!
     end
 
     #----------------------------------------------------------------------------
@@ -108,7 +107,7 @@ module FatFreeCrm
       Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
       if current_user.present? && (locale = current_user.preference[:locale]).present?
         I18n.locale = locale
-      elsif FatFreeCrm::Setting.locale.present?
+      elsif Setting.locale.present?
         I18n.locale = Setting.locale
       end
     end
@@ -131,7 +130,7 @@ module FatFreeCrm
 
     #----------------------------------------------------------------------------
     def can_signup?
-      User.can_signup?
+      FatFreeCrm::User.can_signup?
     end
 
     #----------------------------------------------------------------------------

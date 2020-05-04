@@ -7,7 +7,10 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe FatFreeCrm::Admin::UsersController do
+module FatFreeCrm
+describe Admin::UsersController do
+  routes { FatFreeCrm::Engine.routes }
+
   before(:each) do
     login_admin
     set_current_tab(:users)
@@ -172,7 +175,7 @@ describe FatFreeCrm::Admin::UsersController do
       @user = create(:user)
 
       delete :destroy, params: { id: @user.id }, xhr: true
-      expect { User.find(@user.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { FatFreeCrm::User.find(@user.id) }.to raise_error(ActiveRecord::RecordNotFound)
       expect(response).to render_template("admin/users/destroy")
     end
 
@@ -182,7 +185,7 @@ describe FatFreeCrm::Admin::UsersController do
 
       delete :destroy, params: { id: @user.id }, xhr: true
       expect(flash[:warning]).not_to eq(nil)
-      expect { User.find(@user.id) }.not_to raise_error
+      expect { FatFreeCrm::User.find(@user.id) }.not_to raise_error
       expect(response).to render_template("admin/users/destroy")
     end
   end
@@ -248,4 +251,5 @@ describe FatFreeCrm::Admin::UsersController do
       expect(response.body).to eq("window.location.reload();")
     end
   end
+end
 end

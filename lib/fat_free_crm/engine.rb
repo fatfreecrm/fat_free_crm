@@ -9,6 +9,7 @@
 require 'devise'
 require 'ransack'
 require 'ransack/adapters'
+require 'haml'
 
 require 'fat_free_crm/fields'
 require 'fat_free_crm/permissions'

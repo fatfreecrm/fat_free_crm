@@ -6,14 +6,14 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 FactoryBot.define do
-  factory :version do
+  factory :version, class: FatFreeCrm::Version do
     whodunnit           { "" }
     item                { raise "Please specify :item for the version" }
     event               { "create" }
     created_at          { FactoryBot.generate(:time) }
   end
 
-  factory :comment do
+  factory :comment, class: FatFreeCrm::Comment do
     user
     commentable         { raise "Please specify :commentable for the comment" }
     title               { FactoryBot.generate(:title) }
@@ -26,7 +26,7 @@ FactoryBot.define do
     created_at          { FactoryBot.generate(:time) }
   end
 
-  factory :email do
+  factory :email, class: FatFreeCrm::Email do
     imap_message_id     { format("%08x", rand(0xFFFFFFFF)) }
     user
     mediator            { raise "Please specify :mediator for the email" }
@@ -45,7 +45,7 @@ FactoryBot.define do
     created_at          { FactoryBot.generate(:time) }
   end
 
-  factory :address do
+  factory :address, class: FatFreeCrm::Address do
     addressable         { raise "Please specify :addressable for the address" }
     street1             { FFaker::Address.street_address }
     street2             { FFaker::Address.street_address }
@@ -60,7 +60,7 @@ FactoryBot.define do
     deleted_at          { nil }
   end
 
-  factory :avatar do
+  factory :avatar, class: FatFreeCrm::Avatar do
     user
     entity              { raise "Please specify :entity for the avatar" }
     image               { File.new(Rails.root.join('spec', 'fixtures', 'rails.png')) }

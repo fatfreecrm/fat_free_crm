@@ -71,7 +71,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'acts_as_commentable'
   gem.add_dependency 'acts-as-taggable-on'
   gem.add_development_dependency 'dynamic_form'
-  gem.add_development_dependency 'haml'
+  gem.add_dependency 'haml'
   gem.add_development_dependency 'sass'
   gem.add_dependency 'acts_as_list'
   gem.add_development_dependency 'ffaker', '>= 2'

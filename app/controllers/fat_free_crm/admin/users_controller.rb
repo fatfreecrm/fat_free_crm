@@ -9,7 +9,7 @@ module FatFreeCrm
   class Admin::UsersController < Admin::ApplicationController
     before_action :setup_current_tab, only: %i[index show]
 
-    load_resource except: [:create]
+    load_resource except: [:create], class: FatFreeCrm::User
 
     # GET /admin/users
     # GET /admin/users.xml                                                   HTML

@@ -40,14 +40,14 @@ FactoryBot.define do
     admin { true }
   end
 
-  factory :permission do
+  factory :permission, class: FatFreeCrm::Permission do
     user
     asset               { raise "Please specify :asset for the permission" }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end
 
-  factory :preference do
+  factory :preference, class: FatFreeCrm::Preference do
     user
     name                { raise "Please specify :name for the preference" }
     value               { raise "Please specify :value for the preference" }
