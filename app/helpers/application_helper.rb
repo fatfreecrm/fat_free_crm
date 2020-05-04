@@ -65,7 +65,7 @@ module ApplicationHelper
   def documents_section(related, assets)
     asset = assets.to_s.singularize
     create_id = "create_#{asset}"
-    view_id = "view_#{asset}"
+    view_id = "view_#{asset.pluralize}"
     create_url = controller.send(:"new_#{asset}_path")
     view_url = controller.send(:"#{asset.pluralize}_path", {id: related.id, klass: related.class.to_s})
 

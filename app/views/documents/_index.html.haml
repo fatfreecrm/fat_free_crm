@@ -1,6 +1,8 @@
-- @documents.each_with_index do |document, i|
-  %strong>= i + 1
-  \.#{document.created_at.strftime("Document Created on %m/%d/%Y")}
-  %small= link_to 'download', rails_blob_path(document.file, disposition: "attachment")
-  %small= link_to 'delete', document_path(document.id), method: :delete, data: { confirm: 'Are you sure?' }
-  %br/
+.idc-panel
+  .form-group.one-half
+    - @documents.each_with_index do |document, i|
+      %strong>= i + 1
+      \.#{document.created_at.strftime("Document Created on %m/%d/%Y")}
+      %small= link_to 'download', rails_blob_path(document.file, disposition: "attachment")
+      %small= link_to 'delete', document_path(document.id), method: :delete, data: { confirm: 'Are you sure?' }
+      %br/
