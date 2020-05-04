@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe ContactsController do
   describe "routing" do
     it "recognizes and generates #index" do
@@ -57,4 +58,5 @@ describe ContactsController do
       expect(get: "/contacts/auto_complete").to route_to(controller: "contacts", action: "auto_complete")
     end
   end
+end
 end

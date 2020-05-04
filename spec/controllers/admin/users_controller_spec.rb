@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Admin::UsersController do
+describe FatFreeCrm::Admin::UsersController do
   before(:each) do
     login_admin
     set_current_tab(:users)

@@ -28,6 +28,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe CustomField do
   it "should add a column to the database" do
     expect(CustomField.connection).to receive(:add_column)
@@ -126,4 +127,5 @@ describe CustomField do
       event.custom_validator(foo)
     end
   end
+end
 end

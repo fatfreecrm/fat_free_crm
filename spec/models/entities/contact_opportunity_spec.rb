@@ -20,6 +20,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe ContactOpportunity do
   before(:each) do
     @valid_attributes = {
@@ -31,4 +32,5 @@ describe ContactOpportunity do
   it "should create a new instance given valid attributes" do
     ContactOpportunity.create!(@valid_attributes)
   end
+end
 end

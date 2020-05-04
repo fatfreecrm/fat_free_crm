@@ -40,6 +40,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Lead do
   it "should create a new instance given valid attributes" do
     Lead.create!(first_name: "Billy", last_name: "Bones")
@@ -99,4 +100,5 @@ describe Lead do
   describe "permissions" do
     it_should_behave_like Ability, Lead
   end
+end
 end

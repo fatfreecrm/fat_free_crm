@@ -33,6 +33,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Campaign do
   it "should create a new instance given valid attributes" do
     Campaign.create!(name: "Campaign")
@@ -128,4 +129,5 @@ describe Campaign do
   describe "permissions" do
     it_should_behave_like Ability, Campaign
   end
+end
 end

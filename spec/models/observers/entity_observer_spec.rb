@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe EntityObserver do
   before do
     allow(Setting).to receive(:host).and_return('http://www.example.com')
@@ -71,4 +72,5 @@ describe EntityObserver do
       end
     end
   end
+end
 end

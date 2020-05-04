@@ -22,6 +22,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Version, versioning: true do
   let(:current_user) { create(:user) }
   before { PaperTrail.request.whodunnit = current_user.id.to_s }
@@ -238,4 +239,5 @@ describe Version, versioning: true do
       expect(visible_versions.map(&:event).sort).to eq(%w[create update])
     end
   end
+end
 end

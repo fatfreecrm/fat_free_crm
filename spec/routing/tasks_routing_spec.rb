@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe TasksController do
   describe "routing" do
     it "recognizes and generates #index" do
@@ -65,4 +66,5 @@ describe TasksController do
       expect(put: "/tasks/aaron/complete").not_to be_routable
     end
   end
+end
 end

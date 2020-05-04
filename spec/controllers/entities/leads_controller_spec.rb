@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe LeadsController do
   before(:each) do
     login
@@ -1006,4 +1007,5 @@ describe LeadsController do
       expect(session[:leads_current_page]).to eq(1)
     end
   end
+end
 end

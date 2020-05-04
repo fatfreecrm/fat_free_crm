@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe CampaignsController do
   describe "routing" do
     it "recognizes and generates #index" do
@@ -61,4 +62,5 @@ describe CampaignsController do
       expect(post: "/campaigns/filter").to route_to(controller: "campaigns", action: "filter")
     end
   end
+end
 end

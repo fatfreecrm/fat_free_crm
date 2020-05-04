@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe EmailsController do
   describe "routing" do
     it "should not recognize #index" do
@@ -37,4 +38,5 @@ describe EmailsController do
       expect(delete: "/emails/1").to route_to(controller: "emails", action: "destroy", id: "1")
     end
   end
+end
 end

@@ -29,6 +29,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Opportunity do
   it "should create a new instance given valid attributes" do
     Opportunity.create!(name: "Opportunity", stage: 'analysis')
@@ -296,4 +297,5 @@ describe Opportunity do
       end
     end
   end
+end
 end

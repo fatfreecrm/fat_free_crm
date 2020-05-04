@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe HomeController do
   # GET /
   #----------------------------------------------------------------------------
@@ -232,4 +233,5 @@ describe HomeController do
       get :timeline, params: { id: "1,2,3,4+", state: "Expanded" }, xhr: true
     end
   end
+end
 end

@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe CustomFieldDatePair do
   describe "render_value" do
     before(:each) do
@@ -89,4 +90,5 @@ describe CustomFieldDatePair do
       from.custom_validator(foo)
     end
   end
+end
 end

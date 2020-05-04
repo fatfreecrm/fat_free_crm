@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe CommentsController do
   describe "routing" do
     it "recognizes and generates #index" do
@@ -29,4 +30,5 @@ describe CommentsController do
       expect(delete: "/comments/1").to route_to(controller: "comments", action: "destroy", id: "1")
     end
   end
+end
 end

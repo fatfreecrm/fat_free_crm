@@ -22,6 +22,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Avatar do
   before(:each) do
     @user = create(:user)
@@ -43,4 +44,5 @@ describe Avatar do
     ]
     expect(@user.avatars).to eq(avatars)
   end
+end
 end

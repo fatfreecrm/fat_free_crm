@@ -29,6 +29,7 @@
 
 require 'spec_helper'
 
+module FatFreeCrm
 describe Account do
   it "should create a new instance given valid attributes" do
     Account.create!(name: "Test Account")
@@ -203,4 +204,5 @@ describe Account do
       end
     end
   end
+end
 end

@@ -19,6 +19,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Permission do
   before(:each) do
     @valid_attributes = {
@@ -55,4 +56,5 @@ describe Permission do
     expect(permission1).to be_valid
     expect(permission2).not_to be_valid
   end
+end
 end

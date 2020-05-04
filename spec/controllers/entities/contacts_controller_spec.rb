@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe ContactsController do
   before(:each) do
     login
@@ -702,4 +703,5 @@ describe ContactsController do
       expect(response).to render_template("contacts/index")
     end
   end
+end
 end

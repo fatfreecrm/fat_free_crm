@@ -23,6 +23,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Comment do
   it "should create a new instance given valid attributes" do
     Comment.create!(comment: "Hello", user: create(:user), commentable: create(:lead))
@@ -42,4 +43,5 @@ describe Comment do
       expect(entity.subscribed_users).to include(user.id)
     end
   end
+end
 end

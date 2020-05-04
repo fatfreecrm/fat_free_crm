@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe UsersController do
   describe "routing" do
     it "recognizes #index" do
@@ -103,4 +104,5 @@ describe UsersController do
       expect(patch: "/users/aaron/change_password").not_to be_routable
     end
   end
+end
 end

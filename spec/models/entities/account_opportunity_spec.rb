@@ -19,6 +19,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe AccountOpportunity do
   before(:each) do
     @valid_attributes = {
@@ -31,4 +32,5 @@ describe AccountOpportunity do
     expect(@valid_attributes[:account]).to receive(:increment!)
     AccountOpportunity.create!(@valid_attributes)
   end
+end
 end

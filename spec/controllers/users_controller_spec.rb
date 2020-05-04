@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe UsersController do
   # GET /users/1
   # GET /users/1.xml                                                       HTML
@@ -360,4 +361,5 @@ describe UsersController do
       expect(response).to render_template("users/opportunities_overview")
     end
   end
+end
 end

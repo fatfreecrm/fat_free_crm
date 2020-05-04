@@ -23,6 +23,6 @@ module DeviseHelpers
   end
 
   def current_user
-    User.find_by_id(session['warden.user.user.key'][0][0])
+    FatFreeCrm::User.find_by_id(session['warden.user.user.key'][0][0])
   end
 end

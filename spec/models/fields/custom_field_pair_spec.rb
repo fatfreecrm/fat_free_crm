@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe CustomFieldPair do
   class CustomFieldFooPair
   end
@@ -73,4 +74,5 @@ describe CustomFieldPair do
       expect(@field2.paired_with).to eq(@field1)
     end
   end
+end
 end

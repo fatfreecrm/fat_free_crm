@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe CampaignsController do
   def get_data_for_sidebar
     @status = Setting.campaign_status.dup
@@ -642,4 +643,5 @@ describe CampaignsController do
       expect(session[:campaigns_current_page]).to eq(1)
     end
   end
+end
 end

@@ -40,6 +40,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Contact do
   let(:user) { create(:user) }
 
@@ -311,4 +312,5 @@ describe "field validations" do
     expect(new_record).to_not be_valid
     expect(new_record.errors.messages[:skype]).to include("is too long (maximum is 128 characters)")
   end
+end
 end

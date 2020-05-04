@@ -18,6 +18,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe Setting do
   it "should create a new instance given valid attributes" do
     Setting.create!(name: "name", value: "value")
@@ -74,4 +75,5 @@ describe Setting do
       expect { Setting.dig(:hello, :foo) }.to raise_error(TypeError)
     end
   end
+end
 end

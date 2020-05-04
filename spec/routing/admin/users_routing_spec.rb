@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Admin::UsersController do
+describe FatFreeCrm::Admin::UsersController do
   describe "routing" do
     it "recognizes and generates #index" do
       expect(get: "/admin").to route_to(controller: "admin/users", action: "index")

@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe CommentsController do
   COMMENTABLE = %i[account campaign contact lead opportunity].freeze
 
@@ -192,4 +193,5 @@ describe CommentsController do
       end
     end
   end
+end
 end

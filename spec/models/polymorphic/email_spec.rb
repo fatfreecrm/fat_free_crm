@@ -31,6 +31,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Email do
   before(:each) do
     @email = Email.new
@@ -50,4 +51,5 @@ describe Email do
       expect(@email.body_inline).to eq "this  has line breaks"
     end
   end
+end
 end

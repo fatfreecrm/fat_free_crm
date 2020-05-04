@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe List do
   it "should parse the controller from the url" do
     ["/controller/action", "controller/action?utf8=%E2%9C%93"].each do |url|
@@ -16,4 +17,5 @@ describe List do
     list = build(:list, url: nil)
     expect(list.controller).to eq(nil)
   end
+end
 end

@@ -19,6 +19,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Preference do
   before(:each) do
     @user = create(:user)
@@ -68,4 +69,5 @@ describe Preference do
       expect(@user.reload.preference[:thingymabob]).to eq("thingy")
     end
   end
+end
 end

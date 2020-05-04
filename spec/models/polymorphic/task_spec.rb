@@ -31,6 +31,7 @@
 
 require 'spec_helper'
 
+module FatFreeCrm
 describe Task do
   describe "Task/Create" do
     it "should create a new task instance given valid attributes" do
@@ -392,4 +393,5 @@ describe Task do
       end
     end
   end
+end
 end

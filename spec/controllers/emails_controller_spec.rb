@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe EmailsController, "handling GET /emails" do
   MEDIATOR = %i[account campaign contact lead opportunity].freeze
 
@@ -34,4 +35,5 @@ describe EmailsController, "handling GET /emails" do
       end
     end
   end
+end
 end

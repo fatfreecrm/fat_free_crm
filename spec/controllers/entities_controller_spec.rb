@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe EntitiesController do
   describe "parse_query_and_tags" do
     it "should parse empty string" do
@@ -39,4 +40,5 @@ describe EntitiesController do
       expect(controller.send(:parse_query_and_tags, str)).to eq(['test me', ''])
     end
   end
+end
 end

@@ -48,6 +48,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe User do
   it "should create a new instance given valid attributes" do
     expect(User.new(
@@ -235,4 +236,5 @@ describe User do
       expect(search.first).to eql(user)
     end
   end
+end
 end

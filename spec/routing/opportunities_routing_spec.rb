@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe OpportunitiesController do
+describe FatFreeCrm::OpportunitiesController do
   describe "routing" do
     it "recognizes and generates #index" do
       expect(get: "/opportunities").to route_to(controller: "opportunities", action: "index")

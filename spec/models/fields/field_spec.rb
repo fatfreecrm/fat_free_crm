@@ -29,6 +29,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Field do
   it "should create a new instance given valid attributes" do
     Field.create!(
@@ -66,4 +67,5 @@ describe Field do
       expect(field.render_value(object)).to eq(expected)
     end
   end
+end
 end

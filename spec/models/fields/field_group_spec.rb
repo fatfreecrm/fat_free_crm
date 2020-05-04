@@ -22,8 +22,10 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe FieldGroup do
   it "should have field metadata" do
     expect(FieldGroup.new).to respond_to(:fields)
   end
+end
 end

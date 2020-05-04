@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe AccountsController do
   describe "routing" do
     it "recognizes and generates #index" do
@@ -57,4 +58,5 @@ describe AccountsController do
       expect(get: "/accounts/auto_complete").to route_to(controller: "accounts", action: "auto_complete")
     end
   end
+end
 end

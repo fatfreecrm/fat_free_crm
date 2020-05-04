@@ -79,7 +79,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'premailer'
   gem.add_development_dependency 'nokogiri'
   gem.add_development_dependency 'responds_to_parent'
-  gem.add_development_dependency 'rails3-jquery-autocomplete'
+  gem.add_dependency 'rails3-jquery-autocomplete'
   gem.add_development_dependency 'thor'
   gem.add_development_dependency 'rails_autolink'
   gem.add_development_dependency 'coffee-script-source'

@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe AccountsController do
   def get_data_for_sidebar
     @category = Setting.account_category.dup
@@ -604,4 +605,5 @@ describe AccountsController do
       expect(session[:accounts_current_page]).to eq(1)
     end
   end
+end
 end
