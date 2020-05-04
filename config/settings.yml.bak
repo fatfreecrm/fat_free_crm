@@ -238,6 +238,12 @@
   :url:
     :controller: users
     :action: opportunities_overview
+- :active: false
+  :text: :tab_connect
+  :icon: :fa-phone
+  :url:
+    :controller: connect_streams
+    :action: index
 
 :admin_tabs:
 - :active: true
