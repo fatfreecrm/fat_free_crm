@@ -65,7 +65,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'jquery-ui-rails'
   gem.add_development_dependency 'select2-rails'
   gem.add_development_dependency 'simple_form'
-  gem.add_development_dependency 'will_paginate'
+  gem.add_dependency 'will_paginate'
   gem.add_dependency 'paperclip'
   gem.add_dependency 'paper_trail'
   gem.add_dependency 'acts_as_commentable'

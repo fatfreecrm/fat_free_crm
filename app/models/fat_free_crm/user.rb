@@ -182,7 +182,7 @@ module FatFreeCrm
     #----------------------------------------------------------------------------
     def has_related_assets?
       sum = %w[Account Campaign Lead Contact Opportunity Comment Task].detect do |asset|
-        klass = asset.constantize
+        klass = ("FatFreeCrm::" + asset).constantize
 
         asset != "Comment" && klass.assigned_to(self).exists? || klass.created_by(self).exists?
       end

@@ -61,6 +61,10 @@ module FatFreeCrm
       end
     end
 
+    def current_ability
+      @current_ability ||= FatFreeCrm::Ability.new(current_user)
+    end
+
     private
 
     #
@@ -94,7 +98,7 @@ module FatFreeCrm
 
     #----------------------------------------------------------------------------
     def klass
-      @klass ||= controller_name.classify.constantize
+      @klass ||= ("FatFreeCrm::" + controller_name.classify).constantize
     end
 
     #----------------------------------------------------------------------------

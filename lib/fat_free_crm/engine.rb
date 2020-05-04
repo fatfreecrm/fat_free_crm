@@ -13,6 +13,7 @@ require 'haml'
 require 'responders'
 require 'active_model_serializers'
 require 'activemodel-serializers-xml'
+require 'will_paginate'
 
 require 'fat_free_crm/fields'
 require 'fat_free_crm/permissions'
