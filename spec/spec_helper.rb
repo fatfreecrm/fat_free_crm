@@ -31,6 +31,9 @@ I18n.locale = 'en-US'
 
 Paperclip.options[:log] = false
 
+FactoryBot.definition_file_paths << File.join(File.dirname(__FILE__), 'factories')
+FactoryBot.find_definitions
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
@@ -54,7 +57,7 @@ RSpec.configure do |config|
     # Overwrite locale settings within "config/settings.yml" if necessary.
     # In order to ensure that test still pass if "Setting.locale" is not set to "en-US".
     I18n.locale = 'en-US'
-    FatFreeCrm::Setting.locale = 'en-US' unless FatFreeCrm::Setting.locale == 'en-US'
+    Setting.locale = 'en-US' unless Setting.locale == 'en-US'
   end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

@@ -10,6 +10,12 @@ require 'devise'
 require 'ransack'
 require 'ransack/adapters'
 
+require 'fat_free_crm/fields'
+require 'fat_free_crm/permissions'
+require 'fat_free_crm/comment_extensions'
+require 'fat_free_crm/exportable'
+require 'fat_free_crm/sortable'
+
 module FatFreeCrm
   class Engine < ::Rails::Engine
     isolate_namespace FatFreeCrm
