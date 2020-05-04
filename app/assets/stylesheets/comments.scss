@@ -1,0 +1,53 @@
+.comment {
+  background: #f2f2f2;
+  border-bottom: 1px gainsboro solid;
+  margin: 2px 0px 0px 0px;
+  overflow: hidden;
+  padding: 4px;
+  list-style: none;
+  //  border-radius:
+  //    bottomleft: 8px
+  //    bottomright: 8px
+  //  border-radius:
+  //    bottom-left-radius: 8px
+  //    bottom-right-radius: 8px
+  &#comment_new {
+    margin: 3px 0px 0px 0px;
+  }
+
+  .gravatar {
+    float: left;
+    margin: 3px 10px 3px 3px;
+  }
+  .body {
+    display: inline;
+    font-size: 11px;
+  }
+  tt {
+    font-size: 10px;
+    color: #666666;
+  }
+  dt {
+    padding: 0px;
+    margin: -10px 0px 0px 36px;
+    p {
+      margin: 10px 0px 0px 0px;
+    }
+  }
+  .comment_subscriptions {
+    margin-top: 7px;
+    margin-left: 4px;
+    a {
+      font-size: 11px;
+    }
+  }
+}
+
+.comment .spinner {
+  margin: 5px 4px 0px 4px;
+  float: left;
+}
+
+.comment .buttons {
+  padding-top: 1rem;
+}

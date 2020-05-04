@@ -1,4 +1,9 @@
 #tasks {
+  .idc-panel li,
+  .idc-panel h3 {
+    grid-column: -1 / 1;
+  }
+
   li {
     display: grid;
     grid-template-columns: repeat(3, max-content) 1fr;
@@ -20,4 +25,12 @@
   .remote form {
     position: relative;
   }
+}
+
+ul:empty {
+  display: none;
+}
+
+ul#tasks {
+  padding: 0;
 }
