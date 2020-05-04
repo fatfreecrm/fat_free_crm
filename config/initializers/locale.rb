@@ -12,4 +12,4 @@
 
 # Turn off until https://github.com/rails/rails/issues/13164 is fixed
 # I18n.config.enforce_available_locales = false
-# Rails.application.config.i18n.fallbacks = true
+Rails.application.config.i18n.fallbacks = true
