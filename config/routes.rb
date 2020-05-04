@@ -207,4 +207,6 @@ Rails.application.routes.draw do
     resources :settings, only: :index
     resources :plugins,  only: :index
   end
+
+  root :to => "home#index"
 end
