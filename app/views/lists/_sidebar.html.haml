@@ -25,5 +25,4 @@
       %input{type: "hidden", name: "is_global", value: (personal ? 0 : 1) }
       %div
         = f.submit( t(:save) )
-        #{t :or}
         = link_to(t(:cancel), '#', class: "cancel")

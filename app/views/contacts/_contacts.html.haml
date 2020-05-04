@@ -1,6 +1,6 @@
 
 = section(object, :contacts)
-.list#contacts
+%ul.list#contacts
   - contacts = object.contacts.order('updated_at desc').paginate(page: 1, per_page: 20)
   = render partial: "contacts/contact", collection: contacts
 
