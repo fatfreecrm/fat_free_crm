@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 FactoryBot.define do
-  factory :task do
+  factory :task, class: FatFreeCrm::Task do
     user
     asset               { nil }
     assigned_to         { nil }
