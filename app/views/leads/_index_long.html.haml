@@ -1,34 +1,31 @@
 %li.highlight[lead]
+
   - if lead.status
-    .strip{class: lead.status}= t lead.status
+    .strip.badge.badge-primary{class: lead.status}= t lead.status
   - else
-    .strip{style: "color: gray;"}= t :other
+    .strip.badge.badge-info{style: "color: gray;"}= t :other
 
-  %ul.tools
+  .tools
     - if can?(:update, lead)
-      %li= link_to_edit(lead)
-
+      = link_to_edit(lead)
     - if %w(converted rejected).include?(lead.status)
-      %li
+      %span
         %font{ color: 'silver' }= t :convert
     - elsif can?(:update, lead)
-      %li= link_to_convert(lead)
-
+      = link_to_convert(lead)
     - if lead.status == "rejected"
-      %li
+      %span
         %font{ color: 'silver' }= t :reject
     - elsif can?(:update, lead)
-      %li= link_to_reject(lead)
-
+      = link_to_reject(lead)
     - if shown_on_landing_page?
-      %li= link_to_discard(lead)
-
+      = link_to_discard(lead)
     - if can?(:destroy, lead)
-      %li= link_to_delete(lead)
+      = link_to_delete(lead)
 
-  .indent
+  %div
     = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
-    %tt
+    %span
       - if lead.company? && lead.title?
         = t(:works_at, job_title: lead.title, company: lead.company)
       - else
@@ -38,7 +35,7 @@
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
 
-    %dt
+    %span
       = stars_for(lead)
       |
       - if can?(:read, lead)

@@ -14,5 +14,4 @@
 
   .buttonbar
     = f.submit t(:create_opportunity), onclick: %/$("#account_assigned_to").val($("#opportunity_assigned_to").val()); if ($("#account_id").css('display') != 'none') { $("#account_id").enable(); }/, :class => 'btn btn-primary'
-    #{t :or}
     = link_to_cancel new_opportunity_path, :class => 'btn btn-link'
