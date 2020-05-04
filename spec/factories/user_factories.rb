@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 FactoryBot.define do
-  factory :user do
+  factory :user, class: FatFreeCrm::User do
     username            { FactoryBot.generate(:username) }
     email               { FFaker::Internet.email }
     first_name          { FFaker::Name.first_name }

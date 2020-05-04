@@ -12,5 +12,6 @@ require 'fat_free_crm/comment_extensions'
 require 'fat_free_crm/fields'
 require 'fat_free_crm/exportable'
 require 'fat_free_crm/sortable'
+
 module FatFreeCrm
 end

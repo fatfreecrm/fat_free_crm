@@ -51,9 +51,9 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'zeus' #, platform: :ruby
   gem.add_development_dependency 'timecop'
 
-  gem.add_development_dependency 'devise'
-  gem.add_development_dependency 'devise-i18n'
-  gem.add_development_dependency 'devise-encryptable'
+  gem.add_dependency 'devise'
+  gem.add_dependency 'devise-i18n'
+  gem.add_dependency 'devise-encryptable'
   gem.add_dependency 'cancancan'
   gem.add_development_dependency 'rails-i18n'
   gem.add_development_dependency 'active_model_serializers'

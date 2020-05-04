@@ -10,17 +10,15 @@ FatFreeCrm::Engine.routes.draw do
   resources :lists
 
   # Deprecated: Compatibility with legacy Authlogic routes
-  get '/login',  to: redirect('/users/sign_in')
-  get '/signup', to: redirect('/users/sign_up')
+   get '/login',  to: redirect('/users/sign_in')
+   get '/signup', to: redirect('/users/sign_up')
 
-=begin
   devise_for :users, class_name: 'FatFreeCrm::User',
                      path: '/users',
                      controllers: { registrations: 'fat_free_crm/registrations',
                                     sessions: 'fat_free_crm/sessions',
                                     passwords: 'fat_free_crm/passwords',
                                     confirmations: 'fat_free_crm/confirmations' } 
-=end
 
   devise_scope :user do
     resources :users, only: %i[index show] do

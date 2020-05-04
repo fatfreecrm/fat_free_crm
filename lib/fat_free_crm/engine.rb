@@ -5,6 +5,11 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+
+require 'devise'
+require 'ransack'
+require 'ransack/adapters'
+
 module FatFreeCrm
   class Engine < ::Rails::Engine
     isolate_namespace FatFreeCrm

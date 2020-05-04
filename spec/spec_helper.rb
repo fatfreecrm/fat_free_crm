@@ -8,7 +8,7 @@
 require 'rubygems'
 
 ENV["RAILS_ENV"] = 'test'
-require File.expand_path('../config/environment', __dir__)
+require_relative "dummy/config/environment"
 require 'rspec/rails'
 require 'capybara/rails'
 require 'paper_trail/frameworks/rspec'
