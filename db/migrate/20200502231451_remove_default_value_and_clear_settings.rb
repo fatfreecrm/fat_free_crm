@@ -3,17 +3,17 @@
 
 class RemoveDefaultValueAndClearSettings < ActiveRecord::Migration[4.2]
   def up
-    remove_column :fat_free_crm_settings, :default_value
+    remove_column :settings, :default_value
 
     # Truncate settings table
     if connection.adapter_name.casecmp("sqlite").zero?
-      execute("DELETE FROM fat_free_crm_settings")
+      execute("DELETE FROM settings")
     else # mysql and postgres
-      execute("TRUNCATE fat_free_crm_settings")
+      execute("TRUNCATE settings")
     end
   end
 
   def down
-    add_column :fat_free_crm_settings, :default_value, :text
+    add_column :settings, :default_value, :text
   end
 end
