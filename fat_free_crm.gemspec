@@ -25,10 +25,10 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'coffee-rails'
   gem.add_dependency 'uglifier'
   gem.add_dependency 'execjs'
-  gem.add_dependency 'therubyracer' #, platform: :ruby
   gem.add_dependency 'bootsnap' #, require: false
   gem.add_dependency 'tzinfo-data' #, platforms: %i[mingw mswin x64_mingw jruby]
   gem.add_dependency 'activejob', '~> 6.0'
+  gem.add_dependency 'rails-observers'
 
   # FatFreeCrm has released it's own versions of the following gems:
   #-----------------------------------------------------------------
@@ -39,7 +39,6 @@ Gem::Specification.new do |gem|
 
   # Development dependencies
   #-----------------------------------------------------------------
-  gem.add_development_dependency 'pg'
   gem.add_development_dependency 'pry-byebug'
   gem.add_development_dependency 'capybara'
   gem.add_development_dependency 'rspec-rails'
@@ -57,7 +56,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'devise-encryptable'
   gem.add_development_dependency 'cancancan'
   gem.add_development_dependency 'rails-i18n'
-  gem.add_development_dependency 'rails-observers'
   gem.add_development_dependency 'active_model_serializers'
   gem.add_development_dependency 'activemodel-serializers-xml'
   gem.add_development_dependency 'sprockets-rails'
@@ -69,13 +67,13 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'simple_form'
   gem.add_development_dependency 'will_paginate'
   gem.add_development_dependency 'paperclip'
-  gem.add_development_dependency 'paper_trail'
-  gem.add_development_dependency 'acts_as_commentable'
-  gem.add_development_dependency 'acts-as-taggable-on'
+  gem.add_dependency 'paper_trail'
+  gem.add_dependency 'acts_as_commentable'
+  gem.add_dependency 'acts-as-taggable-on'
   gem.add_development_dependency 'dynamic_form'
   gem.add_development_dependency 'haml'
   gem.add_development_dependency 'sass'
-  gem.add_development_dependency 'acts_as_list'
+  gem.add_dependency 'acts_as_list'
   gem.add_development_dependency 'ffaker', '>= 2'
   gem.add_development_dependency 'font-awesome-rails'
   gem.add_development_dependency 'premailer'

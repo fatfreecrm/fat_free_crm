@@ -1,20 +1,6 @@
 PATH
   remote: .
   specs:
-    fat_free_crm (0.19.0)
-      activejob (~> 6.0)
-      aws-sdk-s3
-      bootsnap
-      coffee-rails
-      email_reply_parser_ffcrm
-      execjs
-      rails (~> 6.0)
-      ransack (>= 1.6.2)
-      ransack_ui (~> 1.3, >= 1.3.1)
-      sass-rails
-      therubyracer
-      tzinfo-data
-      uglifier
 
 GEM
   remote: https://rubygems.org/
@@ -90,6 +76,8 @@ GEM
       activerecord (>= 4.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    airbrussh (1.4.0)
+      sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.0)
     aws-eventstream (1.1.0)
     aws-partitions (1.308.0)
@@ -110,9 +98,23 @@ GEM
     bcrypt (3.1.13)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
+    brakeman (4.8.1)
     builder (3.2.4)
     byebug (11.1.3)
     cancancan (3.1.0)
+    capistrano (3.13.0)
+      airbrussh (>= 1.0.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (>= 1.9.0)
+    capistrano-bundler (1.6.0)
+      capistrano (~> 3.1)
+    capistrano-rails (1.4.0)
+      capistrano (~> 3.1)
+      capistrano-bundler (~> 1.1)
+    capistrano-rvm (0.1.2)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     capybara (3.32.1)
       addressable
       mini_mime (>= 0.1.3)
@@ -161,12 +163,35 @@ GEM
     email_reply_parser_ffcrm (0.5.0)
     erubi (1.9.0)
     execjs (2.7.0)
+    factory_bot (4.11.1)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
+      railties (>= 3.0.0)
     ffaker (2.14.0)
     ffi (1.12.2)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
+    formatador (0.2.5)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    guard (2.16.2)
+      formatador (>= 0.2.4)
+      listen (>= 2.7, < 4.0)
+      lumberjack (>= 1.0.12, < 2.0)
+      nenv (~> 0.1)
+      notiffany (~> 0.0)
+      pry (>= 0.9.12)
+      shellany (~> 0.0)
+      thor (>= 0.18.1)
+    guard-compat (1.2.1)
+    guard-rails (0.8.1)
+      guard (~> 2.11)
+      guard-compat (~> 1.0)
+    guard-rspec (4.7.3)
+      guard (~> 2.1)
+      guard-compat (~> 1.1)
+      rspec (>= 2.99.0, < 4.0)
     haml (5.1.2)
       temple (>= 0.8.0)
       tilt
@@ -185,10 +210,13 @@ GEM
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     jsonapi-renderer (0.2.2)
-    libv8 (3.16.14.19)
+    listen (3.2.1)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.5.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
+    lumberjack (1.2.4)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
@@ -202,9 +230,16 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.14.0)
     msgpack (1.3.3)
+    nenv (0.3.0)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (6.0.0)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    notiffany (0.1.3)
+      nenv (~> 0.1)
+      shellany (~> 0.0)
     orm_adapter (0.5.0)
     paper_trail (10.3.1)
       activerecord (>= 4.2)
@@ -231,7 +266,11 @@ GEM
     pry-byebug (3.9.0)
       byebug (~> 11.0)
       pry (~> 0.13.0)
+    pry-rails (0.3.9)
+      pry (>= 0.10.4)
     public_suffix (4.0.4)
+    puma (4.3.3)
+      nio4r (~> 2.0)
     rack (2.2.2)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -250,6 +289,10 @@ GEM
       bundler (>= 1.3.0)
       railties (= 6.0.2.2)
       sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.4)
+      actionpack (>= 5.0.1.x)
+      actionview (>= 5.0.1.x)
+      activesupport (>= 5.0.1.x)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -262,8 +305,13 @@ GEM
       activemodel (>= 4.0)
     rails3-jquery-autocomplete (1.0.15)
       rails (>= 3.2)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
     rails_autolink (1.1.6)
       rails (> 3.1)
+    rails_serve_static_assets (0.0.5)
+    rails_stdout_logging (0.0.5)
     railties (6.0.2.2)
       actionpack (= 6.0.2.2)
       activesupport (= 6.0.2.2)
@@ -282,10 +330,11 @@ GEM
     ransack_ui (1.3.4)
       ransack
       ransack_chronic (>= 1.1.0)
+    rb-fchange (0.0.6)
+      ffi
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    ref (2.0.0)
     regexp_parser (1.7.0)
     request_store (1.5.0)
       rack (>= 1.4)
@@ -293,7 +342,6 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     responds_to_parent (1.1.0)
-    rexml (3.2.4)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -319,14 +367,13 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.9.2)
-    rubocop (0.82.0)
+    rubocop (0.76.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.7.0.1)
+      parser (>= 2.6)
       rainbow (>= 2.2.2, < 4.0)
-      rexml
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 2.0)
+      unicode-display_width (>= 1.4.0, < 1.7)
     ruby-progressbar (1.10.1)
     rubyzip (2.3.0)
     sass (3.7.4)
@@ -334,51 +381,47 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.3.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
+    sass-rails (5.0.8)
+      railties (>= 5.2.0)
+      sass (~> 3.1)
+      sprockets (>= 2.8, < 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
+      tilt (>= 1.1, < 3)
     select2-rails (4.0.3)
       thor (~> 0.14)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    shellany (0.0.1)
     simple_form (5.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
     sixarm_ruby_unaccent (1.2.0)
     sort_alphabetical (1.1.0)
       unicode_utils (>= 1.2.2)
-    sprockets (4.0.0)
+    sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.2.1)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sqlite3 (1.3.13)
+    sshkit (1.21.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
     temple (0.8.2)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.10)
     timecop (0.9.1)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2020.1)
-      tzinfo (>= 1.0.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.7.0)
+    unicode-display_width (1.6.1)
     unicode_utils (1.4.0)
     warden (1.2.8)
       rack (>= 2.0.6)
@@ -401,54 +444,80 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  activejob (~> 6.0)
   activemodel-serializers-xml
   acts-as-taggable-on
   acts_as_commentable
   acts_as_list
+  aws-sdk-s3
+  bootsnap
+  brakeman
+  byebug
   cancancan
+  capistrano
+  capistrano-bundler
+  capistrano-rails
+  capistrano-rvm
   capybara
+  coffee-rails
   coffee-script-source
   country_select
   database_cleaner
-  devise
+  devise (~> 4.6)
   devise-encryptable
   devise-i18n
   dynamic_form
-  fat_free_crm!
+  email_reply_parser_ffcrm
+  execjs
+  factory_bot_rails (~> 4.0)
   ffaker (>= 2)
   font-awesome-rails
+  guard
+  guard-rails
+  guard-rspec
   haml
   headless
   jquery-migrate-rails
   jquery-rails
   jquery-ui-rails
-  nokogiri
+  nokogiri (>= 1.8.1)
   paper_trail
   paperclip
   pg
   premailer
   pry-byebug
+  pry-rails
+  puma
+  rails (~> 6.0)
+  rails-controller-testing
   rails-i18n
   rails-observers
   rails3-jquery-autocomplete
+  rails_12factor
   rails_autolink
-  rake (~> 13.0.1)
+  rainbow
   ransack (>= 1.6.2)
   ransack_chronic
   ransack_ui (~> 1.3, >= 1.3.1)
+  rb-fchange
+  rb-fsevent
+  rb-inotify
   responders
   responds_to_parent
-  rspec (~> 3.0)
   rspec-activemodel-mocks
   rspec-rails
-  rubocop
+  rubocop (~> 0.76.0)
   sass
+  sass-rails (~> 5.0.3)
   select2-rails
   selenium-webdriver
   simple_form
   sprockets-rails
+  sqlite3 (~> 1.3.13)
   thor
   timecop
+  tzinfo-data
+  uglifier
   webdrivers
   will_paginate
   zeus

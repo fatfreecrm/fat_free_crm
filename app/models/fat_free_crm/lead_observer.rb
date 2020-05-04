@@ -6,22 +6,18 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module FatFreeCrm
-  class TaskObserver < ActiveRecord::Observer
-    observe :task
+  class LeadObserver < ActiveRecord::Observer
+    observe :"FatFreeCrm::Lead"
 
-    @@tasks = {}
+    @@leads = {}
 
     def before_update(item)
-      @@tasks[item.id] = Task.find(item.id).freeze
+      @@leads[item.id] = Lead.find(item.id).freeze
     end
 
     def after_update(item)
-      original = @@tasks.delete(item.id)
-      if original
-        return log_activity(item, :complete)   if item.completed_at && original.completed_at.nil?
-        return log_activity(item, :reassign)   if item.assigned_to != original.assigned_to
-        return log_activity(item, :reschedule) if item.bucket != original.bucket
-      end
+      original = @@leads.delete(item.id)
+      return log_activity(item, :reject) if original&.status != "rejected" && item.status == "rejected"
     end
 
     private
@@ -30,6 +26,6 @@ module FatFreeCrm
       item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.request.whodunnit)
     end
 
-    ActiveSupport.run_load_hooks(:fat_free_crm_task_observer, self)
+    ActiveSupport.run_load_hooks(:fat_free_crm_lead_observer, self)
   end
 end

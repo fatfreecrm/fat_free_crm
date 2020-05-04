@@ -13,6 +13,7 @@ require 'rubygems'
 require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
+require "active_storage/engine"
 require "sprockets/railtie"
 require 'ransack'
 
@@ -27,6 +28,9 @@ Bundler.require(*Rails.groups)
 
 module FatFreeCrm
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    # config.load_defaults 5.0
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -39,7 +43,13 @@ module FatFreeCrm
     config.autoload_once_paths += [File.expand_path('app/models/fields/field.rb', __dir__)]
 
     # Activate observers that should always be running.
-    config.active_record.observers = :lead_observer, :opportunity_observer, :task_observer, :entity_observer unless ARGV.join.include?('assets:precompile')
+    config.active_record.observers = [
+      :"FatFreeCrm::LeadObserver",
+      :"FatFreeCrm::OpportunityObserver",
+      :"FatFreeCrm::TaskObserver",
+      :"FatFreeCrm::EntityObserver"
+      # :lead_observer, :opportunity_observer, :task_observer, :entity_observer
+    ] unless ARGV.join.include?('assets:precompile')
 
     # Load development rake tasks (RSpec, Gem packaging, etc.)
     rake_tasks do

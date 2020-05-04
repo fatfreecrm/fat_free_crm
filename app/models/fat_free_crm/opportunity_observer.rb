@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
   class OpportunityObserver < ActiveRecord::Observer
-    observe :opportunity
+    observe :"FatFreeCrm::Opportunity"
 
     @@opportunities = {}
 

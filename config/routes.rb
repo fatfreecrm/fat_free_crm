@@ -7,19 +7,20 @@
 #------------------------------------------------------------------------------
 FatFreeCrm::Engine.routes.draw do
 
-  root 'fat_free_crm/home#index'
   resources :lists
 
   # Deprecated: Compatibility with legacy Authlogic routes
   get '/login',  to: redirect('/users/sign_in')
   get '/signup', to: redirect('/users/sign_up')
 
+=begin
   devise_for :users, class_name: 'FatFreeCrm::User',
                      path: '/users',
                      controllers: { registrations: 'fat_free_crm/registrations',
                                     sessions: 'fat_free_crm/sessions',
                                     passwords: 'fat_free_crm/passwords',
                                     confirmations: 'fat_free_crm/confirmations' } 
+=end
 
   devise_scope :user do
     resources :users, only: %i[index show] do
@@ -30,14 +31,14 @@ FatFreeCrm::Engine.routes.draw do
   end
 
   get 'activities' => 'fat_free_crm/home#index'
-  get 'admin'      => 'fat_free_crm/admin/users#index',       as: :admin
-  get 'profile'    => 'fat_free_crm/users#show',              as: :profile
+#  get 'admin'      => 'fat_free_crm/admin/users#index',       as: :admin
+#  get 'profile'    => 'fat_free_crm/users#show',              as: :profile
 
-  get '/home/options',  as: :options
-  get '/home/toggle',   as: :toggle
-  match '/home/timeline', as: :timeline, via: %i[get put post]
-  match '/home/timezone', as: :timezone, via: %i[get put post]
-  post '/home/redraw', as: :redraw
+#  get '/home/options',  as: :options
+#  get '/home/toggle',   as: :toggle
+#  match '/home/timeline', as: :timeline, via: %i[get put post]
+#  match '/home/timezone', as: :timezone, via: %i[get put post]
+#  post '/home/redraw', as: :redraw
 
   resources :comments,       except: %i[new show]
   resources :emails,         only: [:destroy]
@@ -212,4 +213,6 @@ FatFreeCrm::Engine.routes.draw do
     resources :settings, only: :index
     resources :plugins,  only: :index
   end
+
+#  root to: 'fat_free_crm/home#index'
 end
