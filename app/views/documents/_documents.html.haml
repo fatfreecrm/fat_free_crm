@@ -1,5 +1,3 @@
-= section(object, :documents)
-%div
-  = content_tag(:div, "&nbsp;|&nbsp;".html_safe, class: "subtitle_tools")
-  = content_tag(:div, link_to('View Documents', documents_path(id: object.id, klass: object.class.to_s), remote: true, id: 'select_id'), class: "subtitle_tools")
+= documents_section(object, :documents)
+
 #documents

@@ -62,6 +62,21 @@ module ApplicationHelper
     html << content_tag(:div, "", class: :remote, id: create_id, style: "display:none;")
   end
 
+  def documents_section(related, assets)
+    asset = assets.to_s.singularize
+    create_id = "create_#{asset}"
+    view_id = "view_#{asset}"
+    create_url = controller.send(:"new_#{asset}_path")
+    view_url = controller.send(:"#{asset.pluralize}_path", {id: related.id, klass: related.class.to_s})
+
+    html = tag(:br)
+    html << content_tag(:div, link_to(view_id.humanize, view_url, remote: true, id: 'select_id'), class: "subtitle_tools")
+    html << content_tag(:div, "&nbsp;|&nbsp;".html_safe, class: "subtitle_tools")
+    html << content_tag(:div, link_to_inline(create_id, create_url, related: dom_id(related)), class: "subtitle_tools")
+    html << content_tag(:div, t(assets), class: :subtitle, id: "create_#{asset}_title")
+    html << content_tag(:div, "", class: :remote, id: create_id, style: "display:none;")
+  end
+
   #----------------------------------------------------------------------------
   def load_select_popups_for(related, *assets)
     js = generate_js_for_popups(related, *assets)

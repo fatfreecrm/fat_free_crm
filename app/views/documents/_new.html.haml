@@ -10,5 +10,5 @@
       = f.file_field :file, autofocus: true, :class => "form-control"
 
   .buttonbar
-    = f.submit t(:create_document), :class => 'btn btn-primary'
+    = f.submit 'Create Document', :class => 'btn btn-primary'
     = link_to_cancel new_document_path + "?view=#{@view}", :class => 'btn btn-link'
