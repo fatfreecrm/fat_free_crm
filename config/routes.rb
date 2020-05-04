@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 FatFreeCrm::Engine.routes.draw do
 
+  #root 'fat_free_crm/home#index'
   resources :lists
 
   # Deprecated: Compatibility with legacy Authlogic routes
@@ -30,9 +31,9 @@ FatFreeCrm::Engine.routes.draw do
     end
   end
 
-  get 'activities' => 'fat_free_crm/home#index'
-#  get 'admin'      => 'fat_free_crm/admin/users#index',       as: :admin
-#  get 'profile'    => 'fat_free_crm/users#show',              as: :profile
+  get 'activities' => 'home#index'
+  get 'admin'      => 'admin/users#index',       as: :admin
+  get 'profile'    => 'users#show',              as: :profile
 
 #  get '/home/options',  as: :options
 #  get '/home/toggle',   as: :toggle
