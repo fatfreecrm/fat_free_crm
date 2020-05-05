@@ -7,7 +7,9 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/create" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/create" do
+
   before do
     controller.controller_path = 'leads'
     login
@@ -29,7 +31,7 @@ describe "/leads/create" do
     end
 
     it "should update sidebar when called from leads index" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads"
       render
 
       expect(rendered).to include("#sidebar")
@@ -39,7 +41,7 @@ describe "/leads/create" do
     end
 
     it "should update pagination when called from leads index" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads"
       render
 
       expect(rendered).to include("#paginate")
@@ -47,7 +49,7 @@ describe "/leads/create" do
 
     it "should update related asset sidebar from related asset" do
       assign(:campaign, campaign = create(:campaign))
-      controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/#{campaign.id}"
       render
 
       expect(rendered).to include("#sidebar")
@@ -67,4 +69,5 @@ describe "/leads/create" do
       expect(rendered).to include(%/$('#create_lead').effect("shake"/)
     end
   end
+end
 end

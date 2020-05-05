@@ -7,9 +7,11 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/new" do
+module FatFreeCrm
+describe "/fat_free_crm/tasks/new" do
 
   before do
+    view.extend FatFreeCrm::UsersHelper
     login
     assign(:task, build(:task))
     assign(:users, [current_user])
@@ -45,4 +47,5 @@ describe "/tasks/new" do
       expect(rendered).to include("crm.flip_form('create_task');")
     end
   end
+end
 end

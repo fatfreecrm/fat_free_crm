@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/index" do
+module FatFreeCrm
+describe "/fat_free_crm/tasks/index" do
 
   before do
     login
@@ -42,4 +43,5 @@ describe "/tasks/index" do
       expect(view).to render_template(partial: "_empty")
     end
   end
+end
 end

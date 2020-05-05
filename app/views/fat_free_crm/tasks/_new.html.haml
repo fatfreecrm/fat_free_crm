@@ -5,8 +5,8 @@
   = hidden_field_tag "task[asset_id]", "#{@asset.id if @asset}"
   = hidden_field_tag "task[asset_type]", "#{@asset.class if @asset}"
 
-  = render "tasks/top_section",    f: f
-  = render "fields/groups", f: f
+  = render "fat_free_crm/tasks/top_section",    f: f
+  = render "fat_free_crm/fields/groups", f: f
 
   .buttonbar
     = f.submit t(:create_task), :class => 'btn btn-primary'
