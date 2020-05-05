@@ -7,9 +7,13 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/_edit" do
+module FatFreeCrm
+describe "/fat_free_crm/tasks/_edit" do
 
   before do
+    view.extend ::FatFreeCrm::Engine.routes.url_helpers
+    view.extend FatFreeCrm::ApplicationHelper
+    view.extend FatFreeCrm::UsersHelper
     login
     assign(:task, build_stubbed(:task, asset: build_stubbed(:account), bucket: "due_asap"))
     assign(:users, [current_user])
@@ -20,7 +24,7 @@ describe "/tasks/_edit" do
   it "should render [edit task] form" do
     render
 
-    expect(view).to render_template(partial: "tasks/_top_section")
+    expect(view).to render_template(partial: "fat_free_crm/tasks/_top_section")
 
     expect(rendered).to have_tag("form[class=edit_task]")
   end
@@ -46,4 +50,5 @@ describe "/tasks/_edit" do
 
     expect(rendered).not_to have_tag("textarea[id=task_background_info]")
   end
+end
 end

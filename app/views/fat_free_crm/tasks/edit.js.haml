@@ -12,7 +12,7 @@
 
   -# Hide open [Edit Lead] form if any.
   - if @previous
-    - if @previous.is_a?(Task)
+    - if @previous.is_a?(FatFreeCrm::Task)
       - partial = (@previous.assigned_to && @previous.assigned_to != current_user.id) ? "assigned" : "pending"
       $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: partial, collection: [ @previous ], locals: { bucket: nil }) }');
     - else

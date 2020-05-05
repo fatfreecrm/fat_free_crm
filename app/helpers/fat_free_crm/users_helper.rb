@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+module FatFreeCrm
 module UsersHelper
   def language_for(user)
     _locale, language = languages.detect { |locale, _language| locale == user.preference[:locale] } if user.preference[:locale]
@@ -31,4 +32,5 @@ module UsersHelper
   def user_options_for_select(users, myself)
     (users - [myself]).map { |u| [u.full_name, u.id] }.prepend([t(:myself), myself.id])
   end
+end
 end
