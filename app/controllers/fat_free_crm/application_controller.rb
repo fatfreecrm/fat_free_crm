@@ -254,7 +254,8 @@ module FatFreeCrm
       end
     end
 
-    def find_class(asset)
+    def find_class(base_asset)
+      asset = base_asset.gsub("FatFreeCrm::", "").gsub("fat_free_crm/", "")
       Rails.application.eager_load! unless Rails.application.config.cache_classes
       classes = ActiveRecord::Base.descendants.map(&:name)
       find = classes.find { |m| m == ("FatFreeCrm::" + asset.classify) }

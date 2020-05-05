@@ -173,7 +173,7 @@ describe TasksController do
 
         get :new, params: { related: "account_#{@account.id}" }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
-        expect(response.body).to eq('window.location.href = "/accounts";')
+        expect(response.body).to eq('window.location.href = "/fat_free_crm/accounts";')
       end
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
@@ -181,7 +181,7 @@ describe TasksController do
 
         get :new, params: { related: "account_#{@account.id}" }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
-        expect(response.body).to eq('window.location.href = "/accounts";')
+        expect(response.body).to eq('window.location.href = "/fat_free_crm/accounts";')
       end
     end
   end

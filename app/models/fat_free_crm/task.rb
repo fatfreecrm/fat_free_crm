@@ -88,7 +88,7 @@ module FatFreeCrm
     scope :completed,     -> { where('completed_at IS NOT NULL').order("#{table_name}.completed_at DESC") }
 
     # Due date scopes.
-    scope :due_asap,      -> { where("due_at IS NULL AND bucket = 'due_asap'").order('tasks.id DESC') }
+    scope :due_asap,      -> { where("due_at IS NULL AND bucket = 'due_asap'").order("#{table_name}.id DESC") }
     scope :overdue,       -> { where('due_at IS NOT NULL AND due_at < ?', Time.zone.now.midnight.utc).order("#{table_name}.id DESC") }
     scope :due_today,     -> { where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.utc, Time.zone.now.midnight.tomorrow.utc).order("#{table_name}.id DESC") }
     scope :due_tomorrow,  -> { where('due_at >= ? AND due_at < ?', Time.zone.now.midnight.tomorrow.utc, Time.zone.now.midnight.tomorrow.utc + 1.day).order("#{table_name}.id DESC") }
