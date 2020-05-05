@@ -53,7 +53,7 @@ module FatFreeCrm
           .where(({ item_type: options[:asset] } if options[:asset]))
           .where(({ event:     options[:event] } if options[:event]))
           .where(({ whodunnit: options[:user].to_s } if options[:user]))
-          .where('versions.created_at >= ?', Time.zone.now - (options[:duration] || 2.days))
+          .where("#{table_name}.created_at >= ?", Time.zone.now - (options[:duration] || 2.days))
           .limit(options[:max])
           .default_order
       end

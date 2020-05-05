@@ -9,6 +9,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 module FatFreeCrm
 describe EmailsController, "handling GET /emails" do
+  routes { FatFreeCrm::Engine.routes }
+
   MEDIATOR = %i[account campaign contact lead opportunity].freeze
 
   before(:each) do

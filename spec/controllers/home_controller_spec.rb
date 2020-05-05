@@ -9,6 +9,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 module FatFreeCrm
 describe HomeController do
+  routes { FatFreeCrm::Engine.routes }
+
+  #
   # GET /
   #----------------------------------------------------------------------------
   describe "responding to GET /" do

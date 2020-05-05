@@ -66,7 +66,7 @@ module FatFreeCrm
       if %w[Collapsed Expanded].include?(state)
         if (model_type = params[:type].to_s).present?
           if %w[comment email].include?(model_type)
-            model = model_type.camelize.constantize
+            model = ("FatFreeCrm::" + model_type.camelize).constantize
             item = model.find(params[:id])
             item.update_attribute(:state, state)
           end

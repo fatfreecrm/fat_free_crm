@@ -24,6 +24,7 @@ require 'fat_free_crm/fields'
 require 'fat_free_crm/permissions'
 require 'fat_free_crm/comment_extensions'
 require 'fat_free_crm/exportable'
+require 'fat_free_crm/gravatar_image_tag'
 require 'fat_free_crm/sortable'
 require 'fat_free_crm/core_ext'
 
