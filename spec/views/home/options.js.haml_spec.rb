@@ -7,8 +7,11 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/home/options" do
+module FatFreeCrm
+describe "/fat_free_crm/home/options" do
   before do
+    view.extend ::FatFreeCrm::Engine.routes.url_helpers
+    view.extend FatFreeCrm::ApplicationHelper
     login
   end
 
@@ -50,4 +53,5 @@ describe "/home/options" do
     expect(rendered).to include("crm.flip_form('options')")
     expect(rendered).to include("crm.set_title('title', 'Recent Activity')")
   end
+end
 end

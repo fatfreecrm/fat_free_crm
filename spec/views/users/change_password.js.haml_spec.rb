@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/users/change_password" do
-  include UsersHelper
 
   before do
     login

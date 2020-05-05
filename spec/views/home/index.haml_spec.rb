@@ -7,10 +7,10 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/home/index" do
-  include HomeHelper
-
+module FatFreeCrm
+describe "/fat_free_crm/home/index" do
   before do
+    view.extend ::FatFreeCrm::Engine.routes.url_helpers
     login
   end
 
@@ -33,4 +33,5 @@ describe "/home/index" do
 
     expect(rendered).to include("No activity records found.")
   end
+end
 end

@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+module FatFreeCrm
 module HomeHelper
   def sort_by_assets
     Version::ASSETS.map do |asset|
@@ -65,4 +66,5 @@ module HomeHelper
       end
     end
   end
+end
 end

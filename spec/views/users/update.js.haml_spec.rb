@@ -8,8 +8,6 @@
 require 'spec_helper'
 
 describe "/users/update" do
-  include UsersHelper
-
   before do
     login
     assign(:user, @user = current_user)

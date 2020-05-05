@@ -7,17 +7,19 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/home/index" do
-  include HomeHelper
+module FatFreeCrm
+describe "/fat_free_crm/home/index" do
 
   before do
+    view.extend ::FatFreeCrm::Engine.routes.url_helpers
+    view.extend FatFreeCrm::ApplicationHelper
     login
   end
 
   it "should render [activity] template with @activities collection" do
     assign(:activities, [build_stubbed(:version, id: 42, event: "update", item: build_stubbed(:account), whodunnit: current_user.id.to_s)])
 
-    render template: 'home/index', formats: [:js]
+    render template: 'fat_free_crm/home/index', formats: [:js]
 
     expect(rendered).to include("$('#activities').html")
     expect(rendered).to include("li class=\\'version\\' id=\\'version_42\\'")
@@ -26,8 +28,9 @@ describe "/home/index" do
   it "should render a message if there're no activities" do
     assign(:activities, [])
 
-    render template: 'home/index', formats: [:js]
+    render template: 'fat_free_crm/home/index', formats: [:js]
 
     expect(rendered).to include("No activity records found.")
   end
+end
 end

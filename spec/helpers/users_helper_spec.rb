@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe UsersHelper do
   let(:myself) { create(:user, id: 54) }
   let(:user1) { create(:user,  id: 60, first_name: 'Bob', last_name: "Hope") }
@@ -36,4 +37,5 @@ describe UsersHelper do
       expect(user_select(:lead, [user1, user2], myself)).to match(%r{<option value="75">Billy Joel</option>})
     end
   end
+end
 end
