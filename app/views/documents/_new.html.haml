@@ -9,5 +9,5 @@
       = f.file_field :file, autofocus: true
 
   .buttonbar
-    = f.submit 'Create Document', :class => 'btn btn-primary'
+    = f.submit 'Upload Document', :class => 'btn btn-primary'
     = link_to_cancel new_document_path + "?view=#{@view}", :class => 'btn btn-link'

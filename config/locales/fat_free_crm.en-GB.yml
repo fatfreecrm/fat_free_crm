@@ -546,6 +546,10 @@ en-GB:
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
 
+  # Views -> Document.
+  create_document: Upload Document
+  documents: Documents
+
   # Views -> Team.
   #----------------------------------------------------------------------------
   unassigned_opportunities: Unassigned Opportunities

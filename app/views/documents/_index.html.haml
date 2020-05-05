@@ -14,5 +14,5 @@
             %td= document.uploaded_username
             %td= document.created_at.strftime("%m/%d/%Y")
             %td
-              %small= link_to 'download', rails_blob_path(document.file, disposition: "attachment")
-              %small= link_to 'delete', document_path(document.id), method: :delete, data: { confirm: 'Are you sure?' }
+              %small= link_to 'Download', rails_blob_path(document.file, disposition: "attachment")
+              %small= link_to 'Delete', document_path(document.id), method: :delete, data: { confirm: 'Are you sure?' }
