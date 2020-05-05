@@ -9,6 +9,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 module FatFreeCrm
 describe AccountsController do
+  routes { FatFreeCrm::Engine.routes }
+
   def get_data_for_sidebar
     @category = Setting.account_category.dup
   end

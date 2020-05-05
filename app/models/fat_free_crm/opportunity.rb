@@ -35,7 +35,7 @@ module FatFreeCrm
     has_one :account_opportunity, dependent: :destroy
     has_one :account, through: :account_opportunity
     has_many :contact_opportunities, dependent: :destroy
-    has_many :contacts, -> { order("contacts.id DESC").distinct }, through: :contact_opportunities
+    has_many :contacts, -> { order("#{table_name}.id DESC").distinct }, through: :contact_opportunities
     has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
     has_many :emails, as: :mediator
 
@@ -46,11 +46,11 @@ module FatFreeCrm
     }
     scope :created_by,  ->(user) { where('user_id = ?', user.id) }
     scope :assigned_to, ->(user) { where('assigned_to = ?', user.id) }
-    scope :won,         -> { where("opportunities.stage = 'won'") }
-    scope :lost,        -> { where("opportunities.stage = 'lost'") }
-    scope :not_lost,    -> { where("opportunities.stage <> 'lost'") }
-    scope :pipeline,    -> { where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')") }
-    scope :unassigned,  -> { where("opportunities.assigned_to IS NULL") }
+    scope :won,         -> { where("#{table_name}.stage = 'won'") }
+    scope :lost,        -> { where("#{table_name}.stage = 'lost'") }
+    scope :not_lost,    -> { where("#{table_name}.stage <> 'lost'") }
+    scope :pipeline,    -> { where("#{table_name}.stage IS NULL OR (#{table_name}.stage != 'won' AND #{table_name}.stage != 'lost')") }
+    scope :unassigned,  -> { where("#{table_name}.assigned_to IS NULL") }
     scope :weighted_sort, -> { select('*, amount*probability') }
 
     # Search by name OR id
