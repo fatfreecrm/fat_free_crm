@@ -9,6 +9,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 module FatFreeCrm
 describe TasksController do
+  routes { FatFreeCrm::Engine.routes }
+
   def update_sidebar
     @task_total = { key: :value, pairs: :etc }
     allow(Task).to receive(:totals).and_return(@task_total)

@@ -9,6 +9,8 @@ require 'spec_helper'
 
 module FatFreeCrm
 describe CommentsController do
+  routes { FatFreeCrm::Engine.routes }
+
   COMMENTABLE = %i[account campaign contact lead opportunity].freeze
 
   before(:each) do

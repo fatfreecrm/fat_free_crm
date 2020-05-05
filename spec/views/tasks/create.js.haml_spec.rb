@@ -7,9 +7,11 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/create" do
+describe "/fat_free_crm/tasks/create" do
 
   before do
+    view.extend ::FatFreeCrm::Engine.routes.url_helpers
+    view.extend FatFreeCrm::ApplicationHelper
     login
   end
 
@@ -19,7 +21,7 @@ describe "/tasks/create" do
         assign(:view, status)
         assign(:task, @task = stub_task(status))
         assign(:task_total, stub_task_total(status))
-        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=#{status}"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks?view=#{status}"
         render
       end
 
@@ -48,7 +50,7 @@ describe "/tasks/create" do
   it "should show flash message when assigning a task from pending tasks view" do
     assign(:view, "pending")
     assign(:task, build_stubbed(:task, id: 42, assignee: build_stubbed(:user)))
-    controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
     render
 
     expect(rendered).to include("$('#flash').html")
@@ -58,7 +60,7 @@ describe "/tasks/create" do
   it "should update recent items when assigning a task from pending tasks view" do
     assign(:view, "pending")
     assign(:task, build_stubbed(:task, id: 42, assignee: build_stubbed(:user)))
-    controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
     render
 
     expect(rendered).to include("#recently")
@@ -68,7 +70,7 @@ describe "/tasks/create" do
   it "should show flash message when creating a pending task from assigned tasks view" do
     assign(:view, "assigned")
     assign(:task, build_stubbed(:task, id: 42, assignee: nil))
-    controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks?view=assigned"
     render
 
     expect(rendered).to include("$('#flash').html")
