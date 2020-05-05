@@ -7,8 +7,10 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/reject" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/reject" do
   before do
+    view.extend FatFreeCrm::OpportunitiesHelper
     login
     assign(:lead, @lead = build_stubbed(:lead, status: "new"))
     assign(:lead_status_total, Hash.new(1))
@@ -22,7 +24,7 @@ describe "/leads/reject" do
   end
 
   it "should update sidebar filters when called from index page" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads"
     render
 
     expect(rendered).to include("$('#sidebar').html")
@@ -38,11 +40,12 @@ describe "/leads/reject" do
 
   it "should update campaign sidebar if called from campaign landing page" do
     assign(:campaign, campaign = build_stubbed(:campaign))
-    controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/#{campaign.id}"
     render
 
     expect(rendered).to include("#sidebar")
     expect(rendered).to have_text("Summary")
     expect(rendered).to have_text("Recent Items")
   end
+end
 end

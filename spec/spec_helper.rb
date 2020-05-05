@@ -50,8 +50,13 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include DeviseHelpers
   config.include FeatureHelpers
+  config.include AbilityAndRouteHelpers, type: :view
 
   Warden.test_mode!
+
+  config.before(:each, type: :view) do
+    add_routes_and_ability_to_view(view)
+  end
 
   config.before(:each) do
     # Overwrite locale settings within "config/settings.yml" if necessary.

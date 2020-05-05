@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/leads/convert" do
-  include LeadsHelper
 
   before do
     login

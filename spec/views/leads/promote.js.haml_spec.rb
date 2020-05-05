@@ -7,8 +7,10 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/promote" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/promote" do
   before do
+    view.extend FatFreeCrm::OpportunitiesHelper
     login
     assign(:users, [current_user])
     assign(:account, @account = build_stubbed(:account))
@@ -25,7 +27,7 @@ describe "/leads/promote" do
 
     describe "from lead landing page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads/123"
       end
 
       it "should flip [Convert Lead] form" do
@@ -45,7 +47,7 @@ describe "/leads/promote" do
 
     describe "from lead index page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads"
       end
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
@@ -65,7 +67,7 @@ describe "/leads/promote" do
 
     describe "from related campaign page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/123"
         assign(:campaign, build_stubbed(:campaign))
         assign(:stage, Setting.unroll(:opportunity_stage))
         assign(:opportunity, @opportunity = build_stubbed(:opportunity))
@@ -100,7 +102,7 @@ describe "/leads/promote" do
 
     describe "from lead landing page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads/123"
       end
 
       it "should redraw the [Convert Lead] form and shake it" do
@@ -112,7 +114,7 @@ describe "/leads/promote" do
 
     describe "from lead index page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads"
       end
 
       it "should redraw the [Convert Lead] form and shake it" do
@@ -124,7 +126,7 @@ describe "/leads/promote" do
 
     describe "from related asset page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/123"
       end
 
       it "should redraw the [Convert Lead] form and shake it" do
@@ -140,4 +142,5 @@ describe "/leads/promote" do
       expect(rendered).to include('focus()')
     end
   end
+end
 end

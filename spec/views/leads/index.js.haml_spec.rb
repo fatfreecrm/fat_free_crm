@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/leads/index" do
-  include LeadsHelper
 
   before do
     login

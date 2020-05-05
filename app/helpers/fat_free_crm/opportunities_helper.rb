@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+module FatFreeCrm
 module OpportunitiesHelper
   # Sidebar checkbox control for filtering opportunities by stage.
   #----------------------------------------------------------------------------
@@ -89,4 +90,5 @@ module OpportunitiesHelper
       t(:no_closing_date)
     end
   end
+end
 end

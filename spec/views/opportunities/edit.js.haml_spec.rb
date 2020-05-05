@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/opportunities/edit" do
-  include OpportunitiesHelper
 
   before do
     login

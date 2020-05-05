@@ -8,8 +8,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/leads/show" do
-  include LeadsHelper
-
   before do
     login
     assign(:lead, @lead = build_stubbed(:lead, id: 42))
