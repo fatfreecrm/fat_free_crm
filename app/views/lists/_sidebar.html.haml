@@ -18,7 +18,7 @@
     = link_to(t(:make_current_view_list), '#')
 
   .list_form{ hidden }
-    = simple_form_for(List.new, remote: true) do |f|
+    = simple_form_for(FatFreeCrm::List.new, remote: true) do |f|
       = f.text_field :name, size: 25
       = image_tag("info_tiny.png", title: t(:list_name_info), class: "input_info")
       = f.hidden_field :url

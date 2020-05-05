@@ -1,4 +1,4 @@
-- @versions = Version.recent_for_user(current_user)
+- @versions = FatFreeCrm::Version.recent_for_user(current_user)
 .panel#recently
   %h4.caption.heading #{t :recent_items}
   - if @versions.present?

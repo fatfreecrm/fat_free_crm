@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+module FatFreeCrm
 module TasksHelper
   # Sidebar checkbox control for filtering tasks by due date -- used for
   # pending and assigned views only.
@@ -95,7 +96,7 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def replace_content(task, bucket = nil)
     partial = task.assigned_to && task.assigned_to != current_user.id ? "assigned" : "pending"
-    html = render(partial: "tasks/#{partial}", collection: [task], locals: { bucket: bucket })
+    html = render(partial: "fat_free_crm/tasks/#{partial}", collection: [task], locals: { bucket: bucket })
     text = "$('##{dom_id(task)}').html('#{j html}');\n".html_safe
     text
   end
@@ -139,4 +140,5 @@ module TasksHelper
     text += refresh_sidebar(:index, :filters)
     text
   end
+end
 end

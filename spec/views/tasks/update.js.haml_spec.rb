@@ -7,10 +7,10 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/update" do
-  include TasksHelper
-
+module FatFreeCrm
+describe "/fat_free_crm/tasks/update" do
   before do
+    view.extend ::FatFreeCrm::Engine.routes.url_helpers
     login
   end
 
@@ -23,7 +23,7 @@ describe "/tasks/update" do
     end
 
     it "from Tasks tab: should remove task from current bucket and hide empty bucket" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
       render
 
       expect(rendered).to include(%/$('#task_#{@task.id}').remove();/)
@@ -31,14 +31,14 @@ describe "/tasks/update" do
     end
 
     it "from Tasks tab: should show updated task in a new bucket" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
       render
       expect(rendered).to include("$('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
       expect(rendered).to include("$('#task_#{@task.id}').effect('highlight'")
     end
 
     it "from Tasks tab: should update tasks sidebar" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
       render
 
       expect(rendered).to include("$('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
@@ -68,7 +68,7 @@ describe "/tasks/update" do
       assign(:task_before_update, build_stubbed(:task, assignee: nil))
       assign(:task, @task = build_stubbed(:task, assignee: assignee))
       assign(:view, "pending")
-      controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
 
       render
       expect(rendered).to include("$('#task_#{@task.id}').remove();")
@@ -82,7 +82,7 @@ describe "/tasks/update" do
       assign(:task_before_update, build_stubbed(:task, assignee: assignee))
       assign(:task, @task = build_stubbed(:task, assignee: nil))
       assign(:view, "assigned")
-      controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks?view=assigned"
 
       render
       expect(rendered).to include("$('#task_#{@task.id}').remove();")
@@ -95,7 +95,7 @@ describe "/tasks/update" do
       assign(:task_before_update, build_stubbed(:task, assignee: build_stubbed(:user)))
       assign(:task, @task = build_stubbed(:task, assignee: build_stubbed(:user)))
       assign(:view, "assigned")
-      controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks?view=assigned"
 
       render
       expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
@@ -105,7 +105,7 @@ describe "/tasks/update" do
       assign(:task_before_update, build_stubbed(:task, assignee: nil))
       assign(:task, @task = build_stubbed(:task, assignee: build_stubbed(:user)))
       assign(:view, "assigned")
-      controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks?view=assigned"
       render
 
       expect(rendered).to include("$('#sidebar').html")
@@ -140,4 +140,5 @@ describe "/tasks/update" do
     expect(rendered).to include(%/$('#task_#{@task.id}').effect("shake"/)
     expect(rendered).to include("$('#task_submit').enable()")
   end
+end
 end
