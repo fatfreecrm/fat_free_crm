@@ -9,6 +9,8 @@ require 'spec_helper'
 
 module FatFreeCrm
 describe UsersController do
+  routes { FatFreeCrm::Engine.routes }
+  
   # GET /users/1
   # GET /users/1.xml                                                       HTML
   #----------------------------------------------------------------------------

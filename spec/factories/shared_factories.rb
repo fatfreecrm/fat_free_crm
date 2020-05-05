@@ -63,7 +63,7 @@ FactoryBot.define do
   factory :avatar, class: FatFreeCrm::Avatar do
     user
     entity              { raise "Please specify :entity for the avatar" }
-    image               { File.new(Rails.root.join('spec', 'fixtures', 'rails.png')) }
+    image               { File.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'rails.png')) }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end

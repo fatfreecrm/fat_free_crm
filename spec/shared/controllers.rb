@@ -37,13 +37,13 @@ shared_examples "attach" do
     expect(@model.send(@attachment.class.name.tableize)).to include(@attachment)
     expect(assigns[:attachment]).to eq(@attachment)
     expect(assigns[:attached]).to eq([@attachment])
-    expect(assigns[:campaign]).to eq(@attachment.reload.campaign) if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
-    expect(assigns[:account]).to eq(@attachment.reload.account) if @model.is_a?(Account) && @attachment.respond_to?(:account) # Skip Tasks...
+    expect(assigns[:campaign]).to eq(@attachment.reload.campaign) if @model.is_a?(FatFreeCrm::Campaign) && (@attachment.is_a?(FatFreeCrm::Lead) || @attachment.is_a?(FatFreeCrm::Opportunity))
+    expect(assigns[:account]).to eq(@attachment.reload.account) if @model.is_a?(FatFreeCrm::Account) && @attachment.respond_to?(:account) # Skip Tasks...
     expect(response).to render_template("entities/attach")
   end
 
   it "should not attach the asset that is already attached" do
-    if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
+    if @model.is_a?(FatFreeCrm::Campaign) && (@attachment.is_a?(FatFreeCrm::Lead) || @attachment.is_a?(FatFreeCrm::Opportunity))
       @attachment.update_attribute(:campaign_id, @model.id)
     else
       @model.send(@attachment.class.name.tableize) << @attachment
@@ -75,8 +75,8 @@ shared_examples "discard" do
     post :discard, params: { id: @model.id, attachment: @attachment.class.name, attachment_id: @attachment.id }, xhr: true
     expect(assigns[:attachment]).to eq(@attachment.reload)                     # The attachment should still exist.
     expect(@model.reload.send(@attachment.class.name.tableize.to_s)).to eq([]) # But no longer associated with the model.
-    expect(assigns[:account]).to eq(@model) if @model.is_a?(Account)
-    expect(assigns[:campaign]).to eq(@model) if @model.is_a?(Campaign)
+    expect(assigns[:account]).to eq(@model) if @model.is_a?(FatFreeCrm::Account)
+    expect(assigns[:campaign]).to eq(@model) if @model.is_a?(FatFreeCrm::Campaign)
 
     expect(response).to render_template("entities/discard")
   end

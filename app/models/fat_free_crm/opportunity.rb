@@ -44,8 +44,8 @@ module FatFreeCrm
     scope :state, lambda { |filters|
       where('stage IN (?)' + (filters.delete('other') ? ' OR stage IS NULL' : ''), filters)
     }
-    scope :created_by,  ->(user) { where('user_id = ?', user.id) }
-    scope :assigned_to, ->(user) { where('assigned_to = ?', user.id) }
+    scope :created_by,  ->(user) { where("#{table_name}.user_id = ?", user.id) }
+    scope :assigned_to, ->(user) { where("#{table_name}.assigned_to = ?", user.id) }
     scope :won,         -> { where("#{table_name}.stage = 'won'") }
     scope :lost,        -> { where("#{table_name}.stage = 'lost'") }
     scope :not_lost,    -> { where("#{table_name}.stage <> 'lost'") }

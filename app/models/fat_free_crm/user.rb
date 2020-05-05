@@ -80,9 +80,9 @@ module FatFreeCrm
     scope :my, ->(current_user) { accessible_by(current_user.ability) }
 
     scope :have_assigned_opportunities, lambda {
-      joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to")
-        .where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
-        .select('DISTINCT(users.id), users.*')
+      joins("INNER JOIN fat_free_crm_opportunities ON #{table_name}.id = fat_free_crm_opportunities.assigned_to")
+        .where("fat_free_crm_opportunities.stage <> 'lost' AND fat_free_crm_opportunities.stage <> 'won'")
+        .select("DISTINCT(#{table_name}.id), #{table_name}.*")
     }
 
     validates :email,

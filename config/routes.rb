@@ -33,11 +33,11 @@ FatFreeCrm::Engine.routes.draw do
   get 'admin'      => 'admin/users#index',       as: :admin
   get 'profile'    => 'users#show',              as: :profile
 
-#  get '/home/options',  as: :options
-#  get '/home/toggle',   as: :toggle
-#  match '/home/timeline', as: :timeline, via: %i[get put post]
-#  match '/home/timezone', as: :timezone, via: %i[get put post]
-#  post '/home/redraw', as: :redraw
+  get '/home/options',  as: :options
+  get '/home/toggle',   as: :toggle
+  match '/home/timeline', as: :timeline, via: %i[get put post]
+  match '/home/timezone', as: :timezone, via: %i[get put post]
+  post '/home/redraw', as: :redraw
 
   resources :comments,       except: %i[new show]
   resources :emails,         only: [:destroy]
@@ -213,5 +213,5 @@ FatFreeCrm::Engine.routes.draw do
     resources :plugins,  only: :index
   end
 
-#  root to: 'fat_free_crm/home#index'
+  root to: 'fat_free_crm/home#index'
 end

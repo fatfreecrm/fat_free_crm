@@ -9,6 +9,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 module FatFreeCrm
 describe ContactsController do
+  routes { FatFreeCrm::Engine.routes }
+
   before(:each) do
     login
     set_current_tab(:contacts)

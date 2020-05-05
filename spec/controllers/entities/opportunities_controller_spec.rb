@@ -8,6 +8,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe FatFreeCrm::OpportunitiesController do
+  routes { FatFreeCrm::Engine.routes }
+
   def get_data_for_sidebar
     @stage = Setting.unroll(:opportunity_stage)
   end
