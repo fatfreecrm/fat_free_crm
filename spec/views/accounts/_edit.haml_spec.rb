@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/accounts/_edit" do
-  include AccountsHelper
 
   before do
     login

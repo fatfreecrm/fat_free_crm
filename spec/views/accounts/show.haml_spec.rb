@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/accounts/show" do
-  include AccountsHelper
 
   before do
     login

@@ -64,11 +64,11 @@ module FatFreeCrm
 
     scope :visible_on_dashboard, lambda { |user|
       # Show opportunities which either belong to the user and are unassigned, or are assigned to the user and haven't been closed (won/lost)
-      where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where("opportunities.stage != 'won'").where("opportunities.stage != 'lost'")
+      where("(#{table_name}.user_id = :user_id AND #{table_name}.assigned_to IS NULL) OR #{table_name}.assigned_to = :user_id", user_id: user.id).where("#{table_name}.stage != 'won'").where("#{table_name}.stage != 'lost'")
     }
 
     scope :by_closes_on, -> { order(:closes_on) }
-    scope :by_amount,    -> { order('opportunities.amount DESC') }
+    scope :by_amount,    -> { order("#{table_name}.amount DESC") }
 
     uses_user_permissions
     acts_as_commentable

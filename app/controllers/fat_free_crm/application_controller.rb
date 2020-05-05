@@ -110,9 +110,9 @@ module FatFreeCrm
     def set_context
       Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
       if current_user.present? && (locale = current_user.preference[:locale]).present?
-        I18n.locale = locale
+        ::I18n.locale = locale
       elsif Setting.locale.present?
-        I18n.locale = Setting.locale
+        ::I18n.locale = Setting.locale
       end
     end
 

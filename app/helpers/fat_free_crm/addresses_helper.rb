@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+module FatFreeCrm
 module AddressesHelper
   # Sets up new address when used in forms.
   #----------------------------------------------------------------------------
@@ -16,4 +17,5 @@ module AddressesHelper
   def priority_countries
     Setting[:priority_countries]
   end
+end
 end

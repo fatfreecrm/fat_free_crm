@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 # Copied from prototype-rails which is no longer maintained
 
+module FatFreeCrm
 module JavascriptHelper
   #   link_to_function("Show me more", nil, :id => "more_link") do |page|
   #     page[:details].visual_effect  :toggle_blind
@@ -34,4 +35,5 @@ module JavascriptHelper
 
     content_tag(:a, name, html_options.merge(href: href, onclick: onclick))
   end
+end
 end

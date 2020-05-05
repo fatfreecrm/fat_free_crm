@@ -7,12 +7,14 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/update" do
-  include AccountsHelper
+module FatFreeCrm
+describe "/fat_free_crm/accounts/update" do
 
   before do
     login
-
+    view.extend FatFreeCrm::AddressesHelper
+    view.extend FatFreeCrm::JavascriptHelper
+    view.extend FatFreeCrm::UsersHelper
     assign(:account, @account = build_stubbed(:account, user: current_user))
     assign(:users, [current_user])
     assign(:account_category_total, Hash.new(1))
@@ -21,7 +23,7 @@ describe "/accounts/update" do
   describe "no errors:" do
     describe "on account landing page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/accounts/123"
       end
 
       it "should flip [edit_account] form" do
@@ -40,7 +42,7 @@ describe "/accounts/update" do
 
     describe "on accounts index page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/accounts"
       end
 
       it "should update sidebar" do
@@ -51,7 +53,7 @@ describe "/accounts/update" do
       end
 
       it "should replace [edit_account] form with account partial and highlight it" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/accounts"
         render
 
         expect(rendered).to include("#account_#{@account.id}")
@@ -67,7 +69,7 @@ describe "/accounts/update" do
 
     describe "on account landing page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/accounts/123"
       end
 
       it "should redraw the [edit_account] form and shake it" do
@@ -81,7 +83,7 @@ describe "/accounts/update" do
 
     describe "on accounts index page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/accounts"
       end
 
       it "should redraw the [edit_account] form and shake it" do
@@ -93,4 +95,5 @@ describe "/accounts/update" do
       end
     end
   end
+end
 end

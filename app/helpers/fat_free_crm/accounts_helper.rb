@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+module FatFreeCrm
 module AccountsHelper
   # Sidebar checkbox control for filtering accounts by category.
   #----------------------------------------------------------------------------
@@ -105,4 +106,5 @@ module AccountsHelper
         end
     text.html_safe
   end
+end
 end

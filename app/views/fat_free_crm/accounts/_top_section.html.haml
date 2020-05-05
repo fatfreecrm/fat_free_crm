@@ -5,7 +5,7 @@
       = f.text_field(:name, { autofocus: true, class: 'form-control' })
     .form-group.one-half
       %label #{t :assigned_to}:
-      = user_select(:account, User.without_user(current_user), current_user)
+      = user_select(:account, FatFreeCrm::User.without_user(current_user), current_user)
     .form-group.one-quarter
       %label #{t :category}:
       = f.select :category, Setting.unroll(:account_category), { selected: (@account.category || "other").to_sym, include_blank: t(:other) }, { class: 'form-control' }
@@ -18,6 +18,6 @@
         %label= t(:background_info) + ':'
         = f.text_area(:background_info, {})
 
-    = render partial: "/shared/tags", locals: {f: f, span: 3}
+    = render partial: "/fat_free_crm/shared/tags", locals: {f: f, span: 3}
 
     = hook(:account_top_section_bottom, self, f: f)

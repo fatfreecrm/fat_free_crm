@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/_edit" do
+module FatFreeCrm
+describe "/fat_free_crm/opportunities/_edit" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::UsersHelper
     login
     assign(:account, @account = build_stubbed(:account))
     assign(:accounts, [@account])
@@ -66,4 +69,5 @@ describe "/opportunities/_edit" do
     render
     expect(rendered).not_to have_tag("textarea[id=opportunity_background_info]")
   end
+end
 end

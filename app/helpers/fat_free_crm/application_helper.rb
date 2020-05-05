@@ -360,15 +360,15 @@ module ApplicationHelper
     url_params[:id] = params[:id] unless params[:id].blank?
 
     exports = %w[xls csv].map do |format|
-      link_to(format.upcase, url_params.merge(format: format), title: I18n.t(:"to_#{format}")) unless action.to_s == "show"
+      link_to(format.upcase, url_params.merge(format: format), title: ::I18n.t(:"to_#{format}")) unless action.to_s == "show"
     end
 
     feeds = %w[rss atom].map do |format|
-      link_to(format.upcase, url_params.merge(format: format, authentication_credentials: token), title: I18n.t(:"to_#{format}"))
+      link_to(format.upcase, url_params.merge(format: format, authentication_credentials: token), title: ::I18n.t(:"to_#{format}"))
     end
 
     links = ['perm'].map do |format|
-      link_to(format.upcase, url_params, title: I18n.t(:"to_#{format}"))
+      link_to(format.upcase, url_params, title: ::I18n.t(:"to_#{format}"))
     end
 
     (exports + feeds + links).compact.join(' | ')
@@ -479,7 +479,7 @@ module ApplicationHelper
 
     options[:class] ||= "timeago"
     options[:title] = time.getutc.iso8601
-    content_tag(:span, I18n.l(time), options)
+    content_tag(:span, ::I18n.l(time), options)
   end
 
   #----------------------------------------------------------------------------

@@ -1,0 +1,6 @@
+- @global_lists = FatFreeCrm::List.where(user_id: nil)
+- @personal_lists = FatFreeCrm::List.where(user_id: current_user.id)
+
+#lists
+  = render "fat_free_crm/lists/sidebar", lists: @global_lists
+  = render "fat_free_crm/lists/sidebar", lists: @personal_lists, personal: true

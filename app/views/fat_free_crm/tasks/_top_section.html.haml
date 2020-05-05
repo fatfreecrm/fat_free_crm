@@ -8,7 +8,7 @@
     - with_time = Setting.task_calendar_with_time
     - if @task.bucket != "specific_time"
       = f.select :bucket, @bucket, { selected: bucket.to_sym }, {  onchange: "crm.flip_calendar(this.value)", class: 'form-control' }
-      = f.text_field :calendar, style: "display:none;", autocomplete: :off, class: (with_time ? 'datetime' : 'date'), :class => 'form-control'
+      = f.text_field :calendar, style: "display:none;", autocomplete: :off, class: ((with_time ? 'datetime' : 'date') + " form-control"
     - else
       = f.select :bucket, @bucket, { selected: :specific_time }, { style: " display:none;", onchange: "crm.flip_calendar(this.value)", class: 'form-control' }
       - fmt = with_time ? '%Y-%m-%d %H:%M' : '%Y-%m-%d'

@@ -22,7 +22,7 @@
         = f.label :group_ids, "#{t(:groups)}:"
         = f.select(:group_ids, group_options, {}, { multiple: true, class: "custom-select" })
 
-    - if entity.is_a?(Lead)
+    - if entity.is_a?(FatFreeCrm::Lead)
       .form-check
         = f.radio_button(:access, t(:campaign), { onclick: "$('#people').hide(); $('#lead_access_campaign').val('Campaign');", disabled: true, class: 'form-check-input'})
         %font{ id: :copy_permissions, color: :grey }

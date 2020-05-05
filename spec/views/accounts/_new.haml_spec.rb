@@ -8,7 +8,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/accounts/_new" do
-  include AccountsHelper
 
   before do
     login

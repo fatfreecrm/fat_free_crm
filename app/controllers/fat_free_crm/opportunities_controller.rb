@@ -40,7 +40,7 @@ module FatFreeCrm
 
       if params[:related]
         model, id = params[:related].split('_')
-        if related = model.classify.constantize.my(current_user).find_by_id(id)
+        if related = ("FatFreeCrm::" + model.classify).constantize.my(current_user).find_by_id(id)
           instance_variable_set("@#{model}", related)
           @account = related.account if related.respond_to?(:account) && !related.account.nil?
           @campaign = related.campaign if related.respond_to?(:campaign)

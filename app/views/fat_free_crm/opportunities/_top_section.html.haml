@@ -54,6 +54,6 @@
               .label= t(:background_info) + ':'
               = f.text_area :background_info, style: "width:500px", rows: 3
 
-        = render partial: "/shared/tags", locals: {f: f, span: 3}
+        = render partial: "/fat_free_crm/shared/tags", locals: {f: f, span: 3}
 
         = hook(:opportunity_top_section_bottom, self, f: f)

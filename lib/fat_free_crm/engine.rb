@@ -6,7 +6,9 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 
+require 'rails-i18n'
 require 'devise'
+require 'devise-i18n'
 require 'ransack'
 require 'ransack/adapters'
 require 'haml'
@@ -23,12 +25,14 @@ require 'select2-rails'
 require 'responds_to_parent'
 require 'dynamic_form'
 require 'simple_form'
+require 'country_select'
 
 require 'fat_free_crm/callback'
 require 'fat_free_crm/custom_fields'
 require 'fat_free_crm/gem_ext'
 require 'fat_free_crm/exceptions'
 require 'fat_free_crm/fields'
+require 'fat_free_crm/i18n'
 require 'fat_free_crm/permissions'
 require 'fat_free_crm/comment_extensions'
 require 'fat_free_crm/errors'
@@ -65,9 +69,9 @@ module FatFreeCrm
           Setting.load_settings_from_yaml(settings_file) if File.exist?(settings_file)
         end
 
-        I18n.default_locale = Setting.locale
-        I18n.fallbacks[:en] = [:"en-US"]
-        I18n.backend.load_translations
+        ::I18n.default_locale = Setting.locale
+        ::I18n.fallbacks[:en] = [:"en-US"]
+        ::I18n.backend.load_translations
     
         translations = { ransack: { attributes: {} } }
         FatFreeCrm::CustomField.find_each do |custom_field|
@@ -78,7 +82,7 @@ module FatFreeCrm
           end
         end
     
-        I18n.backend.store_translations(Setting.locale.to_sym, translations)
+#        I18n.backend.store_translations(Setting.locale.to_sym, translations)
       end
     
     end

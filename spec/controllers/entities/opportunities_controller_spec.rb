@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe FatFreeCrm::OpportunitiesController do
+module FatFreeCrm
+describe OpportunitiesController do
   routes { FatFreeCrm::Engine.routes }
 
   def get_data_for_sidebar
@@ -250,7 +251,7 @@ describe FatFreeCrm::OpportunitiesController do
 
         get :new, params: { related: "account_#{@account.id}" }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
-        expect(response.body).to eq('window.location.href = "/accounts";')
+        expect(response.body).to eq('window.location.href = "/fat_free_crm/accounts";')
       end
 
       it "should redirect to parent asset's index page with the message if parent asset got protected" do
@@ -258,7 +259,7 @@ describe FatFreeCrm::OpportunitiesController do
 
         get :new, params: { related: "account_#{@account.id}" }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
-        expect(response.body).to eq('window.location.href = "/accounts";')
+        expect(response.body).to eq('window.location.href = "/fat_free_crm/accounts";')
       end
     end
   end
@@ -903,4 +904,5 @@ describe FatFreeCrm::OpportunitiesController do
       expect(session[:opportunities_current_page]).to eq(1)
     end
   end
+end
 end

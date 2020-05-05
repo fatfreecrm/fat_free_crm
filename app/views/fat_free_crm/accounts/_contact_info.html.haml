@@ -20,5 +20,5 @@
       = f.text_field(:email, {class: 'form-control'})
   
   .idc-addresses
-    = render "shared/address", f: f, asset: @account, type: :billing, title: :billing_address
-    = render "shared/address", f: f, asset: @account, type: :shipping, title: :shipping_address, same_as_billing: true
+    = render "fat_free_crm/shared/address", f: f, asset: @account, type: :billing, title: :billing_address
+    = render "fat_free_crm/shared/address", f: f, asset: @account, type: :shipping, title: :shipping_address, same_as_billing: true
