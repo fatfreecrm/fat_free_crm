@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+module FatFreeCrm
 module ApplicationHelper
   def tabs(tabs = nil)
     tabs ||= controller_path.match?(/admin/) ? FatFreeCrm::Tabs.admin : FatFreeCrm::Tabs.main
@@ -515,4 +516,5 @@ module ApplicationHelper
   def current_view_name
     current_user.pref[:"#{controller.controller_name}_#{show_or_index_action}_view"]
   end
+end
 end

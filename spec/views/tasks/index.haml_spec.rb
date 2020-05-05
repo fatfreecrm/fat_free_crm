@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/tasks/index" do
-  include TasksHelper
 
   before do
     login

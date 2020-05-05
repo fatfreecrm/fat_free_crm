@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/tasks/new" do
-  include TasksHelper
 
   before do
     login

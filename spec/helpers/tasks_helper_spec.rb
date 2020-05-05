@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe TasksHelper do
   describe "responding with generated links" do
     before do
@@ -17,4 +18,5 @@ describe TasksHelper do
       expect(link_to_task_uncomplete(@task, nil)).to include(t(:task_uncomplete))
     end
   end
+end
 end
