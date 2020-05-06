@@ -14,7 +14,7 @@
     - if called_from_index_page?
       = refresh_sidebar(:index)
     - else
-      $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
+      $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');
 - else
   $('##{id}').html('#{ j render(partial: "edit") }');
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });

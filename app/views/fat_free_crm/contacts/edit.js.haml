@@ -15,7 +15,7 @@
 
   - if params[:cancel].blank?                       # Called from contacts list item...
     - if @previous                                  # Hide open [Edit Contact] form if any.
-      - if @previous.is_a?(Contact)
+      - if @previous.is_a?(FatFreeCrm::Contact)
         $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: entity_name, collection: [ @previous ]) }');
       - else
         crm.flick('#{entity_name}_#{@previous}', 'remove');

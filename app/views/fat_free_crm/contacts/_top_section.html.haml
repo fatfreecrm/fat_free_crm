@@ -30,6 +30,6 @@
         %label= t(:background_info) + ':'
         = f.text_area :background_info
 
-    = render partial: "/shared/tags", locals: {f: f}
+    = render partial: "/fat_free_crm/shared/tags", locals: {f: f}
 
     = hook(:contact_top_section_bottom, self, f: f)

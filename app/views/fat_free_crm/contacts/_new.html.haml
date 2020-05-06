@@ -5,13 +5,13 @@
 
   = f.error_messages object_name: t('contact')
 
-  = render "contacts/top_section", f: f
-  = render "fields/edit_custom_field_group", f: f
-  = render "shared/add_comment",   f: f
-  = render "contacts/extra",       f: f
-  = render "contacts/web",         f: f
-  = render "fields/groups",        f: f
-  = render "entities/permissions", f: f, entity: @contact
+  = render "fat_free_crm/contacts/top_section", f: f
+  = render "fat_free_crm/fields/edit_custom_field_group", f: f
+  = render "fat_free_crm/shared/add_comment",   f: f
+  = render "fat_free_crm/contacts/extra",       f: f
+  = render "fat_free_crm/contacts/web",         f: f
+  = render "fat_free_crm/fields/groups",        f: f
+  = render "fat_free_crm/entities/permissions", f: f, entity: @contact
   = hook(:entity_form, self, {f: f, entity: @contact})
 
   .buttonbar

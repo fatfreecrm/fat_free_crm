@@ -7,10 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/update" do
-  include ContactsHelper
-
+module FatFreeCrm
+describe "/fat_free_crm/contacts/update" do
   before do
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::AddressesHelper
+
     login
 
     assign(:contact, @contact = build_stubbed(:contact, user: current_user))
@@ -22,7 +24,7 @@ describe "/contacts/update" do
   describe "no errors:" do
     describe "on contact landing page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts/123"
       end
 
       it "should flip [edit_contact] form" do
@@ -40,14 +42,14 @@ describe "/contacts/update" do
 
     describe "on contacts index page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
       end
 
       it "should replace [Edit Contact] with contact partial and highlight it" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
 
         render
-        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
         expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
@@ -60,14 +62,14 @@ describe "/contacts/update" do
 
     describe "on related asset page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/accounts/123"
       end
 
       it "should replace [Edit Contact] with contact partial and highlight it" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
 
         render
-        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
         expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
@@ -85,7 +87,7 @@ describe "/contacts/update" do
 
     describe "on contact landing page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts/123"
       end
 
       it "should redraw the [edit_contact] form and shake it" do
@@ -99,7 +101,7 @@ describe "/contacts/update" do
 
     describe "on contacts index page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
       end
 
       it "should redraw the [edit_contact] form and shake it" do
@@ -113,7 +115,7 @@ describe "/contacts/update" do
 
     describe "on related asset page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = @referer = "http://localhost/accounts/123"
+        controller.request.env["HTTP_REFERER"] = @referer = "http://localhost/fat_free_crm/accounts/123"
       end
 
       it "errors: should show disabled accounts dropdown" do
@@ -129,4 +131,5 @@ describe "/contacts/update" do
       end
     end
   end
+end
 end

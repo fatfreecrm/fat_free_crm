@@ -7,10 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/edit" do
-  include ContactsHelper
+module FatFreeCrm
+describe "/fat_free_crm/contacts/edit" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::AddressesHelper
     login
     assign(:contact, @contact = build_stubbed(:contact, user: current_user))
     assign(:users, [current_user])
@@ -22,11 +24,11 @@ describe "/contacts/edit" do
     params[:cancel] = "true"
 
     render
-    expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+    expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
   end
 
   it "cancel from contact landing page: should hide [Edit Contact] form" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts/123"
     params[:cancel] = "true"
 
     render
@@ -71,4 +73,5 @@ describe "/contacts/edit" do
     render
     expect(rendered).to include("crm.create_or_select_account(false)")
   end
+end
 end

@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/contacts/destroy" do
-  include ContactsHelper
 
   before do
     login

@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/contacts/create" do
-  include ContactsHelper
 
   before do
     login

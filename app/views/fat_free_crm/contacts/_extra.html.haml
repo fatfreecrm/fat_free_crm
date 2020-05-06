@@ -16,7 +16,7 @@
       .form-group.one-quarter
         %label #{t :mobile}:
         = f.text_field(:mobile, { class: 'form-control'})
-      = render "shared/address", f: f, asset: @contact, type: 'business', title: :address
+      = render "fat_free_crm/shared/address", f: f, asset: @contact, type: 'business', title: :address
       .form-group.one-quarter
         %label #{t :fax}:
         = f.text_field(:fax, { class: 'form-control'})

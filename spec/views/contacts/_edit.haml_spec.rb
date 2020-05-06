@@ -7,10 +7,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/_edit" do
-  include ContactsHelper
+module FatFreeCrm
+describe "/fat_free_crm/contacts/_edit" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::AddressesHelper
     login
     assign(:account, @account = create(:account))
     assign(:accounts, [@account])
@@ -21,9 +23,9 @@ describe "/contacts/_edit" do
     assign(:users, [current_user])
 
     render
-    expect(view).to render_template(partial: "contacts/_top_section")
-    expect(view).to render_template(partial: "contacts/_extra")
-    expect(view).to render_template(partial: "contacts/_web")
+    expect(view).to render_template(partial: "fat_free_crm/contacts/_top_section")
+    expect(view).to render_template(partial: "fat_free_crm/contacts/_extra")
+    expect(view).to render_template(partial: "fat_free_crm/contacts/_web")
     expect(view).to render_template(partial: "_permissions")
 
     expect(rendered).to have_tag("form[class=edit_contact]") do
@@ -70,4 +72,5 @@ describe "/contacts/_edit" do
     render
     expect(rendered).not_to have_tag("textarea[id=contact_background_info]")
   end
+end
 end

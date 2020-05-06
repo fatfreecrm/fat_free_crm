@@ -8,7 +8,6 @@
 require 'spec_helper'
 
 describe "/contacts/index" do
-  include ContactsHelper
 
   before do
     login

@@ -7,10 +7,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/_new" do
-  include ContactsHelper
+module FatFreeCrm
+describe "/fat_free_crm/contacts/_new" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::AddressesHelper
     login
     @account = build_stubbed(:account)
     assign(:contact, Contact.new)
@@ -21,10 +23,10 @@ describe "/contacts/_new" do
 
   it "should render [create contact] form" do
     render
-    expect(view).to render_template(partial: "contacts/_top_section")
-    expect(view).to render_template(partial: "contacts/_extra")
-    expect(view).to render_template(partial: "contacts/_web")
-    expect(view).to render_template(partial: "entities/_permissions")
+    expect(view).to render_template(partial: "fat_free_crm/contacts/_top_section")
+    expect(view).to render_template(partial: "fat_free_crm/contacts/_extra")
+    expect(view).to render_template(partial: "fat_free_crm/contacts/_web")
+    expect(view).to render_template(partial: "fat_free_crm/entities/_permissions")
 
     expect(rendered).to have_tag("form[class=new_contact]")
   end
@@ -49,4 +51,5 @@ describe "/contacts/_new" do
     render
     expect(rendered).not_to have_tag("textarea[id=contact_background_info]")
   end
+end
 end
