@@ -19,7 +19,7 @@
   }
 
   li .remote {
-    grid-column: -1 / 1;
+    grid-column: 1 / -1;
   }
 
   .remote form {
@@ -33,4 +33,8 @@ ul:empty {
 
 ul#tasks {
   padding: 0;
+}
+
+ul.task-list {
+  grid-column: 1 / -1;
 }
