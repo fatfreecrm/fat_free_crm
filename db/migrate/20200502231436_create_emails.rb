@@ -20,7 +20,7 @@ class CreateEmails < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
-    add_index :fat_free_crm_emails, %i[mediator_id mediator_type], name: 'big_index'
+    add_index :fat_free_crm_emails, %i[mediator_id mediator_type], name: 'emails_mediator_id_n_type'
   end
 
   def self.down

@@ -19,7 +19,7 @@ class CreateAddresses < ActiveRecord::Migration[4.2]
       t.datetime :deleted_at
     end
 
-    add_index :fat_free_crm_addresses, %i[addressable_id addressable_type], name: 'big_index_name'
+    add_index :fat_free_crm_addresses, %i[addressable_id addressable_type], name: 'addresses_id_and_type'
 
     # Migrate data from assets to Address table into full_address blob
     # FatFreeCrm::Contact.all.each do |asset|

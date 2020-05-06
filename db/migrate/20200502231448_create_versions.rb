@@ -11,7 +11,7 @@ class CreateVersions < ActiveRecord::Migration[4.2]
       t.text :object
       t.datetime :created_at
     end
-    add_index :fat_free_crm_versions, %i[item_type item_id], name: 'big_index2'
+    add_index :fat_free_crm_versions, %i[item_type item_id], name: 'versions_item_type_id'
   end
 
   def self.down
