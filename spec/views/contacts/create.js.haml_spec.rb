@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/create" do
+module FatFreeCrm
+describe "/fat_free_crm/contacts/create" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::AddressesHelper
     login
   end
 
@@ -22,12 +25,12 @@ describe "/contacts/create" do
     it "should hide [Create Contact] form and insert contact partial" do
       render
 
-      expect(rendered).to include("$('#contacts').prepend('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+      expect(rendered).to include("$('#contacts').prepend('<li class=\\'fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
       expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
     end
 
     it "should refresh sidebar when called from contacts index" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
       render
 
       expect(rendered).to include("#sidebar")
@@ -35,7 +38,7 @@ describe "/contacts/create" do
     end
 
     it "should update pagination when called from contacts index" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
       render
 
       expect(rendered).to include("#paginate")
@@ -62,4 +65,5 @@ describe "/contacts/create" do
       expect(rendered).to include(%/$('#create_contact').effect("shake"/)
     end
   end
+end
 end

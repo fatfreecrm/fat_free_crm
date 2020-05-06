@@ -11,9 +11,9 @@
 
   - if called_from_index_page?
     = refresh_sidebar(:index)
-    $('#paginate').html('#{ j render(partial: "shared/paginate_with_per_page") }');
+    $('#paginate').html('#{ j render(partial: "fat_free_crm/shared/paginate_with_per_page") }');
   - else
-    $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
+    $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');
   crm.flick('empty', 'remove');
 
 - else

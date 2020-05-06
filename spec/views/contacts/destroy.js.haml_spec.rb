@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/destroy" do
+module FatFreeCrm
+describe "/fat_free_crm/contacts/destroy" do
 
   before do
     login
@@ -21,7 +22,7 @@ describe "/contacts/destroy" do
   end
 
   it "should update contacts sidebar when called from contacts index" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
     render
 
     expect(rendered).to include("#sidebar")
@@ -29,16 +30,17 @@ describe "/contacts/destroy" do
   end
 
   it "should update pagination when called from contacts index" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
     render
 
     expect(rendered).to include("#paginate")
   end
 
   it "should update recently viewed items when called from related asset" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/accounts/123"
     render
 
     expect(rendered).to include("#recently")
   end
+end
 end

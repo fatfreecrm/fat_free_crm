@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/new" do
+module FatFreeCrm
+describe "/fat_free_crm/contacts/new" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::AddressesHelper
     login
     @account = build_stubbed(:account)
     assign(:contact, Contact.new(user: current_user))
@@ -43,4 +46,5 @@ describe "/contacts/new" do
       expect(rendered).to include("crm.flip_form('create_contact');")
     end
   end
+end
 end

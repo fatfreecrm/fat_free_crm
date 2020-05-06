@@ -7,9 +7,11 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/index" do
+module FatFreeCrm
+describe "/fat_free_crm/contacts/index" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
     view.lookup_context.prefixes << 'entities'
     assign :per_page, Contact.per_page
     assign :sort_by,  Contact.sort_by
@@ -22,7 +24,7 @@ describe "/contacts/index" do
 
     render
     expect(view).to render_template(partial: "_contact")
-    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no contacts" do
@@ -30,7 +32,8 @@ describe "/contacts/index" do
 
     render
     expect(view).not_to render_template(partial: "_contact")
-    expect(view).to render_template(partial: "shared/_empty")
-    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_empty")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_paginate_with_per_page")
   end
+end
 end

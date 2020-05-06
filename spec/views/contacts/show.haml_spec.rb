@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/show" do
+module FatFreeCrm
+describe "/fat_free_crm/contacts/show" do
 
   before do
+    view.extend FatFreeCrm::JavascriptHelper
+    view.extend FatFreeCrm::CommentsHelper
     login
     @contact = create(:contact, id: 42,
                                 opportunities: [create(:opportunity)])
@@ -24,11 +27,12 @@ describe "/contacts/show" do
 
   it "should render contact landing page" do
     render
-    expect(view).to render_template(partial: "comments/_new")
-    expect(view).to render_template(partial: "shared/_timeline")
-    expect(view).to render_template(partial: "shared/_tasks")
-    expect(view).to render_template(partial: "opportunities/_opportunity")
+    expect(view).to render_template(partial: "fat_free_crm/comments/_new")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_timeline")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_tasks")
+    expect(view).to render_template(partial: "fat_free_crm/opportunities/_opportunity")
 
     expect(rendered).to have_tag("div[id=edit_contact]")
   end
+end
 end

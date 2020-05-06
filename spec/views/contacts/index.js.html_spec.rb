@@ -7,27 +7,30 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/index" do
+module FatFreeCrm
+describe "/fat_free_crm/contacts/index" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
     login
   end
 
   it "should render [contact] template with @contacts collection if there are contacts" do
     assign(:contacts, [build_stubbed(:contact, id: 42)].paginate)
 
-    render template: 'contacts/index', formats: [:js]
+    render template: 'fat_free_crm/contacts/index', formats: [:js]
 
-    expect(rendered).to include("$('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
+    expect(rendered).to include("$('#contacts').html('<li class=\\'fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_42\\'")
     expect(rendered).to include("#paginate")
   end
 
   it "should render [empty] template if @contacts collection if there are no contacts" do
     assign(:contacts, [].paginate)
 
-    render template: 'contacts/index', formats: [:js]
+    render template: 'fat_free_crm/contacts/index', formats: [:js]
 
     expect(rendered).to include("$('#contacts').html('<div id=\\'empty\\'>")
     expect(rendered).to include("#paginate")
   end
+end
 end
