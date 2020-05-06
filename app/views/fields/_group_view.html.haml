@@ -1,10 +1,12 @@
-%table.asset_attributes
-  - groups = fields.in_groups_of(2, false)
-  - groups.each_with_index do |group, i|
-    %tr
+%details.idc-panel.asset_attributes
+  %summary
+    Custom Information
+  .summary-container
+    - groups = fields.in_groups_of(2, false)
+    - groups.each_with_index do |group, i|
       - group.each do |field|
-        = col(field.label, (i == groups.size - 1) ? :last : nil) do
-          = field.render_value(entity)
-        - if group.size == 1
-          %th.last
-          %td.last
+        .custom-input.full-width
+          %b.idc-label
+            = field.label
+          .idc-value
+            = field.render_value(entity)
