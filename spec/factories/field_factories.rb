@@ -16,13 +16,13 @@ FactoryBot.define do
     FFaker::Internet.user_name + x.to_s
   end
 
-  factory :field_group do
+  factory :field_group, class: FatFreeCrm::FieldGroup do
     klass_name          { FactoryBot.generate(:klass_name) }
     label               { FactoryBot.generate(:field_label) }
     tag
   end
 
-  factory :field do
+  factory :field, class: FatFreeCrm::Field do
     type { "Field" }
     field_group
     position            { FactoryBot.generate(:field_position) }
@@ -34,7 +34,7 @@ FactoryBot.define do
     created_at          { FactoryBot.generate(:time) }
   end
 
-  factory :custom_field do
+  factory :custom_field, class: FatFreeCrm::CustomField do
     type { "CustomField" }
   end
 end

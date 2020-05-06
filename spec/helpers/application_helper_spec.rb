@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module FatFreeCrm
 describe ApplicationHelper do
   it "should be included in the object returned by #helper" do
     included_modules = (class << helper; self; end).send :included_modules
@@ -83,4 +84,5 @@ describe ApplicationHelper do
       expect(helper.send(:current_view_name)).to eq('long')
     end
   end
+end
 end

@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+module FatFreeCrm
 describe Admin::FieldGroupsHelper do
   it "should return the correct info text about tag restrictions and classes for groups" do
     field_group = build(:field_group, klass_name: "Contact", label: "Test Field Group")
@@ -17,4 +18,5 @@ describe Admin::FieldGroupsHelper do
     field_group.klass_name = "Account"
     expect(field_group_subtitle(field_group)).to include("This field group applies to all accounts")
   end
+end
 end

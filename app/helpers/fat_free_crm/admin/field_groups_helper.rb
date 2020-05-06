@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+module FatFreeCrm
 module Admin::FieldGroupsHelper
   include ::ERB::Util
 
@@ -24,4 +25,5 @@ module Admin::FieldGroupsHelper
   def link_to_confirm(field_group)
     link_to(t(:delete) + "?", confirm_admin_field_group_path(field_group), method: :get, remote: true)
   end
+end
 end
