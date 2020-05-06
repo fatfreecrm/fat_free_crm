@@ -15,7 +15,7 @@ describe CustomFieldDatePair do
       @to = CustomFieldDatePair.new(name: 'cf_event_to')
       allow(@from).to receive(:paired_with).and_return(@to)
       @today = Date.today
-      @today_str = @today.strftime(I18n.t("date.formats.mmddyy"))
+      @today_str = @today.strftime(::I18n.t("date.formats.mmddyy"))
     end
 
     it "should be from..." do
@@ -45,7 +45,7 @@ describe CustomFieldDatePair do
       @to = CustomFieldDatePair.new(name: 'cf_event_to', pair_id: 1)
       allow(CustomFieldPair).to receive(:find).and_return(@from)
       @today = Date.today
-      @today_str = @today.strftime(I18n.t("date.formats.mmddyy"))
+      @today_str = @today.strftime(::I18n.t("date.formats.mmddyy"))
     end
 
     it "when from is nil it should be valid" do
