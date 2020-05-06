@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/create" do
+module FatFreeCrm
+describe "/fat_free_crm/accounts/create" do
 
   before do
+    view.extend FatFreeCrm::AddressesHelper
+    view.extend FatFreeCrm::JavascriptHelper
     login
   end
 
@@ -24,7 +27,7 @@ describe "/accounts/create" do
     end
 
     it "should hide [Create Account] form and insert account partial" do
-      expect(rendered).to include("$('#accounts').prepend('<li class=\\'account highlight\\' id=\\'account_#{@account.id}\\'")
+      expect(rendered).to include("$('#accounts').prepend('<li class=\\'fat_free_crm_account highlight\\' id=\\'fat_free_crm_account_#{@account.id}\\'")
       expect(rendered).to include(%/$('#account_#{@account.id}').effect("highlight"/)
     end
 
@@ -49,4 +52,5 @@ describe "/accounts/create" do
       expect(rendered).to include(%/$('#create_account').effect("shake"/)
     end
   end
+end
 end

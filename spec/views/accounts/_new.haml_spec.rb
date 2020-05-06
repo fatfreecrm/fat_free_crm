@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/_new" do
+module FatFreeCrm
+describe "/fat_free_crm/accounts/_new" do
 
   before do
+    view.extend FatFreeCrm::AddressesHelper
+    view.extend FatFreeCrm::JavascriptHelper
     login
     assign(:account, Account.new)
     assign(:users, [current_user])
@@ -38,4 +41,5 @@ describe "/accounts/_new" do
     render
     expect(rendered).not_to have_tag("textarea[id=account_background_info]")
   end
+end
 end

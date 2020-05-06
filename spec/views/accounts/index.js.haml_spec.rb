@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/index" do
+module FatFreeCrm
+describe "/fat_free_crm/accounts/index" do
 
   before do
     login
@@ -16,7 +17,7 @@ describe "/accounts/index" do
   it "should render [account] template with @accounts collection if there are accounts" do
     assign(:accounts, [build_stubbed(:account, id: 42)].paginate)
 
-    render template: 'accounts/index', formats: [:js]
+    render template: 'fat_free_crm/accounts/index', formats: [:js]
 
     expect(rendered).to include("$('#accounts').html")
     expect(rendered).to include("$('#paginate').html")
@@ -25,9 +26,10 @@ describe "/accounts/index" do
   it "should render [empty] template if @accounts collection if there are no accounts" do
     assign(:accounts, [].paginate)
 
-    render template: 'accounts/index', formats: [:js]
+    render template: 'fat_free_crm/accounts/index', formats: [:js]
 
     expect(rendered).to include("$('#accounts').html('<div id=\\'empty\\'")
     expect(rendered).to include("$('#paginate').html")
   end
+end
 end

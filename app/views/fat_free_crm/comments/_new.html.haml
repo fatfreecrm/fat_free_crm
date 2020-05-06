@@ -1,8 +1,8 @@
 - class_name = commentable.class.name.underscore
 - id_prefix = "#{class_name}_#{commentable.id}"
-- @comment = @comment || Comment.new
+- @comment = @comment || FatFreeCrm::Comment.new
 .comment.highlight.new_comment{ id: "#{id_prefix}_comment_new" }
-  - subscribed_users = commentable.subscribed_users.map{|uid| User.find_by_id(uid) unless uid == current_user.id }.compact
+  - subscribed_users = commentable.subscribed_users.map{|uid| FatFreeCrm::User.find_by_id(uid) unless uid == current_user.id }.compact
   - if notification_emails_configured? && subscribed_users.any?
     = t(:following_users_will_be_notified) << ":"
     - subscribed_users.each do |user|
@@ -32,4 +32,4 @@
     = text_field_tag :post_new_note, t(:add_note_help), id: "#{id_prefix}_post_new_note"
 
   - if notification_emails_configured?
-    = render partial: "comments/subscription_links", locals: {entity: commentable}
+    = render partial: "fat_free_crm/comments/subscription_links", locals: {entity: commentable}

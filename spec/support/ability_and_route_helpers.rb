@@ -7,5 +7,6 @@ module AbilityAndRouteHelpers
       end
     RUBYCODE
     the_view.extend ::FatFreeCrm::ApplicationHelper
+    the_view.extend ::FatFreeCrm::UsersHelper
   end
 end

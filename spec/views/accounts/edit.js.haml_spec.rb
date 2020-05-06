@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/edit" do
+module FatFreeCrm
+describe "/fat_free_crm/accounts/edit" do
 
   before do
+    view.extend FatFreeCrm::AddressesHelper
+    view.extend FatFreeCrm::JavascriptHelper
     login
     assign(:account, @account = build_stubbed(:account, user: current_user))
     assign(:users, [current_user])
@@ -62,4 +65,5 @@ describe "/accounts/edit" do
     expect(rendered).to include("edit_account")
     expect(rendered).to include("crm.flip_form('edit_account'")
   end
+end
 end

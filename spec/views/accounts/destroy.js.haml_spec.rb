@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/destroy" do
+module FatFreeCrm
+describe "/fat_free_crm/accounts/destroy" do
 
   before do
     login
@@ -30,4 +31,5 @@ describe "/accounts/destroy" do
     expect(rendered).to have_text("Account Categories")
     expect(rendered).to have_text("Recent Items")
   end
+end
 end

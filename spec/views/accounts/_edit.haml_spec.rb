@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/_edit" do
+module FatFreeCrm
+describe "/fat_free_crm/accounts/_edit" do
 
   before do
+    view.extend FatFreeCrm::AddressesHelper
+    view.extend FatFreeCrm::JavascriptHelper
     login
     assign(:account, @account = create(:account))
   end
@@ -39,4 +42,5 @@ describe "/accounts/_edit" do
     render
     expect(rendered).not_to have_tag("textarea[id=account_background_info]")
   end
+end
 end

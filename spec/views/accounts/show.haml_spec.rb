@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/show" do
+module FatFreeCrm
+describe "fat_free_crm/accounts/show" do
 
   before do
+    view.extend FatFreeCrm::JavascriptHelper
+    view.extend FatFreeCrm::CommentsHelper
     login
     @account = create(:account, id: 42,
                                 contacts: [create(:contact)],
@@ -26,12 +29,13 @@ describe "/accounts/show" do
   it "should render account landing page" do
     render
 
-    expect(view).to render_template(partial: "comments/_new")
-    expect(view).to render_template(partial: "shared/_timeline")
-    expect(view).to render_template(partial: "shared/_tasks")
-    expect(view).to render_template(partial: "contacts/_contact")
-    expect(view).to render_template(partial: "opportunities/_opportunity")
+    expect(view).to render_template(partial: "fat_free_crm/comments/_new")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_timeline")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_tasks")
+    expect(view).to render_template(partial: "fat_free_crm/contacts/_contact")
+    expect(view).to render_template(partial: "fat_free_crm/opportunities/_opportunity")
 
     expect(rendered).to have_tag("div[id=edit_account]")
   end
+end
 end
