@@ -31,6 +31,7 @@ module FatFreeCrm
     rescue_from CanCan::AccessDenied,         with: :respond_to_access_denied
 
     include ERB::Util # to give us h and j methods
+    include FatFreeCrm::I18n
 
     # Common auto_complete handler for all core controllers.
     #----------------------------------------------------------------------------

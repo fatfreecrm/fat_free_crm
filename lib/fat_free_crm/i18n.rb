@@ -41,4 +41,4 @@ module FatFreeCrm
 end
 
 ActionView::Base.include FatFreeCrm::I18n
-ActionController::Base.include FatFreeCrm::I18n
+# ActionController::Base.include FatFreeCrm::I18n
