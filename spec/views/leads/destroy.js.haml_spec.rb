@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/destroy" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/destroy" do
   before do
     login
     assign(:lead, @lead = build_stubbed(:lead))
@@ -21,7 +22,7 @@ describe "/leads/destroy" do
 
   it "should update leads sidebar when called from leads index" do
     assign(:leads, [@lead].paginate)
-    controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads"
     render
 
     expect(rendered).to include("#sidebar")
@@ -31,7 +32,7 @@ describe "/leads/destroy" do
 
   it "should update pagination when called from leads index" do
     assign(:leads, [@lead].paginate)
-    controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads"
     render
 
     expect(rendered).to include("#paginate")
@@ -39,11 +40,12 @@ describe "/leads/destroy" do
 
   it "should update related asset sidebar when called from related asset" do
     assign(:campaign, campaign = build_stubbed(:campaign))
-    controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/#{campaign.id}"
     render
 
     expect(rendered).to include("#sidebar")
     expect(rendered).to have_text("Campaign Summary")
     expect(rendered).to have_text("Recent Items")
   end
+end
 end

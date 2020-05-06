@@ -9,7 +9,7 @@
     %div= @lead.title unless @lead.title.blank?
     %div= @lead.company unless @lead.company.blank?
 
-  %div= render "shared/address_show", asset: @lead, type: 'business', title: :address
+  %div= render "fat_free_crm/shared/address_show", asset: @lead, type: 'business', title: :address
 
   %div
     - if @lead.phone.present?
@@ -58,7 +58,7 @@
     .caption.heading #{t :background_info}
     = auto_link(simple_format @lead.background_info)
 
-  = render "fields/sidebar_show", asset: @lead
+  = render "fat_free_crm/fields/sidebar_show", asset: @lead
 
   - if @lead.tags.present?
     %span

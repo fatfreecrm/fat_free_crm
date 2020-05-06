@@ -17,16 +17,16 @@ describe "/fat_free_crm/leads/index" do
   it "should render [lead] template with @leads collection if there are leads" do
     assign(:leads, [build_stubbed(:lead, id: 42)].paginate(page: 1, per_page: 20))
 
-    render template: 'leads/index', formats: [:js]
+    render template: 'fat_free_crm/leads/index', formats: [:js]
 
-    expect(rendered).to include("$('#leads').html('<li class=\\'highlight lead\\' id=\\'lead_42\\'")
+    expect(rendered).to include("$('#leads').html('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_42\\'")
     expect(rendered).to include("#paginate")
   end
 
   it "should render [empty] template if @leads collection if there are no leads" do
     assign(:leads, [].paginate(page: 1, per_page: 20))
 
-    render template: 'leads/index', formats: [:js]
+    render template: 'fat_free_crm/leads/index', formats: [:js]
 
     expect(rendered).to include("$('#leads').html('<div id=\\'empty\\'>")
     expect(rendered).to include("#paginate")

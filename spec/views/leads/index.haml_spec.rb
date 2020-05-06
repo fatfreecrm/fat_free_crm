@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/index" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/index" do
 
   before do
     view.lookup_context.prefixes << 'entities'
@@ -22,7 +23,7 @@ describe "/leads/index" do
 
     render
     expect(view).to render_template(partial: "_lead")
-    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no leads" do
@@ -30,7 +31,8 @@ describe "/leads/index" do
 
     render
     expect(view).not_to render_template(partial: "_leads")
-    expect(view).to render_template(partial: "shared/_empty")
-    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_empty")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_paginate_with_per_page")
   end
+end
 end

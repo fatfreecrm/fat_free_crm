@@ -188,7 +188,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def styles_for(*models)
-    render partial: "shared/inline_styles", locals: { models: models }
+    render partial: "fat_free_crm/shared/inline_styles", locals: { models: models }
   end
 
   #----------------------------------------------------------------------------

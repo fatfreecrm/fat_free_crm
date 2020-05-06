@@ -7,8 +7,11 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/show" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/show" do
   before do
+    view.extend JavascriptHelper
+    view.extend CommentsHelper
     login
     assign(:lead, @lead = build_stubbed(:lead, id: 42))
     assign(:users, [current_user])
@@ -21,10 +24,11 @@ describe "/leads/show" do
 
   it "should render lead landing page" do
     render
-    expect(view).to render_template(partial: "comments/_new")
-    expect(view).to render_template(partial: "shared/_timeline")
-    expect(view).to render_template(partial: "shared/_tasks")
+    expect(view).to render_template(partial: "fat_free_crm/comments/_new")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_timeline")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_tasks")
 
     expect(rendered).to have_tag("div[id=edit_lead]")
   end
+end
 end

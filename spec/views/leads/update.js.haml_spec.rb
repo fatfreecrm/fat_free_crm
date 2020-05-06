@@ -22,7 +22,7 @@ describe "/fat_free_crm/leads/update" do
   describe "no errors:" do
     describe "on landing page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads/123"
       end
 
       it "should flip [edit_lead] form" do
@@ -41,12 +41,12 @@ describe "/fat_free_crm/leads/update" do
 
     describe "on index page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads"
       end
 
       it "should replace [Edit Lead] with lead partial and highlight it" do
         render
-        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
         expect(rendered).to include("$('#filters').effect('shake'")
       end
 
@@ -62,12 +62,12 @@ describe "/fat_free_crm/leads/update" do
     describe "on related asset page -" do
       before do
         assign(:campaign, build_stubbed(:campaign))
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/123"
       end
 
       it "should replace [Edit Lead] with lead partial and highlight it" do
         render
-        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
         expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
       end
 

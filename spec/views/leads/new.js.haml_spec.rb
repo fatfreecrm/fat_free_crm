@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/new" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/new" do
 
   before do
+    view.extend FatFreeCrm::UsersHelper
+    view.extend FatFreeCrm::AddressesHelper
     login
     @campaign = build_stubbed(:campaign)
     assign(:lead, Lead.new(user: current_user))
@@ -43,4 +46,5 @@ describe "/leads/new" do
       expect(rendered).to include("crm.flip_form('create_lead');")
     end
   end
+end
 end

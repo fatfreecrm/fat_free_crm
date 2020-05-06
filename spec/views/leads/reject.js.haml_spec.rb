@@ -19,7 +19,7 @@ describe "/fat_free_crm/leads/reject" do
   it "should refresh current lead partial" do
     render
 
-    expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+    expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
     expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
   end
 

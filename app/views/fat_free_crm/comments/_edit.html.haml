@@ -7,4 +7,4 @@
     = f.text_area :comment, id: dom_id(@comment, :text)
     .buttons
       = f.submit t(:save_note), :class => 'btn btn-primary'
-      = link_to(t(:cancel), edit_comment_path(@comment, "#{class_name}_id" => commentable.id, cancel: true), remote: true), :class => 'btn btn-link'
+      = link_to(t(:cancel), edit_comment_path(@comment, "#{class_name}_id" => commentable.id, cancel: true), remote: true, :class => 'btn btn-link')

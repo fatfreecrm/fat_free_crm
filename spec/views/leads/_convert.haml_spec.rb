@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/_convert" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/_convert" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::UsersHelper
     login
     @account = build_stubbed(:account)
     assign(:lead, build_stubbed(:lead))
@@ -21,9 +24,10 @@ describe "/leads/_convert" do
 
   it "should render [convert lead] form" do
     render
-    expect(view).to render_template(partial: "leads/_opportunity")
-    expect(view).to render_template(partial: "leads/_convert_permissions")
+    expect(view).to render_template(partial: "fat_free_crm/leads/_opportunity")
+    expect(view).to render_template(partial: "fat_free_crm/leads/_convert_permissions")
 
     expect(rendered).to have_tag("form[class=edit_lead]")
   end
+end
 end

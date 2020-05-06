@@ -7,8 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/comments/edit" do
-  include CommentsHelper
+module FatFreeCrm
+describe "/fat_free_crm/comments/edit" do
 
   before do
     login
@@ -27,4 +27,5 @@ describe "/comments/edit" do
     expect(rendered).to include("textarea")
     expect(rendered).to include("123")
   end
+end
 end

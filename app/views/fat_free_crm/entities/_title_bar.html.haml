@@ -1,5 +1,5 @@
 - model_name = controller_name.singularize
-- model_klass = model_name.camelcase.constantize
+- model_klass = ("FatFreeCrm::" +  model_name.camelcase).constantize
 
 .space-between.page-heading
   .title

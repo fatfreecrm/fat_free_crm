@@ -7,9 +7,11 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/_sidebar_show" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/_sidebar_show" do
 
   before do
+    view.extend FatFreeCrm::AddressesHelper
     login
     assign(:users, [current_user])
     assign(:comment, Comment.new)
@@ -27,4 +29,5 @@ describe "/leads/_sidebar_show" do
     expect(rendered).to have_tag("a[href='http://twitter.com/account']")
     expect(rendered).not_to have_tag("a[href='http://www.facebook/profile']")
   end
+end
 end

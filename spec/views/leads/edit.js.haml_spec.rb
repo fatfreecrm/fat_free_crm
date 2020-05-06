@@ -7,9 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/edit" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/edit" do
 
   before do
+    view.extend FatFreeCrm::UsersHelper
+    view.extend FatFreeCrm::AddressesHelper
     login
     assign(:lead, @lead = build_stubbed(:lead, status: "new", user: current_user))
     assign(:users, [current_user])
@@ -20,7 +23,7 @@ describe "/leads/edit" do
     params[:cancel] = "true"
 
     render
-    expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+    expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
   end
 
   it "cancel from lead landing page: should hide [Edit Lead] form" do
@@ -36,7 +39,7 @@ describe "/leads/edit" do
     assign(:previous, previous = build_stubbed(:lead, user: current_user))
 
     render
-    expect(rendered).to include("$('#lead_#{previous.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{previous.id}\\'")
+    expect(rendered).to include("$('#lead_#{previous.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{previous.id}\\'")
   end
 
   it "edit: should remove previously open [Edit Lead] if it's no longer available" do
@@ -72,4 +75,5 @@ describe "/leads/edit" do
     render
     expect(rendered).not_to include("crm.hide_form('convert_lead'")
   end
+end
 end
