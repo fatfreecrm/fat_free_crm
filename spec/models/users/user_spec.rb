@@ -195,23 +195,23 @@ describe User do
   describe "Setting I18n.locale" do
     before do
       @user = build(:user)
-      @locale = I18n.locale
+      @locale = ::I18n.locale
     end
 
     after do
-      I18n.locale = @locale
+      ::I18n.locale = @locale
     end
 
     it "should update I18n.locale if proference[:locale] is set" do
       @user.preference[:locale] = :es
       @user.set_individual_locale
-      expect(I18n.locale).to eq(:es)
+      expect(::I18n.locale).to eq(:es)
     end
 
     it "should not update I18n.locale if proference[:locale] is not set" do
       @user.preference[:locale] = nil
       @user.set_individual_locale
-      expect(I18n.locale).to eq(@locale)
+      expect(::I18n.locale).to eq(@locale)
     end
   end
 

@@ -143,7 +143,7 @@ module FatFreeCrm
     # Override global I18n.locale if the user has individual local preference.
     #----------------------------------------------------------------------------
     def set_individual_locale
-      I18n.locale = preference[:locale] if preference[:locale]
+      ::I18n.locale = preference[:locale] if preference[:locale]
     end
 
     # Generate the value of single access token if it hasn't been set already.

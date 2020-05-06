@@ -12,6 +12,7 @@ def all_actions
   %i[index show create update destroy manage]
 end
 
+module FatFreeCrm
 describe "User abilities" do
   subject(:ability)  { Ability.new(user) }
   let(:subject_user) { build :user }
@@ -67,4 +68,5 @@ describe "User abilities" do
       is_expected.to be_able_to(:create, User)
     end
   end
+end
 end
