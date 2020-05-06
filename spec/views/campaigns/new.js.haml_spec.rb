@@ -7,8 +7,9 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/new" do
-  include CampaignsHelper
+
+module FatFreeCrm
+describe "/fat_free_crm/campaigns/new" do
 
   before do
     login
@@ -47,4 +48,5 @@ describe "/campaigns/new" do
       expect(rendered).to include("crm.flip_form('create_campaign')")
     end
   end
+end
 end

@@ -7,8 +7,8 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/index" do
-  include CampaignsHelper
+module FatFreeCrm
+describe "/fat_free_crm/campaigns/index" do
 
   before do
     view.lookup_context.prefixes << 'entities'
@@ -23,7 +23,7 @@ describe "/campaigns/index" do
 
     render
     expect(view).to render_template(partial: "_campaign")
-    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_paginate_with_per_page")
   end
 
   it "should render a message if there're no campaigns" do
@@ -31,7 +31,8 @@ describe "/campaigns/index" do
 
     render
     expect(view).not_to render_template(partial: "_campaigns")
-    expect(view).to render_template(partial: "shared/_empty")
-    expect(view).to render_template(partial: "shared/_paginate_with_per_page")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_empty")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_paginate_with_per_page")
   end
+end
 end

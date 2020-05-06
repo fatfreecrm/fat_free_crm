@@ -10,6 +10,6 @@
 
   .indent
     = link_to(campaign.name, campaign)
-    = render "campaigns/status", campaign: campaign
+    = render "fat_free_crm/campaigns/status", campaign: campaign
 
     = hook(:campaign_bottom, self, campaign: campaign)

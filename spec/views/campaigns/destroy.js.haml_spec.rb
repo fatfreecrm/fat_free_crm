@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/destroy" do
+module FatFreeCrm
+describe "/fat_free_crm/campaigns/destroy" do
   before do
     login
     assign(:campaign, @campaign = build_stubbed(:campaign, user: current_user))
@@ -29,4 +30,5 @@ describe "/campaigns/destroy" do
   it "should update pagination" do
     expect(rendered).to include("#paginate")
   end
+end
 end

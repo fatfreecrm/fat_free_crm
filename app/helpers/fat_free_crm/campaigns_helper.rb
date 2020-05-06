@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+module FatFreeCrm
 module CampaignsHelper
   # Sidebar checkbox control for filtering campaigns by status.
   #----------------------------------------------------------------------------
@@ -33,4 +34,5 @@ module CampaignsHelper
     metrics = render file: "campaigns/_metrics.html.haml", locals: { campaign: campaign }
     "#{t(campaign.status)}, " + [status, metrics].map { |str| strip_tags(str) }.join(' ').delete("\n")
   end
+end
 end

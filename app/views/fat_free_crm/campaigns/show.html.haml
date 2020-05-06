@@ -6,21 +6,21 @@
 
   = styles_for :task, :lead, :opportunity
 
-  = render 'campaigns/title_bar', campaign: @campaign
+  = render 'fat_free_crm/campaigns/title_bar', campaign: @campaign
 
-  = render "comments/new", commentable: @campaign
-  = render partial: "shared/timeline", collection: @timeline
+  = render "fat_free_crm/comments/new", commentable: @campaign
+  = render partial: "fat_free_crm/shared/timeline", collection: @timeline
 
   = hook(:show_campaign_bottom, self, {entity: @campaign}) do
 
-    = render "tasks/tasks", object: @campaign
+    = render "fat_free_crm/tasks/tasks", object: @campaign
 
-    = render "leads/leads", object: @campaign
+    = render "fat_free_crm/leads/leads", object: @campaign
 
-    = render "opportunities/opportunities", object: @campaign
+    = render "fat_free_crm/opportunities/opportunities", object: @campaign
 
-    = render "versions/versions", object: @campaign
+    = render "fat_free_crm/versions/versions", object: @campaign
 
     = load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
 
-  #export= render "shared/export", action: :show
+  #export= render "fat_free_crm/shared/export", action: :show

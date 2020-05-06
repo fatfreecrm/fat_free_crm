@@ -7,8 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/edit" do
-  include CampaignsHelper
+module FatFreeCrm
+describe "/fat_free_crm/campaigns/edit" do
 
   before do
     login
@@ -20,11 +20,11 @@ describe "/campaigns/edit" do
     params[:cancel] = "true"
 
     render
-    expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+    expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'fat_free_crm_campaign highlight\\' id=\\'fat_free_crm_campaign_#{@campaign.id}\\'")
   end
 
   it "cancel from campaign landing page: should hide [Edit Campaign] form" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+    controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/123"
     params[:cancel] = "true"
 
     render
@@ -36,7 +36,7 @@ describe "/campaigns/edit" do
     assign(:previous, previous = build_stubbed(:campaign, user: current_user))
 
     render
-    expect(rendered).to include("$('#campaign_#{previous.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{previous.id}\\'")
+    expect(rendered).to include("$('#campaign_#{previous.id}').replaceWith('<li class=\\'fat_free_crm_campaign highlight\\' id=\\'fat_free_crm_campaign_#{previous.id}\\'")
   end
 
   it "edit: should remove previously open [Edit Campaign] if it's no longer available" do
@@ -63,4 +63,5 @@ describe "/campaigns/edit" do
     expect(rendered).to include("$('#edit_campaign').html")
     expect(rendered).to include("crm.flip_form('edit_campaign')")
   end
+end
 end

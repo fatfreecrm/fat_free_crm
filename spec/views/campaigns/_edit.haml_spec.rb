@@ -7,8 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/_edit" do
-  include CampaignsHelper
+module FatFreeCrm
+describe "/fat_free_crm/campaigns/_edit" do
 
   before do
     login
@@ -19,8 +19,8 @@ describe "/campaigns/_edit" do
   it "should render [edit campaign] form" do
     render
 
-    expect(view).to render_template(partial: "campaigns/_top_section")
-    expect(view).to render_template(partial: "campaigns/_objectives")
+    expect(view).to render_template(partial: "fat_free_crm/campaigns/_top_section")
+    expect(view).to render_template(partial: "fat_free_crm/campaigns/_objectives")
     expect(view).to render_template(partial: "_permissions")
 
     expect(view).to have_tag("form[class=edit_campaign]") do
@@ -41,4 +41,5 @@ describe "/campaigns/_edit" do
     render
     expect(rendered).not_to have_tag("textarea[id=campaign_background_info]")
   end
+end
 end

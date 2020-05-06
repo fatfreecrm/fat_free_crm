@@ -4,12 +4,12 @@
 
   = f.error_messages object_name: t('campaign')
 
-  = render "campaigns/top_section", f: f
-  = render "fields/edit_custom_field_group", f: f
-  = render "shared/add_comment", f: f
-  = render "campaigns/objectives",  f: f
-  = render "fields/groups",         f: f
-  = render "entities/permissions",  f: f, entity: @campaign
+  = render "fat_free_crm/campaigns/top_section", f: f
+  = render "fat_free_crm/fields/edit_custom_field_group", f: f
+  = render "fat_free_crm/shared/add_comment", f: f
+  = render "fat_free_crm/campaigns/objectives",  f: f
+  = render "fat_free_crm/fields/groups",         f: f
+  = render "fat_free_crm/entities/permissions",  f: f, entity: @campaign
   = hook(:entity_form, self, {f: f, entity: @campaign})
 
   .buttonbar

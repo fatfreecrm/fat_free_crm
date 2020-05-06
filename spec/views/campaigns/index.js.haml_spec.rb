@@ -7,8 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/index" do
-  include CampaignsHelper
+module FatFreeCrm
+describe "/fat_free_crm/campaigns/index" do
 
   before do
     login
@@ -17,18 +17,19 @@ describe "/campaigns/index" do
   it "should render [campaign] template with @campaigns collection if there are campaigns" do
     assign(:campaigns, [build_stubbed(:campaign, id: 42)].paginate)
 
-    render template: 'campaigns/index', formats: [:js]
+    render template: 'fat_free_crm/campaigns/index', formats: [:js]
 
-    expect(rendered).to include("$('#campaigns').html('<li class=\\'campaign highlight\\' id=\\'campaign_42\\'")
+    expect(rendered).to include("$('#campaigns').html('<li class=\\'fat_free_crm_campaign highlight\\' id=\\'fat_free_crm_campaign_42\\'")
     expect(rendered).to include("#paginate")
   end
 
   it "should render [empty] template if @campaigns collection if there are no campaigns" do
     assign(:campaigns, [].paginate)
 
-    render template: 'campaigns/index', formats: [:js]
+    render template: 'fat_free_crm/campaigns/index', formats: [:js]
 
     expect(rendered).to include("$('#campaigns').html('<div id=\\'empty\\'>")
     expect(rendered).to include("#paginate")
   end
+end
 end

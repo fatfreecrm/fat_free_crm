@@ -7,10 +7,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/campaigns/show" do
-  include CampaignsHelper
+module FatFreeCrm
+describe "/fat_free_crm/campaigns/show" do
 
   before do
+    view.extend FatFreeCrm::JavascriptHelper
+    view.extend FatFreeCrm::CommentsHelper
     login
     @campaign = build_stubbed(:campaign, id: 42,
                                          leads: [build_stubbed(:lead)],
@@ -27,12 +29,13 @@ describe "/campaigns/show" do
 
   it "should render campaign landing page" do
     render
-    expect(view).to render_template(partial: "comments/_new")
-    expect(view).to render_template(partial: "shared/_timeline")
-    expect(view).to render_template(partial: "shared/_tasks")
-    expect(view).to render_template(partial: "leads/_leads")
-    expect(view).to render_template(partial: "opportunities/_opportunities")
+    expect(view).to render_template(partial: "fat_free_crm/comments/_new")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_timeline")
+    expect(view).to render_template(partial: "fat_free_crm/shared/_tasks")
+    expect(view).to render_template(partial: "fat_free_crm/leads/_leads")
+    expect(view).to render_template(partial: "fat_free_crm/opportunities/_opportunities")
 
     expect(rendered).to have_tag("div[id=edit_campaign]")
   end
+end
 end

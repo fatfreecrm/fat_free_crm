@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/create" do
+module FatFreeCrm
+describe "/fat_free_crm/campaigns/create" do
   before do
     login
   end
@@ -21,7 +22,7 @@ describe "/campaigns/create" do
     end
 
     it "should hide [Create Campaign] form and insert campaign partial" do
-      expect(rendered).to include("$('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+      expect(rendered).to include("$('#campaigns').prepend('<li class=\\'fat_free_crm_campaign highlight\\' id=\\'fat_free_crm_campaign_#{@campaign.id}\\'")
       expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
     end
 
@@ -47,4 +48,5 @@ describe "/campaigns/create" do
       expect(rendered).to include(%/$('#create_campaign').effect("shake"/)
     end
   end
+end
 end

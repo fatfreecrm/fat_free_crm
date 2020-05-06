@@ -10,9 +10,9 @@
 
   .indent
     = link_to(campaign.name, campaign)
-    = render "campaigns/status", campaign: campaign
+    = render "fat_free_crm/campaigns/status", campaign: campaign
 
-    = render "campaigns/metrics", campaign: campaign
+    = render "fat_free_crm/campaigns/metrics", campaign: campaign
     - if campaign.tags.present?
       %dt
         .tags= tags_for_index(campaign)

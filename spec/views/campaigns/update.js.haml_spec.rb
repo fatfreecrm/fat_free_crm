@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/update" do
+module FatFreeCrm
+describe "/fat_free_crm/campaigns/update" do
   before do
     login
     assign(:campaign, @campaign = build_stubbed(:campaign, user: current_user))
@@ -19,7 +20,7 @@ describe "/campaigns/update" do
   describe "no errors:" do
     describe "on landing page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/123"
       end
 
       it "should flip [edit_campaign] form" do
@@ -39,12 +40,12 @@ describe "/campaigns/update" do
 
     describe "on index page -" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns"
       end
 
       it "should replace [Edit Campaign] with campaign partial and highlight it" do
         render
-        expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+        expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'fat_free_crm_campaign highlight\\' id=\\'fat_free_crm_campaign_#{@campaign.id}\\'")
         expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
       end
     end
@@ -54,7 +55,7 @@ describe "/campaigns/update" do
     describe "on landing page -" do
       before do
         @campaign.errors.add(:name)
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/123"
       end
 
       it "should redraw the [edit_campaign] form and shake it" do
@@ -68,7 +69,7 @@ describe "/campaigns/update" do
     describe "on index page -" do
       before do
         @campaign.errors.add(:name)
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns"
       end
 
       it "should redraw the [edit_campaign] form and shake it" do
@@ -79,4 +80,5 @@ describe "/campaigns/update" do
       end
     end
   end
+end
 end
