@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
   class Admin::FieldGroupsController < Admin::ApplicationController
-    helper 'admin/fields'
+    helper 'fat_free_crm/admin/fields'
 
     # GET /admin/field_groups/new
     # GET /admin/field_groups/new.xml                                        AJAX
