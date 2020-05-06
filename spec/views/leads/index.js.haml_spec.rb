@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/index" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/index" do
 
   before do
     login
@@ -30,4 +31,5 @@ describe "/leads/index" do
     expect(rendered).to include("$('#leads').html('<div id=\\'empty\\'>")
     expect(rendered).to include("#paginate")
   end
+end
 end

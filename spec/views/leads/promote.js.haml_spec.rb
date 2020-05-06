@@ -11,6 +11,8 @@ module FatFreeCrm
 describe "/fat_free_crm/leads/promote" do
   before do
     view.extend FatFreeCrm::OpportunitiesHelper
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::UsersHelper
     login
     assign(:users, [current_user])
     assign(:account, @account = build_stubbed(:account))
@@ -52,7 +54,7 @@ describe "/fat_free_crm/leads/promote" do
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
-        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
         expect(rendered).to include("$('#filters').effect('shake'")
       end
 
@@ -75,7 +77,7 @@ describe "/fat_free_crm/leads/promote" do
 
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
-        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+        expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
         expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
       end
 
@@ -90,7 +92,7 @@ describe "/fat_free_crm/leads/promote" do
       it "should insert new opportunity if any" do
         render
 
-        expect(rendered).to include("$('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}")
+        expect(rendered).to include("$('#opportunities').prepend('<li class=\\'fat_free_crm_opportunity highlight\\' id=\\'fat_free_crm_opportunity_#{@opportunity.id}")
       end
     end
   end

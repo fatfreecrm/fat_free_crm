@@ -1,6 +1,6 @@
 = styles_for :lead
 
-= render 'entities/title_bar'
+= render 'fat_free_crm/entities/title_bar'
 
 .remote#create_lead{ hidden }
 
@@ -12,7 +12,7 @@
   - if @leads.any?
     = render @leads
   - else
-    = render "shared/empty"
+    = render "fat_free_crm/shared/empty"
 
-#paginate= render "shared/paginate_with_per_page"
-#export= render "shared/export"
+#paginate= render "fat_free_crm/shared/paginate_with_per_page"
+#export= render "fat_free_crm/shared/export"

@@ -17,8 +17,8 @@
             %td
               .label.req #{t :assigned_to}:
               = user_select(:account, all_users, current_user)
-    = render "leads/opportunity"
-    = render "leads/convert_permissions"
+    = render "fat_free_crm/leads/opportunity"
+    = render "fat_free_crm/leads/convert_permissions"
     .buttonbar
       = f.submit t(:convert_lead), :class => 'btn btn-primary'
       = link_to_cancel convert_lead_path(@lead), :class => 'btn btn-link'

@@ -12,6 +12,8 @@ describe "/fat_free_crm/leads/create" do
 
   before do
     controller.controller_path = 'leads'
+    view.extend FatFreeCrm::UsersHelper
+    view.extend FatFreeCrm::AddressesHelper
     login
     assign(:campaigns, [build_stubbed(:campaign)])
   end
@@ -26,7 +28,7 @@ describe "/fat_free_crm/leads/create" do
     it "should hide [Create Lead] form and insert lead partial" do
       render
 
-      expect(rendered).to include("$('#leads').prepend('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+      expect(rendered).to include("$('#leads').prepend('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
       expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
     end
 

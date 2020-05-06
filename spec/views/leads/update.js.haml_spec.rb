@@ -10,8 +10,8 @@ require 'spec_helper'
 module FatFreeCrm
 describe "/fat_free_crm/leads/update" do
   before do
-    view.extend ::FatFreeCrm::Engine.routes.url_helpers
-    view.extend FatFreeCrm::ApplicationHelper
+    view.extend FatFreeCrm::UsersHelper
+    view.extend FatFreeCrm::AddressesHelper
     login
     assign(:lead, @lead = build_stubbed(:lead, user: current_user, assignee: build_stubbed(:user)))
     assign(:users, [current_user])

@@ -5,14 +5,14 @@
 
   = f.error_messages object_name: t('lead')
 
-  = render "leads/top_section",    f: f
-  = render "fields/edit_custom_field_group", f: f
-  = render "leads/status",         f: f
-  = render "leads/contact",        f: f
-  = render "shared/add_comment",   f: f
-  = render "leads/web",            f: f
-  = render "fields/groups",        f: f
-  = render "entities/permissions", f: f, entity: @lead
+  = render "fat_free_crm/leads/top_section",    f: f
+  = render "fat_free_crm/fields/edit_custom_field_group", f: f
+  = render "fat_free_crm/leads/status",         f: f
+  = render "fat_free_crm/leads/contact",        f: f
+  = render "fat_free_crm/shared/add_comment",   f: f
+  = render "fat_free_crm/leads/web",            f: f
+  = render "fat_free_crm/fields/groups",        f: f
+  = render "fat_free_crm/entities/permissions", f: f, entity: @lead
   = hook(:entity_form, self, {f: f, entity: @lead})
 
   .buttonbar

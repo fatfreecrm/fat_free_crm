@@ -7,9 +7,13 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/convert" do
+module FatFreeCrm
+describe "/fat_free_crm/leads/convert" do
 
   before do
+    view.extend FatFreeCrm::AccountsHelper
+    view.extend FatFreeCrm::UsersHelper
+
     login
 
     assign(:lead, @lead = build_stubbed(:lead, user: current_user))
@@ -23,7 +27,7 @@ describe "/leads/convert" do
     params[:cancel] = "true"
 
     render
-    expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
+    expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
   end
 
   it "cancel from lead landing page: should hide [Convert Lead] form" do
@@ -75,4 +79,5 @@ describe "/leads/convert" do
     expect(rendered).to include("crm.create_or_select_account")
     expect(rendered).to include('focus()')
   end
+end
 end
