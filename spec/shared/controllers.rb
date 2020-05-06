@@ -34,7 +34,8 @@ end
 shared_examples "attach" do
   it "should attach existing asset to the parent asset of different type" do
     put :attach, params: { id: @model.id, assets: @attachment.class.name.tableize, asset_id: @attachment.id }, xhr: true
-    expect(@model.send(@attachment.class.name.tableize)).to include(@attachment)
+    association_method = @attachment.class.name.gsub("FatFreeCrm::", "")
+    expect(@model.send(association_method.tableize)).to include(@attachment)
     expect(assigns[:attachment]).to eq(@attachment)
     expect(assigns[:attached]).to eq([@attachment])
     expect(assigns[:campaign]).to eq(@attachment.reload.campaign) if @model.is_a?(FatFreeCrm::Campaign) && (@attachment.is_a?(FatFreeCrm::Lead) || @attachment.is_a?(FatFreeCrm::Opportunity))
@@ -46,7 +47,8 @@ shared_examples "attach" do
     if @model.is_a?(FatFreeCrm::Campaign) && (@attachment.is_a?(FatFreeCrm::Lead) || @attachment.is_a?(FatFreeCrm::Opportunity))
       @attachment.update_attribute(:campaign_id, @model.id)
     else
-      @model.send(@attachment.class.name.tableize) << @attachment
+      association_method = @attachment.class.name.gsub("FatFreeCrm::", "")
+      @model.send(association_method.tableize) << @attachment
     end
 
     put :attach, params: { id: @model.id, assets: @attachment.class.name.tableize, asset_id: @attachment.id }, xhr: true

@@ -136,7 +136,8 @@ module FatFreeCrm
     # Attach given attachment to the opportunity if it hasn't been attached already.
     #----------------------------------------------------------------------------
     def attach!(attachment)
-      send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      attachment_name = attachment.class.name.gsub("FatFreeCrm::", "").gsub("fat_free_crm/", "")
+      send(attachment_name.tableize) << attachment unless send("#{attachment_name.downcase}_ids").include?(attachment.id)
     end
 
     # Discard given attachment from the opportunity.
@@ -145,7 +146,8 @@ module FatFreeCrm
       if attachment.is_a?(Task)
         attachment.update_attribute(:asset, nil)
       else # Contacts
-        send(attachment.class.name.tableize).delete(attachment)
+        attachment_name = attachment.class.name.gsub("FatFreeCrm::", "").gsub("fat_free_crm/", "")
+        send(attachment_name.tableize).delete(attachment)
       end
     end
 
