@@ -22,7 +22,7 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration[4.2]
     end
 
     add_index :fat_free_crm_taggings, :tag_id
-    add_index :fat_free_crm_taggings, %i[taggable_id taggable_type context], name: 'big_index_2'
+    add_index :fat_free_crm_taggings, %i[taggable_id taggable_type context], name: 'taggings_id_type_context'
   end
 
   def self.down

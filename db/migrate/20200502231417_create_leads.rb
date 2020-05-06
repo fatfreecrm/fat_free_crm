@@ -31,7 +31,7 @@ class CreateLeads < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
-    add_index :fat_free_crm_leads, %i[user_id last_name deleted_at], unique: true, name: 'ffcrm_big_index'
+    add_index :fat_free_crm_leads, %i[user_id last_name deleted_at], unique: true, name: 'leads_user_id_last_name_deleted_at'
     add_index :fat_free_crm_leads, :assigned_to
   end
 

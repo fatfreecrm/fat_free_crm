@@ -7,7 +7,7 @@ class AddMissingUniqueIndices < ActiveRecord::Migration[4.2]
     add_index :fat_free_crm_tags, :name, unique: true
 
     remove_index :fat_free_crm_taggings, :tag_id
-    remove_index :fat_free_crm_taggings, name: 'big_index_2'
+    remove_index :fat_free_crm_taggings, name: 'taggings_id_type_context'
     add_index :fat_free_crm_taggings,
               %i[tag_id taggable_id taggable_type context],
               unique: true, name: 'taggings_idx'
