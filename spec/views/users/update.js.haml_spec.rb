@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/users/update" do
+module FatFreeCrm
+describe "/fat_free_crm/users/update" do
   before do
     login
     assign(:user, @user = current_user)
@@ -42,4 +43,5 @@ describe "/users/update" do
       expect(rendered).to include("$('#user_email').focus();")
     end
   end
+end
 end

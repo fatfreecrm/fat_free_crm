@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/users/upload_avatar" do
+module FatFreeCrm
+describe "/fat_free_crm/users/upload_avatar" do
   before do
     login
   end
@@ -41,4 +42,5 @@ describe "/users/upload_avatar" do
       expect(rendered).to include(%/$('#upload_avatar').effect("shake"/)
     end
   end
+end
 end
