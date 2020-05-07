@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["account_id", "contact_id"], name: "big_index5"
+    t.index ["account_id", "contact_id"], name: "account_contacts_index"
   end
 
   create_table "fat_free_crm_account_opportunities", id: :serial, force: :cascade do |t|
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["account_id", "opportunity_id"], name: "big_index3"
+    t.index ["account_id", "opportunity_id"], name: "account_opportunities_index"
   end
 
   create_table "fat_free_crm_accounts", id: :serial, force: :cascade do |t|
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
-    t.index ["addressable_id", "addressable_type"], name: "big_index_name"
+    t.index ["addressable_id", "addressable_type"], name: "addresses_id_and_type"
   end
 
   create_table "fat_free_crm_avatars", id: :serial, force: :cascade do |t|
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["contact_id", "opportunity_id"], name: "big_index1"
+    t.index ["contact_id", "opportunity_id"], name: "contact_opportunities_index"
   end
 
   create_table "fat_free_crm_contacts", id: :serial, force: :cascade do |t|
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "state", limit: 16, default: "Expanded", null: false
-    t.index ["mediator_id", "mediator_type"], name: "big_index"
+    t.index ["mediator_id", "mediator_type"], name: "emails_mediator_id_n_type"
   end
 
   create_table "fat_free_crm_field_groups", id: :serial, force: :cascade do |t|
@@ -318,7 +318,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.string "skype", limit: 128
     t.text "subscribed_users"
     t.index ["assigned_to"], name: "index_fat_free_crm_leads_on_assigned_to"
-    t.index ["user_id", "last_name", "deleted_at"], name: "ffcrm_big_index", unique: true
+    t.index ["user_id", "last_name", "deleted_at"], name: "leads_user_id_last_name_deleted_at", unique: true
   end
 
   create_table "fat_free_crm_lists", id: :serial, force: :cascade do |t|
@@ -379,14 +379,6 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.datetime "updated_at"
     t.index ["session_id"], name: "index_fat_free_crm_sessions_on_session_id"
     t.index ["updated_at"], name: "index_fat_free_crm_sessions_on_updated_at"
-  end
-
-  create_table "fat_free_crm_settings", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 32, default: "", null: false
-    t.text "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["name"], name: "index_fat_free_crm_settings_on_name"
   end
 
   create_table "fat_free_crm_taggings", id: :serial, force: :cascade do |t|
@@ -482,10 +474,18 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.string "related_type"
     t.integer "transaction_id"
     t.index ["created_at"], name: "index_fat_free_crm_versions_on_created_at"
-    t.index ["item_type", "item_id"], name: "big_index2"
+    t.index ["item_type", "item_id"], name: "versions_item_type_id"
     t.index ["related_id", "related_type"], name: "index_fat_free_crm_versions_on_related_id_and_related_type"
     t.index ["transaction_id"], name: "index_fat_free_crm_versions_on_transaction_id"
     t.index ["whodunnit"], name: "index_fat_free_crm_versions_on_whodunnit"
+  end
+
+  create_table "settings", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 32, default: "", null: false
+    t.text "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["name"], name: "index_settings_on_name"
   end
 
   add_foreign_key "fat_free_crm_active_storage_attachments", "fat_free_crm_active_storage_blobs", column: "blob_id"
