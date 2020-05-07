@@ -42,6 +42,7 @@ feature 'Tasks', '
       expect(page).to have_content('Task I Need To Do')
 
       click_link 'Dashboard'
+#      puts page.body
       expect(page).to have_content('Bill Murray created task Task I Need To Do')
     end
   end
