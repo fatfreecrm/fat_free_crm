@@ -8,4 +8,4 @@
       %div[field_group]{ hidden_if(collapsed) }
         = render partial: 'fields/group_table', locals: {f: f, field_group: field_group}
 - else
-  .section= render partial: 'fields/group_table', locals: {f: f, field_group: field_group}
+  .idc-panel= render partial: 'fields/group_table', locals: {f: f, field_group: field_group}

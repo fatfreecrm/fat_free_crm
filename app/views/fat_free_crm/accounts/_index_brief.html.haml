@@ -5,14 +5,12 @@
   - else
     %span.badge.badge-light{style: "color: gray;"} #{t :other}
 
-  %ul.tools
+  .tools
     = hook(:account_tools_before, self, account: account)
-
     - if can?(:update, account)
-      %li= link_to_edit(account)
-
+      = link_to_edit(account)
     - if can?(:destroy, account)
-      %li= link_to_delete(account)
+      = link_to_delete(account)
 
   = link_to(account.name, account)
   - if amount != 0.0

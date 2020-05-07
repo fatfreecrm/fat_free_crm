@@ -1,24 +1,21 @@
-%li.highlight[opportunity]
+%li.flex-container.brief.highlight[opportunity]
   - if opportunity.stage
-    .strip{class: opportunity.stage}= t(opportunity.stage)
+    .strip.badge.badge-primary{class: opportunity.stage}= t(opportunity.stage)
   - else
-    .strip.white #{t :other}
-
-  %ul.tools
+    .strip.badge.badge-light #{t :other}
+  .tools
     - if can?(:update, opportunity)
-      %li= link_to_edit(opportunity)
-
+      = link_to_edit(opportunity)
     - if shown_on_landing_page?
-      %li= link_to_discard(opportunity)
-
+      = link_to_discard(opportunity)
     - if can?(:destroy, opportunity)
-      %li= link_to_delete(opportunity)
+      = link_to_delete(opportunity)
 
-  .indent
+  %div
     = link_to_if can?(:read, opportunity), opportunity.name, opportunity
     - if (account = opportunity.account) && account.id
       == #{t :from} #{link_to_if can?(:read, account), account.name, account_path(account)}
-    %tt
+    %span
       &ndash;
       - user_name = opportunity.user.try(:full_name)
       - if user_name

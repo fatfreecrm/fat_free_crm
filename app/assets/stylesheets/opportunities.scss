@@ -1,0 +1,5 @@
+li.opportunity {
+  .flex-container > * + * {
+    margin-left: 0.5rem;
+  }
+}

@@ -1,8 +1,8 @@
 %li.highlight[completed]
   - unless completed.category.blank?
-    .strip{class: completed.category}= t(completed.category)
+    .badge.badge-info.strip{class: completed.category}= t(completed.category)
   - else
-    .strip.white #{t :other}
+    .badge.badge-info.strip.white #{t :other}
 
   .tools
     - if shown_on_landing_page?
@@ -11,12 +11,12 @@
       = link_to_task_uncomplete(completed, bucket)  + ' | '
       = link_to_task_delete(completed, bucket)
 
-  .indent
+  .details
     %strike= auto_link h(completed.name)
     - if completed.asset_id?
       == #{t :related} #{link_to(h(completed.asset.name), polymorphic_url(completed.asset))}
     &ndash;
-    %tt
+    %span
       %span.cool
         -# :task_completed_by: "completed {{time_ago}} ago by {{user}}"
         = t(:task_completed_by, time_ago: distance_of_time_in_words(completed.completed_at, Time.now), date: l(completed.completed_at, format: :long), user: ((completed.completor.id != current_user.id) ? link_to(h(completed.completor.full_name), user_path(completed.completor)) : t(:me))).html_safe

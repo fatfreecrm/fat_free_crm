@@ -26,6 +26,7 @@ en-US:
   tab_contacts: Contacts
   tab_opportunities: Resources
   tab_team: Team
+  tab_connect: Connect
   admin_tab_groups: Groups
   admin_tab_users: Users
   admin_tab_fields: Custom Fields
@@ -582,6 +583,11 @@ en-US:
   total_tasks: Total %{value}
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
+
+  # Views -> Document.
+  create_document: Upload Document
+  documents: Documents
+
 
   # Views -> Team.
   #----------------------------------------------------------------------------

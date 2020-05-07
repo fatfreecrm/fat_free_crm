@@ -17,5 +17,4 @@
         = f.submit t(:save_account), onclick: "crm.clear_all_hints()"
       - else
         = f.submit t(:save_account)
-      #{t :or}
       = link_to_cancel edit_account_path(@account)

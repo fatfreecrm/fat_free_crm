@@ -1,0 +1,8 @@
+crm.flick('empty', 'toggle');
+crm.flip_form('create_document');
+
+- unless params[:cancel].true?
+  $('#create_document').html('#{ j render(partial: "new", locals: {object: @object}) }');
+  crm.set_title('create_document', '#{j t(:create_document) }');
+- else
+  crm.set_title('create_document', '#{t(:documents) }');

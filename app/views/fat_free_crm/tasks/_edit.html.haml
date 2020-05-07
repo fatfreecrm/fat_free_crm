@@ -9,8 +9,7 @@
     = render "fat_free_crm/fields/groups", f: f, edit: true
 
     .buttonbar
-      = f.submit t :save_task, :class => 'btn btn-primary'
-      == #{t :or}
+      = f.submit(t :save_task, { })
       = link_to_cancel edit_task_path(@task), :class => 'btn btn-link'
       == #{t :or} #{t :move_to}
       - [ "due_asap", "due_today", "due_tomorrow", "due_this_week", "due_next_week", "due_later" ].each do |due_day|

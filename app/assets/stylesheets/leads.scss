@@ -1,0 +1,17 @@
+ul#leads {
+  padding: 1rem;
+  list-style: none;
+
+  li.lead {
+    display: flex;
+    align-items: center;
+  }
+
+  li.lead > * + * {
+    margin-left: 0.5rem;
+  }
+
+  li + li {
+    margin-top: 1rem;
+  }
+}

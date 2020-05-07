@@ -27,48 +27,10 @@ $color_subtitle: darkslateblue;
   }
 }
 
-// .title_tools {
-//   font-size: 12px;
-//   float: right;
-//   margin: 0;
-//   margin-top: 4px;
-
-//   .sorting_options,
-//   .create_asset {
-//     margin-left: 24px;
-//     display: inline-block;
-//     vertical-align: top;
-//   }
-// }
-
-// .subtitle {
-//   border-bottom: 1px silver solid;
-//   color: #2f2f2f;
-//   font: {
-//     size: 14px;
-//     weight: bold;
-//   }
-//   small {
-//     font-weight: normal;
-//     font-size: 11px;
-//     padding-left: 5px;
-//   }
-//   a:link,
-//   a:visited {
-//     color: $color_subtitle;
-//     text-decoration: none;
-//   }
-//   a:hover {
-//     background: none;
-//   }
-//   &.show_attributes {
-//     margin-top: 6px;
-//   }
-// }
-
-// .subtitle_inline_info {
-//   margin-left: 5px;
-// }
+.title_tools {
+  display: flex;
+  align-items: center;
+}
 
 .subtitle_tools {
   font-size: 11px;
@@ -94,14 +56,6 @@ $color_subtitle: darkslateblue;
 
 .tabbed {
   padding: 12px 12px 12px 16px;
-}
-
-.form {
-  background: white;
-  h4 {
-    font-size: 18px;
-    height: 30px;
-  }
 }
 
 .tools {
@@ -196,107 +150,47 @@ $color_subtitle: darkslateblue;
   }
 }
 
-.strip {
-  background: gainsboro;
-  color: black;
-  float: left;
-  font-size: 11px;
-  margin: 0px 6px 0px 0px;
-  padding: 1px 4px 1px 3px;
-  text-align: right;
-  width: 75px;
-  border-radius: {
-    topleft: 7px;
-    bottomleft: 7px;
-  }
-  border: {
-    top-left-radius: 7px;
-    bottom-left-radius: 7px;
-  }
-}
+// .strip {
+//   background: gainsboro;
+//   color: black;
+//   float: left;
+//   font-size: 11px;
+//   margin: 0px 6px 0px 0px;
+//   padding: 1px 4px 1px 3px;
+//   text-align: right;
+//   width: 75px;
+//   border-radius: {
+//     topleft: 7px;
+//     bottomleft: 7px;
+//   }
+//   border: {
+//     top-left-radius: 7px;
+//     bottom-left-radius: 7px;
+//   }
+// }
 
 // Indentation classes:
 //   - indent: for use with strip (regular indentation).
 //   - indentslim: for use with avatar and no strip (Contacts).
 //   - indentwide: for use with strip + checkbox (Tasks).
 //   - indentfull: for use with strip + avatar (Admin/Users).
-.indent {
-  margin-left: 88px;
-}
 
 .indentslim {
   margin-left: 38px;
-}
-
-.indentwide {
-  margin-left: 106px;
 }
 
 .indentfull {
   margin-left: 126px;
 }
 
-.bucket {
-  margin: 0px 0px 10px 0px;
+ul.bucket {
+  padding: 0;
+  list-style: none;
 }
 
 .prefix {
   width: 30px;
   font-size: 10px;
-}
-
-.comment {
-  background: #f2f2f2;
-  border-bottom: 1px gainsboro solid;
-  margin: 2px 0px 0px 0px;
-  overflow: hidden;
-  padding: 4px;
-  list-style: none;
-  //  border-radius:
-  //    bottomleft: 8px
-  //    bottomright: 8px
-  //  border-radius:
-  //    bottom-left-radius: 8px
-  //    bottom-right-radius: 8px
-  &#comment_new {
-    margin: 3px 0px 0px 0px;
-  }
-
-  .gravatar {
-    float: left;
-    margin: 3px 10px 3px 3px;
-  }
-  .body {
-    display: inline;
-    font-size: 11px;
-  }
-  tt {
-    font-size: 10px;
-    color: #666666;
-  }
-  dt {
-    padding: 0px;
-    margin: -10px 0px 0px 36px;
-    p {
-      margin: 10px 0px 0px 0px;
-    }
-  }
-  .comment_subscriptions {
-    margin-top: 7px;
-    margin-left: 4px;
-    a {
-      font-size: 11px;
-    }
-  }
-}
-
-.comment textarea,
-textarea#comment_body {
-  font-size: 11px;
-  height: 110px;
-  margin: 3px 0px 0px 0px;
-  padding: 3px;
-  width: 500px;
 }
 
 // Avoid collision with .email CSS class which is used to display Task category strip.
@@ -359,60 +253,31 @@ textarea#comment_body {
   padding: 6px;
 }
 
-// Single-row lists.
-//------------------------------------------------------------------------------
-.log {
-  padding: 8px 0px 0px 0px;
-  h3 {
-    border-bottom: 1px #2f2f2f dotted;
-    color: #2f2f2f;
-    &.overdue {
-      color: crimson;
-    }
-    &.due_asap {
-      color: darkred;
-    }
-    &.due_today {
-      color: darkgreen;
-    }
-  }
-  li {
-    color: #3f3f3f;
-    font-size: 12px;
-    list-style: none;
-    padding: 3px 0px 3px 0px;
-    tt {
-      color: dimgray;
-      font-size: 11px;
-    }
-  }
-}
-
 // Two-row lists.
 //------------------------------------------------------------------------------
-.list {
-  padding: 8px 0px 7px 0px;
-  li {
-    border-bottom: 1px silver dotted;
-    color: #3f3f3f;
-    font-size: 12px;
-    list-style: none;
-    padding: 6px 0px 6px 0px;
-    .gravatar {
-      float: left;
-      padding: 0px 8px 0px 0px;
-    }
-    tt {
-      color: dimgray;
-      font-size: 11px;
-    }
-    dt {
-      color: #3f3f3f;
-      font-size: 11px;
-      padding: 2px 0px 0px 0px;
-    }
-  }
-}
+// .list {
+//   padding: 8px 0px 7px 0px;
+//   li {
+//     border-bottom: 1px silver dotted;
+//     color: #3f3f3f;
+//     font-size: 12px;
+//     list-style: none;
+//     padding: 6px 0px 6px 0px;
+//     .gravatar {
+//       float: left;
+//       padding: 0px 8px 0px 0px;
+//     }
+//     tt {
+//       color: dimgray;
+//       font-size: 11px;
+//     }
+//     dt {
+//       color: #3f3f3f;
+//       font-size: 11px;
+//       padding: 2px 0px 0px 0px;
+//     }
+//   }
+// }
 
 // Dropdown menu.
 //------------------------------------------------------------------------------
@@ -575,24 +440,10 @@ ul.tools {
   }
 }
 
-.highlight {
-  background-color: white;
-  .tools {
-    visibility: hidden;
-  }
-}
-
 .mail.highlight,
 .comment.highlight {
   background-color: #f2f2f2;
   word-break: break-all;
-}
-
-.highlight:hover {
-  background-color: seashell;
-  .tools {
-    visibility: visible;
-  }
 }
 
 table.asset_attributes {
@@ -625,15 +476,6 @@ table.asset_attributes {
   float: right;
 }
 
-.comment .spinner {
-  margin: 5px 4px 0px 4px;
-  float: left;
-}
-
-.comment .buttons {
-  padding-left: 40px;
-}
-
 // Jumpbox
 
 .ui-menu-item > a:not(.ui-state-focus) {
@@ -655,16 +497,6 @@ table.asset_attributes {
   }
 }
 
-.space-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h1 {
-    margin: 0;
-  }
-}
-
 .outline-red {
   outline: 2px solid red;
 }
@@ -681,4 +513,36 @@ table.asset_attributes {
 
 .page-heading {
   margin-bottom: var(--s2);
+}
+
+#activities,
+#accounts,
+#opportunities {
+  padding: 0;
+  list-style: none;
+
+  li + li {
+    margin-top: 0.25rem;
+  }
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type="file"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
 }

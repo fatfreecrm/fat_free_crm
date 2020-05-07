@@ -1,0 +1,18 @@
+.idc-panel
+  .form-group.one-half
+    %table.table
+      %thead
+        %tr
+          %th{scope: "col"} #
+          %th{scope: "col"} Uploaded By
+          %th{scope: "col"} Uploaded On
+          %th{scope: "col"} Actions
+      %tbody
+        - @documents.each_with_index do |document, i|
+          %tr
+            %th{scope: "row"}= i + 1
+            %td= document.uploaded_username
+            %td= document.created_at.strftime("%m/%d/%Y")
+            %td
+              %small= link_to 'Download', rails_blob_path(document.file, disposition: "attachment")
+              %small= link_to 'Delete', document_path(document.id), method: :delete, data: { confirm: 'Are you sure?' }

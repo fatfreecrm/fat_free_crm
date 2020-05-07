@@ -1,13 +1,13 @@
 %li.highlight[user]
 
   - if user.awaits_approval?
-    .strip.signed_up #{t :user_signed_up}
+    .strip.badge-info.signed_up #{t :user_signed_up}
   - elsif user.suspended?
-    .strip.suspended #{t :user_suspended}
+    .strip.badge-info.suspended #{t :user_suspended}
   - elsif user.admin?
-    .strip.admin #{t :user_admin}
+    .strip.badge-info.admin #{t :user_admin}
   - else
-    .strip.active #{t :user_active}
+    .strip.badge-info.active #{t :user_active}
 
   = avatar_for(user, width: '30', height: '30')
 
