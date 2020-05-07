@@ -7,14 +7,12 @@
         = label_tag(key, t(key), class: 'form-check-label')
       .status-total
         = @account_category_total[key]
-
   .space-between
     .form-check
       = account_category_checkbox("other", @account_category_total[:other])
       = label_tag(:other, t(:other), class: 'form-check-label')
     .status-total
       = @account_category_total[:other]
-
   .space-between
     %b #{t :total_accounts}
     .status-total

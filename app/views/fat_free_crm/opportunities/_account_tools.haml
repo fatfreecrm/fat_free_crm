@@ -1,0 +1,6 @@
+.tools
+  = hook(:account_tools_before, self, account: account)
+  - if can?(:update, account)
+    = link_to_edit(account)
+  - if can?(:destroy, account)
+    = link_to_delete(account)
