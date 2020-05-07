@@ -97,7 +97,7 @@ module TasksHelper
   def replace_content(task, bucket = nil)
     partial = task.assigned_to && task.assigned_to != current_user.id ? "assigned" : "pending"
     html = render(partial: "fat_free_crm/tasks/#{partial}", collection: [task], locals: { bucket: bucket })
-    text = "$('##{dom_id(task)}').html('#{j html}');\n".html_safe
+    text = "$('##{"fat_free_crm_" + dom_id(task)}').html('#{j html}');\n".html_safe
     text
   end
 
