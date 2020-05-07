@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+module FatFreeCrm
 describe "/fat_free_crm/tasks/create" do
 
   before do
@@ -26,7 +27,7 @@ describe "/fat_free_crm/tasks/create" do
       end
 
       it "should hide [Create Task] form and insert task partial" do
-        expect(rendered).to include(%/$('#due_asap').before('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'>/)
+        expect(rendered).to include(%/$('#due_asap').before('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'>/)
         expect(rendered).to include(%/$('#task_#{@task.id}').effect("highlight"/)
       end
 
@@ -101,8 +102,8 @@ describe "/fat_free_crm/tasks/create" do
       end
 
       it "should insert #{status} partial and highlight it" do
-        expect(rendered).to include("$('#tasks').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'>")
-        expect(rendered).to include(%/$('#task_#{@task.id}').effect("highlight"/)
+        expect(rendered).to include("$('#tasks').prepend('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'>")
+        expect(rendered).to include(%/$('#fat_free_crm_task_#{@task.id}').effect("highlight"/)
       end
 
       it "should update recently viewed items" do
@@ -119,4 +120,5 @@ describe "/fat_free_crm/tasks/create" do
     expect(rendered).to include(%/$('#create_task').effect("shake"/)
     expect(rendered).to include(%/$('#new_task input[type=submit]').enable()/)
   end
+end
 end

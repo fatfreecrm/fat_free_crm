@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/destroy" do
+module FatFreeCrm
+describe "/fat_free_crm/tasks/destroy" do
 
   before do
     login
@@ -24,7 +25,7 @@ describe "/tasks/destroy" do
       end
 
       it "should blind up out destroyed task partial" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
 
         render
         expect(rendered).to include("slideUp")
@@ -32,7 +33,7 @@ describe "/tasks/destroy" do
       end
 
       it "should update tasks sidebar" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
 
         render
         expect(rendered).to include("$('#sidebar').html")
@@ -47,11 +48,12 @@ describe "/tasks/destroy" do
     it "should blind up out destroyed task partial" do
       @task = build_stubbed(:task)
       assign(:task, @task)
-      controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads/123"
 
       render
       expect(rendered).to include("slideUp")
       expect(rendered).not_to include("fadeOut") # bucket is not empty
     end
   end
+end
 end

@@ -34,7 +34,7 @@ describe "/fat_free_crm/tasks/update" do
     it "from Tasks tab: should show updated task in a new bucket" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
       render
-      expect(rendered).to include("$('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#due_tomorrow').prepend('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'")
       expect(rendered).to include("$('#task_#{@task.id}').effect('highlight'")
     end
 
@@ -42,7 +42,7 @@ describe "/fat_free_crm/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
       render
 
-      expect(rendered).to include("$('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#due_tomorrow').prepend('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'")
       expect(rendered).to have_text("Assigned")
       expect(rendered).to have_text("Recent Items")
       expect(rendered).to include("$('#filters').effect('shake'")
@@ -50,7 +50,7 @@ describe "/fat_free_crm/tasks/update" do
 
     it "from asset page: should update task partial in place" do
       render
-      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'")
     end
 
     it "from asset page: should update recently viewed items" do
@@ -99,7 +99,7 @@ describe "/fat_free_crm/tasks/update" do
       controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks?view=assigned"
 
       render
-      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'")
     end
 
     it "from Tasks tab: should update tasks sidebar" do
@@ -120,7 +120,7 @@ describe "/fat_free_crm/tasks/update" do
       assign(:task, @task = build_stubbed(:task, assignee: build_stubbed(:user)))
       render
 
-      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'")
     end
 
     it "from asset page: should update recently viewed items" do

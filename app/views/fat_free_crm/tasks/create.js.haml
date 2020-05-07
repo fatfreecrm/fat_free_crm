@@ -9,13 +9,13 @@
     - if @view == "pending" && @task.assigned_to && @task.assigned_to != current_user.id
       $('#flash').html('#{j t(:task_created)} #{j t(:task_assigned_to, @task.assignee.full_name)} (#{j link_to(t(:view_assigned_tasks), url_for(view: "assigned"))}).');
       crm.flash('notice', true);
-      $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
+      $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');
 
       - # Show flash if assigned to current user from the [Assigned Tasks] page.
     - elsif @view == "assigned" && @task.assigned_to.blank?
       $('#flash').html('#{j t(:task_created)} (#{j link_to(t(:view_pending_tasks), tasks_url)}).');
       crm.flash('notice', true);
-      $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
+      $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');
 
     - else # Show newly created task by inserting its div into appropriate bucket; then update tasks sidebar.
       - bucket = @task.computed_bucket
@@ -31,7 +31,7 @@
     - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
     $('#tasks').prepend('#{ j render(partial: "fat_free_crm/tasks/#{partial}", collection: [@task], locals: { bucket: nil }) }');
     $('##{dom_id(@task)}').effect("highlight", { duration:1500 });
-    $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
+    $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');
 
 - else # Couldn't create the task -- validation failed.
   $('#create_task').effect("shake", { duration:250, distance: 6 });
