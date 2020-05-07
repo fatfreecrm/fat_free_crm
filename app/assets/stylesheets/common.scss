@@ -27,48 +27,10 @@ $color_subtitle: darkslateblue;
   }
 }
 
-// .title_tools {
-//   font-size: 12px;
-//   float: right;
-//   margin: 0;
-//   margin-top: 4px;
-
-//   .sorting_options,
-//   .create_asset {
-//     margin-left: 24px;
-//     display: inline-block;
-//     vertical-align: top;
-//   }
-// }
-
-// .subtitle {
-//   border-bottom: 1px silver solid;
-//   color: #2f2f2f;
-//   font: {
-//     size: 14px;
-//     weight: bold;
-//   }
-//   small {
-//     font-weight: normal;
-//     font-size: 11px;
-//     padding-left: 5px;
-//   }
-//   a:link,
-//   a:visited {
-//     color: $color_subtitle;
-//     text-decoration: none;
-//   }
-//   a:hover {
-//     background: none;
-//   }
-//   &.show_attributes {
-//     margin-top: 6px;
-//   }
-// }
-
-// .subtitle_inline_info {
-//   margin-left: 5px;
-// }
+.title_tools {
+  display: flex;
+  align-items: center;
+}
 
 .subtitle_tools {
   font-size: 11px;
@@ -514,8 +476,6 @@ table.asset_attributes {
   float: right;
 }
 
-
-
 // Jumpbox
 
 .ui-menu-item > a:not(.ui-state-focus) {
@@ -564,4 +524,25 @@ table.asset_attributes {
   li + li {
     margin-top: 0.25rem;
   }
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type="file"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
 }

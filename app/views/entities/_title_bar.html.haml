@@ -8,11 +8,11 @@
 
   .title_tools
     .create_asset
-      = link_to_inline("create_#{model_name}".to_sym, send("new_#{model_name}_path"), { text: t("create_#{model_name}".to_sym), class: 'btn   btn-primary create-asset-button' })
-      = form_tag "/fat_free_crms/upload_#{model_name}", multipart: true, method: :post do
-        %span.btn.btn-primary.btn-file
-          = "Upload"
-          = file_field_tag "file[]", type: :file,  class: 'upload-file', :multiple => true, value: "Upload"
+      = link_to_inline("create_#{model_name}".to_sym, send("new_#{model_name}_path"), { text: t("create_#{model_name}".to_sym), class: 'btn btn-primary create-asset-button' })
+    = form_tag "/fat_free_crms/upload_#{model_name}", multipart: true, method: :post do
+      %button.btn.btn-link.btn-file
+        = "Upload"
+        = file_field_tag "file[]", type: :file,  class: 'upload-file', :multiple => true, value: "Upload"
 
 
 :javascript
