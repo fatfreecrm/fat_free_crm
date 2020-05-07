@@ -6,17 +6,17 @@
 
   = styles_for :task, :contact
 
-  = render 'opportunities/title_bar', opportunity: @opportunity
+  = render 'fat_free_crm/opportunities/title_bar', opportunity: @opportunity
 
-  = render "comments/new", commentable: @opportunity
-  = render partial: "shared/timeline", collection: @timeline
+  = render "fat_free_crm/comments/new", commentable: @opportunity
+  = render partial: "fat_free_crm/shared/timeline", collection: @timeline
 
   = hook(:show_opportunity_bottom, self, {entity: @opportunity}) do
 
-    = render "tasks/tasks", object: @opportunity
+    = render "fat_free_crm/tasks/tasks", object: @opportunity
 
-    = render "contacts/contacts", object: @opportunity
+    = render "fat_free_crm/contacts/contacts", object: @opportunity
 
-    = render "versions/versions", object: @opportunity
+    = render "fat_free_crm/versions/versions", object: @opportunity
 
     = load_select_popups_for(@opportunity, :tasks, :contacts)

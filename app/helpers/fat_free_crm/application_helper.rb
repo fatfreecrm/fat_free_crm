@@ -76,7 +76,7 @@ module ApplicationHelper
 
   def generate_js_for_popups(related, *assets)
     assets.map do |asset|
-      render(partial: "shared/select_popup", locals: { related: related, popup: asset })
+      render(partial: "fat_free_crm/shared/select_popup", locals: { related: related, popup: asset })
     end.join
   end
 
