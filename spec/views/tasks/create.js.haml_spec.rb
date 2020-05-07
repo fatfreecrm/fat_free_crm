@@ -28,7 +28,7 @@ describe "/fat_free_crm/tasks/create" do
 
       it "should hide [Create Task] form and insert task partial" do
         expect(rendered).to include(%/$('#due_asap').before('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'>/)
-        expect(rendered).to include(%/$('#task_#{@task.id}').effect("highlight"/)
+        expect(rendered).to include(%/$('#fat_free_crm_task_#{@task.id}').effect("highlight"/)
       end
 
       it "should update tasks title" do

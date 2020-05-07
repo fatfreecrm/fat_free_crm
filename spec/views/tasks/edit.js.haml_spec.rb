@@ -28,7 +28,7 @@ describe "/fat_free_crm/tasks/edit" do
       assign(:task, @task)
 
       render
-      expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+      expect(rendered).to include("$('#fat_free_crm_task_#{@task.id}').html('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'")
       if view == "pending"
         expect(rendered).to include('type=\\"checkbox\\"')
       else
@@ -51,7 +51,7 @@ describe "/fat_free_crm/tasks/edit" do
       assign(:task, stub_task(view))
 
       render
-      expect(rendered).to include("$('#task_#{@previous.id}').replaceWith")
+      expect(rendered).to include("$('#fat_free_crm_task_#{@previous.id}').replaceWith")
     end
 
     it "edit: should remove previous [Edit Task] form if previous task is not available" do
@@ -61,7 +61,7 @@ describe "/fat_free_crm/tasks/edit" do
       assign(:task, stub_task(view))
 
       render
-      expect(rendered).to include("crm.flick('task_41', 'remove');")
+      expect(rendered).to include("crm.flick('fat_free_crm_task_41', 'remove');")
     end
 
     it "edit: should turn off highlight and replace current task with [Edit Task] form" do
@@ -71,7 +71,7 @@ describe "/fat_free_crm/tasks/edit" do
 
       render
       expect(rendered).to include("crm.highlight_off('task_#{@task.id}');")
-      expect(rendered).to include("$('#task_#{@task.id}').html")
+      expect(rendered).to include("$('#fat_free_crm_task_#{@task.id}').html")
       expect(rendered).to have_text("On Specific Date")
       expect(rendered).to include("$('#task_name').focus();")
     end

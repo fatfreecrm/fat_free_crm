@@ -3,7 +3,7 @@
 - if params[:cancel].true?     # <----------------- Hide [Edit Task]
 
   - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
-  $('##{id}').html('#{ j render(partial: partial, collection: [ @task ], locals: { bucket: @task.bucket }) }');
+  $('#fat_free_crm_#{id}').html('#{ j render(partial: partial, collection: [ @task ], locals: { bucket: @task.bucket }) }');
 
 - else # <----------------------------------------  Show [Edit Task] form.
 
@@ -14,13 +14,13 @@
   - if @previous
     - if @previous.is_a?(FatFreeCrm::Task)
       - partial = (@previous.assigned_to && @previous.assigned_to != current_user.id) ? "assigned" : "pending"
-      $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: partial, collection: [ @previous ], locals: { bucket: nil }) }');
+      $('#fat_free_crm_#{dom_id(@previous)}').replaceWith('#{ j render(partial: partial, collection: [ @previous ], locals: { bucket: nil }) }');
     - else
-      crm.flick('task_#{@previous}', 'remove');
+      crm.flick('fat_free_crm_task_#{@previous}', 'remove');
 
   -# Disable onMouseOver for the list item.
   crm.highlight_off('#{id}');
 
   -# Show [Edit Task] form.
-  $('##{id}').html('#{ j render(partial: "edit") }');
+  $('#fat_free_crm_#{id}').html('#{ j render(partial: "edit") }');
   $('#task_name').focus();

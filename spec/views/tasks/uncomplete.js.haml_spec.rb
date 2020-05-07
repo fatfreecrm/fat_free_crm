@@ -7,7 +7,8 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/uncomplete" do
+module FatFreeCrm
+describe "/fat_free_crm/tasks/uncomplete" do
 
   before do
     login
@@ -24,16 +25,16 @@ describe "/tasks/uncomplete" do
     end
 
     it "should slide up uncompleted task partial" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
 
       render
-      expect(rendered).to include("$('#task_#{@task.id}').slideUp")
+      expect(rendered).to include("$('#fat_free_crm_task_#{@task.id}').slideUp")
       expect(rendered).to include("$('#list_due_asap').fadeOut")
     end
 
     it "should update tasks sidebar" do
       assign(:task, build_stubbed(:task))
-      controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
 
       render
       expect(rendered).to include("$('#sidebar').html")
@@ -42,4 +43,5 @@ describe "/tasks/uncomplete" do
       expect(rendered).to include("$('#filters').effect('shake'")
     end
   end
+end
 end
