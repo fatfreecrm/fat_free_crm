@@ -28,21 +28,23 @@ require 'simple_form'
 require 'country_select'
 
 require 'fat_free_crm/callback'
+require 'fat_free_crm/comment_extensions'
+require 'fat_free_crm/core_ext'
 require 'fat_free_crm/custom_fields'
-require 'fat_free_crm/gem_ext'
+require 'fat_free_crm/errors'
 require 'fat_free_crm/exceptions'
+require 'fat_free_crm/exportable'
 require 'fat_free_crm/fields'
+require 'fat_free_crm/gem_ext'
+require 'fat_free_crm/gravatar_image_tag'
 require 'fat_free_crm/i18n'
 require 'fat_free_crm/permissions'
-require 'fat_free_crm/comment_extensions'
-require 'fat_free_crm/errors'
-require 'fat_free_crm/exportable'
-require 'fat_free_crm/gravatar_image_tag'
 require 'fat_free_crm/renderers'
-require 'fat_free_crm/tabs'
 require 'fat_free_crm/sortable'
-require 'fat_free_crm/core_ext'
+require 'fat_free_crm/tabs'
+require 'fat_free_crm/version'
 require 'fat_free_crm/view_factory'
+# gem_dependencies
 
 module FatFreeCrm
   class Engine < ::Rails::Engine
@@ -82,7 +84,7 @@ module FatFreeCrm
           end
         end
     
-#        I18n.backend.store_translations(Setting.locale.to_sym, translations)
+        ::I18n.backend.store_translations(Setting.locale.to_sym, translations)
       end
     
     end

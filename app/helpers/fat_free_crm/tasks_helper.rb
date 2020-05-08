@@ -48,7 +48,7 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def link_to_task_complete(pending, bucket)
-    onclick = %{$("##{dom_id(pending, :name)}").css({textDecoration: "line-through"});}
+    onclick = %{$("#fat_free_crm_#{dom_id(pending, :name)}").css({textDecoration: "line-through"});}
     onclick + %{$.ajax("#{complete_task_path(pending)}", {type: "PUT", data: {bucket: "#{bucket}"}});}
   end
 
@@ -88,7 +88,7 @@ module TasksHelper
 
   #----------------------------------------------------------------------------
   def hide_task_and_possibly_bucket(task, bucket)
-    text = "$('##{h dom_id(task)}').remove();\n"
+    text = "$('#fat_free_crm_#{h dom_id(task)}').remove();\n"
     text += "$('#list_#{h bucket.to_s}').fadeOut({ duration:500 });\n" if Task.bucket_empty?(bucket, current_user, @view)
     text.html_safe
   end
@@ -97,7 +97,7 @@ module TasksHelper
   def replace_content(task, bucket = nil)
     partial = task.assigned_to && task.assigned_to != current_user.id ? "assigned" : "pending"
     html = render(partial: "fat_free_crm/tasks/#{partial}", collection: [task], locals: { bucket: bucket })
-    text = "$('##{dom_id(task)}').html('#{j html}');\n".html_safe
+    text = "$('#fat_free_crm_#{dom_id(task)}').html('#{j html}');\n".html_safe
     text
   end
 
@@ -106,7 +106,7 @@ module TasksHelper
     html = render(partial: view, collection: [task], locals: { bucket: bucket })
     text = "$('#list_#{bucket}').show();\n"
     text += "$('##{h bucket.to_s}').prepend('#{j html}');\n"
-    text += "$('##{dom_id(task)}').effect('highlight', { duration:1500 });\n"
+    text += "$('#fat_free_crm_#{dom_id(task)}').effect('highlight', { duration:1500 });\n"
     text.html_safe
   end
 

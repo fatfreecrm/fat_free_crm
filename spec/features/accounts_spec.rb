@@ -13,6 +13,7 @@ feature 'Accounts', '
   I want to manage accounts
 ' do
   before(:each) do
+    self.class.include FatFreeCrm::Engine.routes.url_helpers
     do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
   end
 

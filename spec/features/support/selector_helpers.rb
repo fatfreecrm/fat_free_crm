@@ -12,14 +12,14 @@ module SelectorHelpers
   end
 
   def click_edit_for_task_id(task_id)
-    within("#task_#{task_id}") do
-      page.execute_script "$('#task_#{task_id} a')[0].click()"
+    within("#fat_free_crm_task_#{task_id}") do
+      page.execute_script "$('#fat_free_crm_task_#{task_id} a')[0].click()"
     end
   end
 
   def click_delete_for_task_id(task_id)
-    within("#task_#{task_id}") do
-      page.execute_script "$('#task_#{task_id} a')[1].click()"
+    within("#fat_free_crm_task_#{task_id}") do
+      page.execute_script "$('#fat_free_crm_task_#{task_id} a')[1].click()"
     end
   end
 end
