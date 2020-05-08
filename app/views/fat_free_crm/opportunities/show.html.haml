@@ -8,7 +8,7 @@
 
   = render 'opportunities/title_bar', opportunity: @opportunity
 
-  = render "comments/new", commentable: @opportunity
+  = render "fat_free_crm/comments/new", commentable: @opportunity
   = render partial: "shared/timeline", collection: @timeline
 
   = hook(:show_opportunity_bottom, self, {entity: @opportunity}) do

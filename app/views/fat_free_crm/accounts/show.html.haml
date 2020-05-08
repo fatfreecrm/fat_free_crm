@@ -6,7 +6,7 @@
   = styles_for :task, :contact, :opportunity
   = render 'accounts/title_bar', account: @account
   %div#edit_account{ hidden }
-  -# = render "comments/new", commentable: @account
+  -# = render "fat_free_crm/comments/new", commentable: @account
   = render partial: "shared/timeline", collection: @timeline
   = hook(:show_account_bottom, self, {entity: @account}) do
     = render partial: "tasks/tasks", locals: {object: @account}
