@@ -8,6 +8,6 @@
 require 'spec_helper'
 
 module FatFreeCrm
-describe ListsController do
-end
+  describe ListsController do
+  end
 end

@@ -8,34 +8,34 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 module FatFreeCrm
-describe EmailsController, "handling GET /emails" do
-  routes { FatFreeCrm::Engine.routes }
+  describe EmailsController, "handling GET /emails" do
+    routes { FatFreeCrm::Engine.routes }
 
-  MEDIATOR = %i[account campaign contact lead opportunity].freeze
+    MEDIATOR = %i[account campaign contact lead opportunity].freeze
 
-  before(:each) do
-    login
-  end
+    before(:each) do
+      login
+    end
 
-  # DELETE /emails/1
-  # DELETE /emails/1.xml                                                 AJAX
-  #----------------------------------------------------------------------------
-  describe "responding to DELETE destroy" do
-    describe "AJAX request" do
-      describe "with valid params" do
-        MEDIATOR.each do |asset|
-          it "should destroy the requested email and render [destroy] template" do
-            @asset = create(asset)
-            @email = create(:email, mediator: @asset, user: current_user)
-            allow(Email).to receive(:new).and_return(@email)
+    # DELETE /emails/1
+    # DELETE /emails/1.xml                                                 AJAX
+    #----------------------------------------------------------------------------
+    describe "responding to DELETE destroy" do
+      describe "AJAX request" do
+        describe "with valid params" do
+          MEDIATOR.each do |asset|
+            it "should destroy the requested email and render [destroy] template" do
+              @asset = create(asset)
+              @email = create(:email, mediator: @asset, user: current_user)
+              allow(Email).to receive(:new).and_return(@email)
 
-            delete :destroy, params: { id: @email.id }, xhr: true
-            expect { Email.find(@email.id) }.to raise_error(ActiveRecord::RecordNotFound)
-            expect(response).to render_template("emails/destroy")
+              delete :destroy, params: { id: @email.id }, xhr: true
+              expect { Email.find(@email.id) }.to raise_error(ActiveRecord::RecordNotFound)
+              expect(response).to render_template("emails/destroy")
+            end
           end
         end
       end
     end
   end
-end
 end
