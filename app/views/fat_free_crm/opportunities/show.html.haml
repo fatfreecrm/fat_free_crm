@@ -13,7 +13,7 @@
 
   = hook(:show_opportunity_bottom, self, {entity: @opportunity}) do
 
-    = render "tasks/tasks", object: @opportunity
+    = render "fat_free_crm/tasks/tasks", object: @opportunity
 
     = render "fat_free_crm/contacts/contacts", object: @opportunity
 
