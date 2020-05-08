@@ -20,7 +20,7 @@ module FatFreeCrm
 
       render template: 'fat_free_crm/contacts/index', formats: [:js]
 
-      expect(rendered).to include("$('#contacts').html('<li class=\\'fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_42\\'")
+      expect(rendered).to include("$('#contacts').html('<li class=\\'brief fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_42\\'")
       expect(rendered).to include("#paginate")
     end
 

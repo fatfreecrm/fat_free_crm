@@ -49,8 +49,8 @@ module FatFreeCrm
           controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
 
           render
-          expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
-          expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
+          expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').replaceWith('<li class=\\'brief fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
+          expect(rendered).to include(%/$('#fat_free_crm_contact_#{@contact.id}').effect("highlight"/)
         end
 
         it "should update sidebar" do
@@ -69,8 +69,8 @@ module FatFreeCrm
           controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
 
           render
-          expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
-          expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
+          expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').replaceWith('<li class=\\'brief fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
+          expect(rendered).to include(%/$('#fat_free_crm_contact_#{@contact.id}').effect("highlight"/)
         end
 
         it "should update recently viewed items" do
@@ -106,9 +106,9 @@ module FatFreeCrm
 
         it "should redraw the [edit_contact] form and shake it" do
           render
-          expect(rendered).to include("$('#contact_#{@contact.id}').html")
+          expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').html")
           expect(rendered).to include('crm.create_or_select_account(false)')
-          expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("shake"/)
+          expect(rendered).to include(%/$('#fat_free_crm_contact_#{@contact.id}').effect("shake"/)
           expect(rendered).to include('focus()')
         end
       end
@@ -125,8 +125,8 @@ module FatFreeCrm
 
         it "should redraw the [edit_contact] form and shake it" do
           render
-          expect(rendered).to include("$('#contact_#{@contact.id}').html")
-          expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("shake"/)
+          expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').html")
+          expect(rendered).to include(%/$('#fat_free_crm_contact_#{@contact.id}').effect("shake"/)
           expect(rendered).to include('focus()')
         end
       end

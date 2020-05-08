@@ -1,2 +1,3 @@
-- type = timeline.class.name.downcase
-= render "#{type.pluralize}/#{type}", type.to_sym => timeline
+- type = timeline.class.name.underscore.gsub("::", "/").downcase
+- partial_name = type.split("/").last
+= render "#{type.pluralize}/#{partial_name}", partial_name.to_sym => timeline

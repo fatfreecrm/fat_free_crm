@@ -25,7 +25,7 @@ module FatFreeCrm
       it "should hide [Create Contact] form and insert contact partial" do
         render
 
-        expect(rendered).to include("$('#contacts').prepend('<li class=\\'fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
+        expect(rendered).to include("$('#contacts').prepend('<li class=\\'brief fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
         expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
