@@ -8,4 +8,5 @@
 require "fat_free_crm/gem_ext/active_support/buffered_logger"
 require "fat_free_crm/gem_ext/action_controller/base"
 require "fat_free_crm/gem_ext/simple_form/action_view_extensions/form_helper"
+require "fat_free_crm/gem_ext/ransack_ui/controller_helpers_deprecation"
 require "fat_free_crm/gem_ext/rake/task" if defined?(Rake)
