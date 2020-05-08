@@ -9,7 +9,7 @@ require 'features/acceptance_helper'
 
 feature 'Devise Sign-up' do
   scenario 'with valid credentials' do
-    visit "/users/sign_up"
+    visit "/fat_free_crm/users/sign_up"
 
     fill_in "user[email]", with: "john@example.com"
     fill_in "user[username]", with: "john"
@@ -22,10 +22,10 @@ feature 'Devise Sign-up' do
   end
 
   scenario 'without credentials' do
-    visit "/users/sign_up"
-    click_button("Sign Up")
+    visit "/fat_free_crm/users/sign_up"
+    click_button("Sign up")
 
-    expect(page).to have_content("6 errors prohibited this User from being saved")
+    expect(page).to have_content("6 errors prohibited this user from being saved")
     expect(page).to have_content("Please specify email address")
     expect(page).to have_content("Email is too short (minimum is 3 characters)")
     expect(page).to have_content("Email is invalid")
