@@ -345,7 +345,7 @@ module FatFreeCrm
           expect(@lead.reload.access).to eq("Shared")
           expect(@lead.permissions.map(&:user_id).sort).to eq([7, 8])
           expect(@lead.permissions.map(&:asset_id)).to eq([@lead.id, @lead.id])
-          expect(@lead.permissions.map(&:asset_type)).to eq(%w[Lead Lead])
+          expect(@lead.permissions.map(&:asset_type)).to eq(%w[FatFreeCrm::Lead FatFreeCrm::Lead])
         end
 
         it "should get the data to update leads sidebar if called from leads index" do
@@ -751,7 +751,7 @@ module FatFreeCrm
         expect(@account.access).to eq("Shared")
         expect(@account.permissions.map(&:user_id).sort).to eq([7, 8])
         expect(@account.permissions.map(&:asset_id)).to eq([@account.id, @account.id])
-        expect(@account.permissions.map(&:asset_type)).to eq(%w[Account Account])
+        expect(@account.permissions.map(&:asset_type)).to eq(%w[FatFreeCrm::Account FatFreeCrm::Account])
         expect(@opportunity.access).to eq("Shared")
         expect(@opportunity.permissions.map(&:user_id).sort).to eq([7, 8])
         expect(@opportunity.permissions.map(&:asset_id)).to eq([@opportunity.id, @opportunity.id])
