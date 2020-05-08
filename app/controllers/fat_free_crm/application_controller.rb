@@ -87,7 +87,7 @@ module FatFreeCrm
       return [] if related.blank?
       return [related.to_i].compact unless related.index('/')
 
-      related_class, id = related.split('/')
+      related_class, id = related.gsub("fatfreecrm::", "").split('/')
       lookup_class = "FatFreeCrm::" + related_class.classify
       obj = lookup_class.classify.constantize.find_by_id(id)
       if obj&.respond_to?(controller_name)

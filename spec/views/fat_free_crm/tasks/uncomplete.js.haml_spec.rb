@@ -24,8 +24,8 @@ module FatFreeCrm
         assign(:task_total, stub_task_total("completed"))
       end
 
-      it "should slide up uncompleted task partial" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+      it "should slide up out destroyed task partial" do
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
 
         render
         expect(rendered).to include("$('#task_#{@task.id}').slideUp")
@@ -34,7 +34,7 @@ module FatFreeCrm
 
       it "should update tasks sidebar" do
         assign(:task, build_stubbed(:task))
-        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
 
         render
         expect(rendered).to include("$('#sidebar').html")
@@ -42,6 +42,18 @@ module FatFreeCrm
         expect(rendered).to have_text("Recent Items")
         expect(rendered).to include("$('#filters').effect('shake'")
       end
+    end
+  end
+
+  describe "destroy from related asset" do
+    it "should blind up out destroyed task partial" do
+      @task = build_stubbed(:task)
+      assign(:task, @task)
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads/123"
+
+      render
+      expect(rendered).to include("slideUp")
+      expect(rendered).not_to include("fadeOut") # bucket is not empty
     end
   end
 end
