@@ -244,7 +244,8 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def confirm_delete(model, params = {})
-    question = %(<span class="warn">#{t(:confirm_delete, model.class.to_s.downcase)}</span>)
+    model_name = model.class.to_s.gsub("FatFreeCrm::", "").downcase
+    question = %(<span class="warn">#{t(:confirm_delete, model_name)}</span>)
     yes = link_to(t(:yes_button), params[:url] || model, method: :delete)
     no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
     text = "$('#confirm').html( $('#menu').html() );\n"

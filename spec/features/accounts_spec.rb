@@ -74,7 +74,7 @@ feature 'Accounts', '
     create(:account, name: "A new account")
     with_versioning do
       visit accounts_page
-      find('div#accounts').click_link('A new account')
+      find('ul#accounts').click_link('A new account')
       expect(page).to have_content('A new account')
       click_link 'Edit'
       fill_in 'account_name', with: 'A new account *editted*'
@@ -89,8 +89,8 @@ feature 'Accounts', '
   scenario 'should delete an account', js: true do
     create(:account, name: "My new account")
     visit accounts_page
-    find('div#accounts').click_link('My new account')
-    click_link 'Delete?'
+    find('ul#accounts').click_link('My new account')
+    click_link 'Delete'
     expect(page).to have_content('Are you sure you want to delete this account?')
     click_link 'Yes'
     expect(page).to have_content('My new account has been deleted')

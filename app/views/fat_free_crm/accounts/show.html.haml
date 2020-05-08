@@ -4,12 +4,12 @@
 
   -# default view
   = styles_for :task, :contact, :opportunity
-  = render 'accounts/title_bar', account: @account
+  = render 'fat_free_crm/accounts/title_bar', account: @account
   %div#edit_account{ hidden }
   -# = render "fat_free_crm/comments/new", commentable: @account
-  = render partial: "shared/timeline", collection: @timeline
+  = render partial: "fat_free_crm/shared/timeline", collection: @timeline
   = hook(:show_account_bottom, self, {entity: @account}) do
-    = render partial: "tasks/tasks", locals: {object: @account}
+    = render partial: "fat_free_crm/tasks/tasks", locals: {object: @account}
     = render "fat_free_crm/contacts/contacts", object: @account
     = render "fat_free_crm/opportunities/opportunities", object: @account
     = render "fat_free_crm/versions/versions", object: @account
