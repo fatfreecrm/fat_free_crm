@@ -43,12 +43,12 @@
     %script{ src: "https://use.fontawesome.com/7b172fda6f.js"}
 
   %body
-    = render "layouts/header"
+    = render "layouts/fat_free_crm/header"
     - if tabless_layout?
-      = render "layouts/tabless"
+      = render "layouts/fat_free_crm/tabless"
     - else
-      = render "layouts/tabbed"
-      = render "layouts/footer"
+      = render "layouts/fat_free_crm/tabbed"
+      = render "layouts/fat_free_crm/footer"
 
     %script{type: "text/javascript"}
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
