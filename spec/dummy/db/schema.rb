@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "record_id"
     t.string "record_klass"
+    t.string "uploaded_by_id"
   end
 
   create_table "fat_free_crm_emails", id: :serial, force: :cascade do |t|
