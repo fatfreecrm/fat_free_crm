@@ -2,5 +2,5 @@
 - @personal_lists = List.where(user_id: current_user.id)
 
 #lists
-  = render "lists/sidebar", lists: @global_lists
-  = render "lists/sidebar", lists: @personal_lists, personal: true
+  = render "fat_free_crm/lists/sidebar", lists: @global_lists
+  = render "fat_free_crm/lists/sidebar", lists: @personal_lists, personal: true
