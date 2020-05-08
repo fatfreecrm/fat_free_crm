@@ -348,7 +348,7 @@
       $list.css opacity: 0.4
       @searchRequest.abort()  if @searchRequest and @searchRequest.readyState isnt -4
       @searchRequest = $.get(
-        @base_url + "/" + controller + ".js"
+        @base_url + "/fat_free_crm/" + controller + ".js"
         query: query
         ->
           $("#loading").hide()
@@ -372,7 +372,7 @@
       $("#auto_complete_query").autocomplete(
         source: (request, response) =>
           request = {auto_complete_query: request['term'], related: related}
-          $.get @base_url + "/" + controller + "/auto_complete.json", request, (data) ->
+          $.get @base_url + "/fat_free_crm/" + controller + "/auto_complete.json", request, (data) ->
             response $.map(data.results, (value) ->
               label: value.text
               value: value.id
@@ -384,7 +384,8 @@
           event.preventDefault()
           if ui.item
             if related
-              $.ajax(@base_url + "/" + related + "/attach", type: 'PUT', data: {
+              rel_string = related.replace("fatfreecrm::", "fat_free_crm/")
+              $.ajax(@base_url + "/" + rel_string + "/attach", type: 'PUT', data: {
                   assets: controller
                   asset_id: ui.item.value
                 }

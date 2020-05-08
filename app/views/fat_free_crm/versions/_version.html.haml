@@ -1,7 +1,7 @@
 %li.highlight[version]
   .body
     - item_type = version.item_type.underscore.humanize
-    - if user = User.find_by_id(version.whodunnit)
+    - if user = FatFreeCrm::User.find_by_id(version.whodunnit)
       - user_name = user.name
     - else
       - user_name = t('version.anonymous')
@@ -14,4 +14,4 @@
     %tt
       - version.changeset.each do |attr_name, change|
         - label, first, second = parse_version(attr_name, change)
-        = render partial: 'versions/version_item', locals: {label: label, first: first, second: second}
+        = render partial: 'fat_free_crm/versions/version_item', locals: {label: label, first: first, second: second}
