@@ -7,6 +7,8 @@
     = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
 
   .title_tools
+    #buttons
+      = view_buttons
     .create_asset
       = link_to_inline("create_#{model_name}".to_sym, send("new_#{model_name}_path"), { text: t("create_#{model_name}".to_sym), class: 'btn btn-primary create-asset-button' })
     = form_tag "/fat_free_crms/upload_#{model_name}", multipart: true, method: :post do
