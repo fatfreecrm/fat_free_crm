@@ -4,7 +4,7 @@
 
   = f.error_messages object_name: t('user')
 
-  = render "admin/users/profile", f: f
+  = render "fat_free_crm/admin/users/profile", f: f
   .buttonbar
     = f.submit t(:create_user), :class => 'btn btn-primary'
     = link_to_cancel new_admin_user_path, :class => 'btn btn-link'
