@@ -1,0 +1,14 @@
+.contact-details
+  - if can?(:read, contact)
+    - if contact.email.present?
+      = link_to_email(contact.email)
+      |
+    - if contact.phone.present?
+      == #{t :phone_small}:
+      %b.phone-number= contact.phone
+    |
+    - if contact.mobile.present?
+      == #{t :mobile_small}:
+      %b.phone-number= contact.mobile
+      |
+  = t(:added_ago, value: contact.created_at).html_safe

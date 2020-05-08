@@ -132,18 +132,22 @@ module ApplicationHelper
     link_to(t(:edit),
             options[:url] || polymorphic_url(record, action: :edit),
             remote:  true,
-            onclick: "this.href = this.href.split('?')[0] + '?previous='+encodeURI(crm.find_form('edit_#{j name}'));".html_safe)
+            onclick: "this.href = this.href.split('?')[0] + '?previous='+encodeURI(crm.find_form('edit_#{j name}'));".html_safe,
+            class: 'btn btn-secondary btn-sm'
+          )
   end
 
   #----------------------------------------------------------------------------
   def link_to_delete(record, options = {})
     confirm = options[:confirm] || nil
 
-    link_to(t(:delete) + "!",
+    link_to(t(:delete),
             options[:url] || url_for(record),
-            method: :delete,
+            { method: :delete,
             remote: true,
-            confirm: confirm)
+            confirm: confirm, 
+            class: 'btn btn-danger btn-sm'}
+          )
   end
 
   #----------------------------------------------------------------------------
@@ -244,7 +248,7 @@ module ApplicationHelper
     yes = link_to(t(:yes_button), params[:url] || model, method: :delete)
     no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
     text = "$('#confirm').html( $('#menu').html() );\n"
-    text += "$('#menu').html('#{question} #{yes} : #{no}');"
+    text += "$('#menu').html('#{question} #{yes} #{no}');"
     text.html_safe
   end
 

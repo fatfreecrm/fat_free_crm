@@ -515,6 +515,19 @@ table.asset_attributes {
   margin-bottom: var(--s2);
 }
 
+.entity-heading {
+  display: flex;
+  align-items: center;
+
+  .title_tools {
+    margin-left: 1rem;
+  }
+
+  h1 {
+    margin: 0;
+  }
+}
+
 #activities,
 #accounts,
 #opportunities {
@@ -545,4 +558,43 @@ table.asset_attributes {
   background: white;
   cursor: inherit;
   display: block;
+}
+
+// Mimic the look of .btn.btn-secondary.btn-sm
+
+.title_tools#menu > * + * {
+  margin-inline-start: 0.5rem;
+}
+
+a[id^="edit_"][id$="_button"],
+a[id^="Delete_"][id$="_button"] {
+  // btn
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  // btn-sm
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+a[id^="edit_"][id$="_button"] {
+  // btn secondary
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+a[id^="Delete_"][id$="_button"] {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
 }
