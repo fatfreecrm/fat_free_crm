@@ -1,0 +1,51 @@
+# frozen_string_literal: true
+
+# Copyright (c) 2008-2013 Michael Dvorkin and contributors.
+#
+# Fat Free CRM is freely distributable under the terms of MIT license.
+# See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
+#------------------------------------------------------------------------------
+require 'spec_helper'
+
+module FatFreeCrm
+  describe "/fat_free_crm/leads/reject" do
+    before do
+      view.extend FatFreeCrm::OpportunitiesHelper
+      login
+      assign(:lead, @lead = build_stubbed(:lead, status: "new"))
+      assign(:lead_status_total, Hash.new(1))
+    end
+
+    it "should refresh current lead partial" do
+      render
+
+      expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
+      expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
+    end
+
+    it "should update sidebar filters when called from index page" do
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads"
+      render
+
+      expect(rendered).to include("$('#sidebar').html")
+      expect(rendered).to include("$('#filters').effect('shake'")
+    end
+
+    it "should update sidebar summary when called from landing page" do
+      render
+
+      expect(rendered).to include("$('#sidebar').html")
+      expect(rendered).to include("$('#summary').effect('shake'")
+    end
+
+    it "should update campaign sidebar if called from campaign landing page" do
+      assign(:campaign, campaign = build_stubbed(:campaign))
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/#{campaign.id}"
+      render
+
+      expect(rendered).to include("#sidebar")
+      expect(rendered).to have_text("Summary")
+      expect(rendered).to have_text("Recent Items")
+    end
+  end
+end
