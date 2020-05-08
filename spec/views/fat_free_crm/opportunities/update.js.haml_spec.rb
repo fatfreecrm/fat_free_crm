@@ -7,144 +7,146 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/opportunities/update" do
-  before do
-    login
-
-    assign(:opportunity, @opportunity = build_stubbed(:opportunity, user: current_user, assignee: build_stubbed(:user)))
-    assign(:users, [current_user])
-    assign(:account, @account = build_stubbed(:account))
-    assign(:accounts, [@account])
-    assign(:stage, Setting.unroll(:opportunity_stage))
-    assign(:opportunity_stage_total, Hash.new(1))
-  end
-
-  describe "no errors:" do
-    describe "on opportunity landing page -" do
-      before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
-      end
-
-      it "should flip [edit_opportunity] form" do
-        render
-        expect(rendered).not_to include("opportunity_#{@opportunity.id}")
-        expect(rendered).to include("crm.flip_form('edit_opportunity'")
-      end
-
-      it "should update sidebar" do
-        render
-        expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Opportunity At a Glance")
-        expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#summary').effect('shake'")
-      end
-    end
-
-    describe "on opportunities index page -" do
-      before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-      end
-
-      it "should replace [Edit Opportunity] with opportunity partial and highlight it" do
-        render
-        expect(rendered).to include("$('#opportunity_#{@opportunity.id}').replaceWith")
-        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
-      end
-
-      it "should update sidebar" do
-        render
-        expect(rendered).to include("sidebar")
-        expect(rendered).to have_text("Opportunity Stages")
-        expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#filters').effect('shake'")
-      end
-    end
-
-    describe "on related asset page -" do
-      it "should update account sidebar" do
-        assign(:account, account = build_stubbed(:account))
-        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
-        render
-
-        expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Account Summary")
-        expect(rendered).to have_text("Recent Items")
-      end
-
-      it "should update campaign sidebar" do
-        assign(:campaign, campaign = build_stubbed(:campaign))
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-        render
-
-        expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Campaign Summary")
-        expect(rendered).to have_text("Recent Items")
-      end
-
-      it "should update recently viewed items for contact" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
-        render
-
-        expect(rendered).to include("#recently")
-      end
-
-      it "should replace [Edit Opportunity] with opportunity partial and highlight it" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
-        render
-
-        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
-      end
-    end
-  end
-
-  describe "validation errors:" do
+module FatFreeCrm
+  describe "/fat_free_crm//opportunities/update" do
     before do
-      @opportunity.errors.add(:name)
+      login
+
+      assign(:opportunity, @opportunity = build_stubbed(:opportunity, user: current_user, assignee: build_stubbed(:user)))
+      assign(:users, [current_user])
+      assign(:account, @account = build_stubbed(:account))
+      assign(:accounts, [@account])
+      assign(:stage, Setting.unroll(:opportunity_stage))
+      assign(:opportunity_stage_total, Hash.new(1))
     end
 
-    describe "on opportunity landing page -" do
-      before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
+    describe "no errors:" do
+      describe "on opportunity landing page -" do
+        before do
+          controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
+        end
+
+        it "should flip [edit_opportunity] form" do
+          render
+          expect(rendered).not_to include("opportunity_#{@opportunity.id}")
+          expect(rendered).to include("crm.flip_form('edit_opportunity'")
+        end
+
+        it "should update sidebar" do
+          render
+          expect(rendered).to include("#sidebar")
+          expect(rendered).to have_text("Opportunity At a Glance")
+          expect(rendered).to have_text("Recent Items")
+          expect(rendered).to include("$('#summary').effect('shake'")
+        end
       end
 
-      it "should redraw the [edit_opportunity] form and shake it" do
-        render
-        expect(rendered).to include("$('#edit_opportunity').html")
-        expect(rendered).to include('crm.create_or_select_account(false)')
-        expect(rendered).to include(%/$('#edit_opportunity').effect("shake"/)
-        expect(rendered).to include('focus()')
+      describe "on opportunities index page -" do
+        before do
+          controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+        end
+
+        it "should replace [Edit Opportunity] with opportunity partial and highlight it" do
+          render
+          expect(rendered).to include("$('#opportunity_#{@opportunity.id}').replaceWith")
+          expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
+        end
+
+        it "should update sidebar" do
+          render
+          expect(rendered).to include("sidebar")
+          expect(rendered).to have_text("Opportunity Stages")
+          expect(rendered).to have_text("Recent Items")
+          expect(rendered).to include("$('#filters').effect('shake'")
+        end
+      end
+
+      describe "on related asset page -" do
+        it "should update account sidebar" do
+          assign(:account, account = build_stubbed(:account))
+          controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
+          render
+
+          expect(rendered).to include("#sidebar")
+          expect(rendered).to have_text("Account Summary")
+          expect(rendered).to have_text("Recent Items")
+        end
+
+        it "should update campaign sidebar" do
+          assign(:campaign, campaign = build_stubbed(:campaign))
+          controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+          render
+
+          expect(rendered).to include("#sidebar")
+          expect(rendered).to have_text("Campaign Summary")
+          expect(rendered).to have_text("Recent Items")
+        end
+
+        it "should update recently viewed items for contact" do
+          controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+          render
+
+          expect(rendered).to include("#recently")
+        end
+
+        it "should replace [Edit Opportunity] with opportunity partial and highlight it" do
+          controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+          render
+
+          expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
+        end
       end
     end
 
-    describe "on opportunities index page -" do
+    describe "validation errors:" do
       before do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+        @opportunity.errors.add(:name)
       end
 
-      it "should redraw the [edit_opportunity] form and shake it" do
-        render
-        expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
-        expect(rendered).to include('crm.create_or_select_account(false)')
-        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
-        expect(rendered).to include('focus()')
-      end
-    end
+      describe "on opportunity landing page -" do
+        before do
+          controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
+        end
 
-    describe "on related asset page -" do
-      before do
-        controller.request.env["HTTP_REFERER"] = @referer = "http://localhost/accounts/123"
-      end
-
-      it "should show disabled accounts dropdown when called from accounts landing page" do
-        render
-        expect(rendered).to include("crm.create_or_select_account(#{@referer =~ %r{/accounts/}})")
+        it "should redraw the [edit_opportunity] form and shake it" do
+          render
+          expect(rendered).to include("$('#edit_opportunity').html")
+          expect(rendered).to include('crm.create_or_select_account(false)')
+          expect(rendered).to include(%/$('#edit_opportunity').effect("shake"/)
+          expect(rendered).to include('focus()')
+        end
       end
 
-      it "should redraw the [edit_opportunity] form and shake it" do
-        render
-        expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
-        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
-        expect(rendered).to include('focus()')
+      describe "on opportunities index page -" do
+        before do
+          controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+        end
+
+        it "should redraw the [edit_opportunity] form and shake it" do
+          render
+          expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
+          expect(rendered).to include('crm.create_or_select_account(false)')
+          expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
+          expect(rendered).to include('focus()')
+        end
+      end
+
+      describe "on related asset page -" do
+        before do
+          controller.request.env["HTTP_REFERER"] = @referer = "http://localhost/accounts/123"
+        end
+
+        it "should show disabled accounts dropdown when called from accounts landing page" do
+          render
+          expect(rendered).to include("crm.create_or_select_account(#{@referer =~ %r{/accounts/}})")
+        end
+
+        it "should redraw the [edit_opportunity] form and shake it" do
+          render
+          expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
+          expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
+          expect(rendered).to include('focus()')
+        end
       end
     end
   end

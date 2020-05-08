@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "/tasks/uncomplete" do
+  describe "/fat_free_crm/tasks/uncomplete" do
 
     before do
       login

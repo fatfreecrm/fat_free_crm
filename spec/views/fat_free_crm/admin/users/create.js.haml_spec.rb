@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "admin/users/create" do
+  describe "/fat_free_crm/admin/users/create" do
     before do
       login_admin
     end

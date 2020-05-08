@@ -7,28 +7,30 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/opportunities/index" do
+module FatFreeCrm
+  describe "/fat_free_crm//opportunities/index" do
 
-  before do
-    login
-    assign(:stage, Setting.unroll(:opportunity_stage))
-  end
+    before do
+      login
+      assign(:stage, Setting.unroll(:opportunity_stage))
+    end
 
-  it "should render [opportunity] template with @opportunities collection if there are opportunities" do
-    assign(:opportunities, [build_stubbed(:opportunity, id: 42)].paginate)
+    it "should render [opportunity] template with @opportunities collection if there are opportunities" do
+      assign(:opportunities, [build_stubbed(:opportunity, id: 42)].paginate)
 
-    render template: 'opportunities/index', formats: [:js]
+      render template: 'opportunities/index', formats: [:js]
 
-    expect(rendered).to include("$('#opportunities').html")
-    expect(rendered).to include("#paginate")
-  end
+      expect(rendered).to include("$('#opportunities').html")
+      expect(rendered).to include("#paginate")
+    end
 
-  it "should render [empty] template if @opportunities collection if there are no opportunities" do
-    assign(:opportunities, [].paginate)
+    it "should render [empty] template if @opportunities collection if there are no opportunities" do
+      assign(:opportunities, [].paginate)
 
-    render template: 'opportunities/index', formats: [:js]
+      render template: 'opportunities/index', formats: [:js]
 
-    expect(rendered).to include("$('#opportunities').html('<div id=\\'empty\\'>")
-    expect(rendered).to include("#paginate")
+      expect(rendered).to include("$('#opportunities').html('<div id=\\'empty\\'>")
+      expect(rendered).to include("#paginate")
+    end
   end
 end

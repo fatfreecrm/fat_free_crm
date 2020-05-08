@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "/users/edit" do
+  describe "/fat_free_crm/users/edit" do
 
     before do
       login
