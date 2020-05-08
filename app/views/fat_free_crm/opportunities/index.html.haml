@@ -12,9 +12,9 @@
   - if @opportunities.any?
     = render @opportunities
   - else
-    = render "shared/empty"
+    = render "fat_free_crm/shared/empty"
 
-#paginate= render "shared/paginate_with_per_page"
-#export= render "shared/export"
+#paginate= render "fat_free_crm/shared/paginate_with_per_page"
+#export= render "fat_free_crm/shared/export"
 
 = hook(:opportunity_index_after, self)
