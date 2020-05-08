@@ -49,7 +49,7 @@
     .caption #{t :background_info}
     = auto_link(simple_format @account.background_info)
 
-  = render "fields/sidebar_show", asset: @account
+  = render "fat_free_crm/fields/sidebar_show", asset: @account
 
   - if @account.tags.present?
     %span
