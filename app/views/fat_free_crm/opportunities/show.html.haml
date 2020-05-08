@@ -17,6 +17,6 @@
 
     = render "fat_free_crm/contacts/contacts", object: @opportunity
 
-    = render "versions/versions", object: @opportunity
+    = render "fat_free_crm/versions/versions", object: @opportunity
 
     = load_select_popups_for(@opportunity, :tasks, :contacts)
