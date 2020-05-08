@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "admin/users/update" do
+  describe "/fat_free_crm/admin/users/update" do
     before do
       login_admin
       assign(:user, @user = build_stubbed(:user))

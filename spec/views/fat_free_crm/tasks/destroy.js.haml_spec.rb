@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "/tasks/destroy" do
+  describe "/fat_free_crm/tasks/destroy" do
 
     before do
       login

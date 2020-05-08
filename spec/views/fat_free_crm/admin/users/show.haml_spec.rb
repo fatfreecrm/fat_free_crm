@@ -5,10 +5,10 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
+require 'spec_helper'
 
 module FatFreeCrm
-  describe "/admin/users/show" do
+  describe "/fat_free_crm/admin/users/show" do
     before do
       assign(:user, @user = stub_model(User))
     end

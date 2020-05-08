@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "fat_free_crm/accounts/show" do
+  describe "/fat_free_crm/accounts/show" do
 
     before do
       view.extend FatFreeCrm::JavascriptHelper

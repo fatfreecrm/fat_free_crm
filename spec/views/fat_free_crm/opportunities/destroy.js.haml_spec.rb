@@ -7,61 +7,63 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/opportunities/destroy" do
-  before do
-    login
-    assign(:opportunity, @opportunity = build_stubbed(:opportunity))
-    assign(:stage, Setting.unroll(:opportunity_stage))
-    assign(:opportunity_stage_total, Hash.new(1))
-  end
+module FatFreeCrm
+  describe "/fat_free_crm/opportunities/destroy" do
+    before do
+      login
+      assign(:opportunity, @opportunity = build_stubbed(:opportunity))
+      assign(:stage, Setting.unroll(:opportunity_stage))
+      assign(:opportunity_stage_total, Hash.new(1))
+    end
 
-  it "should blind up destroyed opportunity partial" do
-    render
-    expect(rendered).to include("slideUp")
-  end
+    it "should blind up destroyed opportunity partial" do
+      render
+      expect(rendered).to include("slideUp")
+    end
 
-  it "should update opportunities sidebar when called from opportunities index" do
-    assign(:opportunities, [@opportunity].paginate)
-    controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-    render
+    it "should update opportunities sidebar when called from opportunities index" do
+      assign(:opportunities, [@opportunity].paginate)
+      controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+      render
 
-    expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Recent Items")
-    expect(rendered).to include("$('#filters').effect('shake'")
-  end
+      expect(rendered).to include("#sidebar")
+      expect(rendered).to have_text("Recent Items")
+      expect(rendered).to include("$('#filters').effect('shake'")
+    end
 
-  it "should update pagination when called from opportunities index" do
-    assign(:opportunities, [@opportunity].paginate)
-    controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
-    render
+    it "should update pagination when called from opportunities index" do
+      assign(:opportunities, [@opportunity].paginate)
+      controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+      render
 
-    expect(rendered).to include("#paginate")
-  end
+      expect(rendered).to include("#paginate")
+    end
 
-  it "should update related account sidebar when called from related account" do
-    assign(:account, account = build_stubbed(:account))
-    controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
-    render
+    it "should update related account sidebar when called from related account" do
+      assign(:account, account = build_stubbed(:account))
+      controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
+      render
 
-    expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Account Summary")
-    expect(rendered).to have_text("Recent Items")
-  end
+      expect(rendered).to include("#sidebar")
+      expect(rendered).to have_text("Account Summary")
+      expect(rendered).to have_text("Recent Items")
+    end
 
-  it "should update related campaign sidebar when called from related campaign" do
-    assign(:campaign, campaign = build_stubbed(:campaign))
-    controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
-    render
+    it "should update related campaign sidebar when called from related campaign" do
+      assign(:campaign, campaign = build_stubbed(:campaign))
+      controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+      render
 
-    expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Campaign Summary")
-    expect(rendered).to have_text("Recent Items")
-  end
+      expect(rendered).to include("#sidebar")
+      expect(rendered).to have_text("Campaign Summary")
+      expect(rendered).to have_text("Recent Items")
+    end
 
-  it "should update recently viewed items when called from related contact" do
-    controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
-    render
+    it "should update recently viewed items when called from related contact" do
+      controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+      render
 
-    expect(rendered).to include("#recently")
+      expect(rendered).to include("#recently")
+    end
   end
 end

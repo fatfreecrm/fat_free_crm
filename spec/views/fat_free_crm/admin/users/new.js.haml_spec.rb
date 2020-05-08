@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "admin/users/new" do
+  describe "/fat_free_crm/admin/users/new" do
     before do
       login_admin
       assign(:user, User.new)

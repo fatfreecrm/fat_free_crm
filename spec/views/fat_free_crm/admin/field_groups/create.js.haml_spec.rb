@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 module FatFreeCrm
-  describe "admin/field_groups/create" do
+  describe "/fat_free_crm/admin/field_groups/create" do
     before do
       login_admin
       assign(:field_group, field_group)

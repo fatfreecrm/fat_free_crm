@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "/users/change_password" do
+  describe "/fat_free_crm/users/change_password" do
 
     before do
       login
