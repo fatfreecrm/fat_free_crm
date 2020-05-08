@@ -19,7 +19,7 @@
       crm.flick('fat_free_crm_task_#{@previous}', 'remove');
 
   -# Disable onMouseOver for the list item.
-  crm.highlight_off('#{id}');
+  crm.highlight_off('fat_free_crm_#{id}');
 
   -# Show [Edit Task] form.
   $('#fat_free_crm_#{id}').html('#{ j render(partial: "edit") }');

@@ -25,10 +25,10 @@ module FatFreeCrm
       end
 
       it "should fade out completed task partial" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
 
         render
-        expect(rendered).to include("$('#task_#{@task.id}').fadeOut")
+        expect(rendered).to include("$('#fat_free_crm_task_#{@task.id}').fadeOut")
         expect(rendered).to include("$('#list_due_asap').fadeOut")
       end
 
@@ -36,7 +36,7 @@ module FatFreeCrm
         assign(:task, build_stubbed(:task))
         assign(:view, "pending")
         assign(:empty_bucket, :due_asap)
-        controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/tasks"
 
         render
         expect(rendered).to include("$('#sidebar').html")
@@ -52,14 +52,14 @@ module FatFreeCrm
         assign(:task, @task)
 
         render
-        expect(rendered).to include("$('#task_#{@task.id}').html('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
+        expect(rendered).to include("$('#fat_free_crm_task_#{@task.id}').html('<li class=\\'fat_free_crm_task highlight\\' id=\\'fat_free_crm_task_#{@task.id}\\'")
         expect(rendered).to include('<strike>')
       end
 
       it "should update recently viewed items" do
         @task = build_stubbed(:task, completed_at: Time.now, completor: current_user)
         assign(:task, @task)
-        controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/leads/123"
 
         render
         expect(rendered).to have_text("Recent Items")
