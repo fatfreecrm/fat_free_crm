@@ -7,7 +7,6 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-
 module FatFreeCrm
   describe "/fat_free_crm/campaigns/new" do
 
