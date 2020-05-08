@@ -22,6 +22,6 @@
   - if can?(:read, contact)
     = render "fat_free_crm/contacts/section_general", contact: contact
     = render "fat_free_crm/contacts/section_extra", contact: contact
-    = render "entities/section_custom_fields", entity: contact
+    = render "fat_free_crm/entities/section_custom_fields", entity: contact
     -# = render "fat_free_crm/comments/new", commentable: contact
   = render partial: "shared/timeline", collection: (contact.comments + contact.emails).sort { |x, y| y.created_at <=> x.created_at }
