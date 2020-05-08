@@ -2,6 +2,6 @@
   .flex-container
     %h3
       = link_to_if can?(:read, contact), contact.full_name(current_user.preference[:contacts_naming]), contact
-    = render "contacts/contact_tools", contact: contact
-  = render "contacts/lead_referral", contact: contact
+    = render "fat_free_cerm/contacts/contact_tools", contact: contact
+  = render "fat_free_cerm/contacts/lead_referral", contact: contact
   = hook(:contact_bottom, self, contact: contact)

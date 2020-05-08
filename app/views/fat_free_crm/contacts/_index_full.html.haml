@@ -3,7 +3,7 @@
   .flex-container
     %h3
       = link_to_if can?(:read, contact), contact.full_name(current_user.preference[:contacts_naming]), contact
-    = render "contacts/contact_tools", contact: contact
+    = render "fat_free_cerm/contacts/contact_tools", contact: contact
   %span
     - if contact.title? && contact.department?
       == #{contact.title}, #{contact.department}
@@ -15,13 +15,13 @@
       &ndash;
       == #{t :referred_by_small} #{lead.referred_by}
   - if can?(:read, contact)
-    = render "contacts/contact_details", contact: contact
+    = render "fat_free_cerm/contacts/contact_details", contact: contact
   - if contact.tags.present?
     .tags= tags_for_index(contact)
   = hook(:contact_bottom, self, contact: contact)
   - if can?(:read, contact)
-    = render "contacts/section_general", contact: contact
-    = render "contacts/section_extra", contact: contact
+    = render "fat_free_cerm/contacts/section_general", contact: contact
+    = render "fat_free_cerm/contacts/section_extra", contact: contact
     = render "entities/section_custom_fields", entity: contact
     -# = render "comments/new", commentable: contact
   = render partial: "shared/timeline", collection: (contact.comments + contact.emails).sort { |x, y| y.created_at <=> x.created_at }
