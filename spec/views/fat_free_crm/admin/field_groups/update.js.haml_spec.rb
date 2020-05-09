@@ -18,7 +18,7 @@ module FatFreeCrm
 
     it "renders javascript" do
       render
-      expect(view).to render_template("admin/field_groups/update")
+      expect(view).to render_template("fat_free_crm/admin/field_groups/update")
       expect(rendered).to have_text("crm.flip_form('#{dom_id(field_group, :edit)}');")
       expect(rendered).to have_text("crm.set_title('#{dom_id(field_group)}'")
     end
