@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "/fat_free_crm//opportunities/index" do
+  describe "/fat_free_crm/opportunities/index" do
 
     before do
       login
@@ -18,7 +18,7 @@ module FatFreeCrm
     it "should render [opportunity] template with @opportunities collection if there are opportunities" do
       assign(:opportunities, [build_stubbed(:opportunity, id: 42)].paginate)
 
-      render template: 'opportunities/index', formats: [:js]
+      render template: 'fat_free_crm/opportunities/index', formats: [:js]
 
       expect(rendered).to include("$('#opportunities').html")
       expect(rendered).to include("#paginate")
@@ -27,7 +27,7 @@ module FatFreeCrm
     it "should render [empty] template if @opportunities collection if there are no opportunities" do
       assign(:opportunities, [].paginate)
 
-      render template: 'opportunities/index', formats: [:js]
+      render template: 'fat_free_crm/opportunities/index', formats: [:js]
 
       expect(rendered).to include("$('#opportunities').html('<div id=\\'empty\\'>")
       expect(rendered).to include("#paginate")

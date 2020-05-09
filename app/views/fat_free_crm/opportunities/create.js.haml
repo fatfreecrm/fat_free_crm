@@ -7,7 +7,7 @@
   $('##{create_id}_title').html('#{ j t(entity_name.pluralize) }');
   $('##{create_id}').slideUp(250);
   $('##{entity_name.pluralize}').prepend('#{ j render(partial: entity_name, collection: [ @entity ]) }');
-  $('##{dom_id(@entity)}').effect("highlight", { duration:1500 });
+  $('#fat_free_crm_#{dom_id(@entity)}').effect("highlight", { duration:1500 });
 
   - if called_from_index_page?
     = refresh_sidebar(:index, :filters)

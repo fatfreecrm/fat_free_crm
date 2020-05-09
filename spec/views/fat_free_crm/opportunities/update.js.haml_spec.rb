@@ -28,7 +28,7 @@ module FatFreeCrm
     describe "no errors:" do
       describe "on opportunity landing page -" do
         before do
-          controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
+          controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/opportunities/123"
         end
 
         it "should flip [edit_opportunity] form" do
@@ -48,7 +48,7 @@ module FatFreeCrm
 
       describe "on opportunities index page -" do
         before do
-          controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+          controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/opportunities"
         end
 
         it "should replace [Edit Opportunity] with opportunity partial and highlight it" do
@@ -69,7 +69,7 @@ module FatFreeCrm
       describe "on related asset page -" do
         it "should update account sidebar" do
           assign(:account, account = build_stubbed(:account))
-          controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
+          controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/accounts/#{account.id}"
           render
 
           expect(rendered).to include("#sidebar")
@@ -79,7 +79,7 @@ module FatFreeCrm
 
         it "should update campaign sidebar" do
           assign(:campaign, campaign = build_stubbed(:campaign))
-          controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+          controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/#{campaign.id}"
           render
 
           expect(rendered).to include("#sidebar")
@@ -88,14 +88,14 @@ module FatFreeCrm
         end
 
         it "should update recently viewed items for contact" do
-          controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+          controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts/123"
           render
 
           expect(rendered).to include("#recently")
         end
 
         it "should replace [Edit Opportunity] with opportunity partial and highlight it" do
-          controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+          controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts/123"
           render
 
           expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
@@ -110,7 +110,7 @@ module FatFreeCrm
 
       describe "on opportunity landing page -" do
         before do
-          controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
+          controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/opportunities/123"
         end
 
         it "should redraw the [edit_opportunity] form and shake it" do
@@ -124,7 +124,7 @@ module FatFreeCrm
 
       describe "on opportunities index page -" do
         before do
-          controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+          controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/opportunities"
         end
 
         it "should redraw the [edit_opportunity] form and shake it" do
@@ -138,7 +138,7 @@ module FatFreeCrm
 
       describe "on related asset page -" do
         before do
-          controller.request.env["HTTP_REFERER"] = @referer = "http://localhost/accounts/123"
+          controller.request.env["HTTP_REFERER"] = @referer = "http://localhost/fat_free_crm/accounts/123"
         end
 
         it "should show disabled accounts dropdown when called from accounts landing page" do
