@@ -359,7 +359,7 @@ en-US:
   accounts_small: index cases
   assigned_to: Assigned to
   billing_address: Home address
-  create_account: Create Index Case
+  create_account: Create Account
   date_created: Date Created
   date_updated: Date Updated
   fax: Fax
@@ -373,7 +373,7 @@ en-US:
   phone_toll_free: Toll-free
   pipeline: Pipeline
   same_as_billing: same as home
-  save_account: Save Index Case
+  save_account: Save Account
   share_with: Share it with the following people
   shipping_address: Work address
   total_accounts: Total Cases
