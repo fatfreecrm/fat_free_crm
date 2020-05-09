@@ -5,34 +5,36 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe FatFreeCrm::Permissions do
   before do
-    ActiveRecord::Base.connection.create_table(:user_with_permissions) do |t|
+    ActiveRecord::Base.connection.create_table(:fat_free_crm_user_with_permissions) do |t|
       t.string :access
     end
-    class UserWithPermission < ActiveRecord::Base
-      uses_user_permissions
+    module FatFreeCrm
+      class UserWithPermission < ActiveRecord::Base
+        uses_user_permissions
+      end
     end
   end
   after do
-    ActiveRecord::Base.connection.drop_table(:user_with_permissions)
+    ActiveRecord::Base.connection.drop_table(:fat_free_crm_user_with_permissions)
   end
 
   describe "initialization" do
     it "should add 'has_many permissions' to the model" do
-      entity = UserWithPermission.new
+      entity = FatFreeCrm::UserWithPermission.new
       expect(entity).to respond_to(:permissions)
     end
     it "should add scope called 'my'" do
-      expect(UserWithPermission).to respond_to(:my)
+      expect(FatFreeCrm::UserWithPermission).to respond_to(:my)
     end
   end
 
   describe "user_ids" do
     before(:each) do
-      @entity = UserWithPermission.create(access: "Shared")
+      @entity = FatFreeCrm::UserWithPermission.create(access: "Shared")
     end
 
     it "should assign permissions to the object" do
@@ -62,7 +64,7 @@ describe FatFreeCrm::Permissions do
 
   describe "group_ids" do
     before(:each) do
-      @entity = UserWithPermission.create(access: "Shared")
+      @entity = FatFreeCrm::UserWithPermission.create(access: "Shared")
     end
     it "should assign permissions to the object" do
       expect(@entity.permissions.size).to eq(0)
@@ -91,25 +93,25 @@ describe FatFreeCrm::Permissions do
 
   describe "access" do
     before(:each) do
-      @entity = UserWithPermission.create
+      @entity = FatFreeCrm::UserWithPermission.create
     end
     it "should delete all permissions if access is set to Public" do
       perm = create(:permission, user_id: 1, asset: @entity)
       expect(perm).to receive(:destroy)
-      expect(Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
+      expect(FatFreeCrm::Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
       @entity.update_attribute(:access, 'Public')
     end
     it "should delete all permissions if access is set to Private" do
       perm = create(:permission, user_id: 1, asset: @entity)
       expect(perm).to receive(:destroy)
-      expect(Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
+      expect(FatFreeCrm::Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
       @entity.update_attribute(:access, 'Private')
     end
     it "should not remove permissions if access is set to Shared" do
       perm = create(:permission, user_id: 1, asset: @entity)
       expect(perm).not_to receive(:destroy)
       @entity.permissions << perm
-      expect(Permission).not_to receive(:find_all_by_asset_id)
+      expect(FatFreeCrm::Permission).not_to receive(:find_all_by_asset_id)
       @entity.update_attribute(:access, 'Shared')
       expect(@entity.permissions.size).to eq(1)
     end
@@ -117,8 +119,8 @@ describe FatFreeCrm::Permissions do
 
   describe "save_with_model_permissions" do
     it "should copy permissions from original model" do
-      entity = UserWithPermission.new
-      model = mock_model(Account, access: "Shared", user_ids: [1, 2, 3], group_ids: [4, 5, 6])
+      entity = FatFreeCrm::UserWithPermission.new
+      model = mock_model(FatFreeCrm::Account, access: "Shared", user_ids: [1, 2, 3], group_ids: [4, 5, 6])
       expect(entity).to receive(:access=).with("Shared")
       expect(entity).to receive(:user_ids=).with([1, 2, 3])
       expect(entity).to receive(:group_ids=).with([4, 5, 6])
@@ -130,7 +132,7 @@ describe FatFreeCrm::Permissions do
   describe 'remove_permissions' do
     context 'with a new record' do
       before :each do
-        @entity = UserWithPermission.new
+        @entity = FatFreeCrm::UserWithPermission.new
       end
       it 'should have no relationships to destroy' do
         expect(@entity.remove_permissions).to eq []
@@ -139,16 +141,16 @@ describe FatFreeCrm::Permissions do
 
     context 'with an existing record' do
       before :each do
-        @entity = UserWithPermission.create
+        @entity = FatFreeCrm::UserWithPermission.create
 
-        @permission1 = Permission.create(user_id: 1, group_id: 1, asset_id: @entity.id, asset_type: 'UserWithPermission')
-        @permission2 = Permission.create(user_id: 1, group_id: 2, asset_id: @entity.id, asset_type: 'UserWithPermission')
+        @permission1 = FatFreeCrm::Permission.create(user_id: 1, group_id: 1, asset_id: @entity.id, asset_type: 'FatFreeCrm::UserWithPermission')
+        @permission2 = FatFreeCrm::Permission.create(user_id: 1, group_id: 2, asset_id: @entity.id, asset_type: 'FatFreeCrm::UserWithPermission')
       end
       it 'should remove the related permissions' do
-        current = Permission.all.count
+        current = FatFreeCrm::Permission.all.count
 
         expect(@entity.remove_permissions.length).to eq 2
-        expect(Permission.all.count).to eq(current - 2)
+        expect(FatFreeCrm::Permission.all.count).to eq(current - 2)
       end
     end
   end
