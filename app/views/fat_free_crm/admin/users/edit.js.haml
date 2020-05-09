@@ -6,7 +6,7 @@
 - else # <----------------------------------------  Show [Edit User] form.
 
   - if @previous                                    # Hide open [Edit User] form if any.
-    - if @previous.is_a?(User)                      # Previous user still exists?
+    - if @previous.is_a?(FatFreeCrm::User)                      # Previous user still exists?
       $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: "user", collection: [ @previous ]) }');
     - else
       crm.flick('user_#{@previous}', 'remove');

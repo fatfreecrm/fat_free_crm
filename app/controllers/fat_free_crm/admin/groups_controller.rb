@@ -9,7 +9,7 @@ module FatFreeCrm
   class Admin::GroupsController < Admin::ApplicationController
     before_action :setup_current_tab, only: %i[index show]
 
-    load_resource
+    load_resource class: FatFreeCrm::Group
 
     # GET /groups
     #----------------------------------------------------------------------------

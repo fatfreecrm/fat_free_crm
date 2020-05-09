@@ -185,7 +185,7 @@ en-US:
               missing_task_name: ^Please specify task name.
             calendar:
               invalid_date: ^Please specify valid date.
-        user:
+        "fat_free_crm/user":
           attributes:
             username:
               missing_username: ^Please specify username.

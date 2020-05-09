@@ -17,7 +17,7 @@ module FatFreeCrm
 
     it "renders javascript" do
       render
-      expect(view).to render_template("admin/field_groups/create")
+      expect(view).to render_template("fat_free_crm/admin/field_groups/create")
       expect(rendered).to have_text("$('##{field_group.klass_name.downcase}_create_field_group_arrow')")
       expect(rendered).to have_text("$('##{dom_id(field_group)}').effect('highlight', { duration:1500 });")
     end
@@ -25,7 +25,7 @@ module FatFreeCrm
     it "renders javascript for invalid field group" do
       allow(field_group).to receive(:valid?).and_return(false)
       render
-      expect(view).to render_template("admin/field_groups/create")
+      expect(view).to render_template("fat_free_crm/admin/field_groups/create")
       expect(rendered).to have_text("effect(\"shake\", { duration:250, distance: 6 });")
     end
   end

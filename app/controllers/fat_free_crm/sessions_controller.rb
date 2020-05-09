@@ -8,7 +8,7 @@
 module FatFreeCrm
   class SessionsController < Devise::SessionsController
     respond_to :html
-    append_view_path 'app/views/devise'
+    append_view_path 'app/views/fat_free_crm/devise'
 
     def after_sign_out_path_for(*)
       new_user_session_path

@@ -19,13 +19,13 @@ module FatFreeCrm
     it "renders destroy javascript" do
       allow(field_group).to receive(:destroyed?).and_return(true)
       render
-      expect(view).to render_template("admin/field_groups/destroy")
+      expect(view).to render_template("fat_free_crm/admin/field_groups/destroy")
       expect(rendered).to have_text("slideUp(250)")
     end
 
     it "renders 'not destroyed' javascript" do
       render
-      expect(view).to render_template("admin/field_groups/destroy")
+      expect(view).to render_template("fat_free_crm/admin/field_groups/destroy")
       expect(rendered).to have_text("Field Group could not be deleted")
       expect(rendered).to have_text("crm.flash('warning');")
     end

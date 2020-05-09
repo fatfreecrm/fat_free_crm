@@ -6,15 +6,15 @@
 
   = styles_for :task
 
-  = render 'leads/title_bar', lead: @lead
+  = render 'fat_free_crm/leads/title_bar', lead: @lead
   
   = render "fat_free_crm/comments/new", commentable: @lead
-  = render partial: "shared/timeline", collection: @timeline
+  = render partial: "fat_free_crm/shared/timeline", collection: @timeline
 
   = hook(:show_lead_bottom, self, {entity: @lead}) do
 
-    = render partial: "tasks/tasks", locals: {object: @lead}
+    = render partial: "fat_free_crm/tasks/tasks", locals: {object: @lead}
 
-    = render partial: "versions/versions", locals: {object: @lead}
+    = render partial: "fat_free_crm/versions/versions", locals: {object: @lead}
 
     = load_select_popups_for(@lead, :tasks)

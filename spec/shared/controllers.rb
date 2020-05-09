@@ -22,7 +22,7 @@ shared_examples "auto complete" do
 
     # We don't save Admin/Users autocomplete controller in a session since Users are not
     # exposed through the Jumpbox.
-    expect(session[:auto_complete]).to eq(@controller.controller_name.to_sym) unless controller.class.to_s.starts_with?("Admin::")
+    expect(session[:auto_complete]).to eq(@controller.controller_name.to_sym) unless controller.class.to_s.starts_with?("FatFreeCrm::Admin::")
   end
 
   it "should render application/_auto_complete template" do

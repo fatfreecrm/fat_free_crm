@@ -1,7 +1,7 @@
 - view   ||= controller.controller_name
 - action ||= controller.action_name
 - sidebar = "fat_free_crm/#{view}/sidebar_#{action}"
-- sidebar = "fat_free_crm/admin/#{sidebar}" if controller.class.to_s.starts_with?("Admin::")
+- sidebar = "fat_free_crm/admin/#{sidebar}" if controller.class.to_s.starts_with?("FatFreeCrm::Admin::")
 
 = content_for :sidebar
 - begin

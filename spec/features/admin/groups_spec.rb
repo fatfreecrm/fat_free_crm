@@ -13,6 +13,7 @@ feature 'Groups tab', '
   I want to manage groups
 ' do
   before(:each) do
+    self.class.include FatFreeCrm::Engine.routes.url_helpers
     do_login(first_name: 'Captain', last_name: 'Kirk', admin: true)
   end
 

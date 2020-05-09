@@ -18,7 +18,7 @@ module FatFreeCrm
 
     it "renders javascript" do
       render
-      expect(view).to render_template("admin/field_groups/new")
+      expect(view).to render_template("fat_free_crm/admin/field_groups/new")
       expect(rendered).to have_text("crm.flick('empty', 'toggle')")
       expect(rendered).to have_text("crm.flip_form('#{field_group.klass_name.downcase}_create_field_group')")
       expect(rendered).to have_text("$('##{field_group.klass_name.downcase}_create_field_group').html")

@@ -126,9 +126,9 @@ module FatFreeCrm
       if !confirmed?
         super
       elsif awaits_approval?
-        I18n.t(:msg_account_not_approved)
+        ::I18n.t(:msg_account_not_approved)
       elsif suspended?
-        I18n.t(:msg_invalig_login)
+        ::I18n.t(:msg_invalig_login)
       else
         super
       end

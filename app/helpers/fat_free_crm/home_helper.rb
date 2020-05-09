@@ -60,7 +60,7 @@ module HomeHelper
   def show_hidden_entities_message(count, entity, limit = 10)
     if count > limit
       hidden_count = count - 10
-      entity_string = I18n.t("#{hidden_count == 1 ? entity : entity.pluralize}_small")
+      entity_string = ::I18n.t("#{hidden_count == 1 ? entity : entity.pluralize}_small")
       content_tag(:p) do
         t(:not_showing_hidden_entities, entity: entity_string, count: hidden_count)
       end

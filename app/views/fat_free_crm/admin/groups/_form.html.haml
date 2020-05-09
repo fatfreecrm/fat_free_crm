@@ -4,4 +4,4 @@
     = f.text_field( :name, { class: 'form-control' })
   .form-group.full-width
     %label #{t :users}:
-    = f.select :user_ids, User.all.map {|u| [u.full_name, u.id]}, {}, multiple: true, class: 'custom-select'
+    = f.select :user_ids, FatFreeCrm::User.all.map {|u| [u.full_name, u.id]}, {}, multiple: true, class: 'custom-select'

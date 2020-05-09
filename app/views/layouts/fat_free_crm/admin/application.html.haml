@@ -23,9 +23,9 @@
     %script{ src: "https://use.fontawesome.com/7b172fda6f.js"}
 
   %body.admin
-    = render "layouts/admin/header"
-    = render "layouts/tabbed"
-    = render "layouts/footer"
+    = render "layouts/fat_free_crm/admin/header"
+    = render "layouts/fat_free_crm/tabbed"
+    = render "layouts/fat_free_crm/footer"
     %script{type: "text/javascript"}
       = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
       = get_browser_timezone_offset

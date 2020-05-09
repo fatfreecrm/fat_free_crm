@@ -38,4 +38,4 @@
   %h2.full-width #{t :group_memberships}
   .form-group.full-width
     %label #{t :groups}:
-    = f.select :group_ids, Group.all.map {|g| [g.name, g.id]}, {}, multiple: true, class: 'custom-select'
+    = f.select :group_ids, FatFreeCrm::Group.all.map {|g| [g.name, g.id]}, {}, multiple: true, class: 'custom-select'

@@ -17,7 +17,7 @@
     - elsif called_from_landing_page?(:campaigns)
       = refresh_sidebar_for(:campaigns, :show, :summary)
     - else
-      $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
+      $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');
 - else
   $('##{id}').html('#{ j render(partial: "edit") }');
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });

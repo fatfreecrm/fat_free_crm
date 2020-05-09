@@ -9,7 +9,7 @@ require 'features/acceptance_helper'
 
 feature 'Devise Sign-up' do
   scenario 'with valid credentials' do
-    visit "/users/sign_up"
+    visit "/fat_free_crm/users/sign_up"
 
     fill_in "user[email]", with: "john@example.com"
     fill_in "user[username]", with: "john"
@@ -17,12 +17,12 @@ feature 'Devise Sign-up' do
     fill_in "user[password_confirmation]", with: "password"
     click_button("Sign Up")
 
-    expect(current_path).to eq "/users/sign_in"
+    expect(current_path).to eq "/fat_free_crm/users/sign_in"
     expect(page).to have_content("A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.")
   end
 
   scenario 'without credentials' do
-    visit "/users/sign_up"
+    visit "/fat_free_crm/users/sign_up"
     click_button("Sign Up")
 
     expect(page).to have_content("6 errors prohibited this User from being saved")

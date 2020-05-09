@@ -5,7 +5,7 @@ class CreatePreferences < ActiveRecord::Migration[4.2]
   def self.up
     create_table :fat_free_crm_preferences do |t|
       t.references :user
-      t.string :name, limit: 32, null: false, default: ""
+      t.string :name, limit: 64, null: false, default: ""
       t.text :value
       t.timestamps
     end

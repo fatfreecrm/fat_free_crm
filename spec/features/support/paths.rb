@@ -9,7 +9,7 @@ module NavigationHelpers
   # Put helper methods related to the paths in your application here.
 
   def homepage
-    "/"
+    "/fat_free_crm/"
   end
 
   def accounts_page

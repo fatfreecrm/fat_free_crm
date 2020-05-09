@@ -2,7 +2,7 @@
 
   %ul.tools
     %li= link_to_edit [:admin, group]
-    - count = Permission.where(group_id: group.id).count
+    - count = FatFreeCrm::Permission.where(group_id: group.id).count
     - confirm = (count.zero? ? nil : "#{t(:confirm_group_delete, count)}")
     %li= link_to_delete [:admin, group], confirm: confirm
 

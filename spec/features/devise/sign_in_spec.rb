@@ -9,6 +9,7 @@ require 'features/acceptance_helper'
 
 feature 'Devise Sign-in' do
   background do
+    self.class.include FatFreeCrm::Engine.routes.url_helpers
     Setting.user_signup = :needs_approval
     @user = create :user,
                    username: 'john',
@@ -38,7 +39,7 @@ feature 'Devise Sign-in' do
 
   scenario 'invalid credentials' do
     login_process('jo', 'pass')
-    expect(current_path).to eq "/users/sign_in"
+    expect(current_path).to eq "/fat_free_crm/users/sign_in"
     expect(page).to have_content("Invalid Email or password")
   end
 
@@ -50,7 +51,7 @@ feature 'Devise Sign-in' do
   end
 
   def login_process(username, password)
-    visit '/users/sign_in'
+    visit '/fat_free_crm/users/sign_in'
     fill_in 'user[email]', with: username
     fill_in 'user[password]', with: password
     click_button 'Login'
