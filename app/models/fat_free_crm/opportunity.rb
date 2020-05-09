@@ -146,8 +146,7 @@ module FatFreeCrm
       if attachment.is_a?(Task)
         attachment.update_attribute(:asset, nil)
       else # Contacts
-        attachment_name = attachment.class.name.gsub("FatFreeCrm::", "").gsub("fat_free_crm/", "")
-        send(attachment_name.tableize).delete(attachment)
+        send(attachment.class.name.demodulize.tableize).delete(attachment)
       end
     end
 

@@ -82,7 +82,7 @@ module FatFreeCrm
           send(attachment.class.name.tableize) << attachment
         else # Leads, Opportunities
           attachment.update_attribute(:campaign, self)
-          attachment.send("increment_#{attachment.class.name.tableize}_count")
+          attachment.send("increment_#{attachment.class.name.demodulize.tableize}_count")
           [attachment]
         end
       end
