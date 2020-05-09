@@ -679,7 +679,7 @@ module FatFreeCrm
         get :redraw, params: { per_page: 42, view: "long", sort_by: "first_name", naming: "after" }, xhr: true
         expect(current_user.preference[:contacts_per_page].to_i).to eq(42)
         expect(current_user.preference[:contacts_index_view]).to eq("long")
-        expect(current_user.preference[:contacts_sort_by]).to eq("contacts.first_name ASC")
+        expect(current_user.preference[:contacts_sort_by]).to eq("fat_free_crm_leads.first_name ASC")
         expect(current_user.preference[:contacts_naming]).to eq("after")
       end
 
