@@ -8,8 +8,13 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "/fat_free_crm//opportunities/update" do
+  describe "/fat_free_crm/opportunities/update" do
     before do
+      view.extend ::FatFreeCrm::Engine.routes.url_helpers
+      view.extend FatFreeCrm::AccountsHelper
+      view.extend FatFreeCrm::AddressesHelper
+      view.extend FatFreeCrm::LeadsHelper
+      view.extend FatFreeCrm::CampaignsHelper
       login
 
       assign(:opportunity, @opportunity = build_stubbed(:opportunity, user: current_user, assignee: build_stubbed(:user)))
