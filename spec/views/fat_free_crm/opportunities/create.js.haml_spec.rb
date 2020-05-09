@@ -11,6 +11,9 @@ module FatFreeCrm
   describe "/fat_free_crm/opportunities/create" do
     before do
       view.extend FatFreeCrm::AccountsHelper
+      view.extend FatFreeCrm::CampaignsHelper
+      view.extend FatFreeCrm::AddressesHelper
+      view.extend FatFreeCrm::LeadsHelper
       login
       assign(:stage, Setting.unroll(:opportunity_stage))
     end
@@ -25,12 +28,12 @@ module FatFreeCrm
       it "should hide [Create Opportunity] form and insert opportunity partial" do
         render
 
-        expect(rendered).to include("$('#opportunities').prepend('<li class=\\'fat_free_crm_opportunity highlight\\' id=\\'fat_free_crm_opportunity_#{@opportunity.id}\\'")
+        expect(rendered).to include("$('#opportunities').prepend('<li class=\\'brief fat_free_crm_opportunity flex-container highlight\\' id=\\'fat_free_crm_opportunity_#{@opportunity.id}\\'")
         expect(rendered).to include(%/$('#fat_free_crm_opportunity_#{@opportunity.id}').effect("highlight"/)
       end
 
       it "should update sidebar filters and recently viewed items when called from opportunities page" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/opportunities"
         render
 
         expect(rendered).to include("#sidebar")
@@ -39,7 +42,7 @@ module FatFreeCrm
       end
 
       it "should update pagination when called from opportunities index" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/opportunities"
         render
 
         expect(rendered).to include("#paginate")
@@ -47,7 +50,7 @@ module FatFreeCrm
 
       it "should update related account sidebar when called from related account" do
         assign(:account, account = create(:account))
-        controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/accounts/#{account.id}"
         render
 
         expect(rendered).to include("#sidebar")
@@ -56,7 +59,7 @@ module FatFreeCrm
 
       it "should update related campaign sidebar when called from related campaign" do
         assign(:campaign, campaign = create(:campaign))
-        controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/campaigns/#{campaign.id}"
         render
 
         expect(rendered).to include("#sidebar")
@@ -65,7 +68,7 @@ module FatFreeCrm
       end
 
       it "should update sidebar when called from related contact" do
-        controller.request.env["HTTP_REFERER"] = "http://localhost/contacts/123"
+        controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts/123"
         render
 
         expect(rendered).to include("#recently")

@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "/fat_free_crm//opportunities/index" do
+  describe "/fat_free_crm/opportunities/index" do
 
     before do
       login

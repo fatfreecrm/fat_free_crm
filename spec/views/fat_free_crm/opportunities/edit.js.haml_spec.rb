@@ -11,6 +11,7 @@ module FatFreeCrm
   describe "/fat_free_crm/opportunities/edit" do
 
     before do
+      view.extend FatFreeCrm::AccountsHelper
       login
 
       assign(:opportunity, @opportunity = build_stubbed(:opportunity, user: current_user))
@@ -24,11 +25,11 @@ module FatFreeCrm
       params[:cancel] = "true"
 
       render
-      expect(rendered).to include("$('#opportunity_#{@opportunity.id}').replaceWith")
+      expect(rendered).to include("$('#fat_free_crm_opportunity_#{@opportunity.id}').replaceWith")
     end
 
     it "cancel from opportunity landing page: should hide [Edit Opportunity] form" do
-      controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
+      controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/opportunities/123"
       params[:cancel] = "true"
 
       render
@@ -40,7 +41,7 @@ module FatFreeCrm
       assign(:previous, previous = build_stubbed(:opportunity, user: current_user))
 
       render
-      expect(rendered).to include("$('#opportunity_#{previous.id}').replaceWith")
+      expect(rendered).to include("$('#fat_free_crm_opportunity_#{previous.id}').replaceWith")
     end
 
     it "edit: remove previously open [Edit Opportunity] if it's no longer available" do
@@ -48,16 +49,16 @@ module FatFreeCrm
       assign(:previous, previous = 41)
 
       render
-      expect(rendered).to include("crm.flick('opportunity_#{previous}', 'remove');")
+      expect(rendered).to include("crm.flick('fat_free_crm_opportunity_#{previous}', 'remove');")
     end
 
     it "edit from opportunities index page: should turn off highlight, hide [Create Opportunity] form, and replace current opportunity with [Edit Opportunity] form" do
       params[:cancel] = nil
 
       render
-      expect(rendered).to include("crm.highlight_off('opportunity_#{@opportunity.id}');")
+      expect(rendered).to include("crm.highlight_off('fat_free_crm_opportunity_#{@opportunity.id}');")
       expect(rendered).to include("crm.hide_form('create_opportunity')")
-      expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
+      expect(rendered).to include("$('#fat_free_crm_opportunity_#{@opportunity.id}').html")
     end
 
     it "edit from opportunity landing page: should show [Edit Opportunity] form" do
