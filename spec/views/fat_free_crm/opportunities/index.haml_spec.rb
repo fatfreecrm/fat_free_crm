@@ -24,7 +24,7 @@ module FatFreeCrm
 
       render
       expect(view).to render_template(partial: "_opportunity")
-      expect(view).to render_template(partial: "shared/_paginate_with_per_page")
+      expect(view).to render_template(partial: "fat_free_crm/shared/_paginate_with_per_page")
     end
 
     it "should render a message if there're no opportunities" do
@@ -32,8 +32,8 @@ module FatFreeCrm
 
       render
       expect(view).not_to render_template(partial: "_opportunities")
-      expect(view).to render_template(partial: "shared/_empty")
-      expect(view).to render_template(partial: "shared/_paginate_with_per_page")
+      expect(view).to render_template(partial: "fat_free_crm/shared/_empty")
+      expect(view).to render_template(partial: "fat_free_crm/shared/_paginate_with_per_page")
     end
   end
 end

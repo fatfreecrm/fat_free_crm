@@ -18,7 +18,7 @@ module FatFreeCrm
       bob = build_stubbed(:user)
       assign(:users, [amy, bob].paginate)
 
-      render template: 'admin/users/index', formats: [:js]
+      render template: 'fat_free_crm/admin/users/index', formats: [:js]
 
       expect(rendered).to include("id=\\'user_#{amy.id}\\'")
       expect(rendered).to include("id=\\'user_#{bob.id}\\'")
