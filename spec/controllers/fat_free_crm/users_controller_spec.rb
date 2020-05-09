@@ -201,7 +201,7 @@ module FatFreeCrm
       end
 
       it "should save the user avatar if it was successfully uploaded and resized" do
-        @image = fixture_file_upload('/rails.png', 'image/png')
+        @image = fixture_file_upload('spec/fixtures/rails.png', 'image/png')
 
         put :upload_avatar, params: { id: @user.id, avatar: { image: @image } }, xhr: true
         expect(@user.avatar).not_to eq(nil)
