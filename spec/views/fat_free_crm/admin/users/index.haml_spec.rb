@@ -18,7 +18,7 @@ module FatFreeCrm
 
       render
       expect(view).to render_template(partial: "_user")
-      expect(view).to render_template(partial: "shared/_paginate")
+      expect(view).to render_template(partial: "fat_free_crm/shared/_paginate")
     end
   end
 end
