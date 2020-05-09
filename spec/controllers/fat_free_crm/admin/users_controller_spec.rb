@@ -26,7 +26,7 @@ module FatFreeCrm
         get :index
         expect(assigns[:users].first).to eq(@users.last) # get_users() sorts by id DESC
         expect(assigns[:users].last).to eq(@users.first)
-        expect(response).to render_template("admin/users/index")
+        expect(response).to render_template("fat_free_crm/admin/users/index")
       end
 
       it "performs lookup using query string" do
@@ -49,7 +49,7 @@ module FatFreeCrm
 
         get :show, params: { id: @user.id }
         expect(assigns[:user]).to eq(@user)
-        expect(response).to render_template("admin/users/show")
+        expect(response).to render_template("fat_free_crm/admin/users/show")
       end
     end
 
@@ -62,7 +62,7 @@ module FatFreeCrm
         get :edit, params: { id: @user.id }, xhr: true
         expect(assigns[:user]).to eq(@user)
         expect(assigns[:previous]).to eq(nil)
-        expect(response).to render_template("admin/users/edit")
+        expect(response).to render_template("fat_free_crm/admin/users/edit")
       end
 
       it "assigns the previous user as @previous when necessary" do
@@ -90,7 +90,7 @@ module FatFreeCrm
         get :edit, params: { id: @user.id, previous: @previous.id }, xhr: true
         expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
         expect(assigns[:previous]).to eq(@previous.id)
-        expect(response).to render_template("admin/users/edit")
+        expect(response).to render_template("fat_free_crm/admin/users/edit")
       end
     end
 
@@ -105,7 +105,7 @@ module FatFreeCrm
           put :update, params: { id: @user.id, user: { username: "flop", email: "flop@example.com" } }, xhr: true
           expect(assigns[:user]).to eq(@user.reload)
           expect(assigns[:user].username).to eq("flop")
-          expect(response).to render_template("admin/users/update")
+          expect(response).to render_template("fat_free_crm/admin/users/update")
         end
 
         it "reloads current page is the user got deleted" do
@@ -122,7 +122,7 @@ module FatFreeCrm
           put :update, params: { id: @user.id, user: { admin: "1", username: @user.username, email: @user.email } }, xhr: true
           expect(assigns[:user]).to eq(@user.reload)
           expect(assigns[:user].admin).to eq(true)
-          expect(response).to render_template("admin/users/update")
+          expect(response).to render_template("fat_free_crm/admin/users/update")
         end
 
         it "revokes admin rights when requested so" do
@@ -130,7 +130,7 @@ module FatFreeCrm
           put :update, params: { id: @user.id, user: { admin: "0", username: @user.username, email: @user.email } }, xhr: true
           expect(assigns[:user]).to eq(@user.reload)
           expect(assigns[:user].admin).to eq(false)
-          expect(response).to render_template("admin/users/update")
+          expect(response).to render_template("fat_free_crm/admin/users/update")
         end
       end
 
@@ -141,7 +141,7 @@ module FatFreeCrm
           put :update, params: { id: @user.id, user: {} }, xhr: true
           expect(assigns[:user]).to eq(@user.reload)
           expect(assigns[:user].username).to eq("flip")
-          expect(response).to render_template("admin/users/update")
+          expect(response).to render_template("fat_free_crm/admin/users/update")
         end
       end
     end
@@ -154,7 +154,7 @@ module FatFreeCrm
 
         get :confirm, params: { id: @user.id }, xhr: true
         expect(assigns[:user]).to eq(@user)
-        expect(response).to render_template("admin/users/confirm")
+        expect(response).to render_template("fat_free_crm/admin/users/confirm")
       end
 
       it "reloads current page is the user got deleted" do
@@ -176,7 +176,7 @@ module FatFreeCrm
 
         delete :destroy, params: { id: @user.id }, xhr: true
         expect { FatFreeCrm::User.find(@user.id) }.to raise_error(ActiveRecord::RecordNotFound)
-        expect(response).to render_template("admin/users/destroy")
+        expect(response).to render_template("fat_free_crm/admin/users/destroy")
       end
 
       it "handles the case when the requested user can't be deleted" do
@@ -186,7 +186,7 @@ module FatFreeCrm
         delete :destroy, params: { id: @user.id }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
         expect { FatFreeCrm::User.find(@user.id) }.not_to raise_error
-        expect(response).to render_template("admin/users/destroy")
+        expect(response).to render_template("fat_free_crm/admin/users/destroy")
       end
     end
 
@@ -209,7 +209,7 @@ module FatFreeCrm
 
         put :suspend, params: { id: @user.id }, xhr: true
         expect(assigns[:user].suspended?).to eq(true)
-        expect(response).to render_template("admin/users/suspend")
+        expect(response).to render_template("fat_free_crm/admin/users/suspend")
       end
 
       it "doesn't suspend current user" do
@@ -217,7 +217,7 @@ module FatFreeCrm
 
         put :suspend, params: { id: @user.id }, xhr: true
         expect(assigns[:user].suspended?).to eq(false)
-        expect(response).to render_template("admin/users/suspend")
+        expect(response).to render_template("fat_free_crm/admin/users/suspend")
       end
 
       it "reloads current page is the user got deleted" do
@@ -239,7 +239,7 @@ module FatFreeCrm
 
         put :reactivate, params: { id: @user.id }, xhr: true
         expect(assigns[:user].suspended?).to eq(false)
-        expect(response).to render_template("admin/users/reactivate")
+        expect(response).to render_template("fat_free_crm/admin/users/reactivate")
       end
 
       it "reloads current page is the user got deleted" do
