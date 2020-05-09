@@ -2,6 +2,6 @@
 .panel#recently
   %h4.caption.heading #{t :recent_items}
   - if @versions.present?
-    %ul.recent-list= render partial: "shared/recent", collection: @versions
+    %ul.recent-list= render partial: "fat_free_crm/shared/recent", collection: @versions
   - else
     %div #{t :no_recent_items}

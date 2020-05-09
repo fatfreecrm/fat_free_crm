@@ -37,7 +37,7 @@ module FatFreeCrm
         render
 
         expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Opportunity Stages")
+        expect(rendered).to have_text("Resource Stages")
         expect(rendered).to have_text("Recent Items")
       end
 

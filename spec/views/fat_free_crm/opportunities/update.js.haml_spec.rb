@@ -40,7 +40,7 @@ module FatFreeCrm
         it "should update sidebar" do
           render
           expect(rendered).to include("#sidebar")
-          expect(rendered).to have_text("Opportunity At a Glance")
+          expect(rendered).to have_text("Resource At a Glance")
           expect(rendered).to have_text("Recent Items")
           expect(rendered).to include("$('#summary').effect('shake'")
         end
@@ -53,14 +53,14 @@ module FatFreeCrm
 
         it "should replace [Edit Opportunity] with opportunity partial and highlight it" do
           render
-          expect(rendered).to include("$('#opportunity_#{@opportunity.id}').replaceWith")
-          expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
+          expect(rendered).to include("$('#fat_free_crm_opportunity_#{@opportunity.id}').replaceWith")
+          expect(rendered).to include(%/$('#fat_free_crm_opportunity_#{@opportunity.id}').effect("highlight"/)
         end
 
         it "should update sidebar" do
           render
           expect(rendered).to include("sidebar")
-          expect(rendered).to have_text("Opportunity Stages")
+          expect(rendered).to have_text("Resource Stages")
           expect(rendered).to have_text("Recent Items")
           expect(rendered).to include("$('#filters').effect('shake'")
         end
@@ -98,7 +98,7 @@ module FatFreeCrm
           controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts/123"
           render
 
-          expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("highlight"/)
+          expect(rendered).to include(%/$('#fat_free_crm_opportunity_#{@opportunity.id}').effect("highlight"/)
         end
       end
     end
@@ -129,9 +129,9 @@ module FatFreeCrm
 
         it "should redraw the [edit_opportunity] form and shake it" do
           render
-          expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
+          expect(rendered).to include("$('#fat_free_crm_opportunity_#{@opportunity.id}').html")
           expect(rendered).to include('crm.create_or_select_account(false)')
-          expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
+          expect(rendered).to include(%/$('#fat_free_crm_opportunity_#{@opportunity.id}').effect("shake"/)
           expect(rendered).to include('focus()')
         end
       end
@@ -148,8 +148,8 @@ module FatFreeCrm
 
         it "should redraw the [edit_opportunity] form and shake it" do
           render
-          expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
-          expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
+          expect(rendered).to include("$('#fat_free_crm_opportunity_#{@opportunity.id}').html")
+          expect(rendered).to include(%/$('#fat_free_crm_opportunity_#{@opportunity.id}').effect("shake"/)
           expect(rendered).to include('focus()')
         end
       end

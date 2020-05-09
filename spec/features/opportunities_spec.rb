@@ -23,7 +23,7 @@ feature 'Opportunities', '
     expect(page).to have_content('Opportunity 0')
     expect(page).to have_content('Opportunity 1')
     expect(page).to have_content('Opportunity 2')
-    expect(page).to have_content('Create Opportunity')
+    expect(page).to have_content('Create Resource')
   end
 
   scenario 'should create a new opportunity', js: true do
