@@ -755,7 +755,7 @@ module FatFreeCrm
         expect(@opportunity.access).to eq("Shared")
         expect(@opportunity.permissions.map(&:user_id).sort).to eq([7, 8])
         expect(@opportunity.permissions.map(&:asset_id)).to eq([@opportunity.id, @opportunity.id])
-        expect(@opportunity.permissions.map(&:asset_type)).to eq(%w[Opportunity Opportunity])
+        expect(@opportunity.permissions.map(&:asset_type)).to eq(%w[FatFreeCrm::Opportunity FatFreeCrm::Opportunity])
       end
 
       it "should assign lead's campaign to the newly created opportunity" do
@@ -968,7 +968,7 @@ module FatFreeCrm
 
       it "should set similar options for Contacts" do
         get :redraw, params: { sort_by: "first_name", naming: "after" }, xhr: true
-        expect(current_user.pref[:contacts_sort_by]).to eq("contacts.first_name ASC")
+        expect(current_user.pref[:contacts_sort_by]).to eq("fat_free_crm_contacts.first_name ASC")
         expect(current_user.pref[:contacts_naming]).to eq("after")
       end
 
