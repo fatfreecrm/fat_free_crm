@@ -37,7 +37,7 @@ module FatFreeCrm
 
       if params[:related]
         model, id = params[:related].split('_')
-        instance_variable_set("@#{model}", model.classify.constantize.find(id))
+        instance_variable_set("@#{model}", "FatFreeCrm::#{model.classify}".constantize.find(id))
       end
 
       respond_with(@account)
