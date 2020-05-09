@@ -14,7 +14,7 @@
         = t(:added_by, time_ago: opportunity.created_at, user: h(user_name)).html_safe
       - else
         = t(:added_ago, value: opportunity.created_at).html_safe
-  - unless current_user.preference[:opportunities_index_view] == "opportunities_index_brief"
+  - unless current_user.preference['fat_free_crm/opportunities_index_view'] == "opportunities_index_brief"
     .revenue-message
       = opportunity_revenue_message(opportunity)
 

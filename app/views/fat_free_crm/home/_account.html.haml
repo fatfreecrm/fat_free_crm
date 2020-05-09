@@ -14,7 +14,7 @@
     - else
       = t(:added_ago, value: timeago(account.created_at)).html_safe
 
-  - unless current_user.preference[:accounts_index_view] == "accounts_index_brief"
+  - unless current_user.preference['fat_free_crm/accounts_index_view'] == "accounts_index_brief"
     %span
       = link_to(account.website, account.website.to_url) + " | " if account.website.present?
       = link_to_email(account.email) + " | " if account.email.present?

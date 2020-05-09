@@ -100,7 +100,7 @@ module FatFreeCrm
     # Attach given attachment to the account if it hasn't been attached already.
     #----------------------------------------------------------------------------
     def attach!(attachment)
-      send(attachment.class.name.demodulize.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      send(attachment.class.name.demodulize.tableize) << attachment unless send("#{attachment.class.name.demodulize.downcase}_ids").include?(attachment.id)
     end
 
     # Discard given attachment from the account.

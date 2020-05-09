@@ -366,7 +366,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
 
   create_table "fat_free_crm_preferences", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.string "name", limit: 32, default: "", null: false
+    t.string "name", limit: 64, default: "", null: false
     t.text "value"
     t.datetime "created_at"
     t.datetime "updated_at"

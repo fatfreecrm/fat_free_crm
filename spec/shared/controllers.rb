@@ -76,7 +76,7 @@ shared_examples "discard" do
   it "should discard the attachment without deleting it" do
     post :discard, params: { id: @model.id, attachment: @attachment.class.name, attachment_id: @attachment.id }, xhr: true
     expect(assigns[:attachment]).to eq(@attachment.reload)                     # The attachment should still exist.
-    expect(@model.reload.send(@attachment.class.name.tableize.to_s)).to eq([]) # But no longer associated with the model.
+    expect(@model.reload.send(@attachment.class.name.demodulize.tableize.to_s)).to eq([]) # But no longer associated with the model.
     expect(assigns[:account]).to eq(@model) if @model.is_a?(FatFreeCrm::Account)
     expect(assigns[:campaign]).to eq(@model) if @model.is_a?(FatFreeCrm::Campaign)
 

@@ -72,7 +72,7 @@ module FatFreeCrm
       respond_with(@account) do |_format|
         # Must set access before user_ids, because user_ids= method depends on access value.
         @account.access = params[:account][:access] if params[:account][:access]
-        get_data_for_sidebar if @account.update_attributes(resource_params)
+        get_data_for_sidebar if @account.update(resource_params)
       end
     end
 
@@ -103,7 +103,7 @@ module FatFreeCrm
     #----------------------------------------------------------------------------
     def redraw
       current_user.pref[:accounts_per_page] = per_page_param if per_page_param
-      current_user.pref[:accounts_sort_by]  = Account.sort_by_map[params[:sort_by]] if params[:sort_by]
+      current_user.pref[:accounts_sort_by]  = FatFreeCrm::Account.sort_by_map[params[:sort_by]] if params[:sort_by]
       @accounts = get_accounts(page: 1, per_page: per_page_param)
       set_options # Refresh options
 
