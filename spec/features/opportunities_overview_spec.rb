@@ -13,6 +13,7 @@ feature 'Opportunities Overview', "
   I want to see an overview of opportunities broken down by user
 " do
   background do
+    self.class.include FatFreeCrm::Engine.routes.url_helpers
     @me = create(:user)
 
     login_as_user(@me)

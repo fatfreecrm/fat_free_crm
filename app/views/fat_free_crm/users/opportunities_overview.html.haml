@@ -11,6 +11,6 @@
           %span#title
             = t(:unassigned_opportunities)
         %ul.list#opportunities
-          = render partial: "opportunities/opportunity", collection: @unassigned_opportunities
+          = render partial: "fat_free_crm/opportunities/opportunity", collection: @unassigned_opportunities
 - else
   = t(:no_opportunities_found)
