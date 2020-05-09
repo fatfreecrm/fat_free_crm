@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 module FatFreeCrm
-  describe "/fat_free_crm//opportunities/show" do
+  describe "/fat_free_crm/opportunities/show" do
 
     before do
       login
@@ -25,10 +25,10 @@ module FatFreeCrm
 
     it "should render opportunity landing page" do
       render
-      expect(view).to render_template(partial: "comments/_new")
-      expect(view).to render_template(partial: "shared/_timeline")
-      expect(view).to render_template(partial: "shared/_tasks")
-      expect(view).to render_template(partial: "contacts/_contact")
+      expect(view).to render_template(partial: "fat_free_crm/comments/_new")
+      expect(view).to render_template(partial: "fat_free_crm/shared/_timeline")
+      expect(view).to render_template(partial: "fat_free_crm/shared/_tasks")
+      expect(view).to render_template(partial: "fat_free_crm/contacts/_contact")
 
       expect(rendered).to have_tag("div[id=edit_opportunity]")
     end
