@@ -54,6 +54,6 @@ feature 'Devise Sign-in' do
     visit '/fat_free_crm/users/sign_in'
     fill_in 'user[email]', with: username
     fill_in 'user[password]', with: password
-    click_button 'Log in'
+    click_button 'Login'
   end
 end
