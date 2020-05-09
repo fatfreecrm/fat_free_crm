@@ -17,7 +17,7 @@ module FatFreeCrm
 
     it "renders [Create User] form" do
       render
-      expect(view).to render_template(partial: "admin/users/_profile")
+      expect(view).to render_template(partial: "fat_free_crm/admin/users/_profile")
 
       expect(rendered).to have_tag("form[class=new_user]")
     end
