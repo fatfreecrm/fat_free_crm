@@ -22,7 +22,7 @@ FactoryBot.define do
     created_at          { FactoryBot.generate(:time) }
   end
 
-  factory :account_contact do
+  factory :account_contact, class: FatFreeCrm::AccountContact do
     account
     contact
     deleted_at          { nil }
@@ -30,7 +30,7 @@ FactoryBot.define do
     created_at          { FactoryBot.generate(:time) }
   end
 
-  factory :account_opportunity do
+  factory :account_opportunity, class: FatFreeCrm::AccountOpportunity do
     account
     opportunity
     deleted_at          { nil }
