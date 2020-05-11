@@ -5,11 +5,11 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe 'ActiveModel Validation Errors' do
   it 'should render explicit error message if it starts with a caret' do
-    class Adam < User
+    class Adam < FatFreeCrm::User
       validates_presence_of :title, message: '^Missing title'
     end
 
@@ -20,7 +20,7 @@ describe 'ActiveModel Validation Errors' do
   end
 
   it 'should exhibit default behavior' do
-    class Eve < User
+    class Eve < FatFreeCrm::User
       validates_presence_of :title, message: 'missing'
     end
 
