@@ -11,6 +11,8 @@ module FatFreeCrm
   describe "/fat_free_crm/leads/reject" do
     before do
       view.extend FatFreeCrm::OpportunitiesHelper
+      view.extend FatFreeCrm::CampaignsHelper
+      view.extend FatFreeCrm::AddressesHelper
       login
       assign(:lead, @lead = build_stubbed(:lead, status: "new"))
       assign(:lead_status_total, Hash.new(1))
