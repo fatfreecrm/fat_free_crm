@@ -22,11 +22,11 @@ module FatFreeCrm
       end
 
       it "sets the subject" do
-        expect(mail.subject).to eq("RE: [opportunity:47] Opportunity name")
+        expect(mail.subject).to eq("RE: [fatfreecrm::opportunity:47] Opportunity name")
       end
 
       it "includes link to opportunity in body" do
-        expect(mail.body.encoded).to match('http://www.example.com/opportunities/47')
+        expect(mail.body.encoded).to match('http://www.example.com/fat_free_crm/opportunities/47')
       end
 
       it "uses email defined in settings as the sender" do
