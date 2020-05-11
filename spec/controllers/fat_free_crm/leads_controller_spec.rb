@@ -233,7 +233,7 @@ module FatFreeCrm
 
           get :new, params: { related: "campaign_#{@campaign.id}" }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
-          expect(response.body).to eq('window.location.href = "/campaigns";')
+          expect(response.body).to eq('window.location.href = "/fat_free_crm/campaigns";')
         end
 
         it "should redirect to parent asset's index page with the message if parent asset got protected" do
@@ -241,7 +241,7 @@ module FatFreeCrm
 
           get :new, params: { related: "campaign_#{@campaign.id}" }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
-          expect(response.body).to eq('window.location.href = "/campaigns";')
+          expect(response.body).to eq('window.location.href = "/fat_free_crm/campaigns";')
         end
       end
     end
@@ -298,7 +298,7 @@ module FatFreeCrm
           get :edit, params: { id: @lead.id, previous: @previous.id }, xhr: true
           expect(flash[:warning]).to eq(nil) # no warning, just silently remove the div
           expect(assigns[:previous]).to eq(@previous.id)
-          expect(response).to render_template("leads/edit")
+          expect(response).to render_template("fat_free_crm/leads/edit")
         end
 
         it "should notify the view if previous lead got protected" do
@@ -307,7 +307,7 @@ module FatFreeCrm
           get :edit, params: { id: @lead.id, previous: @previous.id }, xhr: true
           expect(flash[:warning]).to eq(nil)
           expect(assigns[:previous]).to eq(@previous.id)
-          expect(response).to render_template("leads/edit")
+          expect(response).to render_template("fat_free_crm/leads/edit")
         end
       end
     end
@@ -962,7 +962,7 @@ module FatFreeCrm
         get :redraw, params: { per_page: 42, view: "long", sort_by: "first_name", naming: "after" }, xhr: true
         expect(current_user.preference[:leads_per_page]).to eq(42)
         expect(current_user.preference[:leads_index_view]).to eq("long")
-        expect(current_user.preference[:leads_sort_by]).to eq("leads.first_name ASC")
+        expect(current_user.preference[:leads_sort_by]).to eq("fat_free_crm_leads.first_name ASC")
         expect(current_user.preference[:leads_naming]).to eq("after")
       end
 
