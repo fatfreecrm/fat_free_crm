@@ -5,16 +5,7 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in call_center.gemspec
 gemspec
 
-case ENV['CI'] && ENV['DB']
-when 'sqlite'
-  gem 'sqlite3', '~> 1.3.13'
-when 'mysql'
-  gem 'mysql2'
-when 'postgres'
-  gem 'pg'
-else
-  gem 'pg'
-end
+gem 'pg'
 
 # Removes a gem dependency
 def remove(name)
