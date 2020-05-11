@@ -34,7 +34,7 @@ module FatFreeCrm
     belongs_to :mediator, polymorphic: true
     belongs_to :user
 
-    has_paper_trail class_name: 'FatFreeCrm::Version', meta: { related: :mediator },
+    has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, meta: { related: :mediator },
                     ignore: [:state]
 
     def expanded?

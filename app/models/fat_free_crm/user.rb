@@ -66,7 +66,7 @@ module FatFreeCrm
     has_many :lists
     has_and_belongs_to_many :groups, optional: true
 
-    has_paper_trail class_name: 'FatFreeCrm::Version', ignore: [:last_sign_in_at]
+    has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, ignore: [:last_sign_in_at]
 
     scope :by_id, -> { order('id DESC') }
     scope :without_user, ->(user) { where('id != ?', user.id).by_name }
