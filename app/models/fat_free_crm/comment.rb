@@ -29,7 +29,7 @@ module FatFreeCrm
     scope :created_by, ->(user) { where(user_id: user.id) }
 
     validates_presence_of :user, :commentable, :comment
-    has_paper_trail class_name: 'FatFreeCrm::Version', meta: { related: :commentable },
+    has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, meta: { related: :commentable },
                     ignore: [:state]
 
     before_create :subscribe_mentioned_users

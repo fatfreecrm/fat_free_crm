@@ -89,7 +89,7 @@ module FatFreeCrm
     acts_as_commentable
     uses_comment_extensions
     acts_as_taggable_on :tags
-    has_paper_trail class_name: 'FatFreeCrm::Version', ignore: [:subscribed_users]
+    has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, ignore: [:subscribed_users]
 
     has_fields
     exportable
