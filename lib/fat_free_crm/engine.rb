@@ -59,6 +59,14 @@ module FatFreeCrm
       self.include_root_in_json = true
     end
 
+    config.active_record.observers = [
+      "FatFreeCrm::LeadObserver",
+      "FatFreeCrm::OpportunityObserver",
+      "FatFreeCrm::TaskObserver",
+      "FatFreeCrm::EntityObserver"
+      # :lead_observer, :opportunity_observer, :task_observer, :entity_observer
+    ]
+
     config.after_initialize do
       ActionView::Base.include FatFreeCrm::Callback::Helper
       ActionController::Base.include FatFreeCrm::Callback::Helper
