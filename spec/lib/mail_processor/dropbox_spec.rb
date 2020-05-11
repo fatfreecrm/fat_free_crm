@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 require File.dirname(__FILE__) + '/sample_emails/dropbox'
 
 require "fat_free_crm/mail_processor/dropbox"
@@ -74,8 +74,8 @@ describe FatFreeCrm::MailProcessor::Dropbox do
       expect(@crawler).not_to receive(:with_recipients)
       @crawler.run
 
-      @campaign = Campaign.find_by(name: 'Got milk')
-      expect(@campaign).to be_instance_of(Campaign)
+      @campaign = FatFreeCrm::Campaign.find_by(name: 'Got milk')
+      expect(@campaign).to be_instance_of(FatFreeCrm::Campaign)
       expect(@campaign.emails.size).to eq(1)
       expect(@campaign.emails.first.mediator).to eq(@campaign)
     end
@@ -97,8 +97,8 @@ describe FatFreeCrm::MailProcessor::Dropbox do
       expect(@crawler).not_to receive(:with_recipients)
       @crawler.run
 
-      @lead = Lead.find_by(first_name: 'Cindy', last_name: 'Cluster')
-      expect(@lead).to be_instance_of(Lead)
+      @lead = FatFreeCrm::Lead.find_by(first_name: 'Cindy', last_name: 'Cluster')
+      expect(@lead).to be_instance_of(FatFreeCrm::Lead)
       expect(@lead.status).to eq("contacted")
       expect(@lead.emails.size).to eq(1)
       expect(@lead.emails.first.mediator).to eq(@lead)
@@ -121,8 +121,8 @@ describe FatFreeCrm::MailProcessor::Dropbox do
       expect(@crawler).not_to receive(:with_recipients)
       @crawler.run
 
-      @contact = Contact.find_by(first_name: 'Cindy', last_name: 'Cluster')
-      expect(@contact).to be_instance_of(Contact)
+      @contact = FatFreeCrm::Contact.find_by(first_name: 'Cindy', last_name: 'Cluster')
+      expect(@contact).to be_instance_of(FatFreeCrm::Contact)
       expect(@contact.emails.size).to eq(1)
       expect(@contact.emails.first.mediator).to eq(@contact)
     end
@@ -156,9 +156,9 @@ describe FatFreeCrm::MailProcessor::Dropbox do
 
     it "should create the asset and attach the email message" do
       expect(@crawler).to receive(:archive).once
-      expect { @crawler.run }.to change(Contact, :count).by(1)
+      expect { @crawler.run }.to change(FatFreeCrm::Contact, :count).by(1)
 
-      @contact = Contact.last
+      @contact = FatFreeCrm::Contact.last
       expect(@contact.emails.size).to eq(1)
       expect(@contact.emails.first.mediator).to eq(@contact)
     end
@@ -248,7 +248,7 @@ describe FatFreeCrm::MailProcessor::Dropbox do
       expect(@crawler).to receive(:archive).once
       @crawler.run
 
-      @contact = Contact.first
+      @contact = FatFreeCrm::Contact.first
       expect(@contact.email).to eq("ben@example.com")
       expect(@contact.emails.size).to eq(1)
       expect(@contact.emails.first.mediator).to eq(@contact)
@@ -259,7 +259,7 @@ describe FatFreeCrm::MailProcessor::Dropbox do
       expect(@crawler).to receive(:archive).once
       @crawler.run
 
-      @contact = Contact.first
+      @contact = FatFreeCrm::Contact.first
       expect(@contact.email).to eq("ben@example.com")
       expect(@contact.emails.size).to eq(1)
       expect(@contact.emails.first.mediator).to eq(@contact)

@@ -57,7 +57,7 @@ module FatFreeCrm
       #--------------------------------------------------------------------------------------
       def create_comment(email, entity_name, entity_id)
         # Find entity from subject params
-        if (entity = entity_name.capitalize.constantize.find_by_id(entity_id))
+        if (entity = ("FatFreeCrm::" + entity_name.classify).constantize.find_by_id(entity_id))
           # Create comment if sender has permissions for entity
           if sender_has_permissions_for?(entity)
             parsed_reply = EmailReplyParser.parse_reply(plain_text_body(email))
