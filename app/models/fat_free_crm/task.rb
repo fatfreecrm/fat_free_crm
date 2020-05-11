@@ -112,6 +112,7 @@ module FatFreeCrm
     acts_as_commentable
     has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, meta: { related: :asset },
                     ignore: [:subscribed_users]
+    include FatFreeCrm::Fields
     has_fields
     exportable
 

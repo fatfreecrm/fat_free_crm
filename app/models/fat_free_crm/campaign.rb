@@ -55,6 +55,8 @@ module FatFreeCrm
     uses_comment_extensions
     acts_as_taggable_on :tags
     has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, ignore: [:subscribed_users]
+
+    include FatFreeCrm::Fields
     has_fields
     exportable
     sortable by: ["name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
@@ -77,9 +79,9 @@ module FatFreeCrm
     # Attach given attachment to the campaign if it hasn't been attached already.
     #----------------------------------------------------------------------------
     def attach!(attachment)
-      unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+      unless send("#{attachment.class.name.demodulize.downcase}_ids").include?(attachment.id)
         if attachment.is_a?(Task)
-          send(attachment.class.name.tableize) << attachment
+          send(attachment.class.name.demodulize.tableize) << attachment
         else # Leads, Opportunities
           attachment.update_attribute(:campaign, self)
           attachment.send("increment_#{attachment.class.name.demodulize.tableize}_count")
@@ -94,7 +96,7 @@ module FatFreeCrm
       if attachment.is_a?(Task)
         attachment.update_attribute(:asset, nil)
       else # Leads, Opportunities
-        attachment.send("decrement_#{attachment.class.name.tableize}_count")
+        attachment.send("decrement_#{attachment.class.name.demodulize.tableize}_count")
         attachment.update_attribute(:campaign, nil)
       end
     end

@@ -74,8 +74,7 @@ module FatFreeCrm
         super
       end
 
-      def method_missing(orig_method, *args, &block)
-        method_id = orig_method.to_s.gsub("fatfreecrm::", "").to_sym
+      def method_missing(method_id, *args, &block)
         if method_id.to_s.match?(/\Acf_.*[^=]\Z/)
           # Refresh columns and try again.
           self.class.reset_column_information
@@ -86,11 +85,9 @@ module FatFreeCrm
           # Try again if object now responds to method, else return nil
           object.respond_to?(method_id) ? object.send(method_id, *args) : nil
         else
-          super(method_id, *args, &block)
+          super
         end
       end
     end
   end
 end
-
-ActiveRecord::Base.include FatFreeCrm::Fields

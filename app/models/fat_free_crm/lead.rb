@@ -68,6 +68,7 @@ module FatFreeCrm
     uses_comment_extensions
     acts_as_taggable_on :tags
     has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, ignore: [:subscribed_users]
+    include FatFreeCrm::Fields
     has_fields
     exportable
     sortable by: ["first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
