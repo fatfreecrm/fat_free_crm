@@ -204,7 +204,7 @@ module FatFreeCrm
 
           get :new, params: { related: "account_#{@account.id}" }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
-          expect(response.body).to eq('window.location.href = "/accounts";')
+          expect(response.body).to eq('window.location.href = "/fat_free_crm/accounts";')
         end
 
         it "should redirect to parent asset's index page with the message if parent asset got protected" do
@@ -212,7 +212,7 @@ module FatFreeCrm
 
           get :new, params: { related: "account_#{@account.id}" }, xhr: true
           expect(flash[:warning]).not_to eq(nil)
-          expect(response.body).to eq('window.location.href = "/accounts";')
+          expect(response.body).to eq('window.location.href = "/fat_free_crm/accounts";')
         end
       end
     end
@@ -685,7 +685,7 @@ module FatFreeCrm
 
       it "should set similar options for Leads" do
         get :redraw, params: { sort_by: "first_name", naming: "after" }, xhr: true
-        expect(current_user.pref[:leads_sort_by]).to eq("leads.first_name ASC")
+        expect(current_user.pref[:leads_sort_by]).to eq("fat_free_crm_leads.first_name ASC")
         expect(current_user.pref[:leads_naming]).to eq("after")
       end
 
