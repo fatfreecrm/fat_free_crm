@@ -18,7 +18,7 @@ module FatFreeCrm
         # when Dropbox is initialized. This needs to be done so that Rake tasks such as
         # 'assets:precompile' can run on Heroku without depending on a database.
         # See: http://devcenter.heroku.com/articles/rails31_heroku_cedar#troubleshooting
-        @@assets = [Account, Contact, Lead].freeze
+        @@assets = [FatFreeCrm::Account, FatFreeCrm::Contact, FatFreeCrm::Lead].freeze
         @settings = Setting.email_dropbox.dup
         super
       end
@@ -85,7 +85,7 @@ module FatFreeCrm
       # Process pipe_separated_data or explicit keyword.
       #--------------------------------------------------------------------------------------
       def find_or_create_and_attach(email, data)
-        klass = data["Type"].constantize
+        klass = ("FatFreeCrm::" + data["Type"].classify).constantize
 
         if data["Email"] && klass.new.respond_to?(:email)
           conditions = [
