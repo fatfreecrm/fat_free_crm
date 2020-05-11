@@ -512,7 +512,6 @@ DEPENDENCIES
   selenium-webdriver
   simple_form
   sprockets-rails
-  sqlite3 (~> 1.3.13)
   thor
   timecop
   tzinfo-data

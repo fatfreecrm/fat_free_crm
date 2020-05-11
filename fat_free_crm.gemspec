@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'rails', '~> 6.0'
   
-
+  gem.add_dependency 'pg'
   gem.add_dependency 'sass-rails'
   gem.add_dependency 'coffee-rails'
   gem.add_dependency 'uglifier'

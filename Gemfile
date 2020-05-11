@@ -5,8 +5,6 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in call_center.gemspec
 gemspec
 
-gem 'pg'
-
 # Removes a gem dependency
 def remove(name)
   @dependencies.reject! { |d| d.name == name }
@@ -69,7 +67,6 @@ group :test do
   gem 'database_cleaner'
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
-  gem 'sqlite3', '~> 1.3.13'
 end
 
 group :heroku do
