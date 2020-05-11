@@ -40,7 +40,7 @@ jobs:
     - name: Create And Migrate DB
       run: |
         cp -f spec/dummy/config/database.gh_actions.yml spec/dummy/config/database.yml
-        psql -U postgres -c "create database dummy_test;"
+        psql -U postgres -h localhost -c "create database dummy_test;"
         RAILS_ENV=test bundle exec rails db:migrate
     - name: Run RSpec
       run: |
