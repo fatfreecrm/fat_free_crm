@@ -11,8 +11,10 @@ module FatFreeCrm
   describe "/fat_free_crm/contacts/show" do
 
     before do
+      view.controller.extend ::FatFreeCrm::Engine.routes.url_helpers
       view.extend FatFreeCrm::JavascriptHelper
       view.extend FatFreeCrm::CommentsHelper
+      view.extend FatFreeCrm::OpportunitiesHelper
       login
       @contact = create(:contact, id: 42,
                                   opportunities: [create(:opportunity)])

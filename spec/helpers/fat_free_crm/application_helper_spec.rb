@@ -38,35 +38,36 @@ module FatFreeCrm
 
     it "link_to_discard" do
       lead = create(:lead)
-      allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
+      allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/fat_free_crm/leads/#{lead.id}")
 
       link = helper.link_to_discard(lead)
       expect(link).to match(%r{leads/#{lead.id}/discard})
-      expect(link).to match(/attachment=Lead&amp;attachment_id=#{lead.id}/)
+      expect(link).to match(/attachment=FatFreeCrm%3A%3ALead&amp;attachment_id=#{lead.id}/)
     end
 
     describe "shown_on_landing_page?" do
       it "should return true for Ajax request made from the asset landing page" do
+        controller.extend ::FatFreeCrm::Engine.routes.url_helpers
         allow(controller.request).to receive(:xhr?).and_return(true)
-        allow(controller.request).to receive(:referer).and_return("http://www.example.com/leads/123")
+        allow(controller.request).to receive(:referer).and_return("http://www.example.com/fat_free_crm/leads/123")
         expect(helper.shown_on_landing_page?).to eq(true)
       end
 
       it "should return true for regular request to display asset landing page" do
         allow(controller.request).to receive(:xhr?).and_return(false)
-        allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads/123")
+        allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/fat_free_crm/leads/123")
         expect(helper.shown_on_landing_page?).to eq(true)
       end
 
       it "should return false for Ajax request made from page other than the asset landing page" do
         allow(controller.request).to receive(:xhr?).and_return(true)
-        allow(controller.request).to receive(:referer).and_return("http://www.example.com/leads")
+        allow(controller.request).to receive(:referer).and_return("http://www.example.com/fat_free_crm/leads")
         expect(helper.shown_on_landing_page?).to eq(false)
       end
 
       it "should return false for regular request to display page other than asset landing page" do
         allow(controller.request).to receive(:xhr?).and_return(false)
-        allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads")
+        allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/fat_free_crm/leads")
         expect(helper.shown_on_landing_page?).to eq(false)
       end
     end

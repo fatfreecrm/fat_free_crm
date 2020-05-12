@@ -998,7 +998,7 @@ module FatFreeCrm
         @leads = [create(:lead, user: current_user, status: "new")]
         post :filter, params: { status: "new" }, xhr: true
         expect(assigns[:leads]).to eq(@leads)
-        expect(response).to be_a_success
+        expect(response).to have_http_status(:success)
         expect(response).to render_template("leads/index")
       end
 

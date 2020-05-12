@@ -73,7 +73,7 @@ module FatFreeCrm
           render
 
           expect(rendered).to include("#sidebar")
-          expect(rendered).to have_text("Index Case Summary")
+          expect(rendered).to have_text("Account Summary")
           expect(rendered).to have_text("Recent Items")
         end
 

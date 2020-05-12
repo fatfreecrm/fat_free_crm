@@ -7,14 +7,11 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-RSpec.configure do |c|
-  c.include ::FatFreeCrm::Engine.routes.url_helpers
-end
-
 module FatFreeCrm
   describe TasksHelper do
     describe "responding with generated links" do
       before do
+        controller.extend ::FatFreeCrm::Engine.routes.url_helpers
         @task = create(:task)
       end
 
