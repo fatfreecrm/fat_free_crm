@@ -7,16 +7,19 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
+RSpec.configure do |c|
+  c.include ::FatFreeCrm::Engine.routes.url_helpers
+end
+
 module FatFreeCrm
-  describe TasksHelper, type: :helper do
+  describe TasksHelper do
     describe "responding with generated links" do
       before do
         @task = create(:task)
-        FatFreeCrm::TasksHelper.extend(::FatFreeCrm::Engine.routes.url_helpers)
       end
 
       it "should render link to uncomplete of a task" do
-        expect(FatFreeCrm::TasksHelper.extend(::FatFreeCrm::Engine.routes.url_helpers).link_to_task_uncomplete(@task, nil)).to include(t(:task_uncomplete))
+        expect(link_to_task_uncomplete(@task, nil)).to include(t(:task_uncomplete))
       end
     end
   end
