@@ -14,7 +14,6 @@ module FatFreeCrm
       view.extend FatFreeCrm::JavascriptHelper
       view.extend FatFreeCrm::CommentsHelper
       view.extend FatFreeCrm::AddressesHelper
-      view.extend FatFreeCrm::AddressesHelper
       login
       assign(:lead, @lead = build_stubbed(:lead, id: 42))
       assign(:users, [current_user])
