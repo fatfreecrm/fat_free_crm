@@ -91,7 +91,7 @@ module FatFreeCrm
                                   end
 
       respond_with(@task) do |_format|
-        if @task.update_attributes(task_params)
+        if @task.update(task_params)
           @task.bucket = @task.computed_bucket
           if called_from_index_page?
             @empty_bucket = @task_before_update.bucket if Task.bucket_empty?(@task_before_update.bucket, current_user, @view)
@@ -119,7 +119,7 @@ module FatFreeCrm
     #----------------------------------------------------------------------------
     def complete
       @task = Task.tracked_by(current_user).find(params[:id])
-      @task&.update_attributes(completed_at: Time.now, completed_by: current_user.id)
+      @task&.update(completed_at: Time.now, completed_by: current_user.id)
 
       # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
       @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_user)
@@ -132,7 +132,7 @@ module FatFreeCrm
     #----------------------------------------------------------------------------
     def uncomplete
       @task = Task.tracked_by(current_user).find(params[:id])
-      @task&.update_attributes(completed_at: nil, completed_by: nil)
+      @task&.update(completed_at: nil, completed_by: nil)
 
       # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
       @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_user, @view)

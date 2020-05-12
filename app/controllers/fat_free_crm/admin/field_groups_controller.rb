@@ -42,7 +42,7 @@ module FatFreeCrm
     #----------------------------------------------------------------------------
     def update
       @field_group = FieldGroup.find(params[:id])
-      @field_group.update_attributes(field_group_params)
+      @field_group.update(field_group_params)
 
       respond_with(@field_group)
     end

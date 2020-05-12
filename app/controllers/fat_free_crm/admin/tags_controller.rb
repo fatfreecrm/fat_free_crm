@@ -36,7 +36,7 @@ module FatFreeCrm
     # POST /admin/tags.xml                                                  AJAX
     #----------------------------------------------------------------------------
     def create
-      @tag.update_attributes(tag_params)
+      @tag.update(tag_params)
 
       respond_with(@tag)
     end
@@ -45,7 +45,7 @@ module FatFreeCrm
     # PUT /admin/tags/1.xml                                                 AJAX
     #----------------------------------------------------------------------------
     def update
-      @tag.update_attributes(tag_params)
+      @tag.update(tag_params)
 
       respond_with(@tag)
     end
