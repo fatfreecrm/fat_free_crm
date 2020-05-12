@@ -19,6 +19,7 @@ module FatFreeCrm
       assign(:account, @account = build_stubbed(:account))
       assign(:accounts, [@account])
       assign(:stage, Setting.unroll(:opportunity_stage))
+      allow(view.controller).to receive(:action_name).and_return("edit")
     end
 
     it "cancel from opportunity index page: should replace [Edit Opportunity] form with opportunity partial" do
