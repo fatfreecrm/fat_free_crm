@@ -33,7 +33,7 @@ feature 'Campaigns', '
       expect(page).to have_selector('#campaign_name', visible: true)
       fill_in 'campaign_name', with: 'Cool Campaign'
       select 'On Hold', from: 'campaign_status'
-      click_link 'Comment'
+      find("summary", text: 'Comment').click
       fill_in 'comment_body', with: 'This campaign is very important'
       click_button 'Create Campaign'
 
@@ -53,7 +53,7 @@ feature 'Campaigns', '
     visit campaigns_page
     click_link 'Create Campaign'
 
-    click_link 'Comment'
+    find("summary", text: 'Comment').click
     fill_in 'comment_body', with: 'This campaign is very important'
     click_button 'Create Campaign'
 
