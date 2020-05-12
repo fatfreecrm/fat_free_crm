@@ -30,7 +30,7 @@ module FatFreeCrm
       end
 
       it "includes password reset link in body" do
-        expect(mail.body.encoded).to have_link('Change my password', href: "http://www.example.com/users/password/edit?reset_password_token=#{user.reset_password_token}")
+        expect(mail.body.encoded).to have_link('Change my password', href: "http://localhost:3000/fat_free_crm/users/password/edit?reset_password_token=#{user.reset_password_token}")
       end
     end
   end

@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 FactoryBot.define do
-  factory :list, class: FatFreeCrm::Lead do
+  factory :list, class: FatFreeCrm::List do
     name { "Foo List" }
     url { "/controller/action" }
   end
