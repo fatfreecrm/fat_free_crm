@@ -20,7 +20,7 @@ module FatFreeCrm
           new_token!
         end
         # If db isn't setup yet, token will return nil, provide a randomly generated one for now.
-        FatFreeCrm::Application.config.secret_key_base = (token || generate_token)
+        FatFreeCrm::Engine.config.secret_key_base = (token || generate_token)
       end
 
       private
