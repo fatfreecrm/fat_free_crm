@@ -10,7 +10,7 @@ require "fat_free_crm/view_factory"
 
 describe FatFreeCrm::ViewFactory do
   before(:each) do
-    FatFreeCrm::ViewFactory.send(:class_variable_set, '@@views', [])
+    # FatFreeCrm::ViewFactory.send(:class_variable_set, '@@views', [])
   end
 
   describe "initialization" do
