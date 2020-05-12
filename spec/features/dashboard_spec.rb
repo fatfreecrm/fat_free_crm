@@ -56,7 +56,7 @@ feature 'Dashboard', '
 
     # My Opportunities
     within "#opportunities" do
-      expect(page).to have_content("Not showing 1 hidden opportunity.")
+      expect(page).to have_content("Not showing 1 hidden resource.")
     end
 
     # My Accounts

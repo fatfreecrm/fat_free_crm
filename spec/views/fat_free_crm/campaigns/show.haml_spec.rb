@@ -12,8 +12,6 @@ module FatFreeCrm
 
     before do
       view.controller.extend ::FatFreeCrm::Engine.routes.url_helpers
-      view.extend FatFreeCrm::JavascriptHelper
-      view.extend FatFreeCrm::CommentsHelper
       login
       @campaign = build_stubbed(:campaign, id: 42,
                                            leads: [build_stubbed(:lead)],

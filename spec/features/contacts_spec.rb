@@ -42,6 +42,9 @@ feature 'Contacts', '
       find("summary", text: 'Comment').click
       fill_in 'comment_body', with: 'This is a very important person.'
       click_button 'Create Contact'
+
+      sleep 2
+
       expect(contacts_element).to have_content('Testy McTest')
 
       contacts_element.click_link 'Testy McTest'

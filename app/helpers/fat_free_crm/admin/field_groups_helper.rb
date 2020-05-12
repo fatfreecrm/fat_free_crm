@@ -8,6 +8,7 @@
 module FatFreeCrm
 module Admin::FieldGroupsHelper
   include ::ERB::Util
+  include ::FatFreeCrm::Admin::FieldsHelper
 
   def field_group_subtitle(field_group)
     asset = field_group.klass_name.downcase

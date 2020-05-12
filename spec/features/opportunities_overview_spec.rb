@@ -21,7 +21,12 @@ feature 'Opportunities Overview', "
 
   scenario "Accessing Opportunity Overview via the nav" do
     visit homepage
-    within ".tabs" do
+
+    File.open("current_page.html", "w") do |f|
+      f.puts page.body
+    end
+
+    within "nav > ul.nav-tabs" do
       click_link "Team"
     end
 
