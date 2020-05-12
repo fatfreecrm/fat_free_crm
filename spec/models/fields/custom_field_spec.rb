@@ -32,7 +32,7 @@ module FatFreeCrm
   describe CustomField do
     it "should add a column to the database" do
       expect(FatFreeCrm::CustomField.connection).to receive(:add_column)
-        .with("contacts", "cf_test_field", 'string', {})
+        .with("fat_free_crm_contacts", "cf_test_field", 'string', {})
       expect(Contact).to receive(:reset_column_information)
       expect(Contact).to receive(:serialize_custom_fields!)
 
@@ -76,9 +76,9 @@ module FatFreeCrm
 
     it "should change a column's type for safe transitions" do
       expect(FatFreeCrm::CustomField.connection).to receive(:add_column)
-        .with("contacts", "cf_test_field", 'string', {})
+        .with("fat_free_crm_contacts", "cf_test_field", 'string', {})
       expect(FatFreeCrm::CustomField.connection).to receive(:change_column)
-        .with("contacts", "cf_test_field", 'text', {})
+        .with("fat_free_crm_contacts", "cf_test_field", 'text', {})
       expect(Contact).to receive(:reset_column_information).twice
       expect(Contact).to receive(:serialize_custom_fields!).twice
 
