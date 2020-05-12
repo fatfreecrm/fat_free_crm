@@ -23,7 +23,7 @@ module FatFreeCrm
       assign(:timeline, [create(:comment, commentable: @account)])
 
       # controller#controller_name and controller#action_name are not set in view specs
-      allow(view).to receive(:template_for_current_view).and_return(nil)
+      allow(view.controller).to receive(:action_name).and_return("show")
     end
 
     it "should render account landing page" do

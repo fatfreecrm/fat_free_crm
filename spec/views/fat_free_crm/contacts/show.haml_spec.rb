@@ -11,8 +11,10 @@ module FatFreeCrm
   describe "/fat_free_crm/contacts/show" do
 
     before do
+      view.controller.extend ::FatFreeCrm::Engine.routes.url_helpers
       view.extend FatFreeCrm::JavascriptHelper
       view.extend FatFreeCrm::CommentsHelper
+      view.extend FatFreeCrm::OpportunitiesHelper
       login
       @contact = create(:contact, id: 42,
                                   opportunities: [create(:opportunity)])
@@ -22,7 +24,7 @@ module FatFreeCrm
       assign(:timeline, [create(:comment, commentable: @contact)])
 
       # controller#controller_name and controller#action_name are not set in view specs
-      allow(view).to receive(:template_for_current_view).and_return(nil)
+      allow(view.controller).to receive(:action_name).and_return("show")
     end
 
     it "should render contact landing page" do

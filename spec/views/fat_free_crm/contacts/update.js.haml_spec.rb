@@ -20,7 +20,7 @@ module FatFreeCrm
       assign(:account, @account = build_stubbed(:account))
       assign(:accounts, [@account])
 
-      allow(view).to receive(:template_for_current_view).and_return(false)
+      allow(view.controller).to receive(:action_name).and_return("update")
     end
 
     describe "no errors:" do

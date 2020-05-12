@@ -11,6 +11,7 @@ module FatFreeCrm
   describe "/fat_free_crm/campaigns/show" do
 
     before do
+      view.controller.extend ::FatFreeCrm::Engine.routes.url_helpers
       view.extend FatFreeCrm::JavascriptHelper
       view.extend FatFreeCrm::CommentsHelper
       login
@@ -24,7 +25,7 @@ module FatFreeCrm
       allow(view).to receive(:params) { { id: 123 } }
 
       # controller#controller_name and controller#action_name are not set in view specs
-      allow(view).to receive(:template_for_current_view).and_return(nil)
+      allow(view.controller).to receive(:action_name).and_return("show")
     end
 
     it "should render campaign landing page" do
