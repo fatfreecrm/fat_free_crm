@@ -37,11 +37,13 @@ feature 'Leads', '
       fill_in 'lead_email', with: 'mr_lead@example.com'
       fill_in 'lead_phone', with: '+44 1234 567890'
       find("summary", text: 'Status').click
+      sleep 1
       select 'Myself', from: 'lead_assigned_to'
       select 'Contacted', from: 'lead_status'
       select 'Campaign', from: 'lead_source'
       select 'Contacted', from: 'lead_status'
       find("summary", text: 'Comment').click
+      sleep 1
       fill_in 'comment_body', with: 'This is an important lead.'
       click_button 'Create Lead'
       expect(leads_element).to have_content('Mr Lead')
@@ -63,6 +65,7 @@ feature 'Leads', '
     click_link 'Create Lead'
 
     find("summary", text: 'Comment').click
+    sleep 1
     fill_in 'comment_body', with: 'This is an important lead.'
     click_button 'Create Lead'
 
