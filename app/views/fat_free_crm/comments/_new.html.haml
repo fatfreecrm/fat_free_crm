@@ -1,4 +1,5 @@
-- class_name = commentable.class.name.underscore
+- commentable_name = commentable.class.name.underscore
+- class_name = commentable.class.name.demodulize.underscore
 - id_prefix = "#{class_name}_#{commentable.id}"
 - @comment = @comment || FatFreeCrm::Comment.new
 .comment.highlight.new_comment{ id: "#{id_prefix}_comment_new" }
@@ -20,7 +21,7 @@
   %div{ {id: "#{id_prefix}_post"}.merge(hidden_if(true))}
     = form_for(@comment, remote: true, html: {id: "#{id_prefix}_new_comment"}) do |f|
       = hidden_field_tag "comment[commentable_id]", commentable.id, id: "#{id_prefix}_comment_commentable_id"
-      = hidden_field_tag "comment[commentable_type]", class_name.classify, id: "#{id_prefix}_comment_commentable_type"
+      = hidden_field_tag "comment[commentable_type]", commentable_name.classify, id: "#{id_prefix}_comment_commentable_type"
       = f.text_area(:comment, {id: "#{id_prefix}_comment_comment", class: 'form-control'})
       .buttons
         = image_tag("loading.gif", size: :thumb, class: "spinner", style: "display: none;")

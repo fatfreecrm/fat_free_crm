@@ -30,7 +30,7 @@ feature 'Opportunities', '
     create(:account, name: 'Example Account')
     with_versioning do
       visit opportunities_page
-      click_link 'Create Opportunity'
+      click_link 'Create Resource'
       expect(page).to have_selector('#opportunity_name', visible: true)
       fill_in 'opportunity_name', with: 'My Awesome Opportunity'
       click_link 'select existing'
@@ -42,7 +42,7 @@ feature 'Opportunities', '
       select 'Prospecting', from: 'opportunity_stage'
       click_link 'Comment'
       fill_in 'comment_body', with: 'This is a very important opportunity.'
-      click_button 'Create Opportunity'
+      click_button 'Create Resource'
       expect(page).to have_content('My Awesome Opportunity')
 
       find('div#opportunities').click_link('My Awesome Opportunity')
@@ -67,7 +67,7 @@ feature 'Opportunities', '
 
   scenario "remembers the comment field when the creation was unsuccessful", js: true do
     visit opportunities_page
-    click_link 'Create Opportunity'
+    click_link 'Create Resource'
     select 'Prospecting', from: 'opportunity_stage'
 
     click_link 'Comment'
@@ -88,10 +88,10 @@ feature 'Opportunities', '
       fill_in 'opportunity_name', with: 'An Even Cooler Opportunity'
       select 'Other Example Account', from: 'account_id'
       select 'Analysis', from: 'opportunity_stage'
-      click_button 'Save Opportunity'
+      click_button 'Save Resource'
       expect(page).to have_content('An Even Cooler Opportunity')
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray updated opportunity An Even Cooler Opportunity")
+      expect(page).to have_content("Bill Murray updated resource An Even Cooler Opportunity")
     end
   end
 
