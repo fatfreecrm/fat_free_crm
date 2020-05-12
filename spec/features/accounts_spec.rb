@@ -34,15 +34,15 @@ feature 'Accounts', '
       fill_in 'account_name', with: 'My new account'
       select 'Affiliate', from: 'account_category'
       select 'Myself', from: 'account_assigned_to'
-      click_link 'Contact Information'
+      find("summary", text: 'Contact Information').click
       fill_in 'account_phone', with: '+1 2345 6789'
       fill_in 'account_website', with: 'http://www.example.com'
-      click_link 'Comment'
+      find("summary", text: 'Comment').click
       fill_in 'comment_body', with: 'This account is very important'
       click_button 'Create Account'
 
-      expect(find('div#accounts')).to have_content('My new account')
-      find('div#accounts').click_link('My new account') # avoid recent items link
+      expect(find('ul#accounts')).to have_content('My new account')
+      find('ul#accounts').click_link('My new account') # avoid recent items link
       expect(page).to have_content('+1 2345 6789')
       expect(page).to have_content('http://www.example.com')
       expect(page).to have_content('This account is very important')
@@ -59,10 +59,10 @@ feature 'Accounts', '
     expect(page).to have_content('Create Account')
     click_link 'Create Account'
 
-    click_link 'Contact Information'
+    find("summary", text: 'Contact Information').click
     fill_in 'account_phone', with: '+1 2345 6789'
 
-    click_link 'Comment'
+    find("summary", text: 'Comment').click
     fill_in 'comment_body', with: 'This account is very important'
     click_button "Create Account"
 

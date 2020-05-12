@@ -104,7 +104,7 @@ module FatFreeCrm
 
       describe "with mime type of JSON" do
         it "should render all campaigns as JSON" do
-          expect(@controller).to receive(:get_campaigns).and_return(@campaigns = [])
+          expect(@controller).to receive(:get_campaigns).and_return(@campaigns = Object.new)
           expect(@campaigns).to receive(:to_json).and_return("generated JSON")
 
           request.env["HTTP_ACCEPT"] = "application/json"
