@@ -19,6 +19,8 @@ module FatFreeCrm
       assign(:users, [current_user])
       assign(:account, @account = build_stubbed(:account))
       assign(:accounts, [@account])
+
+      allow(view).to receive(:template_for_current_view).and_return(false)
     end
 
     describe "no errors:" do
@@ -49,7 +51,7 @@ module FatFreeCrm
           controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
 
           render
-          expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').replaceWith('<li class=\\'brief fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
+          expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').replaceWith('<li class=\\'fat_free_crm_contact highlight long\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
           expect(rendered).to include(%/$('#fat_free_crm_contact_#{@contact.id}').effect("highlight"/)
         end
 
@@ -69,7 +71,7 @@ module FatFreeCrm
           controller.request.env["HTTP_REFERER"] = "http://localhost/fat_free_crm/contacts"
 
           render
-          expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').replaceWith('<li class=\\'brief fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
+          expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').replaceWith('<li class=\\'fat_free_crm_contact highlight long\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
           expect(rendered).to include(%/$('#fat_free_crm_contact_#{@contact.id}').effect("highlight"/)
         end
 

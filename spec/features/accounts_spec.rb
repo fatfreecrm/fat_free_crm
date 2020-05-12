@@ -82,7 +82,7 @@ feature 'Accounts', '
       expect(page).to have_content('A new account *editted*')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray updated account A new account *editted*")
+      expect(page).to have_content("Bill Murray updated index case A new account *editted*")
     end
   end
 
