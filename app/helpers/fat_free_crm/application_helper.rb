@@ -156,8 +156,17 @@ module ApplicationHelper
     current_url = (request.xhr? ? request.referer : request.fullpath)
     parent, parent_id = current_url.scan(%r{/(\w+)/(\d+)}).flatten
 
+    discard_link_url = FatFreeCrm::Engine.routes.url_for(
+      controller: "fat_free_crm/" + parent,
+      action: :discard,
+      id: parent_id,
+      attachment: object.class.name,
+      attachment_id: object.id,
+      only_path: true
+    )
+
     link_to(t(:discard),
-            url_for(controller: parent, action: :discard, id: parent_id, attachment: object.class.name, attachment_id: object.id),
+            discard_link_url,
             method:  :post,
             remote:  true)
   end
