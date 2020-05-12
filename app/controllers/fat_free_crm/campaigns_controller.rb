@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module FatFreeCrm
-class CampaignsController < EntitiesController
+  class CampaignsController < EntitiesController
     before_action :get_data_for_sidebar, only: :index
 
     # GET /campaigns
@@ -72,7 +72,7 @@ class CampaignsController < EntitiesController
 
       if params[:related]
         model, id = params[:related].split('_')
-        if related = model.classify.constantize.my(current_user).find_by_id(id)
+        if related = ("FatFreeCrm::" + model.classify).constantize.my(current_user).find_by_id(id)
           instance_variable_set("@#{model}", related)
         else
           respond_to_related_not_found(model) && return

@@ -567,7 +567,7 @@ module FatFreeCrm
       it "should save user selected account preference" do
         get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
         expect(current_user.preference[:accounts_per_page]).to eq(42)
-        expect(current_user.preference["fat_free_crm/accounts_index_view"]).to eq("brief")
+        expect(current_user.preference["accounts_index_view"]).to eq("brief")
         expect(current_user.preference[:accounts_sort_by]).to eq("fat_free_crm_accounts.name ASC")
       end
 

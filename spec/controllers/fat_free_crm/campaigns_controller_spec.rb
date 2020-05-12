@@ -606,7 +606,7 @@ module FatFreeCrm
         get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
         expect(current_user.preference[:campaigns_per_page]).to eq(42)
         expect(current_user.preference[:campaigns_index_view]).to eq("brief")
-        expect(current_user.preference[:campaigns_sort_by]).to eq("campaigns.name ASC")
+        expect(current_user.preference[:campaigns_sort_by]).to eq("fat_free_crm_campaigns.name ASC")
       end
 
       it "should reset current page to 1" do
