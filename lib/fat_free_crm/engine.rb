@@ -26,6 +26,7 @@ require 'responds_to_parent'
 require 'dynamic_form'
 require 'simple_form'
 require 'country_select'
+require 'rails-observers'
 
 require 'fat_free_crm/callback'
 require 'fat_free_crm/comment_extensions'

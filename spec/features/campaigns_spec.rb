@@ -57,7 +57,7 @@ feature 'Campaigns', '
     fill_in 'comment_body', with: 'This campaign is very important'
     click_button 'Create Campaign'
     sleep 2
-
+    find("summary", text: 'Comment').click
     expect(find('#comment_body')).to have_content('This campaign is very important')
   end
 
@@ -67,13 +67,14 @@ feature 'Campaigns', '
       visit campaigns_page
       click_link 'My Cool Campaign'
       click_link 'Edit'
+      sleep 2
       fill_in 'campaign_name', with: 'My Even Cooler Campaign'
       select 'Started', from: 'campaign_status'
       click_button 'Save Campaign'
-      sleep 1
-      expect(page).to have_content('My Even Cooler Campaign')
+      sleep 5
       expect(page).to have_content('My Even Cooler Campaign')
       click_link 'Dashboard'
+      sleep 5
       expect(page).to have_content("Bill Murray updated campaign My Even Cooler Campaign")
     end
   end
