@@ -64,7 +64,7 @@ module FatFreeCrm
         @field = CustomFieldPair.update_pair(params).first
       else
         @field = Field.find(params[:id])
-        @field.update_attributes(field_params)
+        @field.update(field_params)
       end
 
       respond_with(@field)

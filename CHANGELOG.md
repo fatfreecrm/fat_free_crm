@@ -55,7 +55,7 @@ If you consume fat free crm as an engine and re-use any factories, you'll need t
 #### Removed methods
 `Lead.update_with_permissions` is removed, use user_ids and group_ids inside attributes instead and call lead.update_with_account_and_lead_counters
 `FatFreeCrm::Permissions.save_with_permissions` is removed, use user_ids and group_ids inside attributes and call save
-`FatFreeCrm::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
+`FatFreeCrm::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update
 
 #### Other changes
  - CVE-2018-8048 (loofah gem)

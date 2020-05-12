@@ -47,7 +47,7 @@ module FatFreeCrm
     # PUT /groups/1
     #----------------------------------------------------------------------------
     def update
-      @group.update_attributes(group_params)
+      @group.update(group_params)
 
       respond_with(@group)
     end

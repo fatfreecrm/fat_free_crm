@@ -46,9 +46,9 @@ module FatFreeCrm
 
       it "should update the pair" do
         foo1 = double(required: true, disabled: 'false')
-        expect(foo1).to receive(:update_attributes).with(@field.merge(@pair1))
+        expect(foo1).to receive(:update).with(@field.merge(@pair1))
         foo2 = double
-        expect(foo2).to receive(:update_attributes).with(@field.merge(@pair2).merge('required' => true, 'disabled' => 'false'))
+        expect(foo2).to receive(:update).with(@field.merge(@pair2).merge('required' => true, 'disabled' => 'false'))
         expect(foo1).to receive(:paired_with).and_return(foo2)
         expect(FatFreeCrm::CustomFieldPair).to receive(:find).with('3').and_return(foo1)
 
