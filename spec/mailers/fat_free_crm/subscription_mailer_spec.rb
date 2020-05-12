@@ -26,7 +26,7 @@ module FatFreeCrm
       end
 
       it "includes link to opportunity in body" do
-        expect(mail.body.encoded).to match('http://www.example.com/fat_free_crm/opportunities/47')
+        expect(mail.body.encoded).to match('http://localhost:3000/fat_free_crm/opportunities/47')
       end
 
       it "uses email defined in settings as the sender" do
