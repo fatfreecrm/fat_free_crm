@@ -36,19 +36,25 @@ feature 'Leads', '
       fill_in 'lead_last_name', with: 'Lead'
       fill_in 'lead_email', with: 'mr_lead@example.com'
       fill_in 'lead_phone', with: '+44 1234 567890'
-      find("summary", text: 'Status').click
-      sleep 1
-      select 'Myself', from: 'lead_assigned_to'
+      expand_status
+      find("select", id: "lead_assigned_to", wait: 10).select('Myself')
+      #select 'Myself', from: 'lead_assigned_to'
       select 'Contacted', from: 'lead_status'
       select 'Campaign', from: 'lead_source'
       select 'Contacted', from: 'lead_status'
-      find("summary", text: 'Comment').click
-      sleep 1
-      fill_in 'comment_body', with: 'This is an important lead.'
+      expand_comment
+      find("textarea", id: "comment_body", wait: 10).set("This is an important lead.")
+      # fill_in 'comment_body', with: 'This is an important lead.'
       click_button 'Create Lead'
+
+      sleep 1
+
       expect(leads_element).to have_content('Mr Lead')
 
       leads_element.click_link('Mr Lead')
+
+      sleep 1
+
       expect(summary_element).to have_content('Contacted')
       expect(summary_element).to have_content('mr_lead@example.com')
       expect(summary_element).to have_content('+44 1234 567890')
@@ -64,8 +70,7 @@ feature 'Leads', '
     visit leads_page
     click_link 'Create Lead'
 
-    find("summary", text: 'Comment').click
-    sleep 1
+    expand_comment
     fill_in 'comment_body', with: 'This is an important lead.'
     click_button 'Create Lead'
 
@@ -81,8 +86,10 @@ feature 'Leads', '
       click_link('Edit')
       fill_in 'lead_first_name', with: 'Mrs'
       fill_in 'lead_phone', with: '+44 0987 654321'
-      find("summary", text: 'Status').click
-      select 'Rejected', from: 'lead_status'
+
+      expand_status
+      find("select", id: "lead_status").select("Rejected")
+      #select 'Rejected', from: 'lead_status'
       click_button 'Save Lead'
       expect(summary_element).to have_content('Mrs Lead')
 
@@ -120,18 +127,40 @@ feature 'Leads', '
   end
 
   def main_element
-    find('#main')
+    find('#main', wait: 15)
   end
 
   def summary_element
-    find('#summary')
+    find('#summary', wait: 15)
   end
 
   def leads_element
-    find('#leads')
+    find('#leads', wait: 15)
   end
 
   def activities_element
-    find('#activities')
+    find('#activities', wait: 15)
+  end
+
+  def expand_status
+    summary_element = find("summary", text: 'Status')
+    summary_element.execute_script("arguments[0].scrollIntoView();", summary_element.native)
+
+    opened_element = all("details.idc_panel[open] > summary", text: "Summary", wait: 2)
+    if opened_element.empty?
+      summary_element.click
+      sleep 2
+    end
+  end
+
+  def expand_comment
+    summary_element = find("summary", text: 'Comment')
+    summary_element.execute_script("arguments[0].scrollIntoView();", summary_element.native)
+
+    opened_element = all("details.idc_panel[open] > summary", text: "Comment", wait: 2)
+    if opened_element.empty?
+      summary_element.click
+      sleep 2
+    end
   end
 end

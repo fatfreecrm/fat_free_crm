@@ -82,7 +82,6 @@ feature 'Accounts', '
       expect(page).to have_content('A new account')
 
       click_link "Dashboard"
-      sleep 1
       expect(page).to have_content("Bill Murray updated account A new account")
     end
   end
