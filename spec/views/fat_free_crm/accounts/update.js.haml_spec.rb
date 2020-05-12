@@ -48,7 +48,7 @@ module FatFreeCrm
         it "should update sidebar" do
           render
           expect(rendered).to include("#sidebar")
-          expect(rendered).to have_text("Account Categories")
+          expect(rendered).to have_text("Index Case Categories")
           expect(rendered).to have_text("Recent Items")
         end
 
