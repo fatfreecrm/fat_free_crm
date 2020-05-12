@@ -10,8 +10,10 @@ require 'spec_helper'
 module FatFreeCrm
   describe "/fat_free_crm/leads/show" do
     before do
-      view.extend JavascriptHelper
-      view.extend CommentsHelper
+      view.extend FatFreeCrm::JavascriptHelper
+      view.extend FatFreeCrm::CommentsHelper
+      view.extend FatFreeCrm::AddressesHelper
+      view.extend FatFreeCrm::AddressesHelper
       login
       assign(:lead, @lead = build_stubbed(:lead, id: 42))
       assign(:users, [current_user])

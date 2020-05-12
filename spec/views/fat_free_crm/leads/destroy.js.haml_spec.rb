@@ -10,6 +10,7 @@ require 'spec_helper'
 module FatFreeCrm
   describe "/fat_free_crm/leads/destroy" do
     before do
+      view.extend FatFreeCrm::CampaignsHelper
       login
       assign(:lead, @lead = build_stubbed(:lead))
       assign(:lead_status_total, Hash.new(1))

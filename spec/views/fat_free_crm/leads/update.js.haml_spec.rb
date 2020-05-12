@@ -12,6 +12,8 @@ module FatFreeCrm
     before do
       view.extend FatFreeCrm::UsersHelper
       view.extend FatFreeCrm::AddressesHelper
+      view.extend FatFreeCrm::CampaignsHelper
+
       login
       assign(:lead, @lead = build_stubbed(:lead, user: current_user, assignee: build_stubbed(:user)))
       assign(:users, [current_user])
