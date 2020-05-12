@@ -29,6 +29,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'tzinfo-data' #, platforms: %i[mingw mswin x64_mingw jruby]
   gem.add_dependency 'activejob', '~> 6.0'
   gem.add_dependency 'rails-observers'
+  gem.add_dependency 'rmagick'
 
   # FatFreeCrm has released it's own versions of the following gems:
   #-----------------------------------------------------------------

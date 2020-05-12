@@ -18,6 +18,8 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.6.5
+    - name: Install imagemagick
+      run: sudo apt-get install libmagickwand-dev
     - name: Install Bundler
       run: |
         gem install bundler
