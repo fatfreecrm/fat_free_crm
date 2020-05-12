@@ -84,7 +84,7 @@ en-US:
 
 
   discovery: Discovery
-  # prospecting: Prospecting
+  prospecting: Prospecting
   analysis: Analysis
   presentation: Presentation
   proposal: Proposal
@@ -202,11 +202,11 @@ en-US:
       opportunity:
         stage:
           discovery: Discovery
-          # prospecting: Prospecting
+          prospecting: Prospecting
           analysis: Analysis
-          # presentation: Presentation
-          # proposal: Proposal
-          # negotiation: Negotiation
+          presentation: Presentation
+          proposal: Proposal
+          negotiation: Negotiation
           final_review: Final Review
           won: Closed/Concluded
           lost: Closed/Inconclusive

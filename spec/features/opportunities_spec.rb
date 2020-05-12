@@ -34,13 +34,12 @@ feature 'Opportunities', '
       expect(page).to have_selector('#opportunity_name', visible: true)
       fill_in 'opportunity_name', with: 'My Awesome Opportunity'
       click_link 'select existing'
-      find('#select2-account_id-container').click
-      find('.select2-search--dropdown').find('input').set('Example Account')
+      find('select#account_id').select("Example Account")
       sleep(1)
-      find('li', text: 'Example Account').click
+      #find('li', text: 'Example Account').click
       expect(page).to have_content('Example Account')
       select 'Prospecting', from: 'opportunity_stage'
-      click_link 'Comment'
+      find("summary", text: 'Comment').click
       fill_in 'comment_body', with: 'This is a very important opportunity.'
       click_button 'Create Resource'
       expect(page).to have_content('My Awesome Opportunity')
@@ -49,7 +48,7 @@ feature 'Opportunities', '
       expect(page).to have_content('This is a very important opportunity.')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray created opportunity My Awesome Opportunity")
+      expect(page).to have_content("Bill Murray created resource My Awesome Opportunity")
       expect(page).to have_content("Bill Murray created comment on My Awesome Opportunity")
     end
   end
@@ -70,9 +69,9 @@ feature 'Opportunities', '
     click_link 'Create Resource'
     select 'Prospecting', from: 'opportunity_stage'
 
-    click_link 'Comment'
+    find("summary", text: 'Comment').click
     fill_in 'comment_body', with: 'This is a very important opportunity.'
-    click_button 'Create Opportunity'
+    click_button 'Create Resource'
 
     expect(page).to have_field('comment_body', with: 'This is a very important opportunity.')
   end
