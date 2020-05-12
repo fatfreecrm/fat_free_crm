@@ -34,7 +34,7 @@ module FatFreeCrm
         end
 
         it "includes link to the lead in the body" do
-          expect(mail.body.encoded).to match("http://www.example.com/accounts/16")
+          expect(mail.body.encoded).to match("http://localhost:3000/fat_free_crm/accounts/16")
         end
       end
 
@@ -59,7 +59,7 @@ module FatFreeCrm
         end
 
         it "includes link to the lead in the body" do
-          expect(mail.body.encoded).to match("http://www.example.com/contacts/56")
+          expect(mail.body.encoded).to match("http://localhost:3000/fat_free_crm/contacts/56")
         end
       end
 
@@ -84,7 +84,7 @@ module FatFreeCrm
         end
 
         it "includes link to the lead in the body" do
-          expect(mail.body.encoded).to match("http://www.example.com/leads/42")
+          expect(mail.body.encoded).to match("http://localhost:3000/fat_free_crm/leads/42")
         end
       end
 
@@ -109,7 +109,7 @@ module FatFreeCrm
         end
 
         it "includes link to the lead in the body" do
-          expect(mail.body.encoded).to match("http://www.example.com/opportunities/24")
+          expect(mail.body.encoded).to match("http://localhost:3000/fat_free_crm/opportunities/24")
         end
       end
     end
