@@ -22,7 +22,7 @@ en-US:
   tab_tasks: Tasks
   tab_campaigns: Campaigns
   tab_leads: Leads
-  tab_accounts: Index Cases
+  tab_accounts: Accounts
   tab_contacts: Contacts
   tab_opportunities: Resources
   tab_team: Team
@@ -145,9 +145,9 @@ en-US:
         account:
           attributes:
             name:
-              missing_account_name: ^Please specify Index Case name.
+              missing_account_name: ^Please specify Account name.
             access:
-              share_account: ^Please specify users with whom to share the Index Case.
+              share_account: ^Please specify users with whom to share the Account.
         campaign:
           attributes:
             name:
@@ -348,15 +348,15 @@ en-US:
 
   # Views -> Accounts.
   #----------------------------------------------------------------------------
-  account: Index Case
-  account_id: Index Case
-  select_an_account: Select an Index Case
-  account_small: index case
-  account_summary: Index Case Summary
-  account_categories: Index Case Categories
-  accounts: Index Cases
-  accounts_options: Index Cases Options
-  accounts_small: index cases
+  account: Account
+  account_id: Account
+  select_an_account: Select an Account
+  account_small: account
+  account_summary: Account Summary
+  account_categories: Account Categories
+  accounts: Accounts
+  accounts_options: Accounts Options
+  accounts_small: accounts
   assigned_to: Assigned to
   billing_address: Home address
   create_account: Create Account
@@ -376,10 +376,10 @@ en-US:
   save_account: Save Account
   share_with: Share it with the following people
   shipping_address: Work address
-  total_accounts: Total Cases
+  total_accounts: Total Accounts
   website: Website
   account_with_title_department: ! '%{title}, %{department} at %{account}'
-  account_with_title: ! '%{title} in %{account} index case'
+  account_with_title: ! '%{title} in %{account} account'
 
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
@@ -475,7 +475,7 @@ en-US:
   convert_lead_permissions_intro: Contact permissions will be copied from the lead
     being converted. You can change contact permissions later.
   convert_lead_text: By converting the lead %{value} will become a contact associated
-    with the existing or newly created Index Case. Lead status will be automatically
+    with the existing or newly created Account. Lead status will be automatically
     set to converted.
   create_lead: Create Lead
   create_opp_for_contact: You can optionally create a Contact Resource for the %{value}
@@ -609,7 +609,7 @@ en-US:
   no_activity_records: No activity records found.
   recent_activity: Recent Activity
   recent_activity_options: Recent Activity Options
-  subject_account: index case
+  subject_account: account
   subject_address: address on
   subject_campaign: campaign
   subject_comment: comment on
@@ -630,8 +630,8 @@ en-US:
   no_task_records: You have no tasks.
   my_opportunities: My Resources
   no_opportunity_records: You have no resources.
-  my_accounts: My Cases
-  no_account_records: You have no cases
+  my_accounts: My Accounts
+  no_account_records: You have no accounts
   not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
 
   # Views -> Common.
@@ -708,7 +708,7 @@ en-US:
   welcome: Welcome
 
   # Advanced search
-  accounts_advanced_search: Cases Advanced search
+  accounts_advanced_search: Accounts Advanced search
   advanced_search: Advanced search
   basic_search: Basic search
   search_results_count:
