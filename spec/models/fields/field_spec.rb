@@ -28,7 +28,6 @@
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
-require File.expand_path(File.dirname(__FILE__) + '/../../../lib/fat_free_crm/i18n')
 
 module FatFreeCrm
   describe Field do
@@ -62,7 +61,7 @@ module FatFreeCrm
       [["check_boxes", [1, 2, 3], "1, 2<br />3"],
       %w[checkbox 0 no],
       ["checkbox", 1, "yes"],
-      ["date", Time.parse('2011-04-19'), Time.parse('2011-04-19').strftime(FatFreeCrm::I18n.t("date.formats.mmddyy"))]].each do |as, value, expected|
+      ["date", Time.parse('2011-04-19'), Time.parse('2011-04-19').strftime(::I18n.t("date.formats.mmddyy"))]].each do |as, value, expected|
         field.as = as
         allow(object).to receive(field.name).and_return(value)
         expect(field.render_value(object)).to eq(expected)
