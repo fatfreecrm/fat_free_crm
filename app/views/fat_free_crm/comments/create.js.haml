@@ -1,4 +1,4 @@
-- class_name = @comment.commentable.class.name.underscore
+- class_name = @comment.commentable.class.name.demodulize.underscore
 - id_prefix = "#{class_name}_#{@comment.commentable.id}"
 
 - if @comment.valid?

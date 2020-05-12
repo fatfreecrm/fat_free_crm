@@ -1,9 +1,10 @@
-- class_name = commentable.class.name.underscore
+- commentable_name = commentable.class.name.underscore
+- class_name = commentable.class.name.demodulize.underscore
 .comment{style: "margin: 5px 0px 0px 0px"}
   = link_to avatar_for(current_user, size: :small), user_path(current_user)
   = form_for(@comment, remote: true) do |f|
     = hidden_field_tag "comment[commentable_id]", commentable.id
-    = hidden_field_tag "comment[commentable_type]", class_name.classify
+    = hidden_field_tag "comment[commentable_type]", commentable_name.classify
     = f.text_area :comment, id: dom_id(@comment, :text)
     .buttons
       = f.submit t(:save_note), :class => 'btn btn-primary'
