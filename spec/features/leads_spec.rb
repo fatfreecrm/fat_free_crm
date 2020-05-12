@@ -36,14 +36,13 @@ feature 'Leads', '
       fill_in 'lead_last_name', with: 'Lead'
       fill_in 'lead_email', with: 'mr_lead@example.com'
       fill_in 'lead_phone', with: '+44 1234 567890'
-      click_link 'Status'
+      find("summary", text: 'Status').click
       select 'Myself', from: 'lead_assigned_to'
       select 'Contacted', from: 'lead_status'
       select 'Campaign', from: 'lead_source'
-      click_link 'Comment'
-      fill_in 'comment_body', with: 'This is an important lead.'
-      click_link 'Status'
       select 'Contacted', from: 'lead_status'
+      find("summary", text: 'Comment').click
+      fill_in 'comment_body', with: 'This is an important lead.'
       click_button 'Create Lead'
       expect(leads_element).to have_content('Mr Lead')
 
@@ -63,7 +62,7 @@ feature 'Leads', '
     visit leads_page
     click_link 'Create Lead'
 
-    click_link 'Comment'
+    find("summary", text: 'Comment').click
     fill_in 'comment_body', with: 'This is an important lead.'
     click_button 'Create Lead'
 
@@ -79,7 +78,7 @@ feature 'Leads', '
       click_link('Edit')
       fill_in 'lead_first_name', with: 'Mrs'
       fill_in 'lead_phone', with: '+44 0987 654321'
-      click_link('Status')
+      find("summary", text: 'Status').click
       select 'Rejected', from: 'lead_status'
       click_button 'Save Lead'
       expect(summary_element).to have_content('Mrs Lead')
