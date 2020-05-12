@@ -57,4 +57,4 @@ module GravatarImageTag
   end
 end
 
-ActionView::Base.include GravatarImageTag if defined?(ActionView::Base)
+# ActionView::Base.include GravatarImageTag if defined?(ActionView::Base)

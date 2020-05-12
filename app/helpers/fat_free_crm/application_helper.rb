@@ -9,6 +9,7 @@ module FatFreeCrm
 module ApplicationHelper
   # Move translation override out of global scope
   include FatFreeCrm::I18n
+  include GravatarImageTag
 
   def tabs(tabs = nil)
     tabs ||= controller_path.match?(/admin/) ? FatFreeCrm::Tabs.admin : FatFreeCrm::Tabs.main
