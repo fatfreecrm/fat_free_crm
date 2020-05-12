@@ -11,8 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/accounts/_edit" do
 
     before do
-      view.extend FatFreeCrm::AddressesHelper
-      view.extend FatFreeCrm::JavascriptHelper
       login
       assign(:account, @account = create(:account))
     end

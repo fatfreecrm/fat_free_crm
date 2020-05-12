@@ -11,8 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/accounts/create" do
 
     before do
-      view.extend FatFreeCrm::AddressesHelper
-      view.extend FatFreeCrm::JavascriptHelper
       login
     end
 

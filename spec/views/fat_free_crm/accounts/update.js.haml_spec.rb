@@ -12,9 +12,6 @@ module FatFreeCrm
 
     before do
       login
-      view.extend FatFreeCrm::AddressesHelper
-      view.extend FatFreeCrm::JavascriptHelper
-      view.extend FatFreeCrm::LeadsHelper
       assign(:account, @account = build_stubbed(:account, user: current_user))
       assign(:users, [current_user])
       assign(:account_category_total, Hash.new(1))

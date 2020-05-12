@@ -7,6 +7,13 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
   module AccountsHelper
+    include ::FatFreeCrm::JavascriptHelper
+    include ::FatFreeCrm::AddressesHelper
+    include ::FatFreeCrm::UsersHelper
+    include ::FatFreeCrm::CommentsHelper
+    include ::FatFreeCrm::OpportunitiesHelper
+    include ::FatFreeCrm::LeadsHelper
+
     # Sidebar checkbox control for filtering accounts by category.
     #----------------------------------------------------------------------------
     def account_category_checkbox(category, count)

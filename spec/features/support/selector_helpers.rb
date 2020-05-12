@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 module SelectorHelpers
   def click_filter_tab(filter_name)
-    tab = find(:xpath, "//div[@class='filters']//td[contains(text(), '#{filter_name}')]")
+    tab = find(:xpath, "//div[@class='filters']//button[contains(text(), '#{filter_name}')]")
     tab.click
   end
 

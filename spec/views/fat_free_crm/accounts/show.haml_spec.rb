@@ -12,9 +12,6 @@ module FatFreeCrm
 
     before do
       view.controller.extend ::FatFreeCrm::Engine.routes.url_helpers
-      view.extend FatFreeCrm::JavascriptHelper
-      view.extend FatFreeCrm::CommentsHelper
-      view.extend FatFreeCrm::OpportunitiesHelper
       login
       @account = create(:account, id: 42,
                                   contacts: [create(:contact)],

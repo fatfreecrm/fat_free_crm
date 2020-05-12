@@ -27,6 +27,7 @@ require 'dynamic_form'
 require 'simple_form'
 require 'country_select'
 require 'rails-observers'
+require 'acts-as-taggable-on'
 
 require 'fat_free_crm/callback'
 require 'fat_free_crm/comment_extensions'
