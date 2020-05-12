@@ -47,7 +47,7 @@ module FatFreeCrm
 
     describe "shown_on_landing_page?" do
       it "should return true for Ajax request made from the asset landing page" do
-        controller.include ::FatFreeCrm::Engine.routes.url_helpers
+        controller.extend ::FatFreeCrm::Engine.routes.url_helpers
         allow(controller.request).to receive(:xhr?).and_return(true)
         allow(controller.request).to receive(:referer).and_return("http://www.example.com/fat_free_crm/leads/123")
         expect(helper.shown_on_landing_page?).to eq(true)

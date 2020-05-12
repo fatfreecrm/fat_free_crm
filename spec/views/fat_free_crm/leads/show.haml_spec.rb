@@ -10,6 +10,7 @@ require 'spec_helper'
 module FatFreeCrm
   describe "/fat_free_crm/leads/show" do
     before do
+      view.controller.extend ::FatFreeCrm::Engine.routes.url_helpers
       view.extend FatFreeCrm::JavascriptHelper
       view.extend FatFreeCrm::CommentsHelper
       view.extend FatFreeCrm::AddressesHelper
