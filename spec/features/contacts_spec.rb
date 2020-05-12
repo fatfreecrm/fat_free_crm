@@ -33,19 +33,19 @@ feature 'Contacts', '
       click_link 'Create Contact'
       select = find('#account_name', visible: true)
       expect(select).to have_text("")
-      expect(page).to have_selector('#select2-account_id-container', visible: false)
+      expect(page).to have_selector('select#account_id', visible: false)
       expect(page).to have_selector('#contact_first_name', visible: true)
       fill_in 'contact_first_name', with: 'Testy'
       fill_in 'contact_last_name', with: 'McTest'
       fill_in 'contact_email', with: "testy.mctest@example.com"
       fill_in 'contact_phone', with: '+44 1234 567890'
-      click_link 'Comment'
+      find("summary", text: 'Comment').click
       fill_in 'comment_body', with: 'This is a very important person.'
       click_button 'Create Contact'
       expect(contacts_element).to have_content('Testy McTest')
 
       contacts_element.click_link 'Testy McTest'
-      sleep(1) # avoid CI failure
+      sleep(3) # avoid CI failure
       expect(main_element).to have_content('This is a very important person.')
 
       click_link "Dashboard"
@@ -58,7 +58,7 @@ feature 'Contacts', '
     visit contacts_page
     click_link 'Create Contact'
 
-    click_link 'Comment'
+    find("summary", text: "Comment").click
     fill_in 'comment_body', with: 'This is a very important person.'
     click_button 'Create Contact'
 
@@ -71,7 +71,7 @@ feature 'Contacts', '
       visit contacts_page
       click_link 'Testy McTest'
       click_link 'Edit'
-      select = find('#select2-account_id-container', visible: true)
+      select = find('select', id: "account_id",  visible: true)
       expect(select).to have_text("Toast")
       expect(page).to have_selector('#account_name', visible: false)
       fill_in 'contact_first_name', with: 'Test'
@@ -89,7 +89,7 @@ feature 'Contacts', '
     create(:contact, first_name: "Test", last_name: "Subject")
     visit contacts_page
     click_link 'Test Subject'
-    click_link 'Delete?'
+    click_link 'Delete'
     expect(menu_element).to have_content('Are you sure you want to delete this contact?')
     click_link 'Yes'
     expect(flash_element).to have_content('Test Subject has been deleted.')
