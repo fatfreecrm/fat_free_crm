@@ -28,44 +28,45 @@
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../../lib/fat_free_crm/i18n')
 
 module FatFreeCrm
-describe Field do
-  it "should create a new instance given valid attributes" do
-    Field.create!(
-      name:      'skype_address',
-      label:     'Skype address',
-      as:        'string',
-      minlength: 12,
-      maxlength: 220,
-      position:  10
-    )
-  end
+  describe Field do
+    it "should create a new instance given valid attributes" do
+      Field.create!(
+        name:      'skype_address',
+        label:     'Skype address',
+        as:        'string',
+        minlength: 12,
+        maxlength: 220,
+        position:  10
+      )
+    end
 
-  it "should return a list of field types" do
-    expect(Field.field_types['string']).to eq('klass' => 'CustomField', 'type' => 'string')
-  end
+    it "should return a list of field types" do
+      expect(Field.field_types['string']).to eq('klass' => 'CustomField', 'type' => 'string')
+    end
 
-  it "should return a hash of input options" do
-    expect(Field.new.input_options).to be_a(Hash)
-  end
+    it "should return a hash of input options" do
+      expect(Field.new.input_options).to be_a(Hash)
+    end
 
-  it "should be able to display a empty multi_select value" do
-    field = Field.new(
-      label: "Availability",
-      name:  "availability"
-    )
-    object = double('Object')
+    it "should be able to display a empty multi_select value" do
+      field = Field.new(
+        label: "Availability",
+        name:  "availability"
+      )
+      object = double('Object')
 
-    #  as  |  value  |  expected
-    [["check_boxes", [1, 2, 3], "1, 2<br />3"],
-     %w[checkbox 0 no],
-     ["checkbox", 1, "yes"],
-     ["date", Time.parse('2011-04-19'), Time.parse('2011-04-19').strftime(I18n.t("date.formats.mmddyy"))]].each do |as, value, expected|
-      field.as = as
-      allow(object).to receive(field.name).and_return(value)
-      expect(field.render_value(object)).to eq(expected)
+      #  as  |  value  |  expected
+      [["check_boxes", [1, 2, 3], "1, 2<br />3"],
+      %w[checkbox 0 no],
+      ["checkbox", 1, "yes"],
+      ["date", Time.parse('2011-04-19'), Time.parse('2011-04-19').strftime(FatFreeCrm::I18n.t("date.formats.mmddyy"))]].each do |as, value, expected|
+        field.as = as
+        allow(object).to receive(field.name).and_return(value)
+        expect(field.render_value(object)).to eq(expected)
+      end
     end
   end
-end
 end
