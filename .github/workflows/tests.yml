@@ -2,6 +2,12 @@ name: Rails Tests
 
 on: push
 
+env:
+  SHA: ${{ github.sha }}
+  BRANCH: ${{ github.ref }}
+  YELLR_KEY: ${{ secrets.YELLR_KEY }}
+  YELLR_URL: ${{ secrets.YELLR_URL }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -47,3 +53,18 @@ jobs:
     - name: Run RSpec
       run: |
         bundle exec rspec
+    - name: Report Failure
+      if: failure()
+      env:
+        STATUS: failing
+      run: |
+        chmod +x ./script/report_to_yellr.sh
+        ./script/report_to_yellr.sh
+    - name: Report Success
+      if: success()
+      env:
+        STATUS: passing
+      run: |
+        chmod +x ./script/report_to_yellr.sh
+        ./script/report_to_yellr.sh
+
