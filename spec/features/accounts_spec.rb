@@ -39,7 +39,7 @@ feature 'Accounts', '
       fill_in 'account_website', with: 'http://www.example.com'
       find("summary", text: 'Comment').click
       fill_in 'comment_body', with: 'This account is very important'
-      click_button 'Create Account'
+      click_submit_and_await_form_transition("Create Account", "form.new_account")
 
       expect(find('ul#accounts')).to have_content('My new account')
       find('ul#accounts').click_link('My new account') # avoid recent items link
@@ -57,15 +57,17 @@ feature 'Accounts', '
   scenario "remembers the comment field when the creation was unsuccessful", js: true do
     visit accounts_page
     expect(page).to have_content('Create Account')
-    click_link 'Create Account'
+    click_link_and_await_form_load('Create Account', "form.new_account")
 
     find("summary", text: 'Contact Information').click
     fill_in 'account_phone', with: '+1 2345 6789'
 
     find("summary", text: 'Comment').click
     fill_in 'comment_body', with: 'This account is very important'
-    click_button "Create Account"
-    sleep 1
+    click_submit_and_fail_form_transition("Create Account", "form.new_account", 10)
+
+    find("summary", text: "Contact Information").click
+    find("summary", text: "Comment").click
 
     expect(page).to have_field("account_phone", with: '+1 2345 6789')
     expect(page).to have_field("comment_body", with: 'This account is very important')
@@ -79,11 +81,9 @@ feature 'Accounts', '
       expect(page).to have_content('A new account')
       click_link 'Edit'
       fill_in 'account_name', with: 'An updated account'
-      click_button 'Save Account'
-      expect(page).to have_content('An updated account')
+      click_submit_and_await_form_transition("Save Account", "form.edit_account", 15)
 
-      click_link "Dashboard"
-      sleep 2
+      visit_dashboard
       expect(page).to have_content("Bill Murray updated account An updated account")
     end
   end

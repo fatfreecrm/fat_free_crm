@@ -29,15 +29,13 @@ feature 'Campaigns', '
   scenario 'should create a campaign', js: true do
     with_versioning do
       visit campaigns_page
-      click_link 'Create Campaign'
+      click_link_and_await_form_load('Create Campaign', "form.new_campaign")
       expect(page).to have_selector('#campaign_name', visible: true)
       fill_in 'campaign_name', with: 'Cool Campaign'
       select 'On Hold', from: 'campaign_status'
       find("summary", text: 'Comment').click
       fill_in 'comment_body', with: 'This campaign is very important'
-      click_button 'Create Campaign'
-
-      sleep 2
+      click_submit_and_await_form_transition("Create Campaign", "form.new_campaign", 10)
 
       expect(page).to have_content('Cool Campaign')
       expect(page).to have_content('On Hold')
@@ -57,12 +55,11 @@ feature 'Campaigns', '
 
   scenario "remembers the comment field when the creation was unsuccessful", js: true do
     visit campaigns_page
-    click_link 'Create Campaign'
+    click_link_and_await_form_load('Create Campaign', "form.new_campaign")
 
     find("summary", text: 'Comment').click
     fill_in 'comment_body', with: 'This campaign is very important'
-    click_button 'Create Campaign'
-    sleep 2
+    click_submit_and_fail_form_transition("Create Campaign", "form.new_campaign", 10)
     find("summary", text: 'Comment').click
     expect(find('#comment_body')).to have_content('This campaign is very important')
   end
@@ -72,15 +69,12 @@ feature 'Campaigns', '
     with_versioning do
       visit campaigns_page
       click_link 'My Cool Campaign'
-      click_link 'Edit'
-      sleep 2
-      fill_in 'campaign_name', with: 'My Even Cooler Campaign'
+      click_link_and_await_form_load('Edit', "form.edit_campaign")
+      find('form.edit_campaign input#campaign_name').set('My Even Cooler Campaign')
       select 'Started', from: 'campaign_status'
-      click_button 'Save Campaign'
-      sleep 5
+      click_submit_and_await_form_transition("Save Campaign", 'form.edit_campaign', 15)
       expect(page).to have_content('My Even Cooler Campaign')
-      click_link 'Dashboard'
-      sleep 5
+      visit_dashboard
       expect(page).to have_content("Bill Murray updated campaign My Even Cooler Campaign")
     end
   end
