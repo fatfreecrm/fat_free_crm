@@ -7,6 +7,8 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
 module Admin::ApplicationHelper
+  include ::FatFreeCrm::JavascriptHelper
+
   #----------------------------------------------------------------------------
   def link_to_confirm_delete(model)
     link_to(t(:yes_button),
