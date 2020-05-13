@@ -65,6 +65,7 @@ feature 'Accounts', '
     find("summary", text: 'Comment').click
     fill_in 'comment_body', with: 'This account is very important'
     click_button "Create Account"
+    sleep 1
 
     expect(page).to have_field("account_phone", with: '+1 2345 6789')
     expect(page).to have_field("comment_body", with: 'This account is very important')
