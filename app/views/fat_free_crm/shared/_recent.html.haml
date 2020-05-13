@@ -1,4 +1,4 @@
 - title = (recent.item.respond_to?(:full_name) ? recent.item.full_name : recent.item.name)
 %li.space-between{ class: recent != @versions.last ? "" : "last" }
-  %span= t(recent.item_type.downcase) + ":"
+  %span= t(recent.item_type.demodulize.downcase) + ":"
   %span= link_to(truncate(title, length: 19), polymorphic_url(recent.item), title: title)
