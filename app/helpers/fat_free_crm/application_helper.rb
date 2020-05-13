@@ -12,6 +12,7 @@ module ApplicationHelper
   include GravatarImageTag
   include ::FatFreeCrm::JavascriptHelper
   include ::FatFreeCrm::VersionsHelper
+  include ::FatFreeCrm::TagsHelper
 
   RATING_STARS = 5
 
