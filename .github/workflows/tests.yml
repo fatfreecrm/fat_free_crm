@@ -39,3 +39,11 @@ jobs:
       run: |
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
+    - name: Create And Migrate DB
+      run: |
+        cp -f spec/dummy/config/database.gh_actions.yml spec/dummy/config/database.yml
+        psql -U postgres -h localhost -c "create database dummy_test;"
+        RAILS_ENV=test bundle exec rails db:migrate
+    - name: Run RSpec
+      run: |
+        bundle exec rspec

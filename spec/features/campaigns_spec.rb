@@ -37,13 +37,19 @@ feature 'Campaigns', '
       fill_in 'comment_body', with: 'This campaign is very important'
       click_button 'Create Campaign'
 
+      sleep 2
+
       expect(page).to have_content('Cool Campaign')
       expect(page).to have_content('On Hold')
 
       find('div#campaigns').click_link 'Cool Campaign'
+
+      sleep 2
       expect(page).to have_content('This campaign is very important')
 
       click_link "Dashboard"
+
+      sleep 2
       expect(page).to have_content("Bill Murray created campaign Cool Campaign")
       expect(page).to have_content("Bill Murray created comment on Cool Campaign")
     end

@@ -42,12 +42,15 @@ feature 'Opportunities', '
       find("summary", text: 'Comment').click
       fill_in 'comment_body', with: 'This is a very important opportunity.'
       click_button 'Create Resource'
+      sleep 2
       expect(page).to have_content('My Awesome Opportunity')
 
       find('div#opportunities').click_link('My Awesome Opportunity')
+      sleep 2
       expect(page).to have_content('This is a very important opportunity.')
 
       click_link "Dashboard"
+      sleep 2
       expect(page).to have_content("Bill Murray created resource My Awesome Opportunity")
       expect(page).to have_content("Bill Murray created comment on My Awesome Opportunity")
     end
