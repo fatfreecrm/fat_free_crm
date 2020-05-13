@@ -91,14 +91,16 @@ module FatFreeCrm
         ::I18n.backend.load_translations
     
         translations = { ransack: { attributes: {} } }
-        FatFreeCrm::CustomField.find_each do |custom_field|
-          if custom_field.field_group.present?
-            model_key = custom_field.klass.model_name.singular
-            translations[:ransack][:attributes][model_key] ||= {}
-            translations[:ransack][:attributes][model_key][custom_field.name] = custom_field.label
+        if ActiveRecord::Base.connection.table_exists? 'fat_free_crm_fields'
+          FatFreeCrm::CustomField.find_each do |custom_field|
+            if custom_field.field_group.present?
+              model_key = custom_field.klass.model_name.singular
+              translations[:ransack][:attributes][model_key] ||= {}
+              translations[:ransack][:attributes][model_key][custom_field.name] = custom_field.label
+            end
           end
         end
-    
+        
         ::I18n.backend.store_translations(Setting.locale.to_sym, translations)
       end
     
