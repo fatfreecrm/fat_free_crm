@@ -7,6 +7,8 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
 module TasksHelper
+  include ::FatFreeCrm::UsersHelper
+
   # Sidebar checkbox control for filtering tasks by due date -- used for
   # pending and assigned views only.
   #----------------------------------------------------------------------------

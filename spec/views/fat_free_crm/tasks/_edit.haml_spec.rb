@@ -11,9 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/tasks/_edit" do
 
     before do
-      view.extend ::FatFreeCrm::Engine.routes.url_helpers
-      view.extend FatFreeCrm::ApplicationHelper
-      view.extend FatFreeCrm::UsersHelper
       login
       assign(:task, build_stubbed(:task, asset: build_stubbed(:account), bucket: "due_asap"))
       assign(:users, [current_user])

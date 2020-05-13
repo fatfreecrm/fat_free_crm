@@ -11,7 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/tasks/new" do
 
     before do
-      view.extend FatFreeCrm::UsersHelper
       login
       assign(:task, build(:task))
       assign(:users, [current_user])

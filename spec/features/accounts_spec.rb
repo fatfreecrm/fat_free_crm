@@ -77,12 +77,13 @@ feature 'Accounts', '
       find('ul#accounts').click_link('A new account')
       expect(page).to have_content('A new account')
       click_link 'Edit'
-      fill_in 'account_name', with: 'A new account'
+      fill_in 'account_name', with: 'An updated account'
       click_button 'Save Account'
-      expect(page).to have_content('A new account')
+      expect(page).to have_content('An updated account')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray updated account A new account")
+      sleep 2
+      expect(page).to have_content("Bill Murray updated account An updated account")
     end
   end
 

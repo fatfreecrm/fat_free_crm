@@ -11,9 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/tasks/edit" do
 
     before do
-      view.extend ::FatFreeCrm::Engine.routes.url_helpers
-      view.extend FatFreeCrm::ApplicationHelper
-      view.extend FatFreeCrm::UsersHelper
       login
       assign(:users, [current_user])
       assign(:bucket, Setting.task_bucket[1..-1] << ["On Specific Date...", :specific_time])
