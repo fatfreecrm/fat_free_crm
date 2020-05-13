@@ -10,7 +10,6 @@ module ContactsHelper
   include ::FatFreeCrm::AccountsHelper
   include ::FatFreeCrm::AddressesHelper
   include ::FatFreeCrm::OpportunitiesHelper
-  include ::FatFreeCrm::JavascriptHelper
   include ::FatFreeCrm::CommentsHelper
   # Contact summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------

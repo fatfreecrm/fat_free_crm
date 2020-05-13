@@ -10,6 +10,7 @@ module ApplicationHelper
   # Move translation override out of global scope
   include FatFreeCrm::I18n
   include GravatarImageTag
+  include ::FatFreeCrm::JavascriptHelper
 
   RATING_STARS = 5
 

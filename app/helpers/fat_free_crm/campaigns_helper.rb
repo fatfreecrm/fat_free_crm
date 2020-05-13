@@ -7,7 +7,6 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
   module CampaignsHelper
-    include ::FatFreeCrm::JavascriptHelper
     include ::FatFreeCrm::CommentsHelper
 
     # Sidebar checkbox control for filtering campaigns by status.

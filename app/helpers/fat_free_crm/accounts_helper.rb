@@ -7,7 +7,6 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
   module AccountsHelper
-    include ::FatFreeCrm::JavascriptHelper
     include ::FatFreeCrm::AddressesHelper
     include ::FatFreeCrm::UsersHelper
     include ::FatFreeCrm::CommentsHelper
