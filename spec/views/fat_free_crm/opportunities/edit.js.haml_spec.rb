@@ -11,7 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/opportunities/edit" do
 
     before do
-      view.extend FatFreeCrm::AccountsHelper
       login
 
       assign(:opportunity, @opportunity = build_stubbed(:opportunity, user: current_user))

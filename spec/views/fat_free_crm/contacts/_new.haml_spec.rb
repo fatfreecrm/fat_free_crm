@@ -11,8 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/contacts/_new" do
 
     before do
-      view.extend FatFreeCrm::AccountsHelper
-      view.extend FatFreeCrm::AddressesHelper
       login
       @account = build_stubbed(:account)
       assign(:contact, Contact.new)

@@ -11,9 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/leads/convert" do
 
     before do
-      view.extend FatFreeCrm::AccountsHelper
-      view.extend FatFreeCrm::UsersHelper
-
       login
 
       assign(:lead, @lead = build_stubbed(:lead, user: current_user))

@@ -11,8 +11,6 @@ module FatFreeCrm
   describe "fat_free_crm/leads/_new" do
 
     before do
-      view.extend FatFreeCrm::UsersHelper
-      view.extend FatFreeCrm::AddressesHelper
       login
       assign(:lead, build(:lead))
       assign(:users, [current_user])

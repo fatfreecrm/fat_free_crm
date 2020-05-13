@@ -10,10 +10,6 @@ require 'spec_helper'
 module FatFreeCrm
   describe "/fat_free_crm/opportunities/create" do
     before do
-      view.extend FatFreeCrm::AccountsHelper
-      view.extend FatFreeCrm::CampaignsHelper
-      view.extend FatFreeCrm::AddressesHelper
-      view.extend FatFreeCrm::LeadsHelper
       login
       assign(:stage, Setting.unroll(:opportunity_stage))
     end

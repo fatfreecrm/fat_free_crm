@@ -10,11 +10,6 @@ require 'spec_helper'
 module FatFreeCrm
   describe "/fat_free_crm/leads/promote" do
     before do
-      view.extend FatFreeCrm::OpportunitiesHelper
-      view.extend FatFreeCrm::AccountsHelper
-      view.extend FatFreeCrm::UsersHelper
-      view.extend FatFreeCrm::CampaignsHelper
-      view.extend FatFreeCrm::AddressesHelper
       login
       assign(:users, [current_user])
       assign(:account, @account = build_stubbed(:account))

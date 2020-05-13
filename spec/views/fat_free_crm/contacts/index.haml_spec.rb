@@ -11,7 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/contacts/index" do
 
     before do
-      view.extend FatFreeCrm::AccountsHelper
       view.lookup_context.prefixes << 'entities'
       assign :per_page, Contact.per_page
       assign :sort_by,  Contact.sort_by

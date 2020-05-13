@@ -11,7 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/contacts/index" do
 
     before do
-      view.extend FatFreeCrm::AccountsHelper
       login
     end
 

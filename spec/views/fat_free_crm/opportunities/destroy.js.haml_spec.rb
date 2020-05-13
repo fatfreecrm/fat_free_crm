@@ -10,9 +10,6 @@ require 'spec_helper'
 module FatFreeCrm
   describe "/fat_free_crm/opportunities/destroy" do
     before do
-      view.extend FatFreeCrm::AddressesHelper
-      view.extend FatFreeCrm::CampaignsHelper
-      view.extend FatFreeCrm::LeadsHelper
       login
       assign(:opportunity, @opportunity = build_stubbed(:opportunity))
       assign(:stage, Setting.unroll(:opportunity_stage))

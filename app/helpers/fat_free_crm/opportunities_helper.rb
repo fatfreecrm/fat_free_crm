@@ -7,6 +7,11 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
 module OpportunitiesHelper
+  include ::FatFreeCrm::AddressesHelper
+  include ::FatFreeCrm::UsersHelper
+  include ::FatFreeCrm::CampaignsHelper
+  include ::FatFreeCrm::JavascriptHelper
+  include ::FatFreeCrm::CommentsHelper
   # Sidebar checkbox control for filtering opportunities by stage.
   #----------------------------------------------------------------------------
   def opportunity_stage_checkbox(stage, count)

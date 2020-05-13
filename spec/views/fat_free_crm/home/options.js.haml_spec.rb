@@ -10,8 +10,6 @@ require 'spec_helper'
 module FatFreeCrm
   describe "/fat_free_crm/home/options" do
     before do
-      view.extend ::FatFreeCrm::Engine.routes.url_helpers
-      view.extend FatFreeCrm::ApplicationHelper
       login
     end
 

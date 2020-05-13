@@ -12,7 +12,6 @@ module FatFreeCrm
 
     before do
       view.extend FatFreeCrm::AccountsHelper
-      view.extend FatFreeCrm::UsersHelper
       login
       @account = build_stubbed(:account)
       assign(:lead, build_stubbed(:lead))

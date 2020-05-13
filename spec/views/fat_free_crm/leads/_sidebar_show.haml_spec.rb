@@ -11,7 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/leads/_sidebar_show" do
 
     before do
-      view.extend FatFreeCrm::AddressesHelper
       login
       assign(:users, [current_user])
       assign(:comment, Comment.new)

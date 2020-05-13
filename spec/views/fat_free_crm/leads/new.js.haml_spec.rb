@@ -11,8 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/leads/new" do
 
     before do
-      view.extend FatFreeCrm::UsersHelper
-      view.extend FatFreeCrm::AddressesHelper
       login
       @campaign = build_stubbed(:campaign)
       assign(:lead, Lead.new(user: current_user))

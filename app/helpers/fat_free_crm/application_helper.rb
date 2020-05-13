@@ -11,6 +11,8 @@ module ApplicationHelper
   include FatFreeCrm::I18n
   include GravatarImageTag
 
+  RATING_STARS = 5
+
   def tabs(tabs = nil)
     tabs ||= controller_path.match?(/admin/) ? FatFreeCrm::Tabs.admin : FatFreeCrm::Tabs.main
     if tabs
@@ -539,6 +541,73 @@ module ApplicationHelper
     options = { renderer: RemoteLinkPaginationHelper::LinkRenderer }.merge(options)
     will_paginate(collection, options)
   end
+
+
+    # Generates a select list with the first 25 accounts
+    # and prepends the currently selected account, if any.
+    #----------------------------------------------------------------------------
+    def account_select(options = {})
+      options[:selected] = @account&.id.to_i
+      accounts = ([@account.new_record? ? nil : @account] + Account.my(current_user).order(:name).limit(25)).compact.uniq
+      collection_select :account, :id, accounts, :id, :name,
+                        { include_blank: true },
+                        style: 'display: none;',
+                        class: 'form-control',
+                        placeholder: t(:select_an_account),
+                        "data-url": auto_complete_accounts_path(format: 'json')
+    end
+
+    # Select an existing account or create a new one.
+    #----------------------------------------------------------------------------
+    def account_select_or_create(form, &_block)
+      options = {}
+      yield options if block_given?
+
+      content_tag(:label, class: 'label') do
+        t(:account).html_safe +
+          content_tag(:span, id: 'account_create_title') do
+            " (#{t :create_new} #{t :or} <a href='#' onclick='crm.show_select_account(); return false;'>#{t :select_existing}</a>):".html_safe
+          end +
+          content_tag(:span, id: 'account_select_title') do
+            " (<a href='#' onclick='crm.show_create_account(); return false;'>#{t :create_new}</a> #{t :or} #{t :select_existing}):".html_safe
+          end +
+          content_tag(:span, ':', id: 'account_disabled_title')
+      end +
+        account_select(options) +
+        form.text_field(:name, style: 'display:none;', class: "form-control" )
+    end
+
+    # "title, department at Account name" used in index_brief and index_long
+    # - a helper so it is easy to override in plugins that allow for several accounts
+    #----------------------------------------------------------------------------
+    def brief_account_info(contact)
+      text = ""
+      title = contact.title
+      department = contact.department
+      account = contact.account
+      account_text = ""
+      account_text = link_to_if(can?(:read, account), h(account.name), account_path(account)) if account.present?
+
+      text += if title.present? && department.present?
+                t(:account_with_title_department, title: h(title), department: h(department), account: account_text)
+              elsif title.present?
+                t(:account_with_title, title: h(title), account: account_text)
+              elsif department.present?
+                t(:account_with_title, title: h(department), account: account_text)
+              elsif account_text.present?
+                t(:works_at, job_title: "", company: account_text)
+              else
+                ""
+          end
+      text.html_safe
+    end
+
+    #----------------------------------------------------------------------------
+    def stars_for(lead)
+      star = '&#9733;'
+      rating = lead.rating.to_i
+      (star * rating).html_safe + content_tag(:font, (star * (RATING_STARS - rating)).html_safe, color: 'gainsboro')
+    end
 
   private
 

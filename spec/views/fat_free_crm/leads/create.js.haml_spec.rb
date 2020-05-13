@@ -12,9 +12,6 @@ module FatFreeCrm
 
     before do
       controller.controller_path = 'leads'
-      view.extend FatFreeCrm::UsersHelper
-      view.extend FatFreeCrm::AddressesHelper
-      view.extend FatFreeCrm::CampaignsHelper
       login
       assign(:campaigns, [build_stubbed(:campaign)])
     end

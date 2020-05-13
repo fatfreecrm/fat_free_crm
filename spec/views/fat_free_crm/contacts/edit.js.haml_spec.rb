@@ -11,8 +11,6 @@ module FatFreeCrm
   describe "/fat_free_crm/contacts/edit" do
 
     before do
-      view.extend FatFreeCrm::AccountsHelper
-      view.extend FatFreeCrm::AddressesHelper
       login
       assign(:contact, @contact = build_stubbed(:contact, user: current_user))
       assign(:users, [current_user])

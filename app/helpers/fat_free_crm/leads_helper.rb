@@ -7,14 +7,10 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
   module LeadsHelper
-    RATING_STARS = 5
-
-    #----------------------------------------------------------------------------
-    def stars_for(lead)
-      star = '&#9733;'
-      rating = lead.rating.to_i
-      (star * rating).html_safe + content_tag(:font, (star * (RATING_STARS - rating)).html_safe, color: 'gainsboro')
-    end
+    include ::FatFreeCrm::UsersHelper
+    include ::FatFreeCrm::AddressesHelper
+    include ::FatFreeCrm::CampaignsHelper
+    include ::FatFreeCrm::OpportunitiesHelper
 
     #----------------------------------------------------------------------------
     def link_to_convert(lead)
