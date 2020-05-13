@@ -11,6 +11,7 @@ module ContactsHelper
   include ::FatFreeCrm::AddressesHelper
   include ::FatFreeCrm::OpportunitiesHelper
   include ::FatFreeCrm::CommentsHelper
+
   # Contact summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def contact_summary(contact)
