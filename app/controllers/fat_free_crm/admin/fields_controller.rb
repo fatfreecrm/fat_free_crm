@@ -8,7 +8,7 @@
 module FatFreeCrm
   class Admin::FieldsController < Admin::ApplicationController
     before_action :setup_current_tab, only: [:index]
-    load_resource except: %i[create subform]
+    load_resource except: %i[create subform], class: FatFreeCrm::Field
 
     # GET /fields
     # GET /fields.xml                                                      HTML
