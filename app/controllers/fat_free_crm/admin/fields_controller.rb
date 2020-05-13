@@ -14,7 +14,6 @@ module FatFreeCrm
     # GET /fields.xml                                                      HTML
     #----------------------------------------------------------------------------
     def index
-      render 'fat_free_crm/admin/fields/index'
     end
 
     # GET /fields/1

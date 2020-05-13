@@ -12,13 +12,13 @@
 %nav
   %ul{ class: 'nav nav-tabs' }
     - list_of_entities.each do |entity|
-      - asset = entity.downcase
+      - asset = entity.demodulize.downcase
       %li{ "data-tab-class" => asset, class: 'nav-item' }
-        = link_to(t(entity), "#", { class: 'nav-link active' })
+        = link_to(t(entity.demodulize), "#", { class: 'nav-link active' })
 
 - list_of_entities.each do |entity|
-  - asset = entity.downcase
-  - klass = asset.classify.constantize
+  - asset = entity.demodulize.downcase
+  - klass = entity.constantize
   .fields{ id: "#{asset}_section", style: ("display: none;" if asset != 'contact') }
 
     - create_form_id = "#{asset}_create_field_group"
@@ -31,6 +31,6 @@
 
 
     .list{ id: "#{asset}_field_groups", 'data-sortable' =>  sort_admin_field_groups_path(asset: asset) }
-      = render partial: "admin/field_groups/field_group", collection: klass.field_groups, locals: {asset: asset, klass: klass}
+      = render partial: "fat_free_crm/admin/field_groups/field_group", collection: klass.field_groups, locals: {asset: asset, klass: klass}
 
     .remote{ hidden.merge(id: create_form_id) }
