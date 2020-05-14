@@ -1,6 +1,6 @@
 %li.highlight[campaign]
   .strip{class: campaign.status}= t(campaign.status)
-  = render "fat_free_crm/campaign_tools", campaign: campaign
+  = render "fat_free_crm/campaigns/campaign_tools", campaign: campaign
   = link_to(campaign.name, campaign)
   = render "fat_free_crm/campaigns/status", campaign: campaign
   = render "fat_free_crm/campaigns/metrics", campaign: campaign
