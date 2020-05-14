@@ -1,16 +1,7 @@
 .idc-panel ul#accounts {
   padding: 0;
-}
 
-ul#accounts {
-  padding: 1rem;
-
-  li {
-    display: flex;
-    align-items: center;
-  }
-
-  li > * + * {
-    margin-left: 0.5rem;
+  > li {
+    margin-bottom: 1rem;
   }
 }
