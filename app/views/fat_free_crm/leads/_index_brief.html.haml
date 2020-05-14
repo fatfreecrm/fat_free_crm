@@ -1,26 +1,10 @@
 %li.highlight[lead]
-  - if lead.status
-    .strip.badge.badge-primary{class: lead.status}= t lead.status
-  - else
-    .strip.badge.badge-light{style: "color: gray;"}= t :other
+  -# - if lead.status
+  -#   .strip.badge.badge-primary{class: lead.status}= t lead.status
+  -# - else
+  -#   .strip.badge.badge-light{style: "color: gray;"}= t :other
 
-  .tools
-    - if can?(:update, lead)
-      = link_to_edit(lead)
-    - if %w(converted rejected).include?(lead.status)
-      %span
-        %font{ color: 'silver' }= t :convert
-    - elsif can?(:update, lead)
-      = link_to_convert(lead)
-    - if lead.status == "rejected"
-      %span 
-        %font{ color: 'silver' }= t :reject
-    - elsif can?(:update, lead)
-      = link_to_reject(lead)
-    - if shown_on_landing_page?
-      = link_to_discard(lead)
-    - if can?(:destroy, lead)
-      = link_to_delete(lead)
+  = render "fat_free_crm/leads/leads_tools", lead: lead
 
   %div
     = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
