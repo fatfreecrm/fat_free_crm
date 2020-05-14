@@ -1,7 +1,7 @@
-%li.highlight[campaign]
-  .strip{class: campaign.status}= t(campaign.status)
-  = render "fat_free_crm/campaigns/campaign_tools", campaign: campaign
-  = link_to(campaign.name, campaign)
+%li.highlight.campaign{id: "campaign_#{campaign.id}"}
+  .flex-container
+    %h3= link_to(campaign.name, campaign)
+    = render "fat_free_crm/campaigns/campaign_tools", campaign: campaign
   = render "fat_free_crm/campaigns/status", campaign: campaign
   = render "fat_free_crm/campaigns/metrics", campaign: campaign
   - if campaign.tags.present?

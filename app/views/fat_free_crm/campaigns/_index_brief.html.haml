@@ -1,6 +1,5 @@
 %li.highlight.campaign{id: "campaign_#{campaign.id}"}
   .flex-container
-    -# .strip{class: campaign.status}= t(campaign.status)
     %h3= link_to(campaign.name, campaign)
     = render "fat_free_crm/campaigns/campaign_tools", campaign: campaign
   = render "fat_free_crm/campaigns/status", campaign: campaign
