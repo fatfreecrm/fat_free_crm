@@ -135,7 +135,7 @@ module ApplicationHelper
   def link_to_edit(record, options = {})
     object = record.is_a?(Array) ? record.last : record
 
-    name = (params[:klass_name] || object.class.name).underscore.downcase
+    name = (params[:klass_name] || object.class.name.demodulize).underscore.downcase
     link_to(t(:edit),
             options[:url] || polymorphic_url(record, action: :edit),
             remote:  true,
