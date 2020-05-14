@@ -1,59 +1,41 @@
 = hook(:opportunity_top_section, self, f: f) do
-  .section
-    %table
-      %tr
-        %td
-          .label.req.top #{t :name}:
-          = f.text_field :name, autofocus: true, style: "width:325px"
-        
-        %td
-          .label.req.top #{t :stage}:
-          = f.select :stage, @stage, { selected: @opportunity.stage ? @opportunity.stage.to_sym : nil }, { style: "width:160px", class: 'select2' }
-
-    %table{ border: 0, width: 500, cellpadding: 0, cellspacing: 0 }
-      %tr
-        %td
-          .label #{t :close_date}:
-          = f.text_field :closes_on, value: f.object.closes_on, style: "width:110px;", autocomplete: :off, class: 'date'
-        
-        %td
-          .label #{t :probability} (%):
-          = f.text_field :probability, style: "width:110px; text-align:right;"
-        
-        %td
-          .label #{t :amount} #{t :currency}:
-          = f.text_field :amount, style: "width:110px; text-align:right;"
-        
-        %td
-          .label #{t :discount} #{t :currency}:
-          = f.text_field :discount, style: "width:110px; text-align:right;"
+  .idc-panel
+    .form-group
+      %label #{t :name}:
+      = f.text_field :name, autofocus: true, class: 'form-control'
+    .form-group
+      %label #{t :stage}:
+      = f.select :stage, @stage, { selected: @opportunity.stage ? @opportunity.stage.to_sym : nil }, { class: 'custom-select' }
+    .form-group
+      %label #{t :close_date}:
+      = f.date_field :closes_on, value: f.object.closes_on, autocomplete: :off, class: 'form-control'
+    .form-group
+      %label #{t :probability} (%):
+      = f.text_field :probability, class: 'form-control'
+    .form-group
+      %label #{t :amount} #{t :currency}:
+      = f.text_field :amount, class: 'form-control'
+    .form-group
+      %label #{t :discount} #{t :currency}:
+      = f.text_field :discount, class: 'form-control'
 
     = fields_for(@account) do |a|
       = a.hidden_field :user_id
       = a.hidden_field :access
       = a.hidden_field :assigned_to
-      %table
-        %tr
-          %td
-            != account_select_or_create(a) do |options|
-              -# Add [-- None --] account choice when editing existing opportunity that has an account.
-              - options[:selected] = @account.id.to_i
-
-          
-          %td
-            .label.req #{t :assigned_to}:
-            = user_select(:opportunity, all_users, current_user)
-        %tr
-          %td
-            .label #{t :campaign}:
-            = opportunity_campaign_select(selected: (@campaign.try(:id) || @opportunity.campaign_id), include_blank: true)
-
-        - if Setting.background_info && Setting.background_info.include?(:opportunity)
-          %tr
-            %td(colspan="3")
-              .label= t(:background_info) + ':'
-              = f.text_area :background_info, style: "width:500px", rows: 3
-
-        = render partial: "/fat_free_crm/shared/tags", locals: {f: f, span: 3}
-
-        = hook(:opportunity_top_section_bottom, self, f: f)
+      .form-group
+        != account_select_or_create(a) do |options|
+          -# Add [-- None --] account choice when editing existing opportunity that has an account.
+          - options[:selected] = @account.id.to_i
+      .form-group
+        %label.req #{t :assigned_to}:
+        = user_select(:opportunity, all_users, current_user)
+      .form-group
+        %label #{t :campaign}:
+        = opportunity_campaign_select(selected: (@campaign.try(:id) || @opportunity.campaign_id), include_blank: true)
+      - if Setting.background_info && Setting.background_info.include?(:opportunity)
+        .form-group
+          %label= t(:background_info) + ':'
+          = f.text_area :background_info, class: 'form-control'
+      = render partial: "/fat_free_crm/shared/tags", locals: {f: f}
+      = hook(:opportunity_top_section_bottom, self, f: f)
