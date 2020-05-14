@@ -1,6 +1,6 @@
 
 = hook(:contact_top_section, self, f: f) do
-  .idc-panel
+  .idc-panel.outline-red
     .form-group.one-quarter
       %label{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
       = f.text_field :first_name, autofocus: true, :class => "form-control"
