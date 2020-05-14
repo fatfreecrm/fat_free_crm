@@ -5,39 +5,39 @@
   -# - else
   -#   .strip.badge.badge-info{style: "color: gray;"}= t :other
 
-  = render "fat_free_crm/leads/leads_tools", lead: lead
+  .flex-container
+    %h3
+      = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
+    = render "fat_free_crm/leads/leads_tools", lead: lead
 
-  %div
-    = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
-    %span
-      - if lead.company? && lead.title?
-        = t(:works_at, job_title: lead.title, company: lead.company)
-      - else
-        = lead.company if lead.company?
-        = lead.title if lead.title?
-      - if lead.referred_by?
-        &ndash;
-        == #{t :referred_by_small} #{lead.referred_by}
+  
+  %span
+    - if lead.company? && lead.title?
+      = t(:works_at, job_title: lead.title, company: lead.company)
+    - else
+      = lead.company if lead.company?
+      = lead.title if lead.title?
+    - if lead.referred_by?
+      &ndash;
+      == #{t :referred_by_small} #{lead.referred_by}
 
-    %span
-      = stars_for(lead)
-      |
-      - if can?(:read, lead)
-        - if lead.email.present?
-          = link_to_email(lead.email)
-          |
-        - if lead.phone.present?
-          == #{t :phone_small}:
-          %b= lead.phone
-          |
-        - if lead.mobile.present?
-          == #{t :mobile_small}:
-          %b= lead.mobile
-          |
-      = t(:added_ago, value: timeago(lead.created_at)).html_safe
+  %span
+    -# = stars_for(lead)
+    - if can?(:read, lead)
+      - if lead.email.present?
+        = link_to_email(lead.email)
+        |
+      - if lead.phone.present?
+        == #{t :phone_small}:
+        %b= lead.phone
+        |
+      - if lead.mobile.present?
+        == #{t :mobile_small}:
+        %b= lead.mobile
+        |
+    = t(:added_ago, value: timeago(lead.created_at)).html_safe
 
     - if lead.tags.present?
-      %dt
-        .tags= tags_for_index(lead)
+      .tags= tags_for_index(lead)
 
     = hook(:lead_bottom, self, lead: lead)

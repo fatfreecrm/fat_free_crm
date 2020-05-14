@@ -3,19 +3,19 @@
   -#   .strip.badge.badge-primary{class: lead.status}= t lead.status
   -# - else
   -#   .strip.badge.badge-light{style: "color: gray;"}= t :other
-
-  = render "fat_free_crm/leads/leads_tools", lead: lead
-
-  %div
-    = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
-    %span
-      - if lead.company? && lead.title?
-        = t(:works_at, job_title: lead.title, company: lead.company)
-      - else
-        = lead.company if lead.company?
-        = lead.title if lead.title?
-      - if lead.referred_by?
-        &ndash;
-        == #{t :referred_by_small} #{lead.referred_by}
+  .flex-container
+    %h3
+      = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
+    = render "fat_free_crm/leads/leads_tools", lead: lead
+    
+  .idc-details
+    - if lead.company? && lead.title?
+      = t(:works_at, job_title: lead.title, company: lead.company)
+    - else
+      = lead.company if lead.company?
+      = lead.title if lead.title?
+    - if lead.referred_by?
+      &ndash;
+      == #{t :referred_by_small} #{lead.referred_by}
 
     = hook(:lead_bottom, self, lead: lead)
