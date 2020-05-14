@@ -1,29 +1,23 @@
 = hook(:campaign_top_section, self, f: f) do
-  .section
-    %table
-      %tr
-        %td(colspan="5")
-          .label.top.req #{t :name}:
-          = f.text_field :name, autofocus: true, style: "width:500px"
-      %tr
-        %td
-          .label #{t :start_date}:
-          = f.date_field :starts_on, value: f.object.starts_on, autocomplete: :off, class: 'date'
-        
-        %td
-          .label #{t :end_date}:
-          = f.date_field :ends_on, value: f.object.ends_on, autocomplete: :off, class: 'date'
-        
-        %td
-          .label #{t :status}:
-          = f.select :status, Setting.unroll(:campaign_status), { selected: (@campaign.status || "planned").to_sym }, { style: "width:250px", class: 'select2' }
+  .idc-panel
+    .form-group
+      %label #{t :name}:
+      = f.text_field :name, autofocus: true, class: 'form-control'
+    .form-group
+      %label #{t :start_date}:
+      = f.date_field :starts_on, value: f.object.starts_on, autocomplete: :off, class: 'form-control'
+    .form-group
+      %label #{t :end_date}:
+      = f.date_field :ends_on, value: f.object.ends_on, autocomplete: :off, class: 'form-control'
+    .form-group
+      %label #{t :status}:
+      = f.select :status, Setting.unroll(:campaign_status), { selected: (@campaign.status || "planned").to_sym }, { class: 'custom-select' }
 
-      - if Setting.background_info && Setting.background_info.include?(:campaign)
-        %tr
-          %td(colspan="5")
-            .label= t(:background_info) + ':'
-            = f.text_area :background_info, style: "width:500px", rows: 3
+    - if Setting.background_info && Setting.background_info.include?(:campaign)
+      .form-group
+        %label= t(:background_info) + ':'
+        = f.text_area :background_info, rows: 3, class: 'form-control'
 
-      = render partial: "/fat_free_crm/shared/tags", locals: {f: f, span: 5}
+    = render partial: "fat_free_crm/shared/tags", locals: {f: f, span: 5}
 
-      = hook(:campaign_top_section_bottom, self, f: f)
+    = hook(:campaign_top_section_bottom, self, f: f)
