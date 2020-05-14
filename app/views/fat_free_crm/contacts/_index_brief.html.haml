@@ -1,4 +1,4 @@
-%li.brief.highlight.contact{id: "contact#{contact.id}"}
+%li.brief.highlight.contact{id: "contact_#{contact.id}"}
   .flex-container
     %h3
       = link_to_if can?(:read, contact), contact.full_name(current_user.preference[:contacts_naming]), contact
