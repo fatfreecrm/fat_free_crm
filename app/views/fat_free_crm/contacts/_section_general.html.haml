@@ -1,26 +1,32 @@
-- collapsed = session[:contact_show_general].nil? # && contact.errors.empty?
-= section_title :contact_show_general, collapsed, t(:general_info), t('show_general_info_small')
-.show_fields
-  #contact_show_general{ hidden_if(collapsed) }
-    %table.asset_attributes
-      %tr
-        = col(t(:first_name), contact.first_name)
-        = col(t(:last_name), contact.last_name)
-      %tr
-        = col(t(:email), contact.email, false, true)
-        = col(t(:phone), contact.phone)
-      %tr
-        = col(t(:account)) do
-          = account_with_url_for(contact)
-        - assigned_to_user = FatFreeCrm::User.find_by_id(contact.assigned_to)
-        = col(t(:assigned_to)) do
-          = link_to(assigned_to_user.name, url_for(assigned_to_user)) if assigned_to_user
-      %tr
-        = col(t(:tags)) do
-          .tags= tags_for_index(contact)
+%details.idc-panel
+  %summary
+    =t(:general_info)
+  .detail-content
+    %span
+      %b=t(:first_name)
+      %div=contact.first_name
+    %span
+      %b=t(:last_name)
+      %div=contact.last_name
+    %span
+      %b=t(:email)
+      %div=contact.email
+    %span
+      %b=t(:phone)
+      %div=contact.phone
+    %span
+      = t(:account) do
+        %b= account_with_url_for(contact)
+      - assigned_to_user = User.find_by_id(contact.assigned_to)
+    %span
+      = t(:assigned_to) do
+        %b= link_to(assigned_to_user.name, url_for(assigned_to_user)) if assigned_to_user
+    %div
+      = t(:tags) do
+        .tags= tags_for_index(contact)
 
-    -# Show custom fields that are in the default field group
-    - custom_field_group = contact.field_groups.select{|f| f.name == 'custom_fields'}.first
-    - if custom_field_group.present?
-      - fields = custom_field_group.fields.without_pairs
-      = render("fat_free_crm/fields/group_view", fields: fields, entity: contact) unless fields.nil?
+-# Show custom fields that are in the default field group
+- custom_field_group = contact.field_groups.select{|f| f.name == 'custom_fields'}.first
+- if custom_field_group.present?
+  - fields = custom_field_group.fields.without_pairs
+  = render("fat_free_crm/fields/group_view", fields: fields, entity: contact) unless fields.nil?
