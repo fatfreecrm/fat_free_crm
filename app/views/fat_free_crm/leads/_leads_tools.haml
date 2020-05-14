@@ -1,17 +1,17 @@
 .tools
-    - if can?(:update, lead)
-      = link_to_edit(lead)
-    - if %w(converted rejected).include?(lead.status)
-      %span
-        %font{ color: 'silver' }= t :convert
-    - elsif can?(:update, lead)
-      = link_to_convert(lead)
-    - if lead.status == "rejected"
-      %span
-        %font{ color: 'silver' }= t :reject
-    - elsif can?(:update, lead)
-      = link_to_reject(lead)
-    - if shown_on_landing_page?
-      = link_to_discard(lead)
-    - if can?(:destroy, lead)
-      = link_to_delete(lead)
+  - if can?(:update, lead)
+    = link_to_edit(lead)
+  - if %w(converted rejected).include?(lead.status)
+    %span
+      %font{ color: 'silver' }= t :convert
+  - elsif can?(:update, lead)
+    = link_to_convert(lead)
+  - if lead.status == "rejected"
+    %span
+      %font{ color: 'silver' }= t :reject
+  - elsif can?(:update, lead)
+    = link_to_reject(lead)
+  - if shown_on_landing_page?
+    = link_to_discard(lead)
+  - if can?(:destroy, lead)
+    = link_to_delete(lead)
