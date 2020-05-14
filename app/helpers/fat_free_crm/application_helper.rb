@@ -13,6 +13,7 @@ module ApplicationHelper
   include ::FatFreeCrm::JavascriptHelper
   include ::FatFreeCrm::VersionsHelper
   include ::FatFreeCrm::TagsHelper
+  include ::FatFreeCrm::OpportunitiesHelper
 
   RATING_STARS = 5
 
