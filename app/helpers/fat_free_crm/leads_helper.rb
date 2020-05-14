@@ -17,13 +17,12 @@ module FatFreeCrm
       link_to(t(:convert), convert_lead_path(lead),
               method: :get,
               with:   "{ previous: crm.find_form('edit_lead') }",
-              remote: true,
-              class: 'btn btn-link btn-sm idc-convert-button')
+              remote: true)
     end
 
     #----------------------------------------------------------------------------
     def link_to_reject(lead)
-      link_to(t(:reject), reject_lead_path(lead), method: :put, remote: true, class: 'btn btn-link btn-sm idc-reject button')
+      link_to(t(:reject), reject_lead_path(lead), method: :put, remote: true)
     end
 
     #----------------------------------------------------------------------------
