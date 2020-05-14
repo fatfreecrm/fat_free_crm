@@ -241,9 +241,8 @@
 - :active: false
   :text: :tab_connect
   :icon: :fa-phone
-  :url:
-    :controller: connects
-    :action: index
+  :function: "window.launchCCP()"
+
 
 :admin_tabs:
 - :active: true

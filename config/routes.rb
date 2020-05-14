@@ -37,7 +37,6 @@ FatFreeCrm::Engine.routes.draw do
   match '/home/timeline', as: :timeline, via: %i[get put post]
   match '/home/timezone', as: :timezone, via: %i[get put post]
   post '/home/redraw', as: :redraw
-  get 'connects/index'
 
   resources :comments,       except: %i[new show]
   resources :emails,         only: [:destroy]
