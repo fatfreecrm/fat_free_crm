@@ -3,12 +3,12 @@
     = link_to_edit(lead)
   - if %w(converted rejected).include?(lead.status)
     %span
-      %font{ color: 'silver' }= t :convert
+      = t :convert
   - elsif can?(:update, lead)
     = link_to_convert(lead)
   - if lead.status == "rejected"
     %span
-      %font{ color: 'silver' }= t :reject
+      = t :reject
   - elsif can?(:update, lead)
     = link_to_reject(lead)
   - if shown_on_landing_page?
