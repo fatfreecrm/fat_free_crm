@@ -1,17 +1,9 @@
 %li.highlight[lead]
-
-  -# - if lead.status
-  -#   .strip.badge.badge-primary{class: lead.status}= t lead.status
-  -# - else
-  -#   .strip.badge.badge-info{style: "color: gray;"}= t :other
-
   .flex-container
     %h3
       = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
     = render "fat_free_crm/leads/leads_tools", lead: lead
-
   = render "fat_free_crm/leads/lead_details", lead:lead
-
   %span
     -# = stars_for(lead)
     - if can?(:read, lead)

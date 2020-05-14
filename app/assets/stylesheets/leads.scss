@@ -1,17 +1,4 @@
 ul#leads {
   list-style: none;
   padding: 0;
-
-  li.fat_free_crm_lead {
-    display: flex;
-    align-items: center;
-  }
-
-  li.fat_free_crm_lead > * + * {
-    margin-left: 0.5rem;
-  }
-
-  li + li {
-    margin-top: 1rem;
-  }
 }
