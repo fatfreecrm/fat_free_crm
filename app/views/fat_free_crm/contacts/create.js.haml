@@ -1,4 +1,4 @@
-- entity_name = controller.controller_name.singularize.underscore
+- entity_name = controller.controller_name.demodulize.singularize.underscore
 - @entity = instance_variable_get("@#{entity_name}")
 - create_id = "create_#{entity_name}"
 
