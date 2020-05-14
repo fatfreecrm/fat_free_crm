@@ -2,9 +2,13 @@
   %ul{ :class => "nav nav-tabs"}
     - tabs.each do |tab|
       %li{ :class => "nav-item" }
-        = link_to(tab[:url], class: tab[:active] ? "nav-link active" : "nav-link") do
-          %i.fa{class: tab[:icon]}
-          = t(tab[:text])
+        - if tab.key?(:url)
+          = link_to(tab[:url], class: tab[:active] ? "nav-link active" : "nav-link") do
+            %i.fa{class: tab[:icon]}
+            = t(tab[:text])
+        - else
+          = link_to_function(("<i class='fa icon'></i>" + t(tab[:text])).html_safe, onclick: tab[:function], class: "nav-link")
+
 
 = show_flash
 .idc-page-layout

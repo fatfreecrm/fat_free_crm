@@ -27,6 +27,7 @@ module JavascriptHelper
   #       return false;">Show me more</a>
   #
   def link_to_function(name, *args, &block)
+    binding.pry if name == "Connect"
     html_options = args.extract_options!.symbolize_keys
 
     function = block_given? ? update_page(&block) : args[0] || ''

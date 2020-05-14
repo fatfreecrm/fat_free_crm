@@ -242,7 +242,7 @@
   :text: :tab_connect
   :icon: :fa-phone
   :url:
-    :controller: connect_streams
+    :controller: connects
     :action: index
 
 :admin_tabs:
