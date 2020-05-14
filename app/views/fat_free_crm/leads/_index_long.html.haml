@@ -4,7 +4,7 @@
       = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
     = render "fat_free_crm/leads/leads_tools", lead: lead
   = render "fat_free_crm/leads/lead_details", lead:lead
-  %span
+  .idc-leads-details
     -# = stars_for(lead)
     - if can?(:read, lead)
       - if lead.email.present?
@@ -12,15 +12,13 @@
         |
       - if lead.phone.present?
         == #{t :phone_small}:
-        %b= lead.phone
+        %b.phone-number= lead.phone
         |
       - if lead.mobile.present?
         == #{t :mobile_small}:
-        %b= lead.mobile
+        %b.phone-number= lead.mobile
         |
     = t(:added_ago, value: timeago(lead.created_at)).html_safe
-
     - if lead.tags.present?
       .tags= tags_for_index(lead)
-
   = hook(:lead_bottom, self, lead: lead)
