@@ -17,12 +17,13 @@ module FatFreeCrm
       link_to(t(:convert), convert_lead_path(lead),
               method: :get,
               with:   "{ previous: crm.find_form('edit_lead') }",
-              remote: true)
+              remote: true,
+              class: 'btn btn-link btn-sm idc-convert-button')
     end
 
     #----------------------------------------------------------------------------
     def link_to_reject(lead)
-      link_to(t(:reject) + "!", reject_lead_path(lead), method: :put, remote: true)
+      link_to(t(:reject), reject_lead_path(lead), method: :put, remote: true, class: 'btn btn-link btn-sm idc-reject button')
     end
 
     #----------------------------------------------------------------------------
@@ -31,7 +32,7 @@ module FatFreeCrm
       yes = link_to(t(:yes_button), reject_lead_path(lead), method: :put)
       no = link_to_function(t(:no_button), "$('#menu').html($('#confirm').html());")
       text = "$('#confirm').html( $('#menu').html() );\n"
-      text += "$('#menu').html('#{question} #{yes} : #{no}');"
+      text += "$('#menu').html('#{question} #{yes} #{no}');"
       text.html_safe
     end
 
