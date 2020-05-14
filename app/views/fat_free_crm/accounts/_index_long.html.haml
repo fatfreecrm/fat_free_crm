@@ -3,7 +3,7 @@
   .flex-container
     %h3= link_to(account.name, account)
     = render "fat_free_crm/accounts/account_tools", account: account
-  .idc-accounts-details
+  .idc-details
     = account.location + ", " unless account.location.blank?
     - user_name = account.user.try(:full_name)
     - if user_name

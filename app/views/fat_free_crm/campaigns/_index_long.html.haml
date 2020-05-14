@@ -1,20 +1,9 @@
 %li.highlight[campaign]
   .strip{class: campaign.status}= t(campaign.status)
-
-  %ul.tools
-    - if can?(:update, campaign)
-      %li= link_to_edit(campaign)
-
-    - if can?(:destroy, campaign)
-      %li= link_to_delete(campaign)
-
-  .indent
-    = link_to(campaign.name, campaign)
-    = render "fat_free_crm/campaigns/status", campaign: campaign
-
-    = render "fat_free_crm/campaigns/metrics", campaign: campaign
-    - if campaign.tags.present?
-      %dt
-        .tags= tags_for_index(campaign)
-
-    = hook(:campaign_bottom, self, campaign: campaign)
+  = render "fat_free_crm/campaign_tools", campaign: campaign
+  = link_to(campaign.name, campaign)
+  = render "fat_free_crm/campaigns/status", campaign: campaign
+  = render "fat_free_crm/campaigns/metrics", campaign: campaign
+  - if campaign.tags.present?
+    .tags= tags_for_index(campaign)
+  = hook(:campaign_bottom, self, campaign: campaign)

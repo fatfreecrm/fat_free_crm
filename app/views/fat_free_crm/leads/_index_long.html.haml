@@ -1,4 +1,4 @@
-%li.highlight[lead]
+%li.highlight.lead{id: "lead_#{lead.id}"}
   .flex-container
     %h3
       = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead

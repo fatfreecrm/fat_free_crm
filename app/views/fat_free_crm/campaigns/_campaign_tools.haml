@@ -1,0 +1,5 @@
+.tools
+  - if can?(:update, campaign)
+    = link_to_edit(campaign)
+  - if can?(:destroy, campaign)
+    = link_to_delete(campaign)
