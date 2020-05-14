@@ -17,7 +17,7 @@
     %span
       = t(:account) do
         %b= account_with_url_for(contact)
-      - assigned_to_user = User.find_by_id(contact.assigned_to)
+      - assigned_to_user = FatFreeCrm::User.find_by_id(contact.assigned_to)
     %span
       = t(:assigned_to) do
         %b= link_to(assigned_to_user.name, url_for(assigned_to_user)) if assigned_to_user
