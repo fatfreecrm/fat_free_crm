@@ -12,7 +12,7 @@
       %tr
         = col(t(:account)) do
           = account_with_url_for(contact)
-        - assigned_to_user = User.find_by_id(contact.assigned_to)
+        - assigned_to_user = FatFreeCrm::User.find_by_id(contact.assigned_to)
         = col(t(:assigned_to)) do
           = link_to(assigned_to_user.name, url_for(assigned_to_user)) if assigned_to_user
       %tr
