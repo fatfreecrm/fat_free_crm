@@ -1,0 +1,9 @@
+.idc-lead-details
+  - if lead.company? && lead.title?
+    = t(:works_at, job_title: lead.title, company: lead.company)
+  - else
+    = lead.company if lead.company?
+    = lead.title if lead.title?
+  - if lead.referred_by?
+    &ndash;
+    == #{t :referred_by_small} #{lead.referred_by}
