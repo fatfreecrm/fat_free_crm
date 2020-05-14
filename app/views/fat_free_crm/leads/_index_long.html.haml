@@ -1,10 +1,10 @@
-%li.highlight.lead{id: "lead_#{lead.id}"}
+%li.highlight.ffcrm-lead{id: "lead_#{lead.id}"}
   .flex-container
     %h3
       = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
     = render "fat_free_crm/leads/leads_tools", lead: lead
   = render "fat_free_crm/leads/lead_details", lead:lead
-  .idc-leads-details
+  .idc-details
     -# = stars_for(lead)
     - if can?(:read, lead)
       - if lead.email.present?

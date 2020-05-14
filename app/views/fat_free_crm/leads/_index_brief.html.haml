@@ -1,13 +1,7 @@
-%li.highlight.lead{id: "lead_#{lead.id}"}
-  -# - if lead.status
-  -#   .strip.badge.badge-primary{class: lead.status}= t lead.status
-  -# - else
-  -#   .strip.badge.badge-light{style: "color: gray;"}= t :other
+%li.highlight.ffcrm-lead{id: "lead_#{lead.id}"}
   .flex-container
     %h3
       = link_to_if can?(:read, lead), lead.full_name(current_user.preference[:leads_naming]), lead
     = render "fat_free_crm/leads/leads_tools", lead: lead
-    
   = render "fat_free_crm/leads/lead_details", lead:lead
-
   = hook(:lead_bottom, self, lead: lead)
