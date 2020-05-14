@@ -153,7 +153,7 @@ module ApplicationHelper
             { method: :delete,
             remote: true,
             confirm: confirm, 
-            class: 'btn btn-danger btn-sm'}
+            class: 'btn btn-link btn-sm idc-delete-button'}
           )
   end
 

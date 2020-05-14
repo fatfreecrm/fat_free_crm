@@ -7,7 +7,7 @@
   -#   .strip.badge.badge-info{class: account.category} #{t(account.category)}
   -# - else
   -#   .strip.badge.badge-info{style: "color: gray;"} #{t :other}
-  %div
+  .idc-details
     = account.location + ", " unless account.location.blank?
     - user_name = account.user.try(:full_name)
     - if user_name
