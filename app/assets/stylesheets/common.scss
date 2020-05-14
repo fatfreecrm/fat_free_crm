@@ -535,7 +535,12 @@ table.asset_attributes {
   list-style: none;
 
   li + li {
-    margin-top: 0.25rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--neutral-030);
+  }
+
+  .idc-details {
+    margin-top: 0.5rem;
   }
 }
 
