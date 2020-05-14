@@ -1,4 +1,4 @@
-%li.highlight[opportunity]
+%li.highlight.opportunity{id: "opportunity_#{opportunity.id}"}
   - if opportunity.stage
     .strip{class: opportunity.stage}= t(opportunity.stage)
   - else

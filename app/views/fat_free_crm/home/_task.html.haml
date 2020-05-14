@@ -1,4 +1,4 @@
-%li.highlight[task]
+%li.highlight.task{id: "task_#{task.id}"}
   - unless task.category.blank?
     .badge.badge-info.strip{class: task.category}= t(task.category)
   - else

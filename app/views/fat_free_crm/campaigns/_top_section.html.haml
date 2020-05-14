@@ -1,15 +1,15 @@
 = hook(:campaign_top_section, self, f: f) do
   .idc-panel
-    .form-group.one-third
+    .form-group.one-quarter
       %label #{t :name}:
       = f.text_field :name, autofocus: true, class: 'form-control'
-    .form-group.one-third
+    .form-group.one-quarter
       %label #{t :start_date}:
       = f.date_field :starts_on, value: f.object.starts_on, autocomplete: :off, class: 'form-control'
-    .form-group.one-third
+    .form-group.one-quarter
       %label #{t :end_date}:
       = f.date_field :ends_on, value: f.object.ends_on, autocomplete: :off, class: 'form-control'
-    .form-group.full-width
+    .form-group.one-quarter
       %label #{t :status}:
       = f.select :status, Setting.unroll(:campaign_status), { selected: (@campaign.status || "planned").to_sym }, { class: 'custom-select' }
     - if Setting.background_info && Setting.background_info.include?(:campaign)

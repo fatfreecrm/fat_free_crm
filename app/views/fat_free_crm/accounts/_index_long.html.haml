@@ -1,5 +1,5 @@
 - amount = account.pipeline_opportunities.map(&:weighted_amount).sum
-%li.highlight[account]
+%li.highlight.account{id: "account_#{account.id}"}
   .flex-container
     %h3= link_to(account.name, account)
     = render "fat_free_crm/accounts/account_tools", account: account

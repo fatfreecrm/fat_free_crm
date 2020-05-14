@@ -1,4 +1,4 @@
-%li.highlight[opportunity]
+%li.highlight.opportunity{id: "opportunity_#{opportunity.id}"}
   .flex-container
     - if opportunity.stage
       .badge.badge-primary{class: opportunity.stage}= t(opportunity.stage)
