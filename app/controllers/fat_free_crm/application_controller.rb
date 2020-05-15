@@ -259,12 +259,12 @@ module FatFreeCrm
       asset = base_asset.gsub("FatFreeCrm::", "").gsub("fat_free_crm/", "")
       Rails.application.eager_load! unless Rails.application.config.cache_classes
 
-      find = if Module.const_defined?(asset.titleize)
-        asset
-      else
-        classes = ActiveRecord::Base.descendants.map(&:name)
-        classes.find { |m| m == ("FatFreeCrm::" + asset.classify) }
-      end
+      find = if Module.const_defined?(asset.classify)
+                asset.classify
+              else
+                classes = ActiveRecord::Base.descendants.map(&:name)
+                classes.find { |m| m == ("FatFreeCrm::" + asset.classify) }
+              end
 
       if find
         find.safe_constantize

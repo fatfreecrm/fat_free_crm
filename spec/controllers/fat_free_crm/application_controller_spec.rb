@@ -41,5 +41,15 @@ module FatFreeCrm
         expect(controller.send(:auto_complete_ids_to_exclude, 'campaigns/7')).to eq([])
       end
     end
+
+    describe "#find_class" do
+      it "returns the correct class for FatFreeCrm classes" do
+        expect(controller.send(:find_class, 'contact')).to eql(Contact)
+      end
+
+      it "returns the correct class for main app classes" do
+        expect(controller.send(:find_class, 'dummy_model')).to eql(DummyModel)
+      end
+    end
   end
 end
