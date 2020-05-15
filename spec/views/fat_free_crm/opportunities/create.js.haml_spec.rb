@@ -24,7 +24,7 @@ module FatFreeCrm
       it "should hide [Create Opportunity] form and insert opportunity partial" do
         render
 
-        expect(rendered).to include("$('#opportunities').prepend('<li class=\\'brief fat_free_crm_opportunity flex-container highlight\\' id=\\'fat_free_crm_opportunity_#{@opportunity.id}\\'")
+        expect(rendered).to include("$('#opportunities').prepend('<li class=\\'flex-container brief highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}\\'")
         expect(rendered).to include(%/$('#fat_free_crm_opportunity_#{@opportunity.id}').effect("highlight"/)
       end
 

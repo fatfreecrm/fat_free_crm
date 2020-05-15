@@ -19,7 +19,7 @@ module FatFreeCrm
 
       render template: 'fat_free_crm/campaigns/index', formats: [:js]
 
-      expect(rendered).to include("$('#campaigns').html('<li class=\\'fat_free_crm_campaign highlight\\' id=\\'fat_free_crm_campaign_42\\'")
+      expect(rendered).to include("$('#campaigns').html('<li class=\\'highlight campaign\\' id=\\'campaign_42\\'")
       expect(rendered).to include("#paginate")
     end
 

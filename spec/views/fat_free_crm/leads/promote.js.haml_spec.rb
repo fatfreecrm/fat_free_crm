@@ -51,7 +51,7 @@ module FatFreeCrm
 
         it "should replace [Convert Lead] with lead partial and highlight it" do
           render
-          expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
+          expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight ffcrm-lead\\' id=\\'lead_#{@lead.id}\\'")
           expect(rendered).to include("$('#filters').effect('shake'")
         end
 
@@ -74,7 +74,7 @@ module FatFreeCrm
 
         it "should replace [Convert Lead] with lead partial and highlight it" do
           render
-          expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
+          expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight ffcrm-lead\\' id=\\'lead_#{@lead.id}\\'")
           expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
         end
 
@@ -89,7 +89,7 @@ module FatFreeCrm
         it "should insert new opportunity if any" do
           render
 
-          expect(rendered).to include("$('#opportunities').prepend('<li class=\\'fat_free_crm_opportunity highlight\\' id=\\'fat_free_crm_opportunity_#{@opportunity.id}")
+          expect(rendered).to include("$('#opportunities').prepend('<li class=\\'highlight opportunity\\' id=\\'opportunity_#{@opportunity.id}")
         end
       end
     end

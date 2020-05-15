@@ -45,7 +45,7 @@ module FatFreeCrm
 
         it "should replace [Edit Campaign] with campaign partial and highlight it" do
           render
-          expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'fat_free_crm_campaign highlight\\' id=\\'fat_free_crm_campaign_#{@campaign.id}\\'")
+          expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'highlight campaign\\' id=\\'campaign_#{@campaign.id}\\'")
           expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
         end
       end

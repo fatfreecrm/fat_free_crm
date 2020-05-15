@@ -62,8 +62,8 @@ feature 'Opportunities', '
     with_versioning do
       visit opportunities_page
       click_link 'Long format'
-      expect(find("#fat_free_crm_opportunity_#{with_amount.id}")).to have_content('$3,000 | Probability 90%')
-      expect(find("#fat_free_crm_opportunity_#{without_amount.id}")).not_to have_content('$0 | Discount $0 | Probability 0%')
+      expect(find("#opportunity_#{with_amount.id}")).to have_content('$3,000 | Probability 90%')
+      expect(find("#opportunity_#{without_amount.id}")).not_to have_content('$0 | Discount $0 | Probability 0%')
     end
   end
 

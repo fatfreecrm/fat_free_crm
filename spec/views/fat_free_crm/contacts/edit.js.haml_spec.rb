@@ -22,7 +22,7 @@ module FatFreeCrm
       params[:cancel] = "true"
 
       render
-      expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').replaceWith('<li class=\\'brief fat_free_crm_contact highlight\\' id=\\'fat_free_crm_contact_#{@contact.id}\\'")
+      expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'brief highlight contact\\' id=\\'contact_#{@contact.id}\\'")
     end
 
     it "cancel from contact landing page: should hide [Edit Contact] form" do
@@ -38,7 +38,7 @@ module FatFreeCrm
       assign(:previous, previous = build_stubbed(:contact, user: current_user))
 
       render
-      expect(rendered).to include("$('#fat_free_crm_contact_#{previous.id}').replaceWith")
+      expect(rendered).to include("$('#contact_#{previous.id}').replaceWith")
     end
 
     it "edit: should hide and remove previously open [Edit Contact] if it's no longer available" do
@@ -46,16 +46,16 @@ module FatFreeCrm
       assign(:previous, previous = 41)
 
       render
-      expect(rendered).to include("crm.flick('fat_free_crm_contact_#{previous}', 'remove');")
+      expect(rendered).to include("crm.flick('contact_#{previous}', 'remove');")
     end
 
     it "edit from contacts index page: should turn off highlight, hide [Create Contact] form, and replace current contact with [Edit Contact] form" do
       params[:cancel] = nil
 
       render
-      expect(rendered).to include("crm.highlight_off('fat_free_crm_contact_#{@contact.id}');")
+      expect(rendered).to include("crm.highlight_off('contact_#{@contact.id}');")
       expect(rendered).to include("crm.hide_form('create_contact')")
-      expect(rendered).to include("$('#fat_free_crm_contact_#{@contact.id}').html")
+      expect(rendered).to include("$('#contact_#{@contact.id}').html")
       expect(rendered).to include("crm.create_or_select_account(false)")
     end
 

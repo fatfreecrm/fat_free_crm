@@ -26,7 +26,7 @@ module FatFreeCrm
       it "should hide [Create Lead] form and insert lead partial" do
         render
 
-        expect(rendered).to include("$('#leads').prepend('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
+        expect(rendered).to include("$('#leads').prepend('<li class=\\'highlight ffcrm-lead\\' id=\\'lead_#{@lead.id}\\'")
         expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
       end
 

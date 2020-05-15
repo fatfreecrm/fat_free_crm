@@ -44,7 +44,7 @@ module FatFreeCrm
 
         it "should replace [Edit Lead] with lead partial and highlight it" do
           render
-          expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
+          expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight ffcrm-lead\\' id=\\'lead_#{@lead.id}\\'")
           expect(rendered).to include("$('#filters').effect('shake'")
         end
 
@@ -65,7 +65,7 @@ module FatFreeCrm
 
         it "should replace [Edit Lead] with lead partial and highlight it" do
           render
-          expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
+          expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight ffcrm-lead\\' id=\\'lead_#{@lead.id}\\'")
           expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("highlight"/)
         end
 

@@ -1,4 +1,4 @@
-- entity_name = controller.controller_name.singularize.underscore #account
+- entity_name = controller.controller_name.demodulize.singularize.underscore #account
 - @entity = instance_variable_get("@#{entity_name}")
 - id = dom_id(@entity)
 

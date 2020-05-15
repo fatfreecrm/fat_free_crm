@@ -24,7 +24,7 @@ module FatFreeCrm
       params[:cancel] = "true"
 
       render
-      expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'fat_free_crm_lead highlight\\' id=\\'fat_free_crm_lead_#{@lead.id}\\'")
+      expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight ffcrm-lead\\' id=\\'lead_#{@lead.id}\\'")
     end
 
     it "cancel from lead landing page: should hide [Convert Lead] form" do

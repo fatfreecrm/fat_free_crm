@@ -6,6 +6,6 @@
     .section
       %small{ hidden_if(!collapsed).merge(id: "#{field_group.key}_intro") }
       %div[field_group]{ hidden_if(collapsed) }
-        = render partial: 'fields/group_table', locals: {f: f, field_group: field_group}
+        = render partial: 'fat_free_crm/fields/group_table', locals: {f: f, field_group: field_group}
 - else
-  .idc-panel= render partial: 'fields/group_table', locals: {f: f, field_group: field_group}
+  .idc-panel= render partial: 'fat_free_crm/fields/group_table', locals: {f: f, field_group: field_group}
