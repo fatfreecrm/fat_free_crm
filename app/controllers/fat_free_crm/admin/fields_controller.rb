@@ -108,7 +108,7 @@ module FatFreeCrm
         end
 
       respond_with(@field) do |format|
-        format.html { render partial: 'admin/fields/subform' }
+        format.html { render partial: 'fat_free_crm/admin/fields/subform' }
       end
     end
 

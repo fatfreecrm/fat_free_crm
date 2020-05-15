@@ -27,6 +27,12 @@ class DatePairInput < SimpleForm::Inputs::Base
 
     out
   end
+  
+  # Datepicker latches onto the 'date' class.
+  #------------------------------------------------------------------------------
+  def input_html_classes
+    super.push('date')
+  end
 
   private
 
@@ -42,16 +48,11 @@ class DatePairInput < SimpleForm::Inputs::Base
     input_html_options[:autocomplete] ||= 'off'
   end
 
-  # Datepicker latches onto the 'date' class.
-  #------------------------------------------------------------------------------
-  def input_html_classes
-    super.push('date')
-  end
 
   # Returns the pair as [field1, field2]
   #------------------------------------------------------------------------------
   def get_fields
-    @field1 ||= Field.where(name: attribute_name).first
+    @field1 ||= FatFreeCrm::Field.where(name: attribute_name).first
     @field2 ||= @field1.try(:paired_with)
     [@field1, @field2]
   end
