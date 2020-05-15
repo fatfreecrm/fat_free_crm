@@ -1,14 +1,14 @@
-= content_for(:javascript_epilogue) do
-  :plain
-    document.observe("dom:loaded", function() {
-      new Effect.Move("standalone", { x:0, y:-16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
-        new Effect.Move("standalone", { x:0, y:16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
-          new Effect.Move("standalone", { x:0, y:-8, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
-            new Effect.Move("standalone", { x:0, y:8, mode:"relative", fps:100, duration:0.15 });
-          }});
-        }});
-      }});
-    });
+-# = content_for(:javascript_epilogue) do
+-#   :plain
+-#     document.observe("dom:loaded", function() {
+-#       new Effect.Move("standalone", { x:0, y:-16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
+-#         new Effect.Move("standalone", { x:0, y:16, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
+-#           new Effect.Move("standalone", { x:0, y:-8, mode:"relative", fps:100, duration:0.15, afterFinishInternal: function(effect) {
+-#             new Effect.Move("standalone", { x:0, y:8, mode:"relative", fps:100, duration:0.15 });
+-#           }});
+-#         }});
+-#       }});
+-#     });
 
 .standalone#standalone
   = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
