@@ -74,6 +74,12 @@ module FatFreeCrm
       # :lead_observer, :opportunity_observer, :task_observer, :entity_observer
     ]
 
+    config.to_prepare do
+      Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|
+        require_dependency(c)
+      end
+    end
+
     config.after_initialize do
       ActionView::Base.include FatFreeCrm::Callback::Helper
       ActionController::Base.include FatFreeCrm::Callback::Helper
