@@ -1,24 +1,30 @@
 .idc-panel
-  .form-group.one-quarter
+  .form-group.one-third
     %label #{t :name}:
     = f.text_field :name, autofocus: true, :class => "form-control"
-  .form-group.one-quarter
+  .form-group.one-third
     %label #{t :due}:
     - bucket = (params[:bucket].blank? ? @task.bucket : params[:bucket]) || "due_asap"
     - with_time = Setting.task_calendar_with_time
     - if @task.bucket != "specific_time"
-      = f.select :bucket, @bucket, { selected: bucket.to_sym }, {  onchange: "crm.flip_calendar(this.value)", class: 'form-control' }
-      = f.text_field :calendar, style: "display:none;", autocomplete: :off, class: ((with_time ? 'datetime' : 'date') + " form-control")
+      = f.select(:bucket, @bucket, { selected: bucket.to_sym }, {  onchange: "crm.flip_calendar(this.value)", class: 'custom-select form-control' })
+      - if with_time
+        = f.datetime_field( :calendar, {style: "display:none;", autocomplete: :off, class: 'form-control' })
+      - else
+        = f.date_field( :calendar, {style: "display:none;", autocomplete: :off, class: 'form-control' })
     - else
-      = f.select :bucket, @bucket, { selected: :specific_time }, { style: " display:none;", onchange: "crm.flip_calendar(this.value)", class: 'form-control' }
-      - fmt = with_time ? '%Y-%m-%d %H:%M' : '%Y-%m-%d'
-      = f.text_field :calendar, value: f.object.due_at.strftime(fmt),  autocomplete: :off, class: (with_time ? 'datetime' : 'date')
-  .form-group.one-quarter
+      = f.select(:bucket, @bucket, { selected: :specific_time }, { style: " display:none;", onchange: "crm.flip_calendar(this.value)", class: 'custom-select form-control' })
+      - fmt = with_time ? '%Y-%m-%dT%T' : '%Y-%m-%d'
+      - if with_time
+        = f.datetime_field(:calendar, {value: f.object.due_at.strftime(fmt), autocomplete: :off, class: 'form-control'})
+      - else
+        = f.date_field(:calendar, {value: f.object.due_at.strftime(fmt), autocomplete: :off, class: 'form-control'})
+  .form-group.one-third
     %label #{t :assign_to}:
     = user_select(:task, all_users, current_user)
-  .form-group.one-quarter
+  .form-group.one-third
     %label #{t :category}:
-    = f.select :category, @category, { selected: @task.category.blank? ? nil : @task.category.to_sym, include_blank: t(:select_blank) }, { class: 'form-control' }
+    = f.select :category, @category, { selected: @task.category.blank? ? nil : @task.category.to_sym, include_blank: t(:select_blank) }, { class: 'custom-select form-control' }
 
   - if Setting.background_info && Setting.background_info.include?(:task)
     %label= t(:extra_info).capitalize + ':'
