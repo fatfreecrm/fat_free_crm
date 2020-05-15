@@ -1,57 +1,57 @@
-!!!5
-%html
-  %head
-    %meta{ "http-equiv" => "Content-Type", content: "text/html; charset=utf-8" }
-    %title COVID-19 Exchange
-    == <!-- #{controller.controller_name} : #{controller.action_name} -->
-    
-    %link{ :rel => "stylesheet", 
-      :href => "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", 
-      :integrity => "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh", 
-      :crossorigin => "anonymous" }
+- content_for(:head) do
+  %meta{ "http-equiv" => "Content-Type", content: "text/html; charset=utf-8" }
+  %title COVID-19 Exchange
+  == <!-- #{controller.controller_name} : #{controller.action_name} -->
+  
+  %link{ :rel => "stylesheet", 
+    :href => "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", 
+    :integrity => "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh", 
+    :crossorigin => "anonymous" }
 
-    = stylesheet_link_tag :application
-    = hook(:stylesheet_includes, self) do
-      #{yield :stylesheet_includes}
-    -# %style= yield :styles
+  = stylesheet_link_tag :application
+  = hook(:stylesheet_includes, self) do
+    #{yield :stylesheet_includes}
+  -# %style= yield :styles
 
-    %link{ :href => "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap", 
-      :rel => "stylesheet" }
+  %link{ :href => "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap", 
+    :rel => "stylesheet" }
 
-    = javascript_include_tag :application
+  = javascript_include_tag :application
 
-    - unless tabless_layout? || %w(en-US en-GB).include?(I18n.locale.to_s)
-      = javascript_include_tag "jquery_ui_datepicker/jquery.ui.datepicker-#{I18n.locale}"
-      = javascript_include_tag "jquery_ui_datepicker/jquery-ui-timepicker-#{I18n.locale}"
+  - unless tabless_layout? || %w(en-US en-GB).include?(I18n.locale.to_s)
+    = javascript_include_tag "jquery_ui_datepicker/jquery.ui.datepicker-#{I18n.locale}"
+    = javascript_include_tag "jquery_ui_datepicker/jquery-ui-timepicker-#{I18n.locale}"
 
-    = csrf_meta_tag
-    = hook(:javascript_includes, self)
+  = csrf_meta_tag
+  = hook(:javascript_includes, self)
 
+  :javascript
+    crm.language = "#{I18n.locale}"
+    window.controller = "#{controller.controller_name}"
+
+  - if current_user.present?
     :javascript
-      crm.language = "#{I18n.locale}"
-      window.controller = "#{controller.controller_name}"
+      #{yield :javascript}
+      var _ffcrm_users = [
+      #{raw FatFreeCrm::User.all.map{|u| "'#{j u.full_name} (@#{j u.username})'" }.join(",\n")}
+      ];
 
-    - if current_user.present?
-      :javascript
-        #{yield :javascript}
-        var _ffcrm_users = [
-        #{raw FatFreeCrm::User.all.map{|u| "'#{j u.full_name} (@#{j u.username})'" }.join(",\n")}
-        ];
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  %script{ src: "https://use.fontawesome.com/7b172fda6f.js"}
 
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    %script{ src: "https://use.fontawesome.com/7b172fda6f.js"}
+- content_for(:body) do
+  = render "layouts/fat_free_crm/header"
+  - if tabless_layout?
+    = render "layouts/fat_free_crm/tabless"
+  - else
+    = render "layouts/fat_free_crm/tabbed"
+    = render "layouts/fat_free_crm/footer"
 
-  %body
-    = render "layouts/fat_free_crm/header"
-    - if tabless_layout?
-      = render "layouts/fat_free_crm/tabless"
-    - else
-      = render "layouts/fat_free_crm/tabbed"
-      = render "layouts/fat_free_crm/footer"
+  %script{type: "text/javascript"}
+    = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
+    = get_browser_timezone_offset
+    = content_for :javascript_epilogue
+    = hook(:javascript_epilogue, self)
 
-    %script{type: "text/javascript"}
-      = "crm.base_url = '#{Setting.base_url}';" unless Setting.base_url.blank?
-      = get_browser_timezone_offset
-      = content_for :javascript_epilogue
-      = hook(:javascript_epilogue, self)
+= render template: 'layouts/application'

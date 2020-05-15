@@ -241,9 +241,8 @@
 - :active: false
   :text: :tab_connect
   :icon: :fa-phone
-  :url:
-    :controller: connect_streams
-    :action: index
+  :function: "launchCCP()"
+
 
 :admin_tabs:
 - :active: true
