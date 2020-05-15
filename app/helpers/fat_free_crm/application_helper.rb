@@ -14,6 +14,7 @@ module ApplicationHelper
   include ::FatFreeCrm::VersionsHelper
   include ::FatFreeCrm::TagsHelper
   include ::FatFreeCrm::OpportunitiesHelper
+  include ::FatFreeCrm::TasksHelper
 
   RATING_STARS = 5
 
