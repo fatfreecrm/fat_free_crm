@@ -1,7 +1,7 @@
 - tag_field_groups = FieldGroup.where(tag_id: tag.id)
 - model_tagging_counts = tag.model_tagging_counts
 
-%li.highlight[tag]
+%li.highlight.tag{id: "tag_#{tag.id}"}
   .tools
     = link_to_edit(tag, url: edit_admin_tag_path(tag)) + " |"
     - if tag_field_groups.any?
