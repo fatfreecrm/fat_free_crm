@@ -20,6 +20,8 @@ services:
   db:
     image: postgres:9.5
     restart: always
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
     volumes:
       - pgdata:/var/lib/postgresql/data
 volumes:
