@@ -48,10 +48,10 @@
       = link_to_email(user.email.to_s) + " | "
       - if user.phone?
         = t(:phone_small) + ":"
-        = content_tag(:b, user.phone) + " | "
+        = content_tag(:b, class: 'phone-number', user.phone) + " | "
       - if user.mobile?
         = t(:mobile_small) + ":"
-        = content_tag(:b, user.mobile) + " | "
+        = content_tag(:b, class: 'phone-number', user.mobile) + " | "
 
       - if !user.suspended?
         %span #{t(:user_since, l(user.created_at.to_date, format: :mmddyy))}
