@@ -233,6 +233,11 @@
   :url:
     :controller: opportunities
 - :active: false
+  :text: :tab_index_cases
+  :icon: :fa-bug
+  :url:
+    :controller: index_cases
+- :active: false
   :text: :tab_team
   :icon: :fa-globe
   :url:

@@ -41,6 +41,8 @@ FatFreeCrm::Engine.routes.draw do
   resources :comments,       except: %i[new show]
   resources :emails,         only: [:destroy]
   resources :documents,      only: [:index, :new, :create, :destroy]
+  
+  resources :index_cases
 
   resources :accounts, id: /\d+/ do
     collection do
