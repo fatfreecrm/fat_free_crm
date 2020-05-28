@@ -1,0 +1,15 @@
+<div class="fields condition" data-object-name="<%= f.object_name %>">
+  <%= link_to_remove_fields t('ransack.remove_condition'), f, options %>
+
+  <%= f.attribute_fields do |a| %>
+    <span class="fields" data-object-name="<%= f.object_name %>">
+    <%= a.attribute_select({}, :class => 'ransack_attribute') %>
+  <% end %>
+
+  <%= f.predicate_select({}, :class => 'ransack_predicate') %>
+
+  <%= f.value_fields do |v| %>
+    <span class="fields value" data-object-name="<%= f.object_name %>">
+    <%= v.text_field :value, :style => "width: 200px;", :class => "ransack_query" %>
+  <% end %>
+</div>

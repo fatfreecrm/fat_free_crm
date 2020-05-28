@@ -1,3 +1,10 @@
+PATH
+  remote: vendor/gems/ransack_ui-1.3.4
+  specs:
+    ransack_ui (1.3.4)
+      ransack
+      ransack_chronic (>= 1.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -213,8 +220,8 @@ GEM
     parser (2.6.5.0)
       ast (~> 2.4.0)
     pg (1.1.4)
-    polyamorous (2.3.0)
-      activerecord (>= 5.0)
+    polyamorous (2.3.2)
+      activerecord (>= 5.2.1)
     premailer (1.11.1)
       addressable
       css_parser (>= 1.6.0)
@@ -274,17 +281,13 @@ GEM
       thor (>= 0.19.0, < 2.0)
     rainbow (3.0.0)
     rake (13.0.1)
-    ransack (2.3.0)
-      actionpack (>= 5.0)
-      activerecord (>= 5.0)
-      activesupport (>= 5.0)
+    ransack (2.3.2)
+      activerecord (>= 5.2.1)
+      activesupport (>= 5.2.1)
       i18n
-      polyamorous (= 2.3.0)
+      polyamorous (= 2.3.2)
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
-    ransack_ui (1.3.4)
-      ransack
-      ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.10.3)
@@ -452,7 +455,7 @@ DEPENDENCIES
   rails_autolink
   rainbow
   ransack (>= 1.6.2)
-  ransack_ui (~> 1.3, >= 1.3.1)
+  ransack_ui!
   rb-fchange
   rb-fsevent
   rb-inotify

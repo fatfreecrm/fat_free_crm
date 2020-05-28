@@ -1,0 +1,16 @@
+<div class="fields well" data-object-name="<%= f.object_name %>">
+  <div class="combinator">
+    <% key = (f.object_name =~ /[0]/) ? :group_first : :group_rest %>
+    <% combinator = f.combinator_select({}, :class => 'ransack_combinator') %>
+    <%= t("ransack.#{key}", :combinator => combinator).html_safe %>
+  </div>
+
+  <div class="filters">
+    <% f.object.build_condition unless f.object.conditions.any? %>
+    <%= f.condition_fields do |c| %>
+      <%= render 'ransack_ui/condition_fields', :f => c, :options => options %>
+    <% end %>
+
+    <%= link_to_add_fields t('ransack.add_condition'), f, :condition, options %>
+  </div>
+</div>
