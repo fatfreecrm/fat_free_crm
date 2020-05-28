@@ -479,6 +479,3 @@ DEPENDENCIES
   webdrivers
   will_paginate
   zeus
-
-BUNDLED WITH
-   1.17.1
