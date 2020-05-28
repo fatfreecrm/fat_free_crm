@@ -49,17 +49,12 @@ GEM
     acts-as-taggable-on (6.0.0)
       activerecord (~> 5.0)
     acts_as_commentable (4.0.2)
-    acts_as_fu (0.0.9)
-      activerecord
-      sqlite3
     acts_as_list (1.0.0)
       activerecord (>= 4.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
-    archive-zip (0.12.0)
-      io-like (~> 0.3.0)
     arel (9.0.0)
     ast (2.4.0)
     bcrypt (3.1.13)
@@ -68,7 +63,7 @@ GEM
     brakeman (4.7.1)
     builder (3.2.3)
     byebug (11.0.1)
-    cancancan (2.2.0)
+    cancancan (3.0.1)
     capistrano (3.11.2)
       airbrussh (>= 1.0.0)
       i18n
@@ -91,9 +86,6 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
-    chromedriver-helper (2.1.1)
-      archive-zip (~> 0.10)
-      nokogiri (~> 1.8)
     chronic (0.10.2)
     climate_control (0.2.0)
     coderay (1.1.2)
@@ -168,7 +160,6 @@ GEM
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
-    io-like (0.3.0)
     jaro_winkler (1.5.4)
     jquery-migrate-rails (1.2.1)
     jquery-rails (4.3.5)
@@ -203,7 +194,7 @@ GEM
       net-ssh (>= 2.6.5, < 6.0.0)
     net-ssh (5.2.0)
     nio4r (2.5.2)
-    nokogiri (1.10.5)
+    nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     notiffany (0.1.3)
       nenv (~> 0.1)
@@ -234,9 +225,9 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.1)
-    puma (4.2.1)
+    puma (4.3.5)
       nio4r (~> 2.0)
-    rack (2.0.7)
+    rack (2.2.2)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.3)
@@ -393,9 +384,11 @@ GEM
     unicode_utils (1.4.0)
     warden (1.2.8)
       rack (>= 2.0.6)
+    webdrivers (4.1.3)
+      nokogiri (~> 1.6)
+      rubyzip (>= 1.3.0)
+      selenium-webdriver (>= 3.0, < 4.0)
     websocket-driver (0.7.1)
-      websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.4)
     will_paginate (3.2.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -410,18 +403,16 @@ DEPENDENCIES
   activemodel-serializers-xml
   acts-as-taggable-on (>= 3.4.3)
   acts_as_commentable
-  acts_as_fu
   acts_as_list
   bootsnap
   brakeman
   byebug
-  cancancan (~> 2.2.0)
+  cancancan (~> 3.0.0)
   capistrano
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
   capybara
-  chromedriver-helper
   coffee-rails
   coffee-script-source (~> 1.8, >= 1.8.0)
   country_select
@@ -474,11 +465,13 @@ DEPENDENCIES
   selenium-webdriver
   simple_form
   sprockets-rails (>= 3.0.0)
+  sqlite3 (~> 1.3.13)
   therubyracer
   thor
   timecop
   tzinfo-data
   uglifier
+  webdrivers
   will_paginate
   zeus
 

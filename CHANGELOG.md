@@ -33,6 +33,13 @@ Mailers related to user password reset, etc. are changed to use the defaults of 
 PaperClip now only depends on `aws-sdk-s3` instead of `aws-sdk`. For more info see https://github.com/thoughtbot/paperclip/pull/2481.
 Replace the Cocaine gem with Terrapin. https://github.com/thoughtbot/terrapin/ Apart from the namespace change, this is a drop in replacement.
 
+#### Other changes
+ * #794 Fix defect with unpermitted params in advanced search
+ * 2bc6184779a26070496e6f4caefa0cc9ba555d7b Remove broken support for delete links on arrays.
+ * #851 upgrade paper_trail
+ * Security fixes CVE-2019-16109, CVE-2019-16676, CVE-2019-5477, CVE-2019-16892
+ * Dependency updates
+
 
 Sat Apr 21, 2018 (0.18.0)
 ---------------------------------------------------------------------

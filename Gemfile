@@ -7,7 +7,7 @@ source 'https://rubygems.org'
 
 case ENV['CI'] && ENV['DB']
 when 'sqlite'
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.13'
 when 'mysql'
   gem 'mysql2'
 when 'postgres'
@@ -74,11 +74,11 @@ end
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
   gem 'database_cleaner'
-  gem 'acts_as_fu'
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
+  gem 'sqlite3', '~> 1.3.13'
 end
 
 group :heroku do

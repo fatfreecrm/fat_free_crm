@@ -13,10 +13,10 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'paper_trail/frameworks/rspec'
 
-require 'acts_as_fu'
 require 'factory_bot_rails'
 require 'ffaker'
 require 'timecop'
+require 'webdrivers'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
