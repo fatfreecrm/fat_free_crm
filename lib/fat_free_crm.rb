@@ -9,4 +9,5 @@
 require 'fat_free_crm/engine'
 
 module FatFreeCrm
+  mattr_accessor :facility_class
 end
