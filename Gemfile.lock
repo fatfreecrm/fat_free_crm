@@ -58,6 +58,9 @@ GEM
     activerecord (6.0.2.2)
       activemodel (= 6.0.2.2)
       activesupport (= 6.0.2.2)
+    activerecord-postgis-adapter (6.0.0)
+      activerecord (~> 6.0)
+      rgeo-activerecord (~> 6.0)
     activestorage (6.0.2.2)
       actionpack (= 6.0.2.2)
       activejob (= 6.0.2.2)
@@ -342,6 +345,10 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     responds_to_parent (1.1.0)
+    rgeo (2.1.1)
+    rgeo-activerecord (6.2.1)
+      activerecord (>= 5.0)
+      rgeo (>= 1.0.0)
     rmagick (4.1.2)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
@@ -446,6 +453,7 @@ DEPENDENCIES
   active_model_serializers
   activejob (~> 6.0)
   activemodel-serializers-xml
+  activerecord-postgis-adapter
   acts-as-taggable-on
   acts_as_commentable
   acts_as_list
@@ -504,6 +512,7 @@ DEPENDENCIES
   rb-inotify
   responders
   responds_to_parent
+  rgeo
   rmagick
   rspec-activemodel-mocks
   rspec-rails

@@ -489,5 +489,98 @@ ActiveRecord::Schema.define(version: 2020_05_04_163229) do
     t.index ["name"], name: "index_settings_on_name"
   end
 
-  add_foreign_key "fat_free_crm_active_storage_attachments", "fat_free_crm_active_storage_blobs", column: "blob_id"
+# Could not dump table "state" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+  create_table "state_lookup", primary_key: "st_code", id: :integer, default: nil, force: :cascade do |t|
+    t.string "name", limit: 40
+    t.string "abbrev", limit: 3
+    t.string "statefp", limit: 2
+    t.index ["abbrev"], name: "state_lookup_abbrev_key", unique: true
+    t.index ["name"], name: "state_lookup_name_key", unique: true
+    t.index ["statefp"], name: "state_lookup_statefp_key", unique: true
+  end
+
+  create_table "street_type_lookup", primary_key: "name", id: :string, limit: 50, force: :cascade do |t|
+    t.string "abbrev", limit: 50
+    t.boolean "is_hw", default: false, null: false
+    t.index ["abbrev"], name: "street_type_lookup_abbrev_idx"
+  end
+
+# Could not dump table "tabblock" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+# Could not dump table "tract" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+  create_table "us_gaz", id: :serial, force: :cascade do |t|
+    t.integer "seq"
+    t.text "word"
+    t.text "stdword"
+    t.integer "token"
+    t.boolean "is_custom", default: true, null: false
+  end
+
+  create_table "us_lex", id: :serial, force: :cascade do |t|
+    t.integer "seq"
+    t.text "word"
+    t.text "stdword"
+    t.integer "token"
+    t.boolean "is_custom", default: true, null: false
+  end
+
+  create_table "us_rules", id: :serial, force: :cascade do |t|
+    t.text "rule"
+    t.boolean "is_custom", default: true, null: false
+  end
+
+# Could not dump table "zcta5" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+  create_table "zip_lookup", primary_key: "zip", id: :integer, default: nil, force: :cascade do |t|
+    t.integer "st_code"
+    t.string "state", limit: 2
+    t.integer "co_code"
+    t.string "county", limit: 90
+    t.integer "cs_code"
+    t.string "cousub", limit: 90
+    t.integer "pl_code"
+    t.string "place", limit: 90
+    t.integer "cnt"
+  end
+
+  create_table "zip_lookup_all", id: false, force: :cascade do |t|
+    t.integer "zip"
+    t.integer "st_code"
+    t.string "state", limit: 2
+    t.integer "co_code"
+    t.string "county", limit: 90
+    t.integer "cs_code"
+    t.string "cousub", limit: 90
+    t.integer "pl_code"
+    t.string "place", limit: 90
+    t.integer "cnt"
+  end
+
+  create_table "zip_lookup_base", primary_key: "zip", id: :string, limit: 5, force: :cascade do |t|
+    t.string "state", limit: 40
+    t.string "county", limit: 90
+    t.string "city", limit: 90
+    t.string "statefp", limit: 2
+  end
+
+  create_table "zip_state", primary_key: ["zip", "stusps"], force: :cascade do |t|
+    t.string "zip", limit: 5, null: false
+    t.string "stusps", limit: 2, null: false
+    t.string "statefp", limit: 2
+  end
+
+  create_table "zip_state_loc", primary_key: ["zip", "stusps", "place"], force: :cascade do |t|
+    t.string "zip", limit: 5, null: false
+    t.string "stusps", limit: 2, null: false
+    t.string "statefp", limit: 2
+    t.string "place", limit: 100, null: false
+  end
+
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
 end
