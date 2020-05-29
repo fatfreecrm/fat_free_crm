@@ -31,6 +31,8 @@ module FatFreeCrm
 
     has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, meta: { related: :addressable }
 
+    set_rgeo_factory_for_column(:lonlat, RGeo::Geographic.spherical_factory(:srid => 4326))
+
     scope :business, -> { where("address_type='Business'") }
     scope :billing,  -> { where("address_type='Billing'") }
     scope :shipping, -> { where("address_type='Shipping'") }
