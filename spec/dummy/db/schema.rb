@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_151522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.point "lonlat"
     t.index ["addressable_id", "addressable_type"], name: "addresses_id_and_type"
   end
 
@@ -692,13 +693,6 @@ ActiveRecord::Schema.define(version: 2020_05_28_151522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["name"], name: "index_settings_on_name"
-  end
-
-  create_table "spatial_ref_sys", primary_key: "srid", id: :integer, default: nil, force: :cascade do |t|
-    t.string "auth_name", limit: 256
-    t.integer "auth_srid"
-    t.string "srtext", limit: 2048
-    t.string "proj4text", limit: 2048
   end
 
 # Could not dump table "state" because of following StandardError
