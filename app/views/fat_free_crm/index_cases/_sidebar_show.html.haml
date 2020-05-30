@@ -1,0 +1,58 @@
+- won = @index_case.opportunities.won.map(&:amount).compact.sum
+- lost = @index_case.opportunities.lost.map(&:amount).compact.sum
+- pipeline = @index_case.opportunities.pipeline.map(&:weighted_amount).compact.sum
+
+.panel#summary
+  %h4.heading= h(@index_case.name)
+  - if @index_case.website
+    %div
+      %b= link_to(truncate(@index_case.website, length: 30), @index_case.website.to_url, :"data-popup" => true, title: t(:open_in_window, @index_case.website))
+  - if @index_case.email.present?
+    %div
+      %b= link_to_email(@index_case.email, 30)
+
+  %div
+    - if @index_case.toll_free_phone
+      #{t :phone_toll_free}: <b class="phone-number">#{@index_case.toll_free_phone}</b><br />
+
+    - if @index_case.phone
+      #{t :phone}: <b class="phone-number">#{@index_case.phone}</b><br />
+
+    - if @index_case.fax
+      #{t :fax}: <b>#{@index_case.fax}</b><br />
+
+  %div= render "fat_free_crm/shared/address_show", asset: @index_case, type: 'billing', title: :billing_address
+  %div= render "fat_free_crm/shared/address_show", asset: @index_case, type: 'shipping', title: :shipping_address
+
+  .caption #{t :index_case_summary}
+  %ul
+    %li
+      %span #{t :pipeline}:
+      %span= pipeline != 0.0 ? number_to_currency(pipeline, precision: 0) : t(:n_a)
+    %li
+      %span #{t :won}:
+      %span= won != 0.0 ? number_to_currency(won, precision: 0) : t(:n_a)
+    %li
+      %span #{t :lost}:
+      %span= lost != 0.0 ? number_to_currency(lost, precision: 0) : t(:n_a)
+    %li
+      %span #{t :category}:
+      %span= @index_case.category ? t(@index_case.category) : t(:other)
+    %li
+      %span #{t :rating}:
+      %span= stars_for(@index_case)
+    %li
+      %span #{t :assigned_to}:
+      %span= @index_case.assigned_to ? truncate(@index_case.assignee.full_name, length: 16) : nil
+
+  - unless @index_case.background_info.blank?
+    .caption #{t :background_info}
+    = auto_link(simple_format @index_case.background_info)
+
+  = render "fat_free_crm/fields/sidebar_show", asset: @index_case
+
+  - if @index_case.tags.present?
+    %span
+      .tags= tags_for_index(@index_case)
+
+  = hook(:show_index_case_sidebar_bottom, self, index_case: @index_case)

@@ -289,20 +289,46 @@
 #
 #------------------------------------------------------------------------------
 account_category:
-  - :affiliate
-  - :competitor
-  - :customer
-  - :partner
-  - :reseller
-  - :vendor
+  - :branch
+  - :office
+  - :atm
+  - :kiosk
 
 account_category_color:
-  :affiliate   : lavender
-  :competitor  : paleturquoise
-  :customer    : pink
-  :partner     : bisque
-  :reseller    : thistle
-  :vendor      : skyblue
+  :branch   : lavender
+  :office   : paleturquoise
+  :customer : pink
+  :kiosk    : bisque
+
+
+contact_category:
+  - :executive
+  - :management
+  - :employee
+  - :contractor
+  - :customer
+
+contact_category_color:
+  :executive   : lavender
+  :management  : paleturquoise
+  :employee    : pink
+  :contractor  : bisque
+  :customer    : thistle
+
+index_case_category:
+  - :i
+  - :ii
+  - :iii
+  - :iv
+  - :v
+
+index_case_category_color:
+  :i   : lavender
+  :ii  : paleturquoise
+  :iii : pink
+  :iv  : bisque
+  :v   : thistle
+
 
 # Campaign Status. To add custom status use string value, for example:
 #

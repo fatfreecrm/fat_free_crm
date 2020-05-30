@@ -1,0 +1,18 @@
+= styles_for :index_case
+
+= render 'fat_free_crm/entities/title_bar'
+
+.remote#create_index_case{ hidden }
+
+= render 'fat_free_crm/shared/search'
+
+.remote#options{ hidden }
+
+%ul.list#index_cases
+  - if @index_cases.any?
+    = render @index_cases
+  - else
+    = render "fat_free_crm/shared/empty"
+
+#paginate= render "fat_free_crm/shared/paginate_with_per_page"
+#export= render "fat_free_crm/shared/export"

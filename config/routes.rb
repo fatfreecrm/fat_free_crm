@@ -42,7 +42,25 @@ FatFreeCrm::Engine.routes.draw do
   resources :emails,         only: [:destroy]
   resources :documents,      only: [:index, :new, :create, :destroy]
   
-  resources :index_cases
+  resources :index_cases, id: /\d+/ do
+    collection do
+      get :advanced_search
+      post :filter
+      get :options
+      get :field_group
+      match :auto_complete, via: %i[get post]
+      get :redraw
+      get :versions
+    end
+    member do
+      put :attach
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      get :contacts
+      get :opportunities
+    end
+  end
 
   resources :accounts, id: /\d+/ do
     collection do

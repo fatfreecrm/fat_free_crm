@@ -1,0 +1,5 @@
+- if (controller.controller_name == 'index_cases') and (template = template_for_current_view).present?
+  = render('fat_free_crm/' + template, index_case: index_case)
+- else
+  -# default view
+  = render 'fat_free_crm/index_cases/index_brief', index_case: index_case

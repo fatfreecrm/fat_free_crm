@@ -1,0 +1,17 @@
+= simple_form_for(@index_case, html: one_submit_only, remote: true) do |f|
+  = link_to_close new_index_case_path
+  = f.hidden_field :user_id
+
+  = f.error_messages object_name: t('index_case')
+
+  = render "fat_free_crm/index_cases/top_section",  f: f
+  /= render "fat_free_crm/index_cases/contact_info", f: f
+  = render "fat_free_crm/entities/permissions",  f: f, entity: @index_case
+  = hook(:entity_form, self, {f: f, entity: @index_case})
+
+  .buttonbar
+    - if Setting.compound_address
+      = f.submit(t(:create_index_case), { onclick: "crm.clear_all_hints()", class: "btn btn-primary" })
+    - else
+      = f.submit(t(:create_index_case), { class: 'btn btn-primary'})
+    = link_to_cancel new_index_case_path, :class => "btn btn-link"

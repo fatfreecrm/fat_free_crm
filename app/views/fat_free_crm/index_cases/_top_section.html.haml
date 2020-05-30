@@ -1,0 +1,16 @@
+= hook(:index_case_top_section, self, f: f) do
+  .idc-panel
+    .form-group.one-third
+      %label #{t :category}:
+      = f.select :category, Setting.unroll(:index_case_category), { selected: @index_case.category || "other", include_blank: t(:other) }, { class: 'form-control' }
+    .form-group.one-third
+      %label #{t :opportunity}:
+      = f.collection_select :opportunity_id, @opportunities, :id, :name, { selected: @index_case.opportunity&.id }, { class: 'custom-select' }
+    - if Setting.background_info && Setting.background_info.include?(:index_case)
+      .form-group.one-third
+        %label= t(:background_info) + ':'
+        = f.text_area(:background_info, {})
+
+    = render partial: "/fat_free_crm/shared/tags", locals: {f: f}
+
+    = hook(:index_case_top_section_bottom, self, f: f)

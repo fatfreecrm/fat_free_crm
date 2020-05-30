@@ -1,0 +1,6 @@
+.tools
+  = hook(:index_case_tools_before, self, index_case: index_case)
+  - if can?(:update, index_case)
+    = link_to_edit(index_case)
+  - if can?(:destroy, index_case)
+    = link_to_delete(index_case)

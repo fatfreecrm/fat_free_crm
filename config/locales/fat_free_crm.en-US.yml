@@ -47,6 +47,10 @@ en-US:
   called_off: Called Off
   new: New
   contacted: Contacted
+  branch: Branch
+  office: Office
+  atm: Atm
+  kiosk: Kiosk
 
   isolation: Isolation
 
@@ -317,6 +321,12 @@ en-US:
     Supported formats are GIF, JPG, and PNG.
   job_title: Title
   last_name: Last name
+  gender: Gender
+  preferred_name: Preferred Name
+  preferred_language: Preferred Language
+  outreach_priority: Outreach Priority
+  category: Category
+  used_interpreter: Used Interpreter
   login_now_link: Login Now!
   mobile: Mobile
   my_profile: My Profile
@@ -355,6 +365,7 @@ en-US:
   account_small: account
   account_summary: Account Summary
   account_categories: Account Categories
+  division_name: Division Name
   accounts: Accounts
   accounts_options: Accounts Options
   accounts_small: accounts
@@ -381,6 +392,21 @@ en-US:
   website: Website
   account_with_title_department: ! '%{title}, %{department} at %{account}'
   account_with_title: ! '%{title} in %{account} account'
+
+    # Views -> Index Cases.
+  #----------------------------------------------------------------------------
+  create_index_case: Create Index Case
+  i: I
+  ii: II
+  iii: III
+  iv: IV
+  v: V
+  index_case_categories: Categories
+  total_index_cases: Total
+  index_cases: Index Cases
+  index_cases_small: index cases
+  save_index_case: Save Index Case
+
 
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
@@ -437,6 +463,12 @@ en-US:
   contacts_options: Contacts Options
   contacts_small: contacts
   contact_summary: Contact Summary
+  contact_categories: Contact Categories
+  executive: Executive
+  management: Management
+  employee: Employee
+  contractor: Contractor
+  customer: Customer
   create_contact: Create Contact
   department: Department
   department_small: ! '%{value} department'
