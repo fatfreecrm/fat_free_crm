@@ -43,14 +43,14 @@ module FatFreeCrm
       end
 
       it "should filter out accounts by category" do
-        categories = %w[customer vendor]
+        categories = %w[branch atm]
         controller.session[:accounts_filter] = categories.join(',')
         @accounts = [
           create(:account, user: current_user, category: categories.first),
           create(:account, user: current_user, category: categories.last)
         ]
         # This one should be filtered out.
-        create(:account, user: current_user, category: "competitor")
+        create(:account, user: current_user, category: "office")
 
         get :index
         expect(assigns[:accounts]).to eq(@accounts)
@@ -593,16 +593,16 @@ module FatFreeCrm
     describe "responding to POST filter" do
       it "should expose filtered accounts as @accounts and render [index] template" do
         session[:accounts_filter] = "customer,vendor"
-        @accounts = [create(:account, category: "partner", user: current_user)]
+        @accounts = [create(:account, category: "atm", user: current_user)]
 
-        post :filter, params: { category: "partner" }, xhr: true
+        post :filter, params: { category: "atm" }, xhr: true
         expect(assigns(:accounts)).to eq(@accounts)
         expect(response).to render_template("accounts/index")
       end
 
       it "should reset current page to 1" do
         @accounts = []
-        post :filter, params: { category: "partner" }, xhr: true
+        post :filter, params: { category: "atm" }, xhr: true
 
         expect(session[:accounts_current_page]).to eq(1)
       end

@@ -311,16 +311,15 @@ ActiveRecord::Schema.define(version: 2020_05_30_155112) do
 
   create_table "fat_free_crm_index_cases", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "assigned_to_id"
-    t.bigint "reporting_user_id"
+    t.integer "assigned_to"
     t.string "access"
     t.string "source"
     t.string "background_info"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
-    t.index ["assigned_to_id"], name: "index_fat_free_crm_index_cases_on_assigned_to_id"
-    t.index ["reporting_user_id"], name: "index_fat_free_crm_index_cases_on_reporting_user_id"
+    t.bigint "opportunity_id"
+    t.index ["opportunity_id"], name: "index_fat_free_crm_index_cases_on_opportunity_id"
     t.index ["user_id"], name: "index_fat_free_crm_index_cases_on_user_id"
   end
 
