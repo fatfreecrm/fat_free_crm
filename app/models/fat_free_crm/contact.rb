@@ -53,6 +53,7 @@ module FatFreeCrm
     has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
     has_many :emails, as: :mediator
 
+    has_many :identifiers
     has_many :assignments
     # has_many :account_contacts, dependent: :destroy
     # has_many :accounts, -> { distinct }, through: :account_contacts
