@@ -1,0 +1,7 @@
+/- amount = facility.opportunity&.weight
+%li.highlight.facility{id: "facility_#{facility.id}"}
+  .flex-container
+    %h3= link_to(facility.id, admin_facility_path(facility))
+    = render "/fat_free_crm/facilities/facility_tools", facility: facility
+  = hook(:facility_bottom, self, facility: facility)  
+

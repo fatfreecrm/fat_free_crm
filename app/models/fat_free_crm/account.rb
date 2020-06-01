@@ -42,6 +42,8 @@ module FatFreeCrm
     has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
     has_many :emails, as: :mediator
 
+    has_and_belongs_to_many :facilities
+
     has_many :assignments
 
     serialize :subscribed_users, Set

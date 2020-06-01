@@ -1,0 +1,58 @@
+- won = @facility.opportunities.won.map(&:amount).compact.sum
+- lost = @facility.opportunities.lost.map(&:amount).compact.sum
+- pipeline = @facility.opportunities.pipeline.map(&:weighted_amount).compact.sum
+
+.panel#summary
+  %h4.heading= h(@facility.name)
+  - if @facility.website
+    %div
+      %b= link_to(truncate(@facility.website, length: 30), @facility.website.to_url, :"data-popup" => true, title: t(:open_in_window, @facility.website))
+  - if @facility.email.present?
+    %div
+      %b= link_to_email(@facility.email, 30)
+
+  %div
+    - if @facility.toll_free_phone
+      #{t :phone_toll_free}: <b class="phone-number">#{@facility.toll_free_phone}</b><br />
+
+    - if @facility.phone
+      #{t :phone}: <b class="phone-number">#{@facility.phone}</b><br />
+
+    - if @facility.fax
+      #{t :fax}: <b>#{@facility.fax}</b><br />
+
+  %div= render "fat_free_crm/shared/address_show", asset: @facility, type: 'billing', title: :billing_address
+  %div= render "fat_free_crm/shared/address_show", asset: @facility, type: 'shipping', title: :shipping_address
+
+  .caption #{t :facility_summary}
+  %ul
+    %li
+      %span #{t :pipeline}:
+      %span= pipeline != 0.0 ? number_to_currency(pipeline, precision: 0) : t(:n_a)
+    %li
+      %span #{t :won}:
+      %span= won != 0.0 ? number_to_currency(won, precision: 0) : t(:n_a)
+    %li
+      %span #{t :lost}:
+      %span= lost != 0.0 ? number_to_currency(lost, precision: 0) : t(:n_a)
+    %li
+      %span #{t :category}:
+      %span= @facility.category ? t(@facility.category) : t(:other)
+    %li
+      %span #{t :rating}:
+      %span= stars_for(@facility)
+    %li
+      %span #{t :assigned_to}:
+      %span= @facility.assigned_to ? truncate(@facility.assignee.full_name, length: 16) : nil
+
+  - unless @facility.background_info.blank?
+    .caption #{t :background_info}
+    = auto_link(simple_format @facility.background_info)
+
+  = render "fat_free_crm/fields/sidebar_show", asset: @facility
+
+  - if @facility.tags.present?
+    %span
+      .tags= tags_for_index(@facility)
+
+  = hook(:show_facility_sidebar_bottom, self, facility: @facility)

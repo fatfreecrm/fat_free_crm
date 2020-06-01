@@ -1,0 +1,20 @@
+.filters#filters
+  %h4.caption.heading= t :facility_categories
+  - Setting.facility_category.each do |key|
+    .space-between
+      .form-check
+        = facility_category_checkbox(key, @facility_category_total[key])
+        = label_tag(key, t(key), class: 'form-check-label')
+      .status-total
+        = @facility_category_total[key]
+  .space-between
+    .form-check
+      = facility_category_checkbox("other", @facility_category_total[:other])
+      = label_tag(:other, t(:other), class: 'form-check-label')
+    .status-total
+      = @facility_category_total[:other]
+  .space-between
+    %b #{t :total_facilities}
+    .status-total
+      %b= @facility_category_total[:all]
+  = hook(:index_facility_sidebar_bottom, self)

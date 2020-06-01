@@ -1,0 +1,19 @@
+= simple_form_for(@facility, {url: admin_facilities_path(@facility), html: one_submit_only, remote: true}) do |f|
+  = link_to_close new_admin_facility_path
+  = f.hidden_field :user_id
+
+  = f.error_messages object_name: t('facility')
+
+  = render "fat_free_crm/facilities/top_section",  f: f
+  /= render "fat_free_crm/shared/address", f: f, asset: @facility, type: 'business', title: :address
+
+  /= render "fat_free_crm/facilities/contact_info", f: f
+  = render "fat_free_crm/entities/permissions",  f: f, entity: @facility
+  = hook(:entity_form, self, {f: f, entity: @facility})
+
+  .buttonbar
+    - if Setting.compound_address
+      = f.submit(t(:create_facility), { onclick: "crm.clear_all_hints()", class: "btn btn-primary" })
+    - else
+      = f.submit(t(:create_facility), { class: 'btn btn-primary'})
+    = link_to_cancel new_admin_facility_path, :class => "btn btn-link"

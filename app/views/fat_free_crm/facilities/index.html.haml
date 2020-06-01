@@ -1,0 +1,18 @@
+= styles_for :facility
+
+= render 'fat_free_crm/entities/title_bar', model_path: new_admin_facility_path, model_klass: "FatFreeCrm::Facility"
+
+.remote#create_facility{ hidden }
+
+= render '/fat_free_crm/shared/search'
+
+.remote#options{ hidden }
+
+%ul.list#facilities
+  - if @facilities.any?
+    = render @facilities
+  - else
+    = render "fat_free_crm/shared/empty"
+
+#paginate= render "fat_free_crm/shared/paginate_with_per_page", path: "admin_facilities"
+#export= render "fat_free_crm/shared/export"

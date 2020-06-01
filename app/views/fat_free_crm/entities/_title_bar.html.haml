@@ -1,5 +1,6 @@
-- model_name = controller_name.singularize
-- model_klass = ("FatFreeCrm::" +  model_name.camelcase).constantize
+- model_name ||= controller_name.singularize
+- model_klass ||= ("FatFreeCrm::" +  model_name.camelcase).constantize
+-model_path ||= nil
 
 .space-between.page-heading
   .title
@@ -10,7 +11,7 @@
     #buttons
       = view_buttons
     .create_asset
-      = link_to_inline("create_#{model_name}".to_sym, send("new_#{model_name}_path"), { text: t("create_#{model_name}".to_sym), class: 'btn btn-primary create-asset-button' })
+      = link_to_inline("create_#{model_name}".to_sym, model_path || send("new_#{model_name}_path"), { text: t("create_#{model_name}".to_sym), class: 'btn btn-primary create-asset-button' })
     = form_tag "/uploads/upload_#{model_name}", multipart: true, method: :post do
       %button.btn.btn-link.btn-file
         = "Upload"

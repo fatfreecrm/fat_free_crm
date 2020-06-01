@@ -407,7 +407,13 @@ en-US:
   index_cases_small: index cases
   save_index_case: Save Index Case
 
-
+    # Views -> Facilities
+  #----------------------------------------------------------------------------
+  create_facility: Create Facility
+  facilities_small: facilities
+  save_facility: Save Facility
+  facilities: Facilities
+  facility_kind: Facility Kind
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
   actual: Actual

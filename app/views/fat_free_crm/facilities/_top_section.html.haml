@@ -1,0 +1,18 @@
+= hook(:facility_top_section, self, f: f) do
+  .idc-panel
+    .form-group.one-third
+      %label #{t :facility_kind}
+      = f.select :facility_kind, Setting.unroll(:facility_kind), { selected: @facility.facility_kind|| "other", include_blank: t(:other) }, { class: 'form-control' }
+    .form-group.one-third
+      %label #{t :accounts}:
+      = f.collection_check_boxes(:account_ids, @accounts, :id, :name ) do |b|
+        .d-block
+          = b.check_box
+          = b.label
+      /= f.collection_select(:account_ids, @accounts, :id, :name, { multiple: true }, { class: 'custom-select' })
+    - if Setting.background_info && Setting.background_info.include?(:facility)
+      .form-group.one-third
+        %label= t(:background_info) + ':'
+        = f.text_area(:background_info, {})
+
+    = hook(:facility_top_section_bottom, self, f: f)

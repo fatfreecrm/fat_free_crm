@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_30_155112) do
+ActiveRecord::Schema.define(version: 2020_05_31_133012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,13 @@ ActiveRecord::Schema.define(version: 2020_05_30_155112) do
     t.string "division_name"
     t.index ["assigned_to"], name: "index_fat_free_crm_accounts_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_fat_free_crm_accounts_on_user_id_and_name_and_deleted_at", unique: true
+  end
+
+  create_table "fat_free_crm_accounts_facilities", id: false, force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "facility_id"
+    t.index ["account_id"], name: "index_fat_free_crm_accounts_facilities_on_account_id"
+    t.index ["facility_id"], name: "index_fat_free_crm_accounts_facilities_on_facility_id"
   end
 
   create_table "fat_free_crm_activities", id: :serial, force: :cascade do |t|
@@ -216,6 +223,15 @@ ActiveRecord::Schema.define(version: 2020_05_30_155112) do
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
   end
 
+  create_table "fat_free_crm_details", force: :cascade do |t|
+    t.string "name"
+    t.string "kind"
+    t.bigint "unit_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["unit_id"], name: "index_fat_free_crm_details_on_unit_id"
+  end
+
   create_table "fat_free_crm_documents", force: :cascade do |t|
     t.string "title"
     t.string "creator"
@@ -260,6 +276,16 @@ ActiveRecord::Schema.define(version: 2020_05_30_155112) do
     t.datetime "updated_at"
     t.string "state", limit: 16, default: "Expanded", null: false
     t.index ["mediator_id", "mediator_type"], name: "emails_mediator_id_n_type"
+  end
+
+  create_table "fat_free_crm_facilities", force: :cascade do |t|
+    t.string "facility_kind", array: true
+    t.string "lonlat"
+    t.string "st_point"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_fat_free_crm_facilities_on_user_id"
   end
 
   create_table "fat_free_crm_field_groups", id: :serial, force: :cascade do |t|
@@ -311,15 +337,16 @@ ActiveRecord::Schema.define(version: 2020_05_30_155112) do
 
   create_table "fat_free_crm_index_cases", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "assigned_to"
+    t.bigint "assigned_to_id"
+    t.bigint "reporting_user_id"
     t.string "access"
     t.string "source"
     t.string "background_info"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
-    t.bigint "opportunity_id"
-    t.index ["opportunity_id"], name: "index_fat_free_crm_index_cases_on_opportunity_id"
+    t.index ["assigned_to_id"], name: "index_fat_free_crm_index_cases_on_assigned_to_id"
+    t.index ["reporting_user_id"], name: "index_fat_free_crm_index_cases_on_reporting_user_id"
     t.index ["user_id"], name: "index_fat_free_crm_index_cases_on_user_id"
   end
 
@@ -353,6 +380,14 @@ ActiveRecord::Schema.define(version: 2020_05_30_155112) do
     t.text "subscribed_users"
     t.index ["assigned_to"], name: "index_fat_free_crm_leads_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "leads_user_id_last_name_deleted_at", unique: true
+  end
+
+  create_table "fat_free_crm_levels", force: :cascade do |t|
+    t.string "name"
+    t.bigint "facility_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["facility_id"], name: "index_fat_free_crm_levels_on_facility_id"
   end
 
   create_table "fat_free_crm_lists", id: :serial, force: :cascade do |t|
@@ -406,6 +441,14 @@ ActiveRecord::Schema.define(version: 2020_05_30_155112) do
     t.index ["user_id", "name"], name: "index_fat_free_crm_preferences_on_user_id_and_name"
   end
 
+  create_table "fat_free_crm_sections", force: :cascade do |t|
+    t.string "name"
+    t.bigint "level_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["level_id"], name: "index_fat_free_crm_sections_on_level_id"
+  end
+
   create_table "fat_free_crm_sessions", id: :serial, force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -451,6 +494,16 @@ ActiveRecord::Schema.define(version: 2020_05_30_155112) do
     t.text "subscribed_users"
     t.index ["assigned_to"], name: "index_fat_free_crm_tasks_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_fat_free_crm_tasks_on_user_id_and_name_and_deleted_at", unique: true
+  end
+
+  create_table "fat_free_crm_units", force: :cascade do |t|
+    t.string "name"
+    t.string "kind"
+    t.string "unitable_type"
+    t.bigint "unitable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["unitable_type", "unitable_id"], name: "index_fat_free_crm_units_on_unitable_type_and_unitable_id"
   end
 
   create_table "fat_free_crm_users", id: :serial, force: :cascade do |t|
@@ -512,6 +565,14 @@ ActiveRecord::Schema.define(version: 2020_05_30_155112) do
     t.index ["related_id", "related_type"], name: "index_fat_free_crm_versions_on_related_id_and_related_type"
     t.index ["transaction_id"], name: "index_fat_free_crm_versions_on_transaction_id"
     t.index ["whodunnit"], name: "index_fat_free_crm_versions_on_whodunnit"
+  end
+
+  create_table "fat_free_crm_zones", force: :cascade do |t|
+    t.string "name"
+    t.bigint "level_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["level_id"], name: "index_fat_free_crm_zones_on_level_id"
   end
 
   create_table "settings", id: :serial, force: :cascade do |t|

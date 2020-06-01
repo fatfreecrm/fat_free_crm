@@ -1,0 +1,9 @@
+- if (template = template_for_current_view)
+  = render(template, facility: @facility)
+- else
+
+  -# default view
+  = styles_for :task, :contact, :opportunity
+  = render 'fat_free_crm/facilities/title_bar', facility: @facility
+  %div#edit_facility{ hidden }
+

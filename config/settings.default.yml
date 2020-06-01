@@ -271,6 +271,11 @@
   :icon: :fa-tags
   :url:
     :controller: admin/tags
+- :active: false
+  :text: :facilities
+  :icon: :fas fa-building
+  :url:
+    :controller: admin/facilities
 #- :active: false
 #  :text: :admin_tab_settings
 #  :icon: :fa-cogs
@@ -409,6 +414,12 @@ task_category:
   - :money
   - :presentation
   - :trip
+
+facility_kind:
+  - :branch
+  - :atm
+  - :office
+  - :kiosk
 
 task_category_color:
   :call         : Silver

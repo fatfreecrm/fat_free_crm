@@ -9,7 +9,8 @@ module RansackUI
     # Can also be called as a function if needed. Will return the search object.
     #
     def load_ransack_search(klass = nil)
-      klass ||= controller_path.classify.constantize
+      path = controller_path.remove("/admin")
+      klass ||= path.classify.constantize
       @ransack_search = klass.ransack(params[:q])
       @ransack_search.build_grouping if @ransack_search.groupings.empty?
       @ransack_search

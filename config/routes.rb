@@ -225,6 +225,25 @@ FatFreeCrm::Engine.routes.draw do
       end
     end
 
+    resources :facilities, id: /\d+/ do
+      collection do
+        get :advanced_search
+        post :filter
+        get :options
+        get :field_groups
+        match :auto_complete, via: %i[get post]
+        get :redraw
+        get :versions
+      end
+      member do
+        put :attach
+        post :discard
+        post :subscribe
+        post :unsubscribe
+        get :contacts
+      end
+    end
+
     resources :fields, as: :custom_fields
     resources :fields, as: :core_fields
 
