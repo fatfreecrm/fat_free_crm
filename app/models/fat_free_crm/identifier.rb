@@ -27,7 +27,7 @@
 require 'rgeo'
 module FatFreeCrm
   class Identifier < ActiveRecord::Base
-    belongs_to :contact
+    belongs_to :identifiable, polymorphic: true
 
     has_paper_trail versions: {class_name: "FatFreeCrm::Identifer"}, meta: { related: :identifiable }
 
