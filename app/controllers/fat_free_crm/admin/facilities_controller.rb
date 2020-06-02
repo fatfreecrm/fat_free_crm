@@ -29,6 +29,7 @@ module FatFreeCrm
       def show
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
+        @timeline = timeline(@facility)
         respond_with(@facility) do |format|
           format.js   { render "fat_free_crm/facilities/show" }
           format.html { render "fat_free_crm/facilities/show" }

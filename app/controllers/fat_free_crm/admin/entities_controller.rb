@@ -203,7 +203,7 @@ module FatFreeCrm::Admin
 
     #----------------------------------------------------------------------------
     def timeline(asset)
-      (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
+      (asset.comments).sort { |x, y| y.created_at <=> x.created_at }
     end
 
     # Sets the current template view for entities in this context
@@ -227,14 +227,9 @@ module FatFreeCrm::Admin
       [0, page].max if page
     end
 
-    def guess_related_account(id, url, user)
-      return Account.find(id) unless id.blank?
-
-      if url =~ %r{/accounts/(\d+)\z}
-        Account.find(Regexp.last_match[1]) # related account
-      else
-        Account.new(user: user)
-      end
+    def asset
+      controller_name.singularize
     end
+
   end
 end
