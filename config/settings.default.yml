@@ -293,6 +293,10 @@
 #   - "Custom"
 #
 #------------------------------------------------------------------------------
+
+identifier_category:
+  - :employee_id
+
 account_category:
   - :branch
   - :office

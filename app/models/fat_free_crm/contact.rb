@@ -123,6 +123,10 @@ module FatFreeCrm
     validates_length_of :twitter, maximum: 128
     validates_length_of :skype, maximum: 128
 
+    def self.genders
+      %w(male female)
+    end
+
     # Default values provided through class methods.
     #----------------------------------------------------------------------------
     def self.per_page

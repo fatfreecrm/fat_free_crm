@@ -1,0 +1,16 @@
+- model = entity.class.name.underscore
+= f.hidden_field :_destroy
+.form-group-one-third
+  %label #{t :item}:
+  = f.text_field(:item, class: 'form-control')
+  %br
+  %label #{t :kind}:
+  = f.select :kind, Setting.unroll(:identifier_category), { selected: :kind }, { class: 'form-control' }
+  
+  = link_to_function("<i class='fa fa-trash'></i>", "deleteIdentifier(this)")
+
+:javascript
+  function deleteIdentifier(el) {
+    el.closest('.form-group-one-third').previousSibling.remove();
+    el.closest('.form-group-one-third').remove();
+  }

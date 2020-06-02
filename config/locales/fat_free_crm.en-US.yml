@@ -515,6 +515,11 @@ en-US:
   shared_with_everyone: Shared with everyone
   title: Title
   subscriptions: Subscriptions
+  # Identifier Categories
+  employee_id: Employee ID
+  kind: Kind
+  item: Item
+  identifier: Identifier
 
   # Views -> Leads.
   #----------------------------------------------------------------------------

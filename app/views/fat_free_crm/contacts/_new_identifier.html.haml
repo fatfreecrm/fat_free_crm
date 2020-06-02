@@ -1,0 +1,7 @@
+- model = entity.class.name.underscore
+.form-group-one-third
+  %label #{t :item}:
+  = text_field_tag("contact[identifiers_attributes][#{time = Time.now.to_i}][item]", nil, class: 'form-control')
+  %br
+  %label #{t :kind}:
+  = select_tag("contact[identifiers_attributes][#{time}][kind]", Setting.unroll(:identifier_category), { class: 'form-control' })

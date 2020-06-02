@@ -1,0 +1,12 @@
+- model = entity.class.name.underscore
+%details.idc-panel
+  %summary #{t :identifiers_intro}
+  %small#contact_extra_intro.full-width
+    = t(:intro, t(:identifiers_info_small))
+  .idc-form-group#contact_extra
+  = f.fields_for :identifiers, entity.identifiers.each do |identifier_fields|
+    = render "fat_free_crm/contacts/identifier", f: identifier_fields, entity: entity
+
+  #new_identifier
+
+  = link_to("New Identifier", new_identifier_contact_path(entity), remote: true, class: 'btn btn-primary')

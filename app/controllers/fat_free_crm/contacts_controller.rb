@@ -126,6 +126,10 @@ module FatFreeCrm
       end
     end
 
+    def new_identifier
+      @identifier = @contact.identifiers.build
+    end
+
     private
 
     #----------------------------------------------------------------------------
