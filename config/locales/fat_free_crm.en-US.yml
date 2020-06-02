@@ -414,6 +414,8 @@ en-US:
   save_facility: Save Facility
   facilities: Facilities
   facility_kind: Facility Kind
+  longitute: Longitute
+  latitude: Latitude
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
   actual: Actual

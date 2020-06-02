@@ -1,5 +1,5 @@
 - address_type = type.to_s.camelize
-- address_attr = "#{type}_address"
+- address_attr ||= "#{type}_address"
 - address = get_address(asset, address_attr)
 
 - same_as_billing ||= false
@@ -41,3 +41,12 @@
     .form-group.one-half
       %label #{t :country}
       = a.country_select(:country, priority_countries, { include_blank: "" }, {:"data-placeholder" => t(:select_a_country), class: 'form-control'})
+    .form-group.one-sixth
+      %label #{t :longitute}
+      .d-grid
+        = f.label :long_value, disabled: true
+    .form-group.one-sixth
+      %label #{t :latitude}
+      .d-grid
+        = f.label :lat_value, disabled: true
+

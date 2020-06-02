@@ -278,16 +278,6 @@ ActiveRecord::Schema.define(version: 2020_05_31_133012) do
     t.index ["mediator_id", "mediator_type"], name: "emails_mediator_id_n_type"
   end
 
-  create_table "fat_free_crm_facilities", force: :cascade do |t|
-    t.string "facility_kind", array: true
-    t.string "lonlat"
-    t.string "st_point"
-    t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_fat_free_crm_facilities_on_user_id"
-  end
-
   create_table "fat_free_crm_field_groups", id: :serial, force: :cascade do |t|
     t.string "name", limit: 64
     t.string "label", limit: 128

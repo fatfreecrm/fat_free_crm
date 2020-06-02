@@ -13,10 +13,12 @@ module FatFreeCrm
     acts_as_taggable_on :tags
     has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, ignore: [:subscribed_users]
 
-    has_ransackable_associations %w[account]
+    has_ransackable_associations %w[account addresses]
     ransack_can_autocomplete
 
   	sortable by: ["name ASC", "rating DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
+
+    accepts_nested_attributes_for :address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 
   end
 end

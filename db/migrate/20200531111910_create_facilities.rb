@@ -6,6 +6,7 @@ class CreateFacilities < ActiveRecord::Migration[6.0]
       t.references :user
       t.integer :assigned_to
       t.string :access, limit: 8, default: "Public" # %w(Private Public Shared)
+      t.intefer :location_id
 
       t.timestamps
     end

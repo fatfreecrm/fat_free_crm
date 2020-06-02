@@ -9,7 +9,6 @@
         .d-block
           = b.check_box
           = b.label
-      /= f.collection_select(:account_ids, @accounts, :id, :name, { multiple: true }, { class: 'custom-select' })
     - if Setting.background_info && Setting.background_info.include?(:facility)
       .form-group.one-third
         %label= t(:background_info) + ':'

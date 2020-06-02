@@ -6,7 +6,8 @@
     = f.error_messages object_name: t('facility')
 
     = render "fat_free_crm/facilities/top_section",  f: f, edit: true
-    /= render "fat_free_crm/contacts/extra",       f: f, edit: true
+    = render "fat_free_crm/facilities/extra", f: f, edit: true
+    /= render "fat_free_crm/shared/address", f: f, asset: @facility, type: 'business', address_attr: 'address', title: :address, edit: true
     = render "fat_free_crm/entities/permissions",  f: f, edit: true, entity: @facility
     = hook(:entity_form, self, {f: f, entity: @facility})
 
