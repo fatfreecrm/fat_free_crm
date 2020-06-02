@@ -3,7 +3,7 @@
   %small#contact_extra_intro.full-width
   .idc-form-group#contact_extra
     .form-group.one-half
-      = f.collection_check_boxes(:facility_ids, facilities, :id, :facility_kind ) do |b|
+      = f.collection_check_boxes(:facility_ids, facilities, :id, :location_id) do |b|
         .d-block
           = b.check_box
           = b.label

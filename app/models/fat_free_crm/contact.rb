@@ -60,6 +60,8 @@ module FatFreeCrm
 
     delegate :campaign, to: :lead, allow_nil: true
 
+    enum gender: {male: 'Male', female: 'Female', other: 'Other', unknown: 'Unknown'}
+
     has_ransackable_associations %w[account opportunities tags activities emails addresses comments tasks]
     ransack_can_autocomplete
 
