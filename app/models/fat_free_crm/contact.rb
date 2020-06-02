@@ -53,7 +53,7 @@ module FatFreeCrm
     has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
     has_many :emails, as: :mediator
 
-    has_many :identifiers, as: :identifiable
+    has_many :identifiers, as: :identifiable, dependent: :destroy
     has_many :assignments
     # has_many :account_contacts, dependent: :destroy
     # has_many :accounts, -> { distinct }, through: :account_contacts
@@ -66,6 +66,7 @@ module FatFreeCrm
     serialize :subscribed_users, Set
 
     accepts_nested_attributes_for :business_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
+    accepts_nested_attributes_for :identifiers, allow_destroy: true
 
     scope :created_by,  ->(user) { where(user_id: user.id) }
     scope :assigned_to, ->(user) { where(assigned_to: user.id) }
