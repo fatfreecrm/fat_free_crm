@@ -417,9 +417,11 @@ task_category:
 
 facility_kind:
   - :branch
-  - :atm
   - :office
-  - :kiosk
+  - :branch_office
+  - :head_quarters
+  - :branch_head_quarters
+
 
 task_category_color:
   :call         : Silver

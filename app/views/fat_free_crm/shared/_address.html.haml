@@ -44,9 +44,9 @@
     .form-group.one-sixth
       %label #{t :longitute}
       .d-grid
-        = f.label :long_value, disabled: true
+        = a.object.lonlat.longitude if a.object.lonlat.present?
     .form-group.one-sixth
       %label #{t :latitude}
       .d-grid
-        = f.label :lat_value, disabled: true
+        = a.object.lonlat.latitude if a.object.lonlat.present?
 

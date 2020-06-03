@@ -16,6 +16,9 @@ module FatFreeCrm
     has_ransackable_associations %w[account addresses comments]
     ransack_can_autocomplete
 
+    enum status: {open: 'Open', close: 'Close'}
+
+
   	sortable by: ["name ASC", "rating DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
     accepts_nested_attributes_for :address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }

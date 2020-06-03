@@ -47,10 +47,12 @@ en-US:
   called_off: Called Off
   new: New
   contacted: Contacted
-  branch: Branch
-  office: Office
-  atm: Atm
-  kiosk: Kiosk
+  branch: Full Service Branch
+  office: Commercial Office
+  branch_office: Commercial Office/Full Service Branch
+  head_quarters: Corporate Headquarters
+  branch_head_quarters: Regional Headquarters/Full Service Branch
+
 
   isolation: Isolation
 
@@ -392,6 +394,7 @@ en-US:
   website: Website
   account_with_title_department: ! '%{title}, %{department} at %{account}'
   account_with_title: ! '%{title} in %{account} account'
+  reports_to_account: Report To Account
 
     # Views -> Index Cases.
   #----------------------------------------------------------------------------
@@ -416,6 +419,10 @@ en-US:
   facility_kind: Facility Kind
   longitute: Longitute
   latitude: Latitude
+  facility_status: Status
+  unknown: Unknown
+
+
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
   actual: Actual

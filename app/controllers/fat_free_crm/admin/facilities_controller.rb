@@ -84,6 +84,7 @@ module FatFreeCrm
       #----------------------------------------------------------------------------
       def update
         respond_with(@facility) do |format|
+          @facility.update(params["facility"].permit!)
           # Must set access before user_ids, because user_ids= method depends on access value.
           @facility.access = params[:facility][:access] if params[:facility][:access]
           format.js { render "fat_free_crm/facilities/update" }
