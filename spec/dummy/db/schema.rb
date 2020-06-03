@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_31_133012) do
+ActiveRecord::Schema.define(version: 2020_06_02_144712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,7 +74,9 @@ ActiveRecord::Schema.define(version: 2020_05_31_133012) do
     t.integer "contacts_count", default: 0
     t.integer "opportunities_count", default: 0
     t.string "division_name"
+    t.bigint "reports_to_id"
     t.index ["assigned_to"], name: "index_fat_free_crm_accounts_on_assigned_to"
+    t.index ["reports_to_id"], name: "index_fat_free_crm_accounts_on_reports_to_id"
     t.index ["user_id", "name", "deleted_at"], name: "index_fat_free_crm_accounts_on_user_id_and_name_and_deleted_at", unique: true
   end
 
@@ -113,6 +115,9 @@ ActiveRecord::Schema.define(version: 2020_05_31_133012) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.point "lonlat"
+    t.string "county"
+    t.integer "state_code"
+    t.integer "county_code"
     t.index ["addressable_id", "addressable_type"], name: "addresses_id_and_type"
   end
 
@@ -278,6 +283,12 @@ ActiveRecord::Schema.define(version: 2020_05_31_133012) do
     t.index ["mediator_id", "mediator_type"], name: "emails_mediator_id_n_type"
   end
 
+  create_table "fat_free_crm_facilities", force: :cascade do |t|
+    t.string "facility_kind", array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "fat_free_crm_field_groups", id: :serial, force: :cascade do |t|
     t.string "name", limit: 64
     t.string "label", limit: 128
@@ -325,18 +336,30 @@ ActiveRecord::Schema.define(version: 2020_05_31_133012) do
     t.index ["user_id"], name: "index_fat_free_crm_groups_users_on_user_id"
   end
 
+  create_table "fat_free_crm_identifiers", force: :cascade do |t|
+    t.string "identifiable_type"
+    t.bigint "identifiable_id"
+    t.string "item"
+    t.string "kind"
+    t.string "key"
+    t.date "start_on"
+    t.date "end_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identifiable_type", "identifiable_id"], name: "identifiable_identifiers"
+  end
+
   create_table "fat_free_crm_index_cases", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "assigned_to_id"
-    t.bigint "reporting_user_id"
+    t.integer "assigned_to"
     t.string "access"
     t.string "source"
     t.string "background_info"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
-    t.index ["assigned_to_id"], name: "index_fat_free_crm_index_cases_on_assigned_to_id"
-    t.index ["reporting_user_id"], name: "index_fat_free_crm_index_cases_on_reporting_user_id"
+    t.bigint "opportunity_id"
+    t.index ["opportunity_id"], name: "index_fat_free_crm_index_cases_on_opportunity_id"
     t.index ["user_id"], name: "index_fat_free_crm_index_cases_on_user_id"
   end
 
