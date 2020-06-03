@@ -1,5 +1,6 @@
 - model = entity.class.name.underscore
 = f.hidden_field :_destroy
+= f.hidden_field :id, value: f.object.id
 .idc-form-group#contact_extra
   .form-group.one-third
     %label #{t :item}:
