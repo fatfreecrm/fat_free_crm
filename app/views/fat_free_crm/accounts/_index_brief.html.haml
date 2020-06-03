@@ -1,7 +1,11 @@
+- tab ||= 1
 - amount = account.pipeline_opportunities.map(&:weighted_amount).sum
-%li.highlight.account{id: "account_#{account.id}"}
-  .flex-container
-    %h3= link_to(account.name, account)
-    = render "fat_free_crm/accounts/account_tools", account: account
-  = hook(:account_bottom, self, account: account)  
+.form-group.one-half.reporting-account
+  %li.highlight.account{id: "account_#{account.id}"}
+    .flex-container
+      %h3= link_to(account.name, account)
+      = render "fat_free_crm/accounts/account_tools", account: account
 
+  - account.reporting_accounts.each do |reporting_account|
+    = render reporting_account, tab: tab + 1
+  = hook(:account_bottom, self, account: account)
