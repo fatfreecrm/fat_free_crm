@@ -553,6 +553,7 @@ module ApplicationHelper
     #----------------------------------------------------------------------------
     def account_select(options = {})
       options[:selected] = @account&.id.to_i
+      # TODO: Identifiers account is nil when passed through edit as a partial, help please
       accounts = ([@account.new_record? ? nil : @account] + Account.my(current_user).order(:name).limit(25)).compact.uniq
       collection_select :account, :id, accounts, :id, :name,
                         { include_blank: true },

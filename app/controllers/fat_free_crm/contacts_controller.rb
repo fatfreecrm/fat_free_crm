@@ -130,6 +130,11 @@ module FatFreeCrm
       @identifier = @contact.identifiers.build
     end
 
+    def destroy_identifier
+      @contact.identifiers.find(params["format"]).destroy
+      get_accounts
+    end
+
     private
 
     #----------------------------------------------------------------------------

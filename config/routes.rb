@@ -41,7 +41,7 @@ FatFreeCrm::Engine.routes.draw do
   resources :comments,       except: %i[new show]
   resources :emails,         only: [:destroy]
   resources :documents,      only: [:index, :new, :create, :destroy]
-  
+
   resources :index_cases, id: /\d+/ do
     collection do
       get :advanced_search
@@ -119,6 +119,7 @@ FatFreeCrm::Engine.routes.draw do
       post :unsubscribe
       get :opportunities
       get :new_identifier
+      get :destroy_identifier
     end
   end
 
