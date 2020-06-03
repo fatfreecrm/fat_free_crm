@@ -1,9 +1,10 @@
 - model = entity.class.name.underscore
-.form-group-one-third
-  %label #{t :item}:
-  = text_field_tag("contact[identifiers_attributes][#{time = Time.now.to_i}][item]", nil, class: 'form-control')
-  %br
-  %label #{t :kind}:
-  = select_tag("contact[identifiers_attributes][#{time}][kind]", Setting.unroll(:identifier_category), { class: 'form-control' })
-
-  = link_to_function(raw("<i class='fa fa-trash'></i>"), "this.closest('.form-group-one-third').remove();")
+.idc-form-group#contact_extra
+  .form-group.one-third
+    %label #{t :item}:
+    = text_field_tag("contact[identifiers_attributes][#{time = Time.now.to_i}][item]", nil, class: 'form-control')
+  .form-group.one-third
+    %label #{t :kind}:
+    = select_tag("contact[identifiers_attributes][#{time}][kind]", options_for_select(Setting.unroll(:identifier_category), Setting.unroll(:identifier_category).first) , { class: 'form-control' })
+  .one-quarter.shove-down
+    = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "this.closest('.idc-form-group').remove();")

@@ -1,18 +1,19 @@
 - model = entity.class.name.underscore
 = f.hidden_field :_destroy
-.form-group-one-third
-  %label #{t :item}:
-  = f.text_field(:item, class: 'form-control')
-  %br
-  %label #{t :kind}:
-  = f.select :kind, Setting.unroll(:identifier_category), { selected: :kind }, { class: 'form-control' }
-  
-  = link_to_function(raw("<i class='fa fa-trash'></i>"), "deleteIdentifier(this)")
+.idc-form-group#contact_extra
+  .form-group.one-third
+    %label #{t :item}:
+    = f.text_field(:item, class: 'form-control')
+  .form-group.one-third
+    %label #{t :kind}:
+    = f.select :kind, Setting.unroll(:identifier_category), { selected: :kind }, { class: 'form-control' }
+  .one-quarter.shove-down
+    = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "deleteIdentifier(this)")
 
 :javascript
   function deleteIdentifier(el) {
-    hidden_input_id = el.closest('.form-group-one-third').querySelector('input[type="text"]').id.replace('item', '_destroy');
-    el.closest('.form-group-one-third').parentNode.querySelector('input[id="' + hidden_input_id + '"]').value = true;
-    el.closest('.form-group-one-third').remove();
+    hidden_input_id = el.closest('.form-group.one-third').querySelector('input[type="text"]').id.replace('item', '_destroy');
+    el.closest('.form-group.one-third').parentNode.querySelector('input[id="' + hidden_input_id + '"]').value = true;
+    el.closest('.form-group.one-third').remove();
   }
 
