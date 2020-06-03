@@ -7,10 +7,12 @@
   %label #{t :kind}:
   = f.select :kind, Setting.unroll(:identifier_category), { selected: :kind }, { class: 'form-control' }
   
-  = link_to_function("<i class='fa fa-trash'></i>", "deleteIdentifier(this)")
+  = link_to_function(raw("<i class='fa fa-trash'></i>"), "deleteIdentifier(this)")
 
 :javascript
   function deleteIdentifier(el) {
-    el.closest('.form-group-one-third').previousSibling.remove();
+    hidden_input_id = el.closest('.form-group-one-third').querySelector('input[type="text"]').id.replace('item', '_destroy');
+    el.closest('.form-group-one-third').parentNode.querySelector('input[id="' + hidden_input_id + '"]').value = true;
     el.closest('.form-group-one-third').remove();
   }
+

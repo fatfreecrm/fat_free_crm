@@ -5,3 +5,5 @@
   %br
   %label #{t :kind}:
   = select_tag("contact[identifiers_attributes][#{time}][kind]", Setting.unroll(:identifier_category), { class: 'form-control' })
+
+  = link_to_function(raw("<i class='fa fa-trash'></i>"), "this.closest('.form-group-one-third').remove();")

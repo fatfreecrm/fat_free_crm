@@ -1,8 +1,8 @@
 - model = entity.class.name.underscore
 %details.idc-panel
-  %summary #{t :identifiers_intro}
+  %summary #{t :identifiers}
   %small#contact_extra_intro.full-width
-    = t(:intro, t(:identifiers_info_small))
+    =# t(:intro, t(:identifiers_info_small))
   .idc-form-group#contact_extra
   = f.fields_for :identifiers, entity.identifiers.each do |identifier_fields|
     = render "fat_free_crm/contacts/identifier", f: identifier_fields, entity: entity
