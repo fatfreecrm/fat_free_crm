@@ -35,6 +35,7 @@ module FatFreeCrm
     def new
       @account.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
       get_facilities
+      @accounts = get_accounts
 
       if params[:related]
         model, id = params[:related].split('_')
@@ -49,6 +50,7 @@ module FatFreeCrm
     def edit
       @previous = Account.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
       get_facilities
+      @accounts = get_accounts
 
       respond_with(@account)
     end
@@ -73,6 +75,7 @@ module FatFreeCrm
     #----------------------------------------------------------------------------
     def update
       get_facilities
+      @accounts = get_accounts
       respond_with(@account) do |_format|
         # Must set access before user_ids, because user_ids= method depends on access value.
         @account.access = params[:account][:access] if params[:account][:access]
