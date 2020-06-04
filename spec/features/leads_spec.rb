@@ -43,6 +43,11 @@ feature 'Leads', '
       fill_in 'comment_body', with: 'This is an important lead.'
       click_link 'Status'
       select 'Contacted', from: 'lead_status'
+
+      # Ensure the business address is available to avoid validation errors.
+      sleep(2)
+      expect(page).to have_selector('#new_lead input[name="lead[business_address_attributes][street1]"', visible: false)
+
       click_button 'Create Lead'
       expect(leads_element).to have_content('Mr Lead')
 
