@@ -54,9 +54,9 @@ class UsersController < ApplicationController
       render
     else
       if params[:avatar]
-        avatar = Avatar.create(avatar_params)
-        if avatar.valid?
-          @user.avatar = avatar
+        @avatar = Avatar.create(avatar_params)
+        if @avatar.valid?
+          @user.avatar = @avatar
         else
           @user.avatar.errors.clear
           @user.avatar.errors.add(:image, t(:msg_bad_image_file))
@@ -139,6 +139,6 @@ class UsersController < ApplicationController
 
     params[:avatar]
       .permit(:image)
-      .merge(entity: @user)
+      .merge(entity: @user, user_id: @user.id)
   end
 end

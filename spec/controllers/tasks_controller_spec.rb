@@ -24,7 +24,7 @@ describe TasksController do
       end
       hash[due] << case view
                    when "pending"
-                     create(:task, user: user, bucket: due.to_s)
+                     create(:task, user: user, bucket: due.to_s, name: 'Example task')
                    when "assigned"
                      create(:task, user: user, bucket: due.to_s, assigned_to: 1)
                    when "completed"
@@ -83,12 +83,14 @@ describe TasksController do
 
         expect(assigns[:tasks].keys.map(&:to_sym) - @tasks.keys).to eq([])
         expect(assigns[:tasks].values.flatten - @tasks.values.flatten).to eq([])
-        hash = ActiveSupport::JSON.decode(response.body)
 
+        # TODO: This used to return "task" => {...} mappings, now just returns mappings
+        hash = ActiveSupport::JSON.decode(response.body)
         hash.each_key do |key|
-          hash[key].each do |attr|
-            task = Task.new(attr["task"])
+          hash[key].each do |data|
+            task = Task.new(data)
             expect(task).to be_instance_of(Task)
+            puts task.errors.inspect unless task.valid?
             expect(task.valid?).to eq(true)
           end
         end

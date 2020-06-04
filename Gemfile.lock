@@ -1,43 +1,54 @@
+PATH
+  remote: vendor/gems/ransack_ui-1.3.4
+  specs:
+    ransack_ui (1.3.4)
+      ransack
+      ransack_chronic (>= 1.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (5.1.6.2)
-      actionpack (= 5.1.6.2)
+    actioncable (5.2.4.3)
+      actionpack (= 5.2.4.3)
       nio4r (~> 2.0)
-      websocket-driver (~> 0.6.1)
-    actionmailer (5.1.6.2)
-      actionpack (= 5.1.6.2)
-      actionview (= 5.1.6.2)
-      activejob (= 5.1.6.2)
+      websocket-driver (>= 0.6.1)
+    actionmailer (5.2.4.3)
+      actionpack (= 5.2.4.3)
+      actionview (= 5.2.4.3)
+      activejob (= 5.2.4.3)
       mail (~> 2.5, >= 2.5.4)
       rails-dom-testing (~> 2.0)
-    actionpack (5.1.6.2)
-      actionview (= 5.1.6.2)
-      activesupport (= 5.1.6.2)
-      rack (~> 2.0)
+    actionpack (5.2.4.3)
+      actionview (= 5.2.4.3)
+      activesupport (= 5.2.4.3)
+      rack (~> 2.0, >= 2.0.8)
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionview (5.1.6.2)
-      activesupport (= 5.1.6.2)
+    actionview (5.2.4.3)
+      activesupport (= 5.2.4.3)
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    activejob (5.1.6.2)
-      activesupport (= 5.1.6.2)
+    activejob (5.2.4.3)
+      activesupport (= 5.2.4.3)
       globalid (>= 0.3.6)
-    activemodel (5.1.6.2)
-      activesupport (= 5.1.6.2)
+    activemodel (5.2.4.3)
+      activesupport (= 5.2.4.3)
     activemodel-serializers-xml (1.0.2)
       activemodel (> 5.x)
       activesupport (> 5.x)
       builder (~> 3.1)
-    activerecord (5.1.6.2)
-      activemodel (= 5.1.6.2)
-      activesupport (= 5.1.6.2)
-      arel (~> 8.0)
-    activesupport (5.1.6.2)
+    activerecord (5.2.4.3)
+      activemodel (= 5.2.4.3)
+      activesupport (= 5.2.4.3)
+      arel (>= 9.0)
+    activestorage (5.2.4.3)
+      actionpack (= 5.2.4.3)
+      activerecord (= 5.2.4.3)
+      marcel (~> 0.3.1)
+    activesupport (5.2.4.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -51,13 +62,13 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
-    arel (8.0.0)
+    arel (9.0.0)
     ast (2.4.0)
     bcrypt (3.1.13)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     brakeman (4.7.1)
-    builder (3.2.3)
+    builder (3.2.4)
     byebug (11.0.1)
     cancancan (3.0.1)
     capistrano (3.11.2)
@@ -92,7 +103,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.6)
     countries (3.0.0)
       i18n_data (~> 0.8.0)
       sixarm_ruby_unaccent (~> 1.1)
@@ -100,7 +111,7 @@ GEM
     country_select (4.0.0)
       countries (~> 3.0)
       sort_alphabetical (~> 1.0)
-    crass (1.0.5)
+    crass (1.0.6)
     css_parser (1.7.0)
       addressable
     database_cleaner (1.7.0)
@@ -119,11 +130,11 @@ GEM
     email_reply_parser_ffcrm (0.5.0)
     erubi (1.9.0)
     execjs (2.7.0)
-    factory_bot (4.11.1)
-      activesupport (>= 3.0.0)
-    factory_bot_rails (4.11.1)
-      factory_bot (~> 4.11.1)
-      railties (>= 3.0.0)
+    factory_bot (5.1.1)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.1.1)
+      factory_bot (~> 5.1.0)
+      railties (>= 4.2.0)
     ffaker (2.13.0)
     ffi (1.11.1)
     font-awesome-rails (4.7.0.5)
@@ -153,7 +164,7 @@ GEM
       tilt
     headless (2.3.1)
     htmlentities (4.3.4)
-    i18n (1.7.0)
+    i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
     jaro_winkler (1.5.4)
@@ -168,20 +179,22 @@ GEM
     listen (3.2.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.3.1)
+    loofah (2.5.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.13)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
+    marcel (0.3.3)
+      mimemagic (~> 0.3.2)
     method_source (0.9.2)
     mime-types (3.3)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.1009)
-    mimemagic (0.3.3)
+    mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.13.0)
+    minitest (5.14.1)
     msgpack (1.3.1)
     nenv (0.3.0)
     net-scp (2.0.0)
@@ -207,8 +220,8 @@ GEM
     parser (2.6.5.0)
       ast (~> 2.4.0)
     pg (1.1.4)
-    polyamorous (2.3.0)
-      activerecord (>= 5.0)
+    polyamorous (2.3.2)
+      activerecord (>= 5.2.1)
     premailer (1.11.1)
       addressable
       css_parser (>= 1.6.0)
@@ -224,17 +237,18 @@ GEM
     rack (2.2.2)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rails (5.1.6.2)
-      actioncable (= 5.1.6.2)
-      actionmailer (= 5.1.6.2)
-      actionpack (= 5.1.6.2)
-      actionview (= 5.1.6.2)
-      activejob (= 5.1.6.2)
-      activemodel (= 5.1.6.2)
-      activerecord (= 5.1.6.2)
-      activesupport (= 5.1.6.2)
+    rails (5.2.4.3)
+      actioncable (= 5.2.4.3)
+      actionmailer (= 5.2.4.3)
+      actionpack (= 5.2.4.3)
+      actionview (= 5.2.4.3)
+      activejob (= 5.2.4.3)
+      activemodel (= 5.2.4.3)
+      activerecord (= 5.2.4.3)
+      activestorage (= 5.2.4.3)
+      activesupport (= 5.2.4.3)
       bundler (>= 1.3.0)
-      railties (= 5.1.6.2)
+      railties (= 5.2.4.3)
       sprockets-rails (>= 2.0.0)
     rails-controller-testing (1.0.4)
       actionpack (>= 5.0.1.x)
@@ -259,25 +273,21 @@ GEM
       rails (> 3.1)
     rails_serve_static_assets (0.0.5)
     rails_stdout_logging (0.0.5)
-    railties (5.1.6.2)
-      actionpack (= 5.1.6.2)
-      activesupport (= 5.1.6.2)
+    railties (5.2.4.3)
+      actionpack (= 5.2.4.3)
+      activesupport (= 5.2.4.3)
       method_source
       rake (>= 0.8.7)
-      thor (>= 0.18.1, < 2.0)
+      thor (>= 0.19.0, < 2.0)
     rainbow (3.0.0)
-    rake (13.0.0)
-    ransack (2.3.0)
-      actionpack (>= 5.0)
-      activerecord (>= 5.0)
-      activesupport (>= 5.0)
+    rake (13.0.1)
+    ransack (2.3.2)
+      activerecord (>= 5.2.1)
+      activesupport (>= 5.2.1)
       i18n
-      polyamorous (= 2.3.0)
+      polyamorous (= 2.3.2)
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
-    ransack_ui (1.3.4)
-      ransack
-      ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.10.3)
@@ -369,7 +379,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.10)
     timecop (0.9.1)
-    tzinfo (1.2.5)
+    tzinfo (1.2.7)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
@@ -381,7 +391,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (>= 3.0, < 4.0)
-    websocket-driver (0.6.5)
+    websocket-driver (0.7.2)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
     will_paginate (3.2.1)
@@ -394,7 +404,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activejob (~> 5.1.6.1)
+  activejob (~> 5.2.0)
   activemodel-serializers-xml
   acts-as-taggable-on (>= 3.4.3)
   acts_as_commentable
@@ -418,7 +428,7 @@ DEPENDENCIES
   dynamic_form
   email_reply_parser_ffcrm
   execjs
-  factory_bot_rails (~> 4.0)
+  factory_bot_rails (~> 5.0)
   ffaker (>= 2)
   font-awesome-rails
   guard
@@ -436,7 +446,7 @@ DEPENDENCIES
   premailer
   pry-rails
   puma
-  rails (~> 5.1.0)
+  rails (~> 5.2.0)
   rails-controller-testing
   rails-i18n
   rails-observers
@@ -445,7 +455,7 @@ DEPENDENCIES
   rails_autolink
   rainbow
   ransack (>= 1.6.2)
-  ransack_ui (~> 1.3, >= 1.3.1)
+  ransack_ui!
   rb-fchange
   rb-fsevent
   rb-inotify
@@ -469,6 +479,3 @@ DEPENDENCIES
   webdrivers
   will_paginate
   zeus
-
-BUNDLED WITH
-   1.17.1

@@ -995,7 +995,7 @@ describe LeadsController do
       @leads = [create(:lead, user: current_user, status: "new")]
       post :filter, params: { status: "new" }, xhr: true
       expect(assigns[:leads]).to eq(@leads)
-      expect(response).to be_a_success
+      expect(response).to be_successful
       expect(response).to render_template("leads/index")
     end
 

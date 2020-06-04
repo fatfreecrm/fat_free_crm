@@ -34,9 +34,9 @@ class Task < ActiveRecord::Base
   ALLOWED_VIEWS = %w[pending assigned completed]
 
   belongs_to :user
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
-  belongs_to :completor, class_name: "User", foreign_key: :completed_by
-  belongs_to :asset, polymorphic: true
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
+  belongs_to :completor, class_name: "User", foreign_key: :completed_by, optional: true # TODO: Is this really optional?
+  belongs_to :asset, polymorphic: true, optional: true # TODO: Is this really optional?
 
   serialize :subscribed_users, Array
 

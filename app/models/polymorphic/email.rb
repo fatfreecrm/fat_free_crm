@@ -30,8 +30,8 @@
 #
 
 class Email < ActiveRecord::Base
-  belongs_to :mediator, polymorphic: true
-  belongs_to :user
+  belongs_to :mediator, polymorphic: true, optional: true # TODO: Is this really optional?
+  belongs_to :user, optional: true # TODO: Is this really optional?
 
   has_paper_trail class_name: 'Version', meta: { related: :mediator },
                   ignore: [:state]

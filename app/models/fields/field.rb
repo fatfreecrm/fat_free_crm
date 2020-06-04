@@ -34,7 +34,7 @@ class Field < ActiveRecord::Base
   serialize :collection, Array
   serialize :settings, HashWithIndifferentAccess
 
-  belongs_to :field_group
+  belongs_to :field_group, optional: true # TODO: Is this really optional?
 
   scope :core_fields,   -> { where(type: 'CoreField') }
   scope :custom_fields, -> { where("type != 'CoreField'") }
