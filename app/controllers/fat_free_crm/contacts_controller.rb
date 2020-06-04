@@ -127,7 +127,13 @@ module FatFreeCrm
     end
 
     def new_identifier
+      @contact ||= FatFreeCrm::Contact.new
       @identifier = @contact.identifiers.build
+    end
+
+    def new_absence
+      @contact ||= FatFreeCrm::Absence.new
+      @absence = @contact.absences.build
     end
 
     private

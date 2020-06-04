@@ -4,7 +4,13 @@
 .idc-form-group#contact_extra
   .form-group.one-third
     %label #{t :kind}:
-    = f.select :kind, Setting.unroll(:absence_category), { selected: :kind }, { class: 'form-control' }
+    = f.select :kind, ["To be determined"], { selected: :kind }, { class: 'form-control' }
+  .form-group.one-third
+    %label #{t :start_on}:
+    = f.text_field(:start_on, class: 'form-control')
+  .form-group.one-third
+    %label #{t :end_on}:
+    = f.text_field(:end_on, class: 'form-control')
   .one-quarter.shove-down
     = link_to_function raw("<i class='fa fa-2x fa-trash'></i>"), "deleteAbsence(this)"
 

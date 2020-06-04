@@ -521,6 +521,11 @@ en-US:
   item: Item
   identifier: Identifier
   identifiers: Identifiers
+  # Absence Categories
+  absence: Absence
+  absences: Absences
+  start_on: Start On
+  end_on: End On
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
