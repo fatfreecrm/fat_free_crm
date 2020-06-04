@@ -1,4 +1,4 @@
-- content_for(:head) do
+- content_for(:dashboard_head) do
   %meta{ "http-equiv" => "Content-Type", content: "text/html; charset=utf-8" }
   %title COVID-19 Exchange
   == <!-- #{controller.controller_name} : #{controller.action_name} -->
@@ -40,7 +40,7 @@
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   %script{ src: "https://use.fontawesome.com/7b172fda6f.js"}
 
-- content_for(:body) do
+- content_for(:dashboard_body) do
   = render "layouts/fat_free_crm/header"
   - if tabless_layout?
     = render "layouts/fat_free_crm/tabless"
@@ -54,4 +54,4 @@
     = content_for :javascript_epilogue
     = hook(:javascript_epilogue, self)
 
-= render template: 'layouts/application'
+= render template: 'layouts/dashboard'
