@@ -76,6 +76,8 @@ module FatFreeCrm
     scope :created_by,  ->(user) { where(user_id: user.id) }
     scope :assigned_to, ->(user) { where(assigned_to: user.id) }
 
+    scope :absent, ->(date = Date.today) { where(id: FatFreeCrm::Absence.select(:contact_id).where("? >= start_on AND (? <= end_on OR end_on is null)", Date.today, Date.today)) }
+
     scope :text_search, lambda { |query|
       t = Contact.arel_table
       # We can't always be sure that names are entered in the right order, so we must
