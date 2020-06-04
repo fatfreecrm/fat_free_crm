@@ -9,7 +9,7 @@
 
 module FatFreeCrm
   class Absence < ActiveRecord::Base
-
+    belongs_to :contact
   end
 end
 

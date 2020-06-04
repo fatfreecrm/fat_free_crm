@@ -1,10 +1,14 @@
 - model = entity.class.name.underscore
 .idc-form-group#contact_extra
-  .form-group.one-third
-    %label #{t :item}:
-    = text_field_tag("contact[absences_attributes][#{time = Time.now.to_i}][item]", nil, class: 'form-control')
-  .form-group.one-third
+  .form-group.one-quarter
     %label #{t :kind}:
-    = select_tag("contact[absences_attributes][#{time}][kind]", options_for_select(Setting.unroll(:absence_category), Setting.unroll(:absence_category).first) , { class: 'form-control' })
+    = select_tag("contact[absences_attributes][#{time = Time.now.to_i}][kind]", options_for_select(Setting.unroll(:absence_category), Setting.unroll(:absence_category).first) , { class: 'form-control' })
+  .form-group.one-quarter
+    %label #{t :start_on}:
+    = date_field_tag("contact[absences_attributes][#{time}][start_on]", nil, class: 'form-control')
+  .form-group.one-quarter
+    %label #{t :end_on}:
+    = date_field_tag("contact[absences_attributes][#{time}][end_on]", nil, class: 'form-control')
+
   .one-quarter.shove-down
     = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "this.closest('.idc-form-group').remove()")

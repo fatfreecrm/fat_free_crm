@@ -136,6 +136,11 @@ module FatFreeCrm
       @assignment = @contact.assignments.build
     end
 
+    def new_absence
+      @contact ||= FatFreeCrm::Absence.new
+      @absence = @contact.absences.build
+    end
+
     private
 
     #----------------------------------------------------------------------------
