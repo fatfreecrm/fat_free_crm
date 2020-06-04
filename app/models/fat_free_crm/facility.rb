@@ -3,6 +3,7 @@ module FatFreeCrm
   	belongs_to :user
     has_one :address, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
 
+    has_many :assignments
     has_many :levels
     has_and_belongs_to_many :accounts
 
