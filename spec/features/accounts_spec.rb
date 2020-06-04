@@ -38,6 +38,8 @@ feature 'Accounts', '
       fill_in 'account_website', with: 'http://www.example.com'
       click_link 'Comment'
       fill_in 'comment_body', with: 'This account is very important'
+      # Wait for entire form to be present to reduce flakeyness
+      sleep(2)
       click_button 'Create Account'
 
       expect(find('div#accounts')).to have_content('My new account')

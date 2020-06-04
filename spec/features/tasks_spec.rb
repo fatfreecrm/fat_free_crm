@@ -36,6 +36,8 @@ feature 'Tasks', '
       select 'Tomorrow', from: 'task_bucket'
       select 'Myself', from: 'task_assigned_to'
       select 'Call', from: 'task_category'
+      # Wait for entire form to be present to reduce flakeyness
+      sleep(2)
       click_button 'Create Task'
       expect(page).to have_content('Task I Need To Do')
 

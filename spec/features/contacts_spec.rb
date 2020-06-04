@@ -40,6 +40,8 @@ feature 'Contacts', '
       fill_in 'contact_phone', with: '+44 1234 567890'
       click_link 'Comment'
       fill_in 'comment_body', with: 'This is a very important person.'
+      # Wait for entire form to be present to reduce flakeyness
+      sleep(2)
       click_button 'Create Contact'
       expect(contacts_element).to have_content('Testy McTest')
 

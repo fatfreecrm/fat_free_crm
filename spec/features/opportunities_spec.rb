@@ -41,6 +41,8 @@ feature 'Opportunities', '
       select 'Prospecting', from: 'opportunity_stage'
       click_link 'Comment'
       fill_in 'comment_body', with: 'This is a very important opportunity.'
+      # Wait for entire form to be present to reduce flakeyness
+      sleep(2)
       click_button 'Create Opportunity'
       expect(page).to have_content('My Awesome Opportunity')
 

@@ -34,6 +34,8 @@ feature 'Campaigns', '
       select 'On Hold', from: 'campaign_status'
       click_link 'Comment'
       fill_in 'comment_body', with: 'This campaign is very important'
+      # Wait for entire form to be present to reduce flakeyness
+      sleep(2)
       click_button 'Create Campaign'
 
       expect(page).to have_content('Cool Campaign')
