@@ -1,0 +1,26 @@
+- model = entity.class.name.underscore
+= f.hidden_field :_destroy
+= f.hidden_field :id, value: f.object.id
+.idc-form-group#contact_assignment
+  .form-group.one-quarter
+    %label #{t :start_on}:
+    = f.text_field(:start_on, class: 'form-control')
+  .form-group.one-quarter
+    %label #{t :end_on}:
+    = f.text_field(:end_on, class: 'form-control')
+  .form-group.one-third
+    %label #{t :facility}:
+    = select("contact[assignments_attributes][#{time = Time.now.to_i}][facility]", :facility_id, options_from_collection_for_select(entity.account.facilities, 'id', 'name'), {include_blank: true}, {class: 'form-control'})
+  .one-sixth.shove-down
+    = link_to_function raw("<i class='fa fa-2x fa-trash'></i>"), "deleteAssignment(this)"
+
+:javascript
+  function deleteAssignment(el) {
+    text = "Are you sure you wish to delete this assignment?"
+    response = confirm(text)
+    if (response == true) {
+      hidden_input_id = el.closest('.idc-form-group').querySelector('input[type="text"]').id.replace('item', '_destroy');
+      el.closest('.idc-form-group').parentNode.querySelector('input[id="' + hidden_input_id + '"]').value = true;
+      el.closest('.idc-form-group').remove();
+    }
+  }

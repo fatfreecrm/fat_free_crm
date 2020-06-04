@@ -111,6 +111,8 @@ FatFreeCrm::Engine.routes.draw do
       match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
+      get :new_identifier
+      get :new_assignment
     end
     member do
       put :attach
@@ -119,6 +121,7 @@ FatFreeCrm::Engine.routes.draw do
       post :unsubscribe
       get :opportunities
       get :new_identifier
+      get :new_assignment
     end
   end
 
