@@ -1,0 +1,11 @@
+- model = entity.class.name.underscore
+%details.idc-panel.contact-absences
+  %summary #{t :absences}
+  #contact_extra_intro.full-width
+    =# t(:intro, t(:identifiers_info_small))
+    = f.fields_for :absences, entity.absences.each do |identifier_fields|
+      = render "fat_free_crm/contacts/absence", f: absences_fields, entity: entity
+
+  #new_absence
+
+  = link_to("New Absence", new_absence_contact_path(entity), remote: true, class: 'btn btn-primary')

@@ -127,7 +127,13 @@ module FatFreeCrm
     end
 
     def new_identifier
+      @contact ||= FatFreeCrm::Contact.new
       @identifier = @contact.identifiers.build
+    end
+
+    def new_assignment
+      @contact ||= FatFreeCrm::Contact.new
+      @assignment = @contact.assignments.build
     end
 
     private

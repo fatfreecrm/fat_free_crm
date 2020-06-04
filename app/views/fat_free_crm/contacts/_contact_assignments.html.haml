@@ -1,0 +1,12 @@
+- model = entity.class.name.underscore
+%details.idc-panel.contact-assignments
+  %summary #{t :assignments}
+  #contact_extra_intro.full-width
+    = f.fields_for :assignments, entity.assignments.each do |assignment_fields|
+      = render "fat_free_crm/contacts/assignment", f: assignment_fields, entity: entity
+
+  #new_assignment
+  - if entity.new_record?
+    = link_to("New Assignment", new_assignment_contacts_path, remote: true, class: 'btn btn-primary')
+  -else
+    = link_to("New Assignment", new_assignment_contact_path(entity), remote: true, class: 'btn btn-primary')
