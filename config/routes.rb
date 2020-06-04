@@ -119,7 +119,6 @@ FatFreeCrm::Engine.routes.draw do
       post :unsubscribe
       get :opportunities
       get :new_identifier
-      get :destroy_identifier
     end
   end
 

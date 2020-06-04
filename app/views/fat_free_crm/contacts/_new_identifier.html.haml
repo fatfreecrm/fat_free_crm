@@ -7,4 +7,4 @@
     %label #{t :kind}:
     = select_tag("contact[identifiers_attributes][#{time}][kind]", options_for_select(Setting.unroll(:identifier_category), Setting.unroll(:identifier_category).first) , { class: 'form-control' })
   .one-quarter.shove-down
-    = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "this.closest('.idc-form-group').remove();")
+    = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "this.closest('.idc-form-group').remove()")
