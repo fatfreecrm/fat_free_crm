@@ -1,0 +1,24 @@
+en:
+  ransack:
+    predicates:
+      alt:
+        date:
+          lt: "is before"
+          lt_any: "is before any"
+          lt_all: "is before all"
+          lteq: "is before or on"
+          lteq_any: "is before or on any"
+          lteq_all: "is before or on all"
+          gt: "is after"
+          gt_any: "is after any"
+          gt_all: "is after all"
+          gteq: "is after or on"
+          gteq_any: "is after or on any"
+          gteq_all: "is after or on all"
+
+    submit: Search
+    add_group: Add a filter group
+    group_first: "Show results where %{combinator} of the following match:"
+    group_rest: "...and where %{combinator} of the following match:"
+    add_condition: Add a filter
+    remove_condition: Remove filter

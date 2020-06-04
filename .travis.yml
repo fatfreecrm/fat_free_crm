@@ -5,6 +5,8 @@ rvm:
   - 2.6.5
   - 2.7.1
 
+dist: bionic
+
 env:
   global:
     - BROWSER=chrome
@@ -25,6 +27,12 @@ matrix:
     - rvm: 2.6.4
       env: DB=postgres TEST_SUITE=rubocop
   allow_failures:
+    - rvm: 2.4.7
+      env: DB=postgres TEST_SUITE="rake spec:features"
+    - rvm: 2.5.6
+      env: DB=postgres TEST_SUITE="rake spec:features"
+    - rvm: 2.6.4
+      env: DB=postgres TEST_SUITE="rake spec:features"
     - rvm: 2.4.7
       env: DB=mysql TEST_SUITE="rake spec:models"
     - rvm: 2.4.7

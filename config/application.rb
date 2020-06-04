@@ -5,9 +5,10 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path('boot', __dir__)
+require_relative 'boot'
 
 require 'rubygems'
+require 'rails/all'
 
 # Pick the frameworks you want:
 require "active_record/railtie"
@@ -27,6 +28,9 @@ require 'fat_free_crm/gem_ext/rails/engine'
 
 module FatFreeCRM
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.0
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

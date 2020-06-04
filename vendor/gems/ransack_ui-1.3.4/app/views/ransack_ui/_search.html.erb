@@ -1,0 +1,29 @@
+<%= search_form_for @ransack_search, :url => (options[:url] || url_for(:action => :index)),
+  :html => {:method => :get, :class => "ransack_search"}, :remote => !!options[:remote] do |f| %>
+
+  <%= javascript_tag do %>
+    if (window.Ransack == null) { window.Ransack = {}; }
+    Ransack.alt_predicates_i18n = <%= I18n.translate(:"ransack.predicates.alt", :default => {}).to_json.html_safe %>;
+    Ransack.value_field_labels  = <%= f.labels_for_value_fields.to_json.html_safe %>
+  <% end %>
+
+  <div class="row">
+    <div class="span12 well">
+      <%= f.sort_fields do |s| %>
+        <%= render 'ransack_ui/sort_fields', :f => s %>
+      <% end %>
+
+      <%= f.grouping_fields do |g| %>
+        <%= render 'ransack_ui/grouping_fields', :f => g, :options => options %>
+      <% end %>
+
+      <%= link_to_add_fields t('ransack.add_group'), f, :grouping, options %>
+
+      <div class="pull-right">
+        <%= hidden_field_tag :distinct, '1' %>
+        <%= hidden_field_tag :page, '1' %>
+        <%= f.submit t('ransack.submit'), :class => 'btn btn-primary btn-large submit-search' %>
+      </div>
+    </div>
+  </div>
+<% end %>

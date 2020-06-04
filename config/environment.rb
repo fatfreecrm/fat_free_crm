@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 # Load the rails application
-require File.expand_path('application', __dir__)
+require_relative 'application'
 
 # Initialize the rails application
 FatFreeCRM::Application.initialize!
