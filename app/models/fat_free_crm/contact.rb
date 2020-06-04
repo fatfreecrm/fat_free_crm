@@ -55,6 +55,7 @@ module FatFreeCrm
 
     has_many :identifiers, as: :identifiable, dependent: :destroy
     has_many :assignments
+    has_many :absences
     # has_many :account_contacts, dependent: :destroy
     # has_many :accounts, -> { distinct }, through: :account_contacts
 
