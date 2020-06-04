@@ -19,7 +19,7 @@
     text = "Are you sure you wish to delete this absence?"
     response = confirm(text)
     if (response == true) {
-      hidden_input_id = el.closest('.idc-form-group').querySelector('input[type="text"]').id.replace('item', '_destroy');
+      hidden_input_id = el.closest('.idc-form-group').parentNode.querySelector('input[type="hidden"]').id.replace('item', '_destroy');
       el.closest('.idc-form-group').parentNode.querySelector('input[id="' + hidden_input_id + '"]').value = true;
       el.closest('.idc-form-group').remove();
     }
