@@ -4,7 +4,7 @@
 .idc-form-group#contact_absence_extra
   .form-group.one-third
     %label #{t :kind}:
-    = f.select :kind, ["To be determined"], { selected: :kind }, { class: 'form-control' }
+    = f.select :kind, Setting.unroll(:absence_category), { selected: :kind }, { class: 'form-control' }
   .form-group.one-third
     %label #{t :start_on}:
     = f.date_field(:start_on, class: 'form-control')

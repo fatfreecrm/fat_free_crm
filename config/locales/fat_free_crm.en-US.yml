@@ -526,6 +526,9 @@ en-US:
   absences: Absences
   start_on: Start On
   end_on: End On
+  vacation: Vacation
+  personal: Personal
+  sick: Sick
 
   # Views -> Leads.
   #----------------------------------------------------------------------------

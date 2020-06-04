@@ -294,7 +294,9 @@
 #
 #------------------------------------------------------------------------------
 absence_category:
-  
+  - :sick
+  - :vacation
+  - :personal
 identifier_category:
   - :employee_id
 
