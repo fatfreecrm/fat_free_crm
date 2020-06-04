@@ -85,6 +85,7 @@ feature 'Leads', '
       fill_in 'lead_phone', with: '+44 0987 654321'
       click_link('Status')
       select 'Rejected', from: 'lead_status'
+      sleep(2)
       click_button 'Save Lead'
       expect(summary_element).to have_content('Mrs Lead')
 
