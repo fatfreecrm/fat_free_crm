@@ -46,7 +46,7 @@ feature 'Contacts', '
       expect(contacts_element).to have_content('Testy McTest')
 
       contacts_element.click_link 'Testy McTest'
-      sleep(1) # avoid CI failure
+      sleep(5) # avoid CI failure
       expect(main_element).to have_content('This is a very important person.')
 
       click_link "Dashboard"
@@ -61,6 +61,8 @@ feature 'Contacts', '
 
     click_link 'Comment'
     fill_in 'comment_body', with: 'This is a very important person.'
+    # Wait for entire form to be present to reduce flakeyness
+    sleep(2)
     click_button 'Create Contact'
 
     expect(page).to have_field("comment_body", with: 'This is a very important person.')
