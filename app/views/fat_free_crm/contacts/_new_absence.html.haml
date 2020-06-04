@@ -5,10 +5,10 @@
     = select_tag("contact[absences_attributes][#{time = Time.now.to_i}][kind]", options_for_select(['To be determined'], 'To Be Determined') , { class: 'form-control' })
   .form-group.one-quarter
     %label #{t :start_on}:
-    = text_field_tag("contact[absences_attributes][#{time}][start_on]", nil, class: 'form-control')
+    = date_field_tag("contact[absences_attributes][#{time}][start_on]", nil, class: 'form-control')
   .form-group.one-quarter
     %label #{t :end_on}:
-    = text_field_tag("contact[absences_attributes][#{time}][end_on]", nil, class: 'form-control')
+    = date_field_tag("contact[absences_attributes][#{time}][end_on]", nil, class: 'form-control')
 
   .one-quarter.shove-down
     = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "this.closest('.idc-form-group').remove()")

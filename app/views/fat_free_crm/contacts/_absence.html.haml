@@ -1,16 +1,16 @@
 - model = entity.class.name.underscore
 = f.hidden_field :_destroy
 = f.hidden_field :id, value: f.object.id
-.idc-form-group#contact_extra
+.idc-form-group#contact_absence_extra
   .form-group.one-third
     %label #{t :kind}:
     = f.select :kind, ["To be determined"], { selected: :kind }, { class: 'form-control' }
   .form-group.one-third
     %label #{t :start_on}:
-    = f.text_field(:start_on, class: 'form-control')
+    = f.date_field(:start_on, class: 'form-control')
   .form-group.one-third
     %label #{t :end_on}:
-    = f.text_field(:end_on, class: 'form-control')
+    = f.date_field(:end_on, class: 'form-control')
   .one-quarter.shove-down
     = link_to_function raw("<i class='fa fa-2x fa-trash'></i>"), "deleteAbsence(this)"
 
@@ -18,6 +18,7 @@
   function deleteAbsence(el) {
     text = "Are you sure you wish to delete this absence?"
     response = confirm(text)
+    debugger;
     if (response == true) {
       hidden_input_id = el.closest('.idc-form-group').querySelector('input[type="text"]').id.replace('item', '_destroy');
       el.closest('.idc-form-group').parentNode.querySelector('input[id="' + hidden_input_id + '"]').value = true;
