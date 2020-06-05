@@ -29,9 +29,9 @@ module FatFreeCrm
   class Identifier < ActiveRecord::Base
     belongs_to :identifiable, polymorphic: true
 
-    has_paper_trail versions: {class_name: "FatFreeCrm::Identifer"}, meta: { related: :identifiable }
+    has_paper_trail versions: {class_name: "FatFreeCrm::Identifier"}, meta: { related: :identifiable }
 
 
-    ActiveSupport.run_load_hooks(:fat_free_crm_identifer, self)
+    ActiveSupport.run_load_hooks(:fat_free_crm_identifier, self)
   end
 end
