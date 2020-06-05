@@ -6,6 +6,9 @@ module FatFreeCrm
     has_many :assignments
     has_many :levels
     has_and_belongs_to_many :accounts
+    has_many :contacts, through: :accounts
+
+    scope :contact_contact, -> { self.accounts.sum(&:contact_count) }
 
     uses_user_permissions
     acts_as_commentable
@@ -18,7 +21,6 @@ module FatFreeCrm
     ransack_can_autocomplete
 
     enum status: {open: 'Open', close: 'Close'}
-
 
   	sortable by: ["name ASC", "rating DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 

@@ -294,6 +294,11 @@
 #
 #------------------------------------------------------------------------------
 absence_category:
+  - :pto
+  - :covid_19_isolation
+  - :covid_19_quarantine
+  - :unknown
+
   - :sick
   - :vacation
   - :personal

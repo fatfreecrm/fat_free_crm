@@ -7,6 +7,6 @@
 
   #new_assignment
   - if entity.new_record?
-    = link_to("New Assignment", new_assignment_contacts_path, remote: true, class: 'btn btn-primary')
+    = link_to("#{t :new_assignment}", new_assignment_contacts_path, remote: true, class: 'mt-3 btn btn-primary')
   -else
-    = link_to("New Assignment", new_assignment_contact_path(entity), remote: true, class: 'btn btn-primary')
+    = link_to("#{t :new_assignment}", new_assignment_contact_path(entity), remote: true, class: 'mt-3 btn btn-primary')
