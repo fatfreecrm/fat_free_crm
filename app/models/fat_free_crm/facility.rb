@@ -26,5 +26,6 @@ module FatFreeCrm
 
     accepts_nested_attributes_for :address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 
+    validates_presence_of :name
   end
 end
