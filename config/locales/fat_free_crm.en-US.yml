@@ -526,15 +526,12 @@ en-US:
   absences: Absences
   start_on: Start On
   end_on: End On
+  unknown: Unknown
   pto: PTO
   covid_19_isolation:  Isolation Due To Covid
   covid_19_quarantine: In Quarantine
   assignments: Assignments
   new_assignment: New Assignment
-
-  vacation: Vacation
-  personal: Personal
-  sick: Sick
 
   # Views -> Leads.
   #----------------------------------------------------------------------------
