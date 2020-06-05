@@ -4,10 +4,10 @@
 .idc-form-group#contact_assignment
   .form-group.one-quarter
     %label #{t :start_on}:
-    = f.text_field(:start_on, class: 'form-control')
+    = f.date_field(:start_on, class: 'form-control')
   .form-group.one-quarter
     %label #{t :end_on}:
-    = f.text_field(:end_on, class: 'form-control')
+    = f.date_field(:end_on, class: 'form-control')
   .form-group.one-third
     %label #{t :facility}:
     = select("contact[assignments_attributes][#{time = Time.now.to_i}][facility]", :facility_id, options_from_collection_for_select(entity.account.facilities, 'id', 'name'), {include_blank: true}, {class: 'form-control'})

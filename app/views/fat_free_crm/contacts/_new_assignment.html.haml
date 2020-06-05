@@ -2,10 +2,10 @@
 .idc-form-group#contact_assignment
   .form-group.one-quarter
     %label #{t :start_on}:
-    = text_field_tag("contact[assignments_attributes][#{time = Time.now.to_i}][start_on]", nil, class: 'form-control')
+    = date_field_tag("contact[assignments_attributes][#{time = Time.now.to_i}][start_on]", nil, class: 'form-control')
   .form-group.one-quarter
     %label #{t :end_on}:
-    = text_field_tag("contact[assignments_attributes][#{time = Time.now.to_i}][end_on]", nil, class: 'form-control')
+    = date_field_tag("contact[assignments_attributes][#{time = Time.now.to_i}][end_on]", nil, class: 'form-control')
   - if entity.account.present?
     .form-group.one-third
       %label #{t :facility}:

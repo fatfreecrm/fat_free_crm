@@ -10,5 +10,5 @@
     %label #{t :end_on}:
     = date_field_tag("contact[absences_attributes][#{time}][end_on]", nil, class: 'form-control')
 
-  .one-quarter.shove-down
+  .one-sixth.shove-down
     = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "this.closest('.idc-form-group').remove()")
