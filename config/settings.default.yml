@@ -299,9 +299,6 @@ absence_category:
   - :covid_19_quarantine
   - :unknown
 
-  - :sick
-  - :vacation
-  - :personal
 identifier_category:
   - :employee_id
 
