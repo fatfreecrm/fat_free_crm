@@ -384,7 +384,7 @@
           event.preventDefault()
           if ui.item
             if related
-              rel_string = related.replace("fatfreecrm::", "fat_free_crm/")
+              rel_string = related.replace("fatfreecrm::", "crm/")
               $.ajax(@base_url + "/" + rel_string + "/attach", type: 'PUT', data: {
                   assets: controller
                   asset_id: ui.item.value
@@ -392,7 +392,7 @@
               ).then ->
                 $("#auto_complete_query").val ""
             else
-              window.location.href = @base_url + "/" + controller + "/" + ui.item.value
+              window.location.href = @base_url + "/crm/" + controller + "/" + ui.item.value
 
         focus: (event, ui) =>
           event.preventDefault()
