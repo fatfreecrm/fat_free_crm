@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_03_130424) do
+ActiveRecord::Schema.define(version: 2020_06_04_111522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(version: 2020_06_03_130424) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "fat_free_crm_absences", force: :cascade do |t|
+    t.bigint "contact_id"
+    t.string "kind"
+    t.date "start_on"
+    t.date "end_on"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_fat_free_crm_absences_on_contact_id"
   end
 
   create_table "fat_free_crm_account_contacts", id: :serial, force: :cascade do |t|
@@ -124,11 +135,13 @@ ActiveRecord::Schema.define(version: 2020_06_03_130424) do
   create_table "fat_free_crm_assignments", force: :cascade do |t|
     t.bigint "account_id"
     t.bigint "facility_id"
+    t.bigint "contact_id"
     t.date "start_on"
     t.date "end_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_fat_free_crm_assignments_on_account_id"
+    t.index ["contact_id"], name: "index_fat_free_crm_assignments_on_contact_id"
     t.index ["facility_id"], name: "index_fat_free_crm_assignments_on_facility_id"
   end
 

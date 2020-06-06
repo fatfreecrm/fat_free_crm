@@ -26,6 +26,8 @@ module FatFreeCrm
 
     accepts_nested_attributes_for :address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 
+    scope :text_search, ->(query) { ransack('name_cont' => query).result }
+
     validates_presence_of :name
   end
 end
