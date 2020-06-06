@@ -13,6 +13,8 @@ module FatFreeCrm
     before do
       login
       assign(:account, @account = create(:account))
+      assign(:accounts, [FactoryBot.create(:account)])
+      assign(:facilities, [])
     end
 
     it "should render [edit account] form" do
