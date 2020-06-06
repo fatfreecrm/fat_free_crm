@@ -2,10 +2,10 @@
 = hook(:lead_top_section, self, f: f) do
   .idc-panel
     .form-group.one-quarter
-      %label{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
+      %label{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}*:
       = f.text_field :first_name, autofocus: true, :class => 'form-control'
     .form-group.one-quarter
-      %label{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
+      %label{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}*:
       = f.text_field :last_name, :class => 'form-control'
     .form-group.one-quarter
       %label #{t :email}:

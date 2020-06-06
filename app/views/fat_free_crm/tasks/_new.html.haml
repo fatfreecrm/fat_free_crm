@@ -5,6 +5,8 @@
   = hidden_field_tag "task[asset_id]", "#{@asset.id if @asset}"
   = hidden_field_tag "task[asset_type]", "#{@asset.class if @asset}"
 
+  = f.error_messages object_name: t('task')
+
   = render "fat_free_crm/tasks/top_section",    f: f
   = render "fat_free_crm/fields/groups", f: f
 
