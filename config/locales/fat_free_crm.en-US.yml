@@ -50,8 +50,8 @@ en-US:
   branch: Full Service Branch
   office: Commercial Office
   branch_office: Commercial Office/Full Service Branch
-  head_quarters: Corporate Headquarters
-  branch_head_quarters: Regional Headquarters/Full Service Branch
+  corporate_headquarters: Corporate Headquarters
+  branch_headquarters: Regional Headquarters/Full Service Branch
 
 
   isolation: Isolation

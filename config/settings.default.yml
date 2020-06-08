@@ -447,8 +447,8 @@ facility_kind:
   - :branch
   - :office
   - :branch_office
-  - :head_quarters
-  - :branch_head_quarters
+  - :corporate_headquarters
+  - :branch_headquarters
 
 
 task_category_color:
