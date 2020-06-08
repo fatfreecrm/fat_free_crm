@@ -32,21 +32,14 @@
     .form-group.one-quarter
       %label #{t :city}
       = address_field(a, :city)
-    .form-group.one-column
+    .form-group.one-quarter
       %label #{t :state}
       = address_field(a, :state)
     .form-group.one-sixth
       %label #{t :zipcode}
       = address_field(a, :zipcode)
-    .form-group.one-half
+    .form-group.one-quarter
       %label #{t :country}
       = a.country_select(:country, priority_countries, { include_blank: "" }, {:"data-placeholder" => t(:select_a_country), class: 'form-control'})
-    .form-group.one-sixth
-      %label #{t :longitute}
-      .d-grid
-        = a.object.lonlat.longitude if a.object.lonlat.present?
-    .form-group.one-sixth
-      %label #{t :latitude}
-      .d-grid
-        = a.object.lonlat.latitude if a.object.lonlat.present?
+
 
