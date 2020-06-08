@@ -44,8 +44,8 @@ module FatFreeCrm
     belongs_to :lead
     belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
     belongs_to :reporting_user, class_name: "User", foreign_key: :reports_to
-    # has_one :account_contact, dependent: :destroy
-    # has_one :account, through: :account_contact
+    has_one :account_contact, dependent: :destroy
+    has_one :account, through: :account_contact
     has_many :contact_opportunities, dependent: :destroy
     has_many :opportunities, -> { order("fat_free_crm_opportunities.id DESC").distinct }, through: :contact_opportunities
     has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
@@ -57,12 +57,8 @@ module FatFreeCrm
     has_many :identifiers, as: :identifiable, dependent: :destroy
     has_many :assignments, dependent: :destroy
     has_many :absences, dependent: :destroy
-    # has_many :account_contacts, dependent: :destroy
-    # has_many :accounts, -> { distinct }, through: :account_contacts
 
     has_many :assignments
-    has_many :account_contacts, dependent: :destroy
-    has_many :accounts, -> { distinct }, through: :account_contacts
 
     delegate :campaign, to: :lead, allow_nil: true
 
