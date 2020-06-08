@@ -15,10 +15,10 @@
       = f.check_box(:used_mask, class: 'form-control form-control-sm')
     .form-group.one-quarter
       %label #{t :started_at}:
-      = f.date_field(:started_at, class: 'form-control')
+      = f.datetime_field(:started_at, class: 'form-control')
     .form-group.one-quarter
       %label #{t :ended_at}:
-      = f.date_field(:ended_at, class: 'form-control')
+      = f.datetime_field(:ended_at, class: 'form-control')
     .form-group.one-quarter
       %label #{t :level}:
       = f.select :level, Setting.unroll(:exposure_level), { selected: f.object.level || "limited" }, { class: 'form-control' }

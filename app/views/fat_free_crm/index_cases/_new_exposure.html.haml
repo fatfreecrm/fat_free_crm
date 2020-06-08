@@ -14,11 +14,11 @@
       = check_box_tag("#{name_attribute}used_mask", 1, false, class: 'form-control')
     .form-group.one-third
       %label #{t :mtb_exposure_started_at}:
-      = datetime_field("#{name_attribute}started_at", {autocomplete: :off, class: 'form-control'})
+      = datetime_field_tag("#{name_attribute}started_at", nil, {autocomplete: :off, class: 'form-control'})
       /= date_field_tag("#{name_attribute}started_at", {}, class: 'form-control')
     .form-group.one-third
       %label #{t :mtb_exposure_ended_at}:
-      = datetime_field("#{name_attribute}ended_at", {autocomplete: :off, class: 'form-control'})
+      = datetime_field_tag("#{name_attribute}ended_at", nil, {autocomplete: :off, class: 'form-control'})
       /= date_field_tag("#{name_attribute}ended_at", {}, class: 'form-control')
     .form-group.one-sixth
       %label #{t :mtb_exposure_level}:
