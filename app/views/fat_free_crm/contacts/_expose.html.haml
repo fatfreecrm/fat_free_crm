@@ -47,7 +47,7 @@
             = datetime_field_tag("opportunity[source_end_at]", nil, class: 'form-control')
           .col
             .label #{t :exposure_level}:
-            = select_tag(:level, options_for_select(Setting.unroll(:exposure_level)), class: 'form-control')
+            = select_tag("opportunity[exposure_level]", options_for_select(Setting.unroll(:exposure_level)), class: 'form-control')
 
     .buttonbar
       = f.submit t(:exposed_contact), :class => 'btn btn-primary'
