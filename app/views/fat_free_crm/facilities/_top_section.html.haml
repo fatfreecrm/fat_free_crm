@@ -6,7 +6,7 @@
     .form-group.one-quarter
       %label #{t :facility_kind}
       /= f.select :facility_kind, Setting.unroll(:facility_kind), { selected: @facility.facility_kind || "other", include_blank: t(:other) }, { class: 'form-control', multiple: true }
-      = f.select(:facility_kind, Setting.unroll(:facility_kind), {selected: @facility.facility_kind || "Unknown", include_blank: t(:unknown)}, :class => "form-control")
+      = f.select(:facility_kind, Setting.unroll(:facility_kind).map(&:first), {selected: @facility.facility_kind || "Unknown", include_blank: t(:unknown)}, :class => "form-control")
     .form-group.one-quarter
       %label #{t :accounts}:
       = f.collection_check_boxes(:account_ids, @accounts, :id, :name ) do |b|

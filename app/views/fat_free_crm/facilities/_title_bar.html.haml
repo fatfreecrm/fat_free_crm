@@ -1,5 +1,5 @@
 .entity-heading
-  %h1.title#edit_facility_title= h(@facility.id)
+  %h1.title#edit_facility_title= h(@facility.name)
   = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
   #confirm{ hidden }
   .title_tools#menu
