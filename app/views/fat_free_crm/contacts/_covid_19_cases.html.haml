@@ -21,6 +21,7 @@
           #{t :mtb_exposure_level}
           = exposure.level
     - @contact.contact_opportunities.each do |exposure|
+      - next unless exposure.source_relationship 
       .row
         .col-md-2
           #{t :non_mtb_exposure}
