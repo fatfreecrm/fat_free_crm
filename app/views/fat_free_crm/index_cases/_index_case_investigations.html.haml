@@ -1,0 +1,9 @@
+- model = entity.class.name.underscore
+%details.idc-panel.index-case_investigations
+  %summary #{t :investigations}
+  #contact_extra_intro.full-width
+    = f.fields_for :investigations, entity.investigations.each do |investigation_fields|
+      = render "fat_free_crm/index_cases/investigation", f: investigation_fields, entity: entity
+
+  #new_investigation
+    = link_to("#{t :new_investigation}", new_investigation_index_case_path(entity), remote: true, class: 'mt-3 btn btn-primary')

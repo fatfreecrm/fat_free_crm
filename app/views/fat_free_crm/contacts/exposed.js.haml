@@ -1,0 +1,22 @@
+- entity_name = controller.controller_name.singularize.underscore
+- @entity ||= instance_variable_get("@#{entity_name}")
+- id = called_from_landing_page? ? "expose_#{entity_name}" : dom_id(@entity)
+
+- if @created_record.persisted?
+  - if called_from_landing_page?
+    crm.flip_form('expose_#{entity_name}');
+    crm.set_title('expose_#{entity_name}', '#{h @entity.full_name}');
+    = refresh_sidebar(:show, :summary)
+  - else
+    $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
+    $('##{id}').effect("highlight", { duration:1500 });
+    - if called_from_index_page?
+      = refresh_sidebar(:index, :filters)
+    - else
+      $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');
+
+- else  
+  $('##{id}').html('#{ j render(partial: "expose") }');
+  crm.create_or_select_index_case(#{ request.referer =~ /\/index_case\// || @index_case&.id.blank? });
+  $('##{id}').effect("shake", { duration:250, distance: 6 });
+  $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();

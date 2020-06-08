@@ -1,5 +1,5 @@
 .entity-heading
-  %h1.title#edit_index_case_title= h(@index_case.name)
+  %h1.title#edit_index_case_title= h(@index_case.contact&.full_name)
   = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
   #confirm{ hidden }
   .title_tools#menu

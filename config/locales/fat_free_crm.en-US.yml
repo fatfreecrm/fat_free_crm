@@ -409,6 +409,7 @@ en-US:
   index_cases: Index Cases
   index_cases_small: index cases
   save_index_case: Save Index Case
+  index_case: Index Case
 
     # Views -> Facilities
   #----------------------------------------------------------------------------
@@ -532,6 +533,64 @@ en-US:
   covid_19_quarantine: In Quarantine
   assignments: Assignments
   new_assignment: New Assignment
+  exposed_contact: Save Exposure
+  case_type: Case Type
+  symptom_onset_at: Symptom Onset At
+  source_name: Source Name
+  source_start_at: Source Start At
+  source_end_at: Source End At
+  exposure_level: Exposure Level
+  limited: Limited
+  moderate: Moderate
+  significant: Significant
+  source_relationship: Source Relationship
+  self: Self
+  spouse: Spouse
+  partner: Partner
+  child: Child
+  parent: Parent
+  grandparent: Grandparent
+  grandchild: Grandchild
+  aunt: Aunt
+  uncle: Uncle
+  nephew: Nephew
+  niece: Niece
+  friend: Friend
+  mtb_exposure: Exposure
+  mtb_exposure_facility: Facility
+  mtb_exposure_started_at: Started At
+  mtb_exposure_ended_at: Ended At
+  mtb_exposure_level: Exposure Level
+  non_mtb_exposure: Non-MTB Exposure
+  non_mtb_exposure_source_name: Source
+  non_mtb_exposure_source_relationship: Relationship
+  mtb_exposure_source_start_at: Start At
+  mtb_exposure_source_end_at: End At
+  non_mtb_exposure_level: Exposure Level
+  create_case: Create Case
+  cases: Cases
+
+  #views -> Indexcases
+
+  conducted_at: Conducted 
+  mtb_exposure_contact: Contact
+  mtb_exposure_facility: Facility
+  mtb_exposure_used_mask: Used Mask
+  mtb_exposure_started_at: Started At
+  mtb_exposure_ended_at: Ended At
+  mtb_exposure_level: Exposure Level
+  new_investigation: New Investigation
+  new_exposure: New Exposure
+  investigations: Monitoring
+  exposures: Exposures
+  window_start_date: Window Start Date
+  window_end_date: Window End Date
+  mtb_projected_return_date: Projected Return Date
+
+  hospitalized: Hospitalized
+  isolated: Isolated
+  recovered: Recovered
+  deceased: Deceased
 
   # Views -> Leads.
   #----------------------------------------------------------------------------

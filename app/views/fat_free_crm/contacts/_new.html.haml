@@ -6,12 +6,12 @@
   = f.error_messages object_name: t('contact')
 
   = render "fat_free_crm/contacts/top_section", f: f
+  = render "fat_free_crm/contacts/extra",       f: f
   = render "fat_free_crm/fields/edit_custom_field_group", f: f
   = render "fat_free_crm/contacts/identifiers", f: f, entity: @contact
   = render "fat_free_crm/contacts/contact_assignments", f: f
   = render "fat_free_crm/contacts/absences",    f: f, entity: @contact
   = render "fat_free_crm/shared/add_comment",   f: f
-  = render "fat_free_crm/contacts/extra",       f: f
   = render "fat_free_crm/contacts/web",         f: f
   = render "fat_free_crm/fields/groups",        f: f
   = render "fat_free_crm/entities/permissions", f: f, entity: @contact

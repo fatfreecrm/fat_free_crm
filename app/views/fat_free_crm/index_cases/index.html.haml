@@ -1,6 +1,9 @@
 = styles_for :index_case
 
-= render 'fat_free_crm/entities/title_bar'
+.space-between.page-heading
+  .title
+    %h1{id: "create_index_case_title"} #{t controller_name.to_sym}
+    = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
 
 .remote#create_index_case{ hidden }
 

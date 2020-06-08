@@ -59,6 +59,8 @@ FatFreeCrm::Engine.routes.draw do
       post :unsubscribe
       get :contacts
       get :opportunities
+      get :new_investigation
+      get :new_exposure
     end
   end
 
@@ -126,6 +128,9 @@ FatFreeCrm::Engine.routes.draw do
       get :new_identifier
       get :new_assignment
       get :new_absence
+      get :new_exposure
+      get :expose
+      match :exposed, via: %i[patch put]
     end
   end
 

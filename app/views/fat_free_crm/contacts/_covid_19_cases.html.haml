@@ -1,0 +1,45 @@
+- model = entity.class.name.underscore
+%details.idc-panel.contact-absences
+  %summary #{t :cases}
+  #contact_extra_intro.full-width
+    - @contact.exposures.order("started_at DESC").each do |exposure|
+      .row
+        .col-md-3
+          = link_to((t :mtb_exposure), index_case_path(exposure.index_case)) 
+        .col-md-3
+          #{t :mtb_exposure_facility}
+          = exposure.facility.name
+        .col-md-2
+          - if exposure.started_at
+            #{t :mtb_exposure_started_at}
+            = l(exposure.started_at, format: :long)
+        .col-md-2
+          - if exposure.ended_at
+            #{t :mtb_exposure_ended_at}
+            = l(exposure.ended_at, format: :long)
+        .col-md-2
+          #{t :mtb_exposure_level}
+          = exposure.level
+    - @contact.contact_opportunities.each do |exposure|
+      .row
+        .col-md-2
+          #{t :non_mtb_exposure}
+        .col-md-2
+          #{t :non_mtb_exposure_source_name}
+          = exposure.source_name
+        .col-md-2
+          #{t :non_mtb_exposure_source_relationship}
+          = exposure.source_relationship
+        .col-md-2
+          - if exposure.source_start_at
+            #{t :mtb_exposure_source_start_at}
+            = l(exposure.source_start_at, format: :long)
+        .col-md-2
+          - if exposure.source_end_at
+            #{t :mtb_exposure_source_end_at}
+            = l(exposure.source_end_at, format: :long)
+        .col-md-2
+          #{t :non_mtb_exposure_level}
+          = exposure.exposure_level
+
+

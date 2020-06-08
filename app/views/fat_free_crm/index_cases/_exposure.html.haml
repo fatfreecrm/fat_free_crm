@@ -1,0 +1,37 @@
+- model = entity.class.name.underscore
+= f.hidden_field :_destroy
+= f.hidden_field :id, value: f.object.id
+.idc-panel
+  .idc-form-group#index-case-exposure
+    .form-group.one-quarter.contact-field
+      %label #{t :contact}:
+      = text_field_tag(:contact, f.object.contact&.full_name, class: 'form-control')
+      = f.hidden_field(:contact_id)
+    .form-group.one-third
+      %label #{t :facility}:
+      = f.select(:facility_id, options_from_collection_for_select(entity&.contact.account.facilities, 'id', 'name', f.object.facility_id), {include_blank: true}, {class: 'form-control'})
+    .form-group.one-quarter
+      %label #{t :used_mask}:
+      = f.check_box(:used_mask, class: 'form-control form-control-sm')
+    .form-group.one-quarter
+      %label #{t :started_at}:
+      = f.date_field(:started_at, class: 'form-control')
+    .form-group.one-quarter
+      %label #{t :ended_at}:
+      = f.date_field(:ended_at, class: 'form-control')
+    .form-group.one-quarter
+      %label #{t :level}:
+      = f.select :level, Setting.unroll(:exposure_level), { selected: f.object.level || "limited" }, { class: 'form-control' }
+    .one-sixth.shove-down
+      = link_to_function raw("<i class='fa fa-2x fa-trash'></i>"), "deleteExposure(this)"
+
+:javascript
+  function deleteExposure(el) {
+    text = "Are you sure you wish to delete this exposure?"
+    response = confirm(text)
+    if (response == true) {
+      hidden_input_id = el.closest('.idc-form-group').querySelector('input[type="text"]').id.replace('item', '_destroy');
+      el.closest('.idc-form-group').parentNode.querySelector('input[id="' + hidden_input_id + '"]').value = true;
+      el.closest('.idc-form-group').remove();
+    }
+  }

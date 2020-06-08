@@ -141,6 +141,41 @@ module FatFreeCrm
       @absence = @contact.absences.build
     end
 
+    def new_exposure
+      @exposure = @contact.opportunities.build
+    end
+
+    # PUT /contacts/1/expose
+    #----------------------------------------------------------------------------
+    def expose
+      @previous = Contact.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
+
+      respond_with(@contact)
+    end
+
+    # PUT /contacts/1/exposed
+    #----------------------------------------------------------------------------
+    def exposed
+      @opportunity = FatFreeCrm::Opportunity.find(params[:opportunity_id])
+      if @opportunity.name == "Tested Positive"
+        symptom_onset_at = DateTime.parse(params[:opportunity].permit![:symptom_onset_at])
+        index_case = FatFreeCrm::IndexCase.create(contact: @contact, 
+          window_start_date: symptom_onset_at,
+          window_end_date: symptom_onset_at + 48.hours,
+          projected_return_date: symptom_onset_at + 14.days)
+        @created_record = index_case
+        @contact.absences.create(kind: 'covid_19_isolation', start_on: Date.today, end_on: index_case.projected_return_date - 1.day )
+        @contact.opportunities << @opportunity
+      else
+        @created_record = @contact.contact_opportunities.create(params[:opportunity].permit!.merge(opportunity: @opportunity).except(:symptom_onset_at))
+        @contact.absences.create(kind: 'covid_19_quarantine', 
+          start_on: @created_record.source_start_at.beginning_of_day,
+          end_on: @created_record.source_start_at.end_of_day + 13.days)
+      end
+
+      respond_with(@contact)
+    end
+
     private
 
     #----------------------------------------------------------------------------

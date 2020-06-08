@@ -6,12 +6,16 @@
     = f.error_messages object_name: t('index_case')
 
     = render "fat_free_crm/index_cases/top_section",  f: f, edit: true
+    = render "fat_free_crm/index_cases/index_case_investigations", f: f, entity: @index_case
+    = render "fat_free_crm/index_cases/index_case_exposures", f: f, entity: @index_case
     = render "fat_free_crm/entities/permissions",  f: f, edit: true, entity: @index_case
     = hook(:entity_form, self, {f: f, entity: @index_case})
-
     .buttonbar
       - if Setting.compound_address
         = f.submit t(:save_index_case), { onclick: "crm.clear_all_hints()", class: 'btn btn-primary'}
       - else
         = f.submit t(:save_index_case), { class: 'btn btn-primary' }
       = link_to_cancel edit_index_case_path(@index_case)
+
+  = javascript_include_tag("awesomplete")
+  = stylesheet_link_tag("awesomplete")

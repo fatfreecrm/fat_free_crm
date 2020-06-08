@@ -52,6 +52,7 @@ module FatFreeCrm
     has_one :business_address, -> { where(address_type: "Business") }, dependent: :destroy, as: :addressable, class_name: "Address"
     has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
     has_many :emails, as: :mediator
+    has_many :exposures, class_name: "FatFreeCrm::Exposure"
 
     has_many :identifiers, as: :identifiable, dependent: :destroy
     has_many :assignments, dependent: :destroy
@@ -219,6 +220,11 @@ module FatFreeCrm
         contact.opportunities << opportunity unless opportunity.id.blank? # must happen after contact is saved
       end
       contact
+    end
+
+    def create_index_case(params)
+      opportunity_params = params[:opportunity] || {}
+      index_case = FatFreeCrm::IndexCase.create(opportunity_params)
     end
 
     private

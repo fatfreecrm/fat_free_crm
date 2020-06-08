@@ -26,7 +26,7 @@ module FatFreeCrm
     def show
       @stage = Setting.unroll(:opportunity_stage)
       @comment = Comment.new
-      @timeline = timeline(@index_case)
+      @timeline = [] #timeline(@index_case)
       respond_with(@index_case)
     end
 
@@ -124,6 +124,14 @@ module FatFreeCrm
       respond_with(@index_cases) do |format|
         format.js { render :index }
       end
+    end
+
+    def new_exposure
+      @exposure = @index_case.exposures.build
+    end
+
+    def new_investigation
+      @investigation = @index_case.investigations.build
     end
 
     private

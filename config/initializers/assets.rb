@@ -23,3 +23,5 @@ Rails.application.config.assets.precompile += %w(1x1.gif avatar.jpg facebook.gif
 Rails.application.config.assets.precompile += %w(asterisk.gif blog.gif info.png linkedin.gif notifications.png sortable.gif twitter.gif)
 Rails.application.config.assets.precompile += %w(application.js)
 Rails.application.config.assets.precompile += %w(application.css)
+Rails.application.config.assets.precompile += %w(awesomplete.js)
+Rails.application.config.assets.precompile += %w(awesomplete.css)

@@ -1,0 +1,12 @@
+- model = entity.class.name.underscore
+- name_attribute = "index_case[investigations_attributes][#{Time.now.to_i}]"
+.idc-form-group#exposure
+  .form-group.one-quarter
+    %label #{t :status}:
+    = select_tag("#{name_attribute}status", options_for_select(Setting.unroll(:investigation_statuses)), class: 'form-control')
+  .form-group.one-quarter
+    %label #{t :conducted_at}:
+    = date_field_tag("#{name_attribute}conducted_at", {}, class: 'form-control')
+
+  .one-sixth.shove-down
+    = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "this.closest('.idc-form-group').remove()")

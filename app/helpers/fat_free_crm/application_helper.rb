@@ -426,6 +426,14 @@ module FatFreeCrm
       ENTITIES
     end
 
+    def link_to_create_case(contact)
+      link_to(t(:create_case), expose_contact_path(contact),
+        method: :get,
+        with:   "{ previous: crm.find_form('edit_contact') }",
+        remote: true, 
+        class: 'btn btn-sm idc-convert-button')
+    end
+
     def entity_filter_checkbox(name, value, count)
       checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i.positive?)
       url = url_for(action: :filter)
