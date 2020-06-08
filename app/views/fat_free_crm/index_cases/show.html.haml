@@ -1,0 +1,16 @@
+- if (template = template_for_current_view)
+  = render(template, index_case: @index_case)
+- else
+
+  -# default view
+  = styles_for :task, :contact, :opportunity
+  = render 'fat_free_crm/index_cases/title_bar', index_case: @index_case
+  %div#edit_index_case{ hidden }
+  = render "fat_free_crm/comments/new", commentable: @index_case
+  = render partial: "fat_free_crm/shared/timeline", collection: @timeline
+  = hook(:show_index_case_bottom, self, {entity: @index_case}) do
+    = render partial: "fat_free_crm/tasks/tasks", locals: {object: @index_case}
+    /= render "fat_free_crm/contacts/contacts", object: @index_case
+    /= render "fat_free_crm/opportunities/opportunities", object: @index_case
+    /= render "fat_free_crm/versions/versions", object: @index_case
+    = load_select_popups_for(@index_case, :tasks, :contacts, :opportunities)

@@ -1,0 +1,30 @@
+- model = entity.class.name.underscore
+- name_attribute = "index_case[exposures_attributes][#{time}]"
+.idc-panel.new-exposure
+  .idc-form-group#exposure
+    .form-group.one-quarter{id: "contact_#{time}"}
+      %label #{t :mtb_exposure_contact}:
+      = text_field_tag(:contact, nil, class: 'form-control')
+      = hidden_field_tag("#{name_attribute}contact_id")
+    .form-group.one-third
+      %label #{t :mtb_exposure_facility}:
+      = select_tag("#{name_attribute}facility_id", options_from_collection_for_select(entity.contact.account.facilities, 'id', 'name', entity.contact.assignments.current.first.facility_id), class: 'form-control')
+    .form-group.one-quarter
+      %label #{t :mtb_exposure_used_mask}:
+      = check_box_tag("#{name_attribute}used_mask", 1, false, class: 'form-control')
+    .form-group.one-third
+      %label #{t :mtb_exposure_started_at}:
+      = datetime_field_tag("#{name_attribute}started_at", nil, {autocomplete: :off, class: 'form-control'})
+      /= date_field_tag("#{name_attribute}started_at", {}, class: 'form-control')
+    .form-group.one-third
+      %label #{t :mtb_exposure_ended_at}:
+      = datetime_field_tag("#{name_attribute}ended_at", nil, {autocomplete: :off, class: 'form-control'})
+      /= date_field_tag("#{name_attribute}ended_at", {}, class: 'form-control')
+    .form-group.one-sixth
+      %label #{t :mtb_exposure_level}:
+      = select_tag("#{name_attribute}level", options_for_select(Setting.unroll(:exposure_level)), { class: 'form-control' })
+
+    .one-sixth.shove-down
+      = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "this.closest('.idc-panel').remove()")
+
+

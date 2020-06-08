@@ -6,23 +6,23 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module FatFreeCrm
-module ContactsHelper
-  include ::FatFreeCrm::AccountsHelper
-  include ::FatFreeCrm::AddressesHelper
-  include ::FatFreeCrm::OpportunitiesHelper
-  include ::FatFreeCrm::CommentsHelper
+  module ContactsHelper
+    include ::FatFreeCrm::AccountsHelper
+    include ::FatFreeCrm::AddressesHelper
+    include ::FatFreeCrm::OpportunitiesHelper
+    include ::FatFreeCrm::CommentsHelper
 
-  # Contact summary for RSS/ATOM feeds.
-  #----------------------------------------------------------------------------
-  def contact_summary(contact)
-    summary = ['']
-    summary << contact.title.titleize if contact.title?
-    summary << contact.department if contact.department?
-    summary.last += " #{t(:at)} #{contact.account.name}" if contact.account&.name?
-    summary << contact.email if contact.email.present?
-    summary << "#{t(:phone_small)}: #{contact.phone}" if contact.phone.present?
-    summary << "#{t(:mobile_small)}: #{contact.mobile}" if contact.mobile.present?
-    summary.join(', ')
+    # Contact summary for RSS/ATOM feeds.
+    #----------------------------------------------------------------------------
+    def contact_summary(contact)
+      summary = ['']
+      summary << contact.title.titleize if contact.title?
+      summary << contact.department if contact.department?
+      summary.last += " #{t(:at)} #{contact.account.name}" if contact.account&.name?
+      summary << contact.email if contact.email.present?
+      summary << "#{t(:phone_small)}: #{contact.phone}" if contact.phone.present?
+      summary << "#{t(:mobile_small)}: #{contact.mobile}" if contact.mobile.present?
+      summary.join(', ')
+    end
   end
-end
 end

@@ -24,14 +24,14 @@
 #  updated_at       :datetime
 #  deleted_at       :datetime
 #
-
+require 'rgeo'
 module FatFreeCrm
   class Address < ActiveRecord::Base
     belongs_to :addressable, polymorphic: true
 
     has_paper_trail versions: {class_name: "FatFreeCrm::Version"}, meta: { related: :addressable }
 
-    set_rgeo_factory_for_column(:lonlat, RGeo::Geographic.spherical_factory(:srid => 4326))
+    #set_rgeo_factory_for_column(:lonlat, RGeo::Geographic.spherical_factory(:srid => 4326))
 
     scope :business, -> { where("address_type='Business'") }
     scope :billing,  -> { where("address_type='Billing'") }

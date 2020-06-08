@@ -1,0 +1,8 @@
+%details.idc-panel
+  %summary #{t :extra_info}
+  %small#contact_extra_intro.full-width
+  .idc-form-group#contact_extra
+    = hook(:facility_extra_details_form, self, f: f) do
+      = render "fat_free_crm/shared/address", f: f,asset: @facility, type: 'business', address_attr: 'address', title: :address
+
+

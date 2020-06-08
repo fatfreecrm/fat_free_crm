@@ -1,7 +1,7 @@
 = hook(:campaign_top_section, self, f: f) do
   .idc-panel
     .form-group.one-quarter
-      %label #{t :name}:
+      %label #{t :name}*:
       = f.text_field :name, autofocus: true, class: 'form-control'
     .form-group.one-quarter
       %label #{t :start_date}:

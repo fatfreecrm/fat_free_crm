@@ -8,11 +8,7 @@
 
 .remote#options{ hidden }
 
-%ul.list#accounts
-  - if @accounts.any?
-    = render @accounts
-  - else
-    = render "fat_free_crm/shared/empty"
+= render 'list_accounts'
 
 #paginate= render "fat_free_crm/shared/paginate_with_per_page"
 #export= render "fat_free_crm/shared/export"

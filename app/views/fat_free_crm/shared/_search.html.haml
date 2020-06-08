@@ -1,5 +1,5 @@
 - path = controller.controller_name
-- path = "admin/#{path}" if controller.class.to_s.starts_with?("Admin::")
+- path = "admin/#{path}" if controller.class.to_s.starts_with?("FatFreeCrm::Admin::")
 
 .form-group
   %label #{t(:search_assets, t(controller.controller_name + "_small"))}

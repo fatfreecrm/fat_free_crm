@@ -1,0 +1,20 @@
+.filters#filters
+  %h4.caption.heading= t :index_case_categories
+  - Setting.index_case_category.each do |key|
+    .space-between
+      .form-check
+        = index_case_category_checkbox(key, @index_case_category_total[key])
+        = label_tag(key, t(key), class: 'form-check-label')
+      .status-total
+        = @index_case_category_total[key]
+  .space-between
+    .form-check
+      = index_case_category_checkbox("other", @index_case_category_total[:other])
+      = label_tag(:other, t(:other), class: 'form-check-label')
+    .status-total
+      = @index_case_category_total[:other]
+  .space-between
+    %b #{t :total_index_cases}
+    .status-total
+      %b= @index_case_category_total[:all]
+  = hook(:index_index_case_sidebar_bottom, self)

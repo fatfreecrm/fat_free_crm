@@ -213,11 +213,6 @@
   :url:
     :controller: campaigns
 - :active: false
-  :text: :tab_leads
-  :icon: :fa-tasks
-  :url:
-    :controller: leads
-- :active: false
   :text: :tab_accounts
   :icon: :fa-users
   :url:
@@ -227,6 +222,11 @@
   :icon: :fa-user
   :url:
     :controller: contacts
+- :active: false
+  :text: :tab_index_cases
+  :icon: :fa-bug
+  :url:
+    :controller: index_cases
 - :active: false
   :text: :tab_opportunities
   :icon: :fa-money
@@ -266,6 +266,11 @@
   :icon: :fa-tags
   :url:
     :controller: admin/tags
+- :active: false
+  :text: :facilities
+  :icon: :fas fa-building
+  :url:
+    :controller: admin/facilities
 #- :active: false
 #  :text: :admin_tab_settings
 #  :icon: :fa-cogs
@@ -283,21 +288,80 @@
 #   - "Custom"
 #
 #------------------------------------------------------------------------------
+absence_category:
+  - :covid_19_isolation
+  - :covid_19_quarantine
+
+identifier_category:
+  - :employee_id
+
 account_category:
-  - :affiliate
-  - :competitor
-  - :customer
-  - :partner
-  - :reseller
-  - :vendor
+  - :branch
+  - :office
+  - :atm
+  - :kiosk
 
 account_category_color:
-  :affiliate   : lavender
-  :competitor  : paleturquoise
-  :customer    : pink
-  :partner     : bisque
-  :reseller    : thistle
-  :vendor      : skyblue
+  :branch   : lavender
+  :office   : paleturquoise
+  :customer : pink
+  :kiosk    : bisque
+
+
+contact_category:
+  - :executive
+  - :management
+  - :employee
+  - :contractor
+  - :customer
+
+contact_category_color:
+  :executive   : lavender
+  :management  : paleturquoise
+  :employee    : pink
+  :contractor  : bisque
+  :customer    : thistle
+
+exposure_level:
+  - :limited
+  - :moderate
+  - :significant
+
+investigation_statuses:
+  - :hospitalized
+  - :isolated
+  - :recovered
+  - :deceased
+
+source_relationship:
+  - :self
+  - :spouse
+  - :partner
+  - :child
+  - :parent
+  - :grandparent
+  - :grandchild
+  - :aunt
+  - :uncle
+  - :nephew
+  - :niece
+  - :friend
+  - :other
+
+index_case_category:
+  - :i
+  - :ii
+  - :iii
+  - :iv
+  - :v
+
+index_case_category_color:
+  :i   : lavender
+  :ii  : paleturquoise
+  :iii : pink
+  :iv  : bisque
+  :v   : thistle
+
 
 # Campaign Status. To add custom status use string value, for example:
 #
@@ -378,6 +442,14 @@ task_category:
   - :money
   - :presentation
   - :trip
+
+facility_kind:
+  - :branch
+  - :office
+  - :branch_office
+  - :corporate_headquarters
+  - :branch_headquarters
+
 
 task_category_color:
   :call         : Silver

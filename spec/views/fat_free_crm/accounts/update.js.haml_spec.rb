@@ -15,6 +15,8 @@ module FatFreeCrm
       assign(:account, @account = build_stubbed(:account, user: current_user))
       assign(:users, [current_user])
       assign(:account_category_total, Hash.new(1))
+      assign(:accounts, [FactoryBot.create(:account)])
+      assign(:facilities, [])
     end
 
     describe "no errors:" do

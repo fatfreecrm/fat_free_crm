@@ -52,6 +52,13 @@ module FatFreeCrm
     has_one :business_address, -> { where(address_type: "Business") }, dependent: :destroy, as: :addressable, class_name: "Address"
     has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
     has_many :emails, as: :mediator
+    has_many :exposures, class_name: "FatFreeCrm::Exposure"
+
+    has_many :identifiers, as: :identifiable, dependent: :destroy
+    has_many :assignments, dependent: :destroy
+    has_many :absences, dependent: :destroy
+    # has_many :account_contacts, dependent: :destroy
+    # has_many :accounts, -> { distinct }, through: :account_contacts
 
     has_many :assignments
     has_many :account_contacts, dependent: :destroy
@@ -59,15 +66,22 @@ module FatFreeCrm
 
     delegate :campaign, to: :lead, allow_nil: true
 
+    enum gender: {male: 'Male', female: 'Female', other: 'Other', unknown: 'Unknown'}
+
     has_ransackable_associations %w[account opportunities tags activities emails addresses comments tasks]
     ransack_can_autocomplete
 
     serialize :subscribed_users, Set
 
     accepts_nested_attributes_for :business_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
+    accepts_nested_attributes_for :identifiers, allow_destroy: true
+    accepts_nested_attributes_for :assignments, allow_destroy: true
+    accepts_nested_attributes_for :absences, allow_destroy: true
 
     scope :created_by,  ->(user) { where(user_id: user.id) }
     scope :assigned_to, ->(user) { where(assigned_to: user.id) }
+
+    scope :absent, ->(date = Date.today) { where(id: FatFreeCrm::Absence.select(:contact_id).where("? >= start_on AND (? <= end_on OR end_on is null)", Date.today, Date.today)) }
 
     scope :text_search, lambda { |query|
       t = Contact.arel_table
@@ -210,6 +224,11 @@ module FatFreeCrm
         contact.opportunities << opportunity unless opportunity.id.blank? # must happen after contact is saved
       end
       contact
+    end
+
+    def create_index_case(params)
+      opportunity_params = params[:opportunity] || {}
+      index_case = FatFreeCrm::IndexCase.create(opportunity_params)
     end
 
     private

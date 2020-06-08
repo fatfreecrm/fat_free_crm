@@ -1,0 +1,11 @@
+- entities =  'facilities'
+- @entities = instance_variable_get("@#{entities}")
+
+- if @entities.any?
+  $('##{entities}').html('#{ j render(@entities) }');
+- else
+  $('##{entities}').html('#{ j render(partial: "fat_free_crm/shared/empty") }');
+
+$('#paginate').html('#{ j render(partial: "fat_free_crm/shared/paginate_with_per_page", locals: {path: "admin_facilities"}) }');
+$('#export').html('#{ j render(partial: "fat_free_crm/shared/export") }');
+$('#search_results_count').html('#{ j render(plain: t('search_results_count', count: @search_results_count)) }');

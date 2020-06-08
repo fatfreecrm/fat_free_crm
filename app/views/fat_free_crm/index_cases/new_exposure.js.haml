@@ -1,0 +1,12 @@
+- time = Time.now.to_i
+- contacts = FatFreeCrm::Contact.all.pluck(:first_name, :last_name, :id).map { |(first_name, last_name, id)| ["#{first_name} #{last_name}", id]}
+- facilities = FatFreeCrm::Facility.all.pluck(:name, :id)
+
+$('#new_exposure').before('#{ j render(partial: "new_exposure", locals: {time: time}) }');
+var input = document.querySelector('#contact_#{time} input[type="text"]');
+new Awesomplete(input, {list: #{contacts.to_json.html_safe},
+replace: function(suggestion) {
+this.input.value = suggestion.label;
+this.input.parentElement.nextElementSibling.value = suggestion.value;
+}});
+

@@ -1,0 +1,23 @@
+- model = entity.class.name.underscore
+= f.hidden_field :_destroy
+= f.hidden_field :id, value: f.object.id
+.idc-form-group#contact_extra
+  .form-group.one-third
+    %label #{t :item}:
+    = f.text_field(:item, class: 'form-control')
+  .form-group.one-third
+    %label #{t :kind}:
+    = f.select :kind, Setting.unroll(:identifier_category), { selected: :kind }, { class: 'form-control' }
+  .one-quarter.shove-down
+    = link_to_function raw("<i class='fa fa-2x fa-trash'></i>"), "deleteIdentifier(this)"
+
+:javascript
+  function deleteIdentifier(el) {
+    text = "Are you sure you wish to delete this identifier?"
+    response = confirm(text)
+    if (response == true) {
+      hidden_input_id = el.closest('.idc-form-group').querySelector('input[type="text"]').id.replace('item', '_destroy');
+      el.closest('.idc-form-group').parentNode.querySelector('input[id="' + hidden_input_id + '"]').value = true;
+      el.closest('.idc-form-group').remove();
+    }
+  }

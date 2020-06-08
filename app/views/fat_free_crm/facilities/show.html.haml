@@ -1,0 +1,13 @@
+- if (template = template_for_current_view)
+  = render(template, facility: @facility)
+- else
+
+  -# default view
+  = styles_for :task, :contact, :opportunity
+  = render 'fat_free_crm/facilities/title_bar', facility: @facility
+  %div#edit_facility{ hidden }
+  = render partial: "fat_free_crm/shared/timeline", collection: @timeline
+  = hook(:show_facility_bottom, self, {entity: @facility}) do
+    = load_select_popups_for(@facility)
+
+

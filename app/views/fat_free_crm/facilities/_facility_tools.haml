@@ -1,0 +1,6 @@
+.tools
+  = hook(:facility_tools_before, self, facility: facility)
+  - if can?(:update, facility)
+    = link_to_edit(facility, url: edit_admin_facility_path(facility))
+  - if can?(:destroy, facility)
+    = link_to_delete(facility, url: admin_facility_path(facility))

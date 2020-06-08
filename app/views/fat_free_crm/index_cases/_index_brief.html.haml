@@ -1,0 +1,7 @@
+- amount = index_case.opportunity&.weighted_amount
+%li.highlight.index_case{id: "index_case_#{index_case.id}"}
+  .flex-container
+    %h3= link_to(index_case.contact&.full_name, index_case)
+    = render "fat_free_crm/index_cases/index_case_tools", index_case: index_case
+  = hook(:index_case_bottom, self, index_case: index_case)  
+

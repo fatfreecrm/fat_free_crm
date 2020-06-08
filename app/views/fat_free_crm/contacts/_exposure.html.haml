@@ -1,0 +1,14 @@
+.idc-panel
+  = f.hidden_field :contact_ids
+  .form-group.one-quarter
+    %label #{t :source_contact}:
+    = f.text_field(:contact_ids, autocomplete: 'off', class: "form-control awesomplete")
+  .form-group.one-quarter
+    %label #{t :start_on}:
+    = date_field_tag("start_on", nil, class: 'form-control')
+  .form-group.one-quarter
+    %label #{t :end_on}:
+    = date_field_tag("end_on", nil, class: 'form-control')
+  .form-group.one-quarter
+    %label #{t :source_facility}:
+    = f.text_field(:facility_id, autocomplete: 'off', class: "form-control awesomplete")

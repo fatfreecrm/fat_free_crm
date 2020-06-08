@@ -3,12 +3,12 @@
   = f.hidden_field :user_id
 
   = f.error_messages object_name: t('account')
-
-  = render "fat_free_crm/accounts/top_section",  f: f
+  = render "fat_free_crm/accounts/top_section",  f: f, accounts: @accounts
   = render "fat_free_crm/fields/edit_custom_field_group", f: f
   = render "fat_free_crm/shared/add_comment", f: f
   = render "fat_free_crm/accounts/contact_info", f: f
   = render "fat_free_crm/fields/groups",  f: f
+  = render "fat_free_crm/accounts/account_facilities", f: f, facilities: @facilities
   = render "fat_free_crm/entities/permissions",  f: f, entity: @account
   = hook(:entity_form, self, {f: f, entity: @account})
 

@@ -86,3 +86,4 @@ gem 'devise-i18n'
 gem "devise-encryptable"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob', '~> 6.0'
+gem 'activerecord-postgis-adapter'

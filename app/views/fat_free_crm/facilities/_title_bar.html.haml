@@ -1,0 +1,11 @@
+.entity-heading
+  %h1.title#edit_facility_title= h(@facility.id)
+  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
+  #confirm{ hidden }
+  .title_tools#menu
+    = link_to_inline(:edit_facility, edit_admin_facility_path(@facility), text: t(:edit))
+    = link_to_delete(facility, url: admin_facility_path(facility))
+  .title_tools#buttons
+    = view_buttons
+
+%div#edit_facility{ hidden }

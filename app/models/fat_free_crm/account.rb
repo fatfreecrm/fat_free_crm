@@ -42,7 +42,12 @@ module FatFreeCrm
     has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
     has_many :emails, as: :mediator
 
+    has_and_belongs_to_many :facilities
+
     has_many :assignments
+
+    has_many :reporting_accounts, foreign_key: 'reports_to_id', class_name: 'FatFreeCrm::Account'
+    belongs_to :reports_to, class_name: 'FatFreeCrm::Account'
 
     serialize :subscribed_users, Set
 
@@ -78,7 +83,7 @@ module FatFreeCrm
     ransack_can_autocomplete
 
     validates_presence_of :name, message: :missing_account_name
-    validates_uniqueness_of :name, scope: :deleted_at, if: -> { Setting.require_unique_account_names }
+    # validates_uniqueness_of :name, scope: :deleted_at, if: -> { Setting.require_unique_account_names }
     validates :rating, inclusion: { in: 0..5 }, allow_blank: true
     validates :category, inclusion: { in: proc { Setting.unroll(:account_category).map { |s| s.last.to_s } } }, allow_blank: true
     validate :users_for_shared_access

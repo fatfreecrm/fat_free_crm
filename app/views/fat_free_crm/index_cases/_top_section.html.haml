@@ -1,0 +1,22 @@
+= hook(:index_case_top_section, self, f: f) do
+  .idc-panel
+    .full-width
+      %h3
+        = @index_case.contact.full_name
+    .one-quarter
+      %label #{t :phone}:
+      = @index_case.contact.phone
+    .one-half
+      %label #{t :email}:
+      = @index_case.contact.email
+    .one-half
+      #{t :window_start_date}:
+      = l(@index_case.window_start_date, format: :long)
+    .one-half
+      #{t :window_end_date}:
+      = l(@index_case.window_end_date, format: :long)
+    .form-group.one-quarter
+      %label #{t :mtb_projected_return_date}:
+      = f.date_field(:projected_return_date, class: 'form-control')
+
+    = hook(:index_case_top_section_bottom, self, f: f)

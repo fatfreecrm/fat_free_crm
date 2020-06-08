@@ -26,6 +26,7 @@
     -# Show [Edit] form.
     $('##{id}').html('#{ j render(partial: "edit") }');
 
+
   - elsif params[:cancel].false?                    # Called from title of the contact landing page...
     $('#edit_#{entity_name}').html('#{ j render(partial: "edit") }');
     crm.flip_form('edit_#{entity_name}');

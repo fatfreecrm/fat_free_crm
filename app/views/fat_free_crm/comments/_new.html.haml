@@ -28,7 +28,7 @@
         = f.submit(t(:add_note),{ id: "#{id_prefix}_comment_submit", class: 'btn btn-primary'})
         = link_to(t(:cancel), '#', class: 'btn btn-link cancel')
   %div{ {id: "#{id_prefix}_ask"}.merge(hidden_if(false))}
-    = text_field_tag(:post_new_note, t(:add_note_help), {id: "#{id_prefix}_post_new_note", class: 'form-control'})
+    = text_field_tag(:post_new_note, nil, {id: "#{id_prefix}_post_new_note", placeholder: t(:add_note_help), class: 'form-control'})
 
   - if notification_emails_configured?
     = render partial: "fat_free_crm/comments/subscription_links", locals: {entity: commentable}

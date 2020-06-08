@@ -23,6 +23,7 @@ en-US:
   tab_campaigns: Campaigns
   tab_leads: Leads
   tab_accounts: Accounts
+  tab_index_cases: Index Cases
   tab_contacts: Contacts
   tab_opportunities: Resources
   tab_team: Team
@@ -46,6 +47,12 @@ en-US:
   called_off: Called Off
   new: New
   contacted: Contacted
+  branch: Full Service Branch
+  office: Commercial Office
+  branch_office: Commercial Office/Full Service Branch
+  corporate_headquarters: Corporate Headquarters
+  branch_headquarters: Regional Headquarters/Full Service Branch
+
 
   isolation: Isolation
 
@@ -316,6 +323,12 @@ en-US:
     Supported formats are GIF, JPG, and PNG.
   job_title: Title
   last_name: Last name
+  gender: Gender
+  preferred_name: Preferred Name
+  preferred_language: Preferred Language
+  outreach_priority: Outreach Priority
+  category: Category
+  used_interpreter: Used Interpreter
   login_now_link: Login Now!
   mobile: Mobile
   my_profile: My Profile
@@ -354,6 +367,7 @@ en-US:
   account_small: account
   account_summary: Account Summary
   account_categories: Account Categories
+  division_name: Division Name
   accounts: Accounts
   accounts_options: Accounts Options
   accounts_small: accounts
@@ -380,6 +394,35 @@ en-US:
   website: Website
   account_with_title_department: ! '%{title}, %{department} at %{account}'
   account_with_title: ! '%{title} in %{account} account'
+  reports_to_account: Report To Account
+
+    # Views -> Index Cases.
+  #----------------------------------------------------------------------------
+  create_index_case: Create Index Case
+  i: I
+  ii: II
+  iii: III
+  iv: IV
+  v: V
+  index_case_categories: Categories
+  total_index_cases: Total
+  index_cases: Index Cases
+  index_cases_small: index cases
+  save_index_case: Save Index Case
+  index_case: Index Case
+
+    # Views -> Facilities
+  #----------------------------------------------------------------------------
+  create_facility: Create Facility
+  facilities_small: facilities
+  save_facility: Save Facility
+  facilities: Facilities
+  facility_kind: Facility Kind
+  longitute: Longitute
+  latitude: Latitude
+  facility_status: Status
+  unknown: Unknown
+
 
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
@@ -436,6 +479,12 @@ en-US:
   contacts_options: Contacts Options
   contacts_small: contacts
   contact_summary: Contact Summary
+  contact_categories: Contact Categories
+  executive: Executive
+  management: Management
+  employee: Employee
+  contractor: Contractor
+  customer: Customer
   create_contact: Create Contact
   department: Department
   department_small: ! '%{value} department'
@@ -467,6 +516,81 @@ en-US:
   shared_with_everyone: Shared with everyone
   title: Title
   subscriptions: Subscriptions
+  # Identifier Categories
+  employee_id: Employee ID
+  kind: Kind
+  item: Item
+  identifier: Identifier
+  identifiers: Identifiers
+  # Absence Categories
+  absence: Absence
+  absences: Absences
+  start_on: Start On
+  end_on: End On
+  unknown: Unknown
+  pto: PTO
+  covid_19_isolation:  Isolation Due To Covid
+  covid_19_quarantine: In Quarantine
+  assignments: Assignments
+  new_assignment: New Assignment
+  exposed_contact: Save Exposure
+  case_type: Case Type
+  symptom_onset_at: Symptom Onset At
+  source_name: Source Name
+  source_start_at: Source Start At
+  source_end_at: Source End At
+  exposure_level: Exposure Level
+  limited: Limited
+  moderate: Moderate
+  significant: Significant
+  source_relationship: Source Relationship
+  self: Self
+  spouse: Spouse
+  partner: Partner
+  child: Child
+  parent: Parent
+  grandparent: Grandparent
+  grandchild: Grandchild
+  aunt: Aunt
+  uncle: Uncle
+  nephew: Nephew
+  niece: Niece
+  friend: Friend
+  mtb_exposure: Exposure
+  mtb_exposure_facility: Facility
+  mtb_exposure_started_at: Started At
+  mtb_exposure_ended_at: Ended At
+  mtb_exposure_level: Exposure Level
+  non_mtb_exposure: Non-MTB Exposure
+  non_mtb_exposure_source_name: Source
+  non_mtb_exposure_source_relationship: Relationship
+  mtb_exposure_source_start_at: Start At
+  mtb_exposure_source_end_at: End At
+  non_mtb_exposure_level: Exposure Level
+  create_case: Create Case
+  cases: Cases
+
+  #views -> Indexcases
+
+  conducted_at: Conducted 
+  mtb_exposure_contact: Contact
+  mtb_exposure_facility: Facility
+  mtb_exposure_used_mask: Used Mask
+  mtb_exposure_started_at: Started At
+  mtb_exposure_ended_at: Ended At
+  mtb_exposure_level: Exposure Level
+  new_investigation: New Investigation
+  new_exposure: New Exposure
+  investigations: Monitoring
+  exposures: Exposures
+  window_start_date: Window Start Date
+  window_end_date: Window End Date
+  mtb_projected_return_date: Projected Return Date
+
+  hospitalized: Hospitalized
+  isolated: Isolated
+  recovered: Recovered
+  deceased: Deceased
 
   # Views -> Leads.
   #----------------------------------------------------------------------------

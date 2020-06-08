@@ -1,0 +1,13 @@
+- model = entity.class.name.underscore
+%details.idc-panel.contact-identifiers
+  %summary #{t :identifiers}
+  #contact_extra_intro.full-width
+    =# t(:intro, t(:identifiers_info_small))
+    = f.fields_for :identifiers, entity.identifiers.each do |identifier_fields|
+      = render "fat_free_crm/contacts/identifier", f: identifier_fields, entity: entity
+
+  #new_identifier
+  - if entity.new_record?
+    = link_to("New Identifier", new_identifier_contacts_path, remote: true, class: 'mt-3 btn btn-primary')
+  -else
+    = link_to("New Identifier", new_identifier_contact_path(entity), remote: true, class: 'mt-3 btn btn-primary')

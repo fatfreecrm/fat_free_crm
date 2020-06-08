@@ -1,0 +1,9 @@
+- model = entity.class.name.underscore
+%details.idc-panel.index_case_exposures
+  %summary #{t :exposures}
+  #contact_extra_intro.full-width
+    = f.fields_for :exposures, entity.exposures.each do |exposure_fields|
+      = render "fat_free_crm/index_cases/exposure", f: exposure_fields, entity: entity
+
+  #new_exposure
+  = link_to("#{t :new_exposure}", new_exposure_index_case_path(entity), remote: true, class: 'mt-3 btn btn-primary')

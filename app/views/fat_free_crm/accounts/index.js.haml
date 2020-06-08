@@ -2,7 +2,7 @@
 - @entities = instance_variable_get("@#{entities}")
 
 - if @entities.any?
-  $('##{entities}').html('#{ j render(@entities) }');
+  $('##{entities}').html('#{ j render("fat_free_crm/accounts/list_accounts") }');
 - else
   $('##{entities}').html('#{ j render(partial: "fat_free_crm/shared/empty") }');
 

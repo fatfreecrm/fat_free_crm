@@ -1,0 +1,23 @@
+- model = entity.class.name.underscore
+= f.hidden_field :_destroy
+= f.hidden_field :id, value: f.object.id
+.idc-form-group#index-case-investigation
+  .form-group.one-quarter
+    %label #{t :status}:
+    = f.select(:status, options_for_select(Setting.unroll(:investigation_statuses), f.object.status), {}, class: 'form-control')
+  .form-group.one-quarter
+    %label #{t :conducted_at}:
+    = f.date_field(:conducted_at, class: 'form-control')
+  .one-sixth.shove-down
+    = link_to_function raw("<i class='fa fa-2x fa-trash'></i>"), "deleteInvestigation(this)"
+
+:javascript
+  function deleteInvestigation(el) {
+    text = "Are you sure you wish to delete this investigation?"
+    response = confirm(text)
+    if (response == true) {
+      hidden_input_id = el.closest('.idc-form-group').querySelector('input[type="text"]').id.replace('item', '_destroy');
+      el.closest('.idc-form-group').parentNode.querySelector('input[id="' + hidden_input_id + '"]').value = true;
+      el.closest('.idc-form-group').remove();
+    }
+  }

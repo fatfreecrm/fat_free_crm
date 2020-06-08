@@ -2,10 +2,10 @@
 = hook(:contact_top_section, self, f: f) do
   .idc-panel
     .form-group.one-quarter
-      %label{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
+      %label{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}*:
       = f.text_field :first_name, autofocus: true, :class => "form-control"
     .form-group.one-quarter
-      %label{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
+      %label{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}*:
       = f.text_field :last_name, :class => "form-control"
     .form-group.one-quarter
       %label #{t :email}:
@@ -13,6 +13,24 @@
     .form-group.one-quarter
       %label #{t :phone}:
       = f.text_field :phone, :class => "form-control"
+    .form-group.one-quarter
+      %label #{t :preferred_name}:
+      = f.text_field :preferred_name, :class => "form-control"
+    .form-group.one-quarter
+      %label #{t :gender}:
+      = f.select(:gender, FatFreeCrm::Contact.genders.map { |(w)| [w.humanize, w] }, {}, :class => "form-control")
+    .form-group.one-quarter
+      %label #{t :preferred_language}:
+      = f.text_field :preferred_language, :class => "form-control"
+    .form-group.one-quarter
+      %label #{t :outreach_priority}:
+      = f.text_field :outreach_priority, :class => "form-control"
+    .form-group.one-quarter
+      %label #{t :category}:
+      = f.select :category, Setting.unroll(:contact_category), { selected: @contact.category || "employee", include_blank: t(:other) }, { class: 'form-control' }
+    .form-group.one-quarter
+      %label #{t :used_interpreter}:
+      = f.text_field :used_interpreter, :class => "form-control"
     .form-group.one-third
       = fields_for(@account) do |a|
         = a.hidden_field :user_id

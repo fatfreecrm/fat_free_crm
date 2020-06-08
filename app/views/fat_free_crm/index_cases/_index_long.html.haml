@@ -1,0 +1,23 @@
+- amount = index_case.pipeline_opportunities.map(&:weighted_amount).sum
+%li.highlight.index_case{id: "index_case_#{index_case.id}"}
+  .flex-container
+    %h3= link_to(index_case.name, index_case)
+    = render "fat_free_crm/index_cases/index_case_tools", index_case: index_case
+  .idc-details
+    = index_case.location + ", " unless index_case.location.blank?
+    - user_name = index_case.user.try(:full_name)
+    - if user_name
+      = t(:added_by, time_ago: timeago(index_case.created_at), user: h(user_name)).html_safe << " | "
+    - else
+      = t(:added_ago, value: timeago(index_case.created_at)).html_safe << " | "
+    = t('pluralize.contact', index_case.contacts_count) + " | "
+    = t('pluralize.opportunity', index_case.opportunities_count)
+  %div
+    -# = stars_for(index_case)
+    = " | ".html_safe << link_to(index_case.website, index_case.website.to_url) if index_case.website.present?
+    = " | ".html_safe << link_to_email(index_case.email) if index_case.email.present?
+    = " | ".html_safe << t(:phone_small) << ": " << .phone-number=(index_case.toll_free_phone? ? index_case.toll_free_phone : index_case.phone) if index_case.toll_free_phone? || index_case.phone?
+  - if index_case.tags.present?
+    .tags= tags_for_index(index_case)
+
+  = hook(:index_case_bottom, self, index_case: index_case)

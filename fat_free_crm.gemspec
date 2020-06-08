@@ -72,6 +72,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'acts_as_commentable'
   gem.add_dependency 'acts-as-taggable-on'
   gem.add_dependency 'dynamic_form'
+  gem.add_dependency 'rgeo'
+  gem.add_dependency 'activerecord-postgis-adapter'
   gem.add_dependency 'haml'
   gem.add_development_dependency 'sass'
   gem.add_dependency 'acts_as_list'
