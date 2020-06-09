@@ -3,18 +3,22 @@
     .full-width
       %h3
         = @index_case.contact.full_name
-    .one-quarter
+    .form-group.one-sixth
       %label #{t :phone}:
-      = @index_case.contact.phone
-    .one-half
+      .form-control
+        = @index_case.contact.phone
+    .form-group.one-third
       %label #{t :email}:
-      = @index_case.contact.email
-    .one-half
-      #{t :window_start_date}:
-      = l(@index_case.window_start_date, format: :long)
-    .one-half
-      #{t :window_end_date}:
-      = l(@index_case.window_end_date, format: :long)
+      .form-control
+        = @index_case.contact.email
+    .form-group.one-quarter
+      %label #{t :window_start_date}:
+      .form-control
+        = l(@index_case.window_start_date, format: :long)
+    .form-group.one-quarter
+      %label #{t :window_end_date}:
+      .form-control
+        = l(@index_case.window_end_date, format: :long)
     .form-group.one-quarter
       %label #{t :mtb_projected_return_date}:
       = f.date_field(:projected_return_date, class: 'form-control')
