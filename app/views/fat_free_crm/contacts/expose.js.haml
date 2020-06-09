@@ -26,24 +26,16 @@
     $('##{id}').html('#{ j render(partial: "expose") }');
 
     var input = document.getElementById("opportunity_id");
+    var exposed_inputs = document.getElementById('exposed');
+    var tested_positive_inputs = document.getElementById('tested-positive');
     input.addEventListener("change", function(event) {
     var tested_positive = event.currentTarget.querySelector("option:checked").text == "Tested Positive";
-    var parent_element = event.currentTarget.closest(".container");
-    var exposed = parent_element.querySelectorAll(".exposed");
-    exposed.forEach(function(expose){
-    if (tested_positive){
-    expose.classList.add("d-none");
-    }else{
-    expose.classList.remove("d-none");
-    }
-    })
-    var symptom_onset = parent_element.querySelector(".tested-positive");
-    if (tested_positive){
-    symptom_onset.classList.remove("d-none");
-    symptom_onset.querySelector('input').addAttribute('required')
-    }else{
-    symptom_onset.classList.add("d-none");
-    symptom_onset.querySelector('input').removeAttribute('required')
+    if (tested_positive) {
+    tested_positive_inputs.style.display = 'grid';
+    exposed_inputs.style.display = 'none';
+    } else {
+    tested_positive_inputs.style.display = 'none';
+    exposed_inputs.style.display = 'grid';
     }
     })
 

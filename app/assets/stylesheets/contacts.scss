@@ -4,6 +4,10 @@
   grid-gap: 1rem;
 }
 
+#exposed {
+  display: none;
+}
+
 #contact_extra_intro {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(max-content, 30ch));
