@@ -3,3 +3,15 @@
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
 }
+
+#contact_extra_intro {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max-content, 30ch));
+  gap: 1rem;
+}
+
+.label-value-group {
+  div:first-child {
+    font-weight: 600;
+  }
+}
