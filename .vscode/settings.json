@@ -1,6 +1,7 @@
 {
   "ruby.useLanguageServer": true,
   "cSpell.words": [
-    "Dvorkin"
+    "Dvorkin",
+    "awesomplete"
   ]
 }
