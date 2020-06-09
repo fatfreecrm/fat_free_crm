@@ -1,9 +1,9 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.4.7
-  - 2.5.6
-  - 2.6.4
+  - 2.5.7
+  - 2.6.5
+  - 2.7.1
 
 dist: bionic
 
@@ -22,26 +22,26 @@ env:
 matrix:
   fast_finish: true
   exclude:
-    - rvm: 2.5.6
+    - rvm: 2.5.7
       env: DB=postgres TEST_SUITE=rubocop
-    - rvm: 2.6.4
+    - rvm: 2.6.5
       env: DB=postgres TEST_SUITE=rubocop
   allow_failures:
-    - rvm: 2.4.7
+    - rvm: 2.5.7
       env: DB=postgres TEST_SUITE="rake spec:features"
-    - rvm: 2.5.6
+    - rvm: 2.6.5
       env: DB=postgres TEST_SUITE="rake spec:features"
-    - rvm: 2.6.4
+    - rvm: 2.7.1
       env: DB=postgres TEST_SUITE="rake spec:features"
-    - rvm: 2.4.7
+    - rvm: 2.5.7
       env: DB=mysql TEST_SUITE="rake spec:models"
-    - rvm: 2.4.7
+    - rvm: 2.5.7
       env: DB=sqlite TEST_SUITE="rake spec:models"
-    - rvm: 2.5.6
+    - rvm: 2.6.5
+      env: DB=sqlite TEST_SUITE="rake spec:models"
+    - rvm: 2.7.1
       env: DB=mysql TEST_SUITE="rake spec:models"
-    - rvm: 2.5.6
-      env: DB=sqlite TEST_SUITE="rake spec:models"
-    - rvm: 2.6.4
+    - rvm: 2.7.1
       env: DB=sqlite TEST_SUITE="rake spec:models"
 
 addons:

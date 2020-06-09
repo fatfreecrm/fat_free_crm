@@ -33,6 +33,12 @@ Mailers related to user password reset, etc. are changed to use the defaults of 
 PaperClip now only depends on `aws-sdk-s3` instead of `aws-sdk`. For more info see https://github.com/thoughtbot/paperclip/pull/2481.
 Replace the Cocaine gem with Terrapin. https://github.com/thoughtbot/terrapin/ Apart from the namespace change, this is a drop in replacement.
 
+#### Rails 5.2
+The underlying framework is now rails 5.2.*
+
+#### Ruby 2.4 deprecated
+Ruby 2.4 has reached end of life and is no longer activity tested against.
+
 #### Other changes
  * #794 Fix defect with unpermitted params in advanced search
  * 2bc6184779a26070496e6f4caefa0cc9ba555d7b Remove broken support for delete links on arrays.
