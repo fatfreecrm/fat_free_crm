@@ -9,7 +9,7 @@
   - if entity.account.present?
     .form-group.one-third
       %label #{t :facility}:
-      = select("contact[assignments_attributes][#{time = Time.now.to_i}][facility]", :facility_id, options_from_collection_for_select(entity.account&.facilities, 'id', 'name'), {include_blank: true}, {class: 'form-control'})
+      = select_tag("contact[assignments_attributes][#{time = Time.now.to_i}]facility_id", options_from_collection_for_select(entity.account&.facilities, 'id', 'name'), {include_blank: true, class: 'form-control'})
   .one-sixth.shove-down
     = link_to_function(raw("<i class='fa fa-2x fa-trash'></i>"), "this.closest('.idc-form-group').remove()")
 
