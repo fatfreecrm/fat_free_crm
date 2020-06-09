@@ -7,51 +7,42 @@
           = @contact.full_name
       .form-group.one-quarter
         %label #{t :phone}:
-        = @contact.phone
-      .form-group.one-half
+        .form-control
+          = @contact.phone
+      .form-group.one-third
         %label #{t :email}:
-        = @contact.email
+        .form-control
+          = @contact.email
       - @contact.exposures.each do |exposure|
-        .row
-          .col-md-3
-            exposed_on
-            = exposure.started_at
-          .col-md-3
-            at
-            = exposure.facility.name
-
-    = fields_for(:opportunity, opportunity = FatFreeCrm::Opportunity.new) do |o|
-      .container
-        .form-row
-          .form-group
-            .label #{t :case_type}
-            = select_tag("opportunity_id", options_for_select(FatFreeCrm::Opportunity.all.pluck(:name, :id)), { class: 'form-control' })
-        .form-row.tested-positive
-          .form-group
-            .label #{t :symptom_onset_at}:
-            = datetime_field_tag("opportunity[symptom_onset_at]", nil, autocomplete: :off, required: true, class: 'date form-control')
-        .form-row.exposed.d-none
-          .col
-            .label #{t :source_name}:
-            = text_field_tag("opportunity[source_name]", nil, class: 'form-control')
-          .col
-            .label #{t :source_relationship}:
-            = select_tag("opportunity[source_relationship]", options_for_select(Setting.unroll(:source_relationship)), class: 'form-control')
-
-        .form-row.exposed.d-none
-          .col
-            .label #{t :source_start_at}:
-            = datetime_field_tag("opportunity[source_start_at]", nil, class: 'form-control')
-          .col
-            .label #{t :source_end_at}:
-            = datetime_field_tag("opportunity[source_end_at]", nil, class: 'form-control')
-          .col
-            .label #{t :exposure_level}:
-            = select_tag("opportunity[exposure_level]", options_for_select(Setting.unroll(:exposure_level)), class: 'form-control')
-
-    .buttonbar
-      = f.submit t(:exposed_contact), :class => 'btn btn-primary'
-      = link_to_cancel expose_contact_path(@contact), :class => 'btn btn-link'
+        exposed_on
+        = exposure.started_at
+        at
+        = exposure.facility.name
+      = fields_for(:opportunity, opportunity = FatFreeCrm::Opportunity.new) do |o|
+        .form-group.one-half
+          .label #{t :case_type}
+          = select_tag("opportunity_id", options_for_select(FatFreeCrm::Opportunity.all.pluck(:name, :id)), { class: 'form-control' })
+        .form-group
+          .label #{t :symptom_onset_at}:
+          = datetime_field_tag("opportunity[symptom_onset_at]", nil, autocomplete: :off, required: true, class: 'date form-control')
+        .exposed.d-none
+          .label #{t :source_name}:
+          = text_field_tag("opportunity[source_name]", nil, class: 'form-control')
+        .form-group.one-quarter
+          .label #{t :source_relationship}:
+          = select_tag("opportunity[source_relationship]", options_for_select(Setting.unroll(:source_relationship)), class: 'form-control')
+        .exposed.d-none
+          .label #{t :source_start_at}:
+          = datetime_field_tag("opportunity[source_start_at]", nil, class: 'form-control')
+        .form-group.one-quarter
+          .label #{t :source_end_at}:
+          = datetime_field_tag("opportunity[source_end_at]", nil, class: 'form-control')
+        .form-group.one-quarter
+          .label #{t :exposure_level}:
+          = select_tag("opportunity[exposure_level]", options_for_select(Setting.unroll(:exposure_level)), class: 'form-control')
+      .buttonbar.full-width
+        = f.submit t(:exposed_contact), :class => 'btn btn-primary'
+        = link_to_cancel expose_contact_path(@contact), :class => 'btn btn-link'
 
 = javascript_include_tag("awesomplete")
 = stylesheet_link_tag("awesomplete")
