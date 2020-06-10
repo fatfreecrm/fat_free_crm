@@ -61,6 +61,14 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
 }
 
+.idc-panel.nested {
+  border-top: none;
+  padding: 0;
+  background-color: transparent;
+  margin-top: 0;
+  box-shadow: none;
+}
+
 .idc-addresses {
   grid-column: -1 / 1;
 }

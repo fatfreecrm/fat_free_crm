@@ -13,7 +13,96 @@
 ActiveRecord::Schema.define(version: 2020_06_10_100912) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "address_standardizer"
+  enable_extension "address_standardizer_data_us"
+  enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
+  enable_extension "postgis"
+  enable_extension "postgis_sfcgal"
+  enable_extension "postgis_tiger_geocoder"
+  enable_extension "postgis_topology"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "addr", primary_key: "gid", id: :serial, force: :cascade do |t|
+    t.bigint "tlid"
+    t.string "fromhn", limit: 12
+    t.string "tohn", limit: 12
+    t.string "side", limit: 1
+    t.string "zip", limit: 5
+    t.string "plus4", limit: 4
+    t.string "fromtyp", limit: 1
+    t.string "totyp", limit: 1
+    t.integer "fromarmid"
+    t.integer "toarmid"
+    t.string "arid", limit: 22
+    t.string "mtfcc", limit: 5
+    t.string "statefp", limit: 2
+    t.index ["tlid", "statefp"], name: "idx_tiger_addr_tlid_statefp"
+    t.index ["zip"], name: "idx_tiger_addr_zip"
+  end
+
+# Could not dump table "addrfeat" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+# Could not dump table "bg" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+# Could not dump table "county" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+  create_table "county_lookup", primary_key: ["st_code", "co_code"], force: :cascade do |t|
+    t.integer "st_code", null: false
+    t.string "state", limit: 2
+    t.integer "co_code", null: false
+    t.string "name", limit: 90
+    t.index "soundex((name)::text)", name: "county_lookup_name_idx"
+    t.index ["state"], name: "county_lookup_state_idx"
+  end
+
+  create_table "countysub_lookup", primary_key: ["st_code", "co_code", "cs_code"], force: :cascade do |t|
+    t.integer "st_code", null: false
+    t.string "state", limit: 2
+    t.integer "co_code", null: false
+    t.string "county", limit: 90
+    t.integer "cs_code", null: false
+    t.string "name", limit: 90
+    t.index "soundex((name)::text)", name: "countysub_lookup_name_idx"
+    t.index ["state"], name: "countysub_lookup_state_idx"
+  end
+
+# Could not dump table "cousub" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+  create_table "direction_lookup", primary_key: "name", id: :string, limit: 20, force: :cascade do |t|
+    t.string "abbrev", limit: 3
+    t.index ["abbrev"], name: "direction_lookup_abbrev_idx"
+  end
+
+# Could not dump table "edges" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+# Could not dump table "faces" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false

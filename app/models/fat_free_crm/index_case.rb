@@ -26,6 +26,5 @@ module FatFreeCrm
     accepts_nested_attributes_for :investigations, allow_destroy: true
 
   	sortable by: ["name ASC", "rating DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
-
   end
 end
