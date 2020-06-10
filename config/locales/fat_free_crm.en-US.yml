@@ -410,6 +410,7 @@ en-US:
   index_cases_small: index cases
   save_index_case: Save Index Case
   index_case: Index Case
+  case_number: Case Number
 
     # Views -> Facilities
   #----------------------------------------------------------------------------
