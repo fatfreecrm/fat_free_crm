@@ -22,5 +22,8 @@
     .form-group.one-quarter
       %label #{t :mtb_projected_return_date}:
       = f.date_field(:projected_return_date, class: 'form-control')
+    .form-group.one-quarter
+      %label #{t :mtb_case_number}:
+      = f.text_field(:case_number, class: 'form-control')
 
     = hook(:index_case_top_section_bottom, self, f: f)

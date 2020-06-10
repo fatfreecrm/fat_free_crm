@@ -70,6 +70,7 @@ module FatFreeCrm
       "FatFreeCrm::LeadObserver",
       "FatFreeCrm::OpportunityObserver",
       "FatFreeCrm::TaskObserver",
+      "FatFreeCrm::IndexCaseObserver",
       "FatFreeCrm::EntityObserver"
       # :lead_observer, :opportunity_observer, :task_observer, :entity_observer
     ]

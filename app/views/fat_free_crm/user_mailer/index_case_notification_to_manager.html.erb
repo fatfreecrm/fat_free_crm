@@ -1,0 +1,44 @@
+<html>
+	<span align="left"><%= Date.today.strftime('%m/%d/%Y') %></span><br><br>
+	<body>
+	  <b>Subject: COVID-19 Test Positive</b>
+	  <br /><br />
+	  <div>
+	  	The individual below has reported testing positive for COVID-19. Following is known information about the employee, exposure timeline and business location.  An investigation and contact trace effort has been launched to identify additional exposures.
+	  </div>
+	  <br />
+	  <div>
+	  	<b>Employee Details:</b>
+			<table>
+			  <tr>
+			    <td>Name: <%= index_case.contact.full_name %></td>
+			  </tr>
+			  <tr>
+			    <td>Email: <%= index_case.contact.email %></td>
+			  </tr>
+			  <tr>
+			    <td>Phone: <%= index_case.contact.phone || index_case.contact.mobile %></td>
+			  </tr>
+			  <tr>
+			    <td>Symptom Onset Date: <%= index_case.window_start_date %></td>
+			  </tr>
+			  <tr>
+			    <td>Projected Return Date: <%= index_case.projected_return_date %></td>
+			  </tr>
+			</table>
+	  </div><br />
+	  <div>
+	  	<b>Employee's Facility Address:</b><br/>
+	  	<% facility = index_case.contact.assignments.current.first.facility %>
+	  	<% if facility.present? && facility.address.present? %>
+	  		<%= facility.name&.titleize %><br />
+	  		<%= facility.address.street1 %><br />
+	  		<%if acility.address.street2.present? %>
+	  			<%= facility.address.street2 %><br />
+	  		<% end %>
+	  		<%= facility.address.city&.titleize %>, <%= facility.address.state&.titleize %> - <%= facility.address.zipcode %><br />
+	  	<% end %>
+	  </div>
+	</body>
+</html>
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_04_111522) do
+ActiveRecord::Schema.define(version: 2020_06_10_100912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,6 +200,11 @@ ActiveRecord::Schema.define(version: 2020_06_04_111522) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "source_name"
+    t.string "source_relationship"
+    t.datetime "source_start_at"
+    t.datetime "source_end_at"
+    t.string "exposure_level"
     t.index ["contact_id", "opportunity_id"], name: "contact_opportunities_index"
   end
 
@@ -296,8 +301,28 @@ ActiveRecord::Schema.define(version: 2020_06_04_111522) do
     t.index ["mediator_id", "mediator_type"], name: "emails_mediator_id_n_type"
   end
 
+  create_table "fat_free_crm_exposures", force: :cascade do |t|
+    t.bigint "index_case_id"
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.string "level"
+    t.bigint "contact_id"
+    t.bigint "facility_id"
+    t.boolean "used_mask"
+    t.bigint "user_id"
+    t.bigint "assigned_to_id"
+    t.text "subscribed_users"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assigned_to_id"], name: "index_fat_free_crm_exposures_on_assigned_to_id"
+    t.index ["contact_id"], name: "index_fat_free_crm_exposures_on_contact_id"
+    t.index ["facility_id"], name: "index_fat_free_crm_exposures_on_facility_id"
+    t.index ["index_case_id"], name: "index_fat_free_crm_exposures_on_index_case_id"
+    t.index ["user_id"], name: "index_fat_free_crm_exposures_on_user_id"
+  end
+
   create_table "fat_free_crm_facilities", force: :cascade do |t|
-    t.string "facility_kind", array: true
+    t.string "facility_kind"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
@@ -374,8 +399,31 @@ ActiveRecord::Schema.define(version: 2020_06_04_111522) do
     t.datetime "updated_at", null: false
     t.string "category"
     t.bigint "opportunity_id"
+    t.datetime "window_start_date"
+    t.datetime "window_end_date"
+    t.datetime "opened_at"
+    t.datetime "closed_at"
+    t.date "projected_return_date"
+    t.bigint "contact_id"
+    t.text "subscribed_users"
+    t.string "case_number"
+    t.index ["contact_id"], name: "index_fat_free_crm_index_cases_on_contact_id"
     t.index ["opportunity_id"], name: "index_fat_free_crm_index_cases_on_opportunity_id"
     t.index ["user_id"], name: "index_fat_free_crm_index_cases_on_user_id"
+  end
+
+  create_table "fat_free_crm_investigations", force: :cascade do |t|
+    t.bigint "index_case_id"
+    t.string "status"
+    t.datetime "conducted_at"
+    t.text "subscribed_users"
+    t.bigint "user_id"
+    t.bigint "assigned_to_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assigned_to_id"], name: "index_fat_free_crm_investigations_on_assigned_to_id"
+    t.index ["index_case_id"], name: "index_fat_free_crm_investigations_on_index_case_id"
+    t.index ["user_id"], name: "index_fat_free_crm_investigations_on_user_id"
   end
 
   create_table "fat_free_crm_leads", id: :serial, force: :cascade do |t|
@@ -444,7 +492,11 @@ ActiveRecord::Schema.define(version: 2020_06_04_111522) do
     t.datetime "updated_at"
     t.string "background_info"
     t.text "subscribed_users"
+    t.datetime "start_on"
+    t.datetime "end_on"
+    t.bigint "facility_id"
     t.index ["assigned_to"], name: "index_fat_free_crm_opportunities_on_assigned_to"
+    t.index ["facility_id"], name: "index_fat_free_crm_opportunities_on_facility_id"
     t.index ["user_id", "name", "deleted_at"], name: "id_name_deleted", unique: true
   end
 
