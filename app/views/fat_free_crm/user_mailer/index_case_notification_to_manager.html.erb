@@ -33,7 +33,7 @@
 	  	<% if facility.present? && facility.address.present? %>
 	  		<%= facility.name&.titleize %><br />
 	  		<%= facility.address.street1 %><br />
-	  		<%if acility.address.street2.present? %>
+	  		<%if facility.address.street2.present? %>
 	  			<%= facility.address.street2 %><br />
 	  		<% end %>
 	  		<%= facility.address.city&.titleize %>, <%= facility.address.state&.titleize %> - <%= facility.address.zipcode %><br />
