@@ -17,6 +17,5 @@
 
 - else  
   $('##{id}').html('#{ j render(partial: "expose") }');
-  crm.create_or_select_index_case(#{ request.referer =~ /\/index_case\// || @index_case&.id.blank? });
   $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();

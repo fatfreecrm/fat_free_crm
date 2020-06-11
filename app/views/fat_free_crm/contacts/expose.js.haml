@@ -32,9 +32,11 @@
     var tested_positive = event.currentTarget.querySelector("option:checked").text == "Tested Positive";
     if (tested_positive) {
     tested_positive_inputs.style.display = 'grid';
+    tested_positive_inputs.querySelector('input').addAttribute('required')
     exposed_inputs.style.display = 'none';
     } else {
     tested_positive_inputs.style.display = 'none';
+    tested_positive_inputs.querySelector('input').removeAttribute('required')
     exposed_inputs.style.display = 'grid';
     }
     })
@@ -45,5 +47,4 @@
     crm.flip_form('expose_#{entity_name}');
     crm.set_title('expose_#{entity_name}', "#{t :expose} #{h @entity.full_name}");
 
-  crm.create_or_select_index_case(#{ request.referer =~ /\/index_case\// || @index_case&.id.blank? });
   $('#new_#{entity_name} input[type!=hidden]').first().focus();
