@@ -9,7 +9,7 @@
   = render "fat_free_crm/contacts/extra",       f: f
   = render "fat_free_crm/fields/edit_custom_field_group", f: f
   = render "fat_free_crm/contacts/identifiers", f: f, entity: @contact
-  = render "fat_free_crm/contacts/contact_assignments", f: f
+  = render "fat_free_crm/contacts/contact_assignments", f: f, entity: @contact
   = render "fat_free_crm/contacts/absences",    f: f, entity: @contact
   = render "fat_free_crm/shared/add_comment",   f: f
   = render "fat_free_crm/contacts/web",         f: f
@@ -20,3 +20,4 @@
   .buttonbar
     = f.submit t(:create_contact), onclick: "crm.create_contact()", :class => 'btn btn-primary'
     = link_to_cancel new_contact_path, :class => 'btn btn-link'
+awefw
