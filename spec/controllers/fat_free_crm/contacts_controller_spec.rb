@@ -465,28 +465,37 @@ module FatFreeCrm
 
         it "should update contact with new absences, assignments, identifiers, and exposures [opportunties]" do
           @contact = create(:contact, id: 42, access: "Public")
-          @contact.assignments.destroy_all
+          @facility = create(:facility, user: current_user)
           expect(@contact.assignments.count).to eq(0)
-          absence_params = {kind: '', start_on: '', end_on: ''}
-          assignment_params = {:"12345" => {"start_on" => "2020-08-10", "end_on" => "2020-11-10"}}
-          identifier_params = {}
+          absence_params = { "0" => {kind: 'covid_19_isolation', start_on: "2020-08-10", end_on: "2020-11-10"}}
+          assignment_params = { "0" => {"start_on" => "2020-08-10", "end_on" => "2020-11-10", facility_id: @facility.id}}
+          identifier_params = {"0" => {kind: "employee_id", item: "12344"}}
+          opportunity_params = {}
+          params = {
+            id: 42,
+            contact: {
+              first_name: "Hello",
+              access: "Shared",
+              user_ids: [7, 8],
+              assignments_attributes: assignment_params,
+              absences_attributes: absence_params,
+              opportunities_attributes: opportunity_params,
+              identifiers_attributes: identifier_params
+
+            },
+            account: {},
+          }
           put(
             :update,
-            params: {
-              id: 42,
-              contact: {
-                first_name: "Hello",
-                access: "Shared",
-                user_ids: [7, 8]
-              },
-              account: {} ,
-              assignments_attributes: assignment_params,
-            },
+            params: params,
             xhr: true
           )
           expect(assigns[:contact].first_name).to eq("Hello")
           @contact.reload
-          expect(assigns[:contact].assignments.present?).to eq(true)
+          expect(@contact.assignments.last.facility_id).to eq(@facility.id)
+          expect(@contact.absences.last.kind).to eq("covid_19_isolation")
+          expect(@contact.identifiers.last.kind).to eq("employee_id")
+          expect(response).to render_template("contacts/update")
         end
 
         describe "contact got deleted or otherwise unavailable" do
