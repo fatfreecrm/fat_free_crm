@@ -137,11 +137,12 @@ module FatFreeCrm
     end
 
     def new_absence
-      @contact ||= FatFreeCrm::Absence.new
+      @contact ||= FatFreeCrm::Contact.new
       @absence = @contact.absences.build
     end
 
     def new_exposure
+      @contact ||= FatFreeCrm::Contact.new
       @exposure = @contact.opportunities.build
     end
 

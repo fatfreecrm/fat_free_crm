@@ -463,6 +463,32 @@ module FatFreeCrm
           expect(assigns[:contact]).to eq(@contact)
         end
 
+        it "should update contact with new absences, assignments, identifiers, and exposures [opportunties]" do
+          @contact = create(:contact, id: 42, access: "Public")
+          @contact.assignments.destroy_all
+          expect(@contact.assignments.count).to eq(0)
+          absence_params = {kind: '', start_on: '', end_on: ''}
+          assignment_params = {:"12345" => {"start_on" => "2020-08-10", "end_on" => "2020-11-10"}}
+          identifier_params = {}
+          put(
+            :update,
+            params: {
+              id: 42,
+              contact: {
+                first_name: "Hello",
+                access: "Shared",
+                user_ids: [7, 8]
+              },
+              account: {} ,
+              assignments_attributes: assignment_params,
+            },
+            xhr: true
+          )
+          expect(assigns[:contact].first_name).to eq("Hello")
+          @contact.reload
+          expect(assigns[:contact].assignments.present?).to eq(true)
+        end
+
         describe "contact got deleted or otherwise unavailable" do
           it "should reload current page is the contact got deleted" do
             @contact = create(:contact, user: current_user)
@@ -703,6 +729,79 @@ module FatFreeCrm
         get :redraw, params: { per_page: 1, sort_by: "first_name" }, xhr: true
         expect(assigns(:contacts)).to eq([@contacts.first])
         expect(response).to render_template("contacts/index")
+      end
+    end
+
+    context "records referencing contacts" do
+      describe "responding to GET new_absence" do
+        it "should build an absence for an existing contact" do
+          @contact = create(:contact, first_name: "Alice", user: current_user)
+          get :new_absence, params: {id: @contact.id}, xhr: true
+          expect(assigns(:contact)).to eq(@contact)
+          expect(assigns(:absence).contact_id).to eq(@contact.id)
+          expect(response).to render_template("fat_free_crm/contacts/new_absence")
+        end
+
+        it "should build a new contact and absence if no persisted contact" do
+          get :new_absence, params: {}, xhr: true
+          expect(assigns(:contact).persisted?).to eq(false)
+          expect(assigns(:contact).absences).to include(assigns(:absence))
+          expect(response).to render_template("fat_free_crm/contacts/new_absence")
+        end
+      end
+
+      describe "responding to GET new_assignment" do
+        it "should build an assignment for an existing contact" do
+          @contact = create(:contact, first_name: "Alice", user: current_user)
+          get :new_assignment, params: {id: @contact.id}, xhr: true
+          expect(assigns(:contact)).to eq(@contact)
+          expect(assigns(:assignment).contact_id).to eq(@contact.id)
+          expect(response).to render_template("fat_free_crm/contacts/new_assignment")
+
+        end
+
+        it "should build a new contact and assignment if no persisted contact" do
+          get :new_assignment, params: {}, xhr: true
+          expect(assigns(:contact).persisted?).to eq(false)
+          expect(assigns(:contact).assignments).to include(assigns(:assignment))
+          expect(response).to render_template("fat_free_crm/contacts/new_assignment")
+        end
+      end
+
+      describe "responding to GET new_identifier" do
+        it "should build an identifier for an existing contact" do
+          @contact = create(:contact, first_name: "Alice", user: current_user)
+          get :new_identifier, params: {id: @contact.id}, xhr: true
+          expect(assigns(:contact)).to eq(@contact)
+          expect(assigns(:identifier).identifiable_id).to eq(@contact.id)
+          expect(response).to render_template("fat_free_crm/contacts/new_identifier")
+        end
+
+        it "should build a new contact and identifier if no persisted contact" do
+          get :new_identifier, params: {}, xhr: true
+          expect(assigns(:contact).persisted?).to eq(false)
+          expect(assigns(:contact).identifiers).to include(assigns(:identifier))
+          expect(response).to render_template("fat_free_crm/contacts/new_identifier")
+        end
+      end
+
+      describe "responding to GET new_exposure" do
+        it "should build an exposure for an existing contact" do
+          @contact = create(:contact, first_name: "Alice", user: current_user)
+          get :new_exposure, params: {id: @contact.id}, xhr: true
+          expect(assigns(:contact)).to eq(@contact)
+          expect(assigns(:exposure).class).to eq(FatFreeCrm::Opportunity)
+          expect(response).to render_template("fat_free_crm/contacts/new_exposure")
+        end
+
+        it "should build a new contact and exposure if no persisted contact" do
+          @contact = create(:contact, first_name: "Alice", user: current_user)
+          get :new_exposure, params: {id: @contact.id}, xhr: true
+          expect(assigns(:contact)).to eq(@contact)
+          # Exposures are called opportunities in the DB structure
+          expect(assigns(:contact).opportunities).to include(assigns(:exposure))
+          expect(response).to render_template("fat_free_crm/contacts/new_exposure")
+        end
       end
     end
   end
