@@ -117,6 +117,7 @@ FatFreeCrm::Engine.routes.draw do
       get :new_identifier
       get :new_assignment
       get :new_absence
+      get :new_exposure
     end
     member do
       put :attach

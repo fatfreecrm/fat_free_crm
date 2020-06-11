@@ -804,9 +804,8 @@ module FatFreeCrm
         end
 
         it "should build a new contact and exposure if no persisted contact" do
-          @contact = create(:contact, first_name: "Alice", user: current_user)
-          get :new_exposure, params: {id: @contact.id}, xhr: true
-          expect(assigns(:contact)).to eq(@contact)
+          get :new_exposure, params: {}, xhr: true
+          expect(assigns(:contact).persisted?).to eq(false)
           # Exposures are called opportunities in the DB structure
           expect(assigns(:contact).opportunities).to include(assigns(:exposure))
           expect(response).to render_template("fat_free_crm/contacts/new_exposure")
