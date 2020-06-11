@@ -26,17 +26,15 @@
     $('##{id}').html('#{ j render(partial: "expose") }');
 
     var input = document.getElementById("opportunity_id");
-    var exposed_inputs = document.getElementById('exposed');
-    var tested_positive_inputs = document.getElementById('tested-positive');
     input.addEventListener("change", function(event) {
+    var exposed_inputs = document.getElementById('exposed');
+    var tested_positive_inputs = document.getElementById('tested-positive');  
     var tested_positive = event.currentTarget.querySelector("option:checked").text == "Tested Positive";
     if (tested_positive) {
     tested_positive_inputs.style.display = 'grid';
-    tested_positive_inputs.querySelector('input').addAttribute('required')
     exposed_inputs.style.display = 'none';
     } else {
     tested_positive_inputs.style.display = 'none';
-    tested_positive_inputs.querySelector('input').removeAttribute('required')
     exposed_inputs.style.display = 'grid';
     }
     })
