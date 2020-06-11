@@ -25,7 +25,7 @@
         #tested-positive.idc-panel.full-width.nested
           .form-group.one-quarter
             .label #{t :symptom_onset_at}:
-            = datetime_field_tag("opportunity[symptom_onset_at]", nil, autocomplete: :off, required: true, class: 'date form-control')
+            = datetime_field_tag("opportunity[symptom_onset_at]", nil, autocomplete: :off, required: true, class: 'date form-control', id: 'symptom-onset')
         #exposed.idc-panel.full-width.nested
           .form-group.one-quarter
             .label #{t :source_name}:
