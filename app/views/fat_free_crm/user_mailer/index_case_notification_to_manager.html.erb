@@ -27,18 +27,18 @@
 			  </tr>
 			</table>
 	  </div><br />
-	  <div>
-	  	<b>Employee's Facility Address:</b><br/>
-	  	<% facility = index_case.contact.assignments.current.first.facility %>
-	  	<% if facility.present? && facility.address.present? %>
-	  		<%= facility.name&.titleize %><br />
-	  		<%= facility.address.street1 %><br />
-	  		<%if facility.address.street2.present? %>
-	  			<%= facility.address.street2 %><br />
-	  		<% end %>
-	  		<%= facility.address.city&.titleize %>, <%= facility.address.state&.titleize %> - <%= facility.address.zipcode %><br />
-	  	<% end %>
-	  </div>
+	  <% facility = index_case.contact.assignments.current.first&.facility %>
+	  <% if facility.present? && facility.address.present? %>
+		  <div>
+				<b>Employee's Facility Address:</b><br/>
+					<%= facility.name&.titleize %><br />
+					<%= facility.address.street1 %><br />
+					<%if facility.address.street2.present? %>
+						<%= facility.address.street2 %><br />
+					<% end %>
+					<%= facility.address.city&.titleize %>, <%= facility.address.state&.titleize %> - <%= facility.address.zipcode %><br />
+			</div>
+		<% end %>
 	</body>
 </html>
 
