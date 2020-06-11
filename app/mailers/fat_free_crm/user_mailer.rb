@@ -26,6 +26,8 @@ module FatFreeCrm
 
     def index_case_notification_to_manager(entity)
       @entity_url = url_for(entity)
+      @facility =  entity.contact.assignments.current.first&.facility
+      @account = entity.contact.account
       if manager_email.present?
         mail({to: manager_email, subject: "COVID-19 Test Positive", from: from_address}) do |format|
           format.html {render "index_case_notification_to_manager", locals: {index_case: entity}}
@@ -36,7 +38,7 @@ module FatFreeCrm
     private
 
     def from_address
-      Setting.dig(:smtp, :from).presence || "Fat Free CRM <noreply@fatfreecrm.com>"
+      Setting.dig(:smtp, :from).presence || "COMPASS Contact Tracing <noreply@fatfreecrm.com>"
     end
 
     def manager_email

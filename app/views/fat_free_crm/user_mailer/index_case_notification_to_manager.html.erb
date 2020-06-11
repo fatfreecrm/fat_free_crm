@@ -4,41 +4,22 @@
 	  <b>Subject: COVID-19 Test Positive</b>
 	  <br /><br />
 	  <div>
-	  	The individual below has reported testing positive for COVID-19. Following is known information about the employee, exposure timeline and business location.  An investigation and contact trace effort has been launched to identify additional exposures.
+			An individual in your organization has reported testing positive for COVID-19. Following is known information about the exposure timeline and business location. An investigation and contact trace effort has been launched to identify additional exposures.
 	  </div>
+	  <table>
+		  <tr>
+		    <td>Division: <%= @account&.division_name || @account&.reports_to&.name %></td>
+		  </tr>
+		  <tr>
+		    <td>Sub Division: <%= @account&.name %></td>
+		  </tr>
+		  <tr>
+		    <td>Location: <%= @facility&.name %> </td>
+		  </tr>
+		</table>
 	  <br />
-	  <div>
-	  	<b>Employee Details:</b>
-			<table>
-			  <tr>
-			    <td>Name: <%= index_case.contact.full_name %></td>
-			  </tr>
-			  <tr>
-			    <td>Email: <%= index_case.contact.email %></td>
-			  </tr>
-			  <tr>
-			    <td>Phone: <%= index_case.contact.phone || index_case.contact.mobile %></td>
-			  </tr>
-			  <tr>
-			    <td>Symptom Onset Date: <%= index_case.window_start_date %></td>
-			  </tr>
-			  <tr>
-			    <td>Projected Return Date: <%= index_case.projected_return_date %></td>
-			  </tr>
-			</table>
-	  </div><br />
-	  <% facility = index_case.contact.assignments.current.first&.facility %>
-	  <% if facility.present? && facility.address.present? %>
-		  <div>
-				<b>Employee's Facility Address:</b><br/>
-					<%= facility.name&.titleize %><br />
-					<%= facility.address.street1 %><br />
-					<%if facility.address.street2.present? %>
-						<%= facility.address.street2 %><br />
-					<% end %>
-					<%= facility.address.city&.titleize %>, <%= facility.address.state&.titleize %> - <%= facility.address.zipcode %><br />
-			</div>
-		<% end %>
+	  Please click on the link to see employee details
+	  <br />
+	   <a href=@entity_url target="_blank"><%= index_case.contact.full_name %></a>
 	</body>
 </html>
-
