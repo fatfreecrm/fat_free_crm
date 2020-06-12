@@ -1,3 +1,24 @@
+# Attributes
+# id: nil
+# user_id: nil,
+# assigned_to: nil,
+# access: nil,
+# source: nil,
+# background_info: nil,
+# created_at: nil,
+# updated_at: nil,
+# category: nil,
+# opportunity_id: nil,
+# window_start_date: nil,
+# window_end_date: nil,
+# opened_at: nil,
+# closed_at: nil,
+# projected_return_date: nil,
+# contact_id: nil,
+# subscribed_users: #<Set: {}>,
+# case_number: nil,
+# tag_list: nil> 
+
 module FatFreeCrm
   class IndexCase < ActiveRecord::Base
   	belongs_to :user
