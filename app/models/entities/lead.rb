@@ -50,7 +50,7 @@ class Lead < ActiveRecord::Base
 
   serialize :subscribed_users, Set
 
-  accepts_nested_attributes_for :business_address, allow_destroy: true
+  accepts_nested_attributes_for :business_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 
   scope :state, lambda { |filters|
     where(['status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters])
