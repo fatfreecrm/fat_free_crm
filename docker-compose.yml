@@ -14,12 +14,15 @@ services:
       PASSENGER_APP_ENV: 'production'
       DB_DATABASE: 'fat_free_crm_production'
       DB_USERNAME: 'postgres'
-      DB_PASSWORD: ''
+      DB_PASSWORD: 'password'
       DB_HOST: 'db'
       DB_PORT: 5432
   db:
-    image: postgres:9.5
+    image: postgres:11.8
     restart: always
+    environment:
+      POSTGRES_DB: 'fat_free_crm_production'
+      POSTGRES_PASSWORD: 'password'
     volumes:
       - pgdata:/var/lib/postgresql/data
 volumes:
