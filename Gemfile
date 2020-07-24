@@ -90,7 +90,7 @@ gem 'sass-rails', '~> 5.0.3' # sass-rails 6 requires GCC 4.5+
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
-gem 'therubyracer', platform: :ruby unless ENV["CI"]
+# gem 'therubyracer', platform: :ruby unless ENV["CI"]
 gem 'nokogiri', '>= 1.8.1'
 gem 'activemodel-serializers-xml'
 gem 'bootsnap', require: false
@@ -98,5 +98,5 @@ gem 'devise', '~>4.6'
 gem 'devise-i18n'
 gem "devise-encryptable"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'activejob', '~> 5.2.0'
+gem 'activejob'
 gem 'ransack_ui', path: 'vendor/gems/ransack_ui-1.3.4' # Vendored until our fix is merged and released
