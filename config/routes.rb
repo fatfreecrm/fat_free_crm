@@ -164,6 +164,11 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    get '/:model/:id', to: 'objects#show'
+    post '/:model', to: 'objects#create'
+  end
+
   namespace :admin do
     resources :groups
 
