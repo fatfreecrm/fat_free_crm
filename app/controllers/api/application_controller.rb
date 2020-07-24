@@ -21,7 +21,7 @@ module Api
 
       def get_bearer_token
         pattern = /^Bearer /
-        header = request.authorization
+        header = request.env['Authorization']
         header.gsub(pattern, '') if header && header.match(pattern)
       end
   end

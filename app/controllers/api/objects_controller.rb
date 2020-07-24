@@ -6,9 +6,13 @@ module Api
     ALLOWED_MODELS = ['Account', 'Contact', 'Lead'].freeze
 
     def show
-      @object = @model.find(params[:id])
+      begin
+        @object = @model.find(params[:id])
 
-      render json: @object
+        render json: @object
+      rescue => e
+        render json: { error: e.message }, status: :bad_request
+      end
     end
 
     def create
