@@ -3,6 +3,7 @@ module Api
     before_action :get_model
 
     TIMESTAMP_COLUMNS = ['created_at', 'updated_at', 'deleted_at'].freeze
+    ALLOWED_MODELS = ['Account', 'Contact', 'Lead'].freeze
 
     def show
       @object = @model.find(params[:id])
@@ -33,6 +34,8 @@ module Api
 
       def get_model
         @model = params[:model].singularize.capitalize.constantize
+
+        raise "#{@model} is not an allowed model" unless ALLOWED_MODELS.include?(@model.to_s)
       end
 
   end
