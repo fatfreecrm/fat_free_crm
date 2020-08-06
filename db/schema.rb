@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_01_07_082701) do
+ActiveRecord::Schema.define(version: 2020_08_06_004152) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
@@ -223,6 +223,7 @@ ActiveRecord::Schema.define(version: 2018_01_07_082701) do
     t.integer "pair_id"
     t.text "settings"
     t.integer "minlength", limit: 4, default: 0
+    t.string "pattern"
     t.index ["field_group_id"], name: "index_fields_on_field_group_id"
     t.index ["name"], name: "index_fields_on_name"
   end
