@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_004152) do
+ActiveRecord::Schema.define(version: 2020_08_06_004459) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
@@ -224,6 +224,10 @@ ActiveRecord::Schema.define(version: 2020_08_06_004152) do
     t.text "settings"
     t.integer "minlength", limit: 4, default: 0
     t.string "pattern"
+    t.string "autofocus"
+    t.string "autocomplete"
+    t.string "list"
+    t.string "multiple"
     t.index ["field_group_id"], name: "index_fields_on_field_group_id"
     t.index ["name"], name: "index_fields_on_name"
   end
