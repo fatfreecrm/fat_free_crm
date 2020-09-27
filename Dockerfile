@@ -19,6 +19,7 @@ RUN apt-get update && \
 	apt-get install -y imagemagick tzdata && \
 	apt-get autoremove -y && \
 	cp config/database.postgres.docker.yml config/database.yml && \
+	gem install bundler && \
 	bundle install --deployment && \
 	bundle exec rails assets:precompile
 
