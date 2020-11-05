@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_01_07_082701) do
+ActiveRecord::Schema.define(version: 2020_11_03_150431) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
@@ -239,6 +239,13 @@ ActiveRecord::Schema.define(version: 2018_01_07_082701) do
     t.index ["group_id", "user_id"], name: "index_groups_users_on_group_id_and_user_id"
     t.index ["group_id"], name: "index_groups_users_on_group_id"
     t.index ["user_id"], name: "index_groups_users_on_user_id"
+  end
+
+  create_table "imported_files", force: :cascade do |t|
+    t.string "filename", limit: 64, default: "", null: false
+    t.string "md5sum", limit: 32, default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "leads", force: :cascade do |t|
