@@ -30,7 +30,7 @@ class ImportedFile < ActiveRecord::Base
   private
 
   def filetype
-    valid = File.open(filename).type_from_file_command == "text/xml" rescue ""
+    valid = File.open(filename).type_from_file_command == "application/vnd.ms-excel" rescue ""
     if valid == ""
       errors.add(:filename, "no such file")
     end
