@@ -98,6 +98,26 @@ class Campaign < ActiveRecord::Base
     end
   end
 
+  # Save Campaign from row in xls
+  def self.import_from_xls(row,headers)
+    campaign = Campaign.new
+    campaign.name = row[headers['Name']]
+    campaign.access = row[headers['Access']]
+    campaign.status = row[headers['Status']]
+    campaign.budget =row[headers['Budget']]
+    campaign.target_leads =row[headers['target leads']]
+    campaign.target_conversion =row[headers['Target conversion']]
+    campaign.leads_count =row[headers['Number of leads']]
+    campaign.opportunities_count =row[headers['Total Opportunities']]
+    campaign.revenue =row[headers['target revenue']]
+    campaign.starts_on =row[headers['start date']]
+    campaign.ends_on =row[headers['end date']]
+    campaign.objectives =row[headers['Objectives']]
+    campaign.background_info =row[headers['Background']]
+    campaign.save
+    campaign
+  end
+
   private
 
   # Make sure end date > start date.

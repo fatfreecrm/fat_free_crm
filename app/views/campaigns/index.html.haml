@@ -1,8 +1,11 @@
 = styles_for :campaign
 
-= render 'entities/title_bar'
+= render 'list_title_bar'
 
 .remote#create_campaign{ hidden }
+.remote#campaign_import{ hidden }
+
+%iframe#uploading{ name: "uploading", style: "width:100px; height:10px; border:5px" }
 
 = render 'search'
 

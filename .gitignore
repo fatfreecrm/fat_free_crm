@@ -21,6 +21,7 @@ Gemfile.ci.lock
 
 public/avatars/**/*
 public/assets
+public/importers/
 
 tmp
 Design
@@ -39,4 +40,5 @@ Design
 .vagrant
 
 docker-compose.override.yml
-
+.bash_history
+.local/

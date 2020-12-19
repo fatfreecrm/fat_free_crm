@@ -209,4 +209,7 @@ Rails.application.routes.draw do
     resources :settings, only: :index
     resources :plugins,  only: :index
   end
+
+  get 'campaigns/import',to: 'campaigns#import',  as: :import_campaign
+  match 'campaigns/import-upload',to: 'campaigns#import_upload',  as: :import_upload_campaign, via: %i[put patch]
 end

@@ -1,0 +1,35 @@
+= form_for(@importer, url: import_upload_campaign_path(format: "js"), method: "patch",  html: { multipart: true, target: "uploading", onsubmit: "$('#import_submit').disabled = true"}) do |f|
+  = link_to_close new_campaign_path
+  -# todo
+  -#= error_messages_for :avatar, object: @user.avatar, object_name: t('avatar')
+  %p
+    %small 'Descripcion aqui'
+
+  %div 'File':
+  = fields_for(Importer) do |a|
+    %div= a.file_field :attachment
+
+  .buttonbar
+    = f.submit t(:upload_picture), id: "import_submit"
+    #{t :or}
+    = link_to_cancel new_campaign_path
+
+-#= simple_form_for(@campaign, html: one_submit_only, remote: true) do |f|
+-#  = link_to_close new_campaign_path
+-#  = f.hidden_field :user_id
+-#
+-#  = f.error_messages object_name: t('campaign')
+-#
+-#  .section
+-#    %table
+-#      %tr
+-#        %td(colspan="5")
+-#          .label.top.req 'File':
+-#          = f.file_field :file, autofocus: true, style: "width:500px"
+-#
+-#  = hook(:entity_form, self, {f: f, entity: @campaign})
+-#
+-#  .buttonbar
+-#    = f.submit 'Import campaign'
+-#    #{t :or}
+-#    = link_to_cancel new_campaign_path

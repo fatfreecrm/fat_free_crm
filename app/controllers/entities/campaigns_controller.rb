@@ -5,6 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+
 class CampaignsController < EntitiesController
   before_action :get_data_for_sidebar, only: :index
 
@@ -160,6 +161,37 @@ class CampaignsController < EntitiesController
     end
   end
 
+  # get /campaigns/import                                                 AJAX
+  #----------------------------------------------------------------------------
+  def import
+      @importer = Importer.new
+    respond_with(@importer)
+  end
+
+  # patch /campaigns/import                                                 AJAX
+  #----------------------------------------------------------------------------
+  def import_upload
+    @error = false
+    @result = {
+        items: [],
+        errors: []
+    }
+
+    if params[:importer]
+      @importer = Importer.create(import_params)
+      @importer.entity_type = 'campaign'
+      if @importer.valid?
+        @importer.save
+       @result = FatFreeCRM::ImportHandle.process(@importer)
+      else
+        puts @importer.errors.full_messages
+        @result[:errors].push(@importer.errors.full_messages)
+        @error = true
+      end
+    end
+    respond_with(@error,@result)
+  end
+
   private
 
   #----------------------------------------------------------------------------
@@ -203,5 +235,12 @@ class CampaignsController < EntitiesController
       @campaign_status_total[:other] -= total
     end
     @campaign_status_total[:other] += @campaign_status_total[:all]
+  end
+
+  def import_params
+    return {} unless params[:importer]
+
+    params[:importer]
+        .permit(:attachment)
   end
 end
