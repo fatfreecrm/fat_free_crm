@@ -11,10 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_12_17_030615) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "account_contacts", id: :serial, force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
