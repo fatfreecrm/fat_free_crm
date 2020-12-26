@@ -1,0 +1,6 @@
+- import_id = "campaign_import_leads"
+
+crm.flick('empty', 'toggle');
+crm.flip_form('#{import_id}');
+$('##{import_id}').html('#{ j render(partial: "import_leads_maps") }');
+crm.set_title('#{import_id}', '#{ j t(import_id) }');

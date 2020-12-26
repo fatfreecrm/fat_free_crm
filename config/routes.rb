@@ -203,13 +203,13 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :importers do
+    end
+
     resources :fields, as: :custom_fields
     resources :fields, as: :core_fields
 
     resources :settings, only: :index
     resources :plugins,  only: :index
   end
-
-  get 'campaigns/import',to: 'campaigns#import',  as: :import_campaign
-  match 'campaigns/import-upload',to: 'campaigns#import_upload',  as: :import_upload_campaign, via: %i[put patch]
 end

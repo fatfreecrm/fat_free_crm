@@ -1,4 +1,7 @@
-= form_for(@importer, url: import_upload_campaign_path(format: "js"), method: "patch",  html: { multipart: true, target: "uploading", onsubmit: "$('#import_submit').disabled = true"}) do |f|
+= form_for(@importer,
+            url: import_upload_campaign_path(format: "js"),
+            method: "patch",
+            html:{ multipart: true, target: "uploading", onsubmit: "$('#import_submit').disabled = true"}) do |f|
   = link_to_close new_campaign_path
   -# todo
   -#= error_messages_for :avatar, object: @user.avatar, object_name: t('avatar')

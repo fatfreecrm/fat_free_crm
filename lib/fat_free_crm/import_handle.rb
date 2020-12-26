@@ -10,6 +10,25 @@ require 'roo'
 module FatFreeCRM
   class ImportHandle
     class << self
+      def get_columns(path)
+        headers = Hash.new
+
+        puts path
+
+=begin
+        xlsx = Roo::Spreadsheet.open(path)
+        sheet = xlsx.sheets.first
+
+        puts sheet.row(1)
+
+        sheet.row(1).each_with_index { |header, i|
+          headers[i] = header
+        }
+=end
+
+        return headers
+
+      end
       def process(importer)
         result = {
             items: [],
@@ -23,10 +42,17 @@ module FatFreeCRM
             headers[header] = i
           }
           ((sheet.first_row + 1)..sheet.last_row).each do |row|
-            campaign = Campaign.import_from_xls(sheet.row(row), headers)
-            result[:items].push(campaign)
-            if campaign.errors.count
-              result[:errors].push(campaign.errors.full_messages)
+            item = nil
+            if importer.entity_type == 'Campaign'
+              item = Campaign.import_from_xls(sheet.row(row), headers)
+            elsif importer.entity_type == 'Lead'
+              item = Lead.import_from_xls(sheet.row(row), headers)
+            end
+            if item
+              result[:items].push(item)
+              if item.errors.count
+                result[:errors].push(item.errors.full_messages)
+              end
             end
           end
         end

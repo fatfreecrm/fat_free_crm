@@ -937,3 +937,10 @@ en-US:
     from_to: From %{from} to %{to}
     from_only: From %{from}
     to_only: Until %{to}
+
+
+  # Import from excel
+  #----------------------------------------------------------------------------
+  import_leads: 'Import Leads'
+  import_leads_help: 'Todo help for import leads from excel'
+  xls_file: 'EXCEL File'

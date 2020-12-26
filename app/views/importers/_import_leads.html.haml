@@ -1,0 +1,17 @@
+= form_for(@importer,
+            url: uploads_import_leads_campaign_path(@campaign,format: "js"),
+            method: "patch",
+            html: { multipart: true, target: "uploading", onsubmit: "$('#import_submit').disabled = true"}) do |f|
+  = link_to_close campaign_path(@campaign)
+  %p
+    %small 'Descripcion aqui'
+
+  %div 'File':
+  = fields_for(Importer) do |a|
+    = f.hidden_field :entity_type
+    %div= a.file_field :attachment
+
+  .buttonbar
+    = f.submit t(:upload_picture), id: "import_submit"
+    #{t :or}
+    = link_to_cancel campaign_path(@campaign)

@@ -916,3 +916,9 @@ es:
     from_to: De %{from} a %{to}
     from_only: De %{from}
     to_only: Antes de %{to}
+
+  # Import from excel
+  #----------------------------------------------------------------------------
+  import_leads: 'Importar clientes potenciales'
+  import_leads_help: 'Todo help for import leads from excel'
+  xls_file: 'Fichero EXCEL'

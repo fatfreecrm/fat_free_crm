@@ -9,6 +9,9 @@
   = render 'campaigns/title_bar', campaign: @campaign
 
   = render "comments/new", commentable: @campaign
+  .remote#campaign_import_leads{ hidden }
+  %iframe#uploading{ name: "uploading", style: "width:100px; height:10px; border:5px" }
+
   = render partial: "shared/timeline", collection: @timeline
 
   = hook(:show_campaign_bottom, self, {entity: @campaign}) do
