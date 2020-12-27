@@ -927,3 +927,4 @@ es:
   save: Guardar
   importer_description: Subir fichero excel para importar su contenido a las base de datos. Solo se admiten fichero excel validos.
   map_columns_description: Enlazar la columna del excel que le corresponde a cada atributo o dejar en blanco.
+  importer_status_label: Estado

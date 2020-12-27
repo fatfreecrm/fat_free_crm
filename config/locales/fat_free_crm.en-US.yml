@@ -949,3 +949,4 @@ en-US:
   save: Save
   importer_description: Upload excel file to import its content to the databases. Only valid excel files are allowed.
   map_columns_description: Link the excel column that corresponds to each attribute or leave it blank.
+  importer_status_label: Status

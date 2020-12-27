@@ -23,20 +23,24 @@ class ImportersController < ApplicationController
   # post /importers/create
   #----------------------------------------------------------------------------
   def create
-    error = false
+    errors = false
     if params[:importer]
       @importer = Importer.create(importer_params)
       if @importer.valid?
         @importer.save
-        redirect_to form_map_columns_importer_path(@importer)
       else
-        error = @importer.errors.full_messages
+        errors = @importer.errors.full_messages
       end
     end
-# Todo
-    # respond_to do |format|
-    #   format.html { render "create", :locals => {error: error,  columns: columns} }
-    # end
+
+    respond_to do |format|
+      if errors
+        format.html { render "create", :locals => {errors: errors} }
+      else
+        format.html { redirect_to form_map_columns_importer_path(@importer) }
+      end
+    end
+
   end
 
   # get /importers/:id/map
@@ -58,8 +62,11 @@ class ImportersController < ApplicationController
     map = params[:map]
     @importer.map = map.to_json
     @importer.save
-    result = FatFreeCRM::ImportHandle.process(@importer)
+    @importer = FatFreeCRM::ImportHandle.process(@importer)
 
+    respond_to do |format|
+      format.html { render "map_columns" }
+    end
   end
 
 =begin

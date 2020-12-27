@@ -6,6 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 require 'roo'
+require 'json'
 
 module FatFreeCRM
   class ImportHandle
@@ -28,13 +29,11 @@ module FatFreeCRM
 
         xlsx.each_with_pagename do |name, sheet|
           ((sheet.first_row + 1)..sheet.last_row).each do |row|
-            #item = importer.entity_type.capitalize().constantize.new
             values = {}
             map.each do |att,i|
               if not i.empty? and i.to_i >= 0
                 value = sheet.row(row)[i.to_i]
                 values[att] = value
-                #item.instance_variable_set(:@attributes, {att => value})
               end
             end
             item = importer.entity_type.capitalize().constantize.create(values)
@@ -51,8 +50,6 @@ module FatFreeCRM
         else
           importer.status = :error
           importer.messages = errors.to_json
-          puts 'Errors'
-          puts errors.to_json
         end
         importer.save
 

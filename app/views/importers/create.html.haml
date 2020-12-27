@@ -1,4 +1,5 @@
-- if error
-  .flash_error = error
+- if errors
+  - errors.each do |error|
+    .flash_error #{ error }
 - else
   #{ render(partial: "map_columns" ) }
