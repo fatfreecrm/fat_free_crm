@@ -165,14 +165,6 @@ class Lead < ActiveRecord::Base
   end
   alias name full_name
 
-  # Save Campaign from row in xls
-  def self.import_from_xls(row,headers)
-    lead = Lead.new
-    lead.name = row[headers['Name']]
-    lead.save
-    lead
-  end
-
   private
 
   #----------------------------------------------------------------------------
