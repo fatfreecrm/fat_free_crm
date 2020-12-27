@@ -27,32 +27,32 @@ module FatFreeCRM
         xlsx = Roo::Spreadsheet.open(importer.attachment.path)
 
         xlsx.each_with_pagename do |name, sheet|
-          # headers = Hash.new
-          # sheet.row(1).each_with_index { |header, i|
-          #   headers[header] = i
-          # }
           ((sheet.first_row + 1)..sheet.last_row).each do |row|
-            item = importer.entity_type.constantize.new
-
+            #item = importer.entity_type.capitalize().constantize.new
+            values = {}
             map.each do |att,i|
-              if i
-                value = sheet.row(i)
-                item.instance_variable_set("@#{att}".to_sym, value)
+              if not i.empty? and i.to_i >= 0
+                value = sheet.row(row)[i.to_i]
+                values[att] = value
+                #item.instance_variable_set(:@attributes, {att => value})
               end
             end
+            item = importer.entity_type.capitalize().constantize.create(values)
             if item.valid?
               item.save
             else
-              errors << @importer.errors.full_messages
+              errors << item.errors.full_messages
             end
           end
         end
 
-        if len(errors) == 0
+        if errors.length() == 0
           importer.status = :imported
         else
           importer.status = :error
           importer.messages = errors.to_json
+          puts 'Errors'
+          puts errors.to_json
         end
         importer.save
 
