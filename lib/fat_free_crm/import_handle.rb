@@ -36,7 +36,13 @@ module FatFreeCRM
                 values[att] = value
               end
             end
-            item = importer.entity_type.capitalize().constantize.create(values)
+
+            # Todo Do this more geneic
+            if importer.entity_type == 'lead'
+              values[:campaign_id] = importer.entity_id
+            end
+
+            item = importer.entity_type.capitalize.constantize.create(values)
             if item.valid?
               item.save
             else
@@ -45,7 +51,7 @@ module FatFreeCRM
           end
         end
 
-        if errors.length() == 0
+        if errors.length == 0
           importer.status = :imported
         else
           importer.status = :error
