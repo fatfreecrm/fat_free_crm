@@ -941,6 +941,11 @@ en-US:
 
   # Import from excel
   #----------------------------------------------------------------------------
-  import_leads: 'Import Leads'
-  import_leads_help: 'Todo help for import leads from excel'
-  xls_file: 'EXCEL File'
+  import_campaigns: Import Campaigns
+  import_leads: Import Leads
+  import_leads_help: Todo help for import leads from excel
+  xls_file: EXCEL File
+  upload_file: Upload file
+  save: Save
+  importer_description: Upload excel file to import its content to the databases. Only valid excel files are allowed.
+  map_columns_description: Link the excel column that corresponds to each attribute or leave it blank.

@@ -11,6 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_12_17_030615) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "account_contacts", id: :serial, force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -249,10 +253,13 @@ ActiveRecord::Schema.define(version: 2020_12_17_030615) do
 
   create_table "importers", id: :serial, force: :cascade do |t|
     t.integer "attachment_file_size"
-    t.string "attachment_file_name"
+    t.string "attachment_file_name", null: false
     t.string "attachment_content_type"
-    t.string "entity_type"
-    t.string "status"
+    t.string "entity_type", null: false
+    t.string "entity_id"
+    t.string "status", default: "new", null: false
+    t.text "map"
+    t.text "messages"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

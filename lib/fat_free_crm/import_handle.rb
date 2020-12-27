@@ -10,54 +10,53 @@ require 'roo'
 module FatFreeCRM
   class ImportHandle
     class << self
+
       def get_columns(path)
         headers = Hash.new
-
-        puts path
-
-=begin
         xlsx = Roo::Spreadsheet.open(path)
-        sheet = xlsx.sheets.first
-
-        puts sheet.row(1)
-
+        sheet = xlsx.sheet(0)
         sheet.row(1).each_with_index { |header, i|
-          headers[i] = header
+          headers[header] = i
         }
-=end
-
-        return headers
-
+        headers
       end
+
       def process(importer)
-        result = {
-            items: [],
-            errors: []
-        }
+        errors = []
+        map = JSON.parse(importer.map)
         xlsx = Roo::Spreadsheet.open(importer.attachment.path)
 
         xlsx.each_with_pagename do |name, sheet|
-          headers = Hash.new
-          sheet.row(1).each_with_index { |header, i|
-            headers[header] = i
-          }
+          # headers = Hash.new
+          # sheet.row(1).each_with_index { |header, i|
+          #   headers[header] = i
+          # }
           ((sheet.first_row + 1)..sheet.last_row).each do |row|
-            item = nil
-            if importer.entity_type == 'Campaign'
-              item = Campaign.import_from_xls(sheet.row(row), headers)
-            elsif importer.entity_type == 'Lead'
-              item = Lead.import_from_xls(sheet.row(row), headers)
-            end
-            if item
-              result[:items].push(item)
-              if item.errors.count
-                result[:errors].push(item.errors.full_messages)
+            item = importer.entity_type.constantize.new
+
+            map.each do |att,i|
+              if i
+                value = sheet.row(i)
+                item.instance_variable_set("@#{att}".to_sym, value)
               end
+            end
+            if item.valid?
+              item.save
+            else
+              errors << @importer.errors.full_messages
             end
           end
         end
 
-        result
+        if len(errors) == 0
+          importer.status = :imported
+        else
+          importer.status = :error
+          importer.messages = errors.to_json
+        end
+        importer.save
+
+        importer
       end
     end
   end

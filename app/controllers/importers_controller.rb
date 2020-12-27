@@ -6,7 +6,61 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 
+require 'json'
+
 class ImportersController < ApplicationController
+  # get /importers/new                                                 AJAX
+  #----------------------------------------------------------------------------
+  def new
+    @importer = Importer.new
+    @importer.entity_type = params[:entity_type]
+    if params[:entity_id]
+      @importer.entity_id = params[:entity_id]
+    end
+    respond_with(@importer)
+  end
+
+  # post /importers/create
+  #----------------------------------------------------------------------------
+  def create
+    error = false
+    if params[:importer]
+      @importer = Importer.create(importer_params)
+      if @importer.valid?
+        @importer.save
+        redirect_to form_map_columns_importer_path(@importer)
+      else
+        error = @importer.errors.full_messages
+      end
+    end
+# Todo
+    # respond_to do |format|
+    #   format.html { render "create", :locals => {error: error,  columns: columns} }
+    # end
+  end
+
+  # get /importers/:id/map
+  #----------------------------------------------------------------------------
+  def form_map_columns
+    @importer = Importer.find(params[:id])
+    columns = FatFreeCRM::ImportHandle.get_columns(@importer.attachment.path)
+
+    respond_to do |format|
+      format.html { render "form_map_columns", :locals => {columns: columns} }
+    end
+  end
+
+  # post /importers/:id/map
+  #----------------------------------------------------------------------------
+  def map_columns
+    @importer = Importer.find(params[:id])
+    @importer.status = :map
+    map = params[:map]
+    @importer.map = map.to_json
+    @importer.save
+    result = FatFreeCRM::ImportHandle.process(@importer)
+
+  end
 
 =begin
   # get /campaigns/import                                                 AJAX
@@ -103,6 +157,6 @@ class ImportersController < ApplicationController
   private
 
   def importer_params
-    params.require(:importer).permit(:attachment,:entity_type,:entity_id)
+    params.require(:importer).permit(:attachment, :entity_type, :entity_id)
   end
 end

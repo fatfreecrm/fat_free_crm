@@ -7,7 +7,7 @@
   .create_asset
     = link_to_inline("create_#{model_name}".to_sym, send("new_#{model_name}_path"), text: t("create_#{model_name}".to_sym))
   .import_asset
-    = link_to_inline("import_#{model_name}".to_sym, send("import_#{model_name}_path"), text: t("import_#{model_name}".to_sym))
+    = link_to_inline(:new_importer, new_importer_path(:campaign), text: t(:import_campaigns))
 
 .title
   %span{id: "create_#{model_name}_title"} #{t controller_name.to_sym}

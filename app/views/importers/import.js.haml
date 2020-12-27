@@ -1,6 +1,0 @@
-- import_id = "campaign_import"
-
-crm.flick('empty', 'toggle');
-crm.flip_form('#{import_id}');
-$('##{import_id}').html('#{ j render(partial: "import") }');
-crm.set_title('#{import_id}', '#{ j t(import_id) }');
