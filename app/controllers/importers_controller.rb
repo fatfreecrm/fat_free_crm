@@ -50,6 +50,7 @@ class ImportersController < ApplicationController
     columns = FatFreeCRM::ImportHandle.get_columns(@importer.attachment.path)
 
     attributes = []
+    attributes_extra = []
 
     object = @importer.entity_class
     _attrs = object.attribute_names - ['id']
@@ -63,8 +64,21 @@ class ImportersController < ApplicationController
       )
     end
 
+    if @importer.entity_type == 'lead'
+      _attrs = Address.attribute_names - %w(id created_at updated_at deleted_at address_type addressable_type addressable_id)
+
+      _attrs.each do |attr|
+        attributes_extra.push(
+            {
+                name: attr,
+                required: Address.validators_on(attr).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
+            }
+        )
+      end
+    end
+
     respond_to do |format|
-      format.html { render "form_map_columns", :locals => {columns: columns, attributes: attributes} }
+      format.html { render "form_map_columns", :locals => {columns: columns, attributes: attributes, attributes_extra: attributes_extra} }
     end
   end
 

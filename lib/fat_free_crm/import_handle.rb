@@ -22,6 +22,20 @@ module FatFreeCRM
         headers
       end
 
+      def get_values(map, sheet, row)
+        values = {}
+        map.each do |att, i|
+          if i.is_a?(Hash)
+            values[att] = get_values(i, sheet, row)
+          elsif not i.empty? and i.to_i >= 0
+            value = sheet.row(row)[i.to_i]
+            values[att] = value
+          end
+        end
+
+        values
+      end
+
       def process(importer)
         errors = []
         map = JSON.parse(importer.map)
@@ -29,22 +43,27 @@ module FatFreeCRM
 
         xlsx.each_with_pagename do |name, sheet|
           ((sheet.first_row + 1)..sheet.last_row).each do |row|
-            values = {}
-            map.each do |att,i|
-              if not i.empty? and i.to_i >= 0
-                value = sheet.row(row)[i.to_i]
-                values[att] = value
-              end
-            end
+            values = get_values(map, sheet, row)
 
-            # Todo Do this more geneic
+            # TODO Do this more geneic
+            business_address_attributes = {}
             if importer.entity_type == 'lead'
               values[:campaign_id] = importer.entity_id
+              if values.key?('business_address_attributes')
+                business_address_attributes = values.delete('business_address_attributes')
+              end
             end
 
             item = importer.entity_type.capitalize.constantize.create(values)
             if item.valid?
               item.save
+              if importer.entity_type == 'lead'
+                business_address_attributes["address_type"] = "Business"
+                business_address_attributes["addressable_type"] = "Lead"
+                business_address_attributes["addressable_id"] = item.id
+                address = Address.create(business_address_attributes)
+                address.save
+              end
             else
               errors << item.errors.full_messages
             end

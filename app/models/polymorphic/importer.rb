@@ -25,20 +25,6 @@ class Importer < ActiveRecord::Base
                                     :message => 'Only EXCEL files are allowed.'
   validates_attachment_file_name :attachment, matches: [/\.xls/, /\.xlsx?$/]
 
-  def entity_attrs
-    attrs = []
-    case self.entity_type
-    when 'campaign'
-      attrs = %w(user_id assigned_to name access status budget target_leads target_conversion target_revenue leads_count opportunities_count revenue starts_on ends_on objectives deleted_at created_at  updated_at background_info)
-    when 'lead'
-      attrs = %w(user_id assigned_to first_name last_name access title company source status referred_by email alt_email phone mobile blog linkedin facebook twitter rating do_not_call deleted_at created_at updated_at background_info skype)
-    else
-      # Todo
-      puts "Error: entity_type not found"
-    end
-    attrs
-  end
-
   def get_messages()
     JSON.parse(messages)
   end
