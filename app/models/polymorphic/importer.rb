@@ -43,5 +43,9 @@ class Importer < ActiveRecord::Base
     JSON.parse(messages)
   end
 
+  def entity_class
+    self.entity_type.capitalize.constantize
+  end
+
   ActiveSupport.run_load_hooks(:fat_free_crm_importer, self)
 end

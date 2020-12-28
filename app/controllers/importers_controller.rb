@@ -49,8 +49,22 @@ class ImportersController < ApplicationController
     @importer = Importer.find(params[:id])
     columns = FatFreeCRM::ImportHandle.get_columns(@importer.attachment.path)
 
+    attributes = []
+
+    object = @importer.entity_class
+    _attrs = object.attribute_names - ['id']
+
+    _attrs.each do |attr|
+      attributes.push(
+          {
+              name: attr,
+              required: object.validators_on(attr).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
+          }
+      )
+    end
+
     respond_to do |format|
-      format.html { render "form_map_columns", :locals => {columns: columns} }
+      format.html { render "form_map_columns", :locals => {columns: columns, attributes: attributes} }
     end
   end
 

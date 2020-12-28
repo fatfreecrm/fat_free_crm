@@ -5,12 +5,21 @@
 
   %div
     %table
-      - @importer.entity_attrs.each do |attr|
+      - attributes.each do |attr|
         %tr
           %td
-            .label #{ attr }
+            .label
+              #{ attr[:name] }
+              - if attr[:required]
+                %span.warn *
           %td
-            = select_tag "map[#{ attr }]", options_for_select(columns), class: 'select2', :include_blank => true, id: "map_#{ attr }"
+            = select_tag "map[#{ attr[:name] }]",
+            options_for_select(columns),
+            class: 'select2',
+            include_blank: true,
+            data: {placeholder: t(:select_blank)},
+            required: attr[:required],
+            id: "map_#{ attr[:name] }"
 
   .buttonbar
     = f.submit t(:save)
