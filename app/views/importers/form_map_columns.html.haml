@@ -1,0 +1,45 @@
+= form_for(@importer, url: map_columns_importer_path(@importer), html: { method: :post }) do |f|
+  = f.hidden_field :id
+
+  %p #{t :map_columns_description}
+
+  %div
+    %table
+      - attributes.each do |attr|
+        %tr
+          %td
+            .label
+              #{ attr[:name] }
+              - if attr[:required]
+                %span.warn *
+          %td
+            = select_tag "map[#{ attr[:name] }]",
+            options_for_select(columns),
+            class: 'select2',
+            include_blank: true,
+            data: {placeholder: t(:select_blank)},
+            required: attr[:required],
+            id: "map_#{ attr[:name] }"
+
+  - if attributes_extra.length
+    %div.subtitle
+      #{t :address}
+    %table
+      - attributes_extra.each do |attr|
+        %tr
+          %td
+            .label
+              #{ attr[:name] }
+              - if attr[:required]
+                %span.warn *
+          %td
+            = select_tag "map[business_address_attributes][#{ attr[:name] }]",
+            options_for_select(columns),
+            class: 'select2',
+            include_blank: true,
+            data: {placeholder: t(:select_blank)},
+            required: attr[:required],
+            id: "map_#{ attr[:name] }"
+
+  .buttonbar
+    = f.submit t(:save)

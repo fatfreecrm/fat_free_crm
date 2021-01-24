@@ -916,3 +916,15 @@ es:
     from_to: De %{from} a %{to}
     from_only: De %{from}
     to_only: Antes de %{to}
+
+  # Import from excel
+  #----------------------------------------------------------------------------
+  import_campaigns: Importar Campañas
+  import_leads: Importar clientes potenciales
+  import_leads_help: Todo help for import leads from excel
+  xls_file: Fichero EXCEL
+  upload_file: Subir fichero
+  save: Guardar
+  importer_description: Subir fichero excel para importar su contenido a las base de datos. Solo se admiten fichero excel validos.
+  map_columns_description: Enlazar la columna del excel que le corresponde a cada atributo o dejar en blanco. Los elementos con * tienen que tener valor en la columna que se seleccione.
+  importer_status_label: Estado

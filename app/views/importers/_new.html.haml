@@ -1,0 +1,13 @@
+= form_for(@importer, url: create_importer_path, html:{ multipart: true}) do |f|
+  = f.hidden_field :entity_type
+  - if @importer.entity_id
+    = f.hidden_field :entity_id
+  %p
+    %small #{t :importer_description}
+
+  %div #{t :xls_file}
+  = fields_for(Importer) do |a|
+    %div= a.file_field :attachment
+
+  .buttonbar
+    = f.submit t(:upload_file)
