@@ -40,5 +40,4 @@ Design
 .vagrant
 
 docker-compose.override.yml
-.bash_history
 .local/
