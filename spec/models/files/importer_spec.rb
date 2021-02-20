@@ -37,16 +37,16 @@ RSpec.describe Importer, type: :model do
     end
 
     xit "attachment file size" do
-      is_expected.to validate_attachment_size(:attachment).
-                less_than(10.megabytes)
+      is_expected.to validate_attachment_size(:attachment)
+        .less_than(10.megabytes)
     end
 
     it "attachment content type" do
-      is_expected.to validate_attachment_content_type(:attachment).
-                allowing('text/xml', 'application/xml',
-                'application/vnd.ms-excel', 'application/x-ole-storage',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet').
-                rejecting('text/plain')
+      is_expected.to validate_attachment_content_type(:attachment)
+        .allowing('text/xml', 'application/xml',
+                  'application/vnd.ms-excel', 'application/x-ole-storage',
+                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        .rejecting('text/plain')
     end
   end
 end

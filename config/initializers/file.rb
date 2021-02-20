@@ -7,8 +7,16 @@
 #------------------------------------------------------------------------------
 File.class_eval do
   def type_from_file_command
-    type = (self.original_filename.match(/\.(\w+)$/)[1] rescue "octet-stream").downcase
-    mime_type = `file -b --mime-type #{self.path}`.split(':').last.strip rescue "application/x-#{type}"
+    type = (begin
+              original_filename.match(/\.(\w+)$/)[1]
+            rescue StandardError
+              "octet-stream"
+            end).downcase
+    mime_type = begin
+                  `file -b --mime-type #{path}`.split(':').last.strip
+                rescue StandardError
+                  "application/x-#{type}"
+                end
     mime_type = "application/x-#{type}" if mime_type.match(/\(.*?\)/)
     mime_type
   end

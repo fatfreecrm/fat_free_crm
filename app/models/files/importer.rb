@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: importers
@@ -16,21 +18,21 @@ require 'json'
 class Importer < ActiveRecord::Base
   attribute :entity_attrs
 
-  has_attached_file :attachment, :path => ":rails_root/public/importers/:id/:filename"
+  has_attached_file :attachment, path: ":rails_root/public/importers/:id/:filename"
 
   validates_attachment :attachment, presence: true
 
   validates_attachment_content_type :attachment,
-                                    :content_type => %w(text/xml application/xml application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet application/x-ole-storage),
-                                    :message => 'Only EXCEL files are allowed.'
+                                    content_type: %w[text/xml application/xml application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet application/x-ole-storage],
+                                    message: 'Only EXCEL files are allowed.'
   validates_attachment_file_name :attachment, matches: [/\.xls/, /\.xlsx?$/]
 
-  def get_messages()
+  def messages
     JSON.parse(messages)
   end
 
   def entity_class
-    self.entity_type.capitalize.constantize
+    entity_type.capitalize.constantize
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_importer, self)

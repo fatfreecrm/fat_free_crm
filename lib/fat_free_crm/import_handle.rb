@@ -11,14 +11,13 @@ require 'json'
 module FatFreeCRM
   class ImportHandle
     class << self
-
       def get_columns(path)
-        headers = Hash.new
+        headers = {}
         xlsx = Roo::Spreadsheet.open(path)
         sheet = xlsx.sheet(0)
-        sheet.row(1).each_with_index { |header, i|
+        sheet.row(1).each_with_index do |header, i|
           headers[header] = i
-        }
+        end
         headers
       end
 
@@ -27,7 +26,7 @@ module FatFreeCRM
         map.each do |att, i|
           if i.is_a?(Hash)
             values[att] = get_values(i, sheet, row)
-          elsif not i.empty? and i.to_i >= 0
+          elsif !i.empty? && (i.to_i >= 0)
             value = sheet.row(row)[i.to_i]
             values[att] = value
           end
@@ -41,17 +40,15 @@ module FatFreeCRM
         map = JSON.parse(importer.map)
         xlsx = Roo::Spreadsheet.open(importer.attachment.path)
 
-        xlsx.each_with_pagename do |name, sheet|
+        xlsx.each_with_pagename do |_name, sheet|
           ((sheet.first_row + 1)..sheet.last_row).each do |row|
             values = get_values(map, sheet, row)
 
-            # TODO Do this more geneic
+            # TODO: Do this more geneic
             business_address_attributes = {}
             if importer.entity_type == 'lead'
               values[:campaign_id] = importer.entity_id
-              if values.key?('business_address_attributes')
-                business_address_attributes = values.delete('business_address_attributes')
-              end
+              business_address_attributes = values.delete('business_address_attributes') if values.key?('business_address_attributes')
             end
 
             item = importer.entity_type.capitalize.constantize.create(values)
@@ -70,7 +67,7 @@ module FatFreeCRM
           end
         end
 
-        if errors.length == 0
+        if errors.empty?
           importer.status = :imported
         else
           importer.status = :error
@@ -83,5 +80,3 @@ module FatFreeCRM
     end
   end
 end
-
-

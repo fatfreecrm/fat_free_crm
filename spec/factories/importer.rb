@@ -9,8 +9,8 @@ FactoryBot.define do
   factory :importer do
     entity_type             { :lead }
     entity_id               { 1 }
-    attachment_file_size    { Random::rand(1..1024) }
-    attachment_file_name    { "#{FFaker::Filesystem::file_name}.#{%w[xls xlsx].sample}" }
+    attachment_file_size    { Random.rand(1..1024) }
+    attachment_file_name    { "#{FFaker::Filesystem.file_name}.#{%w[xls xlsx].sample}" }
     attachment_content_type { %w[text/xml application/xml].sample }
     status                  { FFaker::Lorem.word }
     created_at              { FactoryBot.generate(:time) }

@@ -24,19 +24,21 @@ class ImportedFile < ActiveRecord::Base
   validates :md5sum, uniqueness: { message: "file already imported" }
 
   def generate_md5sum
-    self.md5sum = Digest::MD5.hexdigest File.open(filename).read unless filename.empty? rescue ""
+    self.md5sum = Digest::MD5.hexdigest File.open(filename).read unless filename.empty?
+  rescue StandardError
+    ""
   end
 
   private
 
   def filetype
-    valid = File.open(filename).type_from_file_command == "application/vnd.ms-excel" rescue ""
-    if valid == ""
-      errors.add(:filename, "no such file")
-    end
-    unless valid
-      errors.add(:filename, "invalid filetype")
-    end
+    valid = begin
+              File.open(filename).type_from_file_command == "application/vnd.ms-excel"
+            rescue StandardError
+              ""
+            end
+    errors.add(:filename, "no such file") if valid == ""
+    errors.add(:filename, "invalid filetype") unless valid
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_imported_file, self)
