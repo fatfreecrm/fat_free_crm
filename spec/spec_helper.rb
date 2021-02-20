@@ -12,6 +12,7 @@ require File.expand_path('../config/environment', __dir__)
 require 'rspec/rails'
 require 'capybara/rails'
 require 'paper_trail/frameworks/rspec'
+require "paperclip/matchers"
 
 require 'factory_bot_rails'
 require 'ffaker'
@@ -47,6 +48,7 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include DeviseHelpers
   config.include FeatureHelpers
+  config.include Paperclip::Shoulda::Matchers
 
   Warden.test_mode!
 
