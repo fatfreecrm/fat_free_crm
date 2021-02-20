@@ -52,6 +52,7 @@ require "fat_free_crm/sortable"
 require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/view_factory"
+require "fat_free_crm/import_handle"
 
 require "activemodel-serializers-xml"
 require "country_select"

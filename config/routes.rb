@@ -209,4 +209,9 @@ Rails.application.routes.draw do
     resources :settings, only: :index
     resources :plugins,  only: :index
   end
+
+  get 'importers/new/:entity_type(/:entity_id)' => 'importers#new', as: :new_importer
+  post 'importers' => 'importers#create', as: :create_importer
+  get 'importers/:id/map' => 'importers#form_map_columns', as: :form_map_columns_importer
+  post 'importers/:id/map' => 'importers#map_columns', as: :map_columns_importer
 end

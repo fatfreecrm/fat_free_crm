@@ -9,6 +9,8 @@
   = render 'campaigns/title_bar', campaign: @campaign
 
   = render "comments/new", commentable: @campaign
+  .remote#new_importer{ hidden }
+
   = render partial: "shared/timeline", collection: @timeline
 
   = hook(:show_campaign_bottom, self, {entity: @campaign}) do

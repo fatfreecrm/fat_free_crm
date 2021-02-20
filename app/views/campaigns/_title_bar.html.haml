@@ -1,7 +1,9 @@
 #confirm{ hidden }
 .title_tools#menu
   = link_to_inline(:edit_campaign, edit_campaign_path(@campaign), text: t(:edit)) + " | "
-  = link_to_function(t(:delete) + '?', confirm_delete(@campaign))
+  = link_to_function(t(:delete) + '?', confirm_delete(@campaign)) + " | "
+  = link_to_inline(:new_importer, new_importer_path(:lead,@campaign), text: t(:import_leads))
+
 .title_tools#buttons
   = view_buttons
 .title#edit_campaign_title

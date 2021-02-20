@@ -1,0 +1,4 @@
+%div #{t :importer_status_label } #{ @importer.status }
+- @importer.messages.each do |message|
+  %div #{message}
+

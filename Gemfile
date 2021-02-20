@@ -100,3 +100,8 @@ gem "devise-encryptable"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob', '~> 5.2.0'
 gem 'ransack_ui', path: 'vendor/gems/ransack_ui-1.3.4' # Vendored until our fix is merged and released
+gem 'spreadsheet'
+
+gem "roo", "~> 2.8"
+
+gem "roo-xls", "~> 1.2"

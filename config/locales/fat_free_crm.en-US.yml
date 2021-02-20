@@ -937,3 +937,16 @@ en-US:
     from_to: From %{from} to %{to}
     from_only: From %{from}
     to_only: Until %{to}
+
+
+  # Import from excel
+  #----------------------------------------------------------------------------
+  import_campaigns: Import Campaigns
+  import_leads: Import Leads
+  import_leads_help: Todo help for import leads from excel
+  xls_file: EXCEL File
+  upload_file: Upload file
+  save: Save
+  importer_description: Upload excel file to import its content to the databases. Only valid excel files are allowed.
+  map_columns_description: Link the excel column that corresponds to each attribute or leave it blank. The elements with * must have a value in the column that is selected.
+  importer_status_label: Status
