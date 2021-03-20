@@ -209,7 +209,6 @@ class EntitiesController < ApplicationController
         end
       end
     end
-    puts [query.join(" "), tags.join(", ")]
     [query.join(" "), tags.join(", ")]
   end
 
