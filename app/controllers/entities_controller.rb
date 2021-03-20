@@ -197,7 +197,6 @@ class EntitiesController < ApplicationController
 
     query = []
     tags = []
-    
     if search_string.start_with?("#") && search_string.end_with?("#")
       tags << search_string[1..-2]
     else
