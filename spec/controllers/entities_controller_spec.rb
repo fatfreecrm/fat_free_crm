@@ -19,6 +19,11 @@ describe EntitiesController do
       expect(controller.send(:parse_query_and_tags, str)).to eq(['', 'test'])
     end
 
+    it 'should parse #multiword tags' do
+      str = "#multiword tag#"
+      expect(controller.send(:parse_query_and_tags, str)).to eq(['', 'multiword tag'])
+    end
+
     it "should parse no tags" do
       str = "test query"
       expect(controller.send(:parse_query_and_tags, str)).to eq(['test query', ''])

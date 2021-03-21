@@ -197,11 +197,15 @@ class EntitiesController < ApplicationController
 
     query = []
     tags = []
-    search_string.strip.split(/\s+/).each do |token|
-      if token.starts_with?("#")
-        tags << token[1..-1]
-      else
-        query << token
+    if search_string.start_with?("#") && search_string.end_with?("#")
+      tags << search_string[1..-2]
+    else
+      search_string.strip.split(/\s+/).each do |token|
+        if token.starts_with?("#")
+          tags << token[1..-1]
+        else
+          query << token
+        end
       end
     end
     [query.join(" "), tags.join(", ")]
