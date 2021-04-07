@@ -4,6 +4,28 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Sat Apr 7, 2021 (0.18.2)
+---------------------------------------------------------------------
+
+#### Security fixes
+CVE-2018-1000544
+CVE-2019-16892
+CVE-2018-16470
+CVE-2018-16471
+CVE-2018-3760
+CVE-2018-8048
+CVE-2019-11068
+CVE-2019-5477
+CVE-2018-14404
+CVE-2018-1000201
+CVE-2018-16476
+CVE-2019-5418
+CVE-2019-5419
+CVE-2019-15587
+CVE-2018-16468
+CVE-2019-16676
+
+
 Sat Oct 27, 2018 (0.18.1)
 ---------------------------------------------------------------------
 
