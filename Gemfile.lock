@@ -1,10 +1,3 @@
-PATH
-  remote: vendor/gems/ransack_ui-1.3.4
-  specs:
-    ransack_ui (1.3.4)
-      ransack
-      ransack_chronic (>= 1.1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -293,6 +286,9 @@ GEM
       i18n
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
+    ransack_ui (1.4.0)
+      ransack (~> 2.0)
+      ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.10.4)
@@ -460,7 +456,7 @@ DEPENDENCIES
   rails_autolink
   rainbow
   ransack (>= 1.6.2)
-  ransack_ui!
+  ransack_ui
   rb-fchange
   rb-fsevent
   rb-inotify
