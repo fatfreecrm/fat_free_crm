@@ -36,9 +36,11 @@ jobs:
       run: bundle install
 
     - name: Prepare DB
-      run: bundle exec rake spec:preparedb
+      run: DB=sqlite RAILS_ENV=test bundle exec rake db:create
+    - name: Migrate DB
+      run: DB=sqlite RAILS_ENV=test  bundle exec rake db:migrate
     - name: Run model tests
-      run: bundle exec rake spec:models
+      run: DB=sqlite bundle exec rake spec:models
     - name: Run controller tests
       run: bundle exec rake spec:controllers
     - name: Run view tests
