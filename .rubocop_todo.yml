@@ -19,7 +19,7 @@ Bundler/DuplicatedGem:
 # SupportedHashRocketStyles: key, separator, table
 # SupportedColonStyles: key, separator, table
 # SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 
 # Offense count: 22
@@ -55,7 +55,7 @@ Lint/DuplicateMethods:
 
 # Offense count: 2
 # Configuration parameters: AllowComments.
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Exclude:
     - 'config/environments/test.rb'
     - 'lib/fat_free_crm/gem_dependencies.rb'
@@ -160,7 +160,7 @@ Naming/RescuedExceptionsVariableName:
 # Offense count: 3
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: io, id, to, by, on, in, at, ip, db, os
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Exclude:
     - 'app/models/fields/field.rb'
     - 'app/models/polymorphic/comment.rb'
