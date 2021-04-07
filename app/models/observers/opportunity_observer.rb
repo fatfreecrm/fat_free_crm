@@ -24,7 +24,7 @@ class OpportunityObserver < ActiveRecord::Observer
       if original.stage != "won" && item.stage == "won" # :other to :won -- add to total campaign revenue.
         update_campaign_revenue(item.campaign, item.amount.to_f - item.discount.to_f)
         item.update_attribute(:probability, 100) # Set probability to 100% if won
-        return log_activity(item, :won)
+        log_activity(item, :won)
       elsif original.stage == "won" && item.stage != "won" # :won to :other -- substract from total campaign revenue.
         update_campaign_revenue(original.campaign, -(original.amount.to_f - original.discount.to_f))
       elsif original.stage != "lost" && item.stage == "lost"
