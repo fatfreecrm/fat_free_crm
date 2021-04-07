@@ -22,7 +22,7 @@ describe "/contacts/edit" do
     params[:cancel] = "true"
 
     render
-    expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+    expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'highlight contact\\' id=\\'contact_#{@contact.id}\\'")
   end
 
   it "cancel from contact landing page: should hide [Edit Contact] form" do

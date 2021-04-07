@@ -44,7 +44,7 @@ describe "/campaigns/update" do
 
       it "should replace [Edit Campaign] with campaign partial and highlight it" do
         render
-        expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+        expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'highlight campaign\\' id=\\'campaign_#{@campaign.id}\\'")
         expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
       end
     end

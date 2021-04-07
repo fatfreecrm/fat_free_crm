@@ -47,7 +47,7 @@ describe "/contacts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
         render
-        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'highlight contact\\' id=\\'contact_#{@contact.id}\\'")
         expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
@@ -67,7 +67,7 @@ describe "/contacts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/contacts"
 
         render
-        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+        expect(rendered).to include("$('#contact_#{@contact.id}').replaceWith('<li class=\\'highlight contact\\' id=\\'contact_#{@contact.id}\\'")
         expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
       end
 
