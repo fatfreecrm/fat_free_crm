@@ -14,8 +14,6 @@ env:
     - DB=postgres TEST_SUITE=rubocop
     - DB=postgres TEST_SUITE="rake spec:features"
     - DB=postgres TEST_SUITE="rake spec:models"
-    - DB=postgres TEST_SUITE="rake spec:controllers spec:lib spec:routing spec:mailers"
-    - DB=postgres TEST_SUITE="rake spec:views spec:helpers"
     - DB=mysql TEST_SUITE="rake spec:models"
     - DB=sqlite TEST_SUITE="rake spec:models"
 
