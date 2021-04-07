@@ -4,7 +4,7 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased (0.19.0)
+Wed Apr 04, 2021 (0.19.0)
 ======
 
 ### Important changes
