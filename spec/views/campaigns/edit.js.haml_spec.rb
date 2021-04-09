@@ -20,7 +20,7 @@ describe "/campaigns/edit" do
     params[:cancel] = "true"
 
     render
-    expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+    expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'highlight campaign\\' id=\\'campaign_#{@campaign.id}\\'")
   end
 
   it "cancel from campaign landing page: should hide [Edit Campaign] form" do
@@ -36,7 +36,7 @@ describe "/campaigns/edit" do
     assign(:previous, previous = build_stubbed(:campaign, user: current_user))
 
     render
-    expect(rendered).to include("$('#campaign_#{previous.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{previous.id}\\'")
+    expect(rendered).to include("$('#campaign_#{previous.id}').replaceWith('<li class=\\'highlight campaign\\' id=\\'campaign_#{previous.id}\\'")
   end
 
   it "edit: should remove previously open [Edit Campaign] if it's no longer available" do

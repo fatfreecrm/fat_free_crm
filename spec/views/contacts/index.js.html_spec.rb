@@ -19,7 +19,7 @@ describe "/contacts/index" do
 
     render template: 'contacts/index', formats: [:js]
 
-    expect(rendered).to include("$('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
+    expect(rendered).to include("$('#contacts').html('<li class=\\'highlight contact\\' id=\\'contact_42\\'")
     expect(rendered).to include("#paginate")
   end
 

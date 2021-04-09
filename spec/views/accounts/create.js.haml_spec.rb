@@ -25,7 +25,7 @@ describe "/accounts/create" do
     end
 
     it "should hide [Create Account] form and insert account partial" do
-      expect(rendered).to include("$('#accounts').prepend('<li class=\\'account highlight\\' id=\\'account_#{@account.id}\\'")
+      expect(rendered).to include("$('#accounts').prepend('<li class=\\'highlight account\\' id=\\'account_#{@account.id}\\'")
       expect(rendered).to include(%/$('#account_#{@account.id}').effect("highlight"/)
     end
 
