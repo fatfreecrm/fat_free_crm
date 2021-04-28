@@ -13,8 +13,8 @@
     = javascript_include_tag :application
 
     - unless tabless_layout? || %w(en-US en-GB).include?(I18n.locale.to_s)
-      = javascript_include_tag "jquery_ui_datepicker/jquery.ui.datepicker-#{I18n.locale}"
-      = javascript_include_tag "jquery_ui_datepicker/jquery-ui-timepicker-#{I18n.locale}"
+      = javascript_include_tag "vendor/jquery_ui_datepicker/jquery.ui.datepicker-#{I18n.locale}"
+      = javascript_include_tag "vendor/jquery_ui_datepicker/jquery-ui-timepicker-#{I18n.locale}"
 
     = csrf_meta_tag
     = hook(:javascript_includes, self)
