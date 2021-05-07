@@ -438,7 +438,7 @@ $sidebar_width: 210px;
 .list {
   padding: 8px 0px 7px 0px;
   li {
-    border-bottom: 1px silver dotted;
+    border-bottom: 1px #eee dotted;
     color: #3f3f3f;
     font-size: 12px;
     list-style: none;
@@ -490,7 +490,7 @@ $sidebar_width: 210px;
     font-size: 13px;
     font-weight: bold; }
   li {
-    border-bottom: 1px silver dotted;
+    border-bottom: 1px #eee dotted;
     font-size: 12px;
     list-style: none;
     padding: 2px 0px 3px 0px;
@@ -717,7 +717,7 @@ table.asset_attributes {
   width: 100%;
   border-spacing: 4px;
   td, th {
-    border-bottom: 1px dotted silver;
+    border-bottom: 1px dotted #eee;
     vertical-align: top;
     text-align: left;
   }
