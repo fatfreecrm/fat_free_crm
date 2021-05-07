@@ -248,7 +248,7 @@ $sidebar_width: 210px;
 
 // Default tag colors
 // Override these with your own stylesheets
-
+// TODO: Improve the dark vs light to be smarter/inherited
 $dark_strip_text: #111;
 $light_strip_text: #EEE;
 
@@ -333,12 +333,8 @@ $bg_color9: #FFDD4A;
   padding: 1px 4px 1px 3px;
   text-align: right;
   width: 75px;
-  -moz-border-radius: {
-    topleft: 7px;
-    bottomleft: 7px; };
-  -webkit-border: {
-    top-left-radius: 7px;
-    bottom-left-radius: 7px; }; }
+  border-radius: 2px;
+}
 
 // Indentation classes:
 //   - indent: for use with strip (regular indentation).
