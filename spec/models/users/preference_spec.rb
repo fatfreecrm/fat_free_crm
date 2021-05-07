@@ -22,7 +22,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Preference do
   before(:each) do
     @user = create(:user)
-    @magoody = Base64.encode64(Marshal.dump("magoody"))
+    @magoody = Base64.encode64("magoody".to_json)
   end
 
   it "should create a new instance given valid attributes" do
