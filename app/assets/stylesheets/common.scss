@@ -86,9 +86,7 @@ $sidebar_width: 210px;
   padding: 20px;
   width: 400px;
   -moz-border-radius: 6px;
-  -moz-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
   -webkit-border-radius: 6px;
-  -webkit-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
   input[type="text"], input[type="email"], input[type="password"] {
     font-size: 16px;
     padding: 2px;
@@ -103,9 +101,7 @@ $sidebar_width: 210px;
   background: white;
   padding: 8px 15px 15px 15px;
   -moz-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
-  -webkit-border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
+  -webkit-border-radius: 4px; }
 
 .info {
   padding-top: 12px;
@@ -512,8 +508,6 @@ $bg_color9: #FFDD4A;
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
-  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
 
   .caption {
     border-bottom: 1px #eee solid;
