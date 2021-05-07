@@ -376,32 +376,32 @@ task_category:
 # Deprecated - Defining this in a dedicated stylesheet is a much more flexible approach
 task_category_color:
   :call :
-    :background : Silver
-    :color      : Black
+    :background : "#05668D"
+    :color      : "#EEE"
   :email :
-    :background : Turquoise
-    :color      : Black
+    :background : "#028090"
+    :color      : "#EEE"
   :follow_up :
-    :background : Gold
-    :color      : Black
+    :background : "#00A896"
+    :color      : "#EEE"
   :lunch :
-    :background : Tomato
-    :color      : White
+    :background : "#02C39A"
+    :color      : "#EEE"
   :meeting :
-    :background : Orchid
-    :color      : White
+    :background : "#2A9D8F"
+    :color      : "#EEE"
   :money :
-    :background : Lime
-    :color      : Black
+    :background : "#B4A6AB"
+    :color      : "#111"
   :presentation :
-    :background : Salmon
-    :color      : White
+    :background : "#946E83"
+    :color      : "#EEE"
   :trip :
-    :background : Turquoise
-    :color      : White
+    :background : "#615055"
+    :color      : "#EEE"
   :other :
-    :background : Silver
-    :color      : White
+    :background : "#FFDD4A"
+    :color      : "#111"
 task_bucket:
   - :overdue
   - :due_asap
