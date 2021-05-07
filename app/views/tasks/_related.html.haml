@@ -2,7 +2,7 @@
   - unless related.category.blank?
     .strip{class: related.category}= t(related.category)
   - else
-    .strip{style: "color:white"} #{t :other}
+    .strip.other #{t :other}
   %div
     - if related.assigned_to
       = link_to(related.assignee.full_name, user_path(related.assignee))

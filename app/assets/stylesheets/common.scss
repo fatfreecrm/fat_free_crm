@@ -243,11 +243,69 @@ $sidebar_width: 210px;
 .black {
   color: black; }
 
-.white {
-  color: white !important; }
-
 .grayed {
   color: silver !important; }
+
+// Default tag colors
+// Override these with your own stylesheets
+// TODO: Improve the dark vs light to be smarter/inherited
+$dark_strip_text: #111;
+$light_strip_text: #EEE;
+
+$bg_color1: #05668D;
+$bg_color2: #028090;
+$bg_color3: #00A896;
+$bg_color4: #02C39A;
+$bg_color5: #2A9D8F;
+$bg_color6: #B4A6AB;
+$bg_color7: #946E83;
+$bg_color8: #615055;
+$bg_color9: #FFDD4A;
+
+
+.task .call  { background: $bg_color1; color: $light_strip_text; }
+.task .email { background: $bg_color2; color: $light_strip_text; }
+.task .follow_up { background: $bg_color3; color: $light_strip_text; }
+.task .lunch { background: $bg_color4; color: $light_strip_text; }
+.task .meeting { background: $bg_color5; color: $light_strip_text; }
+.task .money { background: $bg_color6; color: $dark_strip_text; }
+.task .presentation { background: $bg_color7; color: $light_strip_text; }
+.task .trip  { background: $bg_color8; color: $light_strip_text; }
+.task .other { background: $bg_color9; color: $dark_strip_text; }
+
+.campaign .planned { background: $bg_color1; color: $light_strip_text; }
+.campaign .started { background: $bg_color9; color: $dark_strip_text; }
+.campaign .completed { background: $bg_color3; color: $light_strip_text; }
+.campaign .on_hold { background: $bg_color6; color: $dark_strip_text; }
+.campaign .called_off { background: $bg_color2; color: $light_strip_text; }
+
+.lead .new { background: $bg_color9; color: $dark_strip_text; }
+.lead .contacted { background: $bg_color3; color: $light_strip_text; }
+.lead .converted { background: $bg_color6; color: $dark_strip_text; }
+.lead .rejected { background: $bg_color1; color: $light_strip_text; }
+
+.account .affiliate { background: $bg_color1; color: $light_strip_text; }
+.account .competitor { background: $bg_color2; color: $light_strip_text; }
+.account .customer { background:$bg_color3; color: $light_strip_text; }
+.account .partner { background: $bg_color4; color: $light_strip_text; }
+.account .reseller { background: $bg_color6; color: $dark_strip_text; }
+.account .vendor { background: $bg_color9; color: $dark_strip_text; }
+
+.opportunity .prospecting { background: $bg_color1; color: $light_strip_text; }
+.opportunity .analysis { background: $bg_color2; color: $light_strip_text; }
+.opportunity .presentation { background:$bg_color3; color: $light_strip_text; }
+.opportunity .proposal { background: $bg_color4; color: $light_strip_text; }
+.opportunity .negotiation { background: $bg_color5; color: $light_strip_text; }
+.opportunity .final_review { background: $bg_color9; color: $dark_strip_text; }
+.opportunity .won { background: $bg_color7; color: $light_strip_text; }
+.opportunity .lost { background: $bg_color1; color: $light_strip_text; }
+
+.user .admin     { background: $bg_color1; color: $light_strip_text; }
+.user .suspended { background: $bg_color3; color: $light_strip_text; }
+.user .active    { background: $bg_color6; color: $dark_strip_text; }
+.user .signed_up { background: $bg_color9; color: $dark_strip_text; }
+
+
 
 .amount {
   background: palegreen;
@@ -275,12 +333,8 @@ $sidebar_width: 210px;
   padding: 1px 4px 1px 3px;
   text-align: right;
   width: 75px;
-  -moz-border-radius: {
-    topleft: 7px;
-    bottomleft: 7px; };
-  -webkit-border: {
-    top-left-radius: 7px;
-    bottom-left-radius: 7px; }; }
+  border-radius: 2px;
+}
 
 // Indentation classes:
 //   - indent: for use with strip (regular indentation).

@@ -2,7 +2,7 @@
   - unless pending.category.blank?
     .strip{class: pending.category}= t(pending.category)
   - else
-    .strip.white #{t :other}
+    .strip.other #{t :other}
 
   .tools
     = link_to_task_edit(pending, bucket) + " | "
