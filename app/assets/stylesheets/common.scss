@@ -273,7 +273,11 @@ $bg_color9: #FFDD4A;
 .task .trip  { background: $bg_color8; color: $light_strip_text; }
 .task .other { background: $bg_color9; color: $dark_strip_text; }
 
-
+.campaign .planned { background: $bg_color1; color: $light_strip_text; }
+.campaign .started { background: $bg_color2; color: $light_strip_text; }
+.campaign .completed { background: $bg_color3; color: $light_strip_text; }
+.campaign .on_hold { background: $bg_color4; color: $light_strip_text; }
+.campaign .called_off { background: $bg_color5; color: $light_strip_text; }
 
 .amount {
   background: palegreen;
