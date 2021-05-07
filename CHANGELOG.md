@@ -8,6 +8,8 @@ Unreleased
 ======
 #905 Swap from Marshal.load. Be sure to run `bundle exec rake ffcrm:preference_update` to migrate your users from old to new format
 
+settings.yml - Changes to structure of task_category_colors. If you have customised these, you need to now specify both `:background` and `:color` for each task. However, it is recommended you migrate to defining these in purely CSS 
+
 Wed Apr 04, 2021 (0.19.1)
 ======
 

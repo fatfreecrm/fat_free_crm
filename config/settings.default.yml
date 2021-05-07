@@ -373,16 +373,35 @@ task_category:
   - :presentation
   - :trip
 
+# Deprecated - Defining this in a dedicated stylesheet is a much more flexible approach
 task_category_color:
-  :call         : Silver
-  :email        : Turquoise
-  :follow_up    : Gold
-  :lunch        : Tomato
-  :meeting      : Orchid
-  :money        : Lime
-  :presentation : Salmon
-  :trip         : Turquoise
-
+  :call :
+    :background : Silver
+    :color      : Black
+  :email :
+    :background : Turquoise
+    :color      : Black
+  :follow_up :
+    :background : Gold
+    :color      : Black
+  :lunch :
+    :background : Tomato
+    :color      : White
+  :meeting :
+    :background : Orchid
+    :color      : White
+  :money :
+    :background : Lime
+    :color      : Black
+  :presentation :
+    :background : Salmon
+    :color      : White
+  :trip :
+    :background : Turquoise
+    :color      : White
+  :other :
+    :background : Silver
+    :color      : White
 task_bucket:
   - :overdue
   - :due_asap

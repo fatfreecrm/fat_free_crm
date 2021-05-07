@@ -19,7 +19,7 @@
 
   - if models.include?(:task)
     - Setting.task_category_color.each do |key, value|
-      li.task .#{key} { background:#{value}; }
+      li.task .#{key} { background:#{value.dig(:background)}; color: #{value.dig(:color)}; }
 
   - if models.include?(:user)
     li.user .admin     { background: lightblue; }
