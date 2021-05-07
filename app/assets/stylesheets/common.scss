@@ -408,19 +408,15 @@ $sidebar_width: 210px;
 .log {
   padding: 8px 0px 0px 0px;
   h3 {
-    border-bottom: 1px #2f2f2f dotted;
     color: #2f2f2f;
     margin: 0px 0px 4px 0px;
     padding: 2px 0px 2px 86px;
     &.overdue {
-      color: crimson;
-      border-bottom: 1px crimson dotted; }
+      color: crimson; }
     &.due_asap {
-      color: darkred;
-      border-bottom: 1px darkred dotted; }
+      color: darkred; }
     &.due_today {
-      color: darkgreen;
-      border-bottom: 1px darkgreen dotted; } }
+      color: darkgreen; } }
   li {
     color: #3f3f3f;
     font-size: 12px;
