@@ -246,8 +246,34 @@ $sidebar_width: 210px;
 .grayed {
   color: silver !important; }
 
-.strip.other {
-  color: white; }
+// Default tag colors
+// Override these with your own stylesheets
+
+$dark_strip_text: #111;
+$light_strip_text: #EEE;
+
+$bg_color1: #05668D;
+$bg_color2: #028090;
+$bg_color3: #00A896;
+$bg_color4: #02C39A;
+$bg_color5: #2A9D8F;
+$bg_color6: #B4A6AB;
+$bg_color7: #946E83;
+$bg_color8: #615055;
+$bg_color9: #FFDD4A;
+
+
+.task .call  { background: $bg_color1; color: $light_strip_text; }
+.task .email { background: $bg_color2; color: $light_strip_text; }
+.task .follow_up { background: $bg_color3; color: $light_strip_text; }
+.task .lunch { background: $bg_color4; color: $light_strip_text; }
+.task .meeting { background: $bg_color5; color: $light_strip_text; }
+.task .money { background: $bg_color6; color: $dark_strip_text; }
+.task .presentation { background: $bg_color7; color: $light_strip_text; }
+.task .trip  { background: $bg_color8; color: $light_strip_text; }
+.task .other { background: $bg_color9; color: $dark_strip_text; }
+
+
 
 .amount {
   background: palegreen;
