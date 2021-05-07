@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Unreleased
+======
+#905 Swap from Marshal.load. Be sure to run `bundle exec rake ffcrm:preference_update` to migrate your users from old to new format
+
 Wed Apr 04, 2021 (0.19.1)
 ======
 
