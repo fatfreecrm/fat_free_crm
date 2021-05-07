@@ -5,10 +5,6 @@
     - Setting.account_category_color.each do |key, value|
       li.account .#{key} { background:#{value}; }
 
-  - if models.include?(:lead)
-    - Setting.lead_status_color.each do |key, value|
-      li.lead .#{key} { background:#{value}; }
-
   - if models.include?(:opportunity)
     - Setting.opportunity_stage_color.each do |key, value|
       li.opportunity .#{key} { background:#{value}; }

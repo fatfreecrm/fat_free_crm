@@ -279,6 +279,12 @@ $bg_color9: #FFDD4A;
 .campaign .on_hold { background: $bg_color4; color: $light_strip_text; }
 .campaign .called_off { background: $bg_color5; color: $light_strip_text; }
 
+.lead .new { background: $bg_color1; color: $light_strip_text; }
+.lead .contacted { background: $bg_color2; color: $light_strip_text; }
+.lead .converted { background: $bg_color3; color: $light_strip_text; }
+.lead .rejected { background: $bg_color4; color: $light_strip_text; }
+
+
 .amount {
   background: palegreen;
   color: black;
