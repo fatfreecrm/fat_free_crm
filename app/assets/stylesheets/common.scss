@@ -10,7 +10,7 @@ $sidebar_width: 210px;
 // Common page elements.
 //------------------------------------------------------------------------------
 .title {
-  border-bottom: 1px gray solid;
+  border-bottom: 1px #eee solid;
   color: $color_title;
   font: {
     size: 17px;
@@ -35,7 +35,7 @@ $sidebar_width: 210px;
 }
 
 .subtitle {
-  border-bottom: 1px silver solid;
+  border-bottom: 1px #eee solid;
   color: #2f2f2f;
   font: {
     size: 14px;
@@ -408,19 +408,15 @@ $sidebar_width: 210px;
 .log {
   padding: 8px 0px 0px 0px;
   h3 {
-    border-bottom: 1px #2f2f2f dotted;
     color: #2f2f2f;
     margin: 0px 0px 4px 0px;
     padding: 2px 0px 2px 86px;
     &.overdue {
-      color: crimson;
-      border-bottom: 1px crimson dotted; }
+      color: crimson; }
     &.due_asap {
-      color: darkred;
-      border-bottom: 1px darkred dotted; }
+      color: darkred; }
     &.due_today {
-      color: darkgreen;
-      border-bottom: 1px darkgreen dotted; } }
+      color: darkgreen; } }
   li {
     color: #3f3f3f;
     font-size: 12px;
@@ -438,7 +434,7 @@ $sidebar_width: 210px;
 .list {
   padding: 8px 0px 7px 0px;
   li {
-    border-bottom: 1px silver dotted;
+    border-bottom: 1px #eee dotted;
     color: #3f3f3f;
     font-size: 12px;
     list-style: none;
@@ -466,7 +462,7 @@ $sidebar_width: 210px;
   -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
 
   .caption {
-    border-bottom: 1px grey solid;
+    border-bottom: 1px #eee solid;
     color: navy;
     font: {
       size: 12px;
@@ -490,7 +486,6 @@ $sidebar_width: 210px;
     font-size: 13px;
     font-weight: bold; }
   li {
-    border-bottom: 1px silver dotted;
     font-size: 12px;
     list-style: none;
     padding: 2px 0px 3px 0px;
@@ -717,7 +712,7 @@ table.asset_attributes {
   width: 100%;
   border-spacing: 4px;
   td, th {
-    border-bottom: 1px dotted silver;
+    border-bottom: 1px dotted #eee;
     vertical-align: top;
     text-align: left;
   }
