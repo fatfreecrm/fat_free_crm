@@ -1,19 +1,5 @@
 -# Generate dynamic styles that get embedded on the page.
 - content_for :styles do
 
-  - if models.include?(:account)
-    - Setting.account_category_color.each do |key, value|
-      li.account .#{key} { background:#{value}; }
-
-  - if models.include?(:opportunity)
-    - Setting.opportunity_stage_color.each do |key, value|
-      li.opportunity .#{key} { background:#{value}; }
-
-  - if models.include?(:user)
-    li.user .admin     { background: lightblue; }
-    li.user .suspended { background: gainsboro; }
-    li.user .active    { background: lightgreen; }
-    li.user .signed_up { background: lightsalmon; }
-
   = hook(:inline_styles, self, local_assigns)
 

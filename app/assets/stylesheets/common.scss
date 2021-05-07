@@ -284,6 +284,28 @@ $bg_color9: #FFDD4A;
 .lead .converted { background: $bg_color3; color: $light_strip_text; }
 .lead .rejected { background: $bg_color4; color: $light_strip_text; }
 
+.account .affiliate { background: $bg_color1; color: $light_strip_text; }
+.account .competitor { background: $bg_color2; color: $light_strip_text; }
+.account .customer { background:$bg_color3; color: $light_strip_text; }
+.account .partner { background: $bg_color4; color: $light_strip_text; }
+.account .reseller { background: $bg_color5; color: $light_strip_text; }
+.account .vendor { background: $bg_color6; color: $dark_strip_text; }
+
+.opportunity .prospecting { background: $bg_color1; color: $light_strip_text; }
+.opportunity .analysis { background: $bg_color2; color: $light_strip_text; }
+.opportunity .presentation { background:$bg_color3; color: $light_strip_text; }
+.opportunity .proposal { background: $bg_color4; color: $light_strip_text; }
+.opportunity .negotiation { background: $bg_color5; color: $light_strip_text; }
+.opportunity .final_review { background: $bg_color6; color: $dark_strip_text; }
+.opportunity .won { background: $bg_color7; color: $light_strip_text; }
+.opportunity .lost { background: $bg_color8; color: $light_strip_text; }
+
+.user .admin     { background: $bg_color1; color: $light_strip_text; }
+.user .suspended { background: $bg_color2; color: $light_strip_text; }
+.user .active    { background: $bg_color3; color: $light_strip_text; }
+.user .signed_up { background: $bg_color4; color: $light_strip_text; }
+
+
 
 .amount {
   background: palegreen;
