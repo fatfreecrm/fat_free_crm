@@ -54,6 +54,7 @@ Ruby 2.4 has reached end of life and is no longer activity tested against.
  * #851 upgrade paper_trail
  * Security fixes CVE-2019-16109, CVE-2019-16676, CVE-2019-5477, CVE-2019-16892
  * Dependency updates
+ * Simple Form upgrades to use HTML5 and browser validations by default
 
 
 Sat Apr 21, 2018 (0.18.0)
