@@ -12,6 +12,10 @@ settings.yml - Background, foreground colors for tasks, accounts, opportunities,
 
 Refactoring to Bootstrap for forms, buttons, layouts.
 
+Drop ruby 2.5 support
+
+Upgrade to rails 6, papertail 12, devise 4.8
+
 Wed May 09, 2021 (0.19.2)
 ======
 CVE-2021-22885
