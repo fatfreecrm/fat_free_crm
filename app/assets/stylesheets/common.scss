@@ -501,7 +501,7 @@ $bg_color9: #FFDD4A;
       font-size: 11px;
       padding: 2px 0px 0px 0px; } } }
 
-// Sidebar, filters, and selectors.
+// Sidebar, filters
 //------------------------------------------------------------------------------
 .filters, .panel {
   background: snow;
@@ -552,20 +552,6 @@ $bg_color9: #FFDD4A;
     background: oldlace;
     p {
       margin: 4px 0px 4px 0px; } } }
-
-.selector {
-  color: black;
-  cursor: pointer;
-  font-size: 10px;
-  text-align: center; }
-
-.on {
-  background: lightgoldenrodyellow;
-  border: 1px silver inset; }
-
-.off {
-  background: lightgrey;
-  border: 1px silver outset; }
 
 .arrow {
   font-size: 9px;
