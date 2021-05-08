@@ -40,12 +40,11 @@ $btn-font-size:               '0.9rem';
 @import "bootstrap/root";
 // @import "bootstrap/reboot";
 // @import "bootstrap/type";
-/*
+
 @import "bootstrap/images";
 @import "bootstrap/containers";
 @import "bootstrap/grid";
 @import "bootstrap/tables";
-*/
 @import "bootstrap/forms";
 @import "bootstrap/buttons";
 @import "bootstrap/transitions";
@@ -81,4 +80,16 @@ $btn-font-size:               '0.9rem';
 // Used on tasks#index as the selector component
 .nav-sm .nav-link {
   padding: 0.25rem 0.5rem;
+}
+
+// Application grid
+.sidebar {
+  @extend .col-2;
+  // @extend .g-2;
+
+  .panel {
+  }
+}
+.main {
+ @extend .col-9;
 }
