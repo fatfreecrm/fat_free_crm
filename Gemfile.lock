@@ -420,7 +420,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activejob (~> 5.2.0)
+  activejob
   activemodel-serializers-xml
   acts-as-taggable-on (>= 3.4.3)
   acts_as_commentable
