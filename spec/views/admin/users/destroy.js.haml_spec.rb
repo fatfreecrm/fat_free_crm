@@ -37,12 +37,6 @@ describe "admin/users/destroy" do
       expect(rendered).to include(%/crm.flick('#{dom_id(@user, :confirm)}', 'remove');/)
     end
 
-    it "should shake user partial" do
-      render
-
-      expect(rendered).to include(%/$('#user_#{@user.id}').effect('shake'/)
-    end
-
     it "should show flash message" do
       render
 

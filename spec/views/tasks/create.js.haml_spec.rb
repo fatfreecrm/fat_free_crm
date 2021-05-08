@@ -41,7 +41,6 @@ describe "/tasks/create" do
         expect(rendered).to include("$('#sidebar').html")
         expect(rendered).to have_text("Recent Items")
         expect(rendered).to have_text("Sometime Later")
-        expect(rendered).to include("$('#filters').effect('shake'")
       end
     end
   end
@@ -115,7 +114,6 @@ describe "/tasks/create" do
     assign(:task, build(:task, name: nil)) # make it invalid
     render
 
-    expect(rendered).to include(%/$('#create_task').effect("shake"/)
     expect(rendered).to include(%/$('#new_task input[type=submit]').enable()/)
   end
 end

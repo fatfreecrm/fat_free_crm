@@ -25,6 +25,5 @@ describe "admin/field_groups/update" do
   it "renders javascript for invalid field group" do
     allow(field_group.errors).to receive(:empty?).and_return(false)
     render
-    expect(rendered).to have_text("$('##{dom_id(field_group, :edit)}').effect('shake', { distance:5 }, 250);")
   end
 end

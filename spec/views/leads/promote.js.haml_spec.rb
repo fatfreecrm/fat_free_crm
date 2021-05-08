@@ -38,7 +38,6 @@ describe "/leads/promote" do
         render
         expect(rendered).to include("#sidebar")
         expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
 
@@ -50,7 +49,6 @@ describe "/leads/promote" do
       it "should replace [Convert Lead] with lead partial and highlight it" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-        expect(rendered).to include("$('#filters').effect('shake'")
       end
 
       it "should update sidebar" do
@@ -58,7 +56,6 @@ describe "/leads/promote" do
         expect(rendered).to include("#sidebar")
         expect(rendered).to have_text("Lead Status")
         expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#filters').effect('shake'")
       end
     end
 
@@ -101,10 +98,9 @@ describe "/leads/promote" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
       end
 
-      it "should redraw the [Convert Lead] form and shake it" do
+      it "should redraw the [Convert Lead] form" do
         render
         expect(rendered).to include("$('#convert_lead').html")
-        expect(rendered).to include(%/$('#convert_lead').effect("shake"/)
       end
     end
 
@@ -113,10 +109,9 @@ describe "/leads/promote" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       end
 
-      it "should redraw the [Convert Lead] form and shake it" do
+      it "should redraw the [Convert Lead] form" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').html")
-        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 
@@ -125,10 +120,9 @@ describe "/leads/promote" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 
-      it "should redraw the [Convert Lead] form and shake it" do
+      it "should redraw the [Convert Lead] form" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').html")
-        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("shake"/)
       end
     end
 

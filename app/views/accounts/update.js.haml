@@ -6,14 +6,13 @@
   - if called_from_landing_page?
     crm.flip_form('edit_#{entity_name}');
     crm.set_title('edit_#{entity_name}', '#{j @entity.name}');
-    = refresh_sidebar(:show, :summary)
+    = refresh_sidebar(:show)
   - else
     $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
     $('##{id}').effect("highlight", { duration:1500 });
-    = refresh_sidebar(:index, :filters)
+    = refresh_sidebar(:index)
 - else
   $('##{id}').html('#{ j render(partial: "edit") }');
-  $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();
 
 = hook(:entity_update, self, {entity: @entity})
