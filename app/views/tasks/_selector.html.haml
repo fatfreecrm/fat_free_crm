@@ -1,4 +1,4 @@
-%nav{ class: "nav nav-pills" }
+%nav{ class: "nav nav-pills nav-sm" }
   %a{ class: "nav-link " + (@view == "pending" ? "active" : "off"), href: tasks_path }
     = t :pending_tab
   %a{ class: "nav-link " + (@view == "assigned" ? "active" : "off"), href: url_for(action: :index, view: "assigned") }

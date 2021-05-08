@@ -75,3 +75,8 @@ $theme-colors: (
 @import "bootstrap/utilities/api";
 */
 // 5. Add additional custom code here
+
+// Used on tasks#index as the selector component
+.nav-sm .nav-link {
+  padding: 0.25rem 0.5rem;
+}
