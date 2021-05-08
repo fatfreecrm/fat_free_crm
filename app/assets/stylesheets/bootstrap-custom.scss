@@ -122,3 +122,10 @@ $btn-font-size:               '0.9rem';
     text-align: right;
   }
 }
+
+// ransack_ui_search renders in older bootstrap, so adding padding fixes a few visual glitches
+#advanced_search {
+  .row {
+    padding-right: 1.5rem;
+  }
+}
