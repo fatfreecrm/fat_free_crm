@@ -100,3 +100,4 @@ gem "devise-encryptable"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob', '~> 5.2.0'
 gem 'ransack_ui'
+gem 'bootstrap', '5.0.0'
