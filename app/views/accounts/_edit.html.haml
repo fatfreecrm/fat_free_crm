@@ -14,8 +14,8 @@
 
     .buttonbar
       - if Setting.compound_address
-        = f.submit t(:save_account), onclick: "crm.clear_all_hints()"
+        = f.submit t(:save_account), onclick: "crm.clear_all_hints()", class: 'btn btn-primary'
       - else
-        = f.submit t(:save_account)
+        = f.submit t(:save_account), class: 'btn btn-primary'
       #{t :or}
       = link_to_cancel edit_account_path(@account)

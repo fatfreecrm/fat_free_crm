@@ -29,7 +29,7 @@ feature 'Users tab', '
     fill_in 'user_password_confirmation', with: 'password'
     fill_in 'user_title', with: 'Chief'
     fill_in 'user_company', with: 'Weather Inc.'
-    select 'Superheroes', from: 'user_group_ids'
+    select2 'Superheroes', from: 'Groups:'
 
     click_button 'Create User'
     expect(find('#users')).to have_content('Captain Thunder')

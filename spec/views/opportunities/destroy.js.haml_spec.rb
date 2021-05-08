@@ -44,7 +44,6 @@ describe "/opportunities/destroy" do
     render
 
     expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Account Summary")
     expect(rendered).to have_text("Recent Items")
   end
 
@@ -54,7 +53,6 @@ describe "/opportunities/destroy" do
     render
 
     expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Campaign Summary")
     expect(rendered).to have_text("Recent Items")
   end
 

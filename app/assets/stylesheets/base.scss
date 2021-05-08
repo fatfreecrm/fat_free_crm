@@ -26,7 +26,7 @@ html, body {
 body, ol, ul, li, dt, tt, label, input, select, textarea {
   font: {
     size: 12px;
-    family: "Lucida Grande", Geneva, Arial, Helvetica, sans-serif; }; }
+    family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" }; }
 
 body, h1, h2, h3, h4, h5, h6, ol, ul, li {
   margin: 0px;
@@ -43,7 +43,8 @@ ul li {
 a {
   text-decoration: none;
   &:link, &:visited {
-    color: $color_link; }
+    color: $color_link;
+  }
   &:hover {
     background: $color_link_hover_background;
     color: $color_link_hover; }
@@ -52,6 +53,12 @@ a {
     border: none;
     color: $color_link_image;
     text-decoration: none; } }
+
+// Bootstrap exceptions
+a.btn, a.btn-sm {
+  color: white;
+}
+
 
 #options {
   a {

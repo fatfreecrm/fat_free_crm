@@ -285,14 +285,6 @@ account_category:
   - :reseller
   - :vendor
 
-account_category_color:
-  :affiliate   : lavender
-  :competitor  : paleturquoise
-  :customer    : pink
-  :partner     : bisque
-  :reseller    : thistle
-  :vendor      : skyblue
-
 # Campaign Status. To add custom status use string value, for example:
 #
 # campaign_status:
@@ -306,13 +298,6 @@ campaign_status:
   - :on_hold
   - :called_off
 
-campaign_status_color:
-  :planned    : Gold
-  :started    : Turquoise
-  :completed  : Lime
-  :on_hold    : Orchid
-  :called_off : OrangeRed
-
 # Lead Status and Source.
 #------------------------------------------------------------------------------
 lead_status:
@@ -320,12 +305,6 @@ lead_status:
   - :contacted
   - :converted
   - :rejected
-
-lead_status_color:
-  :new       : Silver
-  :contacted : Turquoise
-  :converted : Lime
-  :rejected  : OrangeRed
 
 lead_source:
   - :campaign
@@ -351,16 +330,6 @@ opportunity_stage:
   - :won
   - :lost
 
-opportunity_stage_color:
-  :prospecting  : Silver
-  :analysis     : PaleGoldenRod
-  :presentation : Salmon
-  :proposal     : Gold
-  :negotiation  : Orchid
-  :final_review : Turquoise
-  :won          : Lime
-  :lost         : OrangeRed
-
 # Task Category, Due Date, and Completed Date.
 #------------------------------------------------------------------------------
 task_category:
@@ -372,16 +341,6 @@ task_category:
   - :money
   - :presentation
   - :trip
-
-task_category_color:
-  :call         : Silver
-  :email        : Turquoise
-  :follow_up    : Gold
-  :lunch        : Tomato
-  :meeting      : Orchid
-  :money        : Lime
-  :presentation : Salmon
-  :trip         : Turquoise
 
 task_bucket:
   - :overdue

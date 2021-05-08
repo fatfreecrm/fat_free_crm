@@ -1,5 +1,5 @@
 .title_tools
-  = link_to_inline(:create_task, url_for(action: :new, view: @view), text: t(:create_task))
+  = link_to_inline(:create_task, url_for(action: :new, view: @view), text: t(:create_task), class: 'btn-sm btn-primary')
 .title#title
   = (@view == "assigned" ? t(:assigned_tasks) : t(:tasks))
   = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")

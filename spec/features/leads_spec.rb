@@ -36,13 +36,16 @@ feature 'Leads', '
       fill_in 'lead_email', with: 'mr_lead@example.com'
       fill_in 'lead_phone', with: '+44 1234 567890'
       click_link 'Status'
-      select 'Myself', from: 'lead_assigned_to'
-      select 'Contacted', from: 'lead_status'
-      select 'Campaign', from: 'lead_source'
+      select2 'Myself', from: 'Assigned to:'
+      select2 'Contacted', from: 'Status:'
+      select2 'Campaign', from: 'Source:'
       click_link 'Comment'
       fill_in 'comment_body', with: 'This is an important lead.'
-      click_link 'Status'
-      select 'Contacted', from: 'lead_status'
+
+      # TODO: Refactor to a page object
+      # This panel is already open, so clicking status again closed the div.
+      # click_link 'Status'
+      select2 'Contacted', from: 'Status:'
       click_button 'Create Lead'
       expect(leads_element).to have_content('Mr Lead')
 
@@ -79,9 +82,10 @@ feature 'Leads', '
       fill_in 'lead_first_name', with: 'Mrs'
       fill_in 'lead_phone', with: '+44 0987 654321'
       click_link('Status')
-      select 'Rejected', from: 'lead_status'
+      select2 'Rejected', from: 'Status:'
       click_button 'Save Lead'
-      expect(summary_element).to have_content('Mrs Lead')
+      sleep(3) # TODO A better AJAX observing call, or just a redirect on save.
+      expect(find('#title')).to have_content('Mrs Lead')
 
       click_link "Dashboard"
       expect(activities_element).to have_content("Bill Murray updated lead Mrs Lead")

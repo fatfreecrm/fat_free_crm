@@ -8,6 +8,14 @@ Unreleased
 ======
 #905 Swap from Marshal.load. Be sure to run `bundle exec rake ffcrm:preference_update` to migrate your users from old to new format
 
+settings.yml - Background, foreground colors for tasks, accounts, opportunities, and more - these are now defined in CSS by default 
+
+Refactoring to Bootstrap for forms, buttons, layouts.
+
+Wed May 09, 2021 (0.19.2)
+======
+CVE-2021-22885
+
 Wed Apr 04, 2021 (0.19.1)
 ======
 
