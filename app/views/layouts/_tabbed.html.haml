@@ -1,14 +1,13 @@
 .navbar.navbar-expand-lg.tabs
   .container-fluid
     %button{"class" => "navbar-toggler", "type" => "button", "data-bs-toggle" => "collapse", "data-bs-target" => "#navbarNav", "aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation"}
-      %span.navbar-toggler-icon ...
-    .collapse.navbar-collapse
-      %ul.navbar-nav.lg-auto{id:"navbarNav"}
-        - tabs.each do |tab|
-          %li.nav-item
-            = link_to(tab[:url], class: tab[:active] ? "nav-link active" : "nav-link") do
-              %i.fa{class: tab[:icon]}
-              = t(tab[:text])
+      %span.navbar-toggler-icon
+    %ul.navbar-nav.collapse.navbar-collapse.lg-auto{id:"navbarNav"}
+      - tabs.each do |tab|
+        %li.nav-item
+          = link_to(tab[:url], class: tab[:active] ? "nav-link active" : "nav-link") do
+            %i.fa{class: tab[:icon]}
+            = t(tab[:text])
 
 = show_flash
 %div{ class: 'container-fluid' }
