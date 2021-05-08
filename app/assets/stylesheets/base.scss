@@ -43,7 +43,8 @@ ul li {
 a {
   text-decoration: none;
   &:link, &:visited {
-    color: $color_link; }
+    color: $color_link;
+  }
   &:hover {
     background: $color_link_hover_background;
     color: $color_link_hover; }
@@ -52,6 +53,12 @@ a {
     border: none;
     color: $color_link_image;
     text-decoration: none; } }
+
+// Bootstrap exceptions
+a.btn, a.btn-sm {
+  color: white;
+}
+
 
 #options {
   a {

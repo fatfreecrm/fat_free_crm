@@ -6,21 +6,45 @@
 
 // 2. Include any default variable overrides here
 
+$bg_color1: #05668D;
+$bg_color2: #028090;
+$bg_color3: #00A896;
+$bg_color4: #02C39A;
+$bg_color5: #2A9D8F;
+$bg_color6: #B4A6AB;
+$bg_color7: #946E83;
+$bg_color8: #615055;
+$bg_color9: #FFDD4A;
+
+$theme-colors: (
+  "primary":    #05668D,
+  "secondary":  #028090,
+  "success":    #00A896,
+  "info":       #02C39A,
+  "warning":    #2A9D8F,
+  "danger":     #B4A683,
+  "light":      #615055,
+  "dark":       #FFDD4A
+);
+
+
+
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
 
 // 4. Include any optional Bootstrap components as you like
-/*
+
 @import "bootstrap/root";
-@import "bootstrap/reboot";
-@import "bootstrap/type";
+// @import "bootstrap/reboot";
+// @import "bootstrap/type";
+/*
 @import "bootstrap/images";
 @import "bootstrap/containers";
 @import "bootstrap/grid";
 @import "bootstrap/tables";
-@import "bootstrap/forms";
 */
+@import "bootstrap/forms";
 @import "bootstrap/buttons";
 /*
 @import "bootstrap/transitions";
