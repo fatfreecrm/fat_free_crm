@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/CloCkWeRX/responds_to_parent.git
+  revision: fc42ea13be78b065a7975564b1828d6feaef8660
+  branch: patch-1
+  specs:
+    responds_to_parent (2.0.0)
+      actionpack (>= 3.2.22, < 6.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -309,8 +317,6 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
-    responds_to_parent (2.0.0)
-      actionpack (>= 3.2.22, < 6.0)
     rexml (3.2.5)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
@@ -478,7 +484,7 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify
   responders (~> 3.0)
-  responds_to_parent
+  responds_to_parent!
   rspec-activemodel-mocks
   rspec-rails
   rubocop (~> 0.82.0)
