@@ -7,7 +7,7 @@
   = styles_for :task
 
   = render 'leads/title_bar', lead: @lead
-  
+  = render 'leads/sidebar_show', lead: @lead 
   = render "comments/new", commentable: @lead
   = render partial: "shared/timeline", collection: @timeline
 

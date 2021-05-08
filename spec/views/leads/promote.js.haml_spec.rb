@@ -37,7 +37,6 @@ describe "/leads/promote" do
       it "should update sidebar" do
         render
         expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Lead Summary")
         expect(rendered).to have_text("Recent Items")
       end
     end
@@ -78,7 +77,6 @@ describe "/leads/promote" do
         render
 
         expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Summary")
         expect(rendered).to have_text("Recent Items")
       end
 
