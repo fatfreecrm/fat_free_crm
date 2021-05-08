@@ -2,7 +2,7 @@
   .container-fluid
     %button{"class" => "navbar-toggler", "type" => "button", "data-bs-toggle" => "collapse", "data-bs-target" => "#navbarNav", "aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation"}
       %span.navbar-toggler-icon
-    %ul.navbar-nav.collapse.navbar-collapse.lg-auto{id:"navbarNav"}
+    %ul.navbar-nav.collapse.navbar-collapse.me-auto.mb-2.mg-lg-0{id:"navbarNav"}
       - tabs.each do |tab|
         %li.nav-item
           = link_to(tab[:url], class: tab[:active] ? "nav-link active" : "nav-link") do
