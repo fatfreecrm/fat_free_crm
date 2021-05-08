@@ -9,4 +9,4 @@
 require_relative 'application'
 
 # Initialize the rails application
-FatFreeCRM::Application.initialize!
+Rails.application.initialize!

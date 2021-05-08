@@ -29,7 +29,7 @@ require 'fat_free_crm/gem_ext/rails/engine'
 module FatFreeCRM
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.0
+    config.load_defaults 6.0
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
