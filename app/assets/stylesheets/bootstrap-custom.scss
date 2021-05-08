@@ -27,7 +27,9 @@ $theme-colors: (
   "dark":       #FFDD4A
 );
 
-
+$btn-padding-y:               0.375;
+$btn-padding-x:               0.75;
+$btn-font-size:               '0.9rem';
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/variables";
