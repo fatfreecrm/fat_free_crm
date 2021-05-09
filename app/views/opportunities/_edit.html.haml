@@ -13,6 +13,6 @@
     = hook(:entity_form, self, {f: f, entity: @opportunity})
 
     .buttonbar
-      = f.submit t(:save_opportunity), onclick: %/$("#account_assigned_to").val($("#opportunity_assigned_to").val());/
+      = f.submit t(:save_opportunity), onclick: %/$("#account_assigned_to").val($("#opportunity_assigned_to").val());/, class: 'btn btn-primary'
       #{t :or}
       = link_to_cancel edit_opportunity_path(@opportunity)

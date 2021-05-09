@@ -22,7 +22,7 @@ describe "/opportunities/_edit" do
     assign(:opportunity, @opportunity = build_stubbed(:opportunity, campaign: @campaign = build_stubbed(:campaign)))
     render
 
-    expect(rendered).to have_tag("form[class=edit_opportunity]") do
+    expect(rendered).to have_tag('form[class="simple_form edit_opportunity"]') do
       with_tag "input[type=hidden][id=opportunity_user_id][value='#{@opportunity.user_id}']"
       with_tag "input[type=hidden][id=opportunity_campaign_id][value='#{@opportunity.campaign_id}']"
     end

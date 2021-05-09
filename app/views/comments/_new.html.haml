@@ -25,7 +25,7 @@
       = f.text_area :comment, id: "#{id_prefix}_comment_comment"
       .buttons
         = image_tag("loading.gif", size: :thumb, class: "spinner", style: "display: none;")
-        = f.submit t(:add_note), id: "#{id_prefix}_comment_submit"
+        = f.submit t(:add_note), id: "#{id_prefix}_comment_submit", class: 'btn btn-primary'
         #{t :or}
         = link_to(t(:cancel), '#', class: 'cancel')
   %div{ {id: "#{id_prefix}_ask"}.merge(hidden_if(false))}
