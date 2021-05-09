@@ -84,7 +84,7 @@ feature 'Leads', '
       click_link('Status')
       select2 'Rejected', from: 'Status:'
       click_button 'Save Lead'
-      expect(summary_element).to have_content('Mrs Lead')
+      expect('#title').to have_content('Mrs Lead')
 
       click_link "Dashboard"
       expect(activities_element).to have_content("Bill Murray updated lead Mrs Lead")
