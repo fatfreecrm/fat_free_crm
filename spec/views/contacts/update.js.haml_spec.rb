@@ -118,10 +118,9 @@ describe "/contacts/update" do
         expect(rendered).to include("crm.create_or_select_account(#{@referer =~ %r{/accounts/}})")
       end
 
-      it "should redraw the [edit_contact] form and shake it" do
+      it "should redraw the [edit_contact] form" do
         render
         expect(rendered).to include("$('#contact_#{@contact.id}').html")
-        expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

@@ -82,11 +82,10 @@ describe "/accounts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
       end
 
-      it "should redraw the [edit_account] form and shake it" do
+      it "should redraw the [edit_account] form" do
         render
 
         expect(rendered).to include("account_#{@account.id}")
-        expect(rendered).to include(%/$('#account_#{@account.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
