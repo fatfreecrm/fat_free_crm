@@ -23,7 +23,7 @@ feature 'Groups tab', '
     click_link 'create a new group'
     expect(page).to have_selector('#group_name', visible: true)
     fill_in 'group_name', with: 'The Enterprise Bridge'
-    select 'Mr Spock', from: 'group_user_ids'
+    select2 'Mr Spock', from: 'Users'
     click_button 'Create Group'
     expect(page).to have_content('The Enterprise Bridge')
     expect(page).to have_content('members: Mr Spock')
