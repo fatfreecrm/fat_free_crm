@@ -4,7 +4,7 @@
   $('##{dom_id(@task)}').fadeOut({ duration:500 });
   - if @empty_bucket
     $('#list_#{@empty_bucket}').fadeOut({ duration:500 });
-  = refresh_sidebar(:index, :filters)
+  = refresh_sidebar(:index)
 
 - else # Completing from the Asset page -- replace task partial with completed one.
 
