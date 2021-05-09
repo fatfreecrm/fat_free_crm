@@ -5,7 +5,7 @@
 [codeclimate-img-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm.svg
 [codeclimate-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm
 [discord-img-url]: https://img.shields.io/badge/chat-on%20discord-7289da.svg?sanitize=true
-[discord-url]: https://discord.gg/EwH6DmqAJn
+[discord-url]: https://discord.gg/JVrzD8RYyk
 ### An open source, Ruby on Rails [customer relationship management][crm-wiki] platform (CRM).
 
 [crm-wiki]: http://en.wikipedia.org/wiki/Customer_relationship_management
