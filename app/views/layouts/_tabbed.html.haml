@@ -10,9 +10,9 @@
             = t(tab[:text])
 
 = show_flash
-%div{ class: 'container-fluid' }
+%div{ id: 'primary-application-pane' }
   %div{ class: 'row' }
-    %div{ class: :sidebar, id: :sidebar, valign: :top }
+    %div{ class: 'sidebar', id: :sidebar }
       = render "layouts/sidebar"
-    %div{ class: 'main', id: :main, valign: :top }
+    %div{ class: 'main', id: :main }
       = yield

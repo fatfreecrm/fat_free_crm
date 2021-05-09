@@ -86,17 +86,23 @@ $utilities: ();
 }
 
 // Application grid
-.sidebar {
-  @extend .col-2;
-  // @extend .g-2;
+#primary-application-pane {
+  @extend .container-fluid;
+  width: auto;
 
-  .panel {
+  .sidebar {
+    @extend .col-2;
+    // @extend .g-2;
+
+    .panel {
+    }
+  }
+  .main {
+    // Same as .col=9
+    flex: 0 0 auto;
+    width: 75%;
   }
 }
-.main {
- @extend .col-9;
-}
-
 // Navbar
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
@@ -109,6 +115,30 @@ $utilities: ();
      }
      i { display: none; }
     } 
+  }
+
+  // On mobile, reverse the order of our content
+  // TODO: Target this better
+  .container-fluid .row {
+    flex-direction: column-reverse !important;
+  }
+
+  #primary-application-pane {
+    .main {
+      width: 90%;
+      margin: auto;
+    }
+    .sidebar {
+      width: 90%;
+      margin: auto;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .sidebar #filters, .sidebar #lists, .sidebar #recently {
+      margin-right: 2%;
+      width: 30%;
+    }
   }
 }
 #search {
