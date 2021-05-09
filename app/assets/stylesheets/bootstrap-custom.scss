@@ -153,6 +153,7 @@ $utilities: ();
   #search_results_count {
     @extend .col;
     text-align: right;
+    width: 98%;
   }
 }
 
