@@ -51,9 +51,9 @@ feature 'Tasks', '
       click_link 'Create Task'
       expect(page).to have_selector('#task_name', visible: true)
       fill_in 'task_name', with: 'Task For Someone Else'
-      select 'Tomorrow', from: 'task_bucket'
-      select 'Another User', from: 'task_assigned_to'
-      select 'Call', from: 'task_category'
+      select2 'Tomorrow', from: 'Due:'
+      select2 'Another User', from: 'Assign to:'
+      select2 'Call', from: 'Category:'
       click_button 'Create Task'
       expect(page).to have_content('The task has been created and assigned to Another User')
 
