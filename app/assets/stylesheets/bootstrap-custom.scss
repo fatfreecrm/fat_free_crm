@@ -121,12 +121,11 @@ button.navbar-toggler:focus {
   }
 
   // On mobile, reverse the order of our content
-  // TODO: Target this better
-  .container-fluid .row {
-    flex-direction: column-reverse !important;
-  }
-
   #primary-application-pane {
+    .row:first-child {
+      flex-direction: column-reverse !important;
+    }
+ 
     .main {
       width: 90%;
       margin: auto;
