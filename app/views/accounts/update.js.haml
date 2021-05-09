@@ -13,7 +13,6 @@
     = refresh_sidebar(:index, :filters)
 - else
   $('##{id}').html('#{ j render(partial: "edit") }');
-  $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();
 
 = hook(:entity_update, self, {entity: @entity})

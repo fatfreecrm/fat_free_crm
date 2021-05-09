@@ -4,6 +4,5 @@
 
 - else # Couldn't create the saved list -- validation failed.
   $form = $('.lists .list_form:visible')
-  $form.effect("shake", { duration:250, distance: 6 });
   $form.find("[name='list[name]']").focus();
   $form.find("[type=submit]").prop('disabled', false);

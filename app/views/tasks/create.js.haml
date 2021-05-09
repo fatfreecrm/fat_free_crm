@@ -34,6 +34,5 @@
     $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
 
 - else # Couldn't create the task -- validation failed.
-  $('#create_task').effect("shake", { duration:250, distance: 6 });
   $('#task_name').focus();
   $('#new_task input[type=submit]').enable();

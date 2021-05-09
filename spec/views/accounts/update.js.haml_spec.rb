@@ -34,7 +34,6 @@ describe "/accounts/update" do
         render
         expect(rendered).to include("$('#sidebar').html")
         expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
 
@@ -70,11 +69,10 @@ describe "/accounts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
       end
 
-      it "should redraw the [edit_account] form and shake it" do
+      it "should redraw the [edit_account] form" do
         render
 
         expect(rendered).to include("#edit_account")
-        expect(rendered).to include(%/$('#edit_account').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

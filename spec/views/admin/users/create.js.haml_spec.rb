@@ -36,7 +36,6 @@ describe "admin/users/create" do
       render
 
       expect(rendered).to include('Please specify username')
-      expect(rendered).to include(%/$('#create_user').effect("shake"/)
     end
   end
 end

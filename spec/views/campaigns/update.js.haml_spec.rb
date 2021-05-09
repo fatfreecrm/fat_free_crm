@@ -33,7 +33,6 @@ describe "/campaigns/update" do
         expect(rendered).to include("#sidebar")
         expect(rendered).to have_text("Campaign Summary")
         expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
 
@@ -57,10 +56,9 @@ describe "/campaigns/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 
-      it "should redraw the [edit_campaign] form and shake it" do
+      it "should redraw the [edit_campaign] form" do
         render
         expect(rendered).to include("$('#edit_campaign').html")
-        expect(rendered).to include(%/$('#edit_campaign').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

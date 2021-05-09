@@ -13,7 +13,6 @@
   crm.flick('empty', 'remove');
 - else
   $('##{create_id}').html('#{ j render(partial: "new") }');
-  $('##{create_id}').effect("shake", { duration:250, distance: 6 });
   - if @entity.errors[:name].blank? and @entity.errors[:ends_on].present?
     $('#campaign_ends_on').focus();
   - else

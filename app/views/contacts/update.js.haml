@@ -18,7 +18,6 @@
 - else
   $('##{id}').html('#{ j render(partial: "edit") }');
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
-  $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();
 
 = hook(:entity_update, self, {entity: @entity})

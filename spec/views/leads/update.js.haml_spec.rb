@@ -32,7 +32,6 @@ describe "/leads/update" do
         render
         expect(rendered).to include("#sidebar")
         expect(rendered).to have_text("Lead Summary")
-        expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
 
@@ -44,7 +43,6 @@ describe "/leads/update" do
       it "should replace [Edit Lead] with lead partial and highlight it" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{@lead.id}\\'")
-        expect(rendered).to include("$('#filters').effect('shake'")
       end
 
       it "should update sidebar" do
@@ -52,7 +50,6 @@ describe "/leads/update" do
         expect(rendered).to include("#sidebar")
         expect(rendered).to have_text("Lead Statuses")
         expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#filters').effect('shake'")
       end
     end
 
@@ -89,10 +86,9 @@ describe "/leads/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
       end
 
-      it "should redraw the [edit_lead] form and shake it" do
+      it "should redraw the [edit_lead] form" do
         render
         expect(rendered).to include("#edit_lead")
-        expect(rendered).to include(%/$('#edit_lead').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -102,10 +98,9 @@ describe "/leads/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/leads"
       end
 
-      it "should redraw the [edit_lead] form and shake it" do
+      it "should redraw the [edit_lead] form" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').html")
-        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -115,10 +110,9 @@ describe "/leads/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/123"
       end
 
-      it "should redraw the [edit_lead] form and shake it" do
+      it "should redraw the [edit_lead] form" do
         render
         expect(rendered).to include("$('#lead_#{@lead.id}').html")
-        expect(rendered).to include(%/$('#lead_#{@lead.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

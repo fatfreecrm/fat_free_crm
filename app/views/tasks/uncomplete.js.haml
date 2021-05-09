@@ -7,6 +7,5 @@
   - if called_from_index_page?
     = refresh_sidebar(:index, :filters)
 - else # Errors
-  $('##{dom_id(@task)}').effect("shake", { duration:250, distance: 6 });
   $('#task_name').focus();
   $('#task_submit').enable();
