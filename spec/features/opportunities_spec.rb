@@ -38,7 +38,7 @@ feature 'Opportunities', '
       sleep(1)
       find('li', text: 'Example Account').click
       expect(page).to have_content('Example Account')
-      select 'Prospecting', from: 'opportunity_stage'
+      select2 'Prospecting', from: 'Stage'
       click_link 'Comment'
       fill_in 'comment_body', with: 'This is a very important opportunity.'
       click_button 'Create Opportunity'
@@ -67,7 +67,7 @@ feature 'Opportunities', '
   scenario "remembers the comment field when the creation was unsuccessful", js: true do
     visit opportunities_page
     click_link 'Create Opportunity'
-    select 'Prospecting', from: 'opportunity_stage'
+    select2 'Prospecting', from: 'Stage:'
 
     click_link 'Comment'
     fill_in 'comment_body', with: 'This is a very important opportunity.'
@@ -85,8 +85,8 @@ feature 'Opportunities', '
       click_link 'A Cool Opportunity'
       click_link 'Edit'
       fill_in 'opportunity_name', with: 'An Even Cooler Opportunity'
-      select 'Other Example Account', from: 'account_id'
-      select 'Analysis', from: 'opportunity_stage'
+      select2 'Other Example Account', from: 'Account (create new or select existing):'
+      select2 'Analysis', from: 'Stage:'
       click_button 'Save Opportunity'
       expect(page).to have_content('An Even Cooler Opportunity')
       click_link "Dashboard"
