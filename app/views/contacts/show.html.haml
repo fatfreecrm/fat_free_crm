@@ -7,6 +7,7 @@
   = styles_for :task, :opportunity
   
   = render 'contacts/title_bar', contact: @contact
+  = render 'contacts/sidebar_show', contact: @contact
 
   = render "comments/new", commentable: @contact
   = render partial: "shared/timeline", collection: @timeline
