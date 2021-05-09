@@ -1,6 +1,5 @@
 .panel#summary
   %span{style: "float:right"}= avatar_for(@lead, size: "50x50")
-  %h4= h(@lead.full_name)
   - if !@lead.title.blank? && !@lead.company.blank?
     -# works_at: "{{job_title}} at {{company}}"
     %div= t(:works_at, job_title: @lead.title, company: @lead.company)
