@@ -141,6 +141,11 @@ $utilities: ();
     }
   }
 }
+
+// For now, clip excess page until we tweak the layout properly
+body {
+  overflow-x: clip;
+}
 #search {
   .tabs { @extend .row; }
 
