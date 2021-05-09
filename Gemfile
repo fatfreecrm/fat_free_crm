@@ -90,7 +90,7 @@ gem 'sass-rails', '~> 5.0.3' # sass-rails 6 requires GCC 4.5+
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
-#gem 'therubyracer', platform: :ruby unless ENV["CI"]
+# gem 'therubyracer', platform: :ruby unless ENV["CI"]
 gem 'mini_racer'
 gem 'nokogiri', '>= 1.8.1'
 gem 'activemodel-serializers-xml'

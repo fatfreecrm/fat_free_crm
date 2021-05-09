@@ -22,7 +22,7 @@ describe "/accounts/_edit" do
     expect(view).to render_template(partial: "_contact_info")
     expect(view).to render_template(partial: "_permissions")
 
-    expect(rendered).to have_tag("form[class=edit_account]") do |form|
+    expect(rendered).to have_tag('form[class="simple_form edit_account"]') do |form|
       expect(form).to have_tag "input[type=hidden][id=account_user_id][value='#{@account.user_id}']"
     end
   end
