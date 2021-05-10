@@ -22,5 +22,4 @@
 - else  
   $('##{id}').html('#{ j render(partial: "convert") }');
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
-  $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();

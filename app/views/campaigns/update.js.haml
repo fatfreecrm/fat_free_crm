@@ -13,7 +13,6 @@
     = refresh_sidebar(:index, :filters)
 - else
   $('##{id}').html('#{ j render(partial: "edit") }');
-  $('##{id}').effect("shake", { duration:250, distance: 6 });
   - if @campaign.errors[:name].blank? and @campaign.errors[:ends_on].present?
     $('#campaign_ends_on').focus();
   - else

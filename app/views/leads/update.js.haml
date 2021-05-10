@@ -19,7 +19,6 @@
 
 - else
   $('##{id}').html('#{ j render(partial: "edit") }');
-  $('##{id}').effect("shake", { duration:250, distance: 6 });
   - if @entity.errors[:first_name].blank? and entity.errors[:last_name].present?
     $('#lead_last_name').focus();
   - else

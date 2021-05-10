@@ -26,14 +26,12 @@ describe "/leads/reject" do
     render
 
     expect(rendered).to include("$('#sidebar').html")
-    expect(rendered).to include("$('#filters').effect('shake'")
   end
 
   it "should update sidebar summary when called from landing page" do
     render
 
     expect(rendered).to include("$('#sidebar').html")
-    expect(rendered).to include("$('#summary').effect('shake'")
   end
 
   it "should update campaign sidebar if called from campaign landing page" do

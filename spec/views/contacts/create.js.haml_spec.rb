@@ -60,7 +60,6 @@ describe "/contacts/create" do
       render
 
       expect(rendered).to include("$('#create_contact').html")
-      expect(rendered).to include(%/$('#create_contact').effect("shake"/)
     end
   end
 end

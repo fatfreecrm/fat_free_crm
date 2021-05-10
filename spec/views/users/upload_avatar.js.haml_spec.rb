@@ -37,10 +37,9 @@ describe "/users/upload_avatar" do
       assign(:user, @user = current_user)
     end
 
-    it "should redraw the [Upload Avatar] form and shake it" do
+    it "should redraw the [Upload Avatar] form" do
       render
       expect(rendered).to include("$('#upload_avatar').html")
-      expect(rendered).to include(%/$('#upload_avatar').effect("shake"/)
     end
   end
 end

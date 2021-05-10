@@ -27,11 +27,10 @@ describe "admin/users/update" do
       @user.errors.add(:name)
     end
 
-    it "redraws [Edit User] form and shakes it" do
+    it "redraws [Edit User] form" do
       render
 
       expect(rendered).to include("user_#{@user.id}")
-      expect(rendered).to include(%/$('#user_#{@user.id}').effect("shake"/)
       expect(rendered).to include(%/$('#user_username').focus()/)
     end
   end
