@@ -7,7 +7,7 @@ source 'https://rubygems.org'
 
 case ENV['CI'] && ENV['DB']
 when 'sqlite'
-  gem 'sqlite3', '~> 1.3.13'
+  gem 'sqlite3', '~> 1.4.0'
 when 'mysql'
   gem 'mysql2'
 when 'postgres'
