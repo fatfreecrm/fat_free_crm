@@ -73,7 +73,7 @@ class Opportunity < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail versions: {class_name: 'Version'}, ignore: [:subscribed_users]
+  has_paper_trail versions: { class_name: 'Version' }, ignore: [:subscribed_users]
   has_fields
   exportable
   sortable by: ["name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
