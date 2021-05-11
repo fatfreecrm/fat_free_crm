@@ -107,7 +107,7 @@ class Task < ActiveRecord::Base
   }
 
   acts_as_commentable
-  has_paper_trail class_name: 'Version', meta: { related: :asset },
+  has_paper_trail versions: {class_name: 'Version'}, meta: { related: :asset },
                   ignore: [:subscribed_users]
   has_fields
   exportable
