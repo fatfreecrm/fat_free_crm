@@ -99,6 +99,6 @@ gem 'devise', '~>4.6'
 gem 'devise-i18n'
 gem "devise-encryptable"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'activejob', '~> 5.2.0'
+gem 'activejob'
 gem 'ransack_ui'
 gem 'bootstrap', '5.0.0'
