@@ -47,7 +47,6 @@ describe "/accounts/create" do
       render
 
       expect(rendered).to include("#create_account")
-      expect(rendered).to include(%/$('#create_account').effect("shake"/)
     end
   end
 end

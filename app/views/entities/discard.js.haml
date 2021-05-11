@@ -1,6 +1,6 @@
 $('##{dom_id(@attachment)}').slideUp(250);
 
 - if called_from_landing_page?(:accounts)
-  = refresh_sidebar_for(:accounts, :show, :summary)
+  = refresh_sidebar_for(:accounts, :show)
 - elsif called_from_landing_page?(:campaigns)
-  = refresh_sidebar_for(:campaigns, :show, :summary)
+  = refresh_sidebar_for(:campaigns, :show)

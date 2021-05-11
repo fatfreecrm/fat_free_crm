@@ -44,7 +44,6 @@ describe "/tasks/update" do
       expect(rendered).to include("$('#due_tomorrow').prepend('<li class=\\'highlight task\\' id=\\'task_#{@task.id}\\'")
       expect(rendered).to have_text("Assigned")
       expect(rendered).to have_text("Recent Items")
-      expect(rendered).to include("$('#filters').effect('shake'")
     end
 
     it "from asset page: should update task partial in place" do
@@ -111,7 +110,6 @@ describe "/tasks/update" do
       expect(rendered).to include("$('#sidebar').html")
       expect(rendered).to have_text("Recent Items")
       expect(rendered).to have_text("Assigned")
-      expect(rendered).to include("$('#filters').effect('shake'")
     end
 
     it "from asset page: should should re-render task partial" do
@@ -131,13 +129,12 @@ describe "/tasks/update" do
     end
   end
 
-  it "error: should re-disiplay [Edit Task] form and shake it" do
+  it "error: should re-disiplay [Edit Task] form" do
     assign(:task_before_update, build_stubbed(:task))
     assign(:task, @task = build_stubbed(:task))
     @task.errors.add(:name)
 
     render
-    expect(rendered).to include(%/$('#task_#{@task.id}').effect("shake"/)
     expect(rendered).to include("$('#task_submit').enable()")
   end
 end

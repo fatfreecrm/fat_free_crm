@@ -37,10 +37,9 @@ describe "/users/update" do
       @user.errors.add(:first_name)
     end
 
-    it "should redraw the [Edit Profile] form and shake it" do
+    it "should redraw the [Edit Profile] form" do
       render
       expect(rendered).to include("$('#edit_profile').html")
-      expect(rendered).to include(%/$('#edit_profile').effect("shake"/)
       expect(rendered).to include("$('#user_email').focus();")
     end
   end

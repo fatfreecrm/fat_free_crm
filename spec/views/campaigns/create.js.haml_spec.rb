@@ -44,7 +44,6 @@ describe "/campaigns/create" do
       render
 
       expect(rendered).to include("$('#create_campaign').html")
-      expect(rendered).to include(%/$('#create_campaign').effect("shake"/)
     end
   end
 end

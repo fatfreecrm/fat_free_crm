@@ -6,14 +6,14 @@
   - if called_from_landing_page?
     crm.flip_form('convert_#{entity_name}');
     crm.set_title('convert_#{entity_name}', '#{h @entity.full_name}');
-    = refresh_sidebar(:show, :summary)
+    = refresh_sidebar(:show)
   - else
     $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
     $('##{id}').effect("highlight", { duration:1500 });
     - if called_from_index_page?
-      = refresh_sidebar(:index, :filters)
+      = refresh_sidebar(:index)
     - elsif called_from_landing_page?("campaigns")
-      = refresh_sidebar_for(:campaigns, :show, :summary)
+      = refresh_sidebar_for(:campaigns, :show)
       - if @opportunity.id # Make sure the opportunity has been saved.
         $('#opportunities').prepend('#{ j render(partial: "opportunities/opportunity", collection: [ @opportunity ]) }');
     - else
@@ -22,5 +22,4 @@
 - else  
   $('##{id}').html('#{ j render(partial: "convert") }');
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
-  $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();

@@ -13,5 +13,4 @@
   $('##{container_id}').sortable('reset');
 - else
   $('##{id}').html('#{ j render(partial: "admin/fields/form", locals: {field_group_id: @field.field_group_id}) }')
-  $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{id}').find('input[type="text"]').first().focus()
