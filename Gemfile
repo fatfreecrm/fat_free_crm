@@ -78,7 +78,7 @@ group :test do
   gem 'database_cleaner'
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
-  gem 'sqlite3', '~> 1.3.13'
+  gem 'sqlite3', '~> 1.4.0'
 end
 
 group :heroku do
