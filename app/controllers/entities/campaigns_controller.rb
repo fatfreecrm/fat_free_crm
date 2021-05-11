@@ -109,7 +109,7 @@ class CampaignsController < EntitiesController
     respond_with(@campaign) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @campaign.access = resource_params[:access] if resource_params[:access]
-      get_data_for_sidebar if @campaign.update_attributes(resource_params) && called_from_index_page?
+      get_data_for_sidebar if @campaign.update(resource_params) && called_from_index_page?
     end
   end
 

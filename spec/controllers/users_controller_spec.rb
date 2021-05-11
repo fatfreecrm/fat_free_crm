@@ -299,7 +299,7 @@ describe UsersController do
     before(:each) do
       login
       @user = current_user
-      @user.update_attributes(first_name: "Apple", last_name: "Boy")
+      @user.update(first_name: "Apple", last_name: "Boy")
     end
 
     it "should assign @users_with_opportunities" do

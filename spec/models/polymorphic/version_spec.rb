@@ -82,9 +82,9 @@ describe Version, versioning: true do
 
       it "should add a version when updating existing #{item}" do
         if @item.respond_to?(:full_name)
-          @item.update_attributes(first_name: "Billy", last_name: "Bones")
+          @item.update(first_name: "Billy", last_name: "Bones")
         else
-          @item.update_attributes(name: "Billy Bones")
+          @item.update(name: "Billy Bones")
         end
         @version = Version.where(@conditions.merge(event: 'update')).first
 

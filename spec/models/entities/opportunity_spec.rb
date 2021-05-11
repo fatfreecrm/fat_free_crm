@@ -113,14 +113,14 @@ describe Opportunity do
 
     it "should set the probability to 0% if opportunity has been lost" do
       opportunity = create(:opportunity, stage: "prospecting", probability: 25)
-      opportunity.update_attributes(stage: 'lost')
+      opportunity.update(stage: 'lost')
       opportunity.reload
       expect(opportunity.probability).to eq(0)
     end
 
     it "should set the probablility to 100% if opportunity has been won" do
       opportunity = create(:opportunity, stage: "prospecting", probability: 65)
-      opportunity.update_attributes(stage: 'won')
+      opportunity.update(stage: 'won')
       opportunity.reload
       expect(opportunity.probability).to eq(100)
     end
