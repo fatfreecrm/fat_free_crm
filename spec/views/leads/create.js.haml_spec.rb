@@ -51,7 +51,6 @@ describe "/leads/create" do
       render
 
       expect(rendered).to include("#sidebar")
-      expect(rendered).to have_text("Campaign Summary")
       expect(rendered).to have_text("Recent Items")
     end
   end

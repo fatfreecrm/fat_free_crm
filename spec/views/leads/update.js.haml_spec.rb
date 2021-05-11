@@ -31,7 +31,6 @@ describe "/leads/update" do
       it "should update sidebar" do
         render
         expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Lead Summary")
         expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
@@ -73,7 +72,6 @@ describe "/leads/update" do
         render
 
         expect(rendered).to include("sidebar")
-        expect(rendered).to have_text("Campaign Summary")
         expect(rendered).to have_text("Recent Items")
       end
     end

@@ -22,7 +22,6 @@ $sidebar_width: 210px;
     top: 2px; } }
 
 .title_tools {
-  font-size: 12px;
   float: right;
   margin: 0;
   margin-top: 4px;
@@ -42,7 +41,7 @@ $sidebar_width: 210px;
     weight: bold; };
   small {
     font-weight: normal;
-    font-size: 11px;
+    font-size: 0.9em;
     padding-left: 5px; }
   a:link, a:visited {
     color: $color_subtitle;
@@ -56,7 +55,7 @@ $sidebar_width: 210px;
   margin-left: 5px }
 
 .subtitle_tools {
-  font-size: 11px;
+  font-size:  0.9em;
   float: right; }
 
 .radio_box {
@@ -71,7 +70,7 @@ $sidebar_width: 210px;
     position: relative;
     top: -3px; }
   label {
-    font-size: 11px; } }
+    font-size: 0.9em; } }
 
 // Main area (page and form).
 //------------------------------------------------------------------------------
@@ -109,9 +108,9 @@ $sidebar_width: 210px;
 
 .sidebar {
   color: #3f3f3f;
-  font-size: 11px;
-  padding: 0px 12px 0px 0px;
-  width: $sidebar_width; }
+  font-size: 0.9em;
+  padding-top: 1rem;
+  }
 
 .form {
   background: white;
@@ -120,7 +119,7 @@ $sidebar_width: 210px;
     height: 30px; } }
 
 .tools {
-  font-size: 10px;
+  font-size: 0.9em;
   float: right;
   padding: 0px 0px 0px 4px;
   &#comment_new_tools {
@@ -128,7 +127,6 @@ $sidebar_width: 210px;
 
 .label {
   color: #3f3f3f;
-  font-size: 12px;
   margin: 8px 0px 0px 0px;
   padding: 0px 8px 0px 0px; }
 
@@ -146,7 +144,6 @@ $sidebar_width: 210px;
 
 .intro {
   color: dimgray;
-  font-size: 12px;
   padding-top: 5px; }
 
 .section {
@@ -470,12 +467,11 @@ $bg_color9: #FFDD4A;
       color: darkgreen; } }
   li {
     color: #3f3f3f;
-    font-size: 12px;
     list-style: none;
     padding: 3px 0px 3px 0px;
     tt {
       color: dimgray;
-      font-size: 11px; } }
+      font-size: 0.9em; } }
   input[type=checkbox] {
     float: left;
     margin: 0px 4px 0px 0px; } }
@@ -487,7 +483,6 @@ $bg_color9: #FFDD4A;
   li {
     border-bottom: 1px #eee dotted;
     color: #3f3f3f;
-    font-size: 12px;
     list-style: none;
     padding: 6px 0px 6px 0px;
     .gravatar {
@@ -495,10 +490,9 @@ $bg_color9: #FFDD4A;
       padding: 0px 8px 0px 0px; }
     tt {
       color: dimgray;
-      font-size: 11px; }
+    }
     dt {
       color: #3f3f3f;
-      font-size: 11px;
       padding: 2px 0px 0px 0px; } } }
 
 // Sidebar, filters
@@ -514,7 +508,6 @@ $bg_color9: #FFDD4A;
     border-bottom: 1px #eee solid;
     color: navy;
     font: {
-      size: 12px;
       weight: bold; };
     margin: 4px 0px 5px 0px;
     padding: 2px 0px 2px 0px; }
@@ -532,24 +525,21 @@ $bg_color9: #FFDD4A;
   div {
     margin: 0px 0px 10px 0px; }
   h4 {
-    font-size: 13px;
+    font-size: 1.1em;
     font-weight: bold; }
   li {
-    font-size: 12px;
     list-style: none;
     padding: 2px 0px 3px 0px;
     dt {
       float: right;
-      font-size: 11px;
       font-weight: bold; }
     tt {
-      font-size: 11px; }
+       }
     &.last {
       border-bottom: none; } }
   &#recently {
     background: floralwhite; }
   &#summary {
-    background: oldlace;
     p {
       margin: 4px 0px 4px 0px; } } }
 
@@ -721,7 +711,7 @@ ul.tools {
     border-right: 1px black solid;
     border-bottom: none;
     padding: 0 4px;
-    font-size: 10px;
+    font-size: 0.8em;
     float: left;
     clear: none; }
   li:last-child {
