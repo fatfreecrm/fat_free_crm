@@ -233,13 +233,13 @@ module ApplicationHelper
 
   # Reresh sidebar using the action view within the current controller.
   #----------------------------------------------------------------------------
-  def refresh_sidebar(action = nil)
-    refresh_sidebar_for(controller.controller_name, action)
+  def refresh_sidebar(action = nil, shake = nil)
+    refresh_sidebar_for(controller.controller_name, action, shake)
   end
 
   # Refresh sidebar using the action view within an arbitrary controller.
   #----------------------------------------------------------------------------
-  def refresh_sidebar_for(view, action = nil)
+  def refresh_sidebar_for(view, action = nil, shake = nil)
     text = ""
     text += "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
     text.html_safe
