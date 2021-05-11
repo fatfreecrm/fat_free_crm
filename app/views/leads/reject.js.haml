@@ -5,8 +5,8 @@
 $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
 $('##{id}').effect("highlight", { duration:1500 });
 - if called_from_index_page?
-  = refresh_sidebar(:index, :filters)
+  = refresh_sidebar(:index)
 - elsif called_from_landing_page?("campaigns")
-  = refresh_sidebar_for(:campaigns, :show, :summary)
+  = refresh_sidebar_for(:campaigns, :show)
 - else
-  = refresh_sidebar(:show, :summary)
+  = refresh_sidebar(:show)

@@ -22,7 +22,7 @@
       $('#list_#{bucket}').show();
       $('##{bucket}').before('#{ j render(partial: @view, collection: [ @task ], locals: { bucket: bucket }) }');
       $('##{dom_id(@task)}').effect("highlight", { duration:1500 });
-      = refresh_sidebar(:index, :filters)
+      = refresh_sidebar(:index)
 
     crm.flick('empty', 'remove');
 

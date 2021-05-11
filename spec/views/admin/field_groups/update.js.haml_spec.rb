@@ -21,4 +21,9 @@ describe "admin/field_groups/update" do
     expect(rendered).to have_text("crm.flip_form('#{dom_id(field_group, :edit)}');")
     expect(rendered).to have_text("crm.set_title('#{dom_id(field_group)}'")
   end
+
+  it "renders javascript for invalid field group" do
+    allow(field_group.errors).to receive(:empty?).and_return(false)
+    render
+  end
 end
