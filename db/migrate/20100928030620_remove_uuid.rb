@@ -14,10 +14,9 @@ class RemoveUuid < ActiveRecord::Migration[4.2]
     raise ActiveRecord::IrreversibleMigration, "Can't recover deleted UUIDs"
   end
 
-  private
-
   def self.uuid_configured?
     return @@uuid_configured if @@uuid_configured
+
     config = ActiveRecord::Base.connection.instance_variable_get("@config")
     @@uuid_configured = config[:uuid]
   end

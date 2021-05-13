@@ -370,7 +370,7 @@ describe CampaignsController do
 
       it "should update campaign permissions when sharing with specific users" do
         @campaign = create(:campaign, id: 42, access: "Public")
-        he  = create(:user, id: 7)
+        he = create(:user, id: 7)
         she = create(:user, id: 8)
 
         put :update, params: { id: 42, campaign: { name: "Hello", access: "Shared", user_ids: %w[7 8] } }, xhr: true

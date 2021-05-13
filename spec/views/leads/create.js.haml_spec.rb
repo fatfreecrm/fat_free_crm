@@ -35,7 +35,6 @@ describe "/leads/create" do
       expect(rendered).to include("#sidebar")
       expect(rendered).to have_text("Lead Statuses")
       expect(rendered).to include("Recent Items")
-      expect(rendered).to include("$('#filters').effect('shake'")
     end
 
     it "should update pagination when called from leads index" do
@@ -51,7 +50,6 @@ describe "/leads/create" do
       render
 
       expect(rendered).to include("#sidebar")
-      expect(rendered).to have_text("Campaign Summary")
       expect(rendered).to have_text("Recent Items")
     end
   end
@@ -64,7 +62,6 @@ describe "/leads/create" do
       render
 
       expect(rendered).to include("$('#create_lead').html")
-      expect(rendered).to include(%/$('#create_lead').effect("shake"/)
     end
   end
 end

@@ -44,7 +44,12 @@ namespace :ffcrm do
 
           password ||= "manager"
           print "Password [#{password}]: "
-          echo = ->(toggle) { return if RUBY_PLATFORM.match?(/mswin/); system(toggle ? "stty echo && echo" : "stty -echo") }
+          echo = lambda { |toggle|
+            return if RUBY_PLATFORM.match?(/mswin/)
+
+            system(toggle ? "stty echo && echo" : "stty -echo")
+          }
+
           begin
             echo.call(false)
             reply = STDIN.gets.strip
@@ -69,6 +74,7 @@ namespace :ffcrm do
             break unless reply.blank?
           end
           break if reply.match?(/y(?:es)*/i)
+
           redo if reply.match?(/no*/i)
           puts "No admin user was created."
           exit
@@ -76,7 +82,10 @@ namespace :ffcrm do
       end
       User.reset_column_information # Reload the class since we've added new fields in migrations.
       user = User.find_by_username(username) || User.new
+      user.skip_confirmation!
+      user.confirm
       user.update_attributes(username: username, password: password, email: email)
+      user.update_attribute(:confirmed_at, Time.now.utc) # Skip confirmation
       user.update_attribute(:admin, true) # Mass assignments don't work for :admin because of the attr_protected
       user.update_attribute(:suspended_at, nil) # Mass assignments don't work for :suspended_at because of the attr_protected
       puts "Admin user has been created."

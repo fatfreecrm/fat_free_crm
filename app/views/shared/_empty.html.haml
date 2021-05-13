@@ -1,6 +1,6 @@
 - assets = controller_name
 - asset = assets.singularize
-- new_asset_path = controller.class.to_s.include?("Admin") ? url_for([:new, :admin, asset]) : url_for([:new, asset])
+- new_asset_path = url_for(action: :new, controller: controller_name)
 #empty
   - if @current_query.blank?
     == #{t(:could_not_find, t(assets.downcase))} #{link_to_inline(:"create_#{asset}", new_asset_path, plain: true, text: "#{t(:create_a_new)} #{t(asset + '_small')}")}.

@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path("../../acceptance_helper.rb", __FILE__)
+require File.expand_path('../acceptance_helper.rb', __dir__)
 
 feature 'Groups tab', '
   In order to increase customer satisfaction
@@ -23,7 +23,7 @@ feature 'Groups tab', '
     click_link 'create a new group'
     expect(page).to have_selector('#group_name', visible: true)
     fill_in 'group_name', with: 'The Enterprise Bridge'
-    select 'Mr Spock', from: 'group_user_ids'
+    select2 'Mr Spock', from: 'Users'
     click_button 'Create Group'
     expect(page).to have_content('The Enterprise Bridge')
     expect(page).to have_content('members: Mr Spock')

@@ -8,11 +8,16 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FatFreeCRM::Permissions do
-  before :each do
-    build_model(:user_with_permission) do
-      uses_user_permissions
-      string :access
+  before do
+    ActiveRecord::Base.connection.create_table(:user_with_permissions) do |t|
+      t.string :access
     end
+    class UserWithPermission < ActiveRecord::Base
+      uses_user_permissions
+    end
+  end
+  after do
+    ActiveRecord::Base.connection.drop_table(:user_with_permissions)
   end
 
   describe "initialization" do

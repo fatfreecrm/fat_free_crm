@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path("../../acceptance_helper.rb", __FILE__)
+require File.expand_path('../acceptance_helper.rb', __dir__)
 
 feature 'Users tab', '
   In order to increase customer satisfaction
@@ -25,9 +25,11 @@ feature 'Users tab', '
     fill_in 'user_email', with: 'lightning@example.com'
     fill_in 'user_first_name', with: 'Captain'
     fill_in 'user_last_name', with: 'Thunder'
+    fill_in 'user_password', with: 'password'
+    fill_in 'user_password_confirmation', with: 'password'
     fill_in 'user_title', with: 'Chief'
     fill_in 'user_company', with: 'Weather Inc.'
-    select 'Superheroes', from: 'user_group_ids'
+    select2 'Superheroes', from: 'Groups:'
 
     click_button 'Create User'
     expect(find('#users')).to have_content('Captain Thunder')

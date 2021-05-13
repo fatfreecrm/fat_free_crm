@@ -62,7 +62,7 @@ class Admin::GroupsController < Admin::ApplicationController
   protected
 
   def group_params
-    params[:group].permit!
+    params.require(:group).permit(:name, user_ids: [])
   end
 
   def setup_current_tab

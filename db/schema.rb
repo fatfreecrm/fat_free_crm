@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,12 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180103223438) do
+ActiveRecord::Schema.define(version: 2020_08_06_004459) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "account_contacts", id: :serial, force: :cascade do |t|
+  create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
     t.datetime "deleted_at"
@@ -26,7 +21,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["account_id", "contact_id"], name: "index_account_contacts_on_account_id_and_contact_id"
   end
 
-  create_table "account_opportunities", id: :serial, force: :cascade do |t|
+  create_table "account_opportunities", force: :cascade do |t|
     t.integer "account_id"
     t.integer "opportunity_id"
     t.datetime "deleted_at"
@@ -35,7 +30,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["account_id", "opportunity_id"], name: "index_account_opportunities_on_account_id_and_opportunity_id"
   end
 
-  create_table "accounts", id: :serial, force: :cascade do |t|
+  create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
     t.integer "assigned_to"
     t.string "name", limit: 64, default: "", null: false
@@ -54,12 +49,11 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.text "subscribed_users"
     t.integer "contacts_count", default: 0
     t.integer "opportunities_count", default: 0
-    t.integer "pipeline_opportunities_count", default: 0
     t.index ["assigned_to"], name: "index_accounts_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_accounts_on_user_id_and_name_and_deleted_at", unique: true
   end
 
-  create_table "activities", id: :serial, force: :cascade do |t|
+  create_table "activities", force: :cascade do |t|
     t.integer "user_id"
     t.string "subject_type"
     t.integer "subject_id"
@@ -72,7 +66,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
-  create_table "addresses", id: :serial, force: :cascade do |t|
+  create_table "addresses", force: :cascade do |t|
     t.string "street1"
     t.string "street2"
     t.string "city", limit: 64
@@ -89,7 +83,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type"
   end
 
-  create_table "avatars", id: :serial, force: :cascade do |t|
+  create_table "avatars", force: :cascade do |t|
     t.integer "user_id"
     t.string "entity_type"
     t.integer "entity_id"
@@ -100,7 +94,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.datetime "updated_at"
   end
 
-  create_table "campaigns", id: :serial, force: :cascade do |t|
+  create_table "campaigns", force: :cascade do |t|
     t.integer "user_id"
     t.integer "assigned_to"
     t.string "name", limit: 64, default: "", null: false
@@ -125,7 +119,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id", "name", "deleted_at"], name: "index_campaigns_on_user_id_and_name_and_deleted_at", unique: true
   end
 
-  create_table "comments", id: :serial, force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
     t.integer "user_id"
     t.string "commentable_type"
     t.integer "commentable_id"
@@ -137,7 +131,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.string "state", limit: 16, default: "Expanded", null: false
   end
 
-  create_table "contact_opportunities", id: :serial, force: :cascade do |t|
+  create_table "contact_opportunities", force: :cascade do |t|
     t.integer "contact_id"
     t.integer "opportunity_id"
     t.string "role", limit: 32
@@ -147,7 +141,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["contact_id", "opportunity_id"], name: "index_contact_opportunities_on_contact_id_and_opportunity_id"
   end
 
-  create_table "contacts", id: :serial, force: :cascade do |t|
+  create_table "contacts", force: :cascade do |t|
     t.integer "user_id"
     t.integer "lead_id"
     t.integer "assigned_to"
@@ -179,7 +173,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
   end
 
-  create_table "emails", id: :serial, force: :cascade do |t|
+  create_table "emails", force: :cascade do |t|
     t.string "imap_message_id", null: false
     t.integer "user_id"
     t.string "mediator_type"
@@ -200,7 +194,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["mediator_id", "mediator_type"], name: "index_emails_on_mediator_id_and_mediator_type"
   end
 
-  create_table "field_groups", id: :serial, force: :cascade do |t|
+  create_table "field_groups", force: :cascade do |t|
     t.string "name", limit: 64
     t.string "label", limit: 128
     t.integer "position"
@@ -211,7 +205,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.string "klass_name", limit: 32
   end
 
-  create_table "fields", id: :serial, force: :cascade do |t|
+  create_table "fields", force: :cascade do |t|
     t.string "type"
     t.integer "field_group_id"
     t.integer "position"
@@ -223,17 +217,22 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.text "collection"
     t.boolean "disabled"
     t.boolean "required"
-    t.integer "maxlength"
+    t.integer "maxlength", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "pair_id"
     t.text "settings"
-    t.integer "minlength", default: 0
+    t.integer "minlength", limit: 4, default: 0
+    t.string "pattern"
+    t.string "autofocus"
+    t.string "autocomplete"
+    t.string "list"
+    t.string "multiple"
     t.index ["field_group_id"], name: "index_fields_on_field_group_id"
     t.index ["name"], name: "index_fields_on_name"
   end
 
-  create_table "groups", id: :serial, force: :cascade do |t|
+  create_table "groups", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -247,7 +246,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id"], name: "index_groups_users_on_user_id"
   end
 
-  create_table "leads", id: :serial, force: :cascade do |t|
+  create_table "leads", force: :cascade do |t|
     t.integer "user_id"
     t.integer "campaign_id"
     t.integer "assigned_to"
@@ -279,7 +278,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id", "last_name", "deleted_at"], name: "index_leads_on_user_id_and_last_name_and_deleted_at", unique: true
   end
 
-  create_table "lists", id: :serial, force: :cascade do |t|
+  create_table "lists", force: :cascade do |t|
     t.string "name"
     t.text "url"
     t.datetime "created_at"
@@ -288,7 +287,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id"], name: "index_lists_on_user_id"
   end
 
-  create_table "opportunities", id: :serial, force: :cascade do |t|
+  create_table "opportunities", force: :cascade do |t|
     t.integer "user_id"
     t.integer "campaign_id"
     t.integer "assigned_to"
@@ -309,7 +308,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id", "name", "deleted_at"], name: "id_name_deleted", unique: true
   end
 
-  create_table "permissions", id: :serial, force: :cascade do |t|
+  create_table "permissions", force: :cascade do |t|
     t.integer "user_id"
     t.string "asset_type"
     t.integer "asset_id"
@@ -321,7 +320,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id"], name: "index_permissions_on_user_id"
   end
 
-  create_table "preferences", id: :serial, force: :cascade do |t|
+  create_table "preferences", force: :cascade do |t|
     t.integer "user_id"
     t.string "name", limit: 32, default: "", null: false
     t.text "value"
@@ -330,7 +329,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id", "name"], name: "index_preferences_on_user_id_and_name"
   end
 
-  create_table "sessions", id: :serial, force: :cascade do |t|
+  create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at"
@@ -339,7 +338,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "settings", id: :serial, force: :cascade do |t|
+  create_table "settings", force: :cascade do |t|
     t.string "name", limit: 32, default: "", null: false
     t.text "value"
     t.datetime "created_at"
@@ -347,7 +346,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["name"], name: "index_settings_on_name"
   end
 
-  create_table "taggings", id: :serial, force: :cascade do |t|
+  create_table "taggings", force: :cascade do |t|
     t.integer "tag_id"
     t.integer "taggable_id"
     t.integer "tagger_id"
@@ -359,13 +358,13 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
   end
 
-  create_table "tags", id: :serial, force: :cascade do |t|
+  create_table "tags", force: :cascade do |t|
     t.string "name"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "tasks", id: :serial, force: :cascade do |t|
+  create_table "tasks", force: :cascade do |t|
     t.integer "user_id"
     t.integer "assigned_to"
     t.integer "completed_by"
@@ -386,7 +385,7 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.index ["user_id", "name", "deleted_at"], name: "index_tasks_on_user_id_and_name_and_deleted_at", unique: true
   end
 
-  create_table "users", id: :serial, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "username", limit: 32, default: "", null: false
     t.string "email", limit: 254, default: "", null: false
     t.string "first_name", limit: 32
@@ -400,28 +399,36 @@ ActiveRecord::Schema.define(version: 20180103223438) do
     t.string "yahoo", limit: 32
     t.string "google", limit: 32
     t.string "skype", limit: 32
-    t.string "password_hash", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
     t.string "password_salt", default: "", null: false
-    t.string "persistence_token", default: "", null: false
-    t.string "perishable_token", default: "", null: false
-    t.datetime "last_login_at"
-    t.datetime "current_login_at"
-    t.string "last_login_ip"
-    t.string "current_login_ip"
-    t.integer "login_count", default: 0, null: false
+    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at"
+    t.string "last_sign_in_ip"
+    t.string "current_sign_in_ip"
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean "admin", default: false, null: false
     t.datetime "suspended_at"
-    t.string "single_access_token"
+    t.string "unconfirmed_email", limit: 254
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.string "remember_token"
+    t.datetime "remember_created_at"
+    t.string "authentication_token"
+    t.string "confirmation_token", limit: 255
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
-    t.index ["perishable_token"], name: "index_users_on_perishable_token"
-    t.index ["persistence_token"], name: "index_users_on_persistence_token"
+    t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username", "deleted_at"], name: "index_users_on_username_and_deleted_at", unique: true
   end
 
-  create_table "versions", id: :serial, force: :cascade do |t|
+  create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
     t.string "event", limit: 512, null: false

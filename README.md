@@ -1,10 +1,11 @@
-# Fat Free CRM [![TravisCI][travis-img-url]][travis-ci-url]  [![Code Climate][codeclimate-img-url]][codeclimate-url]
+# Fat Free CRM [![TravisCI][travis-img-url]][travis-ci-url]  [![Code Climate][codeclimate-img-url]][codeclimate-url] [![Discord][discord-img-url]][discord-url]
 
 [travis-img-url]: https://secure.travis-ci.org/fatfreecrm/fat_free_crm.svg?branch=master
 [travis-ci-url]: https://travis-ci.org/fatfreecrm/fat_free_crm
 [codeclimate-img-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm.svg
 [codeclimate-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm
-
+[discord-img-url]: https://img.shields.io/badge/chat-on%20discord-7289da.svg?sanitize=true
+[discord-url]: https://discord.gg/JVrzD8RYyk
 ### An open source, Ruby on Rails [customer relationship management][crm-wiki] platform (CRM).
 
 [crm-wiki]: http://en.wikipedia.org/wiki/Customer_relationship_management
@@ -53,7 +54,7 @@ Visit our website at http://www.fatfreecrm.com/
 
 ## System Requirements
 
-* Ruby 2.3+ recommended
+* Ruby 2.4+ recommended
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
 * ImageMagick (optional, only needed if you would like to use avatars)
 
@@ -84,7 +85,7 @@ This is the best way to deploy Fat Free CRM if you need to add plugins or make a
 
 ## Upgrading from previous versions of Fat Free CRM
 
-Please read the [Release Notes](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG.md) document for more detailed information on upgrading from previous versions.
+Please read the [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG.md) document for more detailed information on upgrading from previous versions.
 
 
 ## Resources
@@ -116,15 +117,18 @@ Tests can easily be run by typing 'rake' but please note that they do take a whi
 ## Main contributors
 
 * [Michael Dvorkin (@michaeldv)](https://github.com/michaeldv) - Founding creator
-* [Steve Kenworthy (@steveyken)](https://github.com/steveyken) - Maintainer
-* [Nathan Broadbent (@ndbroadbent)](https://github.com/ndbroadbent)
+* CloCkWeRX
+* johnnyshield
+* DmitryAvramec
+* steveyken
 
-See the [contributors graph](https://github.com/fatfreecrm/fat_free_crm/graphs/contributors) and the [contributors file](https://github.com/fatfreecrm/fat_free_crm/blob/master/CONTRIBUTORS) for further details.
+
+See the [contributors graph](https://github.com/fatfreecrm/fat_free_crm/graphs/contributors) and the [contributors file](https://github.com/fatfreecrm/fat_free_crm/blob/master/CONTRIBUTORS.md) for further details.
 
 ## License
 
 Fat Free CRM
-Copyright (c) 2008-2014 Michael Dvorkin and contributors.
+Copyright (c) 2008-2018 Michael Dvorkin and contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

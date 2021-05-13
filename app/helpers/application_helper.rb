@@ -18,7 +18,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def tabless_layout?
-    %w[authentications passwords].include?(controller.controller_name) ||
+    %w[sessions passwords registrations confirmations].include?(controller.controller_name) ||
       ((controller.controller_name == "users") && %w[create new].include?(controller.action_name))
   end
 
@@ -27,6 +27,7 @@ module ApplicationHelper
   def show_flash(options = { sticky: false })
     %i[error warning info notice alert].each do |type|
       next unless flash[type]
+
       html = content_tag(:div, h(flash[type]), id: "flash")
       flash[type] = nil
       return html << content_tag(:script, "crm.flash('#{type}', #{options[:sticky]})".html_safe, type: "text/javascript")
@@ -34,20 +35,23 @@ module ApplicationHelper
     content_tag(:p, nil, id: "flash", style: "display:none;")
   end
 
+  def subtitle_link(id, text, hidden)
+    link_to("<small>#{hidden ? '&#9658;' : '&#9660;'}</small> #{sanitize text}".html_safe,
+            url_for(controller: :home, action: :toggle, id: id),
+            remote: true,
+            onclick: "crm.flip_subtitle(this)")
+  end
+
   #----------------------------------------------------------------------------
   def subtitle(id, hidden = true, text = id.to_s.split("_").last.capitalize)
-    content_tag("div",
-                link_to("<small>#{hidden ? '&#9658;' : '&#9660;'}</small> #{sanitize text}".html_safe,
-                        url_for(controller: :home, action: :toggle, id: id),
-                        remote: true,
-                        onclick: "crm.flip_subtitle(this)"), class: "subtitle")
+    content_tag("div", subtitle_link(id, text, hidden), class: "subtitle")
   end
 
   #----------------------------------------------------------------------------
   def section(related, assets)
     asset = assets.to_s.singularize
-    create_id  = "create_#{asset}"
-    select_id  = "select_#{asset}"
+    create_id = "create_#{asset}"
+    select_id = "select_#{asset}"
     create_url = controller.send(:"new_#{asset}_path")
 
     html = tag(:br)
@@ -76,7 +80,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def rating_select(name, options = {})
     stars = Hash[(1..5).map { |star| [star, "&#9733;" * star] }].sort
-    options_for_select = %(<option value="0"#{options[:selected].to_i == 0 ? ' selected="selected"' : ''}>#{t :select_none}</option>)
+    options_for_select = %(<option value="0"#{options[:selected].to_i.zero? ? ' selected="selected"' : ''}>#{t :select_none}</option>)
     options_for_select += stars.map { |star| %(<option value="#{star.first}"#{options[:selected] == star.first ? ' selected="selected"' : ''}>#{star.last}</option>) }.join
     select_tag name, options_for_select.html_safe, options
   end
@@ -84,7 +88,6 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_inline(id, url, options = {})
     text = options[:text] || t(id, default: id.to_s.titleize)
-    text = (arrow_for(id) + text) unless options[:plain]
     related = (options[:related] ? "&related=#{options[:related]}" : '')
 
     link_to(text,
@@ -112,7 +115,6 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_delete(record, options = {})
-    object = record.is_a?(Array) ? record.last : record
     confirm = options[:confirm] || nil
 
     link_to(t(:delete) + "!",
@@ -231,16 +233,15 @@ module ApplicationHelper
 
   # Reresh sidebar using the action view within the current controller.
   #----------------------------------------------------------------------------
-  def refresh_sidebar(action = nil, shake = nil)
-    refresh_sidebar_for(controller.controller_name, action, shake)
+  def refresh_sidebar(action = nil)
+    refresh_sidebar_for(controller.controller_name, action)
   end
 
   # Refresh sidebar using the action view within an arbitrary controller.
   #----------------------------------------------------------------------------
-  def refresh_sidebar_for(view, action = nil, shake = nil)
+  def refresh_sidebar_for(view, action = nil)
     text = ""
     text += "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
-    text += "$('##{j shake.to_s}').effect('shake', { duration:200, distance: 3 });" if shake
     text.html_safe
   end
 
@@ -254,7 +255,7 @@ module ApplicationHelper
       if site == :skype
         url = "callto:" + url
       else
-        url = "http://" + url unless url.match?(/^https?:\/\//)
+        url = "http://" + url unless url.match?(%r{^https?://})
       end
       link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
     end.compact.join("\n").html_safe
@@ -296,14 +297,12 @@ module ApplicationHelper
   # Ajax helper to pass browser timezone offset to the server.
   #----------------------------------------------------------------------------
   def get_browser_timezone_offset
-    unless session[:timezone_offset]
-      raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
-    end
+    raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});" unless session[:timezone_offset]
   end
 
   # Entities can have associated avatars or gravatars. Only calls Gravatar
   # in production env. Gravatar won't serve default images if they are not
-  # publically available: http://en.gravatar.com/site/implement/images
+  # publically available: https://en.gravatar.com/site/implement/images
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { class: 'gravatar', size: :large }.merge(args)
@@ -327,17 +326,12 @@ module ApplicationHelper
 
   # Render a text field that is part of compound address.
   #----------------------------------------------------------------------------
-  def address_field(form, object, attribute, extra_styles)
+  def address_field(form, attribute, extra_styles)
     hint = "#{t(attribute)}..."
-    if object.send(attribute).blank?
-      form.text_field(attribute,
-                      style:   "margin-top: 6px; #{extra_styles}",
-                      placeholder: hint)
-    else
-      form.text_field(attribute,
-                      style:   "margin-top: 6px; #{extra_styles}",
-                      placeholder: hint)
-    end
+
+    form.text_field(attribute,
+                    style:   "margin-top: 6px; #{extra_styles}",
+                    placeholder: hint)
   end
 
   # Return true if:
@@ -353,7 +347,7 @@ module ApplicationHelper
   # Helper to display links to supported data export formats.
   #----------------------------------------------------------------------------
   def links_to_export(action = :index)
-    token = current_user.single_access_token
+    token = current_user.authentication_token
     url_params = { action: action }
     url_params[:id] = params[:id] unless params[:id].blank?
     url_params[:query] = params[:query] unless params[:query].blank?
@@ -389,7 +383,7 @@ module ApplicationHelper
   end
 
   def entity_filter_checkbox(name, value, count)
-    checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i > 0)
+    checked = (session["#{controller_name}_filter"].present? ? session["#{controller_name}_filter"].split(",").include?(value.to_s) : count.to_i.positive?)
     url = url_for(action: :filter)
     onclick = %{
       var query = $('#query').val(),
@@ -421,7 +415,7 @@ module ApplicationHelper
       fmt_value = if email
                     link_to_email(fmt_value)
                   else
-                    fmt_value.gsub(/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/\+#]*[\w\-\@?^=%&amp;\/\+#])?)/, "<a href=\"\\1\">\\1</a>")
+                    fmt_value.gsub(%r{((http|ftp|https)://[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/\+#]*[\w\-\@?^=%&amp;/\+#])?)}, "<a href=\"\\1\">\\1</a>")
       end
       out << content_tag(:td, fmt_value, class: last_class)
     end
@@ -433,10 +427,7 @@ module ApplicationHelper
   def section_title(id, hidden = true, text = nil, info_text = nil)
     text = id.to_s.split("_").last.capitalize if text.nil?
     content_tag("div", class: "subtitle show_attributes") do
-      content = link_to("<small>#{hidden ? '&#9658;' : '&#9660;'}</small> #{sanitize text}".html_safe,
-                        url_for(controller: :home, action: :toggle, id: id),
-                        remote:  true,
-                        onclick: "crm.flip_subtitle(this)")
+      content = subtitle_link(id, text, hidden)
       content << content_tag("small", info_text.to_s, class: "subtitle_inline_info", id: "#{id}_intro", style: hidden ? "" : "display:none;")
     end
   end
@@ -455,6 +446,7 @@ module ApplicationHelper
     views = FatFreeCRM::ViewFactory.views_for(controller: controller.controller_name,
                                               action: show_or_index_action)
     return nil unless views.size > 1
+
     lis = ''.html_safe
     content_tag :ul, class: 'format-buttons' do
       views.collect do |view|
@@ -480,6 +472,7 @@ module ApplicationHelper
   # <span class="timeago" datetime="2008-07-17T09:24:17Z">July 17, 2008</span>
   def timeago(time, options = {})
     return unless time
+
     options[:class] ||= "timeago"
     options[:title] = time.getutc.iso8601
     content_tag(:span, I18n.l(time), options)

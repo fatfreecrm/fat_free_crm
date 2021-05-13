@@ -55,6 +55,7 @@ class Setting < ActiveRecord::Base
     def [](name)
       # Return value if cached
       return cache[name] if cache.key?(name)
+
       # Check database
       if database_and_table_exists?
         if setting = find_by_name(name.to_s)
@@ -69,6 +70,7 @@ class Setting < ActiveRecord::Base
     #-------------------------------------------------------------------
     def []=(name, value)
       return nil unless database_and_table_exists?
+
       setting = find_by_name(name.to_s) || new(name: name)
       setting.value = value
       setting.save

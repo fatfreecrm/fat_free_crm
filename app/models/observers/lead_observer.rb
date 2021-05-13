@@ -16,15 +16,13 @@ class LeadObserver < ActiveRecord::Observer
 
   def after_update(item)
     original = @@leads.delete(item.id)
-    if original&.status != "rejected" && item.status == "rejected"
-      return log_activity(item, :reject)
-    end
+    return log_activity(item, :reject) if original&.status != "rejected" && item.status == "rejected"
   end
 
   private
 
   def log_activity(item, event)
-    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.whodunnit)
+    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.request.whodunnit)
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_lead_observer, self)

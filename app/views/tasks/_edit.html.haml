@@ -9,7 +9,7 @@
     = render "fields/groups", f: f, edit: true
 
     .buttonbar
-      = f.submit t :save_task
+      = f.submit t :save_task, class: 'btn btn-primary'
       == #{t :or}
       = link_to_cancel edit_task_path(@task)
       == #{t :or} #{t :move_to}

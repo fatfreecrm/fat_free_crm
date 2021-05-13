@@ -26,7 +26,6 @@ describe "/leads/destroy" do
 
     expect(rendered).to include("#sidebar")
     expect(rendered).to have_text("Recent Items")
-    expect(rendered).to include("$('#filters').effect('shake'")
   end
 
   it "should update pagination when called from leads index" do
@@ -43,7 +42,6 @@ describe "/leads/destroy" do
     render
 
     expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Campaign Summary")
     expect(rendered).to have_text("Recent Items")
   end
 end

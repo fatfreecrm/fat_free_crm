@@ -8,15 +8,15 @@
 require 'rubygems'
 
 ENV["RAILS_ENV"] = 'test'
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require 'rspec/rails'
 require 'capybara/rails'
 require 'paper_trail/frameworks/rspec'
 
-require 'acts_as_fu'
 require 'factory_bot_rails'
 require 'ffaker'
 require 'timecop'
+require 'webdrivers'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -41,6 +41,14 @@ RSpec.configure do |config|
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Devise::Test::IntegrationHelpers, type: :features
+  config.include Warden::Test::Helpers
+  config.include DeviseHelpers
+  config.include FeatureHelpers
+
+  Warden.test_mode!
 
   config.before(:each) do
     # Overwrite locale settings within "config/settings.yml" if necessary.

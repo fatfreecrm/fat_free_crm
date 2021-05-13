@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path("../acceptance_helper.rb", __FILE__)
+require File.expand_path('acceptance_helper.rb', __dir__)
 
 feature 'Contacts', '
   In order to increase customer satisfaction
@@ -30,6 +30,9 @@ feature 'Contacts', '
     with_versioning do
       visit contacts_page
       click_link 'Create Contact'
+      select = find('#account_name', visible: true)
+      expect(select).to have_text("")
+      expect(page).to have_selector('#select2-account_id-container', visible: false)
       expect(page).to have_selector('#contact_first_name', visible: true)
       fill_in 'contact_first_name', with: 'Testy'
       fill_in 'contact_last_name', with: 'McTest'
@@ -62,16 +65,20 @@ feature 'Contacts', '
   end
 
   scenario 'should view and edit a contact', js: true do
-    create(:contact, first_name: "Testy", last_name: "McTest")
+    create(:contact, first_name: "Testy", last_name: "McTest", account: create(:account, name: "Toast"))
     with_versioning do
       visit contacts_page
       click_link 'Testy McTest'
       click_link 'Edit'
+      select = find('#select2-account_id-container', visible: true)
+      expect(select).to have_text("Toast")
+      expect(page).to have_selector('#account_name', visible: false)
       fill_in 'contact_first_name', with: 'Test'
       fill_in 'contact_last_name', with: 'Subject'
       fill_in 'contact_email', with: "test.subject@example.com"
       click_button 'Save Contact'
-      expect(summary_element).to have_content('Test Subject')
+      sleep(3) # TODO A better ajax wait, or redirect on save
+      expect(find('#edit_contact_title')).to have_content('Test Subject')
 
       click_link 'Dashboard'
       expect(activities_element).to have_content("Bill Murray updated contact Test Subject")
@@ -107,10 +114,6 @@ feature 'Contacts', '
 
   def main_element
     find('#main')
-  end
-
-  def summary_element
-    find('#summary')
   end
 
   def menu_element

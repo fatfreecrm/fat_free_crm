@@ -890,7 +890,7 @@ describe OpportunitiesController do
       get :filter, params: { stage: "prospecting" }, xhr: true
       expect(assigns(:opportunities)).to eq(@opportunities)
       expect(assigns[:stage]).to eq(@stage)
-      expect(response).to be_a_success
+      expect(response).to be_successful
       expect(response).to render_template("opportunities/index")
     end
 

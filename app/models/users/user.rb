@@ -11,7 +11,7 @@
 #
 #  id                  :integer         not null, primary key
 #  username            :string(32)      default(""), not null
-#  email               :string(64)      default(""), not null
+#  email               :string(254)     default(""), not null
 #  first_name          :string(32)
 #  last_name           :string(32)
 #  title               :string(64)
@@ -23,24 +23,34 @@
 #  yahoo               :string(32)
 #  google              :string(32)
 #  skype               :string(32)
-#  password_hash       :string(255)     default(""), not null
+#  encrypted_password  :string(255)     default(""), not null
 #  password_salt       :string(255)     default(""), not null
-#  persistence_token   :string(255)     default(""), not null
-#  perishable_token    :string(255)     default(""), not null
-#  last_login_at       :datetime
-#  current_login_at    :datetime
-#  last_login_ip       :string(255)
-#  current_login_ip    :string(255)
-#  login_count         :integer         default(0), not null
+#  last_sign_in_at     :datetime
+#  current_sign_in_at  :datetime
+#  last_sign_in_ip     :string(255)
+#  current_sign_in_ip  :string(255)
+#  sign_in_count       :integer         default(0), not null
 #  deleted_at          :datetime
 #  created_at          :datetime
 #  updated_at          :datetime
 #  admin               :boolean         default(FALSE), not null
 #  suspended_at        :datetime
-#  single_access_token :string(255)
+#  unconfirmed_email   :string(254)     default(""), not null
+#  reset_password_token    :string(255)
+#  reset_password_sent_at  :datetime
+#  remember_token          :string(255)
+#  remember_created_at     :datetime
+#  authentication_token    :string(255)
+#  confirmation_token      :string(255)
+#  confirmed_at            :datetime
+#  confirmation_sent_at    :datetime
 #
 
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :registerable, :confirmable,
+         :encryptable, :recoverable, :rememberable, :trackable
+  before_create :suspend_if_needs_approval
+
   has_one :avatar, as: :entity, dependent: :destroy  # Personal avatar.
   has_many :avatars                                  # As owner who uploaded it, ex. Contact avatar.
   has_many :comments, as: :commentable               # As owner who created a comment.
@@ -55,40 +65,38 @@ class User < ActiveRecord::Base
   has_many :lists
   has_and_belongs_to_many :groups
 
-  has_paper_trail class_name: 'Version', ignore: [:perishable_token]
+  has_paper_trail versions: {class_name: 'Version'}, ignore: [:last_sign_in_at]
 
   scope :by_id, -> { order('id DESC') }
-  scope :without, ->(user) { where('id != ?', user.id).by_name }
+  # TODO: /home/clockwerx/.rbenv/versions/2.5.3/lib/ruby/gems/2.5.0/gems/activerecord-5.2.3/lib/active_record/scoping/named.rb:175:in `scope': You tried to define a scope named "without" on the model "User", but ActiveRecord::Relation already defined an instance method with the same name. (ArgumentError)
+  scope :without_user, ->(user) { where('id != ?', user.id).by_name }
   scope :by_name, -> { order('first_name, last_name, email') }
 
-  scope :text_search, ->(query) {
+  scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(username) LIKE upper(:s) OR upper(email) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', s: "%#{query}%")
   }
 
   scope :my, ->(current_user) { accessible_by(current_user.ability) }
 
-  scope :have_assigned_opportunities, -> {
+  scope :have_assigned_opportunities, lambda {
     joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to")
       .where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
       .select('DISTINCT(users.id), users.*')
   }
 
-  acts_as_authentic do |c|
-    c.session_class = Authentication
-    c.validates_uniqueness_of_login_field_options = { case_sensitive: false, message: :username_taken }
-    c.validates_length_of_login_field_options     = { minimum: 1, message: :missing_username }
-    c.validates_uniqueness_of_email_field_options = { message: :email_in_use }
-    c.validates_length_of_password_field_options  = { minimum: 0, allow_blank: true, if: :require_password? }
-    c.ignore_blank_passwords = true
-    c.crypto_provider = Authlogic::CryptoProviders::Sha512
-  end
-
-  # Store current user in the class so we could access it from the activity
-  # observer without extra authentication query.
-  cattr_accessor :current_user
-
-  validates_presence_of :email, message: :missing_email
+  validates :email,
+            presence: { message: :missing_email },
+            length: { minimum: 3, maximum: 254 },
+            uniqueness: { message: :email_in_use, case_sensitive: false },
+            format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+  validates :username,
+            uniqueness: { message: :username_taken, case_sensitive: false },
+            presence: { message: :missing_username },
+            format: { with: /[a-z0-9_-]+/i }
+  validates :password,
+            presence: { if: :password_required? },
+            confirmation: true
 
   #----------------------------------------------------------------------------
   def name
@@ -107,7 +115,23 @@ class User < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def awaits_approval?
-    suspended? && login_count == 0 && Setting.user_signup == :needs_approval
+    suspended? && sign_in_count == 0 && Setting.user_signup == :needs_approval
+  end
+
+  def active_for_authentication?
+    super && confirmed? && !awaits_approval? && !suspended?
+  end
+
+  def inactive_message
+    if !confirmed?
+      super
+    elsif awaits_approval?
+      I18n.t(:msg_account_not_approved)
+    elsif suspended?
+      I18n.t(:msg_invalig_login)
+    else
+      super
+    end
   end
 
   #----------------------------------------------------------------------------
@@ -115,12 +139,6 @@ class User < ActiveRecord::Base
     @preference ||= preferences.build
   end
   alias pref preference
-
-  #----------------------------------------------------------------------------
-  def deliver_password_reset_instructions!
-    reset_perishable_token!
-    UserMailer.password_reset_instructions(self).deliver_now
-  end
 
   # Override global I18n.locale if the user has individual local preference.
   #----------------------------------------------------------------------------
@@ -130,16 +148,16 @@ class User < ActiveRecord::Base
 
   # Generate the value of single access token if it hasn't been set already.
   #----------------------------------------------------------------------------
-  def set_single_access_token
-    self.single_access_token ||= update_attribute(:single_access_token, Authlogic::Random.friendly_token)
-  end
-
   def to_json(_options = nil)
     [name].to_json
   end
 
   def to_xml(_options = nil)
     [name].to_xml
+  end
+
+  def password_required?
+    !persisted? || !password.nil? || !password_confirmation.nil?
   end
 
   # Returns permissions ability object.
@@ -171,13 +189,20 @@ class User < ActiveRecord::Base
     !sum.nil?
   end
 
-  private
-
   # Define class methods
   #----------------------------------------------------------------------------
   class << self
     def can_signup?
       %i[allowed needs_approval].include? Setting.user_signup
+    end
+
+    # Overrides Devise sign-in to use either username or email (case-insensitive)
+    #----------------------------------------------------------------------------
+    def find_for_database_authentication(warden_conditions)
+      conditions = warden_conditions.dup
+      if login = conditions.delete(:email)
+        where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { value: login.downcase }]).first
+      end
     end
   end
 

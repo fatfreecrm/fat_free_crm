@@ -7,6 +7,7 @@
   = styles_for :task, :lead, :opportunity
 
   = render 'campaigns/title_bar', campaign: @campaign
+  = render 'campaigns/sidebar_show', campaign: @campaign
 
   = render "comments/new", commentable: @campaign
   = render partial: "shared/timeline", collection: @timeline

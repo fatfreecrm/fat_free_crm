@@ -2,7 +2,7 @@
   - unless assigned.category.blank?
     .strip{class: assigned.category}= t(assigned.category)
   - else
-    .strip.white #{t :other}
+    .strip.other #{t :other}
 
   .tools
     = link_to_task_edit(assigned, bucket) + " | "

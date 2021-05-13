@@ -6,6 +6,6 @@
     = hidden_field_tag "comment[commentable_type]", class_name.classify
     = f.text_area :comment, id: dom_id(@comment, :text)
     .buttons
-      = f.submit t(:save_note)
+      = f.submit t(:save_note), class: 'btn btn-primary'
       #{t :or}
       = link_to(t(:cancel), edit_comment_path(@comment, "#{class_name}_id" => commentable.id, cancel: true), remote: true)

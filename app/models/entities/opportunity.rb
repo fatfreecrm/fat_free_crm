@@ -28,9 +28,9 @@
 #
 
 class Opportunity < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :campaign
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
+  belongs_to :user, optional: true
+  belongs_to :campaign, optional: true
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true
   has_one :account_opportunity, dependent: :destroy
   has_one :account, through: :account_opportunity
   has_many :contact_opportunities, dependent: :destroy
@@ -40,7 +40,7 @@ class Opportunity < ActiveRecord::Base
 
   serialize :subscribed_users, Set
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where('stage IN (?)' + (filters.delete('other') ? ' OR stage IS NULL' : ''), filters)
   }
   scope :created_by,  ->(user) { where('user_id = ?', user.id) }
@@ -50,9 +50,10 @@ class Opportunity < ActiveRecord::Base
   scope :not_lost,    -> { where("opportunities.stage <> 'lost'") }
   scope :pipeline,    -> { where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')") }
   scope :unassigned,  -> { where("opportunities.assigned_to IS NULL") }
+  scope :weighted_sort, -> { select('*, amount*probability') }
 
   # Search by name OR id
-  scope :text_search, ->(query) {
+  scope :text_search, lambda { |query|
     if query.match?(/\A\d+\z/)
       where('upper(name) LIKE upper(:name) OR opportunities.id = :id', name: "%#{query}%", id: query)
     else
@@ -60,7 +61,7 @@ class Opportunity < ActiveRecord::Base
     end
   }
 
-  scope :visible_on_dashboard, ->(user) {
+  scope :visible_on_dashboard, lambda { |user|
     # Show opportunities which either belong to the user and are unassigned, or are assigned to the user and haven't been closed (won/lost)
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where("opportunities.stage != 'won'").where("opportunities.stage != 'lost'")
   }
@@ -72,7 +73,7 @@ class Opportunity < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail class_name: 'Version', ignore: [:subscribed_users]
+  has_paper_trail versions: {class_name: 'Version'}, ignore: [:subscribed_users]
   has_fields
   exportable
   sortable by: ["name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
@@ -100,7 +101,7 @@ class Opportunity < ActiveRecord::Base
 
   #----------------------------------------------------------------------------
   def weighted_amount
-    ((amount || 0) - (discount || 0)) * (probability || 0) / 100.0
+    (amount.to_f - discount.to_f) * probability.to_i / 100.0
   end
 
   # Backend handler for [Create New Opportunity] form (see opportunity/create).
@@ -134,9 +135,7 @@ class Opportunity < ActiveRecord::Base
   # Attach given attachment to the opportunity if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      send(attachment.class.name.tableize) << attachment
-    end
+    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the opportunity.

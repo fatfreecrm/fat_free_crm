@@ -33,12 +33,11 @@ describe "/users/change_password" do
   end
 
   describe "validation errors:" do
-    it "should redraw the [Change Password] form and shake it" do
+    it "should redraw the [Change Password] form" do
       @user.errors.add(:current_password, "error")
       render
 
       expect(rendered).to include("$('#change_password').html")
-      expect(rendered).to include(%/$('#change_password').effect("shake"/)
       expect(rendered).to include("$('#current_password').focus();")
     end
 

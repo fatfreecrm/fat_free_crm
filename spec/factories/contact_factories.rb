@@ -9,11 +9,11 @@ FactoryBot.define do
   factory :contact do
     user
     lead
-    assigned_to nil
-    reports_to nil
+    assigned_to         { nil }
+    reports_to          { nil }
     first_name          { FFaker::Name.first_name }
     last_name           { FFaker::Name.last_name }
-    access "Public"
+    access              { "Public" }
     title               { FactoryBot.generate(:title) }
     department          { FFaker::Name.name + " Dept." }
     source              { %w[campaign cold_call conference online referral self web word_of_mouth other].sample }
@@ -26,10 +26,10 @@ FactoryBot.define do
     facebook            { FactoryBot.generate(:website) }
     linkedin            { FactoryBot.generate(:website) }
     twitter             { FactoryBot.generate(:website) }
-    do_not_call false
-    born_on "1992-10-10"
+    do_not_call         { false }
+    born_on             { "1992-10-10" }
     background_info     { FFaker::Lorem.paragraph[0, 255] }
-    deleted_at nil
+    deleted_at          { nil }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end
@@ -37,8 +37,8 @@ FactoryBot.define do
   factory :contact_opportunity do
     contact
     opportunity
-    role "foo"
-    deleted_at nil
+    role                { "foo" }
+    deleted_at          { nil }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end

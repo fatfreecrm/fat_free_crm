@@ -36,4 +36,4 @@ module FatFreeCRM
   end
 end
 
-ActiveModel::Errors.send(:include, FatFreeCRM::ActiveModel::Errors)
+ActiveModel::Errors.include FatFreeCRM::ActiveModel::Errors

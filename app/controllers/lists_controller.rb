@@ -33,6 +33,10 @@ class ListsController < ApplicationController
   protected
 
   def list_params
-    params[:list].permit!
+    params.require(:list).permit(
+      :name,
+      :url,
+      :user_id
+    )
   end
 end

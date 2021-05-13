@@ -22,7 +22,7 @@
       $('#list_#{bucket}').show();
       $('##{bucket}').before('#{ j render(partial: @view, collection: [ @task ], locals: { bucket: bucket }) }');
       $('##{dom_id(@task)}').effect("highlight", { duration:1500 });
-      = refresh_sidebar(:index, :filters)
+      = refresh_sidebar(:index)
 
     crm.flick('empty', 'remove');
 
@@ -34,6 +34,5 @@
     $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
 
 - else # Couldn't create the task -- validation failed.
-  $('#create_task').effect("shake", { duration:250, distance: 6 });
   $('#task_name').focus();
   $('#new_task input[type=submit]').enable();

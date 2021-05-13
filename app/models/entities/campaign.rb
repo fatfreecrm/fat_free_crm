@@ -32,8 +32,8 @@
 #
 
 class Campaign < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
+  belongs_to :user, optional: true # TODO: Is this really optional?
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
   has_many :leads, -> { order "id DESC" }, dependent: :destroy
   has_many :opportunities, -> { order "id DESC" }, dependent: :destroy
@@ -41,7 +41,7 @@ class Campaign < ActiveRecord::Base
 
   serialize :subscribed_users, Set
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where('status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters)
   }
   scope :created_by,  ->(user) { where(user_id: user.id) }
@@ -53,7 +53,7 @@ class Campaign < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail class_name: 'Version', ignore: [:subscribed_users]
+  has_paper_trail versions: {class_name: 'Version'}, ignore: [:subscribed_users]
   has_fields
   exportable
   sortable by: ["name ASC", "target_leads DESC", "target_revenue DESC", "leads_count DESC", "revenue DESC", "starts_on DESC", "ends_on DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
@@ -103,9 +103,7 @@ class Campaign < ActiveRecord::Base
   # Make sure end date > start date.
   #----------------------------------------------------------------------------
   def start_and_end_dates
-    if (starts_on && ends_on) && (starts_on > ends_on)
-      errors.add(:ends_on, :dates_not_in_sequence)
-    end
+    errors.add(:ends_on, :dates_not_in_sequence) if (starts_on && ends_on) && (starts_on > ends_on)
   end
 
   # Make sure at least one user has been selected if the campaign is being shared.

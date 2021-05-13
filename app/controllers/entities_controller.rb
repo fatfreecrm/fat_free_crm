@@ -6,7 +6,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class EntitiesController < ApplicationController
-  before_action :require_user
   before_action :set_current_tab, only: %i[index show]
   before_action :set_view, only: %i[index show redraw]
 
@@ -22,7 +21,7 @@ class EntitiesController < ApplicationController
   # Common attach handler for all core controllers.
   #----------------------------------------------------------------------------
   def attach
-    @attachment = params[:assets].classify.constantize.find(params[:asset_id])
+    @attachment = find_class(params[:assets]).find(params[:asset_id])
     @attached = entity.attach!(@attachment)
     entity.reload
 
@@ -32,7 +31,7 @@ class EntitiesController < ApplicationController
   # Common discard handler for all core controllers.
   #----------------------------------------------------------------------------
   def discard
-    @attachment = params[:attachment].constantize.find(params[:attachment_id])
+    @attachment = find_class(params[:attachment]).find(params[:attachment_id])
     entity.discard!(@attachment)
     entity.reload
 
@@ -152,16 +151,16 @@ class EntitiesController < ApplicationController
       scope = scope.state(filter) if filter.present?
     end
 
-    scope = scope.text_search(query)              if query.present?
+    scope = scope.text_search(query) if query.present?
     scope = scope.tagged_with(tags, on: :tags) if tags.present?
 
     # Ignore this order when doing advanced search
     unless advanced_search
       order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
-      scope = scope.order(order)
+      scope = order_by_attributes(scope, order)
     end
 
-    @search_results_count = scope.count
+    @search_results_count = scope.size
 
     # Pagination is disabled for xls and csv requests
     unless wants.xls? || wants.csv?
@@ -179,8 +178,13 @@ class EntitiesController < ApplicationController
   end
 
   #----------------------------------------------------------------------------
+  def order_by_attributes(scope, order)
+    scope.order(order)
+  end
+
+  #----------------------------------------------------------------------------
   def update_recently_viewed
-    entity.versions.create(event: :view, whodunnit: PaperTrail.whodunnit)
+    entity.versions.create(event: :view, whodunnit: PaperTrail.request.whodunnit)
   end
 
   # Somewhat simplistic parser that extracts query and hash-prefixed tags from
@@ -190,13 +194,18 @@ class EntitiesController < ApplicationController
   #----------------------------------------------------------------------------
   def parse_query_and_tags(search_string)
     return ['', ''] if search_string.blank?
+
     query = []
     tags = []
-    search_string.strip.split(/\s+/).each do |token|
-      if token.starts_with?("#")
-        tags << token[1..-1]
-      else
-        query << token
+    if search_string.start_with?("#") && search_string.end_with?("#")
+      tags << search_string[1..-2]
+    else
+      search_string.strip.split(/\s+/).each do |token|
+        if token.starts_with?("#")
+          tags << token[1..-1]
+        else
+          query << token
+        end
       end
     end
     [query.join(" "), tags.join(", ")]
@@ -225,5 +234,15 @@ class EntitiesController < ApplicationController
   def page_param
     page = params[:page]&.to_i
     [0, page].max if page
+  end
+
+  def guess_related_account(id, url, user)
+    return Account.find(id) unless id.blank?
+
+    if url =~ %r{/accounts/(\d+)\z}
+      Account.find(Regexp.last_match[1]) # related account
+    else
+      Account.new(user: user)
+    end
   end
 end

@@ -4,4 +4,4 @@ $('##{dom_id(@task)}').slideUp(250);
   $('#list_#{@empty_bucket}').fadeOut({ duration:500 });
 
 - if called_from_index_page?
-  = refresh_sidebar(:index, :filters)
+  = refresh_sidebar(:index)

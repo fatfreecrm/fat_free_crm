@@ -9,4 +9,5 @@
     - if count == @per_page.to_i
       %em.current= count
     - else
+      - q = params[:q] ? params[:q].permit! : nil
       = link_to count, send("redraw_#{controller.controller_name}_path", per_page: count, query: params[:query], q: params[:q]), remote: true

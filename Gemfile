@@ -7,13 +7,13 @@ source 'https://rubygems.org'
 
 case ENV['CI'] && ENV['DB']
 when 'sqlite'
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.13'
 when 'mysql'
   gem 'mysql2'
 when 'postgres'
-  gem 'pg', '~> 0.21.0' # Pinned, see https://github.com/fatfreecrm/fat_free_crm/pull/689
+  gem 'pg'
 else
-  gem 'pg', '~> 0.21.0'
+  gem 'pg'
 end
 
 # Removes a gem dependency
@@ -30,7 +30,7 @@ end
 # Bundler no longer treats runtime dependencies as base dependencies.
 # The following code restores this behaviour.
 # (See https://github.com/carlhuda/bundler/issues/1041)
-spec = Bundler.load_gemspec(File.expand_path("../fat_free_crm.gemspec", __FILE__))
+spec = Bundler.load_gemspec(File.expand_path('fat_free_crm.gemspec', __dir__))
 spec.runtime_dependencies.each do |dep|
   gem dep.name, *dep.requirement.as_list
 end
@@ -44,7 +44,6 @@ remove 'fat_free_crm'
 group :development do
   # don't load these gems in travis
   unless ENV["CI"]
-    gem 'puma'
     gem 'capistrano'
     gem 'capistrano-bundler'
     gem 'capistrano-rails'
@@ -66,31 +65,40 @@ group :development, :test do
   gem 'headless'
   gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
-  gem 'factory_bot_rails'
-  gem 'rubocop', '~> 0.52.0' # Pinned because upgrades require regenerating rubocop_todo.yml
+  gem 'factory_bot_rails', '~> 5.0' # Was Pinned due to minor failing view tests to 4.0
+  gem 'rubocop', '~> 0.82.0'
   gem 'rainbow'
+  gem 'puma' # used by capybara 3
 end
 
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
   gem 'database_cleaner'
-  gem 'acts_as_fu'
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
+  gem 'sqlite3', '~> 1.3.13'
 end
 
 group :heroku do
   gem 'rails_12factor'
+  gem 'puma'
 end
 
-gem 'sass-rails'
+gem 'sass-rails', '~> 5.0.3' # sass-rails 6 requires GCC 4.5+
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
-gem 'therubyracer', platform: :ruby unless ENV["CI"]
+# gem 'therubyracer', platform: :ruby unless ENV["CI"]
+gem 'mini_racer'
 gem 'nokogiri', '>= 1.8.1'
 gem 'activemodel-serializers-xml'
 gem 'bootsnap', require: false
+gem 'devise', '~>4.6'
+gem 'devise-i18n'
+gem "devise-encryptable"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'activejob'
+gem 'ransack_ui'
+gem 'bootstrap', '5.0.0'

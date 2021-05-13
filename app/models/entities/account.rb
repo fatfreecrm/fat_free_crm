@@ -28,8 +28,8 @@
 #
 
 class Account < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
+  belongs_to :user, optional: true # TODO: Is this really optional?
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true
   has_many :account_contacts, dependent: :destroy
   has_many :contacts, -> { distinct }, through: :account_contacts
   has_many :account_opportunities, dependent: :destroy
@@ -46,7 +46,7 @@ class Account < ActiveRecord::Base
   accepts_nested_attributes_for :billing_address,  allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
   accepts_nested_attributes_for :shipping_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where('category IN (?)' + (filters.delete('other') ? ' OR category IS NULL' : ''), filters)
   }
   scope :created_by,  ->(user) { where(user_id: user.id) }
@@ -54,7 +54,7 @@ class Account < ActiveRecord::Base
 
   scope :text_search, ->(query) { ransack('name_or_email_cont' => query).result }
 
-  scope :visible_on_dashboard, ->(user) {
+  scope :visible_on_dashboard, lambda { |user|
     # Show accounts which either belong to the user and are unassigned, or are assigned to the user
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id)
   }
@@ -65,7 +65,7 @@ class Account < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail class_name: 'Version', ignore: [:subscribed_users]
+  has_paper_trail versions: {class_name: 'Version'}, ignore: [:subscribed_users]
   has_fields
   exportable
   sortable by: ["name ASC", "rating DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
@@ -91,6 +91,7 @@ class Account < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def location
     return "" unless self[:billing_address]
+
     location = self[:billing_address].strip.split("\n").last
     location&.gsub(/(^|\s+)\d+(:?\s+|$)/, " ")&.strip
   end
@@ -98,9 +99,7 @@ class Account < ActiveRecord::Base
   # Attach given attachment to the account if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      send(attachment.class.name.tableize) << attachment
-    end
+    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the account.
@@ -117,14 +116,15 @@ class Account < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.create_or_select_for(model, params)
     # Attempt to find existing account
-    if params[:id].present?
-      return Account.find(params[:id])
-    elsif params[:name].present?
+    return Account.find(params[:id]) if params[:id].present?
+
+    if params[:name].present?
       account = Account.find_by(name: params[:name])
       return account if account
     end
 
     # Fallback to create new account
+    params[:user] = model.user if model
     account = Account.new(params)
     if account.access != "Lead" || model.nil?
       account.save

@@ -4,11 +4,73 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Unreleased
+======
+#905 Swap from Marshal.load. Be sure to run `bundle exec rake ffcrm:preference_update` to migrate your users from old to new format
 
-Unreleased (0.18.0)
----------------------------------------------------------------------
+settings.yml - Background, foreground colors for tasks, accounts, opportunities, and more - these are now defined in CSS by default 
+
+Refactoring to Bootstrap for forms, buttons, layouts.
+
+Wed May 09, 2021 (0.19.2)
+======
+CVE-2021-22885
+
+Wed Apr 04, 2021 (0.19.1)
+======
+
+Minor gem updates
+
+Wed Apr 04, 2021 (0.19.0)
+======
+
 ### Important changes
-#### Mininium ruby version
+
+#### Fixed XSS flaw in tags_helper
+Credit Antonin Steinhauser (asteinhauser) for discovery and responsible disclosure.
+
+#### Devise replaces Authlogic for user authentication
+Ticket #742 replaces Authlogic with the latest Devise (4.3.0) which has wider adoption.
+This change requires a database migration on the User model. Please note:
+ - Most User fields are renamed and can hence be rolled back. Existing Authlogic passwords will continue to work.
+ - Users will be forced logged out. Existing user sessions will not be kept and the fields `persistence_token, single_access_token, perishable_token` will be dropped from the database.
+ - Though the migration is generally safe **we recommend to make a backup of your database** before migrating.
+
+#### Existing OAuth broken
+The Devise change will break any OAuth login plugins which depend on Authlogic.
+You can [configure OAuth for Devise using the guides here](https://github.com/plataformatec/devise/wiki/omniauth:-overview).
+
+#### Login and user-related routes changed
+The login URL routes have been changed to use the defaults of Devise.
+
+#### User mailers changed
+Mailers related to user password reset, etc. are changed to use the defaults of Devise.
+
+#### PaperClip version updated from 5.2.1 to 6.0.0
+PaperClip now only depends on `aws-sdk-s3` instead of `aws-sdk`. For more info see https://github.com/thoughtbot/paperclip/pull/2481.
+Replace the Cocaine gem with Terrapin. https://github.com/thoughtbot/terrapin/ Apart from the namespace change, this is a drop in replacement.
+
+#### Rails 5.2
+The underlying framework is now rails 5.2.*
+
+#### Ruby 2.4 deprecated
+Ruby 2.4 has reached end of life and is no longer activity tested against.
+
+#### Other changes
+ * #794 Fix defect with unpermitted params in advanced search
+ * 2bc6184779a26070496e6f4caefa0cc9ba555d7b Remove broken support for delete links on arrays.
+ * #851 upgrade paper_trail
+ * Security fixes CVE-2019-16109, CVE-2019-16676, CVE-2019-5477, CVE-2019-16892
+ * Dependency updates
+ * Simple Form upgrades to use HTML5 and browser validations by default
+
+
+Sat Apr 21, 2018 (0.18.0)
+---------------------------------------------------------------------
+
+### Important changes
+
+#### Minimum Ruby version
 #665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
 
 #### Swap to FactoryBot
@@ -20,11 +82,36 @@ If you consume fat free crm as an engine and re-use any factories, you'll need t
 `FatFreeCRM::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
 
 #### Other changes
-TBA - https://github.com/fatfreecrm/fat_free_crm/milestone/6
+ - CVE-2018-8048 (loofah gem)
+ - CVE-2018-3741 (rails-html-sanitizer gem)
+ - #768 Fix comment creation on entities
+ - #762 #764 Fix bug in select menu
+ - #759 Improve zero revenue display
+ - #753 Opportunities sort by weighted amount
+ - #749 Fix unsafe reflection and mass assignment
+
+Wed Jan 24, 2018 (0.17.2)
+---------------------------------------------------------------------
+ - CVE-2017-0889
+ - #724 Fixes #589 Autocomplete regression
+ - #723 Fixes #687 Passing string to define a callback is not supported.
+
+Wed Jan 24, 2018 (0.16.3)
+---------------------------------------------------------------------
+CVE-2017-0889
+
+Wed Jan 24, 2018 (0.15.1)
+---------------------------------------------------------------------
+CVE-2017-0889
+
+Wed Jan 24, 2018 (0.14.1)
+---------------------------------------------------------------------
+CVE-2017-0889
 
 Sat Jan 20, 2018 (0.17.1)
 ---------------------------------------------------------------------
  - #709 Revert accidental minimum ruby version 2.4 changes (#665)
+ - Fix #687 Passing string to define a callback is not supported.
 
 Mon Jan 22, 2018 (0.16.2)
 ---------------------------------------------------------------------
@@ -34,6 +121,7 @@ Sat Jan 20, 2018 (0.17.0)
 ---------------------------------------------------------------------
 
 ### Important changes
+
 #### Select2 for select boxes
 This release replaces [Chozen](https://harvesthq.github.io/chosen/) with [Select2](https://select2.org/) consistently across the app.
 This may break plugins which rely on Chozen. To fix any issues please

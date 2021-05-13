@@ -22,9 +22,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   def edit
     @field_group = FieldGroup.find(params[:id])
 
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = FieldGroup.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = FieldGroup.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@field_group)
   end
@@ -80,6 +78,13 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   protected
 
   def field_group_params
-    params[:field_group].permit!
+    params.require(:field_group).permit(
+      :name,
+      :label,
+      :position,
+      :hint,
+      :tag_id,
+      :klass_name
+    )
   end
 end

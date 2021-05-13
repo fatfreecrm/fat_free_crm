@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::TagsController < Admin::ApplicationController
-  before_action "set_current_tab('admin/tags')", only: %i[index show]
+  before_action :setup_current_tab, only: %i[index show]
 
   load_resource
 
@@ -28,9 +28,7 @@ class Admin::TagsController < Admin::ApplicationController
   # GET /admin/tags/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   def edit
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Tag.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Tag.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
   end
 
   # POST /admin/tags
@@ -68,6 +66,10 @@ class Admin::TagsController < Admin::ApplicationController
   protected
 
   def tag_params
-    params[:tag].permit!
+    params.require(:tag).permit(:name, :taggings_count)
+  end
+
+  def setup_current_tab
+    set_current_tab('admin/tags')
   end
 end

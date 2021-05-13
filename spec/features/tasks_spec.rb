@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path("../acceptance_helper.rb", __FILE__)
+require File.expand_path('acceptance_helper.rb', __dir__)
 
 feature 'Tasks', '
   In order to increase keep track of things
@@ -33,9 +33,9 @@ feature 'Tasks', '
       click_link 'Create Task'
       expect(page).to have_selector('#task_name', visible: true)
       fill_in 'task_name', with: 'Task I Need To Do'
-      select 'Tomorrow', from: 'task_bucket'
-      select 'Myself', from: 'task_assigned_to'
-      select 'Call', from: 'task_category'
+      select2 'Tomorrow', from: 'Due:'
+      select2 'Myself', from: 'Assign to:'
+      select2 'Call', from: 'Category:'
       click_button 'Create Task'
       expect(page).to have_content('Task I Need To Do')
 
@@ -51,9 +51,9 @@ feature 'Tasks', '
       click_link 'Create Task'
       expect(page).to have_selector('#task_name', visible: true)
       fill_in 'task_name', with: 'Task For Someone Else'
-      select 'Tomorrow', from: 'task_bucket'
-      select 'Another User', from: 'task_assigned_to'
-      select 'Call', from: 'task_category'
+      select2 'Tomorrow', from: 'Due:'
+      select2 'Another User', from: 'Assign to:'
+      select2 'Call', from: 'Category:'
       click_button 'Create Task'
       expect(page).to have_content('The task has been created and assigned to Another User')
 
