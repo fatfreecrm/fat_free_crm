@@ -5,9 +5,10 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rubygems'
+require 'rails/all'
 
 # Pick the frameworks you want:
 require "active_record/railtie"
@@ -27,6 +28,9 @@ require 'fat_free_crm/gem_ext/rails/engine'
 
 module FatFreeCRM
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.0
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -36,12 +40,10 @@ module FatFreeCRM
                              Dir[Rails.root.join("app/controllers/entities")]
 
     # Prevent Field class from being reloaded more than once as this clears registered customfields
-    config.autoload_once_paths += [File.expand_path("../app/models/fields/field.rb", __FILE__)]
+    config.autoload_once_paths += [File.expand_path('app/models/fields/field.rb', __dir__)]
 
     # Activate observers that should always be running.
-    unless ARGV.join.include?('assets:precompile')
-      config.active_record.observers = :lead_observer, :opportunity_observer, :task_observer, :entity_observer
-    end
+    config.active_record.observers = :lead_observer, :opportunity_observer, :task_observer, :entity_observer unless ARGV.join.include?('assets:precompile')
 
     # Load development rake tasks (RSpec, Gem packaging, etc.)
     rake_tasks do

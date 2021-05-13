@@ -87,9 +87,9 @@ describe HomeController do
     end
 
     it "should assign instance variables for user preferences" do
-      @asset = create(:preference, user: current_user, name: "activity_asset", value: Base64.encode64(Marshal.dump("tasks")))
-      @user = create(:preference, user: current_user, name: "activity_user", value: Base64.encode64(Marshal.dump("Billy Bones")))
-      @duration = create(:preference, user: current_user, name: "activity_duration", value: Base64.encode64(Marshal.dump("two days")))
+      @asset = create(:preference, user: current_user, name: "activity_asset", value: Base64.encode64("tasks".to_json))
+      @user = create(:preference, user: current_user, name: "activity_user", value: Base64.encode64("Billy Bones".to_json))
+      @duration = create(:preference, user: current_user, name: "activity_duration", value: Base64.encode64("two days".to_json))
 
       get :options, xhr: true
       expect(assigns[:asset]).to eq("tasks")

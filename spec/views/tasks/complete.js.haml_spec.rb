@@ -42,7 +42,6 @@ describe "/tasks/complete" do
       expect(rendered).to include("$('#sidebar').html")
       expect(rendered).to have_text("Assigned")
       expect(rendered).to have_text("Recent Items")
-      expect(rendered).to include("$('#filters').effect('shake'")
     end
   end
 

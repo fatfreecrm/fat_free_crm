@@ -26,6 +26,5 @@ describe "admin/field_groups/create" do
     allow(field_group).to receive(:valid?).and_return(false)
     render
     expect(view).to render_template("admin/field_groups/create")
-    expect(rendered).to have_text("effect(\"shake\", { duration:250, distance: 6 });")
   end
 end

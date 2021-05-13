@@ -155,6 +155,7 @@ module RSpec # :nodoc:
 
       def prepare_args(args, current_scope = nil)
         return args if current_scope.nil?
+
         defaults = current_scope.options || { strict: false, xml: false }
         args << {} unless args.last.is_a?(::Hash)
         args.last[:strict] = defaults[:strict] if args.last[:strict].nil?

@@ -34,9 +34,7 @@ describe "/opportunities/update" do
       it "should update sidebar" do
         render
         expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Opportunity At a Glance")
         expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
 
@@ -56,7 +54,6 @@ describe "/opportunities/update" do
         expect(rendered).to include("sidebar")
         expect(rendered).to have_text("Opportunity Stages")
         expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#filters').effect('shake'")
       end
     end
 
@@ -67,7 +64,6 @@ describe "/opportunities/update" do
         render
 
         expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Account Summary")
         expect(rendered).to have_text("Recent Items")
       end
 
@@ -77,7 +73,6 @@ describe "/opportunities/update" do
         render
 
         expect(rendered).to include("#sidebar")
-        expect(rendered).to have_text("Campaign Summary")
         expect(rendered).to have_text("Recent Items")
       end
 
@@ -107,11 +102,10 @@ describe "/opportunities/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities/123"
       end
 
-      it "should redraw the [edit_opportunity] form and shake it" do
+      it "should redraw the [edit_opportunity] form" do
         render
         expect(rendered).to include("$('#edit_opportunity').html")
         expect(rendered).to include('crm.create_or_select_account(false)')
-        expect(rendered).to include(%/$('#edit_opportunity').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -121,11 +115,10 @@ describe "/opportunities/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/opportunities"
       end
 
-      it "should redraw the [edit_opportunity] form and shake it" do
+      it "should redraw the [edit_opportunity] form" do
         render
         expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
         expect(rendered).to include('crm.create_or_select_account(false)')
-        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -137,13 +130,12 @@ describe "/opportunities/update" do
 
       it "should show disabled accounts dropdown when called from accounts landing page" do
         render
-        expect(rendered).to include("crm.create_or_select_account(#{@referer =~ /\/accounts\//})")
+        expect(rendered).to include("crm.create_or_select_account(#{@referer =~ %r{/accounts/}})")
       end
 
-      it "should redraw the [edit_opportunity] form and shake it" do
+      it "should redraw the [edit_opportunity] form" do
         render
         expect(rendered).to include("$('#opportunity_#{@opportunity.id}').html")
-        expect(rendered).to include(%/$('#opportunity_#{@opportunity.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end

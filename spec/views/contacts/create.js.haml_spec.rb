@@ -23,7 +23,7 @@ describe "/contacts/create" do
     it "should hide [Create Contact] form and insert contact partial" do
       render
 
-      expect(rendered).to include("$('#contacts').prepend('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+      expect(rendered).to include("$('#contacts').prepend('<li class=\\'highlight contact\\' id=\\'contact_#{@contact.id}\\'")
       expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
     end
 
@@ -60,7 +60,6 @@ describe "/contacts/create" do
       render
 
       expect(rendered).to include("$('#create_contact').html")
-      expect(rendered).to include(%/$('#create_contact').effect("shake"/)
     end
   end
 end

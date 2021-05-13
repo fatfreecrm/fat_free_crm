@@ -1,0 +1,206 @@
+// Custom.scss
+// Option B: Include parts of Bootstrap
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "bootstrap/functions";
+
+// 2. Include any default variable overrides here
+
+$bg_color1: #05668D;
+$bg_color2: #028090;
+$bg_color3: #00A896;
+$bg_color4: #02C39A;
+$bg_color5: #2A9D8F;
+$bg_color6: #B4A6AB;
+$bg_color7: #946E83;
+$bg_color8: #615055;
+$bg_color9: #FFDD4A;
+
+$theme-colors: (
+  "primary":    #05668D,
+  "secondary":  #028090,
+  "success":    #00A896,
+  "info":       #02C39A,
+  "warning":    #2A9D8F,
+  "danger":     #B4A683,
+  "light":      #615055,
+  "dark":       #FFDD4A
+);
+
+$btn-padding-y:               0.375;
+$btn-padding-x:               0.75;
+$btn-font-size:               '0.9rem';
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+// 4. Include any optional Bootstrap components as you like
+
+@import "bootstrap/root";
+// @import "bootstrap/reboot";
+// @import "bootstrap/type";
+
+@import "bootstrap/images";
+@import "bootstrap/containers";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+@import "bootstrap/buttons";
+@import "bootstrap/transitions";
+@import "bootstrap/dropdown";
+@import "bootstrap/button-group";
+@import "bootstrap/nav";
+@import "bootstrap/navbar";
+@import "bootstrap/card";
+@import "bootstrap/accordion";
+@import "bootstrap/breadcrumb";
+@import "bootstrap/pagination";
+@import "bootstrap/badge";
+@import "bootstrap/alert";
+@import "bootstrap/progress";
+@import "bootstrap/list-group";
+@import "bootstrap/close";
+@import "bootstrap/toasts";
+@import "bootstrap/modal";
+@import "bootstrap/tooltip";
+@import "bootstrap/popover";
+@import "bootstrap/carousel";
+@import "bootstrap/spinners";
+@import "bootstrap/offcanvas";
+
+// Helpers
+@import "bootstrap/helpers";
+
+// Utilities
+$utilities: ();
+@import "bootstrap/utilities/api";
+
+
+
+// 5. Add additional custom code here
+
+// Used on tasks#index as the selector component
+.nav-sm .nav-link {
+  padding: 0.25rem 0.5rem;
+}
+
+// Application grid
+#primary-application-pane {
+  @extend .container-fluid;
+  width: auto;
+
+  .sidebar {
+    @extend .col-2;
+    // @extend .g-2;
+
+    .panel {
+    }
+  }
+  .main {
+    // Same as .col=9
+    flex: 0 0 auto;
+    width: 75%;
+  }
+
+  #summary.panel {
+    dl {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: flex-start;
+
+      li {
+        display: flex;
+        width: 12%;
+	margin-right: 1rem;
+        flex-direction: column-reverse;
+
+	vertical-align: top;
+	dt { float: none; width: 100%; }
+	tt { width: 100%; }
+      }
+    }
+  }
+}
+// Navbar
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+button.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+@include media-breakpoint-down(lg) {
+  .navbar.tabs {
+    li {
+     a:link, a:visited {
+       background-color: transparent;
+     }
+     i { display: none; }
+    } 
+  }
+
+  // On mobile, reverse the order of our content
+  #primary-application-pane {
+    .row:first-child {
+      flex-direction: column-reverse !important;
+    }
+ 
+    .main {
+      width: 90%;
+      margin: auto;
+    }
+    .sidebar {
+      width: 90%;
+      margin: auto;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .sidebar #filters, .sidebar #lists, .sidebar #recently, .sidebar #summary {
+      margin-right: 2%;
+      width: 30%;
+    }
+
+    #summary.panel {
+      dl {
+        li {
+	  width: 23%;
+	  font-size: 2rem;
+	  dt {
+	    font-size: inherit;
+          }
+          tt {
+	    font-size: inherit;
+	  }
+	}
+      }	
+    }
+  }
+}
+
+// For now, clip excess page until we tweak the layout properly
+body {
+  overflow-x: clip;
+}
+#search {
+  .tabs { @extend .row; }
+
+  ul {
+    @extend .col;
+  }
+  li {
+    display: inline-block;
+  }
+  #search_results_count {
+    @extend .col;
+    text-align: right;
+    width: 98%;
+  }
+}
+
+// ransack_ui_search renders in older bootstrap, so adding padding fixes a few visual glitches
+#advanced_search {
+  .row {
+    padding-right: 1.5rem;
+  }
+}

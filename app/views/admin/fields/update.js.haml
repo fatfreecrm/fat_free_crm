@@ -9,5 +9,4 @@
 - else
   html = $.parseHTML('#{ j(render partial: "form") }');
   $('##{id}').find('.edit_field').replaceWith( html );
-  $('##{id}').effect("shake", { duration:250, distance: 6 });
   $('##{id}').find('input[type="text"]').first().focus();

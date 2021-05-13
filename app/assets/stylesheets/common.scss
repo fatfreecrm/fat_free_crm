@@ -10,7 +10,7 @@ $sidebar_width: 210px;
 // Common page elements.
 //------------------------------------------------------------------------------
 .title {
-  border-bottom: 1px gray solid;
+  border-bottom: 1px #eee solid;
   color: $color_title;
   font: {
     size: 17px;
@@ -22,7 +22,6 @@ $sidebar_width: 210px;
     top: 2px; } }
 
 .title_tools {
-  font-size: 12px;
   float: right;
   margin: 0;
   margin-top: 4px;
@@ -35,14 +34,14 @@ $sidebar_width: 210px;
 }
 
 .subtitle {
-  border-bottom: 1px silver solid;
+  border-bottom: 1px #eee solid;
   color: #2f2f2f;
   font: {
     size: 14px;
     weight: bold; };
   small {
     font-weight: normal;
-    font-size: 11px;
+    font-size: 0.9em;
     padding-left: 5px; }
   a:link, a:visited {
     color: $color_subtitle;
@@ -56,7 +55,7 @@ $sidebar_width: 210px;
   margin-left: 5px }
 
 .subtitle_tools {
-  font-size: 11px;
+  font-size:  0.9em;
   float: right; }
 
 .radio_box {
@@ -71,7 +70,7 @@ $sidebar_width: 210px;
     position: relative;
     top: -3px; }
   label {
-    font-size: 11px; } }
+    font-size: 0.9em; } }
 
 // Main area (page and form).
 //------------------------------------------------------------------------------
@@ -86,9 +85,7 @@ $sidebar_width: 210px;
   padding: 20px;
   width: 400px;
   -moz-border-radius: 6px;
-  -moz-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
   -webkit-border-radius: 6px;
-  -webkit-box-shadow: 5px 5px 15px #bbbbbb, -5px 0px 15px #bbbbbb;
   input[type="text"], input[type="email"], input[type="password"] {
     font-size: 16px;
     padding: 2px;
@@ -103,9 +100,7 @@ $sidebar_width: 210px;
   background: white;
   padding: 8px 15px 15px 15px;
   -moz-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
-  -webkit-border-radius: 4px;
-  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb; }
+  -webkit-border-radius: 4px; }
 
 .info {
   padding-top: 12px;
@@ -113,9 +108,9 @@ $sidebar_width: 210px;
 
 .sidebar {
   color: #3f3f3f;
-  font-size: 11px;
-  padding: 0px 12px 0px 0px;
-  width: $sidebar_width; }
+  font-size: 0.9em;
+  padding-top: 1rem;
+  }
 
 .form {
   background: white;
@@ -124,7 +119,7 @@ $sidebar_width: 210px;
     height: 30px; } }
 
 .tools {
-  font-size: 10px;
+  font-size: 0.9em;
   float: right;
   padding: 0px 0px 0px 4px;
   &#comment_new_tools {
@@ -132,7 +127,6 @@ $sidebar_width: 210px;
 
 .label {
   color: #3f3f3f;
-  font-size: 12px;
   margin: 8px 0px 0px 0px;
   padding: 0px 8px 0px 0px; }
 
@@ -150,7 +144,6 @@ $sidebar_width: 210px;
 
 .intro {
   color: dimgray;
-  font-size: 12px;
   padding-top: 5px; }
 
 .section {
@@ -243,11 +236,70 @@ $sidebar_width: 210px;
 .black {
   color: black; }
 
-.white {
-  color: white !important; }
-
 .grayed {
   color: silver !important; }
+
+// Default tag colors
+// Override these with your own stylesheets
+// TODO: Improve the dark vs light to be smarter/inherited
+// TODO: Refactor to a better structure
+$dark_strip_text: #111;
+$light_strip_text: #EEE;
+
+$bg_color1: #05668D;
+$bg_color2: #028090;
+$bg_color3: #00A896;
+$bg_color4: #02C39A;
+$bg_color5: #2A9D8F;
+$bg_color6: #B4A6AB;
+$bg_color7: #946E83;
+$bg_color8: #615055;
+$bg_color9: #FFDD4A;
+
+
+.task .call  { background: $bg_color1; color: $light_strip_text; }
+.task .email { background: $bg_color2; color: $light_strip_text; }
+.task .follow_up { background: $bg_color3; color: $light_strip_text; }
+.task .lunch { background: $bg_color4; color: $light_strip_text; }
+.task .meeting { background: $bg_color5; color: $light_strip_text; }
+.task .money { background: $bg_color6; color: $dark_strip_text; }
+.task .presentation { background: $bg_color7; color: $light_strip_text; }
+.task .trip  { background: $bg_color8; color: $light_strip_text; }
+.task .other { background: $bg_color9; color: $dark_strip_text; }
+
+.campaign .planned { background: $bg_color1; color: $light_strip_text; }
+.campaign .started { background: $bg_color9; color: $dark_strip_text; }
+.campaign .completed { background: $bg_color3; color: $light_strip_text; }
+.campaign .on_hold { background: $bg_color6; color: $dark_strip_text; }
+.campaign .called_off { background: $bg_color2; color: $light_strip_text; }
+
+.lead .new { background: $bg_color9; color: $dark_strip_text; }
+.lead .contacted { background: $bg_color3; color: $light_strip_text; }
+.lead .converted { background: $bg_color6; color: $dark_strip_text; }
+.lead .rejected { background: $bg_color1; color: $light_strip_text; }
+
+.account .affiliate { background: $bg_color1; color: $light_strip_text; }
+.account .competitor { background: $bg_color2; color: $light_strip_text; }
+.account .customer { background:$bg_color3; color: $light_strip_text; }
+.account .partner { background: $bg_color4; color: $light_strip_text; }
+.account .reseller { background: $bg_color6; color: $dark_strip_text; }
+.account .vendor { background: $bg_color9; color: $dark_strip_text; }
+
+.opportunity .prospecting { background: $bg_color1; color: $light_strip_text; }
+.opportunity .analysis { background: $bg_color2; color: $light_strip_text; }
+.opportunity .presentation { background:$bg_color3; color: $light_strip_text; }
+.opportunity .proposal { background: $bg_color4; color: $light_strip_text; }
+.opportunity .negotiation { background: $bg_color5; color: $light_strip_text; }
+.opportunity .final_review { background: $bg_color9; color: $dark_strip_text; }
+.opportunity .won { background: $bg_color7; color: $light_strip_text; }
+.opportunity .lost { background: $bg_color1; color: $light_strip_text; }
+
+.user .admin     { background: $bg_color1; color: $light_strip_text; }
+.user .suspended { background: $bg_color3; color: $light_strip_text; }
+.user .active    { background: $bg_color6; color: $dark_strip_text; }
+.user .signed_up { background: $bg_color9; color: $dark_strip_text; }
+
+
 
 .amount {
   background: palegreen;
@@ -275,12 +327,8 @@ $sidebar_width: 210px;
   padding: 1px 4px 1px 3px;
   text-align: right;
   width: 75px;
-  -moz-border-radius: {
-    topleft: 7px;
-    bottomleft: 7px; };
-  -webkit-border: {
-    top-left-radius: 7px;
-    bottom-left-radius: 7px; }; }
+  border-radius: 2px;
+}
 
 // Indentation classes:
 //   - indent: for use with strip (regular indentation).
@@ -408,27 +456,22 @@ $sidebar_width: 210px;
 .log {
   padding: 8px 0px 0px 0px;
   h3 {
-    border-bottom: 1px #2f2f2f dotted;
     color: #2f2f2f;
     margin: 0px 0px 4px 0px;
     padding: 2px 0px 2px 86px;
     &.overdue {
-      color: crimson;
-      border-bottom: 1px crimson dotted; }
+      color: crimson; }
     &.due_asap {
-      color: darkred;
-      border-bottom: 1px darkred dotted; }
+      color: darkred; }
     &.due_today {
-      color: darkgreen;
-      border-bottom: 1px darkgreen dotted; } }
+      color: darkgreen; } }
   li {
     color: #3f3f3f;
-    font-size: 12px;
     list-style: none;
     padding: 3px 0px 3px 0px;
     tt {
       color: dimgray;
-      font-size: 11px; } }
+      font-size: 0.9em; } }
   input[type=checkbox] {
     float: left;
     margin: 0px 4px 0px 0px; } }
@@ -438,9 +481,8 @@ $sidebar_width: 210px;
 .list {
   padding: 8px 0px 7px 0px;
   li {
-    border-bottom: 1px silver dotted;
+    border-bottom: 1px #eee dotted;
     color: #3f3f3f;
-    font-size: 12px;
     list-style: none;
     padding: 6px 0px 6px 0px;
     .gravatar {
@@ -448,13 +490,12 @@ $sidebar_width: 210px;
       padding: 0px 8px 0px 0px; }
     tt {
       color: dimgray;
-      font-size: 11px; }
+    }
     dt {
       color: #3f3f3f;
-      font-size: 11px;
       padding: 2px 0px 0px 0px; } } }
 
-// Sidebar, filters, and selectors.
+// Sidebar, filters
 //------------------------------------------------------------------------------
 .filters, .panel {
   background: snow;
@@ -462,14 +503,11 @@ $sidebar_width: 210px;
   padding: 6px 8px 6px 8px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -moz-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
-  -webkit-box-shadow: 2px 2px 8px #bbbbbb, -2px 0px 8px #bbbbbb;
 
   .caption {
-    border-bottom: 1px grey solid;
+    border-bottom: 1px #eee solid;
     color: navy;
     font: {
-      size: 12px;
       weight: bold; };
     margin: 4px 0px 5px 0px;
     padding: 2px 0px 2px 0px; }
@@ -487,41 +525,23 @@ $sidebar_width: 210px;
   div {
     margin: 0px 0px 10px 0px; }
   h4 {
-    font-size: 13px;
+    font-size: 1.1em;
     font-weight: bold; }
   li {
-    border-bottom: 1px silver dotted;
-    font-size: 12px;
     list-style: none;
     padding: 2px 0px 3px 0px;
     dt {
       float: right;
-      font-size: 11px;
       font-weight: bold; }
     tt {
-      font-size: 11px; }
+       }
     &.last {
       border-bottom: none; } }
   &#recently {
     background: floralwhite; }
   &#summary {
-    background: oldlace;
     p {
       margin: 4px 0px 4px 0px; } } }
-
-.selector {
-  color: black;
-  cursor: pointer;
-  font-size: 10px;
-  text-align: center; }
-
-.on {
-  background: lightgoldenrodyellow;
-  border: 1px silver inset; }
-
-.off {
-  background: lightgrey;
-  border: 1px silver outset; }
 
 .arrow {
   font-size: 9px;
@@ -691,7 +711,7 @@ ul.tools {
     border-right: 1px black solid;
     border-bottom: none;
     padding: 0 4px;
-    font-size: 10px;
+    font-size: 0.8em;
     float: left;
     clear: none; }
   li:last-child {
@@ -717,7 +737,7 @@ table.asset_attributes {
   width: 100%;
   border-spacing: 4px;
   td, th {
-    border-bottom: 1px dotted silver;
+    border-bottom: 1px dotted #eee;
     vertical-align: top;
     text-align: left;
   }

@@ -96,6 +96,7 @@ class CustomField < Field
     return :safe if SAFE_DB_TRANSITIONS[:any].any? do |col_set|
       [old_col, new_col].all? { |c| col_set.include?(c.to_s) } # any-to-any
     end
+
     :unsafe # Else, unsafe.
   end
 

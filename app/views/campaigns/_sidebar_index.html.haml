@@ -1,13 +1,13 @@
 .filters#filters
   .caption= t :campaign_statuses
   - Setting.campaign_status.each do |key|
-    .check_box{style: "border-bottom: 1px silver dotted;"}
+    .check_box
       %div{style: "float:right;"}
         = @campaign_status_total[key]
       = campaign_status_checkbox(key, @campaign_status_total[key])
       = label_tag(key, t(key))
 
-  .check_box{style: "border-bottom: 1px silver dotted;"}
+  .check_box
     %div{style: "float:right;"}
       = @campaign_status_total[:other]
     = campaign_status_checkbox("other", @campaign_status_total[:other])

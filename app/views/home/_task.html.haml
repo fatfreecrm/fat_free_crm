@@ -2,7 +2,7 @@
   - unless task.category.blank?
     .strip{class: task.category}= t(task.category)
   - else
-    .strip.white #{t :other}
+    .strip.other #{t :other}
   .indent
     %label{ id: dom_id(task, :name) }
       - if task.user.id != current_user.id

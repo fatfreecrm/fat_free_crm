@@ -34,15 +34,15 @@ class Task < ActiveRecord::Base
   ALLOWED_VIEWS = %w[pending assigned completed]
 
   belongs_to :user
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
-  belongs_to :completor, class_name: "User", foreign_key: :completed_by
-  belongs_to :asset, polymorphic: true
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
+  belongs_to :completor, class_name: "User", foreign_key: :completed_by, optional: true # TODO: Is this really optional?
+  belongs_to :asset, polymorphic: true, optional: true # TODO: Is this really optional?
 
   serialize :subscribed_users, Array
 
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
-  scope :my, ->(*args) {
+  scope :my, lambda { |*args|
     options = args[0] || {}
     user_option = (options.is_a?(Hash) ? options[:user] : options) || User.current_user
     includes(:assignee)
@@ -55,24 +55,24 @@ class Task < ActiveRecord::Base
   scope :assigned_to, ->(user) { where(assigned_to: user.id) }
 
   # Tasks assigned by the user to others. That's what we see on Tasks/Assigned.
-  scope :assigned_by, ->(user) {
+  scope :assigned_by, lambda { |user|
     includes(:assignee)
       .where('user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?', user.id, user.id)
   }
 
   # Tasks created by the user or assigned to the user, i.e. the union of the two
   # scopes above. That's the tasks the user is allowed to see and track.
-  scope :tracked_by, ->(user) {
+  scope :tracked_by, lambda { |user|
     includes(:assignee)
       .where('user_id = ? OR assigned_to = ?', user.id, user.id)
   }
 
   # Show tasks which either belong to the user and are unassigned, or are assigned to the user
-  scope :visible_on_dashboard, ->(user) {
+  scope :visible_on_dashboard, lambda { |user|
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where('completed_at IS NULL')
   }
 
-  scope :by_due_at, -> {
+  scope :by_due_at, lambda {
     order({
       "MySQL"      => "due_at NOT NULL, due_at ASC",
       "PostgreSQL" => "due_at ASC NULLS FIRST"
@@ -101,13 +101,13 @@ class Task < ActiveRecord::Base
   scope :completed_this_month, -> { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days) }
   scope :completed_last_month, -> { where('completed_at >= ? AND completed_at < ?', (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc) }
 
-  scope :text_search, ->(query) {
+  scope :text_search, lambda { |query|
     query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
     where('upper(name) LIKE upper(?)', "%#{query}%")
   }
 
   acts_as_commentable
-  has_paper_trail class_name: 'Version', meta: { related: :asset },
+  has_paper_trail versions: {class_name: 'Version'}, meta: { related: :asset },
                   ignore: [:subscribed_users]
   has_fields
   exportable
@@ -155,6 +155,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def computed_bucket
     return bucket if bucket != "specific_time"
+
     if overdue?
       "overdue"
     elsif due_today?
@@ -174,6 +175,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)
     return {} unless ALLOWED_VIEWS.include?(view)
+
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     Hash[
       settings.map do |key, _value|
@@ -186,6 +188,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.bucket_empty?(bucket, user, view = "pending")
     return false if bucket.blank? || !ALLOWED_VIEWS.include?(view)
+
     if view == "assigned"
       assigned_by(user).send(bucket).pending.count
     else
@@ -197,6 +200,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.totals(user, view = "pending")
     return {} unless ALLOWED_VIEWS.include?(view)
+
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     settings.each_with_object(HashWithIndifferentAccess[all: 0]) do |key, hash|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)

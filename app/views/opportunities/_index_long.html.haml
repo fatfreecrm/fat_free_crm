@@ -2,7 +2,7 @@
   - if opportunity.stage
     .strip{class: opportunity.stage}= t(opportunity.stage)
   - else
-    .strip.white #{t :other}
+    .strip.other #{t :other}
 
   %ul.tools
     - if can?(:update, opportunity)

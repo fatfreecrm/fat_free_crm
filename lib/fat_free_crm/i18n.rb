@@ -40,5 +40,5 @@ module FatFreeCRM
   end
 end
 
-ActionView::Base.send(:include, FatFreeCRM::I18n)
-ActionController::Base.send(:include, FatFreeCRM::I18n)
+ActionView::Base.include FatFreeCRM::I18n
+ActionController::Base.include FatFreeCRM::I18n

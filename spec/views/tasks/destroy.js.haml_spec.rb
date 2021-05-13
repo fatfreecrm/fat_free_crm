@@ -39,7 +39,6 @@ describe "/tasks/destroy" do
         expect(rendered).to include("$('#sidebar').html")
         expect(rendered).to have_text("Recent Items")
         expect(rendered).to have_text("Completed")
-        expect(rendered).to include("$('#filters').effect('shake'")
       end
     end
   end

@@ -11,9 +11,7 @@ class OpportunityObserver < ActiveRecord::Observer
   @@opportunities = {}
 
   def after_create(item)
-    if item.campaign && item.stage == "won"
-      update_campaign_revenue(item.campaign, item.amount.to_f - item.discount.to_f)
-    end
+    update_campaign_revenue(item.campaign, item.amount.to_f - item.discount.to_f) if item.campaign && item.stage == "won"
   end
 
   def before_update(item)
@@ -26,7 +24,7 @@ class OpportunityObserver < ActiveRecord::Observer
       if original.stage != "won" && item.stage == "won" # :other to :won -- add to total campaign revenue.
         update_campaign_revenue(item.campaign, item.amount.to_f - item.discount.to_f)
         item.update_attribute(:probability, 100) # Set probability to 100% if won
-        return log_activity(item, :won)
+        log_activity(item, :won)
       elsif original.stage == "won" && item.stage != "won" # :won to :other -- substract from total campaign revenue.
         update_campaign_revenue(original.campaign, -(original.amount.to_f - original.discount.to_f))
       elsif original.stage != "lost" && item.stage == "lost"
@@ -38,7 +36,7 @@ class OpportunityObserver < ActiveRecord::Observer
   private
 
   def log_activity(item, event)
-    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.whodunnit)
+    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.request.whodunnit)
   end
 
   def update_campaign_revenue(campaign, revenue)

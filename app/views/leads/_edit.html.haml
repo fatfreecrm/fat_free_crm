@@ -16,8 +16,8 @@
 
     .buttonbar
       - if Setting.compound_address
-        = f.submit t(:save_lead), onclick: "crm.clear_all_hints()"
+        = f.submit t(:save_lead), onclick: "crm.clear_all_hints()", class: 'btn btn-primary'
       - else
-        = f.submit t(:save_lead)
+        = f.submit t(:save_lead), class: 'btn btn-primary'
       #{t :or}
       = link_to_cancel edit_lead_path(@lead)

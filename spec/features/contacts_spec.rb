@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path("../acceptance_helper.rb", __FILE__)
+require File.expand_path('acceptance_helper.rb', __dir__)
 
 feature 'Contacts', '
   In order to increase customer satisfaction
@@ -77,7 +77,8 @@ feature 'Contacts', '
       fill_in 'contact_last_name', with: 'Subject'
       fill_in 'contact_email', with: "test.subject@example.com"
       click_button 'Save Contact'
-      expect(summary_element).to have_content('Test Subject')
+      sleep(3) # TODO A better ajax wait, or redirect on save
+      expect(find('#edit_contact_title')).to have_content('Test Subject')
 
       click_link 'Dashboard'
       expect(activities_element).to have_content("Bill Murray updated contact Test Subject")
@@ -113,10 +114,6 @@ feature 'Contacts', '
 
   def main_element
     find('#main')
-  end
-
-  def summary_element
-    find('#summary')
   end
 
   def menu_element

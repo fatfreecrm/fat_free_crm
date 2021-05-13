@@ -14,11 +14,11 @@ module FatFreeCRM
     #----------------------------------------------------------------------------
     class << self
       def main
-        @@main ||= (Setting[:tabs] && Setting[:tabs].dup)
+        @@main ||= Setting[:tabs]&.dup
       end
 
       def admin
-        @@admin ||= (Setting[:admin_tabs] && Setting[:admin_tabs].dup)
+        @@admin ||= Setting[:admin_tabs]&.dup
       end
     end
   end

@@ -1,40 +1,29 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.4.7
-  - 2.5.6
-  - 2.6.4
+  - 2.6.5
+  - 2.7.1
+
+dist: bionic
 
 env:
   global:
     - BROWSER=chrome
   matrix:
-    - DB=postgres TEST_SUITE=rubocop
     - DB=postgres TEST_SUITE="rake spec:features"
     - DB=postgres TEST_SUITE="rake spec:models"
-    - DB=postgres TEST_SUITE="rake spec:controllers spec:lib spec:routing spec:mailers"
-    - DB=postgres TEST_SUITE="rake spec:views spec:helpers"
     - DB=mysql TEST_SUITE="rake spec:models"
-    - DB=sqlite TEST_SUITE="rake spec:models"
 
 matrix:
   fast_finish: true
-  exclude:
-    - rvm: 2.5.6
-      env: DB=postgres TEST_SUITE=rubocop
-    - rvm: 2.6.4
-      env: DB=postgres TEST_SUITE=rubocop
   allow_failures:
-    - rvm: 2.4.7
+    - rvm: 2.6.5
+      env: DB=postgres TEST_SUITE="rake spec:features"
+    - rvm: 2.7.1
+      env: DB=postgres TEST_SUITE="rake spec:features"
+    - rvm: 2.7.1
       env: DB=mysql TEST_SUITE="rake spec:models"
-    - rvm: 2.4.7
-      env: DB=sqlite TEST_SUITE="rake spec:models"
-    - rvm: 2.5.6
-      env: DB=mysql TEST_SUITE="rake spec:models"
-    - rvm: 2.5.6
-      env: DB=sqlite TEST_SUITE="rake spec:models"
-    - rvm: 2.6.4
-      env: DB=sqlite TEST_SUITE="rake spec:models"
+
 
 addons:
   chrome: stable
@@ -46,6 +35,7 @@ cache: bundler
 before_script:
   # gem update --system is a workaround for travis-ci/travis-ci#8978
   - "gem update --system"
+  - 'gem install bundler -v 1.17.3'
   - sh -c "cp config/database.$DB.yml config/database.yml"
   - sh -c "if [ \"$DB\" = 'postgres' ]; then psql -c 'create database fat_free_crm_test;' -U postgres; fi"
   - sh -c "if [ \"$DB\" = 'mysql' ]; then mysql -e 'create database fat_free_crm_test;'; fi"

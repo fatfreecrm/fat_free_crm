@@ -27,7 +27,6 @@ describe "/opportunities/destroy" do
 
     expect(rendered).to include("#sidebar")
     expect(rendered).to have_text("Recent Items")
-    expect(rendered).to include("$('#filters').effect('shake'")
   end
 
   it "should update pagination when called from opportunities index" do
@@ -44,7 +43,6 @@ describe "/opportunities/destroy" do
     render
 
     expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Account Summary")
     expect(rendered).to have_text("Recent Items")
   end
 
@@ -54,7 +52,6 @@ describe "/opportunities/destroy" do
     render
 
     expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Campaign Summary")
     expect(rendered).to have_text("Recent Items")
   end
 

@@ -10,7 +10,7 @@ require 'spec_helper'
 describe EntityObserver do
   before do
     allow(Setting).to receive(:host).and_return('http://www.example.com')
-    allow(PaperTrail).to receive(:whodunnit).and_return(assigner)
+    allow(PaperTrail.request).to receive(:whodunnit).and_return(assigner)
   end
 
   %i[account contact lead opportunity].each do |entity_type|

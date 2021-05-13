@@ -58,7 +58,6 @@ describe "/opportunities/create" do
       render
 
       expect(rendered).to include("#sidebar")
-      expect(rendered).to have_text("Campaign Summary")
       expect(rendered).to have_text("Recent Items")
     end
 
@@ -81,7 +80,6 @@ describe "/opportunities/create" do
       render
 
       expect(rendered).to include("$('#create_opportunity').html")
-      expect(rendered).to include(%/$('#create_opportunity').effect("shake"/)
       expect(rendered).to include("crm.create_or_select_account(false)")
     end
   end

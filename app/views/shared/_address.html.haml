@@ -26,19 +26,19 @@
               .label #{t title}:
           - else
             .label #{t title}:
-          = address_field(a, address, :street1, "width:240px; margin-top:3px")
-          = address_field(a, address, :street2, "width:240px;")
+          = address_field(a, :street1, "width:240px; margin-top:3px")
+          = address_field(a, :street2, "width:240px;")
     %table.address(cellpadding="0" cellspacing="0")
       %tr
         %td
-          = address_field(a, address, :city, "width:165px;")
+          = address_field(a, :city, "width:165px;")
         %td= spacer
         %td
-          = address_field(a, address, :state, "width:60px;")
+          = address_field(a, :state, "width:60px;")
     %table.address(cellpadding="0" cellspacing="0")
       %tr
         %td
-          = address_field(a, address, :zipcode, "width:80px;")
+          = address_field(a, :zipcode, "width:80px;")
         %td= spacer
         %td
           = a.country_select(:country, priority_countries, { include_blank: "" }, {:"data-placeholder" => t(:select_a_country), style: "width:150px; margin-top:6px", class: 'select2'})

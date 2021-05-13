@@ -4,7 +4,24 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased (0.19.0)
+Unreleased
+======
+#905 Swap from Marshal.load. Be sure to run `bundle exec rake ffcrm:preference_update` to migrate your users from old to new format
+
+settings.yml - Background, foreground colors for tasks, accounts, opportunities, and more - these are now defined in CSS by default 
+
+Refactoring to Bootstrap for forms, buttons, layouts.
+
+Wed May 09, 2021 (0.19.2)
+======
+CVE-2021-22885
+
+Wed Apr 04, 2021 (0.19.1)
+======
+
+Minor gem updates
+
+Wed Apr 04, 2021 (0.19.0)
 ======
 
 ### Important changes
@@ -32,6 +49,20 @@ Mailers related to user password reset, etc. are changed to use the defaults of 
 #### PaperClip version updated from 5.2.1 to 6.0.0
 PaperClip now only depends on `aws-sdk-s3` instead of `aws-sdk`. For more info see https://github.com/thoughtbot/paperclip/pull/2481.
 Replace the Cocaine gem with Terrapin. https://github.com/thoughtbot/terrapin/ Apart from the namespace change, this is a drop in replacement.
+
+#### Rails 5.2
+The underlying framework is now rails 5.2.*
+
+#### Ruby 2.4 deprecated
+Ruby 2.4 has reached end of life and is no longer activity tested against.
+
+#### Other changes
+ * #794 Fix defect with unpermitted params in advanced search
+ * 2bc6184779a26070496e6f4caefa0cc9ba555d7b Remove broken support for delete links on arrays.
+ * #851 upgrade paper_trail
+ * Security fixes CVE-2019-16109, CVE-2019-16676, CVE-2019-5477, CVE-2019-16892
+ * Dependency updates
+ * Simple Form upgrades to use HTML5 and browser validations by default
 
 
 Sat Apr 21, 2018 (0.18.0)

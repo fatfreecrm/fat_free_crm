@@ -21,7 +21,7 @@ describe "/campaigns/create" do
     end
 
     it "should hide [Create Campaign] form and insert campaign partial" do
-      expect(rendered).to include("$('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+      expect(rendered).to include("$('#campaigns').prepend('<li class=\\'highlight campaign\\' id=\\'campaign_#{@campaign.id}\\'")
       expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
     end
 
@@ -44,7 +44,6 @@ describe "/campaigns/create" do
       render
 
       expect(rendered).to include("$('#create_campaign').html")
-      expect(rendered).to include(%/$('#create_campaign').effect("shake"/)
     end
   end
 end

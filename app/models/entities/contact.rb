@@ -40,9 +40,9 @@
 
 class Contact < ActiveRecord::Base
   belongs_to :user
-  belongs_to :lead
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
-  belongs_to :reporting_user, class_name: "User", foreign_key: :reports_to
+  belongs_to :lead, optional: true # TODO: Is this really optional?
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
+  belongs_to :reporting_user, class_name: "User", foreign_key: :reports_to, optional: true # TODO: Is this really optional?
   has_one :account_contact, dependent: :destroy
   has_one :account, through: :account_contact
   has_many :contact_opportunities, dependent: :destroy
@@ -64,7 +64,7 @@ class Contact < ActiveRecord::Base
   scope :created_by,  ->(user) { where(user_id: user.id) }
   scope :assigned_to, ->(user) { where(assigned_to: user.id) }
 
-  scope :text_search, ->(query) {
+  scope :text_search, lambda { |query|
     t = Contact.arel_table
     # We can't always be sure that names are entered in the right order, so we must
     # split the query into all possible first/last name permutations.
@@ -88,7 +88,7 @@ class Contact < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail class_name: 'Version', ignore: [:subscribed_users]
+  has_paper_trail versions: {class_name: 'Version'}, ignore: [:subscribed_users]
 
   has_fields
   exportable
@@ -155,9 +155,7 @@ class Contact < ActiveRecord::Base
   # Attach given attachment to the contact if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      send(attachment.class.name.tableize) << attachment
-    end
+    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the contact.
@@ -188,9 +186,7 @@ class Contact < ActiveRecord::Base
     # Set custom fields.
     if model.class.respond_to?(:fields)
       model.class.fields.each do |field|
-        if contact.respond_to?(field.name)
-          contact.send "#{field.name}=", model.send(field.name)
-        end
+        contact.send "#{field.name}=", model.send(field.name) if contact.respond_to?(field.name)
       end
     end
 

@@ -72,20 +72,13 @@ $color_footer: grey;
 
 .tabs {
   background: $color_header_background;
-  height: $size_tab_height;
   padding: 0px;
-  text-align: center;
-  width: 100%;
   i.fa { 
     font-size: 130%; 
     vertical-align:text-top; }
   ul {
-    // :margin 0px 25%,  18% for 5th tab
     margin-left: 15px; }
   li {
-    float: left;
-    font-size: 12px;
-    line-height: 16px;
     list-style: none;
     margin: 0px 4px 0px 1px; }
   a:link, a:visited {
@@ -96,7 +89,6 @@ $color_footer: grey;
       margin-right: 7px; }
     background: $color_tab_background;
     color: white;
-    float: left;
     padding: 4px 15px 6px;
     text-align: center;
     text-decoration: none;

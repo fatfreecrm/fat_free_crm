@@ -18,6 +18,7 @@ class ActivitiesToVersions < ActiveRecord::Migration[4.2]
     activities.each do |activity|
       # commented and email activities don't translate well so ignore them
       next unless event = events[activity['action']]
+
       attributes = {
         item_id: activity['subject_id'],
         item_type: activity['subject_type'],
