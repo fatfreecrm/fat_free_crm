@@ -31,9 +31,9 @@ FactoryBot.define do
     deleted_at          { nil }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
-    suspended_at nil
-    password "password"
-    password_confirmation "password"
+    suspended_at        { nil }
+    password            { "password" }
+    password_confirmation { "password" }
 
     # For unit tests, we dont need to enforce uniqueness
     to_create { |instance| instance.save(validate: false) }
