@@ -52,7 +52,7 @@ describe EntityObserver do
 
       it "notifies the new owner if the entity is re-assigned" do
         expect(UserMailer).to receive(:assigned_entity_notification).with(entity, assigner).and_return(mail)
-        entity.update_attributes(assignee: assignee)
+        entity.update(assignee: assignee)
       end
 
       it "does not notify the owner if the entity is not re-assigned" do
@@ -62,12 +62,12 @@ describe EntityObserver do
 
       it "does not notify anyone if the entity becomes unassigned" do
         expect(UserMailer).not_to receive(:assigned_entity_notification)
-        entity.update_attributes(assignee: nil)
+        entity.update(assignee: nil)
       end
 
       it "does not notify me if I re-assign an entity to myself" do
         expect(UserMailer).not_to receive(:assigned_entity_notification)
-        entity.update_attributes(assignee: assigner)
+        entity.update(assignee: assigner)
       end
     end
   end

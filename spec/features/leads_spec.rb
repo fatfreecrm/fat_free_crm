@@ -84,7 +84,7 @@ feature 'Leads', '
       click_link('Status')
       select2 'Rejected', from: 'Status:'
       click_button 'Save Lead'
-      sleep(3) # TODO A better AJAX observing call, or just a redirect on save.
+      sleep(3) # TODO: A better AJAX observing call, or just a redirect on save.
       expect(find('#title')).to have_content('Mrs Lead')
 
       click_link "Dashboard"

@@ -19,7 +19,7 @@ describe "/home/index" do
     assign(:my_tasks, [])
     assign(:my_opportunities, [])
     assign(:my_accounts, [])
-    render
+    render template: 'home/index', formats: [:html]
     expect(view).to render_template(partial: "_activity")
   end
 
@@ -28,7 +28,7 @@ describe "/home/index" do
     assign(:my_tasks, [])
     assign(:my_opportunities, [])
     assign(:my_accounts, [])
-    render
+    render template: 'home/index', formats: [:html]
     expect(view).not_to render_template(partial: "_activity")
 
     expect(rendered).to include("No activity records found.")

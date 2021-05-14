@@ -133,18 +133,18 @@ describe CommentsController do
   #   describe "with valid params" do
   #     it "should update the requested comment" do
   #       Comment.should_receive(:find).with("37").and_return(mock_comment)
-  #       mock_comment.should_receive(:update_attributes).with({'these' => 'params'})
+  #       mock_comment.should_receive(:update).with({'these' => 'params'})
   #       put :update, :id => "37", :comment => {:these => 'params'}
   #     end
   #
   #     it "should expose the requested comment as @comment" do
-  #       Comment.stub(:find).and_return(mock_comment(:update_attributes => true))
+  #       Comment.stub(:find).and_return(mock_comment(:update => true))
   #       put :update, :id => "1"
   #       assigns(:comment).should equal(mock_comment)
   #     end
   #
   #     it "should redirect to the comment" do
-  #       Comment.stub(:find).and_return(mock_comment(:update_attributes => true))
+  #       Comment.stub(:find).and_return(mock_comment(:update => true))
   #       put :update, :id => "1"
   #       response.should redirect_to(comment_path(mock_comment))
   #     end
@@ -153,18 +153,18 @@ describe CommentsController do
   #   describe "with invalid params" do
   #     it "should update the requested comment" do
   #       Comment.should_receive(:find).with("37").and_return(mock_comment)
-  #       mock_comment.should_receive(:update_attributes).with({'these' => 'params'})
+  #       mock_comment.should_receive(:update).with({'these' => 'params'})
   #       put :update, :id => "37", :comment => {:these => 'params'}
   #     end
   #
   #     it "should expose the comment as @comment" do
-  #       Comment.stub(:find).and_return(mock_comment(:update_attributes => false))
+  #       Comment.stub(:find).and_return(mock_comment(:update => false))
   #       put :update, :id => "1"
   #       assigns(:comment).should equal(mock_comment)
   #     end
   #
   #     it "should re-render the 'edit' template" do
-  #       Comment.stub(:find).and_return(mock_comment(:update_attributes => false))
+  #       Comment.stub(:find).and_return(mock_comment(:update => false))
   #       put :update, :id => "1"
   #       response.should render_template('edit')
   #     end

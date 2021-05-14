@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   has_many :lists
   has_and_belongs_to_many :groups
 
-  has_paper_trail versions: {class_name: 'Version'}, ignore: [:last_sign_in_at]
+  has_paper_trail versions: { class_name: 'Version' }, ignore: [:last_sign_in_at]
 
   scope :by_id, -> { order('id DESC') }
   # TODO: /home/clockwerx/.rbenv/versions/2.5.3/lib/ruby/gems/2.5.0/gems/activerecord-5.2.3/lib/active_record/scoping/named.rb:175:in `scope': You tried to define a scope named "without" on the model "User", but ActiveRecord::Relation already defined an instance method with the same name. (ArgumentError)

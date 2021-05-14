@@ -63,7 +63,7 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @comment = Comment.find(params[:id])
-    @comment.update_attributes(comment_params)
+    @comment.update(comment_params)
     respond_with(@comment)
   end
 

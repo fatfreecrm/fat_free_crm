@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   # PUT /users/1.js
   #----------------------------------------------------------------------------
   def update
-    @user.update_attributes(user_params)
+    @user.update(user_params)
     flash[:notice] = t(:msg_user_updated)
     respond_with(@user)
   end
