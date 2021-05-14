@@ -77,7 +77,7 @@ feature 'Contacts', '
       fill_in 'contact_last_name', with: 'Subject'
       fill_in 'contact_email', with: "test.subject@example.com"
       click_button 'Save Contact'
-      sleep(3) # TODO A better ajax wait, or redirect on save
+      sleep(3) # TODO: A better ajax wait, or redirect on save
       expect(find('#edit_contact_title')).to have_content('Test Subject')
 
       click_link 'Dashboard'

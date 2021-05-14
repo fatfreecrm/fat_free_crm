@@ -60,6 +60,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # To deal with pre rails 6 users, reset the session and ask them to relogin
+  rescue_from ArgumentError do |exception|
+    if request.format.html? && exception.message == "invalid base64"
+      request.reset_session
+      redirect_to login_path
+    else
+      raise(exception)
+    end
+  end
+
   private
 
   #
