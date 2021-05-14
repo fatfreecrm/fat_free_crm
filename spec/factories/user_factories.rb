@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 FactoryBot.define do
   factory :user do
-    username            { FFaker::Internet.user_name }
+    username            { FFaker::InternetSE.user_name_variant_short }
     email               { FFaker::Internet.email }
     first_name          { FFaker::Name.first_name }
     last_name           { FFaker::Name.last_name }
