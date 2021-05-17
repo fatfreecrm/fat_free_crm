@@ -26,13 +26,13 @@
   .caption #{t :account_summary}
   %dl
     %li
-      %dt= pipeline != 0.0 ? number_to_currency(pipeline, precision: 0) : t(:n_a)
+      %dt= display_value(pipeline)
       %tt #{t :pipeline}:
     %li
-      %dt= won != 0.0 ? number_to_currency(won, precision: 0) : t(:n_a)
+      %dt= display_value(won)
       %tt #{t :won}:
     %li
-      %dt= lost != 0.0 ? number_to_currency(lost, precision: 0) : t(:n_a)
+      %dt= display_value(lost)
       %tt #{t :lost}:
     %li
       %dt= @account.category ? t(@account.category) : t(:other)
@@ -41,7 +41,7 @@
       %span{style: "float:right;"}= stars_for(@account)
       %tt #{t :rating}:
     %li
-      %dt= @account.assigned_to ? truncate(@account.assignee.full_name, length: 16) : nil
+      %dt= display_assigned(@account)
       %tt #{t :assigned_to}:
 
   - unless @account.background_info.blank?
