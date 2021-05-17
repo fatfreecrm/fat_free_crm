@@ -26,13 +26,13 @@
   .caption #{t :account_summary}
   %dl
     %li
-      %dt= display_pipeline(pipeline)
+      %dt= display_value(pipeline)
       %tt #{t :pipeline}:
     %li
-      %dt= display_won(won)
+      %dt= display_value(won)
       %tt #{t :won}:
     %li
-      %dt= display_lost(lost)
+      %dt= display_value(lost)
       %tt #{t :lost}:
     %li
       %dt= @account.category ? t(@account.category) : t(:other)

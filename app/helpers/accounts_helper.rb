@@ -105,22 +105,12 @@ module AccountsHelper
     text.html_safe
   end
 
-  # We have too much login in the account views
+  # We have too much logic in the account views
   # - a helper that abstracts the logic to the backend
-  def display_pipeline(pipeline)
-    return "N/A" if pipeline.zero?
-    number_to_currency(pipeline, precision: 0)
+  def display_value(value)
+    return "N/A" if value.zero?
+    number_to_currency(value, precision: 0)
   end
-
-  def display_won(won)
-    return "N/A" if won.zero?
-    number_to_currency(won, precision: 0)
-  end 
-
-  def display_lost(lost)
-    return "N/A" if lost.zero?
-    number_to_currency(lost, precision: 0)
-  end  
 
   def display_assigned(account)
     return truncate(account.assignee.full_name, length: 16) if account.assigned_to
