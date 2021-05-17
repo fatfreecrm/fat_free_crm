@@ -66,7 +66,7 @@ describe AccountsHelper do
         allow(@account).to receive(:assignee).and_return(assignee)
         allow(assignee).to receive(:full_name).and_return('Richard Milhouse Nixon')
         allow(@account).to receive(:assigned_to).and_return(1)
-        expect(display_assigned(@account)).to eq('Richard Milhouse')
+        expect(display_assigned(@account)).to eq('Richard Milho...')
       end
     end
   end
