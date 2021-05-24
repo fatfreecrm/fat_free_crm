@@ -50,4 +50,4 @@ jobs:
         run: DB=sqlite RAILS_ENV=test bundle exec rake spec:preparedb
 
       - name: Run RSpec on features
-        run: DB=sqlite bundle exec rspec spec/features
+        run: BROWSER=chrome DB=sqlite bundle exec rspec spec/features
