@@ -6,6 +6,14 @@ GIT
     responds_to_parent (2.0.0)
       actionpack (>= 3.2.22, < 6.1)
 
+GIT
+  remote: https://github.com/fatfreecrm/acts_as_commentable.git
+  revision: eb811316ffbfc66612060822a505d64676564f57
+  branch: rails-6
+  specs:
+    acts_as_commentable (6.0.0)
+      activerecord (~> 6.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -70,7 +78,6 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     acts-as-taggable-on (7.0.0)
       activerecord (>= 5.0, < 6.2)
-    acts_as_commentable (4.0.2)
     acts_as_list (1.0.4)
       activerecord (>= 4.2)
     addressable (2.7.0)
@@ -445,7 +452,7 @@ DEPENDENCIES
   activejob
   activemodel-serializers-xml
   acts-as-taggable-on (>= 3.4.3)
-  acts_as_commentable
+  acts_as_commentable!
   acts_as_list
   bootsnap
   bootstrap (= 5.0.0)
