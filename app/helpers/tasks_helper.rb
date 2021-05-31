@@ -11,7 +11,7 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def task_filter_checkbox(view, filter, count)
     name = "filter_by_task_#{view}"
-    checked = (session[name] ? session[name].split(",").include?(filter.to_s) : count > 0)
+    checked = (session[name] ? session[name].split(",").include?(filter.to_s) : count.positive?)
     url = url_for(action: :filter, view: view)
     onclick = %{
       $('#loading').show();
@@ -128,7 +128,7 @@ module TasksHelper
     else
       text << replace_content(@task, @task.bucket)
     end
-    text << refresh_sidebar(:index, :filters)
+    text << refresh_sidebar(:index)
     text
   end
 
@@ -136,7 +136,7 @@ module TasksHelper
   def reschedule(task)
     text = hide_task_and_possibly_bucket(task, @task_before_update.bucket)
     text += insert_content(task, task.bucket, @view)
-    text += refresh_sidebar(:index, :filters)
+    text += refresh_sidebar(:index)
     text
   end
 end

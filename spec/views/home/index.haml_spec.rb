@@ -15,11 +15,11 @@ describe "/home/index" do
   end
 
   it "should render list of activities if it's not empty" do
-    assign(:activities, [FactoryGirl.build_stubbed(:version, event: "update", item: FactoryGirl.build_stubbed(:account))])
+    assign(:activities, [build_stubbed(:version, event: "update", item: build_stubbed(:account))])
     assign(:my_tasks, [])
     assign(:my_opportunities, [])
     assign(:my_accounts, [])
-    render
+    render template: 'home/index', formats: [:html]
     expect(view).to render_template(partial: "_activity")
   end
 
@@ -28,7 +28,7 @@ describe "/home/index" do
     assign(:my_tasks, [])
     assign(:my_opportunities, [])
     assign(:my_accounts, [])
-    render
+    render template: 'home/index', formats: [:html]
     expect(view).not_to render_template(partial: "_activity")
 
     expect(rendered).to include("No activity records found.")

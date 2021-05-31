@@ -2,7 +2,7 @@
   - unless completed.category.blank?
     .strip{class: completed.category}= t(completed.category)
   - else
-    .strip.white #{t :other}
+    .strip.other #{t :other}
 
   .tools
     - if shown_on_landing_page?

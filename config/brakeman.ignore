@@ -47,13 +47,13 @@
       "file": "app/views/admin/users/_user.html.haml",
       "line": 44,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "t(:last_logged_in, timeago((Unresolved Model).new.current_login_at))",
+      "code": "t(:last_logged_in, timeago((Unresolved Model).new.current_sign_in_at))",
       "render_path": [{"type":"template","name":"admin/users/index","line":11,"file":"app/views/admin/users/index.html.haml"}],
       "location": {
         "type": "template",
         "template": "admin/users/_user"
       },
-      "user_input": "(Unresolved Model).new.current_login_at",
+      "user_input": "(Unresolved Model).new.current_sign_in_at",
       "confidence": "Weak",
       "note": ""
     },

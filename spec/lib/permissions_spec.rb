@@ -8,11 +8,16 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FatFreeCRM::Permissions do
-  before :each do
-    build_model(:user_with_permission) do
-      uses_user_permissions
-      string :access
+  before do
+    ActiveRecord::Base.connection.create_table(:user_with_permissions) do |t|
+      t.string :access
     end
+    class UserWithPermission < ActiveRecord::Base
+      uses_user_permissions
+    end
+  end
+  after do
+    ActiveRecord::Base.connection.drop_table(:user_with_permissions)
   end
 
   describe "initialization" do
@@ -44,8 +49,8 @@ describe FatFreeCRM::Permissions do
     end
 
     it "should replace existing permissions" do
-      @entity.permissions << FactoryGirl.create(:permission, user_id: 1, asset: @entity)
-      @entity.permissions << FactoryGirl.create(:permission, user_id: 2, asset: @entity)
+      @entity.permissions << create(:permission, user_id: 1, asset: @entity)
+      @entity.permissions << create(:permission, user_id: 2, asset: @entity)
       @entity.user_ids = %w[2 3]
       @entity.save!
       expect(@entity.permissions.size).to eq(2)
@@ -73,8 +78,8 @@ describe FatFreeCRM::Permissions do
     end
 
     it "should replace existing permissions" do
-      @entity.permissions << FactoryGirl.build(:permission, group_id: 1, user_id: nil, asset: @entity)
-      @entity.permissions << FactoryGirl.build(:permission, group_id: 2, user_id: nil, asset: @entity)
+      @entity.permissions << build(:permission, group_id: 1, user_id: nil, asset: @entity)
+      @entity.permissions << build(:permission, group_id: 2, user_id: nil, asset: @entity)
       expect(@entity.permissions.size).to eq(2)
       @entity.group_ids = ['3']
       @entity.save!
@@ -89,42 +94,24 @@ describe FatFreeCRM::Permissions do
       @entity = UserWithPermission.create
     end
     it "should delete all permissions if access is set to Public" do
-      perm = FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      perm = create(:permission, user_id: 1, asset: @entity)
       expect(perm).to receive(:destroy)
       expect(Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
       @entity.update_attribute(:access, 'Public')
     end
     it "should delete all permissions if access is set to Private" do
-      perm = FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      perm = create(:permission, user_id: 1, asset: @entity)
       expect(perm).to receive(:destroy)
       expect(Permission).to receive(:where).with(asset_id: @entity.id, asset_type: @entity.class.to_s).and_return([perm])
       @entity.update_attribute(:access, 'Private')
     end
     it "should not remove permissions if access is set to Shared" do
-      perm = FactoryGirl.create(:permission, user_id: 1, asset: @entity)
+      perm = create(:permission, user_id: 1, asset: @entity)
       expect(perm).not_to receive(:destroy)
       @entity.permissions << perm
       expect(Permission).not_to receive(:find_all_by_asset_id)
       @entity.update_attribute(:access, 'Shared')
       expect(@entity.permissions.size).to eq(1)
-    end
-  end
-
-  describe "save_with_permissions" do
-    it "should raise deprecation warning and call save" do
-      entity = UserWithPermission.new
-      expect(ActiveSupport::Deprecation).to receive(:warn)
-      expect(entity).to receive(:save)
-      entity.save_with_permissions
-    end
-  end
-
-  describe "update_with_permissions" do
-    it "should raise deprecation warning and call update_attributes" do
-      entity = UserWithPermission.new
-      expect(ActiveSupport::Deprecation).to receive(:warn)
-      expect(entity).to receive(:update_attributes).with({})
-      entity.update_with_permissions({})
     end
   end
 

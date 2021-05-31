@@ -15,7 +15,7 @@ describe "/accounts/index" do
   end
 
   it "should render [account] template with @accounts collection if there are accounts" do
-    assign(:accounts, [FactoryGirl.build_stubbed(:account, id: 42)].paginate)
+    assign(:accounts, [build_stubbed(:account, id: 42)].paginate)
 
     render template: 'accounts/index', formats: [:js]
 

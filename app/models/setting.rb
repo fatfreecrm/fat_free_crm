@@ -26,6 +26,7 @@
 # `config/settings.default.yml`, and settings in the database table have the highest priority.
 
 class Setting < ActiveRecord::Base
+  validates :name, presence: true, allow_blank: false
   serialize :value
 
   # Use class variables for cache and yaml settings.
@@ -55,6 +56,7 @@ class Setting < ActiveRecord::Base
     def [](name)
       # Return value if cached
       return cache[name] if cache.key?(name)
+
       # Check database
       if database_and_table_exists?
         if setting = find_by_name(name.to_s)
@@ -68,8 +70,10 @@ class Setting < ActiveRecord::Base
     # Set setting value
     #-------------------------------------------------------------------
     def []=(name, value)
+      raise ArgumentError, "name cannot be blank" if name.blank?
+
       return nil unless database_and_table_exists?
-      setting = find_by_name(name.to_s) || new(name: name)
+      setting = find_by_name(name.to_s) || new(name: name.to_s)
       setting.value = value
       setting.save
       cache[name] = value

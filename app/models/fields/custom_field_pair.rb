@@ -28,9 +28,9 @@ class CustomFieldPair < CustomField
     pair = params.delete('pair')
     base_params = fields.delete_if { |k, _v| !%w[field_group_id label as].include?(k) }
     field1 = CustomFieldPair.find(params['id'])
-    field1.update_attributes(base_params.merge(pair['0']))
+    field1.update(base_params.merge(pair['0']))
     field2 = field1.paired_with
-    field2.update_attributes(base_params.merge(pair['1']).merge('required' => field1.required, 'disabled' => field1.disabled))
+    field2.update(base_params.merge(pair['1']).merge('required' => field1.required, 'disabled' => field1.disabled))
     [field1, field2]
   end
 

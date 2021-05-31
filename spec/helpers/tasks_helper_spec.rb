@@ -10,7 +10,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe TasksHelper do
   describe "responding with generated links" do
     before do
-      @task = FactoryGirl.create(:task)
+      @task = create(:task)
     end
 
     it "should render link to uncomplete of a task" do

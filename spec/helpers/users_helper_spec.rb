@@ -8,9 +8,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersHelper do
-  let(:myself) { FactoryGirl.create(:user, id: 54) }
-  let(:user1) { FactoryGirl.create(:user,  id: 60, first_name: 'Bob', last_name: "Hope") }
-  let(:user2) { FactoryGirl.create(:user,  id: 75, first_name: 'Billy', last_name: "Joel") }
+  let(:myself) { create(:user, id: 54) }
+  let(:user1) { create(:user,  id: 60, first_name: 'Bob', last_name: "Hope") }
+  let(:user2) { create(:user,  id: 75, first_name: 'Billy', last_name: "Joel") }
 
   describe "user_options_for_select" do
     it "includes 'myself'" do
@@ -24,16 +24,16 @@ describe UsersHelper do
 
   describe "user_select" do
     it "includes blank option" do
-      expect(user_select(:lead, [user1, user2], myself)).to match(/<option value="">Unassigned<\/option>/)
+      expect(user_select(:lead, [user1, user2], myself)).to match(%r{<option value="">Unassigned</option>})
     end
 
     it "includes myself" do
-      expect(user_select(:lead, [user1, user2], myself)).to match(/<option value="54">Myself<\/option>/)
+      expect(user_select(:lead, [user1, user2], myself)).to match(%r{<option value="54">Myself</option>})
     end
 
     it "includes other users" do
-      expect(user_select(:lead, [user1, user2], myself)).to match(/<option value="60">Bob Hope<\/option>/)
-      expect(user_select(:lead, [user1, user2], myself)).to match(/<option value="75">Billy Joel<\/option>/)
+      expect(user_select(:lead, [user1, user2], myself)).to match(%r{<option value="60">Bob Hope</option>})
+      expect(user_select(:lead, [user1, user2], myself)).to match(%r{<option value="75">Billy Joel</option>})
     end
   end
 end

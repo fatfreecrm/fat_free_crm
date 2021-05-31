@@ -21,7 +21,7 @@ class AccountContact < ActiveRecord::Base
   belongs_to :account, counter_cache: :contacts_count
   belongs_to :contact
 
-  has_paper_trail class_name: 'Version', meta: { related: :contact },
+  has_paper_trail versions: { class_name: 'Version' }, meta: { related: :contact },
                   ignore: %i[id created_at updated_at contact_id]
 
   validates_presence_of :account_id

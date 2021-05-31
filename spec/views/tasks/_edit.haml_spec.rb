@@ -12,7 +12,7 @@ describe "/tasks/_edit" do
 
   before do
     login
-    assign(:task, FactoryGirl.build_stubbed(:task, asset: FactoryGirl.build_stubbed(:account), bucket: "due_asap"))
+    assign(:task, build_stubbed(:task, asset: build_stubbed(:account), bucket: "due_asap"))
     assign(:users, [current_user])
     assign(:bucket, %w[due_asap due_today])
     assign(:category, %w[meeting money])
@@ -23,7 +23,7 @@ describe "/tasks/_edit" do
 
     expect(view).to render_template(partial: "tasks/_top_section")
 
-    expect(rendered).to have_tag("form[class=edit_task]")
+    expect(rendered).to have_tag('form[class="simple_form edit_task"]')
   end
 
   ["As Soon As Possible", "Today", "Tomorrow", "This Week", "Next Week", "Sometime Later"].each do |day|

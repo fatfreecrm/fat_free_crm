@@ -12,13 +12,13 @@ describe "/campaigns/show" do
 
   before do
     login
-    @campaign = FactoryGirl.build_stubbed(:campaign, id: 42,
-                                                     leads: [FactoryGirl.build_stubbed(:lead)],
-                                                     opportunities: [FactoryGirl.build_stubbed(:opportunity)])
+    @campaign = build_stubbed(:campaign, id: 42,
+                                         leads: [build_stubbed(:lead)],
+                                         opportunities: [build_stubbed(:opportunity)])
     assign(:campaign, @campaign)
     assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [FactoryGirl.build_stubbed(:comment, commentable: @campaign)])
+    assign(:timeline, [build_stubbed(:comment, commentable: @campaign)])
     allow(view).to receive(:params) { { id: 123 } }
 
     # controller#controller_name and controller#action_name are not set in view specs

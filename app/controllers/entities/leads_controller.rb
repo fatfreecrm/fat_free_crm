@@ -52,9 +52,7 @@ class LeadsController < EntitiesController
   def edit
     get_campaigns
 
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Lead.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@lead)
   end
@@ -110,9 +108,7 @@ class LeadsController < EntitiesController
     @accounts = Account.my(current_user).order('name')
     @opportunity = Opportunity.new(user: current_user, access: "Lead", stage: "prospecting", campaign: @lead.campaign, source: @lead.source)
 
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Lead.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Lead.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@lead)
   end
@@ -142,7 +138,10 @@ class LeadsController < EntitiesController
     update_sidebar
 
     respond_with(@lead) do |format|
-      format.html { flash[:notice] = t(:msg_asset_rejected, @lead.full_name); redirect_to leads_path }
+      format.html do
+        flash[:notice] = t(:msg_asset_rejected, @lead.full_name)
+        redirect_to leads_path
+      end
     end
   end
 
@@ -166,9 +165,7 @@ class LeadsController < EntitiesController
     # Sorting and naming only: set the same option for Contacts if the hasn't been set yet.
     if params[:sort_by]
       current_user.pref[:leads_sort_by] = Lead.sort_by_map[params[:sort_by]]
-      if Contact.sort_by_fields.include?(params[:sort_by])
-        current_user.pref[:contacts_sort_by] ||= Contact.sort_by_map[params[:sort_by]]
-      end
+      current_user.pref[:contacts_sort_by] ||= Contact.sort_by_map[params[:sort_by]] if Contact.sort_by_fields.include?(params[:sort_by])
     end
     if params[:naming]
       current_user.pref[:leads_naming] = params[:naming]
@@ -248,10 +245,17 @@ class LeadsController < EntitiesController
                            all: Lead.my(current_user).count,
                            other: 0
       ]
+
       Setting.lead_status.each do |key|
-        @lead_status_total[key] = Lead.my(current_user).where(status: key.to_s).count
-        @lead_status_total[:other] -= @lead_status_total[key]
+        @lead_status_total[key] = 0
       end
+
+      status_counts = Lead.my(current_user).where(status: Setting.lead_status).group(:status).count
+      status_counts.each do |key, total|
+        @lead_status_total[key.to_sym] = total
+        @lead_status_total[:other] -= total
+      end
+
       @lead_status_total[:other] += @lead_status_total[:all]
     end
   end

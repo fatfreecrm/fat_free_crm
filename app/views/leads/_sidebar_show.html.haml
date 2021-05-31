@@ -1,6 +1,5 @@
 .panel#summary
   %span{style: "float:right"}= avatar_for(@lead, size: "50x50")
-  %h4= h(@lead.full_name)
   - if !@lead.title.blank? && !@lead.company.blank?
     -# works_at: "{{job_title}} at {{company}}"
     %div= t(:works_at, job_title: @lead.title, company: @lead.company)
@@ -22,35 +21,36 @@
   = web_presence_icons(@lead)
 
   .caption #{t :lead_summary}
-  %li
-    %dt= t(@lead.status, default: :n_a)
-    %tt #{t :status}:
-  %li
-    %dt= t(@lead.source, default: :n_a)
-    %tt #{t :source}:
-  %li
-    %span{style: "float:right;"}= stars_for(@lead)
-    %tt #{t :rating}:
-  %li
-    %dt= @lead.referred_by ? truncate(@lead.referred_by, length: 16) : t(:n_a)
-    %tt #{t :referred_by}:
-  %li
-    %dt= @lead.assigned_to ? truncate(@lead.assignee.full_name, length: 16) : nil
-    %tt #{t :assigned_to}:
-  %li
-    %dt
-      - if @lead.campaign
-        = link_to(truncate(@lead.campaign.name, length: 16), @lead.campaign, title: @lead.campaign.name)
-      - else
-        #{t :n_a}
-    %tt #{t :campaign}:
-  %li
-    %dt
-      - if @lead.contact
-        = link_to(truncate(@lead.contact.name, length: 16), @lead.contact, title: @lead.contact.name)
-      - else
-        #{t :n_a}
-    %tt #{t :contact}:
+  %dl
+    %li
+      %dt= t(@lead.status, default: :n_a)
+      %tt #{t :status}:
+    %li
+      %dt= t(@lead.source, default: :n_a)
+      %tt #{t :source}:
+    %li
+      %span{style: "float:right;"}= stars_for(@lead)
+      %tt #{t :rating}:
+    %li
+      %dt= @lead.referred_by ? truncate(@lead.referred_by, length: 16) : t(:n_a)
+      %tt #{t :referred_by}:
+    %li
+      %dt= @lead.assigned_to ? truncate(@lead.assignee.full_name, length: 16) : nil
+      %tt #{t :assigned_to}:
+    %li
+      %dt
+        - if @lead.campaign
+          = link_to(truncate(@lead.campaign.name, length: 16), @lead.campaign, title: @lead.campaign.name)
+        - else
+          #{t :n_a}
+      %tt #{t :campaign}:
+    %li
+      %dt
+        - if @lead.contact
+          = link_to(truncate(@lead.contact.name, length: 16), @lead.contact, title: @lead.contact.name)
+        - else
+          #{t :n_a}
+      %tt #{t :contact}:
 
   - unless @lead.background_info.blank?
     .caption #{t :background_info}

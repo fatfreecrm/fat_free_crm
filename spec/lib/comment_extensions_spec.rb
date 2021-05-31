@@ -9,16 +9,22 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FatFreeCRM::CommentExtensions do
   describe "add_comment_by_user" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { create(:user) }
 
-    before :each do
-      build_model(:commentable_entity) do
-        string :subscribed_users
+    before do
+      ActiveRecord::Base.connection.create_table(:commentable_entities) do |t|
+        t.string :subscribed_users
+      end
+
+      class CommentableEntity < ActiveRecord::Base
         serialize :subscribed_users, Set
-
         acts_as_commentable
         uses_comment_extensions
       end
+    end
+
+    after do
+      ActiveRecord::Base.connection.drop_table(:commentable_entities)
     end
 
     it "should create a comment for user" do

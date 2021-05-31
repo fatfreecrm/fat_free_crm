@@ -4,8 +4,151 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased (0.17.0)
+Unreleased
+======
+#905 Swap from Marshal.load. Be sure to run `bundle exec rake ffcrm:preference_update` to migrate your users from old to new format
+
+settings.yml - Background, foreground colors for tasks, accounts, opportunities, and more - these are now defined in CSS by default 
+
+Refactoring to Bootstrap for forms, buttons, layouts.
+
+Drop ruby 2.5 support
+
+Upgrade to rails 6, papertail 12, devise 4.8
+
+Wed May 09, 2021 (0.19.2)
+======
+CVE-2021-22885
+
+Wed Apr 04, 2021 (0.19.1)
+======
+
+Minor gem updates
+
+Wed Apr 04, 2021 (0.19.0)
+======
+
+### Important changes
+
+#### Fixed XSS flaw in tags_helper
+Credit Antonin Steinhauser (asteinhauser) for discovery and responsible disclosure.
+
+#### Devise replaces Authlogic for user authentication
+Ticket #742 replaces Authlogic with the latest Devise (4.3.0) which has wider adoption.
+This change requires a database migration on the User model. Please note:
+ - Most User fields are renamed and can hence be rolled back. Existing Authlogic passwords will continue to work.
+ - Users will be forced logged out. Existing user sessions will not be kept and the fields `persistence_token, single_access_token, perishable_token` will be dropped from the database.
+ - Though the migration is generally safe **we recommend to make a backup of your database** before migrating.
+
+#### Existing OAuth broken
+The Devise change will break any OAuth login plugins which depend on Authlogic.
+You can [configure OAuth for Devise using the guides here](https://github.com/plataformatec/devise/wiki/omniauth:-overview).
+
+#### Login and user-related routes changed
+The login URL routes have been changed to use the defaults of Devise.
+
+#### User mailers changed
+Mailers related to user password reset, etc. are changed to use the defaults of Devise.
+
+#### PaperClip version updated from 5.2.1 to 6.0.0
+PaperClip now only depends on `aws-sdk-s3` instead of `aws-sdk`. For more info see https://github.com/thoughtbot/paperclip/pull/2481.
+Replace the Cocaine gem with Terrapin. https://github.com/thoughtbot/terrapin/ Apart from the namespace change, this is a drop in replacement.
+
+#### Rails 5.2
+The underlying framework is now rails 5.2.*
+
+#### Ruby 2.4 deprecated
+Ruby 2.4 has reached end of life and is no longer activity tested against.
+
+#### Other changes
+ * #794 Fix defect with unpermitted params in advanced search
+ * 2bc6184779a26070496e6f4caefa0cc9ba555d7b Remove broken support for delete links on arrays.
+ * #851 upgrade paper_trail
+ * Security fixes CVE-2019-16109, CVE-2019-16676, CVE-2019-5477, CVE-2019-16892
+ * Dependency updates
+ * Simple Form upgrades to use HTML5 and browser validations by default
+
+
+Sat Apr 21, 2018 (0.18.0)
 ---------------------------------------------------------------------
+
+### Important changes
+
+#### Minimum Ruby version
+#665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
+
+#### Swap to FactoryBot
+If you consume fat free crm as an engine and re-use any factories, you'll need to [upgrade to FactoryBot](https://github.com/thoughtbot/factory_bot/blob/4-9-0-stable/UPGRADE_FROM_FACTORY_GIRL.md).
+
+#### Removed methods
+`Lead.update_with_permissions` is removed, use user_ids and group_ids inside attributes instead and call lead.update_with_account_and_lead_counters
+`FatFreeCRM::Permissions.save_with_permissions` is removed, use user_ids and group_ids inside attributes and call save
+`FatFreeCRM::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
+
+#### Other changes
+ - CVE-2018-8048 (loofah gem)
+ - CVE-2018-3741 (rails-html-sanitizer gem)
+ - #768 Fix comment creation on entities
+ - #762 #764 Fix bug in select menu
+ - #759 Improve zero revenue display
+ - #753 Opportunities sort by weighted amount
+ - #749 Fix unsafe reflection and mass assignment
+
+Wed Jan 24, 2018 (0.17.2)
+---------------------------------------------------------------------
+ - CVE-2017-0889
+ - #724 Fixes #589 Autocomplete regression
+ - #723 Fixes #687 Passing string to define a callback is not supported.
+
+Wed Jan 24, 2018 (0.16.3)
+---------------------------------------------------------------------
+CVE-2017-0889
+
+Wed Jan 24, 2018 (0.15.1)
+---------------------------------------------------------------------
+CVE-2017-0889
+
+Wed Jan 24, 2018 (0.14.1)
+---------------------------------------------------------------------
+CVE-2017-0889
+
+Sat Jan 20, 2018 (0.17.1)
+---------------------------------------------------------------------
+ - #709 Revert accidental minimum ruby version 2.4 changes (#665)
+ - Fix #687 Passing string to define a callback is not supported.
+
+Mon Jan 22, 2018 (0.16.2)
+---------------------------------------------------------------------
+Fix #687
+
+Sat Jan 20, 2018 (0.17.0)
+---------------------------------------------------------------------
+
+### Important changes
+
+#### Select2 for select boxes
+This release replaces [Chozen](https://harvesthq.github.io/chosen/) with [Select2](https://select2.org/) consistently across the app.
+This may break plugins which rely on Chozen. To fix any issues please
+migrate to Select2 or add Chozen to your plugins.
+
+#### Counter caches
+To improve performance, a number of [counter caches](http://guides.rubyonrails.org/association_basics.html#options-for-belongs-to-counter-cache) have been added.
+
+Users with large amounts of records may find certain [database migrations](https://github.com/fatfreecrm/fat_free_crm/blob/master/db/migrate/20180102075234_add_account_counter_caches.rb) taking a large amount of time, as each record is cached upfront.
+
+#### Minimum ruby version is now Ruby 2.3
+See #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
+
+#### Other changes
+ - #691 Wording
+ - #688 Preparation for Devise
+ - #686 Bundle update
+ - #683 Rubocop: Refactoring
+ - #680 Alternative build setup
+ - #682 Rubocop: Hashrockets
+ - #693 Update Japanese translations
+ - #697 Minor security improvements
+ - #703 #696 Replace Chozen with select2
  - #678 Find an account by name when name is in params (fixes #397) 
  - #673 Improve JS escaping 
  - #671 Devise Readiness (+ thread-safety): Refactor User.my scope 
@@ -15,7 +158,7 @@ Unreleased (0.17.0)
  - #666 Various rubocop corrected items 
  - #661 Bundle Update on 2018-01-06 
  - #655 Upgrade rubocop
- - #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
+
  - #658 Upgrade Bootsnap gem, fixing an issue with windows
 
 Sat Jan 6, 2018 (0.16.1)

@@ -34,7 +34,7 @@ module FatFreeCRM
       # Save shared permissions to the model, if any.
       #--------------------------------------------------------------------------
       %w[group user].each do |model|
-        class_eval %{
+        class_eval(%{
           def #{model}_ids=(value)
             if access != 'Shared'
               remove_permissions
@@ -53,7 +53,7 @@ module FatFreeCRM
           def #{model}_ids
             permissions.map(&:#{model}_id).compact
           end
-        }
+        }, __FILE__, __LINE__ - 19)
       end
 
       # Remove all shared permissions if no longer shared
@@ -73,21 +73,10 @@ module FatFreeCRM
                                   []
                                 end
 
-        permissions_to_remove.each { |p| permissions.delete(p); p.destroy }
-      end
-
-      # Save the model along with its permissions if any.
-      #--------------------------------------------------------------------------
-      def save_with_permissions(_users = nil)
-        ActiveSupport::Deprecation.warn "save_with_permissions is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead."
-        save
-      end
-
-      # Update the model along with its permissions if any.
-      #--------------------------------------------------------------------------
-      def update_with_permissions(attributes, _users = nil)
-        ActiveSupport::Deprecation.warn "update_with_permissions is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead."
-        update_attributes(attributes)
+        permissions_to_remove.each do |p|
+          permissions.delete(p)
+          p.destroy
+        end
       end
 
       # Save the model copying other model's permissions.
@@ -105,4 +94,4 @@ module FatFreeCRM
   end
 end
 
-ActiveRecord::Base.send(:include, FatFreeCRM::Permissions)
+ActiveRecord::Base.include FatFreeCRM::Permissions

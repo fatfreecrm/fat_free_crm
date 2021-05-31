@@ -14,14 +14,14 @@ describe "/campaigns/create" do
 
   describe "create success" do
     before do
-      assign(:campaign, @campaign = FactoryGirl.build_stubbed(:campaign))
+      assign(:campaign, @campaign = build_stubbed(:campaign))
       assign(:campaigns, [@campaign].paginate)
       assign(:campaign_status_total, Hash.new(1))
       render
     end
 
     it "should hide [Create Campaign] form and insert campaign partial" do
-      expect(rendered).to include("$('#campaigns').prepend('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+      expect(rendered).to include("$('#campaigns').prepend('<li class=\\'highlight campaign\\' id=\\'campaign_#{@campaign.id}\\'")
       expect(rendered).to include(%/$('#campaign_#{@campaign.id}').effect("highlight"/)
     end
 
@@ -38,13 +38,12 @@ describe "/campaigns/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_campaign div" do
-      assign(:campaign, FactoryGirl.build(:campaign, name: nil)) # make it invalid
-      assign(:users, [FactoryGirl.build_stubbed(:user)])
+      assign(:campaign, build(:campaign, name: nil)) # make it invalid
+      assign(:users, [build_stubbed(:user)])
 
       render
 
       expect(rendered).to include("$('#create_campaign').html")
-      expect(rendered).to include(%/$('#create_campaign').effect("shake"/)
     end
   end
 end

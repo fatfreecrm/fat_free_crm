@@ -12,7 +12,7 @@ describe "/contacts/_new" do
 
   before do
     login
-    @account = FactoryGirl.build_stubbed(:account)
+    @account = build_stubbed(:account)
     assign(:contact, Contact.new)
     assign(:users, [current_user])
     assign(:account, @account)
@@ -26,7 +26,7 @@ describe "/contacts/_new" do
     expect(view).to render_template(partial: "contacts/_web")
     expect(view).to render_template(partial: "entities/_permissions")
 
-    expect(rendered).to have_tag("form[class=new_contact]")
+    expect(rendered).to have_tag('form[class="simple_form new_contact"]')
   end
 
   it "should pick default assignee (Myself)" do

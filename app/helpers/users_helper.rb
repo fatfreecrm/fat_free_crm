@@ -7,9 +7,7 @@
 #------------------------------------------------------------------------------
 module UsersHelper
   def language_for(user)
-    if user.preference[:locale]
-      _locale, language = languages.detect { |locale, _language| locale == user.preference[:locale] }
-    end
+    _locale, language = languages.detect { |locale, _language| locale == user.preference[:locale] } if user.preference[:locale]
     language || "English"
   end
 

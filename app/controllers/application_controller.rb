@@ -8,8 +8,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  before_action :configure_devise_parameters, if: :devise_controller?
+  before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
-
   before_action :set_context
   before_action :clear_setting_cache
   before_action :cors_preflight_check
@@ -17,7 +18,6 @@ class ApplicationController < ActionController::Base
   after_action { hook(:app_after_filter, self) }
   after_action :cors_set_access_control_headers
 
-  helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
   helper_method :klass
 
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
-    @query = params[:auto_complete_query] || ''
+    @query = params[:term] || ''
     @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
@@ -47,10 +47,26 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.any(:js, :html) { render partial: 'auto_complete' }
       format.json do
-        render json: @auto_complete.each_with_object({}) { |a, h|
-                       h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
-                     }
+        results = @auto_complete.map do |a|
+          {
+            id: a.id,
+            text: a.respond_to?(:full_name) ? a.full_name : a.name
+          }
+        end
+        render json: {
+          results: results
+        }
       end
+    end
+  end
+
+  # To deal with pre rails 6 users, reset the session and ask them to relogin
+  rescue_from ArgumentError do |exception|
+    if request.format.html? && exception.message == "invalid base64"
+      request.reset_session
+      redirect_to login_path
+    else
+      raise(exception)
     end
   end
 
@@ -67,16 +83,17 @@ class ApplicationController < ActionController::Base
   end
 
   #
-  # Takes { :related => 'campaigns/7' } or { :related => '5' }
+  # Takes { related: 'campaigns/7' } or { related: '5' }
   #   and returns array of object ids that should be excluded from search
   #   assumes controller_name is a method on 'related' class that returns a collection
   #----------------------------------------------------------------------------
   def auto_complete_ids_to_exclude(related)
     return [] if related.blank?
     return [related.to_i].compact unless related.index('/')
+
     related_class, id = related.split('/')
     obj = related_class.classify.constantize.find_by_id(id)
-    if obj && obj.respond_to?(controller_name)
+    if obj&.respond_to?(controller_name)
       obj.send(controller_name).map(&:id)
     else
       []
@@ -106,47 +123,6 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def set_current_tab(tab = controller_name)
     @current_tab = tab
-  end
-
-  #----------------------------------------------------------------------------
-  def current_user_session
-    @current_user_session ||= Authentication.find
-    @current_user_session = nil if @current_user_session&.record&.suspended?
-    @current_user_session
-  end
-
-  #----------------------------------------------------------------------------
-  def current_user
-    unless @current_user
-      @current_user = (current_user_session&.record)
-      if @current_user
-        @current_user.set_individual_locale
-        @current_user.set_single_access_token
-      end
-      User.current_user = @current_user
-    end
-    @current_user
-  end
-
-  #----------------------------------------------------------------------------
-  def require_user
-    unless current_user
-      store_location
-      flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
-      respond_to do |format|
-        format.html { redirect_to login_url }
-        format.js   { render plain: "window.location = '#{login_url}';" }
-      end
-    end
-  end
-
-  #----------------------------------------------------------------------------
-  def require_no_user
-    if current_user
-      store_location
-      flash[:notice] = t(:msg_logout_needed)
-      redirect_to profile_url
-    end
   end
 
   #----------------------------------------------------------------------------
@@ -273,6 +249,23 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Max-Age'] = '1728000'
 
       render plain: ''
+    end
+  end
+
+  def configure_devise_parameters
+    devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+      user_params.permit(:username, :email, :password, :password_confirmation)
+    end
+  end
+
+  def find_class(asset)
+    Rails.application.eager_load! unless Rails.application.config.cache_classes
+    classes = ActiveRecord::Base.descendants.map(&:name)
+    find = classes.find { |m| m == asset.classify }
+    if find
+      find.safe_constantize
+    else
+      raise "Unknown resource"
     end
   end
 end

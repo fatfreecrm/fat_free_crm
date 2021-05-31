@@ -28,7 +28,7 @@
 class Address < ActiveRecord::Base
   belongs_to :addressable, polymorphic: true
 
-  has_paper_trail class_name: 'Version', meta: { related: :addressable }
+  has_paper_trail versions: { class_name: 'Version' }, meta: { related: :addressable }
 
   scope :business, -> { where("address_type='Business'") }
   scope :billing,  -> { where("address_type='Billing'") }

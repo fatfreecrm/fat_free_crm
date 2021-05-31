@@ -12,7 +12,7 @@ class List < ActiveRecord::Base
 
   # Parses the controller from the url
   def controller
-    (url || "").sub(/\A\//, '').split(/\/|\?/).first
+    (url || "").sub(%r{\A/}, '').split(%r{/|\?}).first
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_list, self)

@@ -18,7 +18,7 @@
 #
 
 class Preference < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, optional: true
 
   #-------------------------------------------------------------------
   def [](name)
@@ -26,8 +26,9 @@ class Preference < ActiveRecord::Base
     return super(name) if name.to_s == "user_id" # get the value of belongs_to
 
     return cached_prefs[name.to_s] if cached_prefs.key?(name.to_s)
+
     cached_prefs[name.to_s] = if user.present? && pref = Preference.find_by_name_and_user_id(name.to_s, user.id)
-                                Marshal.load(Base64.decode64(pref.value))
+                                JSON.parse(Base64.decode64(pref.value), symbolize_name: true)
     end
   end
 
@@ -35,7 +36,7 @@ class Preference < ActiveRecord::Base
   def []=(name, value)
     return super(name, value) if name.to_s == "user_id" # set the value of belongs_to
 
-    encoded = Base64.encode64(Marshal.dump(value))
+    encoded = Base64.encode64(value.to_json)
     if pref = Preference.find_by(name: name.to_s, user_id: user.id)
       pref.update_attribute(:value, encoded)
     else

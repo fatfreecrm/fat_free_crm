@@ -15,6 +15,6 @@
   = hook(:entity_form, self, {f: f, entity: @contact})
 
   .buttonbar
-    = f.submit t(:create_contact), onclick: "crm.create_contact()"
+    = f.submit t(:create_contact), onclick: "crm.create_contact()", class: 'btn btn-primary'
     #{t :or}
     = link_to_cancel new_contact_path

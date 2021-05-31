@@ -22,7 +22,7 @@ describe "/campaigns/_new" do
     expect(view).to render_template(partial: "campaigns/_objectives")
     expect(view).to render_template(partial: "_permissions")
 
-    expect(rendered).to have_tag("form[class=new_campaign]")
+    expect(rendered).to have_tag('form[class="simple_form new_campaign"]')
   end
 
   it "should render background info field if settings require so" do

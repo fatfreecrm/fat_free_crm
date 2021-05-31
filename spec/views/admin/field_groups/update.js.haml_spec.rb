@@ -13,7 +13,7 @@ describe "admin/field_groups/update" do
     assign(:field_group, field_group)
   end
 
-  let(:field_group) { FactoryGirl.build_stubbed(:field_group, label: 'test') }
+  let(:field_group) { build_stubbed(:field_group, label: 'test') }
 
   it "renders javascript" do
     render
@@ -25,6 +25,5 @@ describe "admin/field_groups/update" do
   it "renders javascript for invalid field group" do
     allow(field_group.errors).to receive(:empty?).and_return(false)
     render
-    expect(rendered).to have_text("$('##{dom_id(field_group, :edit)}').effect('shake', { distance:5 }, 250);")
   end
 end

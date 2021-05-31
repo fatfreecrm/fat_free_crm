@@ -23,20 +23,20 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Version, versioning: true do
-  let(:current_user) { FactoryGirl.create(:user) }
-  before { PaperTrail.whodunnit = current_user.id.to_s }
+  let(:current_user) { create(:user) }
+  before { PaperTrail.request.whodunnit = current_user.id.to_s }
 
   it "should create a new instance given valid attributes" do
-    FactoryGirl.create(:version, whodunnit: PaperTrail.whodunnit, item: FactoryGirl.create(:lead))
+    create(:version, whodunnit: PaperTrail.request.whodunnit, item: create(:lead))
   end
 
   describe "with multiple version records" do
     before do
-      @lead = FactoryGirl.create(:lead)
+      @lead = create(:lead)
 
       %w[create destroy update view].each do |event|
-        FactoryGirl.create(:version, event: event, item: @lead, whodunnit: PaperTrail.whodunnit)
-        FactoryGirl.create(:version, event: event, item: @lead, whodunnit: "1")
+        create(:version, event: event, item: @lead, whodunnit: PaperTrail.request.whodunnit)
+        create(:version, event: event, item: @lead, whodunnit: "1")
       end
     end
 
@@ -71,8 +71,8 @@ describe Version, versioning: true do
   %w[account campaign contact lead opportunity task].each do |item|
     describe "Create, update, and delete (#{item})" do
       before :each do
-        @item = FactoryGirl.create(item.to_sym, user: current_user)
-        @conditions = { item_id: @item.id, item_type: @item.class.name, whodunnit: PaperTrail.whodunnit }
+        @item = create(item.to_sym, user: current_user)
+        @conditions = { item_id: @item.id, item_type: @item.class.name, whodunnit: PaperTrail.request.whodunnit }
       end
 
       it "should add a version when creating new #{item}" do
@@ -82,9 +82,9 @@ describe Version, versioning: true do
 
       it "should add a version when updating existing #{item}" do
         if @item.respond_to?(:full_name)
-          @item.update_attributes(first_name: "Billy", last_name: "Bones")
+          @item.update(first_name: "Billy", last_name: "Bones")
         else
-          @item.update_attributes(name: "Billy Bones")
+          @item.update(name: "Billy Bones")
         end
         @version = Version.where(@conditions.merge(event: 'update')).first
 
@@ -99,9 +99,9 @@ describe Version, versioning: true do
       end
 
       it "should add a version when commenting on a #{item}" do
-        @comment = FactoryGirl.create(:comment, commentable: @item, user: current_user)
+        @comment = create(:comment, commentable: @item, user: current_user)
 
-        @version = Version.where(related_id: @item.id, related_type: @item.class.name, whodunnit: PaperTrail.whodunnit, event: 'create').first
+        @version = Version.where(related_id: @item.id, related_type: @item.class.name, whodunnit: PaperTrail.request.whodunnit, event: 'create').first
         expect(@version).not_to eq(nil)
       end
     end
@@ -109,7 +109,7 @@ describe Version, versioning: true do
 
   describe "Recently viewed items (task)" do
     before do
-      @task = FactoryGirl.create(:task)
+      @task = create(:task)
       @conditions = { item_id: @task.id, item_type: @task.class.name }
     end
 
@@ -128,8 +128,8 @@ describe Version, versioning: true do
 
   describe "Action refinements for task updates" do
     before do
-      @task = FactoryGirl.create(:task, user: current_user)
-      @conditions = { item_id: @task.id, item_type: @task.class.name, whodunnit: PaperTrail.whodunnit }
+      @task = create(:task, user: current_user)
+      @conditions = { item_id: @task.id, item_type: @task.class.name, whodunnit: PaperTrail.request.whodunnit }
     end
 
     it "should create 'completed' task event" do
@@ -147,7 +147,7 @@ describe Version, versioning: true do
     end
 
     it "should create 'rescheduled' task event" do
-      @task.update(bucket: "due_tomorrow") # FactoryGirl creates :due_asap task
+      @task.update(bucket: "due_tomorrow") # FactoryBot creates :due_asap task
 
       versions = Version.where(@conditions)
       expect(versions.pluck(:event)).to include('reschedule')
@@ -156,8 +156,8 @@ describe Version, versioning: true do
 
   describe "Rejecting a lead" do
     before do
-      @lead = FactoryGirl.create(:lead, user: current_user, status: "new")
-      @conditions = { item_id: @lead.id, item_type: @lead.class.name, whodunnit: PaperTrail.whodunnit }
+      @lead = create(:lead, user: current_user, status: "new")
+      @conditions = { item_id: @lead.id, item_type: @lead.class.name, whodunnit: PaperTrail.request.whodunnit }
     end
 
     it "should create 'rejected' lead event" do
@@ -170,12 +170,12 @@ describe Version, versioning: true do
 
   describe "Permissions" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       Version.delete_all
     end
 
     it "should not show the create/update versions if the item is private" do
-      @item = FactoryGirl.create(:account, user: current_user, access: "Private")
+      @item = create(:account, user: current_user, access: "Private")
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -186,7 +186,7 @@ describe Version, versioning: true do
     end
 
     it "should not show the destroy version if the item is private" do
-      @item = FactoryGirl.create(:account, user: current_user, access: "Private")
+      @item = create(:account, user: current_user, access: "Private")
       @item.destroy
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -197,10 +197,10 @@ describe Version, versioning: true do
     end
 
     it "should not show create/update versions if the item was not shared with the user" do
-      @item = FactoryGirl.create(:account,
-                                 user: current_user,
-                                 access: "Shared",
-                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)])
+      @item = create(:account,
+                     user: current_user,
+                     access: "Shared",
+                     permissions: [build(:permission, user: current_user, asset: @item)])
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -211,10 +211,10 @@ describe Version, versioning: true do
     end
 
     it "should not show the destroy version if the item was not shared with the user" do
-      @item = FactoryGirl.create(:account,
-                                 user: current_user,
-                                 access: "Shared",
-                                 permissions: [FactoryGirl.build(:permission, user: current_user, asset: @item)])
+      @item = create(:account,
+                     user: current_user,
+                     access: "Shared",
+                     permissions: [build(:permission, user: current_user, asset: @item)])
       @item.destroy
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -225,10 +225,10 @@ describe Version, versioning: true do
     end
 
     it "should show create/update versions if the item was shared with the user" do
-      @item = FactoryGirl.create(:account,
-                                 user: current_user,
-                                 access: "Shared",
-                                 permissions: [FactoryGirl.build(:permission, user: @user, asset: @item)])
+      @item = create(:account,
+                     user: current_user,
+                     access: "Shared",
+                     permissions: [build(:permission, user: @user, asset: @item)])
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)

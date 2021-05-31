@@ -12,9 +12,9 @@ describe "/leads/_new" do
 
   before do
     login
-    assign(:lead, FactoryGirl.build(:lead))
+    assign(:lead, build(:lead))
     assign(:users, [current_user])
-    assign(:campaign, @campaign = FactoryGirl.build_stubbed(:campaign))
+    assign(:campaign, @campaign = build_stubbed(:campaign))
     assign(:campaigns, [@campaign])
   end
 
@@ -26,7 +26,7 @@ describe "/leads/_new" do
     expect(view).to render_template(partial: "leads/_web")
     expect(view).to render_template(partial: "entities/_permissions")
 
-    expect(rendered).to have_tag("form[class=new_lead]")
+    expect(rendered).to have_tag('form[class="simple_form new_lead"]')
   end
 
   it "should render background info field if settings require so" do

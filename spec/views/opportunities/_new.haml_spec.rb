@@ -12,8 +12,8 @@ describe "/opportunities/_new" do
 
   before do
     login
-    assign(:opportunity, FactoryGirl.build(:opportunity))
-    @account = FactoryGirl.build_stubbed(:account)
+    assign(:opportunity, build(:opportunity))
+    @account = build_stubbed(:account)
     assign(:account, @account)
     assign(:accounts, [@account])
     assign(:users, [current_user])
@@ -25,7 +25,7 @@ describe "/opportunities/_new" do
     expect(view).to render_template(partial: "opportunities/_top_section")
     expect(view).to render_template(partial: "entities/_permissions")
 
-    expect(rendered).to have_tag("form[class=new_opportunity]")
+    expect(rendered).to have_tag('form[class="simple_form new_opportunity"]')
   end
 
   it "should pick default assignee (Myself)" do

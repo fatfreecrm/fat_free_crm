@@ -13,18 +13,21 @@ end
 #----------------------------------------------------------------------------
 def stub_task(view)
   assigns[:task] = if view == "completed"
-                     FactoryGirl.create(:task, completed_at: Time.now - 1.minute)
+                     create(:task, completed_at: Time.now - 1.minute)
                    elsif view == "assigned"
-                     FactoryGirl.create(:task, assignee: FactoryGirl.create(:user))
+                     create(:task, assignee: create(:user))
                    else
-                     FactoryGirl.create(:task)
+                     create(:task)
                    end
 end
 
 #----------------------------------------------------------------------------
 def stub_task_total(view = "pending")
   settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-  settings.each_with_object(all: 0) { |key, hash| hash[key] = 1; hash }
+  settings.each_with_object(all: 0) do |key, hash|
+    hash[key] = 1
+    hash
+  end
 end
 
 # Get current server timezone and set it (see rake time:zones:local for details).

@@ -12,7 +12,7 @@ describe "/campaigns/edit" do
 
   before do
     login
-    assign(:campaign, @campaign = FactoryGirl.build_stubbed(:campaign, user: current_user))
+    assign(:campaign, @campaign = build_stubbed(:campaign, user: current_user))
     assign(:users, [current_user])
   end
 
@@ -20,7 +20,7 @@ describe "/campaigns/edit" do
     params[:cancel] = "true"
 
     render
-    expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{@campaign.id}\\'")
+    expect(rendered).to include("$('#campaign_#{@campaign.id}').replaceWith('<li class=\\'highlight campaign\\' id=\\'campaign_#{@campaign.id}\\'")
   end
 
   it "cancel from campaign landing page: should hide [Edit Campaign] form" do
@@ -33,10 +33,10 @@ describe "/campaigns/edit" do
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
     params[:cancel] = nil
-    assign(:previous, previous = FactoryGirl.build_stubbed(:campaign, user: current_user))
+    assign(:previous, previous = build_stubbed(:campaign, user: current_user))
 
     render
-    expect(rendered).to include("$('#campaign_#{previous.id}').replaceWith('<li class=\\'campaign highlight\\' id=\\'campaign_#{previous.id}\\'")
+    expect(rendered).to include("$('#campaign_#{previous.id}').replaceWith('<li class=\\'highlight campaign\\' id=\\'campaign_#{previous.id}\\'")
   end
 
   it "edit: should remove previously open [Edit Campaign] if it's no longer available" do

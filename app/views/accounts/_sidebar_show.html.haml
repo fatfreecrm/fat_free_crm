@@ -3,7 +3,6 @@
 - pipeline = @account.opportunities.pipeline.map(&:weighted_amount).compact.sum
 
 .panel#summary
-  %h4= h(@account.name)
   - if @account.website
     %div
       %b= link_to(truncate(@account.website, length: 30), @account.website.to_url, :"data-popup" => true, title: t(:open_in_window, @account.website))
@@ -25,24 +24,25 @@
   %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address
 
   .caption #{t :account_summary}
-  %li
-    %dt= pipeline != 0.0 ? number_to_currency(pipeline, precision: 0) : t(:n_a)
-    %tt #{t :pipeline}:
-  %li
-    %dt= won != 0.0 ? number_to_currency(won, precision: 0) : t(:n_a)
-    %tt #{t :won}:
-  %li
-    %dt= lost != 0.0 ? number_to_currency(lost, precision: 0) : t(:n_a)
-    %tt #{t :lost}:
-  %li
-    %dt= @account.category ? t(@account.category) : t(:other)
-    %tt #{t :category}:
-  %li
-    %span{style: "float:right;"}= stars_for(@account)
-    %tt #{t :rating}:
-  %li
-    %dt= @account.assigned_to ? truncate(@account.assignee.full_name, length: 16) : nil
-    %tt #{t :assigned_to}:
+  %dl
+    %li
+      %dt= display_value(pipeline)
+      %tt #{t :pipeline}:
+    %li
+      %dt= display_value(won)
+      %tt #{t :won}:
+    %li
+      %dt= display_value(lost)
+      %tt #{t :lost}:
+    %li
+      %dt= @account.category ? t(@account.category) : t(:other)
+      %tt #{t :category}:
+    %li
+      %span{style: "float:right;"}= stars_for(@account)
+      %tt #{t :rating}:
+    %li
+      %dt= display_assigned(@account)
+      %tt #{t :assigned_to}:
 
   - unless @account.background_info.blank?
     .caption #{t :background_info}

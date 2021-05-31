@@ -46,7 +46,7 @@ class Admin::GroupsController < Admin::ApplicationController
   # PUT /groups/1
   #----------------------------------------------------------------------------
   def update
-    @group.update_attributes(group_params)
+    @group.update(group_params)
 
     respond_with(@group)
   end
@@ -62,7 +62,7 @@ class Admin::GroupsController < Admin::ApplicationController
   protected
 
   def group_params
-    params[:group].permit!
+    params.require(:group).permit(:name, user_ids: [])
   end
 
   def setup_current_tab

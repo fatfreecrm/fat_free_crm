@@ -10,7 +10,7 @@ require 'spec_helper'
 describe "/leads/destroy" do
   before do
     login
-    assign(:lead, @lead = FactoryGirl.build_stubbed(:lead))
+    assign(:lead, @lead = build_stubbed(:lead))
     assign(:lead_status_total, Hash.new(1))
   end
 
@@ -26,7 +26,6 @@ describe "/leads/destroy" do
 
     expect(rendered).to include("#sidebar")
     expect(rendered).to have_text("Recent Items")
-    expect(rendered).to include("$('#filters').effect('shake'")
   end
 
   it "should update pagination when called from leads index" do
@@ -38,12 +37,11 @@ describe "/leads/destroy" do
   end
 
   it "should update related asset sidebar when called from related asset" do
-    assign(:campaign, campaign = FactoryGirl.build_stubbed(:campaign))
+    assign(:campaign, campaign = build_stubbed(:campaign))
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 
     expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Campaign Summary")
     expect(rendered).to have_text("Recent Items")
   end
 end

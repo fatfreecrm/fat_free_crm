@@ -14,7 +14,7 @@ describe "admin/users/create" do
 
   describe "create success" do
     before do
-      assign(:user, @user = FactoryGirl.build_stubbed(:user))
+      assign(:user, @user = build_stubbed(:user))
       assign(:users, [@user]) # .paginate
     end
 
@@ -31,12 +31,11 @@ describe "admin/users/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_user div" do
-      assign(:user, FactoryGirl.build(:user, username: nil)) # make it invalid
+      assign(:user, build(:user, username: nil)) # make it invalid
       assign(:users, [current_user])
       render
 
       expect(rendered).to include('Please specify username')
-      expect(rendered).to include(%/$('#create_user').effect("shake"/)
     end
   end
 end

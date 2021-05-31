@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path("../acceptance_helper.rb", __FILE__)
+require File.expand_path('acceptance_helper.rb', __dir__)
 
 feature 'Tasks', '
   In order to increase keep track of things
@@ -17,7 +17,7 @@ feature 'Tasks', '
   end
 
   scenario 'should view a list of tasks which are assigned to the logged in user' do
-    4.times { |i| FactoryGirl.create(:task, name: "Task #{i}", user: @user) }
+    4.times { |i| create(:task, name: "Task #{i}", user: @user) }
     visit tasks_page
     expect(page).to have_content('Task 0')
     expect(page).to have_content('Task 1')
@@ -33,9 +33,9 @@ feature 'Tasks', '
       click_link 'Create Task'
       expect(page).to have_selector('#task_name', visible: true)
       fill_in 'task_name', with: 'Task I Need To Do'
-      select 'Tomorrow', from: 'task_bucket'
-      select 'Myself', from: 'task_assigned_to'
-      select 'Call', from: 'task_category'
+      select2 'Tomorrow', from: 'Due:'
+      select2 'Myself', from: 'Assign to:'
+      select2 'Call', from: 'Category:'
       click_button 'Create Task'
       expect(page).to have_content('Task I Need To Do')
 
@@ -45,15 +45,15 @@ feature 'Tasks', '
   end
 
   scenario 'creating a task for another user', js: true do
-    FactoryGirl.create(:user, first_name: 'Another', last_name: 'User')
+    create(:user, first_name: 'Another', last_name: 'User')
     with_versioning do
       visit tasks_page
       click_link 'Create Task'
       expect(page).to have_selector('#task_name', visible: true)
       fill_in 'task_name', with: 'Task For Someone Else'
-      select 'Tomorrow', from: 'task_bucket'
-      select 'Another User', from: 'task_assigned_to'
-      select 'Call', from: 'task_category'
+      select2 'Tomorrow', from: 'Due:'
+      select2 'Another User', from: 'Assign to:'
+      select2 'Call', from: 'Category:'
       click_button 'Create Task'
       expect(page).to have_content('The task has been created and assigned to Another User')
 
@@ -72,7 +72,7 @@ feature 'Tasks', '
   end
 
   scenario 'should view and edit a task', js: true do
-    FactoryGirl.create(:task, id: 42, name: 'Example Task', user: @user)
+    create(:task, id: 42, name: 'Example Task', user: @user)
     with_versioning do
       visit tasks_page
       click_edit_for_task_id(42)
@@ -85,7 +85,7 @@ feature 'Tasks', '
   end
 
   scenario 'should delete a task', js: true do
-    FactoryGirl.create(:task, id: 42, name: 'Outdated Task', user: @user)
+    create(:task, id: 42, name: 'Outdated Task', user: @user)
     visit tasks_page
     click_delete_for_task_id(42)
     click_link 'Tasks'

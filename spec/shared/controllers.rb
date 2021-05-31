@@ -12,23 +12,21 @@ shared_examples "auto complete" do
   end
 
   it "should do the search and find records that match autocomplete query" do
-    get :auto_complete, params: { auto_complete_query: @query }
+    get :auto_complete, params: { term: @query }
     expect(assigns[:query]).to eq(@query)
     expect(assigns[:auto_complete]).to eq(@auto_complete_matches) # Each controller must define it.
   end
 
   it "should save current autocomplete controller in a session" do
-    get :auto_complete, params: { auto_complete_query: @query }
+    get :auto_complete, params: { term: @query }
 
     # We don't save Admin/Users autocomplete controller in a session since Users are not
     # exposed through the Jumpbox.
-    unless controller.class.to_s.starts_with?("Admin::")
-      expect(session[:auto_complete]).to eq(@controller.controller_name.to_sym)
-    end
+    expect(session[:auto_complete]).to eq(@controller.controller_name.to_sym) unless controller.class.to_s.starts_with?("Admin::")
   end
 
   it "should render application/_auto_complete template" do
-    post :auto_complete, params: { auto_complete_query: @query }
+    post :auto_complete, params: { term: @query }
     expect(response).to render_template("application/_auto_complete")
   end
 end
@@ -39,12 +37,8 @@ shared_examples "attach" do
     expect(@model.send(@attachment.class.name.tableize)).to include(@attachment)
     expect(assigns[:attachment]).to eq(@attachment)
     expect(assigns[:attached]).to eq([@attachment])
-    if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
-      expect(assigns[:campaign]).to eq(@attachment.reload.campaign)
-    end
-    if @model.is_a?(Account) && @attachment.respond_to?(:account) # Skip Tasks...
-      expect(assigns[:account]).to eq(@attachment.reload.account)
-    end
+    expect(assigns[:campaign]).to eq(@attachment.reload.campaign) if @model.is_a?(Campaign) && (@attachment.is_a?(Lead) || @attachment.is_a?(Opportunity))
+    expect(assigns[:account]).to eq(@attachment.reload.account) if @model.is_a?(Account) && @attachment.respond_to?(:account) # Skip Tasks...
     expect(response).to render_template("entities/attach")
   end
 

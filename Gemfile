@@ -4,13 +4,17 @@ source 'https://rubygems.org'
 
 # Uncomment the database that you have configured in config/database.yml
 # ----------------------------------------------------------------------
-db_drivers = {
-  "mysql" => "mysql2",
-  "sqlite" => "sqlite3",
-  "postgres" => "pg"
-}
 
-gem db_drivers[ENV['CI'] && ENV['DB']] || 'pg'
+case ENV['CI'] && ENV['DB']
+when 'sqlite'
+  gem 'sqlite3', '~> 1.4.0'
+when 'mysql'
+  gem 'mysql2'
+when 'postgres'
+  gem 'pg'
+else
+  gem 'pg'
+end
 
 # Removes a gem dependency
 def remove(name)
@@ -26,7 +30,7 @@ end
 # Bundler no longer treats runtime dependencies as base dependencies.
 # The following code restores this behaviour.
 # (See https://github.com/carlhuda/bundler/issues/1041)
-spec = Bundler.load_gemspec(File.expand_path("../fat_free_crm.gemspec", __FILE__))
+spec = Bundler.load_gemspec(File.expand_path('fat_free_crm.gemspec', __dir__))
 spec.runtime_dependencies.each do |dep|
   gem dep.name, *dep.requirement.as_list
 end
@@ -40,7 +44,6 @@ remove 'fat_free_crm'
 group :development do
   # don't load these gems in travis
   unless ENV["CI"]
-    gem 'puma'
     gem 'capistrano'
     gem 'capistrano-bundler'
     gem 'capistrano-rails'
@@ -63,31 +66,42 @@ group :development, :test do
   gem 'headless'
   gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
-  gem 'factory_girl_rails', '~> 4.7.0' # 4.8.0+ stubbed models are not allowed to access the database - User#destroyed?()
-  gem 'rubocop', '~> 0.52.0' # Pinned because upgrades require regenerating rubocop_todo.yml
+  gem 'factory_bot_rails', '~> 5.0' # Was Pinned due to minor failing view tests to 4.0
+  gem 'rubocop', '~> 0.82.0'
   gem 'rainbow'
+  gem 'puma' # used by capybara 3
 end
 
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
   gem 'database_cleaner'
-  gem 'acts_as_fu'
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
+  gem 'sqlite3', '~> 1.4.0'
 end
 
 group :heroku do
   gem 'rails_12factor'
+  gem 'puma'
 end
 
-gem 'sass-rails'
+gem 'responds_to_parent', git: 'https://github.com/CloCkWeRX/responds_to_parent.git', branch: 'patch-1' # Temporarily pointed at git until https://github.com/zendesk/responds_to_parent/pull/6 is released
+gem 'acts_as_commentable', git: 'https://github.com/fatfreecrm/acts_as_commentable.git', branch: 'rails-6' # Our fork
+gem 'sass-rails', '~> 5.0.3' # sass-rails 6 requires GCC 4.5+
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
-gem 'therubyracer', platform: :ruby unless ENV["CI"]
+# gem 'therubyracer', platform: :ruby unless ENV["CI"]
+gem 'mini_racer'
 gem 'nokogiri', '>= 1.8.1'
 gem 'activemodel-serializers-xml'
 gem 'bootsnap', require: false
+gem 'devise', '~>4.6'
+gem 'devise-i18n'
+gem "devise-encryptable"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'activejob'
+gem 'ransack_ui'
+gem 'bootstrap', '5.0.0'

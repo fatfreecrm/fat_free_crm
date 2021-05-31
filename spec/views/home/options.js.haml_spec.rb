@@ -19,12 +19,12 @@ describe "/home/options" do
     assign(:user, "all_users")
     assign(:action, "all_actions")
     assign(:duration, "two_days")
-    assign(:all_users, [FactoryGirl.build_stubbed(:user)])
+    assign(:all_users, [build_stubbed(:user)])
 
     render
 
     expect(rendered).to include("$('#options').html")
-    expect(rendered).to include("$(&#39;#asset&#39;).html(&#39;campaign&#39;)")
+    expect(rendered).to include("$(\\\'#asset\\\').html(\\\'campaign\\\')")
     expect(rendered).to include("crm.flip_form('options')")
     expect(rendered).to include("crm.set_title('title', 'Recent Activity Options')")
   end
@@ -35,7 +35,7 @@ describe "/home/options" do
     assign(:action, "all_actions")
     assign(:user, "all_users")
     assign(:duration, "two_days")
-    assign(:all_users, [FactoryGirl.build_stubbed(:user)])
+    assign(:all_users, [build_stubbed(:user)])
 
     render
 

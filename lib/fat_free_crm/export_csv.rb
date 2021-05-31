@@ -14,6 +14,7 @@ module FatFreeCRM
     #----------------------------------------------------------------------------
     def self.from_array(items = [])
       return '' if items.empty?
+
       # Infer column types from the first item in the array
       klass = items.first.class
       columns = klass.columns.map(&:name).reject { |column| column =~ /password|token/ }

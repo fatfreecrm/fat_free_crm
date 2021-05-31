@@ -5,7 +5,7 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-require File.expand_path("../acceptance_helper.rb", __FILE__)
+require File.expand_path('acceptance_helper.rb', __dir__)
 
 feature 'Leads', '
   In order to increase sales
@@ -17,7 +17,7 @@ feature 'Leads', '
   end
 
   scenario 'should view a list of leads' do
-    4.times { |i| FactoryGirl.create(:lead, first_name: "L", last_name: "Ead #{i}") }
+    4.times { |i| create(:lead, first_name: "L", last_name: "Ead #{i}") }
     visit leads_page
     expect(leads_element).to have_content('L Ead 0')
     expect(leads_element).to have_content('L Ead 1')
@@ -36,13 +36,16 @@ feature 'Leads', '
       fill_in 'lead_email', with: 'mr_lead@example.com'
       fill_in 'lead_phone', with: '+44 1234 567890'
       click_link 'Status'
-      select 'Myself', from: 'lead_assigned_to'
-      select 'Contacted', from: 'lead_status'
-      select 'Campaign', from: 'lead_source'
+      select2 'Myself', from: 'Assigned to:'
+      select2 'Contacted', from: 'Status:'
+      select2 'Campaign', from: 'Source:'
       click_link 'Comment'
       fill_in 'comment_body', with: 'This is an important lead.'
-      click_link 'Status'
-      select 'Contacted', from: 'lead_status'
+
+      # TODO: Refactor to a page object
+      # This panel is already open, so clicking status again closed the div.
+      # click_link 'Status'
+      select2 'Contacted', from: 'Status:'
       click_button 'Create Lead'
       expect(leads_element).to have_content('Mr Lead')
 
@@ -70,7 +73,7 @@ feature 'Leads', '
   end
 
   scenario 'should view and edit a lead', js: true do
-    FactoryGirl.create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
+    create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
     with_versioning do
       visit leads_page
       click_link 'Mr Lead'
@@ -79,9 +82,10 @@ feature 'Leads', '
       fill_in 'lead_first_name', with: 'Mrs'
       fill_in 'lead_phone', with: '+44 0987 654321'
       click_link('Status')
-      select 'Rejected', from: 'lead_status'
+      select2 'Rejected', from: 'Status:'
       click_button 'Save Lead'
-      expect(summary_element).to have_content('Mrs Lead')
+      sleep(3) # TODO: A better AJAX observing call, or just a redirect on save.
+      expect(find('#title')).to have_content('Mrs Lead')
 
       click_link "Dashboard"
       expect(activities_element).to have_content("Bill Murray updated lead Mrs Lead")
@@ -89,7 +93,7 @@ feature 'Leads', '
   end
 
   scenario 'should delete a lead', js: true do
-    FactoryGirl.create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
+    create(:lead, first_name: "Mr", last_name: "Lead", email: "mr_lead@example.com")
     visit leads_page
     click_link 'Mr Lead'
     click_link 'Delete?'
@@ -101,7 +105,7 @@ feature 'Leads', '
   end
 
   scenario 'should search for a lead', js: true do
-    2.times { |i| FactoryGirl.create(:lead, first_name: "Lead", last_name: "\##{i}", email: "lead#{i}@example.com") }
+    2.times { |i| create(:lead, first_name: "Lead", last_name: "\##{i}", email: "lead#{i}@example.com") }
     visit leads_page
     expect(leads_element).to have_content('Lead #0')
     expect(leads_element).to have_content('Lead #1')

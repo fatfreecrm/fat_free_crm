@@ -92,4 +92,4 @@ module FatFreeCRM
   end
 end
 
-ActiveRecord::Base.send(:include, FatFreeCRM::Fields)
+ActiveRecord::Base.include FatFreeCRM::Fields

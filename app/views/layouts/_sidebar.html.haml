@@ -1,11 +1,11 @@
 - view   ||= controller.controller_name
 - action ||= controller.action_name
-- sidebar = "#{view}/sidebar_#{action}"
+- sidebar = "#{view}/sidebar_#{action}" unless action.to_s == 'show'
 - sidebar = "admin/#{sidebar}" if controller.class.to_s.starts_with?("Admin::")
 
 = content_for :sidebar
 - begin
-  = render sidebar
+  = render sidebar if sidebar
   - rescue MissingTemplate
 
 = render "lists/lists"
