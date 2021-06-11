@@ -133,13 +133,13 @@ describe UsersController do
     
     describe "with a email with whitespace" do
       it "should update the user information and render [update] template" do
-        put :update, params: { id: @user.id, user: { first_name: "Billy", last_name: "Bones", email: " john@email.com " } }, xhr: true
+        put :update, params: { id: @user.id, user: { first_name: "Billy", last_name: "Bones", alt_email: " john@email.com " } }, xhr: true
         @user.reload
         expect(@user.first_name).to eq("Billy")
         expect(@user.last_name).to eq("Bones")
         expect(assigns[:user]).to eq(@user)
         expect(response).to render_template("users/update")
-        expect(@user.email).to eq("john@email.com")
+        expect(@user.alt_email).to eq("john@email.com")
       end      
     end
 
