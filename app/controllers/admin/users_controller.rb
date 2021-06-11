@@ -105,11 +105,12 @@ class Admin::UsersController < Admin::ApplicationController
     return {} unless params[:user]
 
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
+    params[:user][:email].try(:strip!)
 
     params[:user].permit(
       :admin,
       :username,
-      :email.strip unless params[:user][:email].nil?,
+      :email,
       :first_name,
       :last_name,
       :title,
