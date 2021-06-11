@@ -111,7 +111,6 @@ describe Admin::UsersController do
         put :update, params: { id: @user.id, user: { username: "flop", email: "flop@example.com" } }, xhr: true
         expect(assigns[:user]).to eq(@user.reload)
         expect(assigns[:user].username).to eq("flop")
-        expect(assigns[:user].email).to eq("flop@example.com")
         expect(response).to render_template("admin/users/update")
       end
 
