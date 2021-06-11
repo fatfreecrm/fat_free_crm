@@ -107,7 +107,7 @@ describe Admin::UsersController do
 
       it "updates the requested user, assigns it to @user, and renders [update] template even when there is whitespace in email" do
         @user = create(:user, username: "flip", email: "      flip@example.com     ")
-        expect(assigns[:user].email).to eq("flip@example.com")
+        expect(@user.email).to eq("flip@example.com")
         put :update, params: { id: @user.id, user: { username: "flop", email: "flop@example.com" } }, xhr: true
         expect(assigns[:user]).to eq(@user.reload)
         expect(assigns[:user].username).to eq("flop")
