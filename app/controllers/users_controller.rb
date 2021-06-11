@@ -119,7 +119,6 @@ class UsersController < ApplicationController
     params[:user][:email].try(:strip!)
     params[:user][:alt_email].try(:strip!)
 
-
     params[:user].permit(
       :username,
       :email,
