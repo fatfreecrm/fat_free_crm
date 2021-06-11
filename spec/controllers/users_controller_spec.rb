@@ -137,8 +137,9 @@ describe UsersController do
         @user.reload
         expect(@user.first_name).to eq("Billy")
         expect(@user.last_name).to eq("Bones")
-        expect(@user.email).to eq("john@email.com")
+        expect(assigns[:user]).to eq(@user)
         expect(response).to render_template("users/update")
+        expect(@user.email).to eq("john@email.com")
       end      
     end
 
