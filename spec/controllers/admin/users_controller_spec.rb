@@ -106,12 +106,13 @@ describe Admin::UsersController do
       end
 
       it "updates the requested user, assigns it to @user, and renders [update] template even when there is whitespace in email" do
-        @user = create(:user, username: "flip", email: "      flip@example.com     ")
+        @user = create(:user, username: "flip", email: "flip@example.com")
         expect(@user.email).to eq("flip@example.com")
-        put :update, params: { id: @user.id, user: { username: "flop", email: "flop@example.com" } }, xhr: true
+        put :update, params: { id: @user.id, user: { username: "flop", email: "  flop@example.com  " } }, xhr: true
         expect(assigns[:user]).to eq(@user.reload)
         expect(assigns[:user].username).to eq("flop")
         expect(response).to render_template("admin/users/update")
+        expect(@user.email).to eq("flop@example.com")
       end
 
       it "reloads current page is the user got deleted" do
