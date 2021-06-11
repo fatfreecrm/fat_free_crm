@@ -116,7 +116,7 @@ class UsersController < ApplicationController
   def user_params
     return {} unless params[:user]
 
-    params[:user][:email].try(:strip!)
+    params[:user][:email] = params[:user][:email].strip
     params[:user].permit(
       :username,
       :email,
