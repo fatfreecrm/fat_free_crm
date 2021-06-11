@@ -58,6 +58,15 @@ describe User do
     ).valid?).to eq true
   end
 
+  it "should create a new instance given valid attributes even when too much whitespace is in email" do
+    expect(User.new(
+      username: "username",
+      email:    " user@example.com ",
+      password: "password",
+      password_confirmation: "password"
+    ).email).to eq("user@example.com")
+  end
+
   it "should have a valid factory" do
     expect(build(:user)).to be_valid
   end
