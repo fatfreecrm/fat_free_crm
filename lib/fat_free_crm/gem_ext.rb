@@ -6,5 +6,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 require "fat_free_crm/gem_ext/active_support/buffered_logger"
+require "fat_free_crm/gem_ext/active_support/polymorphic_url"
 require "fat_free_crm/gem_ext/action_controller/base"
 require "fat_free_crm/gem_ext/rake/task" if defined?(Rake)
