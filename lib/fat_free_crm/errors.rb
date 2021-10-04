@@ -22,7 +22,7 @@ module FatFreeCRM
       end
 
       def each_with_explicit_error
-        keys.each do |attribute|
+        attribute_names.each do |attribute|
           self[attribute].each do |error|
             if error.start_with?('^')
               yield :base, error[1..-1]   # Drop the attribute.
