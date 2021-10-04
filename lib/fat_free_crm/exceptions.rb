@@ -7,6 +7,7 @@
 #------------------------------------------------------------------------------
 module FatFreeCRM
   class MissingSettings < StandardError; end
+
   class ObsoleteSettings < StandardError; end
 end
 

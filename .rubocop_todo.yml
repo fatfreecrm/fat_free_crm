@@ -26,21 +26,6 @@ Layout/EmptyLineAfterGuardClause:
   Exclude:
     - 'app/models/setting.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EmptyLineBetweenMethodDefs, EmptyLineBetweenClassDefs, EmptyLineBetweenModuleDefs, AllowAdjacentOneLineDefs, NumberOfEmptyLines.
-Layout/EmptyLineBetweenDefs:
-  Exclude:
-    - 'lib/fat_free_crm/exceptions.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowAliasSyntax, AllowedMethods.
-# AllowedMethods: alias_method, public, protected, private
-Layout/EmptyLinesAroundAttributeAccessor:
-  Exclude:
-    - 'app/models/polymorphic/task.rb'
-
 # Offense count: 21
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleAlignWith, Severity.
@@ -56,23 +41,6 @@ Layout/EndAlignment:
 # SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
 Layout/HashAlignment:
   Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: AllowDoxygenCommentStyle, AllowGemfileRubyComment.
-Layout/LeadingCommentSpace:
-  Exclude:
-    - 'lib/fat_free_crm/version.rb'
-    - 'spec/support/assert_select.rb'
-
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBrackets.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBrackets: space, no_space
-Layout/SpaceInsideArrayLiteralBrackets:
-  Exclude:
-    - 'db/seeds/fields.rb'
 
 # Offense count: 21
 # Configuration parameters: AllowSafeAssignment.
@@ -298,12 +266,6 @@ Style/CommentAnnotation:
     - 'spec/controllers/entities/leads_controller_spec.rb'
     - 'spec/controllers/entities/opportunities_controller_spec.rb'
     - 'spec/views/accounts/create.js.haml_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/CommentedKeyword:
-  Exclude:
-    - 'db/migrate/20100928030617_drop_openid_tables.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
