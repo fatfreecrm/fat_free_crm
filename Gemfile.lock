@@ -80,7 +80,7 @@ GEM
       activerecord (>= 5.0, < 6.2)
     acts_as_list (1.0.4)
       activerecord (>= 4.2)
-    addressable (2.7.0)
+    addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
