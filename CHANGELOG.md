@@ -16,6 +16,14 @@ Drop ruby 2.5 support
 
 Upgrade to rails 6, papertail 12, devise 4.8
 
+A variety of minor bug fixes and security updates
+
+#946
+#947
+#950
+#951
+#952
+
 Wed May 09, 2021 (0.19.2)
 ======
 CVE-2021-22885
