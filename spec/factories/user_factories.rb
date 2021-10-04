@@ -38,7 +38,7 @@ FactoryBot.define do
     # For unit tests, we dont need to enforce uniqueness
     to_create { |instance| instance.save(validate: false) }
   end
-
+  
   factory :admin do
     admin { true }
   end
