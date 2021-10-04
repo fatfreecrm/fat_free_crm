@@ -165,11 +165,11 @@ GEM
     email_reply_parser_ffcrm (0.5.0)
     erubi (1.10.0)
     execjs (2.8.1)
-    factory_bot (5.2.0)
-      activesupport (>= 4.2.0)
-    factory_bot_rails (5.2.0)
-      factory_bot (~> 5.2.0)
-      railties (>= 4.2.0)
+    factory_bot (6.2.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     ffaker (2.19.0)
     ffi (1.15.4)
     font-awesome-rails (4.7.0.7)
@@ -202,7 +202,6 @@ GEM
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     i18n_data (0.13.0)
-    jaro_winkler (1.5.4)
     jquery-migrate-rails (1.2.1)
     jquery-rails (4.4.0)
       rails-dom-testing (>= 1, < 3)
@@ -368,14 +367,17 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.10.2)
-    rubocop (0.82.0)
-      jaro_winkler (~> 1.5.1)
+    rubocop (1.22.1)
       parallel (~> 1.10)
-      parser (>= 2.7.0.1)
+      parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
       rexml
+      rubocop-ast (>= 1.12.0, < 2.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 2.0)
+      unicode-display_width (>= 1.4.0, < 3.0)
+    rubocop-ast (1.12.0)
+      parser (>= 3.0.1.1)
     ruby-progressbar (1.11.0)
     rubyzip (2.3.2)
     sass (3.7.4)
@@ -429,7 +431,7 @@ GEM
       concurrent-ruby (~> 1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.8.0)
+    unicode-display_width (2.1.0)
     unicode_utils (1.4.0)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -476,7 +478,7 @@ DEPENDENCIES
   dynamic_form
   email_reply_parser_ffcrm
   execjs
-  factory_bot_rails (~> 5.0)
+  factory_bot_rails (~> 6.0)
   ffaker (>= 2)
   font-awesome-rails
   guard
@@ -512,7 +514,7 @@ DEPENDENCIES
   responds_to_parent!
   rspec-activemodel-mocks
   rspec-rails
-  rubocop (~> 0.82.0)
+  rubocop
   sass
   sass-rails (~> 5.0.3)
   select2-rails
