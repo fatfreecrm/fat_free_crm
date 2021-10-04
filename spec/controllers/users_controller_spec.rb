@@ -130,7 +130,7 @@ describe UsersController do
         expect(response).to render_template("users/update")
       end
     end
-    
+
     describe "with a email with whitespace" do
       it "should update the user information and render [update] template" do
         put :update, params: { id: @user.id, user: { first_name: "Billy", last_name: "Bones", alt_email: " john@email.com " } }, xhr: true
@@ -140,7 +140,7 @@ describe UsersController do
         expect(assigns[:user]).to eq(@user)
         expect(response).to render_template("users/update")
         expect(@user.alt_email).to eq("john@email.com")
-      end      
+      end
     end
 
     describe "with invalid params" do
