@@ -353,25 +353,12 @@ Style/OptionalBooleanParameter:
     - 'lib/fat_free_crm/mail_processor/base.rb'
     - 'lib/fat_free_crm/mail_processor/dropbox.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/RedundantAssignment:
-  Exclude:
-    - 'app/helpers/tasks_helper.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/RedundantBegin:
   Exclude:
     - 'bin/yarn'
     - 'lib/tasks/ffcrm/update_data.rake'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: SafeForConstants.
-Style/RedundantFetchBlock:
-  Exclude:
-    - 'config/puma.rb'
 
 # Offense count: 4
 # Cop supports --auto-correct.
