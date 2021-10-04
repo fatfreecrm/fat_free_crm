@@ -22,7 +22,7 @@ jobs:
 
     # This step is not necessary if you add the gem to your Gemfile
     - name: Install Code Scanning integration
-      run: bundle add code-scanning-rubocop --version 0.3.0 --skip-install
+      run: bundle add code-scanning-rubocop --skip-install
 
     - name: Install dependencies
       run: bundle install
