@@ -332,6 +332,8 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rb-readline (0.5.5)
+    ref (2.0.0)
     regexp_parser (2.1.1)
     request_store (1.5.0)
       rack (>= 1.4)
@@ -424,6 +426,8 @@ GEM
     timecop (0.9.4)
     tzinfo (1.2.9)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2017.3)
+      tzinfo (>= 1.0.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.8.0)
@@ -505,6 +509,7 @@ DEPENDENCIES
   rb-fchange
   rb-fsevent
   rb-inotify
+  rb-readline
   responders (~> 3.0)
   responds_to_parent!
   rspec-activemodel-mocks
