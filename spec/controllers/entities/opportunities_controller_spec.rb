@@ -49,7 +49,7 @@ describe OpportunitiesController do
       create(:opportunity, user: current_user, stage: "analysis")
 
       get :index
-      # Note: can't compare opportunities directly because of BigDecimal objects.
+      # NOTE: can't compare opportunities directly because of BigDecimal objects.
       expect(assigns[:opportunities].size).to eq(2)
       expect(assigns[:opportunities].map(&:stage).sort).to eq(%w[negotiation prospecting])
     end
@@ -265,7 +265,7 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
     it "should expose the requested opportunity as @opportunity and render [edit] template" do
-      # Note: campaign => nil makes sure campaign factory is not invoked which has a side
+      # NOTE: campaign => nil makes sure campaign factory is not invoked which has a side
       # effect of creating an extra (campaign) user.
       @account = create(:account, user: current_user)
       @opportunity = create(:opportunity, id: 42, user: current_user, campaign: nil,
