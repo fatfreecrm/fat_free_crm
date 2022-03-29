@@ -10,7 +10,7 @@
 module RSpec # :nodoc:
   module Rails
     module Matchers
-      class AssertSelect #:nodoc:
+      class AssertSelect # :nodoc:
         attr_reader :options
 
         def initialize(selector_assertion, spec_scope, *args, &block)
