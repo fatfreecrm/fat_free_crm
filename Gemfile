@@ -65,8 +65,8 @@ group :development, :test do
   gem 'headless'
   gem 'byebug'
   gem 'pry-rails' unless ENV["CI"]
-  gem 'factory_bot_rails', '~> 5.0' # Was Pinned due to minor failing view tests to 4.0
-  gem 'rubocop', '~> 0.82.0'
+  gem 'factory_bot_rails', '~> 6.0'
+  gem 'rubocop'
   gem 'rainbow'
   gem 'puma' # used by capybara 3
 end
@@ -86,8 +86,8 @@ group :heroku do
   gem 'puma'
 end
 
-gem 'responds_to_parent', git: 'https://github.com/CloCkWeRX/responds_to_parent.git', branch: 'patch-1' # Temporarily pointed at git until https://github.com/zendesk/responds_to_parent/pull/6 is released
-gem 'acts_as_commentable', git: 'https://github.com/fatfreecrm/acts_as_commentable.git', branch: 'rails-6' # Our fork
+gem 'responds_to_parent', git: 'https://github.com/CloCkWeRX/responds_to_parent.git', branch: 'patch-2' # Temporarily pointed at git until https://github.com/zendesk/responds_to_parent/pull/7 is released
+gem 'acts_as_commentable', git: 'https://github.com/fatfreecrm/acts_as_commentable.git', branch: 'rails-61' # Our fork
 gem 'sass-rails', '~> 5.0.3' # sass-rails 6 requires GCC 4.5+
 gem 'coffee-rails'
 gem 'uglifier'

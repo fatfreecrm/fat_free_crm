@@ -6,7 +6,8 @@ class DropOpenidTables < ActiveRecord::Migration[4.2]
     drop_table :open_id_authentication_nonces
   end
 
-  def self.down # see 003_create_openid_tables.rb
+  # see 003_create_openid_tables.rb
+  def self.down
     create_table :open_id_authentication_associations, force: true do |t|
       t.integer :issued
       t.integer :lifetime
