@@ -20,6 +20,7 @@ RUN apt-get update && \
 	apt-get autoremove -y && \
 	cp config/database.postgres.docker.yml config/database.yml && \
 	gem install bundler && \
+	bundle config set --local deployment 'true' && \
 	bundle install --deployment && \
 	bundle exec rails assets:precompile
 
