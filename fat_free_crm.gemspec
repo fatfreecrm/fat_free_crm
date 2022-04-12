@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-LOAD_PATH.push File.expand_path('lib', __dir__)
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 require 'fat_free_crm/version'
 
 Gem::Specification.new do |gem|
