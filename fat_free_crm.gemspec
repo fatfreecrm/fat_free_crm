@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.push File.expand_path('vendor/gems/globby-0.1.2/lib', __dir__)
-require 'globby'
-rules = File.read("#{File.expand_path(__dir__)}/.gitignore").split("\n")
-rules << '.git'
-files = Globby.reject(rules)
-
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 require 'fat_free_crm/version'
 
@@ -16,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.description = 'An open source, Ruby on Rails customer relationship management platform'
   gem.homepage = 'http://fatfreecrm.com'
   gem.email = ['mike@fatfreecrm.com', 'steveyken@gmail.com', 'daniel.oconnor@gmail.com']
-  gem.files = files
+  gem.files = Dir["{app,config,db,lib,vendor,public,bin,log/script}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "config.ru", "CHANGELOG.md", "CONTRIBUTING.md"]
   gem.version = FatFreeCRM::VERSION::STRING
   gem.required_ruby_version = '>= 2.4.0'
   gem.license = 'MIT'
