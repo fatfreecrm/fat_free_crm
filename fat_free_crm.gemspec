@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'fat_free_crm/version'
-require 'rake'
 
 Gem::Specification.new do |gem|
   gem.name = 'fat_free_crm'
@@ -10,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.description = 'An open source, Ruby on Rails customer relationship management platform'
   gem.homepage = 'http://fatfreecrm.com'
   gem.email = ['mike@fatfreecrm.com', 'steveyken@gmail.com', 'daniel.oconnor@gmail.com']
-  gem.files = Dir["{app,config,db,lib,vendor,public,bin,log/script}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "config.ru"]
+  gem.files = Dir["{app,config,db,lib,vendor,public,bin,log/script}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "config.ru", "CHANGELOG.md", "CONTRIBUTING.md"]
   gem.version = FatFreeCRM::VERSION::STRING
   gem.required_ruby_version = '>= 2.4.0'
   gem.license = 'MIT'
