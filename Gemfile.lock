@@ -80,8 +80,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    acts-as-taggable-on (8.1.0)
-      activerecord (>= 5.0, < 6.2)
+    acts-as-taggable-on (9.0.1)
+      activerecord (>= 6.0, < 7.1)
     acts_as_list (1.0.4)
       activerecord (>= 4.2)
     addressable (2.8.0)
@@ -134,7 +134,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.9)
+    concurrent-ruby (1.1.10)
     countries (4.0.1)
       i18n_data (~> 0.13.0)
       sixarm_ruby_unaccent (~> 1.1)
