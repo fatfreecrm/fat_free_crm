@@ -321,9 +321,9 @@ GEM
       thor (~> 1.0)
     rainbow (3.1.1)
     rake (13.0.6)
-    ransack (2.4.2)
-      activerecord (>= 5.2.4)
-      activesupport (>= 5.2.4)
+    ransack (2.6.0)
+      activerecord (>= 6.0.4)
+      activesupport (>= 6.0.4)
       i18n
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
