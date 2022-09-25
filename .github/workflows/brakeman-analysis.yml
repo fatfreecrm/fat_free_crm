@@ -22,8 +22,6 @@ jobs:
     # Customize the ruby version depending on your needs
     - name: Setup Ruby
       uses: actions/setup-ruby@v1
-      with:
-        ruby-version: '2.7'
 
     - name: Setup Brakeman
       env:
