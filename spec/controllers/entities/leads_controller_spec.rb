@@ -44,7 +44,7 @@ describe LeadsController do
       create(:lead, status: "rejected", user: current_user)
 
       get :index
-      # Note: can't compare campaigns directly because of BigDecimals.
+      # NOTE: can't compare campaigns directly because of BigDecimals.
       expect(assigns[:leads].size).to eq(2)
       expect(assigns[:leads].map(&:status).sort).to eq(%w[contacted new])
     end

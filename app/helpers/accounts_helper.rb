@@ -109,11 +109,13 @@ module AccountsHelper
   # - a helper that abstracts the logic to the backend
   def display_value(value)
     return "N/A" if value.zero?
+
     number_to_currency(value, precision: 0)
   end
 
   def display_assigned(account)
     return truncate(account.assignee.full_name, length: 16) if account.assigned_to
+
     nil
   end
 end

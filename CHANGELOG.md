@@ -4,7 +4,7 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-Unreleased
+Mon Oct 04, 2021 (0.20.0)
 ======
 #905 Swap from Marshal.load. Be sure to run `bundle exec rake ffcrm:preference_update` to migrate your users from old to new format
 
@@ -15,6 +15,14 @@ Refactoring to Bootstrap for forms, buttons, layouts.
 Drop ruby 2.5 support
 
 Upgrade to rails 6, papertail 12, devise 4.8
+
+A variety of minor bug fixes and security updates
+
+#946
+#947
+#950
+#951
+#952
 
 Wed May 09, 2021 (0.19.2)
 ======

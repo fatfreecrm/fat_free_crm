@@ -51,7 +51,7 @@ describe CampaignsController do
       create(:campaign, user: current_user, status: "completed")
 
       get :index
-      # Note: can't compare campaigns directly because of BigDecimal objects.
+      # NOTE: can't compare campaigns directly because of BigDecimal objects.
       expect(assigns[:campaigns].size).to eq(2)
       expect(assigns[:campaigns].map(&:status).sort).to eq(%w[planned started])
     end

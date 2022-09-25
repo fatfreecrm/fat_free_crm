@@ -6,10 +6,10 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 module FatFreeCRM
-  module VERSION #:nodoc:
+  module VERSION # :nodoc:
     MAJOR = 0
-    MINOR = 19
-    TINY  = 1
+    MINOR = 20
+    TINY  = 0
     PRE   = nil
 
     STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')

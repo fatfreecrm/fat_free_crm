@@ -4,7 +4,7 @@
 # docker-compose up
 # docker-compose exec web bundle exec rake db:create db:schema:load ffcrm:demo:load
 
-FROM ruby:2.4
+FROM ruby:2.7
 
 LABEL author="Steve Kenworthy"
 
@@ -20,6 +20,7 @@ RUN apt-get update && \
 	apt-get autoremove -y && \
 	cp config/database.postgres.docker.yml config/database.yml && \
 	gem install bundler && \
+	bundle config set --local deployment 'true' && \
 	bundle install --deployment && \
 	bundle exec rails assets:precompile
 

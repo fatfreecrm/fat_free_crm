@@ -306,7 +306,7 @@ describe AccountsController do
         expect(response).to render_template("accounts/create")
       end
 
-      # Note: [Create Account] is shown only on Accounts index page.
+      # NOTE: [Create Account] is shown only on Accounts index page.
       it "should reload accounts to update pagination" do
         @account = build(:account, user: current_user)
         allow(Account).to receive(:new).and_return(@account)

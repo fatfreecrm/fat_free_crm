@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 xml.Worksheet 'ss:Name' => I18n.t(:tab_dashboard) do
   xml.Table do
     unless @activities.empty?

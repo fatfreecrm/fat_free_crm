@@ -17,7 +17,7 @@ describe FatFreeCRM::CommentExtensions do
       end
 
       class CommentableEntity < ActiveRecord::Base
-        serialize :subscribed_users, Set
+        serialize :subscribed_users, Array
         acts_as_commentable
         uses_comment_extensions
       end
