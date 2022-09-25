@@ -17,8 +17,6 @@ jobs:
     # listed at https://github.com/ruby/setup-ruby#using-self-hosted-runners
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.6
 
     # This step is not necessary if you add the gem to your Gemfile
     - name: Install Code Scanning integration
