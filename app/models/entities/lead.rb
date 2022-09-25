@@ -48,7 +48,7 @@ class Lead < ActiveRecord::Base
   has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
   has_many :emails, as: :mediator
 
-  serialize :subscribed_users, Set
+  serialize :subscribed_users, Array
 
   accepts_nested_attributes_for :business_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 

@@ -14,7 +14,7 @@ describe "/accounts/create" do
     login
   end
 
-  # Note: [Create Account] is only called from Accounts index. Unlike other
+  # NOTE: [Create Account] is only called from Accounts index. Unlike other
   # core object Account partial is not embedded.
   describe "create success" do
     before do
