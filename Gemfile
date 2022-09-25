@@ -88,7 +88,7 @@ end
 
 gem 'responds_to_parent', git: 'https://github.com/CloCkWeRX/responds_to_parent.git', branch: 'patch-2' # Temporarily pointed at git until https://github.com/zendesk/responds_to_parent/pull/7 is released
 gem 'acts_as_commentable', git: 'https://github.com/fatfreecrm/acts_as_commentable.git', branch: 'rails-61' # Our fork
-gem 'sass-rails', '~> 5.0.3' # sass-rails 6 requires GCC 4.5+
+gem 'sassc-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'execjs'
