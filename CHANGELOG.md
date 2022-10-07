@@ -4,6 +4,10 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
+Fri Oct 07, 2022 (0.20.1)
+======
+CVE-2022-39281
+
 Mon Oct 04, 2021 (0.20.0)
 ======
 #905 Swap from Marshal.load. Be sure to run `bundle exec rake ffcrm:preference_update` to migrate your users from old to new format
