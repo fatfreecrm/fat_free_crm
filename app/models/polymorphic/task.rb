@@ -189,6 +189,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.bucket_empty?(bucket, user, view = "pending")
     return false if bucket.blank? || !ALLOWED_VIEWS.include?(view)
+    return false unless Setting.task_bucket.map(&:to_s).include?(bucket.to_s)
 
     if view == "assigned"
       assigned_by(user).send(bucket).pending.count
