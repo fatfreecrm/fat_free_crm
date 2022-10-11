@@ -94,7 +94,6 @@ Please read the [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/mast
 |-----------------------------------:|:--------------------------|
 |                 **Home Page**: | http://www.fatfreecrm.com |
 |                    **Guides**: | http://guides.fatfreecrm.com |
-|               **Online Demo**: | http://demo.fatfreecrm.com |
 |       **Github Project Page**: | http://github.com/fatfreecrm/fat_free_crm |
 | **Feature Requests and Bugs**: | http://support.fatfreecrm.com/ |
 |                  **RDoc API**: | http://api.fatfreecrm.com |
