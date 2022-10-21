@@ -1,14 +1,5 @@
-config/*.yml
-config/deploy.rb
-!config/settings.default.yml
-!config/database.mysql.mac.yml
-!config/database.mysql.yml
-!config/database.postgres.yml
-!config/database.postgres.docker.yml
-!config/database.sqlite.yml
-!config/settings.default.yml
-
 .rspec
+config/database.yml
 spec/reports
 spec/internal/public/avatars
 spec/internal/public/assets
