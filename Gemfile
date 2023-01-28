@@ -15,7 +15,7 @@ when 'postgres'
 else
   gem 'pg'
 end
-
+gem 'mimemagic'
 # Removes a gem dependency
 def remove(name)
   @dependencies.reject! { |d| d.name == name }
