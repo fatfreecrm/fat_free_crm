@@ -101,7 +101,7 @@ GEM
     brakeman (5.4.1)
     builder (3.2.4)
     byebug (11.1.3)
-    cancancan (3.4.0)
+    cancancan (3.5.0)
     capistrano (3.17.2)
       airbrussh (>= 1.0.0)
       i18n
