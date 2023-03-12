@@ -261,7 +261,7 @@ GEM
       ast (~> 2.4.1)
     pg (1.4.6)
     popper_js (2.9.3)
-    premailer (1.19.0)
+    premailer (1.20.0)
       addressable
       css_parser (>= 1.12.0)
       htmlentities (>= 4.0.0)
