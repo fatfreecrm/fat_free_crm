@@ -134,7 +134,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.2.0)
+    concurrent-ruby (1.2.2)
     countries (5.3.0)
       unaccent (~> 0.3)
     country_select (8.0.1)
@@ -142,9 +142,9 @@ GEM
     crass (1.0.6)
     css_parser (1.14.0)
       addressable
-    database_cleaner (2.0.1)
-      database_cleaner-active_record (~> 2.0.0)
-    database_cleaner-active_record (2.0.1)
+    database_cleaner (2.0.2)
+      database_cleaner-active_record (>= 2, < 3)
+    database_cleaner-active_record (2.1.0)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
@@ -231,7 +231,7 @@ GEM
     mini_portile2 (2.8.1)
     mini_racer (0.6.3)
       libv8-node (~> 16.10.0.0)
-    minitest (5.17.0)
+    minitest (5.18.0)
     msgpack (1.6.0)
     nenv (0.3.0)
     net-scp (4.0.0)
