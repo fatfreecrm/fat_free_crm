@@ -419,7 +419,7 @@ GEM
     temple (0.8.2)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
-    thor (1.2.1)
+    thor (1.2.2)
     tilt (2.0.10)
     timecop (0.9.6)
     tzinfo (2.0.6)
