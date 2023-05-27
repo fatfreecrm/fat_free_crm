@@ -2,17 +2,20 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_004459) do
+ActiveRecord::Schema.define(version: 2023_05_26_212613) do
 
-  create_table "account_contacts", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "account_contacts", id: :serial, force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
     t.datetime "deleted_at"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["account_id", "contact_id"], name: "index_account_contacts_on_account_id_and_contact_id"
   end
 
-  create_table "account_opportunities", force: :cascade do |t|
+  create_table "account_opportunities", id: :serial, force: :cascade do |t|
     t.integer "account_id"
     t.integer "opportunity_id"
     t.datetime "deleted_at"
@@ -30,7 +33,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["account_id", "opportunity_id"], name: "index_account_opportunities_on_account_id_and_opportunity_id"
   end
 
-  create_table "accounts", force: :cascade do |t|
+  create_table "accounts", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "assigned_to"
     t.string "name", limit: 64, default: "", null: false
@@ -53,7 +56,35 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id", "name", "deleted_at"], name: "index_accounts_on_user_id_and_name_and_deleted_at", unique: true
   end
 
-  create_table "activities", force: :cascade do |t|
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "activities", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "subject_type"
     t.integer "subject_id"
@@ -66,7 +97,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
-  create_table "addresses", force: :cascade do |t|
+  create_table "addresses", id: :serial, force: :cascade do |t|
     t.string "street1"
     t.string "street2"
     t.string "city", limit: 64
@@ -83,7 +114,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type"
   end
 
-  create_table "avatars", force: :cascade do |t|
+  create_table "avatars", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "entity_type"
     t.integer "entity_id"
@@ -94,7 +125,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.datetime "updated_at"
   end
 
-  create_table "campaigns", force: :cascade do |t|
+  create_table "campaigns", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "assigned_to"
     t.string "name", limit: 64, default: "", null: false
@@ -119,7 +150,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id", "name", "deleted_at"], name: "index_campaigns_on_user_id_and_name_and_deleted_at", unique: true
   end
 
-  create_table "comments", force: :cascade do |t|
+  create_table "comments", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "commentable_type"
     t.integer "commentable_id"
@@ -131,7 +162,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.string "state", limit: 16, default: "Expanded", null: false
   end
 
-  create_table "contact_opportunities", force: :cascade do |t|
+  create_table "contact_opportunities", id: :serial, force: :cascade do |t|
     t.integer "contact_id"
     t.integer "opportunity_id"
     t.string "role", limit: 32
@@ -141,7 +172,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["contact_id", "opportunity_id"], name: "index_contact_opportunities_on_contact_id_and_opportunity_id"
   end
 
-  create_table "contacts", force: :cascade do |t|
+  create_table "contacts", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "lead_id"
     t.integer "assigned_to"
@@ -173,7 +204,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
   end
 
-  create_table "emails", force: :cascade do |t|
+  create_table "emails", id: :serial, force: :cascade do |t|
     t.string "imap_message_id", null: false
     t.integer "user_id"
     t.string "mediator_type"
@@ -194,7 +225,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["mediator_id", "mediator_type"], name: "index_emails_on_mediator_id_and_mediator_type"
   end
 
-  create_table "field_groups", force: :cascade do |t|
+  create_table "field_groups", id: :serial, force: :cascade do |t|
     t.string "name", limit: 64
     t.string "label", limit: 128
     t.integer "position"
@@ -205,7 +236,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.string "klass_name", limit: 32
   end
 
-  create_table "fields", force: :cascade do |t|
+  create_table "fields", id: :serial, force: :cascade do |t|
     t.string "type"
     t.integer "field_group_id"
     t.integer "position"
@@ -217,12 +248,12 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.text "collection"
     t.boolean "disabled"
     t.boolean "required"
-    t.integer "maxlength", limit: 4
+    t.integer "maxlength"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "pair_id"
     t.text "settings"
-    t.integer "minlength", limit: 4, default: 0
+    t.integer "minlength", default: 0
     t.string "pattern"
     t.string "autofocus"
     t.string "autocomplete"
@@ -232,7 +263,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["name"], name: "index_fields_on_name"
   end
 
-  create_table "groups", force: :cascade do |t|
+  create_table "groups", id: :serial, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -246,7 +277,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id"], name: "index_groups_users_on_user_id"
   end
 
-  create_table "leads", force: :cascade do |t|
+  create_table "leads", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "campaign_id"
     t.integer "assigned_to"
@@ -278,7 +309,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id", "last_name", "deleted_at"], name: "index_leads_on_user_id_and_last_name_and_deleted_at", unique: true
   end
 
-  create_table "lists", force: :cascade do |t|
+  create_table "lists", id: :serial, force: :cascade do |t|
     t.string "name"
     t.text "url"
     t.datetime "created_at"
@@ -287,7 +318,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id"], name: "index_lists_on_user_id"
   end
 
-  create_table "opportunities", force: :cascade do |t|
+  create_table "opportunities", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "campaign_id"
     t.integer "assigned_to"
@@ -308,7 +339,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id", "name", "deleted_at"], name: "id_name_deleted", unique: true
   end
 
-  create_table "permissions", force: :cascade do |t|
+  create_table "permissions", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "asset_type"
     t.integer "asset_id"
@@ -320,7 +351,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id"], name: "index_permissions_on_user_id"
   end
 
-  create_table "preferences", force: :cascade do |t|
+  create_table "preferences", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "name", limit: 32, default: "", null: false
     t.text "value"
@@ -329,7 +360,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id", "name"], name: "index_preferences_on_user_id_and_name"
   end
 
-  create_table "sessions", force: :cascade do |t|
+  create_table "sessions", id: :serial, force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at"
@@ -338,7 +369,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "settings", force: :cascade do |t|
+  create_table "settings", id: :serial, force: :cascade do |t|
     t.string "name", limit: 32, default: "", null: false
     t.text "value"
     t.datetime "created_at"
@@ -346,7 +377,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["name"], name: "index_settings_on_name"
   end
 
-  create_table "taggings", force: :cascade do |t|
+  create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.integer "taggable_id"
     t.integer "tagger_id"
@@ -358,13 +389,13 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
   end
 
-  create_table "tags", force: :cascade do |t|
+  create_table "tags", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "tasks", force: :cascade do |t|
+  create_table "tasks", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "assigned_to"
     t.integer "completed_by"
@@ -385,7 +416,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["user_id", "name", "deleted_at"], name: "index_tasks_on_user_id_and_name_and_deleted_at", unique: true
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "username", limit: 32, default: "", null: false
     t.string "email", limit: 254, default: "", null: false
     t.string "first_name", limit: 32
@@ -428,7 +459,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["username", "deleted_at"], name: "index_users_on_username_and_deleted_at", unique: true
   end
 
-  create_table "versions", force: :cascade do |t|
+  create_table "versions", id: :serial, force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
     t.string "event", limit: 512, null: false
@@ -446,4 +477,6 @@ ActiveRecord::Schema.define(version: 2020_08_06_004459) do
     t.index ["whodunnit"], name: "index_versions_on_whodunnit"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
 end

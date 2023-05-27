@@ -104,3 +104,5 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob'
 gem 'ransack_ui'
 gem 'bootstrap', '5.0.0'
+gem 'mini_magick'
+gem 'image_processing', '~> 1.2'
