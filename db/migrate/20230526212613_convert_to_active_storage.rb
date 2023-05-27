@@ -2,23 +2,28 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
   require 'open-uri'
 
   def up
-    # postgres
-    get_blob_id = 'LASTVAL()'
-    # mariadb
-    # get_blob_id = 'LAST_INSERT_ID()'
-    # sqlite
-    # get_blob_id = 'LAST_INSERT_ROWID()'
+    case ENV['CI'] && ENV['DB']
+    when 'sqlite'
+      get_blob_id = 'LAST_INSERT_ROWID()'
+    when 'mysql'
+      get_blob_id = 'LAST_INSERT_ID()'
+    when 'postgres'
+      get_blob_id = 'LASTVAL()'
+    else
+      get_blob_id = 'LASTVAL()'
+    end
 
-    active_storage_blob_statement = ActiveRecord::Base.connection.raw_connection.prepare('active_storage_blob_statement', <<-SQL)
+
+    active_storage_blob_statement = ActiveRecord::Base.connection.raw_connection.prepare(<<-SQL)
       INSERT INTO active_storage_blobs (
-        key, filename, content_type, metadata, byte_size, checksum, created_at
-      ) VALUES ($1, $2, $3, '{}', $4, $5, $6)
+        `key`, filename, content_type, metadata, byte_size, checksum, created_at
+      ) VALUES (?, ?, ?, '{}', ?, ?, ?)
     SQL
 
-    active_storage_attachment_statement = ActiveRecord::Base.connection.raw_connection.prepare('active_storage_attachment_statement', <<-SQL)
+    active_storage_attachment_statement = ActiveRecord::Base.connection.raw_connection.prepare(<<-SQL)
       INSERT INTO active_storage_attachments (
         name, record_type, record_id, blob_id, created_at
-      ) VALUES ($1, $2, $3, #{get_blob_id}, $4)
+      ) VALUES (?, ?, ?, #{get_blob_id}, ?)
     SQL
 
     Rails.application.eager_load!
