@@ -63,7 +63,7 @@ FactoryBot.define do
   factory :avatar do
     user
     entity              { raise "Please specify :entity for the avatar" }
-    image               { file_fixture('rails.png').open }
+    image               { Rack::Test::UploadedFile.new("spec/fixtures/files/rails.png", "image/png") }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
   end
