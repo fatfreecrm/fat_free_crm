@@ -12,16 +12,16 @@
 
 namespace :license do
   FILES = { ruby: [
-    "app/**/*.rb",
-    "app/**/*.coffee",
-    "lib/**/*.rake",
-    "lib/fat_free_crm/**/*.rb",
-    "lib/fat_free_crm.rb",
-    "spec/**/*.rb",
-    "spec/spec_helper.rb",
-    "config/**/*.rb",
-    "config/settings.default.yml"
-  ],
+              "app/**/*.rb",
+              "app/**/*.coffee",
+              "lib/**/*.rake",
+              "lib/fat_free_crm/**/*.rb",
+              "lib/fat_free_crm.rb",
+              "spec/**/*.rb",
+              "spec/spec_helper.rb",
+              "config/**/*.rb",
+              "config/settings.default.yml"
+            ],
             js: [
               "app/assets/javascripts/**/*.js",
               "app/assets/javascripts/**/*.js.erb",

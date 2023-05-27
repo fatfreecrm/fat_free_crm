@@ -323,15 +323,14 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { class: 'gravatar', size: :large }.merge(args)
+    args = size_from_style!(args)
     if model.respond_to?(:avatar) && model.avatar.present?
-      args = size_from_style!(args) # convert size format :large => '75x75'
       size = args[:size].split('x').map(&:to_i) # convert '75x75' into [75, 75]
 
       image_tag model.avatar.image.variant(resize_to_limit: size)
     else
-      args = size_from_style!(args) # convert size format :large => '75x75'
       gravatar_image_tag(model.email, args)
-    end
+        end
   end
 
   # Returns default permissions intro.
