@@ -23,7 +23,10 @@ module FatFreeCRM
     # Activate observers that should always be running.
     config.active_record.observers = :lead_observer, :opportunity_observer, :task_observer, :entity_observer unless ARGV.join.include?('assets:precompile')
 
-
+    # Load development rake tasks (RSpec, Gem packaging, etc.)
+    rake_tasks do
+      Dir.glob(Rails.root.join('lib', 'development_tasks', '*.rake')).each { |t| load t }
+    end
 
     # Configuration for the application, engines, and railties goes here.
     #
