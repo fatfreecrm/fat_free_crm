@@ -49,6 +49,8 @@
 #   since changing the type of the database column would cause data to be lost.
 #
 
+require_relative 'field'
+
 class CustomField < Field
   delegate :table_name, to: :klass
 

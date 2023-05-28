@@ -108,7 +108,7 @@ module FatFreeCRM
     #--------------------------------------------------------------------------
     module Helper
       def hook(method, caller, context = {}, &block)
-        is_view_hook = caller.is_haml?
+        is_view_hook = true
 
         # If a block was given, hooks are able to replace, append or prepend view content.
         if is_view_hook

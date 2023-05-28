@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get '/login',  to: redirect('/users/sign_in')
   get '/signup', to: redirect('/users/sign_up')
 
+  require './app/models/users/user.rb'
+
   devise_for :users, controllers: { registrations: 'registrations',
                                     sessions: 'sessions',
                                     passwords: 'passwords',
