@@ -10,7 +10,7 @@
 # Should be used in conjunction with the 'annotate' gem to annotate models
 # with schema information.
 
-namespace :license do
+task :license do
   FILES = { ruby: [
     "app/**/*.rb",
     "app/**/*.coffee",
