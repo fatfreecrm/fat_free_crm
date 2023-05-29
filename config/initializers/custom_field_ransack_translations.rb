@@ -8,6 +8,7 @@
 # Load field names for custom fields, for Ransack search
 
 require './app/models/fields/custom_field.rb'
+require './app/models/setting.rb'
 
 if Setting.database_and_table_exists?
   Rails.application.config.after_initialize do
