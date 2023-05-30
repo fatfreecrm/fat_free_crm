@@ -27,7 +27,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'select2-rails'
   gem.add_dependency 'simple_form'
   gem.add_dependency 'will_paginate'
-  gem.add_dependency 'paperclip'
   gem.add_dependency 'paper_trail',         '~> 12.0.0'
   gem.add_dependency 'devise',              '~> 4.6'
   gem.add_dependency 'devise-encryptable',  '~> 0.2.0'
