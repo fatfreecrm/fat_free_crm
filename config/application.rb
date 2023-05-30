@@ -12,6 +12,7 @@ require 'rails/all'
 
 # Pick the frameworks you want:
 require "active_record/railtie"
+require "active_storage/engine"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "sprockets/railtie"

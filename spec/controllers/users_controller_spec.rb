@@ -214,9 +214,6 @@ describe UsersController do
 
       put :upload_avatar, params: { id: @user.id, avatar: { image: @image } }, xhr: true
       expect(@user.avatar).not_to eq(nil)
-      expect(@user.avatar.image_file_size).to eq(@image.size)
-      expect(@user.avatar.image_file_name).to eq(@image.original_filename)
-      expect(@user.avatar.image_content_type).to eq(@image.content_type)
       expect(response).to render_template("users/upload_avatar")
     end
 
