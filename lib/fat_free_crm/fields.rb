@@ -24,12 +24,10 @@ module FatFreeCRM
 
     module SingletonMethods
       def field_groups
-        begin
-          # catches cases where this code runs before database has been created or migrated
-          FieldGroup.where(klass_name: name).order(:position)
-        rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
-          []
-        end
+        # catches cases where this code runs before database has been created or migrated
+        FieldGroup.where(klass_name: name).order(:position)
+      rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
+        []
       end
 
       def fields
