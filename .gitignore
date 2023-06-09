@@ -25,6 +25,7 @@ Design
 *~
 *.swp
 *.gem
+*.tmp
 
 .passenger
 .vagrant
