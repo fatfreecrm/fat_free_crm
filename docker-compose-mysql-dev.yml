@@ -14,7 +14,7 @@ services:
       PASSENGER_APP_ENV: 'development'
       DB_DATABASE: 'fat_free_crm_development'
       DB_USERNAME: 'root'
-      DB_PASSWORD: 'password'
+      DB_PASSWORD: ''
       DB_HOST: db
       DB_PORT: 3306
   db:
@@ -25,7 +25,7 @@ services:
       - mysqldata:/var/lib/mysqld
     environment:
       MYSQL_DB: fat_free_crm_development
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: 
     ports:
       - '3306:3306'
 volumes:
