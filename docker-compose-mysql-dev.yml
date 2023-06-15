@@ -10,27 +10,26 @@ services:
     volumes:
       - gems:/usr/local/rvm/gems
     environment:
-      RAILS_ENV: 'production'
-      PASSENGER_APP_ENV: 'production'
-      DB_DATABASE: 'fat_free_crm_production'
-      DB_USERNAME: 'postgres'
+      RAILS_ENV: 'development'
+      PASSENGER_APP_ENV: 'development'
+      DB_DATABASE: 'fat_free_crm_development'
+      DB_USERNAME: 'root'
       DB_PASSWORD: ''
       DB_HOST: 'db'
-      DB_PORT: 5432
+      DB_PORT: 3306
   db:
-    image: postgres:12.15-alpine
+    image: mysql:5.7.42
     container_name: db
     restart: always
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - mysqldata:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: fat_free_crm_production
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ''
+      MYSQL_DB: fat_free_crm_development
+      MYSQL_ROOT_PASSWORD:
     ports:
-      - '5432:5432'
+      - '3306:3306'
 volumes:
-  pgdata: {}
+  mysqldata: {}
   gems: {}
 networks:
   default:
