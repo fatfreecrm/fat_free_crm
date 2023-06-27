@@ -31,3 +31,6 @@ services:
 volumes:
   mysqldata: {}
   gems: {}
+networks:
+  default:
+    name: fat_free_crm_default
