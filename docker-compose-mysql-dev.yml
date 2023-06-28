@@ -1,0 +1,36 @@
+version: '3'
+services:
+  web:
+    build: .
+    links:
+      - db
+    ports:
+      - '3000:3000'
+      - '80:80'
+    volumes:
+      - gems:/usr/local/rvm/gems
+    environment:
+      RAILS_ENV: 'development'
+      PASSENGER_APP_ENV: 'development'
+      DB_DATABASE: 'fat_free_crm_development'
+      DB_USERNAME: 'root'
+      DB_PASSWORD: ''
+      DB_HOST: db
+      DB_PORT: 3306
+  db:
+    image: mysql:latest
+    container_name: db
+    restart: always
+    volumes:
+      - mysqldata:/var/lib/mysqld
+    environment:
+      MYSQL_DB: fat_free_crm_development
+      MYSQL_ROOT_PASSWORD: 
+    ports:
+      - '3306:3306'
+volumes:
+  mysqldata: {}
+  gems: {}
+networks:
+  default:
+    name: fat_free_crm_default
