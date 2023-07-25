@@ -72,6 +72,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'webrick'
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
