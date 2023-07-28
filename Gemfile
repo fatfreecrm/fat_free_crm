@@ -79,6 +79,7 @@ group :test do
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
   gem 'sqlite3', '~> 1.4.0'
+  gem 'webrick'
 end
 
 group :heroku do
