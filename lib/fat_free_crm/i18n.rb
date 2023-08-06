@@ -14,7 +14,7 @@ module FatFreeCRM
       if args.size == 1
         super(args.first, default: args.first.to_s)
       elsif args.second.is_a?(Hash)
-        super(*args)
+        super(args.first, **args.second)
       elsif args.second.is_a?(Integer)
         super(args.first, count: args.second)
       else
