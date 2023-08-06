@@ -15,10 +15,10 @@ describe 'I18n.t()' do
 
   let(:entity_string) { 'entities' }
   let(:hidden_count) { 10 }
-  let(:test_controler) { TestController.new }
+  let(:test_controller) { TestController.new }
 
   it 'should translate hash arguments' do
-    expect(test_controler.t(:not_showing_hidden_entities, entity: entity_string, count: hidden_count))
+    expect(test_controller.t(:not_showing_hidden_entities, entity: entity_string, count: hidden_count))
       .to eq("Not showing 10 hidden entities.")
   end
 end
