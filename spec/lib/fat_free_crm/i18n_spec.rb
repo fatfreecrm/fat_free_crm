@@ -7,12 +7,11 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+class TestController < ActionController::Base
+  include FatFreeCRM::I18n
+end
+
 describe 'I18n.t()' do
-
-  class TestController < ActionController::Base
-    include FatFreeCRM::I18n
-  end
-
   let(:entity_string) { 'entities' }
   let(:hidden_count) { 10 }
   let(:test_controller) { TestController.new }

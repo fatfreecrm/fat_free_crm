@@ -75,7 +75,16 @@ module FatFreeCRM
     config.filter_parameters += %i[password encrypted_password password_salt password_confirmation]
 
     # Enable support for loading via Psych, required by PaperTrail
-    config.active_record.use_yaml_unsafe_load = true
+    config.active_record.use_yaml_unsafe_load = false
+    config.active_record.yaml_column_permitted_classes = [
+      ::ActiveRecord::Type::Time::Value,
+      ::ActiveSupport::TimeWithZone,
+      ::ActiveSupport::TimeZone,
+      ::BigDecimal,
+      ::Date,
+      ::Symbol,
+      ::Time
+    ]
   end
 end
 
