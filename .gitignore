@@ -28,3 +28,5 @@ Design
 
 .passenger
 .vagrant
+storage/
+.byebug_history

@@ -300,18 +300,37 @@ module ApplicationHelper
     raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});" unless session[:timezone_offset]
   end
 
+  STYLES = { large: "75x75#", medium: "50x50#", small: "25x25#", thumb: "16x16#" }.freeze
+
+  # Convert STYLE symbols to 'w x h' format for Gravatar and Rails
+  # e.g. size_from_style(:size => :large) -> '75x75'
+  # Allow options to contain :width and :height override keys
+  #----------------------------------------------------------------------------
+  def size_from_style!(options)
+    if options[:width] && options[:height]
+      options[:size] = %i[width height].map { |d| options[d] }.join("x")
+      options.delete(:width)
+      options.delete(:height)
+    elsif STYLES.keys.include?(options[:size])
+      options[:size] = STYLES[options[:size]].sub(/\#\z/, '')
+    end
+    options
+  end
+
   # Entities can have associated avatars or gravatars. Only calls Gravatar
   # in production env. Gravatar won't serve default images if they are not
   # publically available: https://en.gravatar.com/site/implement/images
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { class: 'gravatar', size: :large }.merge(args)
+    args = size_from_style!(args)
     if model.respond_to?(:avatar) && model.avatar.present?
-      image_tag(model.avatar.image.url(args.delete(:size)), args)
+      size = args[:size].split('x').map(&:to_i) # convert '75x75' into [75, 75]
+
+      image_tag model.avatar.image.variant(resize_to_limit: size)
     else
-      args = Avatar.size_from_style!(args) # convert size format :large => '75x75'
       gravatar_image_tag(model.email, args)
-    end
+        end
   end
 
   # Returns default permissions intro.

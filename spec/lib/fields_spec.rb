@@ -37,16 +37,20 @@ describe 'FatFreeCRM::Fields' do
   end
 
   describe "field_groups" do
-    it "should call FieldGroup" do
-      expect(ActiveRecord::Base.connection).to receive(:data_source_exists?).with('field_groups').and_return(true)
+    it "should call FieldGroup.where" do
       dummy_scope = double
       expect(dummy_scope).to receive(:order).with(:position)
       expect(FieldGroup).to receive(:where).and_return(dummy_scope)
       Foo.new.field_groups
     end
 
-    it "should not call FieldGroup if table doesn't exist (migrations not yet run)" do
-      expect(ActiveRecord::Base.connection).to receive(:data_source_exists?).with('field_groups').and_return(false)
+    it "should return [] if database doesn't exist" do
+      expect(FieldGroup).to receive(:where).and_raise(ActiveRecord::NoDatabaseError)
+      expect(Foo.new.field_groups).to eq([])
+    end
+
+    it "should return [] if FieldGroup table doesn't exist" do
+      expect(FieldGroup).to receive(:where).and_raise(ActiveRecord::StatementInvalid)
       expect(Foo.new.field_groups).to eq([])
     end
   end

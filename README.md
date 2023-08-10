@@ -54,7 +54,7 @@ Visit our website at http://www.fatfreecrm.com/
 
 ## System Requirements
 
-* Ruby 2.6+ recommended
+* Ruby 3.1+ recommended
 * MySQL v4.1.1 or later (v5+ is recommended), SQLite v3.4 or later, or Postgres 8.4.8 or later.
 * ImageMagick (optional, only needed if you would like to use avatars)
 

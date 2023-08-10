@@ -31,6 +31,14 @@ Rails.application.configure do
     config.action_controller.perform_caching = false
 
     config.cache_store = :null_store
+
+    # Adds additional error checking when serving assets at runtime.
+    # Checks for improperly declared sprockets dependencies.
+    # Raises helpful error messages.
+    config.assets.raise_runtime_errors = true
+
+    # Store files locally.
+    config.active_storage.service = :local
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).

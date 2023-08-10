@@ -29,8 +29,6 @@ TASK_STATUSES = %w[pending assigned completed].freeze
 
 I18n.locale = 'en-US'
 
-Paperclip.options[:log] = false
-
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 

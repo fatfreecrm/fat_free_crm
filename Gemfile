@@ -79,6 +79,7 @@ group :test do
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
   gem 'sqlite3', '~> 1.4.0'
+  gem 'webrick'
 end
 
 group :heroku do
@@ -104,3 +105,5 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob'
 gem 'ransack_ui'
 gem 'bootstrap', '5.0.0'
+gem 'mini_magick'
+gem 'image_processing', '~> 1.2'

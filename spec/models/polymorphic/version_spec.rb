@@ -104,6 +104,23 @@ describe Version, versioning: true do
         @version = Version.where(related_id: @item.id, related_type: @item.class.name, whodunnit: PaperTrail.request.whodunnit, event: 'create').first
         expect(@version).not_to eq(nil)
       end
+
+      # NOTE: This to ensure that the yaml_column_permitted_classes config option in
+      # application.rb is set correctly. If this test fails, then you need to add the
+      # class to the list of permitted classes.
+      it "should include version object changes when updating existing #{item}" do
+        if @item.respond_to?(:full_name)
+          previous_name_attributes = @item.attributes.slice('first_name', 'last_name')
+          @item.update(first_name: "Billy", last_name: "Bones")
+        else
+          previous_name_attributes = @item.attributes.slice('name')
+          @item.update(name: "Billy Bones")
+        end
+        @version = Version.where(@conditions.merge(event: 'update')).first
+
+        expect(@version.object).to be_present
+        expect(@version.reify.attributes).to include(previous_name_attributes)
+      end
     end
   end
 
