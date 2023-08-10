@@ -1,7 +1,5 @@
-# Fat Free CRM [![TravisCI][travis-img-url]][travis-ci-url]  [![Code Climate][codeclimate-img-url]][codeclimate-url] [![Discord][discord-img-url]][discord-url]
+# Fat Free CRM  [![Code Climate][codeclimate-img-url]][codeclimate-url] [![Discord][discord-img-url]][discord-url]
 
-[travis-img-url]: https://secure.travis-ci.org/fatfreecrm/fat_free_crm.svg?branch=master
-[travis-ci-url]: https://travis-ci.org/fatfreecrm/fat_free_crm
 [codeclimate-img-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm.svg
 [codeclimate-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm
 [discord-img-url]: https://img.shields.io/badge/chat-on%20discord-7289da.svg?sanitize=true
@@ -110,7 +108,7 @@ Fat Free CRM is released under the MIT license and is freely available for you t
 
 Specific features that are not 'Fat Free' in nature, can be added by creating Rails Engines. See the [wiki](http://github.com/fatfreecrm/fat_free_crm/wiki) for information on how to do this.
 
-Tests can easily be run by typing 'rake' but please note that they do take a while to run! Alternatively, you can see the test build status over at our [travis page](http://travis-ci.org/fatfreecrm/fat_free_crm)
+Tests can easily be run by typing 'rake' but please note that they do take a while to run!
 
 
 ## Main contributors
