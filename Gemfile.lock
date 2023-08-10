@@ -99,7 +99,7 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.9.2, < 3)
       sassc-rails (>= 2.0.0)
-    brakeman (5.4.1)
+    brakeman (6.0.1)
     builder (3.2.4)
     byebug (11.1.3)
     cancancan (3.5.0)
@@ -160,7 +160,7 @@ GEM
     devise-i18n (1.11.0)
       devise (>= 4.9.0)
     diff-lcs (1.5.0)
-    dynamic_form (1.1.4)
+    dynamic_form (1.2.0)
     email_reply_parser_ffcrm (0.5.0)
     erubi (1.12.0)
     execjs (2.8.1)
@@ -232,7 +232,7 @@ GEM
     mini_mime (1.1.2)
     mini_racer (0.6.4)
       libv8-node (~> 16.19.0.0)
-    minitest (5.18.1)
+    minitest (5.19.0)
     msgpack (1.6.0)
     nenv (0.3.0)
     net-imap (0.3.6)
@@ -254,9 +254,9 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
-    paper_trail (12.0.0)
-      activerecord (>= 5.2)
-      request_store (~> 1.1)
+    paper_trail (15.0.0)
+      activerecord (>= 6.1)
+      request_store (~> 1.4)
     parallel (1.23.0)
     parser (3.2.2.3)
       ast (~> 2.4.1)
@@ -276,7 +276,7 @@ GEM
     puma (6.3.0)
       nio4r (~> 2.0)
     racc (1.7.1)
-    rack (2.2.7)
+    rack (2.2.8)
     rack-test (2.1.0)
       rack (>= 1.3)
     rails (6.1.7.4)
@@ -342,7 +342,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.8.1)
-    request_store (1.5.0)
+    request_store (1.5.1)
       rack (>= 1.4)
     responders (3.1.0)
       actionpack (>= 5.2)
@@ -441,6 +441,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (~> 4.0, < 4.11)
+    webrick (1.8.1)
     websocket (1.2.9)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
@@ -448,7 +449,7 @@ GEM
     will_paginate (4.0.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.8)
+    zeitwerk (2.6.11)
     zeus (0.15.14)
       method_source (>= 0.6.7)
 
@@ -496,7 +497,7 @@ DEPENDENCIES
   mini_magick
   mini_racer
   nokogiri (>= 1.8.1)
-  paper_trail (~> 12.0.0)
+  paper_trail (~> 15.0.0)
   pg
   premailer
   pry-rails
@@ -531,6 +532,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier
   webdrivers
+  webrick
   will_paginate
   zeus
 

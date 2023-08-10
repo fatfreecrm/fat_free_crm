@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.email = ['mike@fatfreecrm.com', 'steveyken@gmail.com', 'daniel.oconnor@gmail.com']
   gem.files = Dir["{app,config,db,lib,vendor,public,bin,log/script}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "config.ru", "CHANGELOG.md", "CONTRIBUTING.md"]
   gem.version = FatFreeCRM::VERSION::STRING
-  gem.required_ruby_version = '>= 2.7.0'
+  gem.required_ruby_version = '>= 3.1'
   gem.license = 'MIT'
 
   gem.add_dependency 'rails', '~> 6.1.0'
@@ -27,7 +27,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'select2-rails'
   gem.add_dependency 'simple_form'
   gem.add_dependency 'will_paginate'
-  gem.add_dependency 'paper_trail',         '~> 12.0.0'
+  gem.add_dependency 'paper_trail',         '~> 15.0.0'
   gem.add_dependency 'devise',              '~> 4.6'
   gem.add_dependency 'devise-encryptable',  '~> 0.2.0'
   gem.add_dependency 'acts_as_commentable', '~> 6.0.0'
