@@ -15,17 +15,33 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
                     'LASTVAL()'
                   end
 
-    ActiveRecord::Base.connection.raw_connection.prepare(<<-SQL)
-      INSERT INTO active_storage_blobs (
-        `key`, filename, content_type, metadata, byte_size, checksum, created_at
-      ) VALUES (?, ?, ?, '{}', ?, ?, ?)
-    SQL
+    ActiveRecord::Base.connection.raw_connection.then do |conn|
+      if conn.is_a?(PG::Connection)
+        conn.prepare('active_storage_blobs', <<-SQL)
+          INSERT INTO active_storage_blobs (
+            key, filename, content_type, metadata, byte_size, checksum, created_at
+          ) VALUES ($1, $2, $3, '{}', $4, $5, $6)
+        SQL
 
-    ActiveRecord::Base.connection.raw_connection.prepare(<<-SQL)
-      INSERT INTO active_storage_attachments (
-        name, record_type, record_id, blob_id, created_at
-      ) VALUES (?, ?, ?, #{get_blob_id}, ?)
-    SQL
+        conn.prepare('active_storage_attachments', <<-SQL)
+          INSERT INTO active_storage_attachments (
+            name, record_type, record_id, blob_id, created_at
+          ) VALUES ($1, $2, $3, #{get_blob_id}, $4)
+        SQL
+      else
+        conn.raw_connection.prepare(<<-SQL)
+          INSERT INTO active_storage_blobs (
+            `key`, filename, content_type, metadata, byte_size, checksum, created_at
+          ) VALUES (?, ?, ?, '{}', ?, ?, ?)
+        SQL
+
+        conn.raw_connection.prepare(<<-SQL)
+          INSERT INTO active_storage_attachments (
+            name, record_type, record_id, blob_id, created_at
+          ) VALUES (?, ?, ?, #{get_blob_id}, ?)
+        SQL
+      end
+    end
 
     Rails.application.eager_load!
     models = ActiveRecord::Base.descendants.reject { |model| model.abstract_class? || model == ActionMailbox::InboundEmail || model == ActionText::RichText }
