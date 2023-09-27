@@ -193,8 +193,9 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    haml (5.2.2)
-      temple (>= 0.8.0)
+    haml (6.1.4)
+      temple (>= 0.8.2)
+      thor
       tilt
     headless (2.3.1)
     htmlentities (4.3.4)
@@ -424,9 +425,9 @@ GEM
     sshkit (1.21.5)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    temple (0.8.2)
+    temple (0.10.2)
     thor (1.2.2)
-    tilt (2.0.10)
+    tilt (2.3.0)
     timecop (0.9.8)
     timeout (0.4.0)
     tzinfo (2.0.6)
