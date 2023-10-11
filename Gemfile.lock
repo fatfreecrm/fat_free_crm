@@ -510,7 +510,7 @@ DEPENDENCIES
   rails_12factor
   rails_autolink
   rainbow
-  ransack (>= 1.6.2)
+  ransack (< 4)
   ransack_ui
   rb-fchange
   rb-fsevent
