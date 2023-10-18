@@ -99,4 +99,6 @@ class CommentsController < ApplicationController
   def extract_commentable_name(params)
     params.keys.detect { |x| x =~ /_id$/ }.try(:sub, /_id$/, '')
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_comments_controller, self)
 end

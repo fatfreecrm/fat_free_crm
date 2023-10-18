@@ -164,4 +164,6 @@ class ContactsController < EntitiesController
       redirect_to contacts_path
     end
   end
+  
+  ActiveSupport.run_load_hooks(:fat_free_crm_contacts_controller, self)
 end

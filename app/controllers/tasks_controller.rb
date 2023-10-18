@@ -224,4 +224,6 @@ class TasksController < ApplicationController
     views = Task::ALLOWED_VIEWS
     views.include?(view) ? view : views.first
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_tasks_controller, self)
 end

@@ -245,4 +245,6 @@ class EntitiesController < ApplicationController
       Account.new(user: user)
     end
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_entities_controller, self)
 end

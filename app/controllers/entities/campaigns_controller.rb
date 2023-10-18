@@ -204,4 +204,6 @@ class CampaignsController < EntitiesController
     end
     @campaign_status_total[:other] += @campaign_status_total[:all]
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_campaigns_controller, self)
 end

@@ -160,4 +160,6 @@ class AccountsController < EntitiesController
     @account_category_total[:all] = Account.my(current_user).count
     @account_category_total[:other] = @account_category_total[:all] - categorized
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_accounts_controller, self)
 end
