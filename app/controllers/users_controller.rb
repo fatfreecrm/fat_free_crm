@@ -143,4 +143,6 @@ class UsersController < ApplicationController
       .permit(:image)
       .merge(entity: @user, user_id: @user.id)
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_users_controller, self)
 end

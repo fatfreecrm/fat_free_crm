@@ -15,4 +15,6 @@ class EmailsController < ApplicationController
     @email.destroy
     respond_with(@email)
   end
+  
+  ActiveSupport.run_load_hooks(:fat_free_crm_emails_controller, self)
 end

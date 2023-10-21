@@ -39,4 +39,6 @@ class ListsController < ApplicationController
       :user_id
     )
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_lists_controller, self)
 end

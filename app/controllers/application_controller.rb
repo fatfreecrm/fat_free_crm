@@ -268,4 +268,6 @@ class ApplicationController < ActionController::Base
       raise "Unknown resource"
     end
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_application_controller, self)
 end

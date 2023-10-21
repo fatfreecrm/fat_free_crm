@@ -268,4 +268,6 @@ class LeadsController < EntitiesController
       get_data_for_sidebar(:campaign)
     end
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_leads_controller, self)
 end
