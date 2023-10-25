@@ -10,5 +10,6 @@ field_group_<%= i %>:
   id          : <%= i %>
   klass_name  : <%= klasses[i-1] %>
   name        : "Extra"
-  position    : 1
+  position    : 1,
+  label       : "Extra"
 <% end %>
