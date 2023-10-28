@@ -35,13 +35,18 @@ describe ApplicationHelper do
     end
   end
 
-  it "link_to_discard" do
-    lead = create(:lead)
-    allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
-
-    link = helper.link_to_discard(lead)
-    expect(link).to match(%r{leads/#{lead.id}/discard})
-    expect(link).to match(/attachment=Lead&amp;attachment_id=#{lead.id}/)
+  describe "link_to_discard" do
+    let(:contact) { create(:contact) }
+    let(:opportunity) { create(:opportunity) }
+    before do
+      contact.opportunities << opportunity
+      allow(helper).to receive(:entity).and_return(contact)
+    end
+    it do
+      link = helper.link_to_discard(opportunity)
+      expect(link).to match(%r{contacts/#{contact.id}/discard})
+      expect(link).to match(/attachment=Opportunity&amp;attachment_id=#{opportunity.id}/)
+    end
   end
 
   describe "shown_on_landing_page?" do
