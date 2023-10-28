@@ -18,6 +18,7 @@ if Setting.database_and_table_exists?
         translations[:ransack][:attributes][model_key][custom_field.name] = custom_field.label
       end
     end
+    rescue ActiveRecord::StatementInvalid, PG::UndefinedTable # can happen if a migration fails and DB is not correctly setup.
 
     I18n.backend.store_translations(Setting.locale.to_sym, translations)
   end
