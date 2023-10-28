@@ -124,7 +124,7 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def add_column
     self.name = generate_column_name if name.blank?
-    klass.connection.add_column(table_name, name, column_type, column_options)
+    klass.connection.add_column(table_name, name, column_type, **column_options)
     klass.reset_column_information
     klass.serialize_custom_fields!
   end
