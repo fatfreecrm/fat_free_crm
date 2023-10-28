@@ -1,3 +1,1 @@
-//= link_tree ../images
-//= link_directory ../javascripts .js
-//= link_directory ../stylesheets .css
+//= link fat_free_crm
