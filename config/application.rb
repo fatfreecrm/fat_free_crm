@@ -78,6 +78,7 @@ module FatFreeCRM
     config.active_record.use_yaml_unsafe_load = false
     config.active_record.yaml_column_permitted_classes = [
       ::ActiveRecord::Type::Time::Value,
+      ::ActiveSupport::HashWithIndifferentAccess, # for Field#settings serialization see app/models/fields/field.rb
       ::ActiveSupport::TimeWithZone,
       ::ActiveSupport::TimeZone,
       ::BigDecimal,
