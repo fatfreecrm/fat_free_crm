@@ -142,7 +142,7 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def update_column
     if errors.empty? && db_transition_safety(as_was) == :safe
-      klass.connection.change_column(table_name, name, column_type, column_options)
+      klass.connection.change_column(table_name, name, column_type, **column_options)
       klass.reset_column_information
       klass.serialize_custom_fields!
     end

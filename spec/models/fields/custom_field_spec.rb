@@ -31,12 +31,25 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe CustomField do
   it "should add a column to the database" do
     expect(CustomField.connection).to receive(:add_column)
-      .with("contacts", "cf_test_field", 'string', {})
+      .with("contacts", "cf_test_field", 'string')
     expect(Contact).to receive(:reset_column_information)
     expect(Contact).to receive(:serialize_custom_fields!)
 
     create(:custom_field,
            as: "string",
+           name: "cf_test_field",
+           label: "Test Field",
+           field_group: create(:field_group, klass_name: "Contact"))
+  end
+
+  it "should add a column to the database and include column_options" do
+    expect(CustomField.connection).to receive(:add_column)
+      .with("contacts", "cf_test_field", 'decimal', {"precision" => 15, "scale" => 2})
+    expect(Contact).to receive(:reset_column_information)
+    expect(Contact).to receive(:serialize_custom_fields!)
+
+    create(:custom_field,
+           as: "decimal",
            name: "cf_test_field",
            label: "Test Field",
            field_group: create(:field_group, klass_name: "Contact"))
@@ -75,9 +88,9 @@ describe CustomField do
 
   it "should change a column's type for safe transitions" do
     expect(CustomField.connection).to receive(:add_column)
-      .with("contacts", "cf_test_field", 'string', {})
+      .with("contacts", "cf_test_field", 'string')
     expect(CustomField.connection).to receive(:change_column)
-      .with("contacts", "cf_test_field", 'text', {})
+      .with("contacts", "cf_test_field", 'text')
     expect(Contact).to receive(:reset_column_information).twice
     expect(Contact).to receive(:serialize_custom_fields!).twice
 
