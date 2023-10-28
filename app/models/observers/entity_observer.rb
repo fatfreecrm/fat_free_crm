@@ -19,7 +19,7 @@ class EntityObserver < ActiveRecord::Observer
   private
 
   def send_notification_to_assignee(item)
-    UserMailer.assigned_entity_notification(item, current_user).deliver_now if item.assignee.present? && current_user.present? && can_send_email?
+    UserMailer.assigned_entity_notification(item, current_user).deliver_later if item.assignee.present? && current_user.present? && can_send_email?
   end
 
   # Need to have a host set before email can be sent
