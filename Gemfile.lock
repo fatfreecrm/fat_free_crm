@@ -92,7 +92,7 @@ GEM
     autoprefixer-rails (10.3.3.0)
       execjs (~> 2)
     bcrypt (3.1.19)
-    bootsnap (1.16.0)
+    bootsnap (1.17.0)
       msgpack (~> 1.2)
     bootstrap (5.0.0)
       autoprefixer-rails (>= 9.1.0)
@@ -233,7 +233,7 @@ GEM
     mini_racer (0.8.0)
       libv8-node (~> 18.16.0.0)
     minitest (5.20.0)
-    msgpack (1.6.0)
+    msgpack (1.7.2)
     nenv (0.3.0)
     net-imap (0.3.6)
       date
