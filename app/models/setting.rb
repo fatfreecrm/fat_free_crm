@@ -64,7 +64,7 @@ class Setting < ActiveRecord::Base
         end
       end
       # Check YAML settings
-      return cache[name] = yaml_settings[name] if yaml_settings.key?(name)
+      cache[name] = yaml_settings[name] if yaml_settings.key?(name)
     end
 
     # Set setting value
