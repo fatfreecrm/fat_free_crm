@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/new" do
+describe "contacts/new" do
   include ContactsHelper
 
   before do

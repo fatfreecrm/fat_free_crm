@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/users/update" do
+describe "users/update" do
   include UsersHelper
 
   before do

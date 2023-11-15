@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/opportunities/index" do
+describe "opportunities/index" do
   include OpportunitiesHelper
 
   before do

@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/destroy" do
+describe "accounts/destroy" do
   include AccountsHelper
 
   before do

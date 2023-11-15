@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/users/upload_avatar" do
+describe "users/upload_avatar" do
   include UsersHelper
 
   before do

@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/index" do
+describe "accounts/index" do
   include AccountsHelper
 
   before do

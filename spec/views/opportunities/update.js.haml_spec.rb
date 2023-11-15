@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/opportunities/update" do
+describe "opportunities/update" do
   before do
     login
 

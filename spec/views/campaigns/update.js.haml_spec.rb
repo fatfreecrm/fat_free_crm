@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/update" do
+describe "campaigns/update" do
   before do
     login
     assign(:campaign, @campaign = build_stubbed(:campaign, user: current_user))

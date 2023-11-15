@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/application/_auto_complete" do
+describe "application/_auto_complete" do
   include AccountsHelper
 
   before do

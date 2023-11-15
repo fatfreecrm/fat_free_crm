@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/uncomplete" do
+describe "tasks/uncomplete" do
   include TasksHelper
 
   before do

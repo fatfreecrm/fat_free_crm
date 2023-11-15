@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/index" do
+describe "opportunities/index" do
   include OpportunitiesHelper
 
   before do

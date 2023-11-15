@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/create" do
+describe "campaigns/create" do
   before do
     login
   end
