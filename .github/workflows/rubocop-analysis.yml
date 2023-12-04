@@ -19,8 +19,11 @@ jobs:
       uses: ruby/setup-ruby@v1
 
     # This step is not necessary if you add the gem to your Gemfile
+    - name: Install dependencies
+      run: bundle install
+
     - name: Install Code Scanning integration
-      run: bundle add code-scanning-rubocop --skip-install
+      run: bundle add code-scanning-rubocop
 
     - name: Install dependencies
       run: bundle install
