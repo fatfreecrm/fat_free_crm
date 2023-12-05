@@ -126,12 +126,13 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_discard(object)
-    if entity.present?
-      link_to(t(:discard),
-        url_for(controller: entity.class.to_s.tableize, action: 'discard', id: entity.id, attachment: object.class.name, attachment_id: object.id),
-        method:  :post,
-        remote:  true)
-    end
+    current_url = (request.xhr? ? request.referer : request.fullpath)
+    parent, parent_id = current_url.scan(%r{/(\w+)/(\d+)}).flatten
+
+    link_to(t(:discard),
+            url_for(controller: parent, action: :discard, id: parent_id, attachment: object.class.name, attachment_id: object.id),
+            method:  :post,
+            remote:  true)
   end
 
   #----------------------------------------------------------------------------
