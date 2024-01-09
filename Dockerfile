@@ -4,7 +4,7 @@
 # docker-compose up
 # docker-compose exec web bundle exec rake db:create db:schema:load ffcrm:demo:load
 
-FROM ruby:3.1
+FROM ruby:3.2
 
 LABEL author="Steve Kenworthy"
 
