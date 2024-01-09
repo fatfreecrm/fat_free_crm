@@ -108,6 +108,7 @@ translations to the Fat Free CRM:
   * Robert Fletcher
   * Rob Esposito
   * Roman Smirnov
+  * Roman Shterenzon
   * Ryan Stenhouse
   * Satoru Ishikawa
   * Scott
