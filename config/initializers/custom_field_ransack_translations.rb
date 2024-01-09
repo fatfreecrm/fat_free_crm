@@ -6,6 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 # Load field names for custom fields, for Ransack search
+require './app/models/setting'
 if Setting.database_and_table_exists?
   Rails.application.config.after_initialize do
     I18n.backend.load_translations

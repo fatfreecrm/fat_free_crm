@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/users/password" do
+describe "users/password" do
   include UsersHelper
 
   before do

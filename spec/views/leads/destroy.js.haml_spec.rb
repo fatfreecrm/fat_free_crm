@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/destroy" do
+describe "leads/destroy" do
   before do
     login
     assign(:lead, @lead = build_stubbed(:lead))

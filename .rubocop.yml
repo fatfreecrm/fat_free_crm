@@ -22,7 +22,7 @@ Lint/ScriptPermission:
   Exclude:
     - 'Rakefile'
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Metrics/BlockLength:
@@ -42,7 +42,7 @@ Security/YAMLLoad:
     - 'db/migrate/*.rb'
     - 'lib/tasks/ffcrm/config.rake'
 
-StringLiterals:
+Style/StringLiterals:
   Enabled: false
 
 Style/Alias:

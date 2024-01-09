@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/reject" do
+describe "leads/reject" do
   before do
     login
     assign(:lead, @lead = build_stubbed(:lead, status: "new"))

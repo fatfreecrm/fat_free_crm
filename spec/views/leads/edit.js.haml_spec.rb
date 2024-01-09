@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/edit" do
+describe "leads/edit" do
   include LeadsHelper
 
   before do

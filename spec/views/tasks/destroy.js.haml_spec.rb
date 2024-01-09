@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/destroy" do
+describe "tasks/destroy" do
   include TasksHelper
 
   before do

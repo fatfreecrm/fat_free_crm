@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/campaigns/new" do
+describe "campaigns/new" do
   include CampaignsHelper
 
   before do

@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/users/edit" do
+describe "users/edit" do
   include UsersHelper
 
   before do

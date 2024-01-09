@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/index" do
+describe "contacts/index" do
   include ContactsHelper
 
   before do

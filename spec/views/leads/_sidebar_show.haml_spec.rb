@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/_sidebar_show" do
+describe "leads/_sidebar_show" do
   include LeadsHelper
 
   before do

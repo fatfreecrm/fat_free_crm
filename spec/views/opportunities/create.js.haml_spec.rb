@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/opportunities/create" do
+describe "opportunities/create" do
   before do
     login
     assign(:stage, Setting.unroll(:opportunity_stage))
