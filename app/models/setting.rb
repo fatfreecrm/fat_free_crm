@@ -58,10 +58,8 @@ class Setting < ActiveRecord::Base
       return cache[name] if cache.key?(name)
 
       # Check database
-      if database_and_table_exists?
-        if setting = find_by_name(name.to_s)
-          return cache[name] = setting.value unless setting.value.nil?
-        end
+      if database_and_table_exists? && (setting = find_by_name(name.to_s))&.value.present?
+        return cache[name] = setting.value
       end
       # Check YAML settings
       cache[name] = yaml_settings[name] if yaml_settings.key?(name)
@@ -73,6 +71,7 @@ class Setting < ActiveRecord::Base
       raise ArgumentError, "name cannot be blank" if name.blank?
 
       return nil unless database_and_table_exists?
+
       setting = find_by_name(name.to_s) || new(name: name.to_s)
       setting.value = value
       setting.save
