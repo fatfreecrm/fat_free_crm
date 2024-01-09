@@ -84,7 +84,7 @@ class CampaignsController < EntitiesController
   # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
-    @previous = Campaign.my(current_user).find_by_id(detect_previous_id) if detect_previous_id
+    @previous = Campaign.my(current_user).find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
 
     respond_with(@campaign)
   end

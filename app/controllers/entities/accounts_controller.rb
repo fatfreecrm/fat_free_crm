@@ -45,7 +45,7 @@ class AccountsController < EntitiesController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @previous = Account.my(current_user).find_by_id(detect_previous_id) if detect_previous_id
+    @previous = Account.my(current_user).find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
 
     respond_with(@account)
   end

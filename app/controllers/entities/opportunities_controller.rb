@@ -57,7 +57,7 @@ class OpportunitiesController < EntitiesController
     @account  = @opportunity.account || Account.new(user: current_user)
     @accounts = Account.my(current_user).order('name')
 
-    @previous = Opportunity.my(current_user).find_by_id(detect_previous_id) if detect_previous_id
+    @previous = Opportunity.my(current_user).find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
 
     respond_with(@opportunity)
   end

@@ -58,7 +58,7 @@ class TasksController < ApplicationController
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?
 
-    @previous = Task.tracked_by(current_user).find_by_id(detect_previous_id) if detect_previous_id
+    @previous = Task.tracked_by(current_user).find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
 
     respond_with(@task)
   end

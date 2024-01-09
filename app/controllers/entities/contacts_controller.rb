@@ -51,7 +51,7 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def edit
     @account = @contact.account || Account.new(user: current_user)
-    @previous = Contact.my(current_user).find_by_id(detect_previous_id) if detect_previous_id
+    @previous = Contact.my(current_user).find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
 
     respond_with(@contact)
   end

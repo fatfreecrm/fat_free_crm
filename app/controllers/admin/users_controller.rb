@@ -35,7 +35,7 @@ class Admin::UsersController < Admin::ApplicationController
   # GET /admin/users/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   def edit
-    @previous = User.find_by_id(detect_previous_id) if detect_previous_id
+    @previous = User.find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
 
     respond_with(@user)
   end
