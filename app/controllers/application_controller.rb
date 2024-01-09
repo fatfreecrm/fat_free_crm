@@ -269,5 +269,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # In a number of places, we pass ?previous=(id) or ?previous=crm.find_form...
+  # This method centralises all of the places we can pass in a previous param
+  # and extracts an int ID, or nil
+  def detect_previous_id
+    return unless params[:previous]
+    return if params[:previous].start_with?("crm")
+
+    params[:previous].to_i
+  end
   ActiveSupport.run_load_hooks(:fat_free_crm_application_controller, self)
 end
