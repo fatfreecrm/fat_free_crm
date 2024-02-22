@@ -9,8 +9,8 @@
     @[0].toUpperCase() + @.substring(1)
 
   window.crm =
-    EXPANDED: "&#9660;"
-    COLLAPSED: "&#9658;"
+    EXPANDED: "&#9661;"
+    COLLAPSED: "&#9655;"
     searchRequest: null
     autocompleter: null
     base_url: ""
