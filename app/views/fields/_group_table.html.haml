@@ -8,6 +8,8 @@
           - if field.as == 'check_boxes'
             - value = f.object.send(field.name)
             - checked = YAML.load(value.to_s)
-          = f.input field.name, field.input_options.merge(checked: checked)
+          .label.top
+            = "#{field.label}:"
+          = f.input_field field.name, field.input_options.merge(checked: checked)
         - if i == 0
           %td= spacer
