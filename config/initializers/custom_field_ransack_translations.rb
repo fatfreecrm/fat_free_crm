@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 # Load field names for custom fields, for Ransack search
-if Setting.database_and_table_exists?
+if Setting.database_and_table_exists? and ActiveRecord::Base.connection.table_exists?(:custom_fields)
   Rails.application.config.after_initialize do
     I18n.backend.load_translations
 
@@ -18,7 +18,6 @@ if Setting.database_and_table_exists?
         translations[:ransack][:attributes][model_key][custom_field.name] = custom_field.label
       end
     end
-    rescue ActiveRecord::StatementInvalid, PG::UndefinedTable # can happen if a migration fails and DB is not correctly setup.
 
     I18n.backend.store_translations(Setting.locale.to_sym, translations)
   end
