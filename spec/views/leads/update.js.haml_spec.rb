@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/update" do
+describe "leads/update" do
   before do
     login
     assign(:lead, @lead = build_stubbed(:lead, user: current_user, assignee: build_stubbed(:user)))

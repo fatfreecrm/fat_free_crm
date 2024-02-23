@@ -54,6 +54,11 @@ describe Setting do
     expect(Setting.hello).to eq(false)
   end
 
+  it "should return nil if setting is missing and no default value is provided by YAML" do
+    expect(Setting[:missing]).to eq(nil)
+    expect(Setting.missing).to eq(nil)
+  end
+
   describe "#dig" do
     it "should dig into nested hashes" do
       Setting[:hello] = { foo: { bar: 3 } }

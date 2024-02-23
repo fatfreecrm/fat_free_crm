@@ -184,15 +184,15 @@ describe FatFreeCRM::MailProcessor::Dropbox do
 
     it "should touch the asset" do
       now = Time.zone.now
-      timezone = ActiveRecord::Base.default_timezone
+      timezone = ActiveRecord.default_timezone
       begin
-        ActiveRecord::Base.default_timezone = :utc
+        ActiveRecord.default_timezone = :utc
         @lead = create(:lead, email: "ben@example.com", access: "Public", updated_at: 5.day.ago)
 
         @crawler.run
         expect(@lead.reload.updated_at.to_i).to be >= now.to_i
       ensure
-        ActiveRecord::Base.default_timezone = timezone
+        ActiveRecord.default_timezone = timezone
       end
     end
 

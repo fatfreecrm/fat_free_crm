@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
-describe "/admin/users/index" do
+describe "admin/users/index" do
   before do
     login_admin
   end

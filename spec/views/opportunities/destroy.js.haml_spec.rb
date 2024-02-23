@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/opportunities/destroy" do
+describe "opportunities/destroy" do
   before do
     login
     assign(:opportunity, @opportunity = build_stubbed(:opportunity))

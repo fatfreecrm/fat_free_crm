@@ -10,6 +10,7 @@
 #   ActionMailer is setup in test mode later on
 #
 unless Rails.env.test?
+  require './app/models/setting'
 
   smtp_settings = Setting.smtp || {}
 

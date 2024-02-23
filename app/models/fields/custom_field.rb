@@ -124,7 +124,7 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def add_column
     self.name = generate_column_name if name.blank?
-    klass.connection.add_column(table_name, name, column_type, column_options)
+    klass.connection.add_column(table_name, name, column_type, **column_options)
     klass.reset_column_information
     klass.serialize_custom_fields!
   end
@@ -142,7 +142,7 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def update_column
     if errors.empty? && db_transition_safety(as_was) == :safe
-      klass.connection.change_column(table_name, name, column_type, column_options)
+      klass.connection.change_column(table_name, name, column_type, **column_options)
       klass.reset_column_information
       klass.serialize_custom_fields!
     end

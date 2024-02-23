@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/leads/promote" do
+describe "leads/promote" do
   before do
     login
     assign(:users, [current_user])

@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/comments/edit" do
+describe "comments/edit" do
   include CommentsHelper
 
   before do

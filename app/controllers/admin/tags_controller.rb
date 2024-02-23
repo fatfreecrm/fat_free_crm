@@ -28,7 +28,7 @@ class Admin::TagsController < Admin::ApplicationController
   # GET /admin/tags/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   def edit
-    @previous = Tag.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
+    @previous = Tag.find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
   end
 
   # POST /admin/tags

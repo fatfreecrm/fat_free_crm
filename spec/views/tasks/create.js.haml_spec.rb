@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/create" do
+describe "tasks/create" do
   include TasksHelper
 
   before do

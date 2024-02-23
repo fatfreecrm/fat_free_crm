@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   has_many :opportunities
   has_many :assigned_opportunities, class_name: 'Opportunity', foreign_key: 'assigned_to'
   has_many :permissions, dependent: :destroy
-  has_many :preferences, dependent: :destroy
+  has_many :preferences, class_name: 'Preference', dependent: :destroy
   has_many :lists
   has_and_belongs_to_many :groups
 
