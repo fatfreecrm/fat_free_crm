@@ -15,6 +15,7 @@
         $(this).select2
           'width':'resolve'
           placeholder: $(this).attr("placeholder")
+          allowClear: true
           ajax:
             url: $(this).data("url")
             dataType: 'json'
@@ -22,16 +23,18 @@
         $(this).select2
           'width':'resolve'
           placeholder: $(this).attr("placeholder")
+          allowClear: true
 
       if $(this).prop("disabled") == true
         $(this).next('.select2-container').disable()
-        $(this).next('.select2-container').hide()    
+        $(this).next('.select2-container').hide()
 
     $(".select2_tag").not(".select2-container, .select2-offscreen").each ->
       $(this).select2
         'width':'resolve'
         placeholder: $(this).data("placeholder")
         multiple: $(this).data("multiple")
+        allowClear: true
 
   $(document).ready ->
     crm.make_select2()
