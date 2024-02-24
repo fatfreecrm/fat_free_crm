@@ -7,6 +7,7 @@
     crm.flip_form('edit_#{entity_name}');
     crm.set_title('edit_#{entity_name}', '#{h @entity.name}');
     = refresh_sidebar(:show)
+    $('#summary').html('#{ j (render partial: "#{entity_name.pluralize}/sidebar_show", entity_name => @entity) }');
   - else
     $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
     $('##{id}').effect("highlight", { duration:1500 });
