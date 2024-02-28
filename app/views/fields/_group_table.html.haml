@@ -2,7 +2,7 @@
   - field_group.fields.without_pairs.in_groups_of(2, false) do |group|
     %tr
       - group.each_with_index do |field, i|
-        %td{class: (@entity.errors[field.name].present? ? 'fieldWithErrors' : nil)}
+        %td{class: (f.object.errors[field.name].present? ? 'fieldWithErrors' : nil)}
           - if field.hint.present?
             = image_tag "info_tiny.png", title: field.hint, class: "tooltip-icon"
           - if field.as == 'check_boxes'
