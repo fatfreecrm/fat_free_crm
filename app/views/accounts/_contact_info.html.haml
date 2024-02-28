@@ -1,5 +1,5 @@
 - edit ||= false
-- collapsed = (@account.errors.empty? && session[:account_contact].nil?)
+- collapsed = session[:account_contact].nil?
 = subtitle :account_contact, collapsed, t(:contact_info)
 .section
   %small#account_contact_intro{ hidden_if(!collapsed) }

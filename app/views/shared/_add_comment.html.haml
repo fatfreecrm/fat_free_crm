@@ -1,5 +1,5 @@
 - edit ||= false
-- collapsed = @comment_body.nil?  && f.object.errors.empty?
+- collapsed = session[:comment].nil?
 = subtitle :comment, collapsed, t(:comment)
 .section
   %small#comment_intro{ hidden_if(!collapsed) }
