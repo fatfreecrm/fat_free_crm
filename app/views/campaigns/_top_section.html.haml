@@ -4,7 +4,7 @@
       %tr
         %td{class: (@campaign.errors['name'].present? ? 'fieldWithErrors' : nil)}(colspan="5")
           .label.top.req #{t :name}:
-          = f.text_field :name, autofocus: true, style: "width:500px"
+          = f.text_field :name, autofocus: true, style: "width:500px", required: "required"
       %tr
         %td
           .label #{t :start_date}:
