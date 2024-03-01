@@ -3,13 +3,13 @@
   .section
     %table
       %tr
-        %td
+        %td{ class: (@lead.errors['first_name'].present? ? 'fieldWithErrors' : nil)}
           .label.top{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
-          = f.text_field :first_name, autofocus: true
+          = f.text_field :first_name, autofocus: true, required: (Setting.require_first_names ? "required" : nil)
         %td= spacer
-        %td
+        %td{ class: (@lead.errors['last_name'].present? ? 'fieldWithErrors' : nil)}
           .label.top{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
-          = f.text_field :last_name
+          = f.text_field :last_name, required: (Setting.require_last_names ? "required" : nil)
       %tr
         %td
           .label #{t :email}:
