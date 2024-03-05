@@ -336,7 +336,10 @@
 
       # Country dropdown needs special treatment ;-)
       country = $("#" + from + "_attributes_country").select2("data")
-      $("#" + to + "_attributes_country").select2("data", country, true)
+      if country.length == 1
+        country_dropdown = $("#" + to + "_attributes_country")
+        country_dropdown.val(country[0].id)
+        country_dropdown.trigger('change')
 
 
     #----------------------------------------------------------------------------
