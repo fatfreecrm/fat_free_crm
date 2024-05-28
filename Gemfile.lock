@@ -116,7 +116,7 @@ GEM
       racc
     builder (3.2.4)
     byebug (11.1.3)
-    cancancan (3.6.0)
+    cancancan (3.6.1)
     capistrano (3.18.1)
       airbrussh (>= 1.0.0)
       i18n
