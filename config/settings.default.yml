@@ -192,7 +192,8 @@
 #------------------------------------------------------------------------------
 # Specify which countries (if any) should appear at the top of country pickers
 # priority_countries:
-#  - Burkina Faso
+#  - AU
+#  - BF
 
 # Main and Admin Tabs
 #------------------------------------------------------------------------------

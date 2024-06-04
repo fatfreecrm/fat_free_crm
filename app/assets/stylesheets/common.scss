@@ -784,3 +784,12 @@ table.asset_attributes {
     background-color: darkgray;
   }
 }
+
+
+// Login page
+.form-group.user_remember_me {
+  border: 0px;
+  .form-check {
+    padding-left: 6px;
+  }
+}

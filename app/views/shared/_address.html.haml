@@ -41,4 +41,4 @@
           = address_field(a, :zipcode, "width:80px;")
         %td= spacer
         %td
-          = a.country_select(:country, priority_countries: priority_countries, include_blank: "", :"data-placeholder" => t(:select_a_country), style: "width:150px; margin-top:6px", class: 'select2')
+          = a.country_select(:country, {priority_countries: priority_countries, include_blank: true}, {data: { placeholder: t(:select_a_country)}, class: 'select2'})

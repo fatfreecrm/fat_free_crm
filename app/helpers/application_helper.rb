@@ -36,7 +36,7 @@ module ApplicationHelper
   end
 
   def subtitle_link(id, text, hidden)
-    link_to("<small>#{hidden ? '&#9658;' : '&#9660;'}</small> #{sanitize text}".html_safe,
+    link_to("<small>#{hidden ? '&#9655;' : '&#9661;'}</small> #{sanitize text}".html_safe,
             url_for(controller: :home, action: :toggle, id: id),
             remote: true,
             onclick: "crm.flip_subtitle(this)")
@@ -99,7 +99,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def arrow_for(id)
-    content_tag(:span, "&#9658;".html_safe, id: "#{id}_arrow", class: :arrow)
+    content_tag(:span, "&#9655;".html_safe, id: "#{id}_arrow", class: :arrow)
   end
 
   #----------------------------------------------------------------------------
