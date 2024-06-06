@@ -96,7 +96,7 @@ GEM
       tzinfo (~> 2.0)
     acts-as-taggable-on (10.0.0)
       activerecord (>= 6.1, < 7.2)
-    acts_as_list (1.2.0)
+    acts_as_list (1.2.1)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
     addressable (2.8.6)
