@@ -16,7 +16,7 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
                   end
 
     ActiveRecord::Base.connection.raw_connection.then do |conn|
-      if conn.is_a?(PG::Connection)
+      if conn.is_a?(::PG::Connection)
         conn.prepare('active_storage_blobs', <<-SQL)
           INSERT INTO active_storage_blobs (
             key, filename, content_type, metadata, byte_size, checksum, created_at
