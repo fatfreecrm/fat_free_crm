@@ -119,7 +119,7 @@ GEM
     builder (3.3.0)
     byebug (11.1.3)
     cancancan (3.6.1)
-    capistrano (3.19.0)
+    capistrano (3.19.1)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
