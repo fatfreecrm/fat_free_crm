@@ -8,7 +8,7 @@
 class List < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :url
-  belongs_to :user
+  belongs_to :user, optional: true
 
   # Parses the controller from the url
   def controller
