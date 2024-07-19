@@ -10,7 +10,7 @@ class ListsController < ApplicationController
   #----------------------------------------------------------------------------
   def create
     list_attr = list_params.to_h
-    list_attr[:user_id] = (current_user.id if params[:is_global].to_i.zero?)
+    list_attr["user_id"] = current_user.id if params["is_global"] != "1"
 
     # Find any existing list with the same name (case insensitive)
     if @list = List.where("lower(name) = ?", list_attr[:name].downcase).where(user_id: list_attr[:user_id]).first
