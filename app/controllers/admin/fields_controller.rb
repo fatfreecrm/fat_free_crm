@@ -33,7 +33,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # GET /fields/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @field = Field.find(params[:id])
+    @field = Field.find(params["id"])
     respond_with(@field)
   end
 
@@ -41,10 +41,10 @@ class Admin::FieldsController < Admin::ApplicationController
   # POST /fields.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    as = field_params[:as]
+    as = field_params["as"]
     @field =
       if as.match?(/pair/)
-        CustomFieldPair.create_pair(params).first
+        CustomFieldPair.create_pair("pair" => pair_params, "field" => field_params).first
       elsif as.present?
         klass = find_class(Field.lookup_class(as))
         klass.create(field_params)
@@ -59,10 +59,10 @@ class Admin::FieldsController < Admin::ApplicationController
   # PUT /fields/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    if field_params[:as].match?(/pair/)
-      @field = CustomFieldPair.update_pair(params).first
+    if field_params["as"].match?(/pair/)
+      @field = CustomFieldPair.update_pair("pair" => pair_params, "field" => field_params).first
     else
-      @field = Field.find(params[:id])
+      @field = Field.find(params["id"])
       @field.update(field_params)
     end
 
@@ -73,7 +73,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # DELETE /fields/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @field = Field.find(params[:id])
+    @field = Field.find(params["id"])
     @field.destroy
 
     respond_with(@field)
@@ -82,11 +82,11 @@ class Admin::FieldsController < Admin::ApplicationController
   # POST /fields/sort
   #----------------------------------------------------------------------------
   def sort
-    field_group_id = params[:field_group_id].to_i
+    field_group_id = params["field_group_id"].to_i
     field_ids = params["fields_field_group_#{field_group_id}"] || []
 
     field_ids.each_with_index do |id, index|
-      Field.where(id: id).update_all(position: index + 1, field_group_id: field_group_id)
+      Field.where(id:).update_all(position: index + 1, field_group_id:)
     end
 
     render nothing: true
@@ -96,14 +96,13 @@ class Admin::FieldsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def subform
     field = field_params
-    as = field[:as]
-
+    as = field_params["as"]
     @field = if (id = field[:id]).present?
                Field.find(id).tap { |f| f.as = as }
              else
                field_group_id = field[:field_group_id]
-               klass = find_class(Field.lookup_class(as))
-               klass.new(field_group_id: field_group_id, as: as)
+               klass = Field.lookup_class(as).safe_constantize
+               klass.new(field_group_id:, as:)
       end
 
     respond_with(@field) do |format|
@@ -114,7 +113,13 @@ class Admin::FieldsController < Admin::ApplicationController
   protected
 
   def field_params
-    params[:field].permit!
+    # Sets the +permitted+ attribute to +true+. This can be used to pass
+    # mass assignment. Returns +self+.
+    params.require(:field).permit!
+  end
+
+  def pair_params
+    params.require(:pair).permit!
   end
 
   def setup_current_tab
