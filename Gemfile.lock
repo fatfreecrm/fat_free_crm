@@ -108,7 +108,7 @@ GEM
       execjs (~> 2)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    bootsnap (1.18.3)
+    bootsnap (1.18.4)
       msgpack (~> 1.2)
     bootstrap (5.0.2)
       autoprefixer-rails (>= 9.1.0)
