@@ -4,7 +4,10 @@
     %tr
       - group.each do |field|
         = col(field.label, (i == groups.size - 1) ? :last : nil) do
-          = field.render_value(entity)
+          - if field.as == "text"
+            = simple_format(field.render_value(entity))
+          - else
+            = field.render_value(entity)
         - if group.size == 1
           %th.last
           %td.last
