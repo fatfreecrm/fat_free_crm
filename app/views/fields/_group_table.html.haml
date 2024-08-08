@@ -5,11 +5,8 @@
         %td{class: (f.object.errors[field.name].present? ? 'fieldWithErrors' : nil)}
           - if field.hint.present?
             = image_tag "info_tiny.png", title: field.hint, class: "tooltip-icon"
-          - if field.as == 'check_boxes'
-            - value = f.object.send(field.name)
-            - checked = YAML.load(value.to_s)
           .label.top{class: (field.required? ? 'req': nil)}
             = "#{field.label}:"
-          = f.input_field field.name, field.input_options.merge(checked: checked)
+          = f.input_field field.name, field.input_options
         - if i == 0
           %td= spacer

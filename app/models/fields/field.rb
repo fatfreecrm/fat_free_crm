@@ -92,8 +92,6 @@ class Field < ActiveRecord::Base
 
   def render(value)
     case as
-    when 'checkbox'
-      value.to_s == '0' ? "no" : "yes"
     when 'date'
       value&.strftime(I18n.t("date.formats.mmddyy"))
     when 'datetime'
