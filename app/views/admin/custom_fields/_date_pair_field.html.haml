@@ -1,5 +1,5 @@
 - field1 = f.object || CustomFieldPair.new
-- field2 = f.object.respond_to?(:paired_with) ? field1.paired_with : CustomFieldPair.new
+- field2 = (field1.pair || CustomFieldPair.new)
 
 %table{class: :pairs}
   = fields_for("pair[0]", field1) do |first|
