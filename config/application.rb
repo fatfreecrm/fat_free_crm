@@ -85,6 +85,8 @@ module FatFreeCRM
       ::ActiveSupport::HashWithIndifferentAccess, # for Field#settings serialization see app/models/fields/field.rb
       ::ActiveSupport::TimeWithZone,
       ::ActiveSupport::TimeZone,
+      ::ActsAsTaggableOn::TagList,
+      ::ActsAsTaggableOn::DefaultParser,
       ::BigDecimal,
       ::Date,
       ::Symbol,
