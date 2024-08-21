@@ -86,7 +86,7 @@ class Admin::FieldsController < Admin::ApplicationController
     field_ids = params["fields_field_group_#{field_group_id}"] || []
 
     field_ids.each_with_index do |id, index|
-      Field.where(id:).update_all(position: index + 1, field_group_id:)
+      Field.where(id: id).update_all(position: index + 1, field_group_id: field_group_id)
     end
 
     render nothing: true
@@ -101,8 +101,8 @@ class Admin::FieldsController < Admin::ApplicationController
                Field.find(id).tap { |f| f.as = as }
              else
                field_group_id = field[:field_group_id]
-               klass = Field.lookup_class(as).safe_constantize
-               klass.new(field_group_id:, as:)
+               klass = find_class(Field.lookup_class(as))
+               klass.new(field_group_id: field_group_id, as: as)
       end
 
     respond_with(@field) do |format|
