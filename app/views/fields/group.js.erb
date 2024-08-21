@@ -1,3 +1,5 @@
 <%= simple_fields_for(@asset) do |f| %>
-  $('#field_groups').append('<%= j render(partial: 'fields/group', locals: {f: f, field_group: @field_group, fields: @field_group.fields}) %>')
+  <% @field_groups.each do |field_group| %>
+    $('#field_groups').append('<%= j render(partial: 'fields/group', locals: {f: f, field_group: field_group, fields: field_group.fields}) %>')
+  <% end %>
 <% end %>
