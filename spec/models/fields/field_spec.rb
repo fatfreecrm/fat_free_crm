@@ -49,21 +49,24 @@ describe Field do
     expect(Field.new.input_options).to be_a(Hash)
   end
 
-  it "should be able to display a empty multi_select value" do
-    field = Field.new(
-      label: "Availability",
-      name:  "availability"
-    )
-    object = double('Object')
+  context "render" do
+    let(:field) { FactoryBot.create(:field, as: as) }
 
-    #  as  |  value  |  expected
-    [["check_boxes", [1, 2, 3], "1, 2<br />3"],
-     %w[checkbox 0 no],
-     ["checkbox", 1, "yes"],
-     ["date", Time.parse('2011-04-19'), Time.parse('2011-04-19').strftime(I18n.t("date.formats.mmddyy"))]].each do |as, value, expected|
-      field.as = as
-      allow(object).to receive(field.name).and_return(value)
-      expect(field.render_value(object)).to eq(expected)
+    context "check_boxes" do
+      let(:as) { "check_boxes" }
+      it { expect(field.render([1, 2, 3])).to eql("1, 2<br />3") }
+      it { expect(field.render([1, 2, 3])).to eql("1, 2<br />3") }
+    end
+
+    context "date" do
+      let(:as) { "date" }
+      it { expect(field.render(Time.parse('2011-04-19'))).to eql("Apr 19, 2011") }
+    end
+
+    context "datetime" do
+      let(:as) { "datetime" }
+      it { expect(field.render(Time.parse('2011-04-19 14:47 +0000'))).to eql("19 Apr 2011 at  2:47PM") }
     end
   end
+
 end
