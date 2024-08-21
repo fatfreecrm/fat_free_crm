@@ -115,13 +115,13 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def link_to_delete(record, options = {})
-    confirm = options[:confirm] || nil
+    confirm = options[:confirm] || t(:confirm_delete, record.class.to_s.downcase)
 
     link_to(t(:delete) + "!",
             options[:url] || url_for(record),
             method: :delete,
             remote: true,
-            confirm: confirm)
+            data: { confirm: confirm})
   end
 
   #----------------------------------------------------------------------------
