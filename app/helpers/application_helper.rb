@@ -121,7 +121,7 @@ module ApplicationHelper
             options[:url] || url_for(record),
             method: :delete,
             remote: true,
-            data: { confirm: confirm})
+            data: { confirm: confirm })
   end
 
   #----------------------------------------------------------------------------
