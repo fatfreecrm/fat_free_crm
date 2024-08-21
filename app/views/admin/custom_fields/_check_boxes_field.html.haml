@@ -1,6 +1,9 @@
 %div
   .label.top.req
     = "Select Options (pipe separated):"
-= f.text_field :collection_string, class: 'field_collection_string', size: 78
+= f.text_field :collection_string, class: 'field_collection_string', size: 78, placeholder: "Option 1|Option 2|Option 3"
 
 = render partial: 'admin/custom_fields/base_field', locals: {f: f}
+
+- if f.object.new_record?
+  .info2 After saving, you must restart all instances of the Rails server to apply column serialization.
