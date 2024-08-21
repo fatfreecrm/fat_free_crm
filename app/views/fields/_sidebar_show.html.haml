@@ -1,9 +1,6 @@
 - asset.field_groups.each do |field_group|
-  - fg = field_group.fields.without_pairs
-  - if fg.select{|f| asset.send(f.name).present? }.any?
-    %div
-      - unless field_group.name == 'custom_fields'
-        .caption #{field_group.label_i18n}
-      - fg.each do |field|
-        - if (value = field.render_value(asset)).present?
-          == #{field.label}:<br /> <b>#{truncate(value, length: 35)}</b><br />
+  - fields = field_group.fields.without_pairs
+  - if fields.select{|f| asset.send(f.name).present? }.any?
+    - unless field_group.name == 'custom_fields'
+      .caption #{field_group.label_i18n}
+    = render("fields/group_view", fields: fields, entity: asset) unless fields.nil?
