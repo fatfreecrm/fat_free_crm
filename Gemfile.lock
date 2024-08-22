@@ -287,7 +287,7 @@ GEM
       racc
     pg (1.5.7)
     popper_js (2.11.8)
-    premailer (1.24.0)
+    premailer (1.25.0)
       addressable
       css_parser (>= 1.12.0)
       htmlentities (>= 4.0.0)
