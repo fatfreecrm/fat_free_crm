@@ -114,7 +114,7 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.9.2, < 3)
       sassc-rails (>= 2.0.0)
-    brakeman (6.1.2)
+    brakeman (6.2.1)
       racc
     builder (3.3.0)
     byebug (11.1.3)
