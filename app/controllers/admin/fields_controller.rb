@@ -113,7 +113,7 @@ class Admin::FieldsController < Admin::ApplicationController
   protected
 
   def field_params
-    params.require(:field).permit(:as, :collection_string, :disabled, :field_group_id, :hint, :label, :maxlength, :minlength, :name, :pair_id, :placeholder, :position, :required, :settings, :type)
+    params.require(:field).permit(:as, :collection_string, :disabled, :field_group_id, :hint, :label, :maxlength, :minlength, :name, :pair_id, :placeholder, :position, :required, :type, settings: {})
   end
 
   def pair_params
