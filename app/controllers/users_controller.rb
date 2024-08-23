@@ -111,6 +111,22 @@ class UsersController < ApplicationController
     @unassigned_opportunities = Opportunity.my(current_user).unassigned.pipeline.order(:stage).includes(:account, :user, :tags)
   end
 
+  def auto_complete
+    @query = params[:term] || ''
+    @users = User.my(current_user).text_search(@query).limit(10).order(:first_name, :last_name)
+
+    respond_to do |format|
+      format.json do
+        results = @users.map do |a|
+          helpers.j(a.full_name + " (@" + a.username + ")")
+        end
+        render json: {
+          results: results
+        }
+      end
+    end
+  end
+
   protected
 
   def user_params
