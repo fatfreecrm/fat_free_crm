@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :users, only: %i[index show] do
       collection do
         get :opportunities_overview
+        match :auto_complete, via: %i[get post]
       end
     end
   end
@@ -158,9 +159,6 @@ Rails.application.routes.draw do
       match :upload_avatar, via: %i[put patch]
       patch :change_password
       post :redraw
-    end
-    collection do
-      match :auto_complete, via: %i[get post]
     end
   end
 
