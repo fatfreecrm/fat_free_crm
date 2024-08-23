@@ -8,7 +8,8 @@
 
 #
 # Register CustomFields when Field class is loaded
+
 ActiveSupport.on_load(:fat_free_crm_field) do # self == Field
-  CustomFieldDatePair.register(as: 'date_pair', klass: 'CustomFieldDatePair', type: 'date')
-  CustomFieldDatetimePair.register(as: 'datetime_pair', klass: 'CustomFieldDatetimePair', type: 'timestamp')
+  register(as: 'date_pair', klass: 'CustomFieldDatePair', type: 'date')
+  register(as: 'datetime_pair', klass: 'CustomFieldDatetimePair', type: 'timestamp')
 end

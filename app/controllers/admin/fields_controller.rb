@@ -42,11 +42,11 @@ class Admin::FieldsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def create
     as = field_params["as"]
+    klass= Field.lookup_class(as).safe_constantize
     @field =
       if as.match?(/pair/)
-        CustomFieldPair.create_pair("pair" => pair_params, "field" => field_params).first
+        klass.create_pair("pair" => pair_params, "field" => field_params).first
       elsif as.present?
-        klass = find_class(Field.lookup_class(as))
         klass.create(field_params)
       else
         Field.new(field_params).tap(&:valid?)
@@ -101,7 +101,7 @@ class Admin::FieldsController < Admin::ApplicationController
                Field.find(id).tap { |f| f.as = as }
              else
                field_group_id = field[:field_group_id]
-               klass = find_class(Field.lookup_class(as))
+               klass = Field.lookup_class(as).safe_constantize
                klass.new(field_group_id: field_group_id, as: as)
       end
 
@@ -113,13 +113,11 @@ class Admin::FieldsController < Admin::ApplicationController
   protected
 
   def field_params
-    # Sets the +permitted+ attribute to +true+. This can be used to pass
-    # mass assignment. Returns +self+.
-    params.require(:field).permit!
+    params.require(:field).permit(:as, :collection_string, :disabled, :field_group_id, :hint, :label, :maxlength, :minlength, :name, :pair_id, :placeholder, :position, :required, :settings, :type)
   end
 
   def pair_params
-    params.require(:pair).permit!
+    params.require(:pair).permit("0": [:hint, :required, :disabled, :id], "1": [:hint, :required, :disabled, :id])
   end
 
   def setup_current_tab
