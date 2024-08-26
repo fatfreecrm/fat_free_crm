@@ -3,10 +3,10 @@
     %tr
       %td(colspan="5")
         .label.top.req #{t :name}:
-        = f.text_field :name, autofocus: true, style: "width:500px"
+        = f.text_field :name, autofocus: true, style: "width:500px", required: "required"
     %tr
       %td
-        .label.req #{t :due}:
+        .label #{t :due}:
         - bucket = (params[:bucket].blank? ? @task.bucket : params[:bucket]) || "due_asap"
         - with_time = Setting.task_calendar_with_time
         - if @task.bucket != "specific_time"
@@ -18,11 +18,11 @@
           = f.text_field :calendar, value: f.object.due_at.strftime(fmt), style: "width:160px;", autocomplete: :off, class: (with_time ? 'datetime' : 'date')
       %td= spacer
       %td
-        .label.req #{t :assign_to}:
+        .label #{t :assign_to}:
         = user_select(:task, all_users, current_user)
       %td= spacer
       %td
-        .label.req #{t :category}:
+        .label #{t :category}:
         = f.select :category, @category, { selected: @task.category.blank? ? nil : @task.category.to_sym, include_blank: t(:select_blank) }, { style: "width:160px", class: 'select2' }
 
     - if Setting.background_info && Setting.background_info.include?(:task)

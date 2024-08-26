@@ -2,9 +2,9 @@
   .section
     %table
       %tr
-        %td(colspan="5")
+        %td{class: (@account.errors['name'].present? ? 'fieldWithErrors' : nil)}(colspan="5")
           .label.top.req #{t :name}:
-          = f.text_field :name, autofocus: true, style: "width:500px"
+          = f.text_field :name, autofocus: true, style: "width:500px", required: "required"
       %tr
         %td
           .label #{t :assigned_to}:
@@ -12,7 +12,7 @@
         %td= spacer
         %td
           .label #{t :category}:
-          = f.select :category, Setting.unroll(:account_category), { selected: (@account.category || "other").to_sym, include_blank: t(:other) }, { style: "width:160px", class: 'select2' }
+          = f.select :category, Setting.unroll(:account_category), { selected: (@account.category || "other").to_sym, include_blank: t(:other) }, { style: "width:160px", class: 'select2', placeholder: t(:other) }
         %td= spacer
         %td
           .label #{t :rating}:

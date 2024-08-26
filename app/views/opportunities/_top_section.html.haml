@@ -2,9 +2,9 @@
   .section
     %table
       %tr
-        %td
+        %td{class: (@opportunity.errors['name'].present? ? 'fieldWithErrors' : nil)}
           .label.req.top #{t :name}:
-          = f.text_field :name, autofocus: true, style: "width:325px"
+          = f.text_field :name, autofocus: true, style: "width:325px", required: "required"
         %td= spacer
         %td
           .label.req.top #{t :stage}:

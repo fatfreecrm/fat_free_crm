@@ -23,10 +23,9 @@
       .label= t(:password)
       = f.input_field :password
 
-    %div(style="margin-left:12px")
+    .section
       = f.input :remember_me, as: :boolean, inline_label: t('remember_me')
-    %br
-    .buttonbar
-      = f.submit t(:login)
-      = t(:or)
+      = f.submit t(:login), class: 'btn btn-primary'
+
+    .section
       = link_to t(:forgot_password) + '?', new_password_path(resource_name)

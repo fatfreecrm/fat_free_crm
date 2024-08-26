@@ -1,6 +1,9 @@
 - if field_group.name != 'custom_fields'
-  -# start a new section
-  - collapsed = session[field_group.key].nil?
+  - # Ensure field groups containing validation errors are expanded
+  - required_field_names = field_group.fields.select(&:required?).map(&:name)
+  - fields_with_errors = f.object.errors.map{|e| e.attribute.to_s}
+  - force_open = (required_field_names & fields_with_errors).any?
+  - collapsed = session[field_group.key].nil? && !force_open
   %div{ id: "#{field_group.key}_container", :"data-tag" => field_group.tag.try(:name) }
     = subtitle field_group.key, collapsed, t(field_group.name, default: field_group.label)
     .section

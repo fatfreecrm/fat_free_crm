@@ -8,69 +8,63 @@
 require 'spec_helper'
 
 describe CustomFieldPair do
-  class CustomFieldFooPair
-  end
+  let(:field_group) { FactoryBot.create(:field_group) }
 
   it "should respond to pair" do
     expect(CustomFieldPair.new).to respond_to(:pair)
   end
 
   describe "create_pair" do
-    before(:each) do
-      @field = { 'as' => 'foopair', 'field_group_id' => 1, 'label' => 'Event' }
-      @pair1 = { 'name' => 'pair1' }
-      @pair2 = { 'name' => 'pair2' }
-      @params = { 'field' => @field, 'pair' => { '0' => @pair1, '1' => @pair2 } }
-    end
+    let(:field_params) { { "as" => "date_pair", "field_group_id" => field_group.id, "label" => "New Field Pair" } }
+    let(:pair_params) { { "0" => { "required" => "1" }, "1" => {} } }
+    let(:params) { { "pair" => pair_params, "field" => field_params } }
 
     it "should create the pair" do
-      params1 = @field.merge(@pair1)
-      foo1 = double(id: 3, required: true, disabled: 'false')
-      expect(CustomFieldFooPair).to receive(:create).with(params1).and_return(foo1)
-      params2 = @field.merge(@pair2).merge('pair_id' => 3, 'required' => true, 'disabled' => 'false')
-      foo2 = double(id: 5)
-      expect(CustomFieldFooPair).to receive(:create).with(params2).and_return(foo2)
-
-      expect(CustomFieldPair.create_pair(@params)).to eq([foo1, foo2])
+      field1, field2 = CustomFieldPair.create_pair(params)
+      expect(field1.label).to eq("New Field Pair")
+      expect(field1.as).to eq("date_pair")
+      expect(field1.field_group_id).to eq(field_group.id)
+      expect(field2.label).to eq("New Field Pair")
+      expect(field2.as).to eq("date_pair")
+      expect(field2.paired_with).to eq(field1)
     end
   end
 
   describe "update_pair" do
-    before(:each) do
-      @field = { 'as' => 'foopair', 'field_group_id' => 1, 'label' => 'Event' }
-      @pair1 = { 'name' => 'pair1' }
-      @pair2 = { 'name' => 'pair2' }
-      @params = { 'id' => '3', 'field' => @field, 'pair' => { '0' => @pair1, '1' => @pair2 } }
-    end
+    let!(:field1) { CustomFieldPair.create!(name: 'cf_pair1', label: 'Date Pair', as: 'date_pair', hint: "", field_group: field_group, required: false, disabled: 'false') }
+    let!(:field2) { CustomFieldPair.create!(name: 'cf_pair2', label: 'Date Pair', as: 'date_pair', hint: "", field_group: field_group, required: false, disabled: 'false', pair_id: field1.id) }
+
+    let(:field_params) { { "label" => "Test Update" } }
+    let(:pair_params) { { "0" => { "required" => "1", "id" => field1.id }, "1" => {} } }
+    let(:params) { { "pair" => pair_params, "field" => field_params } }
 
     it "should update the pair" do
-      foo1 = double(required: true, disabled: 'false')
-      expect(foo1).to receive(:update).with(@field.merge(@pair1))
-      foo2 = double
-      expect(foo2).to receive(:update).with(@field.merge(@pair2).merge('required' => true, 'disabled' => 'false'))
-      expect(foo1).to receive(:paired_with).and_return(foo2)
-      expect(CustomFieldPair).to receive(:find).with('3').and_return(foo1)
+      expect(field1.label).to eq("Date Pair")
+      expect(field2.label).to eq("Date Pair")
+      expect(field1.required).to eq(false)
+      expect(field2.required).to eq(false)
 
-      expect(CustomFieldPair.update_pair(@params)).to eq([foo1, foo2])
+      CustomFieldPair.update_pair(params)
+      field1.reload
+      field2.reload
+
+      expect(field1.label).to eq("Test Update")
+      expect(field2.label).to eq("Test Update")
+      expect(field1.required).to eq(true)
+      expect(field2.required).to eq(true)
     end
   end
 
   describe "paired_with" do
-    before(:each) do
-      @field1 = CustomFieldDatePair.new(name: 'cf_event_from')
-      @field2 = CustomFieldDatePair.new(name: 'cf_event_to')
-    end
+    let!(:field1) { CustomFieldPair.create!(name: 'cf_event_from', label: 'From', as: 'date_pair', field_group: field_group) }
+    let!(:field2) { CustomFieldPair.create!(name: 'cf_event_to', label: 'To', as: 'date_pair', field_group: field_group, pair_id: field1.id) }
 
     it "should return the 2nd field" do
-      expect(@field1).to receive(:pair).and_return(@field2)
-      expect(@field1.paired_with).to eq(@field2)
+      expect(field1.paired_with).to eq(field2)
     end
 
     it "should return the 1st field" do
-      expect(@field2).to receive(:pair).and_return(nil)
-      expect(@field2).to receive(:id).and_return(1)
-      expect(CustomFieldPair).to receive(:where).with(pair_id: 1).and_return([@field1])
-      expect(@field2.paired_with).to eq(@field1)
+      expect(field2.paired_with).to eq(field1)
     end
   end
 end
