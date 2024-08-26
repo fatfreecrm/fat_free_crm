@@ -156,7 +156,7 @@ GEM
     country_select (9.0.0)
       countries (> 5.0, < 7.0)
     crass (1.0.6)
-    css_parser (1.17.1)
+    css_parser (1.19.0)
       addressable
     database_cleaner (2.0.2)
       database_cleaner-active_record (>= 2, < 3)
@@ -287,9 +287,9 @@ GEM
       racc
     pg (1.5.7)
     popper_js (2.11.8)
-    premailer (1.25.0)
+    premailer (1.26.0)
       addressable
-      css_parser (>= 1.12.0)
+      css_parser (>= 1.19.0)
       htmlentities (>= 4.0.0)
     pry (0.14.2)
       coderay (~> 1.1)
