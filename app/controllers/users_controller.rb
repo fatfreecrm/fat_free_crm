@@ -120,9 +120,7 @@ class UsersController < ApplicationController
         results = @users.map do |a|
           helpers.j(a.full_name + " (@" + a.username + ")")
         end
-        render json: {
-          results: results
-        }
+        render json: results
       end
     end
   end
