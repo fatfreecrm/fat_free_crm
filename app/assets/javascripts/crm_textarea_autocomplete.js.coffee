@@ -22,7 +22,7 @@
               data:
                 term: text.replace("@", "")
               success: (response) ->
-                cb response['results'], text.replace("@", "")
+                cb response, text.replace("@", "")
 
           selected: (text, data) ->
             username_regEx = new RegExp("\\((@[^)]+)\\)")
