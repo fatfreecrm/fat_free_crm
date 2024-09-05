@@ -252,7 +252,7 @@ GEM
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
-    mini_racer (0.14.1)
+    mini_racer (0.16.0)
       libv8-node (~> 18.19.0.0)
     minitest (5.25.1)
     msgpack (1.7.2)
