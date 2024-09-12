@@ -482,7 +482,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.18)
-    zeus (0.16.0)
+    zeus (0.17.0)
       method_source (>= 0.6.7)
 
 PLATFORMS
