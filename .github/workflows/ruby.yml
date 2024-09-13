@@ -45,3 +45,5 @@ jobs:
       run: bundle exec rake spec:mailers
     - name: Run lib tests
       run: bundle exec rake spec:lib
+    - name: Run feature tests
+      run: bundle exec rake spec:features
