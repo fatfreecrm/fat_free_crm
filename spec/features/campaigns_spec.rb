@@ -55,8 +55,7 @@ feature 'Campaigns', '
     click_link 'Comment'
     fill_in 'comment_body', with: 'This campaign is very important'
     click_button 'Create Campaign'
-
-    expect(find('#comment_body')).to have_content('This campaign is very important')
+    expect(find('#comment_body').value).to eq('This campaign is very important')
   end
 
   scenario 'should view and edit a campaign', js: true do
