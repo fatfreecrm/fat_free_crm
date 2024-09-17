@@ -219,7 +219,7 @@ GEM
       tilt
     headless (2.3.1)
     htmlentities (4.3.4)
-    i18n (1.14.5)
+    i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     image_processing (1.13.0)
       mini_magick (>= 4.9.5, < 5)
@@ -361,7 +361,7 @@ GEM
       i18n
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
-    ransack_ui (2.0.0)
+    ransack_ui (2.0.1)
       ransack (< 4)
       ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)
