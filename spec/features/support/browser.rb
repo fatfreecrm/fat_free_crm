@@ -9,20 +9,20 @@ Capaybara.app_host = ENV['APP_URL'] if ENV['APP_URL']
 Capybara.default_max_wait_time = 7
 Capybara.server = :webrick
 
+# For local testing in an environment with a display or remote X server configured
+# such as WSL2, use NO_HEADLESS=1 bundle exec rspec spec/features
 if ENV['BROWSER'] == 'chrome'
   Capybara.register_driver :selenium do |app|
-    options = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: %w[no-sandbox headless disable-gpu] })
+    options = Selenium::WebDriver::Options.chrome
+    options.add_argument('--headless') unless ENV['NO_HEADLESS'].present?
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
   end
 else
-  # For local testing in an environment with a display or remote X server configured
-  # such as WSL2, use NO_HEADLESS=1 bundle exec rspec spec/features
-  #
-  # NB the marionette setting is deprecated. For modern firefox, install the geckodriver.
+  # NB the marionette setting is deprecated.
+  # For modern firefox, sudo apt-get install firefox, geckodriver will be included.
   Capybara.register_driver :selenium do |app|
     options = Selenium::WebDriver::Options.firefox
     options.add_argument('-headless') unless ENV['NO_HEADLESS'].present?
-
     Capybara::Selenium::Driver.new(app, browser: :firefox, options: options)
   end
 end
