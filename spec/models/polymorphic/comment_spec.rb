@@ -42,4 +42,36 @@ describe Comment do
       expect(entity.subscribed_users).to include(user.id)
     end
   end
+
+  describe "notify_subscribers" do
+    let(:subscriber) { create(:user) }
+    let(:entity) { create(:lead, subscribed_users: [subscriber.id]) }
+    before(:each) do
+      allow(SubscriptionMailer).to receive_message_chain(:comment_notification, :deliver_later)
+    end
+
+    it "should notify subscribers when a comment is added" do
+      Comment.create!(comment: "Hello", user: create(:user), commentable: entity)
+      expect(SubscriptionMailer).to have_received(:comment_notification).with(subscriber, instance_of(Comment))
+    end
+
+    it "should not notify the user who created the comment" do
+      user = create(:user, confirmed_at: Time.now, email: "user@example.com")
+      Comment.create!(comment: "Hello", user: user, commentable: entity)
+      expect(SubscriptionMailer).not_to have_received(:comment_notification).with(user, instance_of(Comment))
+    end
+
+    it "should not notify suspended users" do
+      subscriber.update(suspended_at: Time.now)
+      Comment.create!(comment: "Hello", user: create(:user), commentable: entity)
+      expect(SubscriptionMailer).not_to have_received(:comment_notification).with(subscriber, instance_of(Comment))
+    end
+
+    it "should not notify users awaiting approval" do
+      subscriber.update(sign_in_count: 0, suspended_at: Time.now)
+      allow(Setting).to receive(:user_signup).and_return(:not_allowed)
+      Comment.create!(comment: "Hello", user: create(:user), commentable: entity)
+      expect(SubscriptionMailer).not_to have_received(:comment_notification).with(subscriber, instance_of(Comment))
+    end
+  end
 end

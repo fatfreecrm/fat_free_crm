@@ -31,6 +31,7 @@ FactoryBot.define do
     deleted_at          { nil }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }
+    confirmed_at        { Time.now.utc }
     suspended_at        { nil }
     password            { "password" }
     password_confirmation { "password" }
