@@ -15,7 +15,8 @@ feature 'Devise Sign-in' do
                    password: 'password',
                    password_confirmation: 'password',
                    email: 'john@example.com',
-                   sign_in_count: 0
+                   sign_in_count: 0,
+                   confirmed_at: nil
   end
 
   scenario 'without confirmation' do
