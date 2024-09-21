@@ -52,11 +52,9 @@ class Comment < ActiveRecord::Base
 
   # Notify subscribed users when a comment is added, unless user created this comment
   def notify_subscribers
-    commentable.subscribed_users.reject { |user_id| user_id == user.id }.each do |subscriber_id|
-      subscriber = User.find_by_id(subscriber_id)
-      if subscriber&.confirmed? && !subscriber.awaits_approval? && !subscriber.suspended? && subscriber.email.present?
-        SubscriptionMailer.comment_notification(subscriber, self).deliver_later
-      end
+    users_to_notify = User.where(id: commentable.subscribed_users.reject { |user_id| user_id == user.id })
+    users_to_notify.select(&:emailable?).each do |subscriber|
+      SubscriptionMailer.comment_notification(subscriber, self).deliver_later
     end
   end
 

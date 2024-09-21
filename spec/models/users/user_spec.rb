@@ -235,4 +235,24 @@ describe User do
       expect(search.first).to eql(user)
     end
   end
+
+  describe "emailable?" do
+    let(:user) { create(:user) }
+    it "should return true for standard user" do
+      expect(user.emailable?).to eql(true)
+    end
+    it "should return false for unconfirmed user" do
+      user.update(confirmed_at: nil)
+      expect(user.emailable?).to eql(false)
+    end
+    it "should return false for user awaiting approval" do
+      user.update(sign_in_count: 0, suspended_at: Time.now)
+      allow(Setting).to receive(:user_signup).and_return(:not_allowed)
+      expect(user.emailable?).to eql(false)
+    end
+    it "should return false for suspended user" do
+      user.update(suspended_at: Time.now)
+      expect(user.emailable?).to eql(false)
+    end
+  end
 end

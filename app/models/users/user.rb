@@ -134,6 +134,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Send emails to active users only
+  #----------------------------------------------------------------------------
+  def emailable?
+    confirmed? && !awaits_approval? && !suspended? && email.present?
+  end
+
   #----------------------------------------------------------------------------
   def preference
     @preference ||= preferences.build
