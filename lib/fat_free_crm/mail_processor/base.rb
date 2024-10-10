@@ -104,10 +104,8 @@ module FatFreeCRM
               discard(uid)
             end
           rescue Exception => e
-            if %w[test development].include?(Rails.env)
-              warn e
-              warn e.backtrace
-            end
+            warn e
+            warn e.backtrace
             log "error processing email: #{e.inspect}", email
             discard(uid)
           end
@@ -181,12 +179,10 @@ module FatFreeCRM
       # Centralized logging.
       #--------------------------------------------------------------------------------------
       def log(message, email = nil)
-        unless %w[test cucumber].include?(Rails.env)
-          klass = self.class.to_s.split("::").last
-          klass << " [Dry Run]" if @dry_run
-          puts "[#{Time.now.rfc822}] #{klass}: #{message}"
-          puts "[#{Time.now.rfc822}] #{klass}: From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
-        end
+        klass = self.class.to_s.split("::").last
+        klass << " [Dry Run]" if @dry_run
+        Rails.logger.info("[#{Time.now.rfc822}] #{klass}: #{message}")
+        Rails.logger.info("[#{Time.now.rfc822}] #{klass}: From: #{email.from}, Subject: #{email.subject} (#{email.message_id})") if email
       end
 
       # Returns the plain-text version of an email, or strips html tags
