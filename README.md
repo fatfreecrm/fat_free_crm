@@ -67,6 +67,10 @@ Please view one of the following installation guides:
 
 Installing Fat Free CRM on Linux or Mac OS X
 
+### [2024 Full setup on Linux WSL using MySQL](https://github.com/fatfreecrm/fat_free_crm/wiki/2024-Full-setup-on-Linux-WSL-using-MySQL)
+
+Full setup guide for Linux/WSL with MySQL
+
 ### [Setup Heroku](http://guides.fatfreecrm.com/Setup-Heroku)
 
 Setting up a Heroku instance for Fat Free CRM
