@@ -287,7 +287,7 @@ GEM
     parser (3.3.5.0)
       ast (~> 2.4.1)
       racc
-    pg (1.5.7)
+    pg (1.5.9)
     popper_js (2.11.8)
     premailer (1.26.0)
       addressable
