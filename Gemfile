@@ -7,7 +7,7 @@ source 'https://rubygems.org'
 
 case ENV['CI'] && ENV['DB']
 when 'sqlite'
-  gem 'sqlite3', '~> 1.6.8'
+  gem 'sqlite3', '~> 2.0.4'
 when 'mysql'
   gem 'mysql2'
 when 'postgres'
@@ -78,7 +78,7 @@ group :test do
   gem 'database_cleaner'
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
-  gem 'sqlite3', '~> 1.6.8'
+  gem 'sqlite3', '~> 2.0.4'
   gem 'webrick'
 end
 
@@ -108,3 +108,4 @@ gem 'bootstrap', '~>5.0.0'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'jquery-ui-rails', git: 'https://github.com/jquery-ui-rails/jquery-ui-rails.git', tag: 'v7.0.0' # See https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
+gem 'mysql2'
