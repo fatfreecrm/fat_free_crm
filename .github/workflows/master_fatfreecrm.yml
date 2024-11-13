@@ -46,6 +46,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'fatfreecrm'
-        slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_80cbce9a6d5f42368d867c1e7fb8d124 }}
         images: 'fatfreecrmregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_db1106f9b87b467bb077d754be0f3ef0 }}/fat_free_crm-web:${{ github.sha }}'
