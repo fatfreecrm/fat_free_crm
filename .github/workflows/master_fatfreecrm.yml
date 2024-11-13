@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://fatfreecrmregistry.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_db1106f9b87b467bb077d754be0f3ef0 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_a7f04377c14f46989511b99c11e6afa1 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_a9bf147f991c4f8bbaa3d0b0571d1112 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_a1b072134e354ba2a77ee61d58857e28 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: fatfreecrmregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_db1106f9b87b467bb077d754be0f3ef0 }}/fat_free_crm-web:${{ github.sha }}
+        tags: fatfreecrmregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_a9bf147f991c4f8bbaa3d0b0571d1112 }}/fatfreecrmregistry/fat_free_crm-web:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -46,5 +46,6 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'fatfreecrm'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_80cbce9a6d5f42368d867c1e7fb8d124 }}
-        images: 'fatfreecrmregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_db1106f9b87b467bb077d754be0f3ef0 }}/fat_free_crm-web:${{ github.sha }}'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_1e09247648744540ad6645313be7ef00 }}
+        images: 'fatfreecrmregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_a9bf147f991c4f8bbaa3d0b0571d1112 }}/fatfreecrmregistry/fat_free_crm-web:${{ github.sha }}'
