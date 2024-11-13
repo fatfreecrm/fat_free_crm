@@ -11,6 +11,7 @@ services:
     environment:
       RAILS_ENV: 'production'
       PASSENGER_APP_ENV: 'production'
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-$(rails secret)}
       DB_DATABASE: 'fat_free_crm_production'
       DB_USERNAME: 'postgres'
       DB_PASSWORD: 'password'  # match the password in the db service
