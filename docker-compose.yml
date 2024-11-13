@@ -1,12 +1,11 @@
-version: '3'
 services:
   web:
     build: .
-    links:
+    depends_on:
       - db
     ports:
       - "3000:3000"
-      - "80:80"
+      - "8080:80"
     volumes:
       - gems:/usr/local/rvm/gems
     environment:
@@ -14,12 +13,18 @@ services:
       PASSENGER_APP_ENV: 'production'
       DB_DATABASE: 'fat_free_crm_production'
       DB_USERNAME: 'postgres'
-      DB_PASSWORD: ''
+      DB_PASSWORD: 'password'  # match the password in the db service
       DB_HOST: 'db'
       DB_PORT: 5432
+    command: >
+        bash -c "/usr/local/bin/wait-for-it.sh db:5432 -- bundle exec rake db:create db:schema:load assets:precompile && bundle exec rails s -b '0.0.0.0'"
   db:
     image: postgres:9.5
     restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: fat_free_crm_production
     volumes:
       - pgdata:/var/lib/postgresql/data
 volumes:
