@@ -18,7 +18,10 @@ services:
       DB_HOST: 'db'
       DB_PORT: 5432
     command: >
-        bash -c "/usr/local/bin/wait-for-it.sh db:5432 -- bundle exec rake db:create db:schema:load assets:precompile && bundle exec rails s -b '0.0.0.0'"
+      bash -c "/usr/local/bin/wait-for-it.sh db:5432 -- 
+      (bundle exec rake db:exists || bundle exec rake db:create) && 
+      bundle exec rake db:schema:load assets:precompile && 
+      bundle exec rails s -b '0.0.0.0'"
   db:
     image: postgres:9.5
     restart: always
