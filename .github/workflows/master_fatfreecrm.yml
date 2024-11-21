@@ -38,6 +38,13 @@ jobs:
     needs: build
 
     steps:
+
+    - name: Run Docker Compose Down
+      run: docker compose down -v
+
+    - name: Run Docker Compose Up
+      run: docker-compose up --build
+      
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
