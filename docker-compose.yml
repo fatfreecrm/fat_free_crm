@@ -17,6 +17,7 @@ services:
       DB_PASSWORD: 'password'  # match the password in the db service
       DB_HOST: 'db'
       DB_PORT: 5432
+      PORT: 3000
     command: >
       bash -c "/usr/local/bin/wait-for-it.sh db:5432 -- 
       DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:exists || bundle exec rake db:create && 
