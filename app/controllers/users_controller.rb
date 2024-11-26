@@ -63,9 +63,7 @@ class UsersController < ApplicationController
         end
       end
       responds_to_parent do
-        # Without return RSpec2 screams bloody murder about rendering twice:
-        # within the block and after yield in responds_to_parent.
-        render && (return if Rails.env.test?)
+        render
       end
     end
   end
