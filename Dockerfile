@@ -43,6 +43,6 @@ RUN bundle install --deployment
 
 # Remove asset precompile command; it will run via Docker Compose later
 # CMD ["bundle", "exec", "rails", "assets:precompile"]
-CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0", "-p", "${PORT:-3000}"]
+CMD ["bash", "-c", "bundle exec rails s -b 0.0.0.0 -p ${PORT}"]
 
 EXPOSE 3000
