@@ -19,9 +19,10 @@ services:
       DB_PORT: 5432
       PORT: 3000
     command: >
-      bash -c "/usr/local/bin/wait-for-it.sh db:5432 -- 
-      DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:exists || bundle exec rake db:create && 
-      DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:schema:load assets:precompile && 
+      bash -c "rm -rf /var/lib/postgresql/data/* &&
+      /usr/local/bin/wait-for-it.sh db:5432 -- 
+      DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:exists || bundle exec rake db:create &&
+      DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:schema:load assets:precompile &&
       bundle exec rails s -b '0.0.0.0' -p ${PORT:-3000}"
   db:
     image: postgres:9.5
