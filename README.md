@@ -159,6 +159,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   sudo apt-get install moby-engine moby-cli moby-buildx moby-compose
   sudo systemctl start moby
   sudo systemctl enable moby
+  ```
   
 #### 3. Setting Up an Apache Reverse Proxy Server
 
@@ -166,6 +167,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   ```bash
   sudo apt-get install apache2
   sudo a2enmod proxy proxy_http proxy_balancer lbmethod_byrequests
+  ```
   
 - Configure the virtual host:
   ```apache
@@ -175,15 +177,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     ProxyPass / http://127.0.0.1:3000/
     ProxyPassReverse / http://127.0.0.1:3000/
   </VirtualHost>
+  ```
   
 - Restart Apache:
   ```bash
   sudo systemctl restart apache2
+  ```
 
 #### 4. Loading Demo Data into the Database
 - Populate the database with demo data:
   ```bash
   sudo docker exec -it fat_free_crm-web-1 bundle exec rails ffcrm:demo:load
+  ```
 
 #### 5. Sharing the VM with the Group
 - Configure permissions in Azure's IAM for the following resource groups, granting necessary access:
@@ -209,26 +214,38 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 The following commands are necessary to run Fat Free CRM on the Docker VM once you have established an SSH connection.
 
-1. **Connect to the VM via SSH:**
+#### 1. Connect to the VM via SSH
    - Use your preferred SSH client or Azure's built-in SSH functionality.
 
-2. **Navigate to the Project Directory:**
-   cd fat_free_crm
+#### 2. Navigate to the Project Directory
+  ```bash
+  cd fat_free_crm
+  ```
 
-3. **Start the Docker Project in the Background:**
-   sudo docker compose up -d
+#### 3. Start the Docker Project in the Background
+  ```bash
+  sudo docker compose up -d
+  ```
 
-4. **Load Demo Data into the Database:**
-   sudo docker exec -it fat_free_crm-web-1 bundle exec rails ffcrm:demo:load
+#### 4. Load Demo Data into the Database
+  ```bash
+  sudo docker exec -it fat_free_crm-web-1 bundle exec rails ffcrm:demo:load
+  ```
 
-5. **Monitor Logs for Errors:**
-   sudo docker compose logs -f
-   Ensure there are no errors. If the logs show the application is running without issues, the setup is successful.
+#### 5. Monitor Logs for Errors
+  ```bash
+  sudo docker compose logs -f
+  ```
+   
+- Ensure there are no errors. If the logs show the application is running without issues, the setup is successful.
 
-6. **Shut Down the Project:**
-   sudo docker compose down
-   sudo docker volume rm fat_free_crm_pgdata
-   This stops the project and removes the associated databases. Note: This step is necessary because the docker-compose file prevents the project from running if a database already exists, indicating a bug in the original Fat Free CRM project.
+#### 6. Shut Down the Project
+  ```bash
+  sudo docker compose down
+  sudo docker volume rm fat_free_crm_pgdata
+  ```
+  
+- This stops the project and removes the associated databases. Note: This step is necessary because the docker-compose file prevents the project from running if a database already exists, indicating a bug in the original Fat Free CRM project.
 
 ### Additional Notes
 SSH Key Management: Consider configuring the VM to use individual SSH keys for each team member to simplify access control.
