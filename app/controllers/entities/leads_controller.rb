@@ -6,6 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class LeadsController < EntitiesController
+  include LeadPromotionHelper
   before_action :get_data_for_sidebar, only: :index
   autocomplete :account, :name, full: true
 
@@ -115,8 +116,8 @@ class LeadsController < EntitiesController
 
   # PUT /leads/1/promote
   #----------------------------------------------------------------------------
-  def promote
-    @account, @opportunity, @contact = @lead.promote(params.permit!)
+def promote
+    @account, @opportunity, @contact = promote_lead(@lead, params.permit!)
     @accounts = Account.my(current_user).order('name')
     @stage = Setting.unroll(:opportunity_stage)
 

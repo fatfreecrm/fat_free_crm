@@ -83,4 +83,5 @@ module LeadsHelper
     summary << "#{t(:mobile_small)}: #{lead.mobile}" if lead.mobile.present?
     summary.join(', ')
   end
+
 end
