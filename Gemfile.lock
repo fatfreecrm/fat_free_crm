@@ -109,6 +109,7 @@ GEM
       execjs (~> 2)
     base64 (0.2.0)
     bcrypt (3.1.20)
+    benchmark (0.4.0)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
     bootstrap (5.0.2)
@@ -249,7 +250,9 @@ GEM
     marcel (1.0.4)
     matrix (0.4.2)
     method_source (1.1.0)
-    mini_magick (4.13.2)
+    mini_magick (5.1.2)
+      benchmark
+      logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
     mini_racer (0.16.0)
