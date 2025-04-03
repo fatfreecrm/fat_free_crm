@@ -119,7 +119,7 @@ GEM
     brakeman (7.0.0)
       racc
     builder (3.3.0)
-    byebug (11.1.3)
+    byebug (12.0.0)
     cancancan (3.6.1)
     capistrano (3.19.2)
       airbrussh (>= 1.0.0)
