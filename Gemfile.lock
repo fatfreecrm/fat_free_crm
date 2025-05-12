@@ -221,7 +221,7 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
-    headless (2.3.1)
+    headless (3.0.0)
     htmlentities (4.3.4)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
