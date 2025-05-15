@@ -110,7 +110,7 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.20)
     benchmark (0.4.0)
-    bootsnap (1.18.4)
+    bootsnap (1.18.5)
       msgpack (~> 1.2)
     bootstrap (5.0.2)
       autoprefixer-rails (>= 9.1.0)
@@ -262,7 +262,7 @@ GEM
     mini_racer (0.18.1)
       libv8-node (~> 23.6.1.0)
     minitest (5.25.5)
-    msgpack (1.7.2)
+    msgpack (1.8.0)
     nenv (0.3.0)
     net-imap (0.5.7)
       date
