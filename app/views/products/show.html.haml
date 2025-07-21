@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @product.name
+%p
+  %b Sku:
+  = @product.sku
+%p
+  %b Description:
+  = @product.description
+%p
+  %b Image url:
+  = @product.image_url
+%p
+  %b Url:
+  = @product.url
+%p
+  %b Gtin:
+  = @product.gtin
+%p
+  %b Brand:
+  = @product.brand
+
+= link_to 'Edit', edit_product_path(@product)
+\|
+= link_to 'Back', products_path

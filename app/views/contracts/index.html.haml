@@ -1,0 +1,29 @@
+%h1 Listing contracts
+
+%table
+  %thead
+    %tr
+      %th Start date
+      %th End date
+      %th Status
+      %th Contract original text
+      %th Account
+      %th
+      %th
+      %th
+
+  %tbody
+    - @contracts.each do |contract|
+      %tr
+        %td= contract.start_date
+        %td= contract.end_date
+        %td= contract.status
+        %td= contract.contract_original_text
+        %td= contract.account
+        %td= link_to 'Show', contract
+        %td= link_to 'Edit', edit_contract_path(contract)
+        %td= link_to 'Destroy', contract, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Contract', new_contract_path
