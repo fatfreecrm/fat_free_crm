@@ -17,8 +17,8 @@ This project follows a standard Ruby on Rails application structure
 ## Installation
 
 - Install a version of ruby as per .ruby-version
-- Install a current version of postgres
-- Create a config/database.yml with the relevant database connection details, for the development and test environments
+- Install a current version of sqlite
+- Create a config/database.yml with the relevant database connection details, for the development and test environments, based on the config/database.sqlite.yml example.
 - Create the development and test databases
 - Run `bundle exec rake db:migrate RAILS_ENV=test` to validate the database configuration is correct.
 
