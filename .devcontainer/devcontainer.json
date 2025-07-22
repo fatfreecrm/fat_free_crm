@@ -3,5 +3,5 @@
 	"features": {
 		"ghcr.io/devcontainers/features/ruby:1": {}
 	},
-	"postCreateCommand": "sudo apt-get update && bundle && cp config/database.sqlite.yml config/database.yml && bundle exec rake db:create && bundle exec rake db:migrate"
+	"postCreateCommand": "sudo apt-get update && sudo apt install libpq-dev && bundle && cp config/database.sqlite.yml config/database.yml && bundle exec rake db:create && bundle exec rake db:migrate"
 }
