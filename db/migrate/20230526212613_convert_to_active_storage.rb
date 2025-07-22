@@ -4,19 +4,18 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
   require 'open-uri'
 
   def up
+    ActiveRecord::Base.connection.raw_connection.then do |conn|
     get_blob_id = case ENV['CI'] && ENV['DB']
-                  when 'sqlite'
-                    'LAST_INSERT_ROWID()'
                   when 'mysql'
                     'LAST_INSERT_ID()'
-                  when 'postgres'
-                    'LASTVAL()'
                   else
                     'LASTVAL()'
                   end
-
-    ActiveRecord::Base.connection.raw_connection.then do |conn|
+      if conn.is_a?(SQLite3::Database)
+        get_blob_id = 'LAST_INSERT_ROWID()'
+      end
       if conn.is_a?(::PG::Connection)
+        get_blob_id = 'LASTVAL()'
         conn.prepare('active_storage_blobs', <<-SQL)
           INSERT INTO active_storage_blobs (
             key, filename, content_type, metadata, byte_size, checksum, created_at
