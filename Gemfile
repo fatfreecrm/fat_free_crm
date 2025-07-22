@@ -109,5 +109,11 @@ gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'jquery-ui-rails', git: 'https://github.com/jquery-ui-rails/jquery-ui-rails.git', tag: 'v7.0.0' # See https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
 
+# Ruby 3.4 explict dependencies
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'drb'
+gem 'csv'
+
 # Workaround problems from concurrent-ruby 1.3.5
 require "logger"
