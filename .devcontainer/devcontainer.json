@@ -1,8 +1,7 @@
 {
 	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
 	"features": {
-		"ghcr.io/itsmechlark/features/postgresql:1": {},
 		"ghcr.io/devcontainers/features/ruby:1": {}
 	},
-	"postCreateCommand": "bundle && cp config/database.postgres.yml config/database.yml && bundle exec rake db:create && bundle exec rake db:migrate"
+	"postCreateCommand": "sudo apt-get update && bundle && cp config/database.sqlite.yml config/database.yml && bundle exec rake db:create && bundle exec rake db:migrate"
 }
