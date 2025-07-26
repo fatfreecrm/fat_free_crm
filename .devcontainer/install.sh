@@ -7,7 +7,7 @@ echo -e "Package: firefox*\nPin: release o=LP-PPA-mozillateam-ppa\nPin-Priority:
 sudo apt-get update
 
 sudo apt install -y libpq-dev # Not strictly needed, but easier than explaining to users to constantly pass DB=sqlite
-sudo apt-get install -y firefox 
+sudo apt install -y firefox 
 
 bundle
 
