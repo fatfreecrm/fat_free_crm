@@ -5,47 +5,42 @@
         %td{class: (@product.errors['name'].present? ? 'fieldWithErrors' : nil)}
           .label.req.top #{t :name}:
           = f.text_field :name, autofocus: true, style: "width: 325px", required: "required"
-        %td= spacer
-        %td
-          .label.req.top #{t :stage}:
-          = f.select :stage, @stage, { selected: @product.stage ? @product.stage.to_sym : nil }, { style: "width:160px", class: 'select2' }
 
     %table{ border: 0, width: 500, cellpadding: 0, cellspacing: 0 }
       %tr
         %td
-          .label #{t :close_date}:
-          = f.text_field :closes_on, value: f.object.closes_on, style: "width:110px;", autocomplete: :off, class: 'date'
+          .label #{t :sku}:
+          = f.text_field :sku, value: f.object.sku
         %td= spacer
         %td
-          .label #{t :probability} (%):
-          = f.text_field :probability, style: "width:110px; text-align:right;"
+          .label #{t :brand}:
+          = f.text_field :brand
         %td= spacer
         %td
-          .label #{t :amount} #{t :currency}:
-          = f.text_field :amount, style: "width:110px; text-align:right;"
+          .label #{t :gtin}:
+          = f.text_field :gtin
         %td= spacer
         %td
-          .label #{t :discount} #{t :currency}:
-          = f.text_field :discount, style: "width:110px; text-align:right;"
+          .label #{t :url}:
+          = f.url_field :url
 
-    = fields_for(@account) do |a|
+        %td= spacer
+        %td
+          .label #{t :description}:
+          = f.text_area :description
+        %td= spacer
+        %td
+          .label #{t :image_url}:
+          = f.url_field :image_url
+
+    = fields_for(@products) do |a|
       = a.hidden_field :user_id
       = a.hidden_field :access
-          %td= spacer
-          %td
-            .label.req #{t :assigned_to}:
-            = user_select(:product, all_users, current_user)
-        %tr
-          %td
-            .label #{t :campaign}:
-            = product_campaign_select(selected: (@campaign.try(:id) || @product.campaign_id), include_blank: true)
+      %td= spacer
+      %td
+        .label.req #{t :assigned_to}:
+        = user_select(:product, all_users, current_user)
 
-        - if Setting.background_info && Setting.background_info.include?(:product)
-          %tr
-            %td(colspan="3")
-              .label= t(:background_info) + ':'
-              = f.text_area :background_info, style: "width:500px", rows: 3
+      = render partial: "/shared/tags", locals: {f: f, span: 3}
 
-        = render partial: "/shared/tags", locals: {f: f, span: 3}
-
-        = hook(:product_top_section_bottom, self, f: f)
+      = hook(:product_top_section_bottom, self, f: f)

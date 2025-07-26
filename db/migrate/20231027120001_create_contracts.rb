@@ -9,6 +9,8 @@ class CreateContracts < ActiveRecord::Migration[6.1]
       t.text :contract_original_text
       t.references :account, null: false, foreign_key: true
       t.text "subscribed_users"
+      t.string "access", limit: 8, default: "Public"
+
 
       t.timestamps
     end

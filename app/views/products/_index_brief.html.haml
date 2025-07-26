@@ -1,5 +1,8 @@
 %li.highlight[product]
-  .strip{style: "color: gray;"} #{t :other}
+  - if product.sku
+    .strip{class: product.sku} #{product.sku}
+  - else
+    .strip{style: "color: gray;"} #{t :other}
 
   %ul.tools
     = hook(:product_tools_before, self, product: product)
@@ -12,7 +15,9 @@
 
   .indent
     = link_to(product.name, product)
+    = product.brand
     &ndash;
+    = product.description
     %tt
       - user_name = product.user.try(:full_name)
       - if user_name

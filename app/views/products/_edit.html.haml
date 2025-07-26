@@ -2,7 +2,6 @@
   = simple_form_for(@product, html: one_submit_only, remote: true) do |f|
     = link_to_close edit_product_path(@product)
     = f.hidden_field :user_id
-    = f.hidden_field :campaign_id
 
     = f.error_messages object_name: t('product')
 

@@ -1,37 +1,10 @@
-%p#notice= notice
-
-%p
-  %b Name:
-  = @product.name
-%p
-  %b Sku:
-  = @product.sku
-%p
-  %b Description:
-  = @product.description
-%p
-  %b Image url:
-  = @product.image_url
-%p
-  %b Url:
-  = @product.url
-%p
-  %b Gtin:
-  = @product.gtin
-%p
-  %b Brand:
-  = @product.brand
-
-= link_to 'Edit', edit_product_path(@product)
-\|
-= link_to 'Back', products_path
 - if (template = template_for_current_view)
   = render(template, product: @product)
 - else
   
   -# default view
 
-  = styles_for :task, :contact, :opportunity
+  = styles_for :task
 
   = render 'products/title_bar', product: @product
   = render 'products/sidebar_show', product: @product

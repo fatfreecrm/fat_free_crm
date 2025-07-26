@@ -1,17 +1,27 @@
 
 .panel#summary
-  - if @product.url
-    %div
-      %b= link_to(truncate(@product.url, length: 30), @product.url.to_url, :"data-popup" => true, title: t(:open_in_window, @product.url))
 
 
   %div
+    #{t :sku}: <b>#{@product.sku}</b><br />
+    #{t :gtin}: <b>#{@product.gtin}</b><br />
+    #{t :brand}: <b>#{@product.brand}</b><br />
 
   .caption #{t :product_summary}
   %dl
     %li
       %dt= display_assigned(@product)
       %tt #{t :assigned_to}:
+
+  - if @product.url
+    %li
+      %dt= link_to(truncate(@product.url, length: 30), @product.url.to_url, :"data-popup" => true, title: t(:open_in_window, @product.url))
+      %tt #{t :url}:
+
+  - if @product.image_url
+    %li
+      %dt= link_to(truncate(@product.image_url, length: 30), @product.image_url.to_url, :"data-popup" => true, title: t(:open_in_window, @product.image_url))
+
 
   - unless @product.description.blank?
     .caption #{t :description}

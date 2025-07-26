@@ -9,12 +9,14 @@ Rails.application.routes.draw do
   resources :contracts do
     collection do
       get :redraw
+      get :field_group
     end
   end
 
   resources :products do
     collection do
       get :redraw
+      get :field_group
     end
   end
   resources :lists

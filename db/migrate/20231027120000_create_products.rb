@@ -12,6 +12,7 @@ class CreateProducts < ActiveRecord::Migration[6.1]
       t.string :brand
       t.datetime :deleted_at
       t.text "subscribed_users"
+      t.string "access", limit: 8, default: "Public"
 
       t.timestamps
     end

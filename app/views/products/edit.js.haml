@@ -30,5 +30,3 @@
     $('#edit_#{entity_name}').html('#{ j render(partial: "edit") }');
     crm.flip_form('edit_#{entity_name}');
     crm.set_title('edit_#{entity_name}', "#{t :edit} #{h @product.name}");
-
-  crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });

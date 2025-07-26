@@ -228,6 +228,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_120002) do
     t.text "contract_original_text"
     t.integer "account_id", null: false
     t.text "subscribed_users"
+    t.string "access", limit: 8, default: "Public"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index "\"user_id\", \"name\", \"deleted_at\"", name: "index_contracts_on_user_id_and_name_and_deleted_at", unique: true
@@ -403,6 +404,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_120002) do
     t.string "brand"
     t.datetime "deleted_at", precision: nil
     t.text "subscribed_users"
+    t.string "access", limit: 8, default: "Public"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assigned_to"], name: "index_products_on_assigned_to"

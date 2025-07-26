@@ -15,4 +15,5 @@ class Product < ActiveRecord::Base
   sortable by: ["name ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
   serialize :subscribed_users, Array
   # :name, :sku, :description, :image_url, :url, :gtin, :brand
+
 end
