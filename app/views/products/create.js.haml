@@ -1,0 +1,28 @@
+- entity_name = controller.controller_name.singularize.underscore
+- @entity = instance_variable_get("@#{entity_name}")
+- create_id = "create_#{entity_name}"
+
+- if @entity.valid?
+  $('##{create_id}_arrow').html(crm.COLLAPSED);
+  $('##{create_id}_title').html('#{ j t(entity_name.pluralize) }');
+  $('##{create_id}').slideUp(250);
+  $('##{entity_name.pluralize}').prepend('#{ j render(partial: entity_name, collection: [ @entity ]) }');
+  $('##{dom_id(@entity)}').effect("highlight", { duration:1500 });
+
+  - if called_from_index_page?
+    = refresh_sidebar(:index)
+    $('#paginate').html('#{ j render(partial: "shared/paginate_with_per_page") }');
+  - elsif called_from_landing_page?("accounts") # Opportunity created on Account landing page: refresh Account summary.
+    - @account.reload
+    = refresh_sidebar_for(:accounts, :show)
+  - elsif called_from_landing_page?("campaigns") # Opportunity created on Campaign landing page: refresh Campaign summary.
+    - @campaign.reload
+    = refresh_sidebar_for(:campaigns, :show)
+  - else # Opportunity created on Contact landing page: refresh recent items list.
+    $('#recently').replaceWith('#{ j render(partial: "shared/recently") }');
+  crm.flick('empty', 'remove');
+
+- else
+  $('##{create_id}').html('#{ j render(partial: "new") }');
+  crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
+  $('#new_#{entity_name} input[type!=hidden]').first().focus();
