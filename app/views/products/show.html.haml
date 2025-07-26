@@ -25,3 +25,24 @@
 = link_to 'Edit', edit_product_path(@product)
 \|
 = link_to 'Back', products_path
+- if (template = template_for_current_view)
+  = render(template, product: @product)
+- else
+  
+  -# default view
+
+  = styles_for :task, :contact, :opportunity
+
+  = render 'products/title_bar', product: @product
+  = render 'products/sidebar_show', product: @product
+
+  %div#edit_product{ hidden }
+
+  = render "comments/new", commentable: @product
+  = render partial: "shared/timeline", collection: @timeline
+
+  = hook(:show_product_bottom, self, {entity: @product}) do
+
+    = render "versions/versions", object: @product
+
+    = load_select_popups_for(@product)

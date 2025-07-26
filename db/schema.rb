@@ -220,14 +220,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_120002) do
   end
 
   create_table "contracts", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "assigned_to"
     t.date "start_date"
     t.date "end_date"
     t.string "status"
     t.text "contract_original_text"
     t.integer "account_id", null: false
+    t.text "subscribed_users"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "\"user_id\", \"name\", \"deleted_at\"", name: "index_contracts_on_user_id_and_name_and_deleted_at", unique: true
     t.index ["account_id"], name: "index_contracts_on_account_id"
+    t.index ["assigned_to"], name: "index_contracts_on_assigned_to"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -397,6 +402,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_120002) do
     t.string "gtin"
     t.string "brand"
     t.datetime "deleted_at", precision: nil
+    t.text "subscribed_users"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assigned_to"], name: "index_products_on_assigned_to"

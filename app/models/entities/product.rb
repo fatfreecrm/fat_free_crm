@@ -11,6 +11,8 @@ class Product < ActiveRecord::Base
   acts_as_taggable_on :tags
   has_paper_trail versions: { class_name: 'Version' }, ignore: [:subscribed_users]
   exportable
+  has_fields
   sortable by: ["name ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
+  serialize :subscribed_users, Array
   # :name, :sku, :description, :image_url, :url, :gtin, :brand
 end

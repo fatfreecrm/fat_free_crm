@@ -11,6 +11,7 @@ class CreateProducts < ActiveRecord::Migration[6.1]
       t.string :gtin
       t.string :brand
       t.datetime :deleted_at
+      t.text "subscribed_users"
 
       t.timestamps
     end
