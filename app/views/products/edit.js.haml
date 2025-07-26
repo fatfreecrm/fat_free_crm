@@ -10,11 +10,11 @@
   - else                                            # Called from index page...
     $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
 
-- else # <----------------------------------------- Show requested [Edit Opportunity] form.
+- else # <----------------------------------------- Show requested [Edit Product] form.
 
   - if params[:cancel].blank?                       # Called from opportunities list item...
-    - if @previous                                  # Hide open [Edit Opportunity] form if any.
-      - if @previous.is_a?(Opportunity)
+    - if @previous                                  # Hide open [Edit Product] form if any.
+      - if @previous.is_a?(Product)
         $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: entity_name, collection: [ @previous ]) }');
       - else
         crm.flick('#{entity_name}_#{@previous}', 'remove');
