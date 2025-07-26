@@ -234,6 +234,16 @@
   :url:
     :controller: opportunities
 - :active: false
+  :text: :tab_products
+  :icon: :fa-box
+  :url:
+    :controller: products
+- :active: false
+  :text: :tab_contracts
+  :icon: :fa-money
+  :url:
+    :controller: contracts
+- :active: false
   :text: :tab_team
   :icon: :fa-globe
   :url:

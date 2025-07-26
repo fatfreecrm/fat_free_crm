@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_120002) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -210,6 +210,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
   end
 
+  create_table "contracted_products", force: :cascade do |t|
+    t.integer "contract_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contract_id"], name: "index_contracted_products_on_contract_id"
+    t.index ["product_id"], name: "index_contracted_products_on_product_id"
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.string "status"
+    t.text "contract_original_text"
+    t.integer "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_contracts_on_account_id"
+  end
+
   create_table "emails", force: :cascade do |t|
     t.string "imap_message_id", null: false
     t.integer "user_id"
@@ -366,6 +386,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
     t.index ["user_id", "name"], name: "index_preferences_on_user_id_and_name"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.string "sku"
+    t.text "description"
+    t.string "image_url"
+    t.string "url"
+    t.string "gtin"
+    t.string "brand"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -485,4 +517,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contracted_products", "contracts"
+  add_foreign_key "contracted_products", "products"
+  add_foreign_key "contracts", "accounts"
 end
