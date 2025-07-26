@@ -29,13 +29,13 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
           ) VALUES ($1, $2, $3, #{get_blob_id}, $4)
         SQL
       else
-        conn.raw_connection.prepare(<<-SQL)
+        conn.prepare(<<-SQL)
           INSERT INTO active_storage_blobs (
             `key`, filename, content_type, metadata, byte_size, checksum, created_at
           ) VALUES (?, ?, ?, '{}', ?, ?, ?)
         SQL
 
-        conn.raw_connection.prepare(<<-SQL)
+        conn.prepare(<<-SQL)
           INSERT INTO active_storage_attachments (
             name, record_type, record_id, blob_id, created_at
           ) VALUES (?, ?, ?, #{get_blob_id}, ?)
