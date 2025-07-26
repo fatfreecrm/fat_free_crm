@@ -1,10 +1,12 @@
 #! /bin/bash
 
 sudo add-apt-repository -y ppa:mozillateam/ppa
-sudo apt-get update
-sudo apt install -y libpq-dev # Not strictly needed, but easier than explaining to users to constantly pass DB=sqlite
 
-# TODO: https://gist.github.com/jfeilbach/78d0ef94190fb07dee9ebfc34094702f
+echo -e "Package: firefox*\nPin: release o=LP-PPA-mozillateam-ppa\nPin-Priority: 550\n\nPackage: firefox*\nPin: release o=Ubuntu\nPin-Priority: -1" | sudo tee /etc/apt/preferences.d/99-mozillateamppa
+
+sudo apt-get update
+
+sudo apt install -y libpq-dev # Not strictly needed, but easier than explaining to users to constantly pass DB=sqlite
 sudo apt-get install -y firefox 
 
 bundle
