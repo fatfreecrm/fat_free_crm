@@ -84,9 +84,17 @@ if defined?(FatFreeCRM::Application)
     # Raises helpful error messages.
     config.assets.raise_runtime_errors = true
 
-    # Allow connections to the app from Codespaces
+    # Are we running in a GitHub Codespace?
     if ENV.fetch('CODESPACE_NAME', nil)
       config.hosts << "#{ENV['CODESPACE_NAME']}-3000.app.github.dev"
+
+      config.force_ssl = true
+      config.action_dispatch.cookies_same_site_protection = :lax
+
+      config.action_dispatch.trusted_proxies = [
+        # Trust all IPs (safe in dev only)
+        IPAddr.new("0.0.0.0/0"), IPAddr.new("::/0")
+      ]
     end
   end
 end
