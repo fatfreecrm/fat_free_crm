@@ -20,7 +20,7 @@
       %tr
         %td
           .label #{t :wikidata_id}:
-          = f.text_field "account[wikidata_id]", pattern: "^Q\d+$", title: t(:wikidata_id_pattern), placeholder: "Q1345234"
+          = f.text_field :wikidata_id, pattern: "^Q\d+$", title: t(:wikidata_id_title), placeholder: "Q1345234"
 
       - if Setting.background_info && Setting.background_info.include?(:account)
         %tr

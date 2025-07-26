@@ -341,6 +341,9 @@ en-US:
   website: Website
   account_with_title_department: ! '%{title}, %{department} at %{account}'
   account_with_title: ! '%{title} at %{account}'
+  wikidata_id: Wikidata ID
+  wikidata_id_place: Wikidata ID
+  wikidata_id_title: "A Wikidata ID is a unique identifier for an entity in the Wikidata knowledge base. It can be used to link to additional information about the entity, such as its description, aliases, and related entities. Format is Q followed by a number, e.g. Q288523 for ACME corporation"
 
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
