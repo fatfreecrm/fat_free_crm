@@ -42,7 +42,7 @@ class Admin::FieldsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def create
     as = field_params["as"]
-    klass= Field.lookup_class(as).safe_constantize
+    klass = Field.lookup_class(as).safe_constantize
     @field =
       if as.match?(/pair/)
         klass.create_pair("pair" => pair_params, "field" => field_params).first
