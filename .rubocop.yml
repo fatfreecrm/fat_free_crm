@@ -87,3 +87,7 @@ RSpec/DescribeClass:
 Naming/PredicatePrefix:
   Exclude:
     - 'spec/support/assert_select.rb'
+
+RSpec/SpecFilePathFormat:
+  Exclude:
+    - 'spec/routing/**/*.rb'
