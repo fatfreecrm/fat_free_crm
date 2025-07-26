@@ -117,7 +117,7 @@ class Admin::FieldsController < Admin::ApplicationController
   end
 
   def pair_params
-    params.require(:pair).permit("0": [:hint, :required, :disabled, :id], "1": [:hint, :required, :disabled, :id])
+    params.require(:pair).permit("0": %i[hint required disabled id], "1": %i[hint required disabled id])
   end
 
   def setup_current_tab
