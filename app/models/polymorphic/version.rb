@@ -17,7 +17,7 @@ class Version < PaperTrail::Version
 
   scope :default_order,  -> { order('created_at DESC') }
   scope :include_events, ->(*events) { where(event: events) }
-  scope :exclude_events, ->(*events) { where('event NOT IN (?)', events) }
+  scope :exclude_events, ->(*events) { where.not(event: events) }
   scope :for,            ->(user) { where(whodunnit: user.id.to_s) }
 
   class << self

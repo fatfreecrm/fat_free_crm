@@ -1204,15 +1204,6 @@ Rails/WhereEquals:
     - 'app/models/entities/opportunity.rb'
     - 'app/models/polymorphic/task.rb'
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-Rails/WhereNot:
-  Exclude:
-    - 'app/models/polymorphic/task.rb'
-    - 'app/models/polymorphic/version.rb'
-    - 'app/models/users/user.rb'
-    - 'db/migrate/20120216042541_is_paranoid_to_paper_trail.rb'
-
 # Offense count: 11
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/WhereRange:

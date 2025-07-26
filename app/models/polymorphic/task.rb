@@ -83,7 +83,7 @@ class Task < ActiveRecord::Base
   # Status based scopes to be combined with the due date and completion time.
   scope :pending,       -> { where('completed_at IS NULL').order('tasks.due_at, tasks.id') }
   scope :assigned,      -> { where('completed_at IS NULL AND assigned_to IS NOT NULL').order('tasks.due_at, tasks.id') }
-  scope :completed,     -> { where('completed_at IS NOT NULL').order('tasks.completed_at DESC') }
+  scope :completed,     -> { where.not(completed_at: nil).order('tasks.completed_at DESC') }
 
   # Due date scopes.
   scope :due_asap,      -> { where("due_at IS NULL AND bucket = 'due_asap'").order('tasks.id DESC') }
