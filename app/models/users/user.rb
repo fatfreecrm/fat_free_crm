@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
   scope :by_name, -> { order('first_name, last_name, email') }
 
   scope :text_search, lambda { |query|
-    query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
+    query = query.gsub(/[^\w\s\-.'\p{L}]/u, '').strip
     where('upper(username) LIKE upper(:s) OR upper(email) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', s: "%#{query}%")
   }
 
