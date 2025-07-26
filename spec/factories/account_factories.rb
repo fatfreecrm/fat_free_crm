@@ -17,6 +17,7 @@ FactoryBot.define do
     phone               { FFaker::PhoneNumber.phone_number }
     fax                 { FFaker::PhoneNumber.phone_number }
     background_info     { FFaker::Lorem.paragraph[0, 255] }
+    wikidata_id         { "Q123456" }
     deleted_at          { nil }
     updated_at          { FactoryBot.generate(:time) }
     created_at          { FactoryBot.generate(:time) }

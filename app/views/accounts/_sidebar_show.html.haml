@@ -20,6 +20,9 @@
     - if @account.fax
       #{t :fax}: <b>#{@account.fax}</b><br />
 
+    - if @account.wikidata_id
+      %b= link_to t(:wikidata), "https://www.wikidata.org/wiki/#{@account.wikidata_id}", target: "_blank", rel: "noopener noreferrer"
+
   %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address
   %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address
 
