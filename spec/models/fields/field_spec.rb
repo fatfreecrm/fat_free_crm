@@ -68,5 +68,4 @@ describe Field do
       it { expect(field.render(Time.parse('2011-04-19 14:47 +0000'))).to eql("19 Apr 2011 at  2:47PM") }
     end
   end
-
 end

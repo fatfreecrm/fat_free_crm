@@ -69,7 +69,7 @@ module LeadsHelper
   #----------------------------------------------------------------------------
   def lead_summary(lead)
     summary = []
-    summary << (lead.status ? t(lead.status) : t(:other))
+    summary << t(lead.status || :other)
 
     if lead.company? && lead.title?
       summary << t(:works_at, job_title: lead.title, company: lead.company)

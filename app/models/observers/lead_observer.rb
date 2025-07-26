@@ -16,7 +16,8 @@ class LeadObserver < ActiveRecord::Observer
 
   def after_update(item)
     original = @@leads.delete(item.id)
-    return log_activity(item, :reject) if original&.status != "rejected" && item.status == "rejected"
+
+    log_activity(item, :reject) if original&.status != "rejected" && item.status == "rejected"
   end
 
   private

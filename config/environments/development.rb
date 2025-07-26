@@ -86,7 +86,7 @@ if defined?(FatFreeCRM::Application)
 
     # Are we running in a GitHub Codespace?
     if ENV.fetch('CODESPACE_NAME', nil)
-      config.host = "#{ENV['CODESPACE_NAME']}-3000.app.github.dev:443"
+      config.host = "#{ENV.fetch('CODESPACE_NAME', nil)}-3000.app.github.dev:443"
       config.hosts << ".preview.app.github.dev"
       config.hosts << ".app.github.dev"
 

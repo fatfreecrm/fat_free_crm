@@ -12,7 +12,7 @@ def all_actions
   %i[index show create update destroy manage]
 end
 
-describe "User abilities" do
+describe User do
   subject(:ability)  { Ability.new(user) }
   let(:subject_user) { build :user }
 
