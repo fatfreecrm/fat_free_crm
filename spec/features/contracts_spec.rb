@@ -8,7 +8,7 @@
 require File.expand_path('acceptance_helper.rb', __dir__)
 
 feature 'Contracts', '
-  In order to increase sales
+  In order to manage and review accounts
   As a user
   I want to manage contracts
 ' do

@@ -8,7 +8,7 @@
 require File.expand_path('acceptance_helper.rb', __dir__)
 
 feature 'Products', '
-  In order to increase sales
+  In order to be able to make sales
   As a user
   I want to manage products
 ' do
