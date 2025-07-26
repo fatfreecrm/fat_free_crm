@@ -5,15 +5,13 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
 
   def up
     ActiveRecord::Base.connection.raw_connection.then do |conn|
-    get_blob_id = case ENV['CI'] && ENV['DB']
-                  when 'mysql'
-                    'LAST_INSERT_ID()'
-                  else
-                    'LASTVAL()'
-                  end
-      if conn.is_a?(SQLite3::Database)
-        get_blob_id = 'LAST_INSERT_ROWID()'
-      end
+      get_blob_id = case ENV['CI'] && ENV['DB']
+                    when 'mysql'
+                      'LAST_INSERT_ID()'
+                    else
+                      'LASTVAL()'
+                    end
+      get_blob_id = 'LAST_INSERT_ROWID()' if conn.is_a?(SQLite3::Database)
       if conn.is_a?(::PG::Connection)
         get_blob_id = 'LASTVAL()'
         conn.prepare('active_storage_blobs', <<-SQL)
