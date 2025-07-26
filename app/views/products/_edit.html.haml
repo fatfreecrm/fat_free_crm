@@ -1,0 +1,17 @@
+.remote
+  = simple_form_for(@product, html: one_submit_only, remote: true) do |f|
+    = link_to_close edit_product_path(@product)
+    = f.hidden_field :user_id
+
+    = f.error_messages object_name: t('product')
+
+    = render "products/top_section", f: f, edit: true
+    = render "fields/edit_custom_field_group", f: f, edit: true
+    = render "fields/groups",             f: f, edit: true
+    = render "entities/permissions",      f: f, edit: true, entity: @product
+    = hook(:entity_form, self, {f: f, entity: @product})
+
+    .buttonbar
+      = f.submit t(:save_product), class: 'btn btn-primary'
+      #{t :or}
+      = link_to_cancel edit_product_path(@product)

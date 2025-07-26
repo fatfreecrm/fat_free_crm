@@ -1,0 +1,39 @@
+
+.panel#summary
+
+
+  %div
+    - if @product.sku.present?
+      #{t :sku}: <b>#{@product.sku}</b><br />
+    - if @product.gtin.present?
+      #{t :gtin}: <b>#{@product.gtin}</b><br />
+    - if @product.brand.present?
+      #{t :brand}: <b>#{@product.brand}</b><br />
+
+  .caption #{t :product_summary}
+  %dl
+    %li
+      %dt= display_assigned(@product)
+      %tt #{t :assigned_to}:
+
+  - if @product.url
+    %li
+      %dt= link_to(truncate(@product.url, length: 30), @product.url.to_url, :"data-popup" => true, title: t(:open_in_window, @product.url))
+      %tt #{t :url}:
+
+  - if @product.image_url
+    %li
+      %dt= link_to(truncate(@product.image_url, length: 30), @product.image_url.to_url, :"data-popup" => true, title: t(:open_in_window, @product.image_url))
+
+
+  - unless @product.description.blank?
+    .caption #{t :description}
+    = auto_link(simple_format @product.description)
+
+  = render "fields/sidebar_show", asset: @product
+
+  - if @product.tags.present?
+    %dt
+      .tags= tags_for_index(@product)
+
+  = hook(:show_product_sidebar_bottom, self, product: @product)

@@ -1,0 +1,28 @@
+%li.highlight[product]
+  - if product.sku
+    .strip{class: product.sku} #{product.sku}
+  - else
+    .strip{style: "color: gray;"} #{t :other}
+
+  %ul.tools
+    = hook(:product_tools_before, self, product: product)
+
+    - if can?(:update, product)
+      %li= link_to_edit(product)
+
+    - if can?(:destroy, product)
+      %li= link_to_delete(product)
+
+  .indent
+    = link_to(product.name, product)
+    = product.brand
+    &ndash;
+    = product.description
+    %tt
+      - user_name = product.user.try(:full_name)
+      - if user_name
+        = t(:added_by, time_ago: timeago(product.created_at), user: h(user_name)).html_safe
+      - else
+        = t(:added_ago, value: timeago(product.created_at)).html_safe
+
+    = hook(:product_bottom, self, product: product)
