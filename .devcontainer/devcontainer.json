@@ -3,5 +3,5 @@
 	"features": {
 		"ghcr.io/devcontainers/features/ruby:1": {}
 	},
-	"postCreateCommand": ""
+	"postCreateCommand": "sh .devcontainer/install.sh"
 }
