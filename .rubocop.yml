@@ -1,7 +1,15 @@
 inherit_from: .rubocop_todo.yml
 
+plugins:
+  - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+
 AllCops:
-  TargetRubyVersion: 3.3
+  TargetRubyVersion: 3.4
+  NewCops: enable
 
 Bundler/OrderedGems:
   Enabled: false
