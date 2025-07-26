@@ -387,6 +387,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_120002) do
   end
 
   create_table "products", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "assigned_to"
     t.string "name"
     t.string "sku"
     t.text "description"
@@ -394,8 +396,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_120002) do
     t.string "url"
     t.string "gtin"
     t.string "brand"
+    t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["assigned_to"], name: "index_products_on_assigned_to"
+    t.index ["user_id", "name", "deleted_at"], name: "index_products_on_user_id_and_name_and_deleted_at", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
