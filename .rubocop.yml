@@ -91,10 +91,12 @@ Naming/PredicatePrefix:
     - 'app/inputs/date_time_input.rb'
     - 'app/models/users/user.rb'
     - 'lib/fat_free_crm/fields.rb'
+    - 'lib/fat_free_crm/mail_processor/base.rb'
 
 RSpec/SpecFilePathFormat:
   Exclude:
     - 'spec/routing/**/*.rb'
+    - 'spec/lib/**/*.rb'
 
 Rails/CreateTableWithTimestamps:
   Exclude:
