@@ -24,6 +24,14 @@ module NavigationHelpers
     opportunities_path
   end
 
+  def products_page
+    products_path
+  end
+
+  def contracts_page
+    contracts_path
+  end
+
   def contacts_page
     contacts_path
   end
