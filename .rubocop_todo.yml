@@ -746,7 +746,7 @@ RSpec/ScatteredSetup:
 # Include: **/*_spec.rb
 RSpec/SpecFilePathFormat:
   Exclude:
-    - 'spec/controllers/applications_controller_spec.rb'
+    - 'spec/controllers/application_controller_spec.rb'
     - 'spec/controllers/emails_controller_spec.rb'
     - 'spec/lib/comment_extensions_spec.rb'
     - 'spec/lib/mail_processor/base_spec.rb'
@@ -771,7 +771,7 @@ RSpec/StubbedMock:
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
 RSpec/VerifiedDoubles:
   Exclude:
-    - 'spec/controllers/applications_controller_spec.rb'
+    - 'spec/controllers/application_controller_spec.rb'
     - 'spec/controllers/entities/accounts_controller_spec.rb'
     - 'spec/controllers/entities/contacts_controller_spec.rb'
     - 'spec/controllers/entities/leads_controller_spec.rb'
