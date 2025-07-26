@@ -11,13 +11,15 @@ class TestController < ActionController::Base
   include FatFreeCRM::I18n
 end
 
-describe 'I18n.t()' do
+describe 'I18n' do
   let(:entity_string) { 'entities' }
   let(:hidden_count) { 10 }
   let(:test_controller) { TestController.new }
 
-  it 'should translate hash arguments' do
-    expect(test_controller.t(:not_showing_hidden_entities, entity: entity_string, count: hidden_count))
-      .to eq("Not showing 10 hidden entities.")
+  describe '#t' do
+    it 'should translate hash arguments' do
+      expect(test_controller.t(:not_showing_hidden_entities, entity: entity_string, count: hidden_count))
+        .to eq("Not showing 10 hidden entities.")
+    end
   end
 end

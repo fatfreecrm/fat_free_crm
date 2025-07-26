@@ -67,6 +67,11 @@ group :development, :test do
   gem 'pry-rails' unless ENV["CI"]
   gem 'factory_bot_rails', '~> 6.0'
   gem 'rubocop'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
+  gem 'rubocop-capybara'
+  gem 'rubocop-factory_bot'
+  gem 'rubocop-rspec_rails'
   gem 'rainbow'
   gem 'puma' # used by capybara 3
 end
@@ -108,6 +113,12 @@ gem 'bootstrap', '~>5.0.0'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'jquery-ui-rails', git: 'https://github.com/jquery-ui-rails/jquery-ui-rails.git', tag: 'v7.0.0' # See https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
+
+# Ruby 3.4 explict dependencies
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'drb'
+gem 'csv'
 
 # Workaround problems from concurrent-ruby 1.3.5
 require "logger"

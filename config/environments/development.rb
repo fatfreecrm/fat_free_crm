@@ -83,5 +83,20 @@ if defined?(FatFreeCRM::Application)
     # Checks for improperly declared sprockets dependencies.
     # Raises helpful error messages.
     config.assets.raise_runtime_errors = true
+
+    # Are we running in a GitHub Codespace?
+    if ENV.fetch('CODESPACE_NAME', nil)
+      config.host = "#{ENV.fetch('CODESPACE_NAME', nil)}-3000.app.github.dev:443"
+      config.hosts << ".preview.app.github.dev"
+      config.hosts << ".app.github.dev"
+
+      config.force_ssl = true
+      config.action_dispatch.cookies_same_site_protection = :lax
+
+      config.action_dispatch.trusted_proxies = [
+        # Trust all IPs (safe in dev only)
+        IPAddr.new("0.0.0.0/0"), IPAddr.new("::/0")
+      ]
+    end
   end
 end

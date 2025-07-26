@@ -4,19 +4,16 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
   require 'open-uri'
 
   def up
-    get_blob_id = case ENV['CI'] && ENV['DB']
-                  when 'sqlite'
-                    'LAST_INSERT_ROWID()'
-                  when 'mysql'
-                    'LAST_INSERT_ID()'
-                  when 'postgres'
-                    'LASTVAL()'
-                  else
-                    'LASTVAL()'
-                  end
-
     ActiveRecord::Base.connection.raw_connection.then do |conn|
+      get_blob_id = case ENV['CI'] && ENV['DB']
+                    when 'mysql'
+                      'LAST_INSERT_ID()'
+                    else
+                      'LASTVAL()'
+                    end
+      get_blob_id = 'LAST_INSERT_ROWID()' if conn.is_a?(SQLite3::Database)
       if conn.is_a?(::PG::Connection)
+        get_blob_id = 'LASTVAL()'
         conn.prepare('active_storage_blobs', <<-SQL)
           INSERT INTO active_storage_blobs (
             key, filename, content_type, metadata, byte_size, checksum, created_at
@@ -29,13 +26,13 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
           ) VALUES ($1, $2, $3, #{get_blob_id}, $4)
         SQL
       else
-        conn.raw_connection.prepare(<<-SQL)
+        conn.prepare(<<-SQL)
           INSERT INTO active_storage_blobs (
             `key`, filename, content_type, metadata, byte_size, checksum, created_at
           ) VALUES (?, ?, ?, '{}', ?, ?, ?)
         SQL
 
-        conn.raw_connection.prepare(<<-SQL)
+        conn.prepare(<<-SQL)
           INSERT INTO active_storage_attachments (
             name, record_type, record_id, blob_id, created_at
           ) VALUES (?, ?, ?, #{get_blob_id}, ?)

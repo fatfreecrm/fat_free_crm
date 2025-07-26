@@ -44,7 +44,7 @@ describe CustomField do
 
   it "should add a column to the database and include column_options" do
     expect(CustomField.connection).to receive(:add_column)
-      .with("contacts", "cf_test_field", 'decimal', {"precision" => 15, "scale" => 2})
+      .with("contacts", "cf_test_field", 'decimal', { "precision" => 15, "scale" => 2 })
     expect(Contact).to receive(:reset_column_information)
     expect(Contact).to receive(:serialize_custom_fields!)
 
