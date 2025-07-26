@@ -84,10 +84,18 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/views/**/*_spec.rb'
 
+# Arguably these should be fixed at a later point, but would require depreciation, aliases, etc.
 Naming/PredicatePrefix:
   Exclude:
     - 'spec/support/assert_select.rb'
+    - 'app/inputs/date_time_input.rb'
+    - 'app/models/users/user.rb'
+    - 'lib/fat_free_crm/fields.rb'
 
 RSpec/SpecFilePathFormat:
   Exclude:
     - 'spec/routing/**/*.rb'
+
+Rails/CreateTableWithTimestamps:
+  Exclude:
+    - 'db/migrate/20230526211831_create_active_storage_tables.active_storage.rb'
