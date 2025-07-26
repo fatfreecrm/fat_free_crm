@@ -3,9 +3,12 @@
 
 
   %div
-    #{t :sku}: <b>#{@product.sku}</b><br />
-    #{t :gtin}: <b>#{@product.gtin}</b><br />
-    #{t :brand}: <b>#{@product.brand}</b><br />
+    - if @product.sku.present?
+      #{t :sku}: <b>#{@product.sku}</b><br />
+    - if @product.gtin.present?
+      #{t :gtin}: <b>#{@product.gtin}</b><br />
+    - if @product.brand.present?
+      #{t :brand}: <b>#{@product.brand}</b><br />
 
   .caption #{t :product_summary}
   %dl

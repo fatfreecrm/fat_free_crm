@@ -518,6 +518,11 @@ en-US:
   products_small: products
   create_product: Create Product
   save_profile: Save Product
+  url: "URL"
+  gtin: "GTIN (Barcode/UPC)"
+  sku: "SKU (Stock Keeping Unit)"
+  brand: "Brand"
+  description: "Description"
 
   # Views -> Tasks.
   #----------------------------------------------------------------------------

@@ -13,25 +13,25 @@
           = f.text_field :sku, value: f.object.sku
         %td= spacer
         %td
-          .label #{t :brand}:
-          = f.text_field :brand
-        %td= spacer
-        %td
           .label #{t :gtin}:
           = f.text_field :gtin
-        %td= spacer
+      %tr
+        %td
+          .label #{t :brand}:
+          = f.text_field :brand
+      %tr
         %td
           .label #{t :url}:
           = f.url_field :url
-
-        %td= spacer
-        %td
-          .label #{t :description}:
-          = f.text_area :description
         %td= spacer
         %td
           .label #{t :image_url}:
           = f.url_field :image_url
+      %tr
+        %td{ colspan: "3" }
+          .label #{t :description}:
+          = f.text_area :description, rows: 3, style: "width: 100%"
+
 
     = fields_for(@products) do |a|
       = a.hidden_field :user_id
