@@ -4,14 +4,14 @@
 // See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 //------------------------------------------------------------------------------
 #search {
-
   margin-top: 15px;
 
   .tabs {
     background: none;
 
     li {
-      a:link, a:visited {
+      a:link,
+      a:visited {
         background-color: #ddd;
         color: #222;
         font-weight: normal;
@@ -67,7 +67,7 @@
     }
 
     .fields.sort {
-      float:right;
+      float: right;
     }
 
     .submit-search {
@@ -78,20 +78,24 @@
   .pull-right {
     float: none;
   }
-
 }
 
-.defaultTextActive { color: #a1a1a1; }
+.defaultTextActive {
+  color: #a1a1a1;
+}
 
 .remove_fields {
   margin-right: 4px;
-  &:hover { background: none; }
+  &:hover {
+    background: none;
+  }
   img {
     vertical-align: middle;
   }
 }
 
-.select2-container, input.ransack_query {
+.select2-container,
+input.ransack_query {
   vertical-align: middle;
 }
 

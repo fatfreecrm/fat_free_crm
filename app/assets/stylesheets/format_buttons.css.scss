@@ -5,7 +5,10 @@
 //------------------------------------------------------------------------------
 #buttons {
   display: inline-block;
-  .create_asset, ul { display: inline; }
+  .create_asset,
+  ul {
+    display: inline;
+  }
   .create_asset {
     margin-left: 24px;
     display: inline-block;
@@ -28,13 +31,17 @@ ul.format-buttons li {
       opacity: 0.3;
     }
   }
-  a.active i.fa { opacity: 1; }
+  a.active i.fa {
+    opacity: 1;
+  }
   a:hover i.fa {
     opacity: 1;
   }
-  a:active i.fa { opacity: 1; }
+  a:active i.fa {
+    opacity: 1;
+  }
   a:hover {
-    background:none;
-    color:gray;
+    background: none;
+    color: gray;
   }
 }

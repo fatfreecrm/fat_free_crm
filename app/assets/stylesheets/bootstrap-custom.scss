@@ -6,30 +6,30 @@
 
 // 2. Include any default variable overrides here
 
-$bg_color1: #05668D;
+$bg_color1: #05668d;
 $bg_color2: #028090;
-$bg_color3: #00A896;
-$bg_color4: #02C39A;
-$bg_color5: #2A9D8F;
-$bg_color6: #B4A6AB;
-$bg_color7: #946E83;
+$bg_color3: #00a896;
+$bg_color4: #02c39a;
+$bg_color5: #2a9d8f;
+$bg_color6: #b4a6ab;
+$bg_color7: #946e83;
 $bg_color8: #615055;
-$bg_color9: #FFDD4A;
+$bg_color9: #ffdd4a;
 
 $theme-colors: (
-  "primary":    #05668D,
-  "secondary":  #028090,
-  "success":    #00A896,
-  "info":       #02C39A,
-  "warning":    #2A9D8F,
-  "danger":     #B4A683,
-  "light":      #615055,
-  "dark":       #FFDD4A
+  "primary": #05668d,
+  "secondary": #028090,
+  "success": #00a896,
+  "info": #02c39a,
+  "warning": #2a9d8f,
+  "danger": #b4a683,
+  "light": #615055,
+  "dark": #ffdd4a
 );
 
-$btn-padding-y:               0.375;
-$btn-padding-x:               0.75;
-$btn-font-size:               '0.9rem';
+$btn-padding-y: 0.375;
+$btn-padding-x: 0.75;
+$btn-font-size: "0.9rem";
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/variables";
@@ -76,8 +76,6 @@ $btn-font-size:               '0.9rem';
 $utilities: ();
 @import "bootstrap/utilities/api";
 
-
-
 // 5. Add additional custom code here
 
 // Used on tasks#index as the selector component
@@ -112,12 +110,17 @@ $utilities: ();
       li {
         display: flex;
         width: 12%;
-	margin-right: 1rem;
+        margin-right: 1rem;
         flex-direction: column-reverse;
 
-	vertical-align: top;
-	dt { float: none; width: 100%; }
-	tt { width: 100%; }
+        vertical-align: top;
+        dt {
+          float: none;
+          width: 100%;
+        }
+        tt {
+          width: 100%;
+        }
       }
     }
   }
@@ -132,11 +135,14 @@ button.navbar-toggler:focus {
 @include media-breakpoint-down(lg) {
   .navbar.tabs {
     li {
-     a:link, a:visited {
-       background-color: transparent;
-     }
-     i { display: none; }
-    } 
+      a:link,
+      a:visited {
+        background-color: transparent;
+      }
+      i {
+        display: none;
+      }
+    }
   }
 
   // On mobile, reverse the order of our content
@@ -144,7 +150,7 @@ button.navbar-toggler:focus {
     .row:first-child {
       flex-direction: column-reverse !important;
     }
- 
+
     .main {
       width: 90%;
       margin: auto;
@@ -156,7 +162,10 @@ button.navbar-toggler:focus {
       align-items: stretch;
     }
 
-    .sidebar #filters, .sidebar #lists, .sidebar #recently, .sidebar #summary {
+    .sidebar #filters,
+    .sidebar #lists,
+    .sidebar #recently,
+    .sidebar #summary {
       margin-right: 2%;
       width: 30%;
     }
@@ -164,16 +173,16 @@ button.navbar-toggler:focus {
     #summary.panel {
       dl {
         li {
-	  width: 23%;
-	  font-size: 1rem;
-	  dt {
-	    font-size: 0.75rem;
+          width: 23%;
+          font-size: 1rem;
+          dt {
+            font-size: 0.75rem;
           }
           tt {
-	    font-size: 0.75rem;
-	  }
-	}
-      }	
+            font-size: 0.75rem;
+          }
+        }
+      }
     }
   }
 }
@@ -183,7 +192,9 @@ body {
   overflow-x: clip;
 }
 #search {
-  .tabs { @extend .row; }
+  .tabs {
+    @extend .row;
+  }
 
   ul {
     @extend .col;

@@ -12,11 +12,11 @@
     background: white;
     padding: 0;
     margin: 0 4px 4px 0;
-    list-style:none;
+    list-style: none;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 230px;
-    border: 1px solid #AAA;
+    border: 1px solid #aaa;
     -webkit-border-radius: 0 0 4px 4px;
     -moz-border-radius: 0 0 4px 4px;
     border-radius: 0 0 4px 4px;
@@ -26,10 +26,11 @@
     font-family: "Lucida Grande", Geneva, Arial, Helvetica, sans-serif;
   }
 
-  ul.auto-list > li:hover, ul.auto-list > li[data-selected=true] {
-    background: #3875D7;
+  ul.auto-list > li:hover,
+  ul.auto-list > li[data-selected="true"] {
+    background: #3875d7;
     color: white;
-    em{
+    em {
       background: inherit;
     }
   }
@@ -40,8 +41,8 @@
     border-bottom: none;
   }
 
-  em{
-    background: #FEFFDE;
+  em {
+    background: #feffde;
     font-style: normal;
   }
 }
