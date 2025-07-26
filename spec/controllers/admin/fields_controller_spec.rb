@@ -8,7 +8,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::FieldsController do
-
   before(:each) do
     login_admin
     set_current_tab(:fields)
@@ -26,12 +25,11 @@ describe Admin::FieldsController do
     end
 
     it "should create a new custom field pair" do
-      post :create, params: { field: { as: "date_pair", label: "Date Pair", field_group_id: field_group.id }, pair: {"0" => {hint: "Hint"}, "1" => {hint: "Hint"}} }, xhr: true
+      post :create, params: { field: { as: "date_pair", label: "Date Pair", field_group_id: field_group.id }, pair: { "0" => { hint: "Hint" }, "1" => { hint: "Hint" } } }, xhr: true
       expect(assigns[:field].class).to eq(CustomFieldDatePair)
       expect(assigns[:field].valid?).to eq(true)
       expect(assigns[:field].label).to eq("Date Pair")
       expect(response).to render_template("admin/fields/create")
     end
   end
-
 end
