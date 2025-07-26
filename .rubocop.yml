@@ -79,3 +79,11 @@ Style/WordArray:
 
 Style/SymbolArray:
   EnforcedStyle: percent
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/views/**/*_spec.rb'
+
+Naming/PredicatePrefix:
+  Exclude:
+    - 'spec/support/assert_select.rb'
