@@ -83,5 +83,10 @@ if defined?(FatFreeCRM::Application)
     # Checks for improperly declared sprockets dependencies.
     # Raises helpful error messages.
     config.assets.raise_runtime_errors = true
+
+    # Allow connections to the app from Codespaces
+    if ENV.fetch('CODESPACE_NAME', nil)
+      config.hosts << "#{ENV['CODESPACE_NAME']}-3000.app.github.dev"
+    end
   end
 end
