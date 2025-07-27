@@ -25,7 +25,7 @@ namespace :ffcrm do
 
       account.update(background_info: result[:description].to_s) if account.background_info.blank? && result[:description]
       account.update(website: result[:website].to_s) if account.website.blank? && result[:website]
-      account.update(billing_address: result[:address].to_s) if account.billing_address.blank? && result[:address]
+      # account.update(billing_address: result[:address].to_s) if account.billing_address.blank? && result[:address]
       # Assuming you have a logo field on your account model
       # account.update(logo: result[:logo].to_s) if account.logo.blank? && result[:logo]
 
