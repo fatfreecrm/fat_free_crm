@@ -53,7 +53,7 @@ describe FatFreeCRM::MailProcessor::Base do
 
   #------------------------------------------------------------------------------
   describe "Disconnecting from the IMAP server" do
-    it "should logout and diconnect" do
+    it "should logout and disconnect" do
       mock_connect
       mock_disconnect
       expect(@imap).to receive(:logout).once
