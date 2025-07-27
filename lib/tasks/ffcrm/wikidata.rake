@@ -6,13 +6,13 @@ namespace :ffcrm do
     require 'sparql/client'
 
     endpoint = 'https://query.wikidata.org/sparql'
-    client = SPARQL::Client.new(endpoint, headers: {'User-Agent' => 'Fat Free CRM'})
+    client = SPARQL::Client.new(endpoint, headers: { 'User-Agent' => 'Fat Free CRM' })
 
     n = 0
     Account.where.not(wikidata_id: nil).find_each do |account|
       n += 1
 
-      sleep(1) if n % 10 == 0 # Throttle requests to avoid hitting rate limits
+      sleep(1) if (n % 10).zero? # Throttle requests to avoid hitting rate limits
 
       query = <<-SPARQL
           SELECT ?description ?website ?address ?logo WHERE {
