@@ -58,7 +58,7 @@ feature 'Accounts', '
     expect(page).to have_content('Create Account')
     click_link 'Create Account'
 
-    click_link 'Contact Information'
+    expect(page).to have_link 'Contact Information'
     fill_in 'account_phone', with: '+1 2345 6789'
 
     click_link 'Comment'

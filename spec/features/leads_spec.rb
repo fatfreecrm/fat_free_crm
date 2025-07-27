@@ -82,6 +82,7 @@ feature 'Leads', '
       fill_in 'lead_first_name', with: 'Mrs'
       fill_in 'lead_phone', with: '+44 0987 654321'
 
+      expect(page).to have_link('Status')
       select2 'Rejected', from: 'Status:'
       click_button 'Save Lead'
       sleep(3) # TODO: A better AJAX observing call, or just a redirect on save.
