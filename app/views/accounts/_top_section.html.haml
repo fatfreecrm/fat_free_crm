@@ -17,6 +17,10 @@
         %td
           .label #{t :rating}:
           = rating_select "account[rating]", { id: :account_rating, selected: @account.rating, style: "width:160px" }
+      %tr
+        %td
+          .label #{t :wikidata_id}:
+          = f.text_field :wikidata_id, pattern: 'Q\d+', title: t(:wikidata_id_title), placeholder: "Q1345234"
 
       - if Setting.background_info && Setting.background_info.include?(:account)
         %tr
