@@ -18,4 +18,27 @@ module ContactsHelper
     summary << "#{t(:mobile_small)}: #{contact.mobile}" if contact.mobile.present?
     summary.join(', ')
   end
+
+  def vcard_for(contact)
+    card = VCardigan.create
+    card.name contact.last_name, contact.first_name
+    card.fullname "#{contact.first_name} #{contact.last_name}"
+    card.title contact.title if contact.title?
+    card.org contact.account.name, contact.department if contact.account?
+    card.email contact.email, type: %w[internet work] if contact.email?
+    card.tel contact.phone, type: 'work' if contact.phone?
+    card.tel contact.mobile, type: %w[cell voice] if contact.mobile?
+    card.note "Exported from Fat Free CRM"
+
+    if contact.business_address
+      card.adr contact.business_address.street1,
+               contact.business_address.street2,
+               contact.business_address.city,
+               contact.business_address.state,
+               contact.business_address.zipcode,
+               contact.business_address.country, type: 'work'
+    end
+
+    card
+  end
 end

@@ -102,6 +102,14 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
 
+  # GET /contacts/1/vcard
+  #----------------------------------------------------------------------------
+  def vcard
+    respond_to do |format|
+      format.vcf { send_data vcard_for(@contact), filename: "#{@contact.full_name}.vcf", disposition: 'attachment', type: 'text/x-vcard' }
+    end
+  end
+
   # GET /contacts/redraw                                                   AJAX
   #----------------------------------------------------------------------------
   def redraw
