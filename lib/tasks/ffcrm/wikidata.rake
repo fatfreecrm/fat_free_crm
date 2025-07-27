@@ -6,7 +6,7 @@ namespace :ffcrm do
     require 'sparql/client'
 
     endpoint = 'https://query.wikidata.org/sparql'
-    client = SPARQL::Client.new(endpoint)
+    client = SPARQL::Client.new(endpoint, headers: {'User-Agent' => 'Fat Free CRM'})
 
     n = 0
     Account.where.not(wikidata_id: nil).find_each do |account|
