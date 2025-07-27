@@ -57,7 +57,7 @@ class Contact < ActiveRecord::Base
   has_ransackable_associations %w[account opportunities tags activities emails addresses comments tasks]
   ransack_can_autocomplete
 
-  serialize :subscribed_users, Array
+  serialize :subscribed_users, type: Array
 
   accepts_nested_attributes_for :business_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 
