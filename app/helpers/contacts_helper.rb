@@ -30,6 +30,7 @@ module ContactsHelper
       card.org contact.company if contact.company.present?
     end
     card.email contact.email, type: %w[internet work] if contact.email.present?
+    card.email contact.alt_email, type: %w[internet work] if contact.alt_email.present?
     card.tel contact.phone, type: 'work' if contact.phone?
     card.tel contact.mobile, type: %w[cell voice] if contact.mobile.present?
     card.note "Exported from Fat Free CRM"
