@@ -277,7 +277,7 @@ module ApplicationHelper
     elsif person.is_a?(Lead)
       sites << link_to(content_tag(:i, "", { class: "fa fa-address-card" }), lead_path(person, format: :vcf), title: "VCard")
     end
-    safe_join(sites, "\n")
+    content_tag(:span, class: "web-presence-icons") { safe_join(sites, "\n") }
   end
 
   # Ajax helper to refresh current index page once the user selects an option.
