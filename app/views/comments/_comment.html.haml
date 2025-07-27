@@ -1,6 +1,6 @@
 - truncated = simple_format(truncate(comment.comment.gsub("\n", " "), length: 125))
 - formatted = defined?(RedCloth) ? RedCloth.new(comment.comment).to_html : simple_format(comment.comment)
-- collapsable = formatted.size > 150
+- collapsible = formatted.size > 150
 - commentable = comment.commentable
 
 %li.comment.highlight[comment]
@@ -15,12 +15,12 @@
     = link_to(comment.user.full_name, user_path(comment.user)) + ","
     %tt
       = t(:added_note, value: timeago(comment.created_at) ).html_safe
-      - if collapsable && can?(:read, commentable)
+      - if collapsible && can?(:read, commentable)
         = " | "
         = link_to_function(comment.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", class: "toggle")
 
     - if can?(:read, commentable)
-      - if collapsable
+      - if collapsible
         %dt{ hidden_if(comment.expanded?), id: dom_id(comment, :truncated) }
           = truncated
         %dt.textile{ hidden_if(comment.collapsed?), id: dom_id(comment, :formatted) }

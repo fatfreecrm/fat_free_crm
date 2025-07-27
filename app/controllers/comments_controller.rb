@@ -59,7 +59,7 @@ class CommentsController < ApplicationController
 
   # PUT /comments/1
   # PUT /comments/1.json
-  # PUT /comments/1.xml                                          not implemened
+  # PUT /comments/1.xml                                         not implemented
   #----------------------------------------------------------------------------
   def update
     @comment = Comment.find(params[:id])

@@ -248,7 +248,7 @@ Sat Apr 21, 2018 (0.18.0)
 #665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
 
 #### Swap to FactoryBot
-If you consume fat free crm as an engine and re-use any factories, you'll need to [upgrade to FactoryBot](https://github.com/thoughtbot/factory_bot/blob/4-9-0-stable/UPGRADE_FROM_FACTORY_GIRL.md).
+If you consume fat free crm as an engine and reuse any factories, you'll need to [upgrade to FactoryBot](https://github.com/thoughtbot/factory_bot/blob/4-9-0-stable/UPGRADE_FROM_FACTORY_GIRL.md).
 
 #### Removed methods
 `Lead.update_with_permissions` is removed, use user_ids and group_ids inside attributes instead and call lead.update_with_account_and_lead_counters
@@ -366,7 +366,7 @@ Be aware of https://github.com/rails/sprockets/issues/426 if you were using FFCR
 
 Thu Feb 23, 2017 (0.15.0-beta.2)
 ---------------------------------------------------------------------
-This release is aimed at minor updates and ruby 2.4 compatability via
+This release is aimed at minor updates and ruby 2.4 compatibility via
 the relevant rails updates.
 
 Other improvements include:
@@ -460,7 +460,7 @@ https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.2...v0.13.3
 ---------------------------------------------------------------------
  - Lock down routes.
  - Remove stub hook
- - Remove unneccessary function
+ - Remove unnecessary function
  - Don't spam gmail by default
  - consider_all_requests_local should be off by default in production mode
  - Remove pysch by default (optimise for ruby 2 now)
@@ -694,7 +694,7 @@ Thu, Aug 5, 2010
 
 Wed, Aug 4, 2010
 ---------------------------------------------------------------------
-- Made dropbox email address comparision was case-insensitve (thanks, Ralf!)
+- Made dropbox email address comparison was case-insensitive (thanks, Ralf!)
 - Removed duplicate association Opportunity#account (was: has_one + belongs_to) (thanks, Ralf!)
 - Multiple fixes for Rails 2.3.8 upgrade (thanks, Ralf!)
 
@@ -772,7 +772,7 @@ Tue, Jun 8, 2010
 
 Fri, Jun 4, 2010
 ---------------------------------------------------------------------
-- Initial prototype of seleting related asset from the asset's landing page.
+- Initial prototype of selecting related asset from the asset's landing page.
 - Added discard action related specs.
 
 Fri, May 28, 2010
@@ -2340,7 +2340,7 @@ Sun, Dec 14, 2008
 
 Sat, Dec 13, 2008
 ---------------------------------------------------------------------
-- Insalled [annotate_models] plugin and generated model annotations.
+- Installed [annotate_models] plugin and generated model annotations.
 - Generated campaign fixtures.
 - Updated [Campaign] model to include actual vs. targets.
 - Added permissions to [Campaign/New].
@@ -2359,7 +2359,7 @@ Wed, Dec 10, 2008
 
 Tue, Dec 9, 2008
 ---------------------------------------------------------------------
-- Implemented [Campaing/New] with dates validation and status set.
+- Implemented [Campaign/New] with dates validation and status set.
 
 Mon, Dec 8, 2008
 ---------------------------------------------------------------------

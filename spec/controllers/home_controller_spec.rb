@@ -218,14 +218,14 @@ describe HomeController do
       get :timeline, params: { id: "1,2,3,4+", state: "Collapsed" }, xhr: true
     end
 
-    it "should not allow an arbitary state (sanitizes input)" do
+    it "should not allow an arbitrary state (sanitizes input)" do
       where_stub = double
       expect(where_stub).to receive(:update_all).with(state: "Expanded")
       expect(Comment).to receive(:where).and_return(where_stub)
       get :timeline, params: { id: "1,2,3,4+", state: "Expanded" }, xhr: true
     end
 
-    it "should not update an arbitary model (sanitizes input)" do
+    it "should not update an arbitrary model (sanitizes input)" do
       where_stub = double
       expect(where_stub).to receive(:update_all).with(state: "Expanded")
       expect(Comment).to receive(:where).and_return(where_stub)

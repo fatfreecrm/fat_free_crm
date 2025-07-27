@@ -76,12 +76,12 @@ feature 'Accounts', '
       find('div#accounts').click_link('A new account')
       expect(page).to have_content('A new account')
       click_link 'Edit'
-      fill_in 'account_name', with: 'A new account *editted*'
+      fill_in 'account_name', with: 'A new account *edited!*'
       click_button 'Save Account'
-      expect(page).to have_content('A new account *editted*')
+      expect(page).to have_content('A new account *edited!*')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray updated account A new account *editted*")
+      expect(page).to have_content("Bill Murray updated account A new account *edited!*")
     end
   end
 
