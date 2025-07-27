@@ -528,6 +528,7 @@ DEPENDENCIES
   acts-as-taggable-on (>= 3.4.3)
   acts_as_commentable!
   acts_as_list
+  base64
   bigdecimal
   bootsnap
   bootstrap (~> 5.0.0)
