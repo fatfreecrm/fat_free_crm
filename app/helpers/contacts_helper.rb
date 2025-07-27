@@ -23,11 +23,11 @@ module ContactsHelper
     card = VCardigan.create
     card.name contact.last_name, contact.first_name
     card.fullname "#{contact.first_name} #{contact.last_name}"
-    card.title contact.title if contact.title?
-    card.org contact.account.name, contact.department if contact.account?
-    card.email contact.email, type: %w[internet work] if contact.email?
+    card.title contact.title if contact.title.present?
+    card.org contact.account.name, contact.department if contact.account.present?
+    card.email contact.email, type: %w[internet work] if contact.email.present?
     card.tel contact.phone, type: 'work' if contact.phone?
-    card.tel contact.mobile, type: %w[cell voice] if contact.mobile?
+    card.tel contact.mobile, type: %w[cell voice] if contact.mobile.present?
     card.note "Exported from Fat Free CRM"
 
     if contact.business_address
