@@ -8,7 +8,12 @@ namespace :ffcrm do
     endpoint = 'https://query.wikidata.org/sparql'
     client = SPARQL::Client.new(endpoint)
 
+    n = 0
     Account.where.not(wikidata_id: nil).find_each do |account|
+      n += 1
+
+      sleep(1) if n % 10 == 0 # Throttle requests to avoid hitting rate limits
+
       query = <<-SPARQL
           SELECT ?description ?website ?address ?logo WHERE {
             BIND(wd:#{account.wikidata_id} AS ?item)
