@@ -119,6 +119,7 @@ gem 'bigdecimal'
 gem 'mutex_m'
 gem 'drb'
 gem 'csv'
+gem 'base64'
 
 # Workaround problems from concurrent-ruby 1.3.5
 require "logger"
