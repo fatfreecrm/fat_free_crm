@@ -24,7 +24,11 @@ module ContactsHelper
     card.name contact.last_name, contact.first_name
     card.fullname "#{contact.first_name} #{contact.last_name}"
     card.title contact.title if contact.title.present?
-    card.org contact.account.name, contact.department if contact.account.present?
+    if contact.respond_to?(:account) # Contact
+      card.org contact.account.name, contact.department if contact.account.present?
+    elsif contact.respond_to?(:company) # Lead
+      card.org contact.company if contact.company.present?
+    end
     card.email contact.email, type: %w[internet work] if contact.email.present?
     card.tel contact.phone, type: 'work' if contact.phone?
     card.tel contact.mobile, type: %w[cell voice] if contact.mobile.present?
