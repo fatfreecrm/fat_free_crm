@@ -43,6 +43,6 @@ account<%= i %>:
   wikidata_id      : Q2345
   rating           : <%= rand(5) %>
   category         : <%= category.sample %>
-  created_at       : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
-  updated_at       : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
+  created_at       : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_fs(:db) %>
+  updated_at       : <%= (created_at + rand(36_000).seconds).to_fs(:db) %>
 <% end %>
