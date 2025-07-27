@@ -120,6 +120,7 @@ gem 'mutex_m'
 gem 'drb'
 gem 'csv'
 gem 'base64'
+gem 'sparql-client'
 
 # Workaround problems from concurrent-ruby 1.3.5
 require "logger"
