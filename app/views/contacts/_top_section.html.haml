@@ -13,11 +13,11 @@
       %tr
         %td
           .label #{t :email}:
-          = f.text_field :email
+          = f.email_field :email
         %td= spacer
         %td
           .label #{t :phone}:
-          = f.text_field :phone
+          = f.phone_field :phone
 
     %table
       = fields_for(@account) do |a|

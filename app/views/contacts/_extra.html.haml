@@ -18,11 +18,11 @@
         %tr
           %td
             .label #{t :alt_email}:
-            = f.text_field :alt_email
+            = f.email_field :alt_email
           %td= spacer
           %td
             .label #{t :mobile}:
-            = f.text_field :mobile
+            = f.phone_field :mobile
         %tr
           %td
             = render "shared/address", f: f, asset: @contact, type: 'business', title: :address
