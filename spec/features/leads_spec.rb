@@ -35,7 +35,7 @@ feature 'Leads', '
       fill_in 'lead_last_name', with: 'Lead'
       fill_in 'lead_email', with: 'mr_lead@example.com'
       fill_in 'lead_phone', with: '+44 1234 567890'
-      click_link 'Status'
+
       select2 'Myself', from: 'Assigned to:'
       select2 'Contacted', from: 'Status:'
       select2 'Campaign', from: 'Source:'
@@ -81,7 +81,7 @@ feature 'Leads', '
       click_link('Edit')
       fill_in 'lead_first_name', with: 'Mrs'
       fill_in 'lead_phone', with: '+44 0987 654321'
-      click_link('Status')
+
       select2 'Rejected', from: 'Status:'
       click_button 'Save Lead'
       sleep(3) # TODO: A better AJAX observing call, or just a redirect on save.
