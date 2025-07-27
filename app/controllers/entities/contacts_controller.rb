@@ -27,7 +27,7 @@ class ContactsController < EntitiesController
     @comment = Comment.new
     @timeline = timeline(@contact)
     respond_with(@contact) do |format|
-      format.vcf { send_data vcard_for(@contact), filename: "#{@contact.full_name}.vcf", disposition: 'attachment', type: 'text/x-vcard' }
+      format.vcf { send_data helpers.vcard_for(@contact).to_s, filename: "#{@contact.full_name}.vcf", disposition: 'attachment', type: 'text/x-vcard' }
     end
   end
 

@@ -9,9 +9,6 @@
   = render 'contacts/title_bar', contact: @contact
   = render 'contacts/sidebar_show', contact: @contact
 
-  .right
-    = link_to t(:download_vcard), contact_path(@contact, format: :vcf)
-
   = render "comments/new", commentable: @contact
   = render partial: "shared/timeline", collection: @timeline
 

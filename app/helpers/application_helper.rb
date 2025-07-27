@@ -248,7 +248,7 @@ module ApplicationHelper
   # Display web presence mini-icons for Contact or Lead.
   #----------------------------------------------------------------------------
   def web_presence_icons(person)
-    %i[blog linkedin facebook twitter skype].map do |site|
+    sites = %i[blog linkedin facebook twitter skype].map do |site|
       url = person.send(site)
       next if url.blank?
 
@@ -258,7 +258,9 @@ module ApplicationHelper
         url = "http://" + url unless url.match?(%r{^https?://})
       end
       link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
-    end.compact.join("\n").html_safe
+    end.compact
+    sites << link_to(t(:vcard), contact_path(person, format: :vcf))
+    safe_join(sites, "\n")
   end
 
   # Ajax helper to refresh current index page once the user selects an option.
