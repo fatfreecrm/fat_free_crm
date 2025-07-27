@@ -11,12 +11,13 @@ if [ -n "$files" ]; then
   rubocop_exit_code=$?
 fi
 
-# TODO: Later tools
+codespell
+codespell_exit_code=$?
 
 # Unstash unstaged changes
 git stash pop -q
 
-if [ $rubocop_exit_code -ne 0 ] ; then
+if [ $rubocop_exit_code -ne 0 ] || [ $codespell_exit_code -ne 0 ] ; then
   exit 1
 fi
 
