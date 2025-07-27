@@ -97,7 +97,6 @@ Rails.application.routes.draw do
       post :subscribe
       post :unsubscribe
       get :opportunities
-      get :vcard
     end
   end
 

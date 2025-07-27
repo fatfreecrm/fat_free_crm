@@ -26,7 +26,9 @@ class ContactsController < EntitiesController
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
     @timeline = timeline(@contact)
-    respond_with(@contact)
+    respond_with(@contact) do |format|
+      format.vcf { send_data vcard_for(@contact), filename: "#{@contact.full_name}.vcf", disposition: 'attachment', type: 'text/x-vcard' }
+    end
   end
 
   # GET /contacts/new
@@ -101,14 +103,6 @@ class ContactsController < EntitiesController
   # POST /contacts/auto_complete/query                                     AJAX
   #----------------------------------------------------------------------------
   # Handled by ApplicationController :auto_complete
-
-  # GET /contacts/1/vcard
-  #----------------------------------------------------------------------------
-  def vcard
-    respond_to do |format|
-      format.vcf { send_data vcard_for(@contact), filename: "#{@contact.full_name}.vcf", disposition: 'attachment', type: 'text/x-vcard' }
-    end
-  end
 
   # GET /contacts/redraw                                                   AJAX
   #----------------------------------------------------------------------------
