@@ -259,7 +259,7 @@ module ApplicationHelper
       end
       link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
     end.compact
-    sites << link_to(t(:vcard), contact_path(person, format: :vcf))
+    sites << link_to(content_tag(:i, "", { class: "fa fa-address-card" }), contact_path(person, format: :vcf), title: "VCard")
     safe_join(sites, "\n")
   end
 
