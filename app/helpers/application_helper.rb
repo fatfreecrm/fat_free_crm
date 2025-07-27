@@ -248,7 +248,15 @@ module ApplicationHelper
   # Display web presence mini-icons for Contact or Lead.
   #----------------------------------------------------------------------------
   def web_presence_icons(person)
-    sites = %i[blog linkedin facebook twitter skype].map do |site|
+    sites = []
+    icon_for_site = {
+      skype: "skype",
+      facebook: "facebook",
+      linkedin: "linkedin",
+      twitter: "twitter",
+      blog: "external-link"
+    }
+    %i[blog linkedin facebook twitter skype].each do |site|
       url = person.send(site)
       next if url.blank?
 
@@ -257,9 +265,18 @@ module ApplicationHelper
       else
         url = "http://" + url unless url.match?(%r{^https?://})
       end
-      link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
-    end.compact
-    sites << link_to(content_tag(:i, "", { class: "fa fa-address-card" }), contact_path(person, format: :vcf), title: "VCard")
+      sites << if icon_for_site[site]
+                 link_to(content_tag(:i, "", { class: "fa fa-#{icon_for_site[site]}" }), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
+               else
+                 link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
+               end
+    end
+
+    if person.is_a?(Contact)
+      sites << link_to(content_tag(:i, "", { class: "fa fa-address-card" }), contact_path(person, format: :vcf), title: "VCard")
+    elsif person.is_a?(Lead)
+      sites << link_to(content_tag(:i, "", { class: "fa fa-address-card" }), lead_path(person, format: :vcf), title: "VCard")
+    end
     safe_join(sites, "\n")
   end
 
