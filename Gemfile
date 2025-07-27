@@ -74,6 +74,7 @@ group :development, :test do
   gem 'rubocop-rspec_rails'
   gem 'rainbow'
   gem 'puma' # used by capybara 3
+  gem 'capybara-screenshot'
 end
 
 group :test do
