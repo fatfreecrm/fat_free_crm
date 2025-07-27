@@ -84,6 +84,7 @@ class Contact < ActiveRecord::Base
     where(name_query.nil? ? other : name_query.or(other))
   }
 
+  has_one_attached :image
   uses_user_permissions
   acts_as_commentable
   uses_comment_extensions

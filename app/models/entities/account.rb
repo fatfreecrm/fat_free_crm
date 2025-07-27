@@ -61,6 +61,7 @@ class Account < ActiveRecord::Base
 
   scope :by_name, -> { order(:name) }
 
+  has_one_attached :image
   uses_user_permissions
   acts_as_commentable
   uses_comment_extensions
