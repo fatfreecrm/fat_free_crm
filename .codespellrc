@@ -1,0 +1,6 @@
+# https://github.com/codespell-project/codespell#using-a-config-file
+[codespell]
+skip = *.log,*.cache,./tmp/*,./config/locales/*
+
+# Comma separated list of words to be ignored. Words must be lowercased.
+# ignore-words-list = 
