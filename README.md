@@ -76,7 +76,7 @@ Setting up a Heroku instance for Fat Free CRM
 
 ### [Setup Microsoft Windows](http://guides.fatfreecrm.com/Setup-Microsoft-Windows)
 
-Installing Fat Free CRM on Microsoft Windows
+Installing Fat Free CRM on Microsoft Windows (Deprecated)
 
 ### [Running Fat Free CRM as a Rails Engine](http://guides.fatfreecrm.com/Running-as-a-Rails-Engine)
 
@@ -86,7 +86,7 @@ This is the best way to deploy Fat Free CRM if you need to add plugins or make a
 
 ## Upgrading from previous versions of Fat Free CRM
 
-Please read the [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG.md) document for more detailed information on upgrading from previous versions.
+Please read the [Release notes](https://github.com/fatfreecrm/fat_free_crm/releases) or [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG.md) document for more detailed information on upgrading from previous versions.
 
 
 ## Resources
