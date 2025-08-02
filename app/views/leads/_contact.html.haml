@@ -1,5 +1,5 @@
 - edit ||= false
-- collapsed = session[:lead_contact].nil? # && @lead.errors.empty?
+- collapsed = false
 = subtitle :lead_contact, collapsed, t(:contact_info)
 .section
   %small#lead_contact_intro{ hidden_if(!collapsed) }

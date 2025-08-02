@@ -33,7 +33,8 @@ feature 'Accounts', '
       fill_in 'account_name', with: 'My new account'
       select2 'Affiliate', from: 'Category:'
       select2 'Myself', from: 'Assigned to:'
-      click_link 'Contact Information'
+
+      expect(page).to have_link 'Contact Information'
       fill_in 'account_phone', with: '+1 2345 6789'
       fill_in 'account_website', with: 'http://www.example.com'
       click_link 'Comment'
@@ -58,7 +59,7 @@ feature 'Accounts', '
     expect(page).to have_content('Create Account')
     click_link 'Create Account'
 
-    click_link 'Contact Information'
+    expect(page).to have_link 'Contact Information'
     fill_in 'account_phone', with: '+1 2345 6789'
 
     click_link 'Comment'
