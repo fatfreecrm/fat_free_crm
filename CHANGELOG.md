@@ -6,6 +6,25 @@ then you win. –- Mahatma Gandhi
 
 See the live details via https://github.com/fatfreecrm/fat_free_crm/releases
 
+Jul 27, 2025 (0.24.1)
+======
+## What's Changed
+* Add capybara-screenshot by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1501
+* Rails 7.1: Fix .to_s(:format) usage by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1505
+
+
+**Full Changelog**: https://github.com/fatfreecrm/fat_free_crm/compare/v0.24.0...v0.24.1
+
+Jul 27, 2025 (0.24.0)
+======
+
+## What's Changed
+* Fully target Ruby 3.4 by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1493
+* Update to Rails 7.1 by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1494
+
+
+**Full Changelog**: https://github.com/fatfreecrm/fat_free_crm/compare/v0.23.0...v0.24.0
+
 Jul 27, 2025 (0.23.0)
 ======
 
