@@ -162,6 +162,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'webhooks/readai_meeting_notes'
+
   namespace :admin do
     resources :groups
 
