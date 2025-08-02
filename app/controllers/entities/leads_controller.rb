@@ -26,7 +26,9 @@ class LeadsController < EntitiesController
   def show
     @comment = Comment.new
     @timeline = timeline(@lead)
-    respond_with(@lead)
+    respond_with(@lead) do |format|
+      format.vcf { send_data helpers.vcard_for(@lead).to_s, filename: "#{@lead.full_name}.vcf", disposition: 'attachment', type: 'text/x-vcard' }
+    end
   end
 
   # GET /leads/new

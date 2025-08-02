@@ -785,6 +785,13 @@ table.asset_attributes {
   }
 }
 
+.web-presence-icons a {
+  font-size: larger;
+  color: black;
+  :hover {
+    color: black;
+  }
+}
 
 // Login page
 .form-group.user_remember_me {

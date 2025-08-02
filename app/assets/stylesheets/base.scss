@@ -46,8 +46,8 @@ a {
     color: $color_link;
   }
   &:hover {
-    background: $color_link_hover_background;
-    color: $color_link_hover; }
+    text-decoration: underline;
+  }
   img {
     background-color: $color_link_image_background;
     border: none;

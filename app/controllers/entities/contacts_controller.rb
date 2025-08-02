@@ -26,7 +26,9 @@ class ContactsController < EntitiesController
     @stage = Setting.unroll(:opportunity_stage)
     @comment = Comment.new
     @timeline = timeline(@contact)
-    respond_with(@contact)
+    respond_with(@contact) do |format|
+      format.vcf { send_data helpers.vcard_for(@contact).to_s, filename: "#{@contact.full_name}.vcf", disposition: 'attachment', type: 'text/x-vcard' }
+    end
   end
 
   # GET /contacts/new
