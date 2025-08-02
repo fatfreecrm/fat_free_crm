@@ -100,8 +100,6 @@ Please read the [Release notes](https://github.com/fatfreecrm/fat_free_crm/relea
 |                  **Ruby gem**: | https://rubygems.org/gems/fat_free_crm |
 |       **User's Google Group**: | http://groups.google.com/group/fat-free-crm-users |
 |  **Developer's Google Group**: | http://groups.google.com/group/fat-free-crm-dev |
-|               **IRC Channel**: | [#fatfreecrm](http://webchat.freenode.net/) on irc.freenode.net |
-
 
 ## For Developers
 
