@@ -97,7 +97,6 @@ Please read the [Release notes](https://github.com/fatfreecrm/fat_free_crm/relea
 |                    **Guides**: | http://guides.fatfreecrm.com |
 |       **Github Project Page**: | http://github.com/fatfreecrm/fat_free_crm |
 | **Feature Requests and Bugs**: | http://github.com/fatfreecrm/fat_free_crm/issues |
-|                  **RDoc API**: | http://api.fatfreecrm.com |
 |                  **Ruby gem**: | https://rubygems.org/gems/fat_free_crm |
 |    **Twitter Commit Updates**: | http://twitter.com/fatfreecrm |
 |       **User's Google Group**: | http://groups.google.com/group/fat-free-crm-users |
