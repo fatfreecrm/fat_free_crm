@@ -49,8 +49,7 @@ https://github.com/fatfreecrm/fat_free_crm/wiki/Available-Plugins
 
 Pull requests and bug reports are always welcome!
 
-Visit our website at http://www.fatfreecrm.com/
-
+Visit our website at http://www.fatfreecrm.com/ or check out the [documentation](https://www.rubydoc.info/github/fatfreecrm/fat_free_crm.git/master).
 
 
 ## System Requirements
