@@ -1,20 +1,4 @@
 GIT
-  remote: https://github.com/RedPatchTechnologies/responds_to_parent.git
-  revision: 36337ac1cb69245bdf551bc852abb9bd77c3826f
-  branch: master
-  specs:
-    responds_to_parent (2.0.0)
-      actionpack (>= 3.2.22, < 8.0)
-
-GIT
-  remote: https://github.com/fatfreecrm/acts_as_commentable.git
-  revision: 28df5959f8c17168be7c5d4ed3ea2f3d06275773
-  branch: main
-  specs:
-    acts_as_commentable (7.1.0)
-      activerecord (~> 7.1.0)
-
-GIT
   remote: https://github.com/jquery-ui-rails/jquery-ui-rails.git
   revision: 413265e81f790f795239e07e7e25e01429b2f18d
   tag: v7.0.0
@@ -109,6 +93,8 @@ GEM
     acts-as-taggable-on (11.0.0)
       activerecord (>= 7.0, < 8.0)
       zeitwerk (>= 2.4, < 3.0)
+    acts_as_commentable2 (7.1.0.1)
+      activerecord (~> 7.1.0)
     acts_as_list (1.2.4)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
@@ -430,6 +416,8 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
+    responds_to_parent2 (2.1.0)
+      actionpack (>= 3.2.22, < 8.0)
     rexml (3.3.9)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -575,7 +563,7 @@ DEPENDENCIES
   activejob
   activemodel-serializers-xml
   acts-as-taggable-on (>= 3.4.3)
-  acts_as_commentable!
+  acts_as_commentable2
   acts_as_list
   base64
   bigdecimal
@@ -637,7 +625,7 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify
   responders (~> 3.0)
-  responds_to_parent!
+  responds_to_parent2
   rspec-activemodel-mocks
   rspec-rails
   rubocop
