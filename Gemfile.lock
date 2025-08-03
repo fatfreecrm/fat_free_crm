@@ -7,14 +7,6 @@ GIT
       actionpack (>= 3.2.22, < 8.0)
 
 GIT
-  remote: https://github.com/fatfreecrm/acts_as_commentable.git
-  revision: 28df5959f8c17168be7c5d4ed3ea2f3d06275773
-  branch: main
-  specs:
-    acts_as_commentable (7.1.0)
-      activerecord (~> 7.1.0)
-
-GIT
   remote: https://github.com/jquery-ui-rails/jquery-ui-rails.git
   revision: 413265e81f790f795239e07e7e25e01429b2f18d
   tag: v7.0.0
@@ -577,8 +569,7 @@ DEPENDENCIES
   activejob
   activemodel-serializers-xml
   acts-as-taggable-on (>= 3.4.3)
-  acts_as_commentable!
-  acts_as_commentable2 (~> 7.1.0)
+  acts_as_commentable2
   acts_as_list
   base64
   bigdecimal
