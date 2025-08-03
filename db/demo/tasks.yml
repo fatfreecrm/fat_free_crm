@@ -59,6 +59,6 @@ task<%= i %>:
 # background_info : <%= FFaker::Lorem.paragraph[0,255] %>
   due_at       : <%= due_at %>
   completed_at : <%= completed_by ? Date.today - rand(5).days : "" %>
-  created_at   : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_s(:db) %>
-  updated_at   : <%= (created_at + rand(36_000).seconds).to_s(:db) %>
+  created_at   : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_fs(:db) %>
+  updated_at   : <%= (created_at + rand(36_000).seconds).to_fs(:db) %>
 <% end %>

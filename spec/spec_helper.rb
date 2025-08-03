@@ -17,6 +17,7 @@ require 'factory_bot_rails'
 require 'ffaker'
 require 'timecop'
 require 'webdrivers'
+require 'capybara-screenshot/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -34,7 +35,7 @@ RSpec.configure do |config|
 
   config.mock_with :rspec
 
-  config.fixture_path = "#{Rails.root}/spec/fixtures"
+  config.fixture_paths = ["#{Rails.root}/spec/fixtures"]
 
   # RSpec configuration options for Fat Free CRM.
   config.include RSpec::Rails::Matchers

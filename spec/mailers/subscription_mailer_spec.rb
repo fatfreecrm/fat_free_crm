@@ -25,7 +25,7 @@ describe SubscriptionMailer do
     end
 
     it "includes link to opportunity in body" do
-      expect(mail.body.encoded).to match('http://www.example.com/opportunities/47')
+      expect(mail.body.encoded).to include('http://www.example.com/opportunities/47')
     end
 
     it "uses email defined in settings as the sender" do

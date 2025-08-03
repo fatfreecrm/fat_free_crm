@@ -1,5 +1,5 @@
 - edit ||= false
-- collapsed = session[:lead_contact].nil? # && @lead.errors.empty?
+- collapsed = false
 = subtitle :lead_contact, collapsed, t(:contact_info)
 .section
   %small#lead_contact_intro{ hidden_if(!collapsed) }
@@ -17,11 +17,11 @@
       %tr
         %td
           .label #{t :alt_email}:
-          = f.text_field :alt_email
+          = f.email_field :alt_email
         %td= spacer
         %td
           .label #{t :mobile}:
-          = f.text_field :mobile
+          = f.phone_field :mobile
       %tr
         %td
           = render "shared/address", f: f, asset: @lead, type: 'business', title: :address

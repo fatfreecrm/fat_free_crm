@@ -104,11 +104,11 @@ describe UserMailer do
       end
 
       it "includes the name of the person who re-assigned the lead in the body" do
-        expect(mail.body.encoded).to match("Bob")
+        expect(mail.body.encoded).to include("Bob")
       end
 
       it "includes link to the lead in the body" do
-        expect(mail.body.encoded).to match("http://www.example.com/opportunities/24")
+        expect(mail.body.encoded).to include("http://www.example.com/opportunities/24")
       end
     end
   end

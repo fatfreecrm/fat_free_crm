@@ -39,7 +39,7 @@ class Task < ActiveRecord::Base
   belongs_to :completor, class_name: "User", foreign_key: :completed_by, optional: true # TODO: Is this really optional?
   belongs_to :asset, polymorphic: true, optional: true # TODO: Is this really optional?
 
-  serialize :subscribed_users, Array
+  serialize :subscribed_users, type: Array
 
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.

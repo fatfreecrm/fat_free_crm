@@ -11,8 +11,8 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
                     else
                       'LASTVAL()'
                     end
-      get_blob_id = 'LAST_INSERT_ROWID()' if conn.is_a?(SQLite3::Database)
-      if conn.is_a?(::PG::Connection)
+      get_blob_id = 'LAST_INSERT_ROWID()' if Object.const_defined?("SQLite3") && conn.is_a?(SQLite3::Database)
+      if Object.const_defined?("PG") && conn.is_a?(::PG::Connection)
         get_blob_id = 'LASTVAL()'
         conn.prepare('active_storage_blobs', <<-SQL)
           INSERT INTO active_storage_blobs (

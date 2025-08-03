@@ -80,7 +80,7 @@
 :email_dropbox:
   :server                     : ""        # IMAP server name.
   :port                       : ""        # IMAP server port number.
-  :ssl                        : ""        # True for secure IMAP connection, false othewise.
+  :ssl                        : ""        # True for secure IMAP connection, false otherwise.
   :address                    : ""        # Dropbox email address.
   :user                       : ""        # User to login to the IMAP server.
   :password                   : ""        # Password to login to the IMAP server.
@@ -99,7 +99,7 @@
 :email_comment_replies:
   :server                     : ""        # IMAP server name.
   :port                       : ""        # IMAP server port number.
-  :ssl                        : ""        # True for secure IMAP connection, false othewise.
+  :ssl                        : ""        # True for secure IMAP connection, false otherwise.
   :address                    : ""        # Comment reply email address.
   :user                       : ""        # User to login to the IMAP server.
   :password                   : ""        # Password to login to the IMAP server.

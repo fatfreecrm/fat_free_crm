@@ -42,7 +42,7 @@ class Account < ActiveRecord::Base
   has_many :emails, as: :mediator
   has_many :contracts
 
-  serialize :subscribed_users, Array
+  serialize :subscribed_users, type: Array
 
   accepts_nested_attributes_for :billing_address,  allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
   accepts_nested_attributes_for :shipping_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
