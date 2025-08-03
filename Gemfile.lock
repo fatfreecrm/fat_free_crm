@@ -549,6 +549,7 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
+    vcardigan (0.0.9)
     warden (1.2.9)
       rack (>= 2.0.9)
     webdrivers (5.3.1)
@@ -658,6 +659,7 @@ DEPENDENCIES
   timecop
   tzinfo-data
   uglifier
+  vcardigan
   webdrivers
   webrick
   will_paginate
