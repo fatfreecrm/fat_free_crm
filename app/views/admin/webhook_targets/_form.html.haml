@@ -1,0 +1,19 @@
+= form_for [:admin, @webhook_target] do |f|
+  - if @webhook_target.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@webhook_target.errors.count, "error")} prohibited this webhook_target from being saved:"
+      %ul
+        - @webhook_target.errors.full_messages.each do |message|
+          %li= message
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :url
+    = f.text_field :url, class: 'form-control'
+  .form-group
+    = f.label :enabled
+    = f.check_box :enabled
+  .actions
+    = f.submit 'Save', class: 'btn btn-primary'

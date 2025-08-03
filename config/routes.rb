@@ -163,6 +163,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :webhook_targets
     resources :groups
 
     resources :users do

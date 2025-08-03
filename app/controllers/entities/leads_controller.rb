@@ -5,7 +5,10 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+require_dependency 'app/controllers/concerns/webhook_notification_concern'
+
 class LeadsController < EntitiesController
+  include WebhookNotificationConcern
   before_action :get_data_for_sidebar, only: :index
   autocomplete :account, :name, full: true
 
@@ -65,6 +68,7 @@ class LeadsController < EntitiesController
 
     respond_with(@lead) do |_format|
       if @lead.save_with_permissions(params.permit!)
+        fire_webhook(@lead, :created)
         @lead.add_comment_by_user(@comment_body, current_user)
         if called_from_index_page?
           @leads = get_leads
@@ -83,6 +87,7 @@ class LeadsController < EntitiesController
       # Must set access before user_ids, because user_ids= method depends on access value.
       @lead.access = resource_params[:access] if resource_params[:access]
       if @lead.update_with_lead_counters(resource_params)
+        fire_webhook(@lead, :updated)
         update_sidebar
       else
         @campaigns = Campaign.my(current_user).order('name')
@@ -93,7 +98,9 @@ class LeadsController < EntitiesController
   # DELETE /leads/1
   #----------------------------------------------------------------------------
   def destroy
-    @lead.destroy
+    if @lead.destroy
+      fire_webhook(@lead, :deleted)
+    end
 
     respond_with(@lead) do |format|
       format.html { respond_to_destroy(:html) }

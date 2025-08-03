@@ -1,0 +1,25 @@
+%h1 Webhook Targets
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th URL
+      %th Enabled
+      %th Last Success At
+      %th Actions
+  %tbody
+    - @webhook_targets.each do |webhook_target|
+      %tr
+        %td= webhook_target.name
+        %td= webhook_target.url
+        %td= webhook_target.enabled?
+        %td= webhook_target.last_success_at
+        %td
+          = link_to 'Show', admin_webhook_target_path(webhook_target), class: 'btn btn-secondary btn-sm'
+          = link_to 'Edit', edit_admin_webhook_target_path(webhook_target), class: 'btn btn-primary btn-sm'
+          = link_to 'Destroy', admin_webhook_target_path(webhook_target), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'
+
+%br
+
+= link_to 'New Webhook Target', new_admin_webhook_target_path, class: 'btn btn-success'

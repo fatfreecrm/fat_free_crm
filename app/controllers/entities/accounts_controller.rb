@@ -5,7 +5,10 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+require_dependency 'app/controllers/concerns/webhook_notification_concern'
+
 class AccountsController < EntitiesController
+  include WebhookNotificationConcern
   before_action :get_data_for_sidebar, only: :index
 
   # GET /accounts
@@ -56,6 +59,7 @@ class AccountsController < EntitiesController
     @comment_body = params[:comment_body]
     respond_with(@account) do |_format|
       if @account.save
+        fire_webhook(@account, :created)
         @account.add_comment_by_user(@comment_body, current_user)
         # None: account can only be created from the Accounts index page, so we
         # don't have to check whether we're on the index page.
@@ -71,14 +75,19 @@ class AccountsController < EntitiesController
     respond_with(@account) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @account.access = params[:account][:access] if params[:account][:access]
-      get_data_for_sidebar if @account.update(resource_params)
+      if @account.update(resource_params)
+        fire_webhook(@account, :updated)
+        get_data_for_sidebar
+      end
     end
   end
 
   # DELETE /accounts/1
   #----------------------------------------------------------------------------
   def destroy
-    @account.destroy
+    if @account.destroy
+      fire_webhook(@account, :deleted)
+    end
 
     respond_with(@account) do |format|
       format.html { respond_to_destroy(:html) }

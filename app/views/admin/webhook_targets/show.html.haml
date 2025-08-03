@@ -1,0 +1,16 @@
+%p
+  %strong Name:
+  = @webhook_target.name
+%p
+  %strong Url:
+  = @webhook_target.url
+%p
+  %strong Enabled:
+  = @webhook_target.enabled
+%p
+  %strong Last success at:
+  = @webhook_target.last_success_at
+
+= link_to 'Edit', edit_admin_webhook_target_path(@webhook_target)
+\|
+= link_to 'Back', admin_webhook_targets_path

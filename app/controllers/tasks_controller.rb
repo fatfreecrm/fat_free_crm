@@ -5,7 +5,10 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+require_dependency 'app/controllers/concerns/webhook_notification_concern'
+
 class TasksController < ApplicationController
+  include WebhookNotificationConcern
   before_action :set_current_tab, only: %i[index show]
   before_action :update_sidebar, only: :index
 
@@ -71,6 +74,7 @@ class TasksController < ApplicationController
 
     respond_with(@task) do |_format|
       if @task.save
+        fire_webhook(@task, :created)
         update_sidebar if called_from_index_page?
       end
     end
@@ -91,6 +95,7 @@ class TasksController < ApplicationController
 
     respond_with(@task) do |_format|
       if @task.update(task_params)
+        fire_webhook(@task, :updated)
         @task.bucket = @task.computed_bucket
         if called_from_index_page?
           @empty_bucket = @task_before_update.bucket if Task.bucket_empty?(@task_before_update.bucket, current_user, @view)
@@ -105,7 +110,9 @@ class TasksController < ApplicationController
   def destroy
     @view = view
     @task = Task.tracked_by(current_user).find(params[:id])
-    @task.destroy
+    if @task.destroy
+      fire_webhook(@task, :deleted)
+    end
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
     @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_user, @view)

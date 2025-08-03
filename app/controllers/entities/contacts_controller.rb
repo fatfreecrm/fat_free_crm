@@ -5,7 +5,10 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+require_dependency 'app/controllers/concerns/webhook_notification_concern'
+
 class ContactsController < EntitiesController
+  include WebhookNotificationConcern
   before_action :get_accounts, only: %i[new create edit update]
 
   # GET /contacts
@@ -62,6 +65,7 @@ class ContactsController < EntitiesController
     @comment_body = params[:comment_body]
     respond_with(@contact) do |_format|
       if @contact.save_with_account_and_permissions(params.permit!)
+        fire_webhook(@contact, :created)
         @contact.add_comment_by_user(@comment_body, current_user)
         @contacts = get_contacts if called_from_index_page?
       else
@@ -75,14 +79,20 @@ class ContactsController < EntitiesController
   #----------------------------------------------------------------------------
   def update
     respond_with(@contact) do |_format|
-      @account = @contact.account || Account.new(user: current_user) unless @contact.update_with_account_and_permissions(params.permit!)
+      if @contact.update_with_account_and_permissions(params.permit!)
+        fire_webhook(@contact, :updated)
+      else
+        @account = @contact.account || Account.new(user: current_user)
+      end
     end
   end
 
   # DELETE /contacts/1
   #----------------------------------------------------------------------------
   def destroy
-    @contact.destroy
+    if @contact.destroy
+      fire_webhook(@contact, :deleted)
+    end
 
     respond_with(@contact) do |format|
       format.html { respond_to_destroy(:html) }
