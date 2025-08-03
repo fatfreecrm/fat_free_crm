@@ -27,7 +27,7 @@
 
 class Setting < ActiveRecord::Base
   validates :name, presence: true, allow_blank: false
-  serialize :value
+  serialize :value, coder: YAML
 
   # Use class variables for cache and yaml settings.
   cattr_accessor :cache, :yaml_settings
