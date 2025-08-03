@@ -30,7 +30,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'paper_trail',         '~> 15.1.0'
   gem.add_dependency 'devise',              '~> 4.6'
   gem.add_dependency 'devise-encryptable',  '~> 0.2.0'
-  gem.add_dependency 'acts_as_commentable', '>= 6.1'
+  gem.add_dependency 'acts_as_commentable2', '~> 7.1.0'
   gem.add_dependency 'acts-as-taggable-on', '>= 3.4.3'
   gem.add_dependency 'dynamic_form'
   gem.add_dependency 'haml'

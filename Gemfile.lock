@@ -109,6 +109,8 @@ GEM
     acts-as-taggable-on (11.0.0)
       activerecord (>= 7.0, < 8.0)
       zeitwerk (>= 2.4, < 3.0)
+    acts_as_commentable2 (7.1.0.1)
+      activerecord (~> 7.1.0)
     acts_as_list (1.2.4)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
@@ -576,6 +578,7 @@ DEPENDENCIES
   activemodel-serializers-xml
   acts-as-taggable-on (>= 3.4.3)
   acts_as_commentable!
+  acts_as_commentable2 (~> 7.1.0)
   acts_as_list
   base64
   bigdecimal
