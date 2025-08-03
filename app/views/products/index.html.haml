@@ -1,0 +1,20 @@
+= styles_for :product
+
+= render 'entities/title_bar'
+
+.remote#create_product{ hidden }
+
+- # = render 'search'
+
+.remote#options{ hidden }
+
+.list#products
+  - if @products.any?
+    = render @products
+  - else
+    = render "shared/empty"
+
+#paginate= render "shared/paginate_with_per_page"
+#export= render "shared/export"
+
+= hook(:product_index_after, self)
