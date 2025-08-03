@@ -184,9 +184,12 @@
 #     - :opportunity
 #     - :task
 #
-# By default, no background information is shown.
-#
-:background_info: []
+:background_info:
+  - :account
+  - :campaign
+  - :contact
+  - :lead
+  - :opportunity
 
 # Priority countries
 #------------------------------------------------------------------------------

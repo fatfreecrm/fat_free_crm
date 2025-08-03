@@ -79,6 +79,8 @@ feature 'Accounts', '
       click_link 'Edit'
       fill_in 'account_name', with: 'A new account *edited!*'
       click_button 'Save Account'
+
+      wait_for_ajax
       expect(page).to have_content('A new account *edited!*')
 
       click_link "Dashboard"
