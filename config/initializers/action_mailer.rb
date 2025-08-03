@@ -9,15 +9,15 @@
 # Configure ActionMailer unless running tests
 #   ActionMailer is setup in test mode later on
 #
-unless Rails.env.test?
-  require 'setting'
 
-  smtp_settings = Setting.smtp || {}
+Rails.application.config.after_initialize do
+  unless Rails.env.test?
+    smtp_settings = Setting.smtp || {}
 
-  Rails.application.config.action_mailer.smtp_settings = smtp_settings.symbolize_keys if smtp_settings["address"].present?
+    Rails.application.config.action_mailer.smtp_settings = smtp_settings.symbolize_keys if smtp_settings["address"].present?
 
-  if (host = Setting.host).present?
-    (Rails.application.routes.default_url_options ||= {})[:host] = host.gsub('http://', '')
+    if (host = Setting.host).present?
+      (Rails.application.routes.default_url_options ||= {})[:host] = host.gsub('http://', '')
+    end
   end
-
 end
