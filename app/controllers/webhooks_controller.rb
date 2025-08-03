@@ -10,22 +10,20 @@ class WebhooksController < ApplicationController
     owner_email = payload.dig("owner", "email")
     user = User.find_by(email: owner_email)
 
-    if user.nil?
-      return head :not_found
-    end
+    return head :not_found if user.nil?
 
     ActiveRecord::Base.transaction do
       payload["participants"].each do |participant|
-        participant_email = participant["email"]
+        participant["email"]
         lead_or_contact = find_or_create_lead_or_contact(participant)
 
-        if lead_or_contact
-          # Create a Note
-          lead_or_contact.notes.create(
-            user: user,
-            note: "Meeting Summary: #{payload['summary']}\n\nReport URL: #{payload['report_url']}"
-          )
-        end
+        next unless lead_or_contact
+
+        # Create a Note
+        lead_or_contact.notes.create(
+          user: user,
+          note: "Meeting Summary: #{payload['summary']}\n\nReport URL: #{payload['report_url']}"
+        )
       end
 
       payload["action_items"].each do |action_item|
@@ -50,8 +48,8 @@ class WebhooksController < ApplicationController
     return lead if lead
 
     Lead.create(
-      first_name: participant["name"].split(" ").first,
-      last_name: participant["name"].split(" ").last,
+      first_name: participant["name"].split.first,
+      last_name: participant["name"].split.last,
       email: participant["email"],
       user: User.first # Or assign to a default user
     )
