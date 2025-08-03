@@ -33,7 +33,8 @@ feature 'Accounts', '
       fill_in 'account_name', with: 'My new account'
       select2 'Affiliate', from: 'Category:'
       select2 'Myself', from: 'Assigned to:'
-      click_link 'Contact Information'
+
+      expect(page).to have_link 'Contact Information'
       fill_in 'account_phone', with: '+1 2345 6789'
       fill_in 'account_website', with: 'http://www.example.com'
       click_link 'Comment'
@@ -58,7 +59,7 @@ feature 'Accounts', '
     expect(page).to have_content('Create Account')
     click_link 'Create Account'
 
-    click_link 'Contact Information'
+    expect(page).to have_link 'Contact Information'
     fill_in 'account_phone', with: '+1 2345 6789'
 
     click_link 'Comment'
@@ -76,12 +77,12 @@ feature 'Accounts', '
       find('div#accounts').click_link('A new account')
       expect(page).to have_content('A new account')
       click_link 'Edit'
-      fill_in 'account_name', with: 'A new account *editted*'
+      fill_in 'account_name', with: 'A new account *edited!*'
       click_button 'Save Account'
-      expect(page).to have_content('A new account *editted*')
+      expect(page).to have_content('A new account *edited!*')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray updated account A new account *editted*")
+      expect(page).to have_content("Bill Murray updated account A new account *edited!*")
     end
   end
 

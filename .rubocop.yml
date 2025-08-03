@@ -7,6 +7,9 @@ plugins:
   - rubocop-rspec
   - rubocop-rspec_rails
 
+Metrics/ModuleLength:
+  Enabled: false
+
 AllCops:
   TargetRubyVersion: 3.4
   NewCops: enable

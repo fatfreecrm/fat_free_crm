@@ -80,7 +80,7 @@ describe CommentsController do
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
     COMMENTABLE.each do |asset|
-      it "should expose the requested comment as @commment and render [edit] template" do
+      it "should expose the requested comment as @comment and render [edit] template" do
         @asset = create(asset)
         @comment = create(:comment, id: 42, commentable: @asset, user: current_user)
         allow(Comment).to receive(:new).and_return(@comment)
@@ -126,7 +126,7 @@ describe CommentsController do
   end
 
   # PUT /comments/1
-  # PUT /comments/1.xml                                          not implemened
+  # PUT /comments/1.xml                                          not implemented
   #----------------------------------------------------------------------------
   # describe "responding to PUT update" do
   #

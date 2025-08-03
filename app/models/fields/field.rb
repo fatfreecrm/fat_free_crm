@@ -32,7 +32,7 @@ class Field < ActiveRecord::Base
   acts_as_list
 
   serialize :collection, type: Array
-  serialize :settings, HashWithIndifferentAccess
+  serialize :settings, type: HashWithIndifferentAccess
 
   belongs_to :field_group, optional: true
 

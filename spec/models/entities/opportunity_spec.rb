@@ -118,7 +118,7 @@ describe Opportunity do
       expect(opportunity.probability).to eq(0)
     end
 
-    it "should set the probablility to 100% if opportunity has been won" do
+    it "should set the probability to 100% if opportunity has been won" do
       opportunity = create(:opportunity, stage: "prospecting", probability: 65)
       opportunity.update(stage: 'won')
       opportunity.reload

@@ -232,8 +232,8 @@ describe Contact do
       Contact.new(
         first_name: "ChristopherChristopherChristopherChristopherChristopherChristopherChristopher",
         last_name: "BonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBonesBones",
-        title: 'This is a really long title for the contact and it should thow an error.',
-        department: 'This is a really long name for the department and it should thow an error.',
+        title: 'This is a really long title for the contact and it should throw an error.',
+        department: 'This is a really long name for the department and it should throw an error.',
         email: 'bob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillion@example.com',
         alt_email: 'bob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillionbob_dillion@example.com',
         phone: '+1 123 456 7891 123 456 7891 123 456 7891 123 456 7891 123 456 789',
