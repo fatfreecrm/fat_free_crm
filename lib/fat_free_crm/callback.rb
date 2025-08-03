@@ -108,7 +108,6 @@ module FatFreeCRM
     #--------------------------------------------------------------------------
     module Helper
       def hook(method, caller, context = {}, &block)
-
         # In a view template context, hooks are able to replace, append or prepend content.
         if caller.is_a?(ActionView::Base)
           hooks = FatFreeCRM::Callback.view_hook(method, caller, context)

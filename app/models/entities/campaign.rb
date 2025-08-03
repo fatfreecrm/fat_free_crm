@@ -39,7 +39,7 @@ class Campaign < ActiveRecord::Base
   has_many :opportunities, -> { order "id DESC" }
   has_many :emails, as: :mediator
 
-  serialize :subscribed_users, Array
+  serialize :subscribed_users, type: Array
 
   scope :state, lambda { |filters|
     where('status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters)
@@ -103,7 +103,7 @@ class Campaign < ActiveRecord::Base
   # Make sure end date > start date.
   #----------------------------------------------------------------------------
   def start_and_end_dates
-    errors.add(:ends_on, :dates_not_in_sequence) if (starts_on && ends_on) && (starts_on > ends_on)
+    errors.add(:ends_on, :dates_not_in_sequence) if starts_on && ends_on && (starts_on > ends_on)
   end
 
   # Make sure at least one user has been selected if the campaign is being shared.

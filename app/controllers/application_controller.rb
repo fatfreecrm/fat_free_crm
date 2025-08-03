@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
   # See http://blog.nvisium.com/2014/09/understanding-protectfromforgery.html for more details.
   #----------------------------------------------------------------------------
   def handle_unverified_request
-    raise ActionController::InvalidAuthenticityToken
+    raise ActionController::InvalidAuthenticityToken unless ENV.fetch('CODESPACE_NAME', nil) && Rails.env.development?
   end
 
   #

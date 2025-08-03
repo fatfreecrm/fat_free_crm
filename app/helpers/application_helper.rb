@@ -155,7 +155,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_email(email, length = nil, &_block)
     name = (length ? truncate(email, length: length) : email)
-    bcc = Setting&.email_dropbox
+    bcc = Setting.email_dropbox
     mailto = if bcc && bcc[:address].present?
                "#{email}?bcc=#{bcc[:address]}"
              else
@@ -319,7 +319,7 @@ module ApplicationHelper
 
   # Entities can have associated avatars or gravatars. Only calls Gravatar
   # in production env. Gravatar won't serve default images if they are not
-  # publically available: https://en.gravatar.com/site/implement/images
+  # public: https://en.gravatar.com/site/implement/images
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { class: 'gravatar', size: :large }.merge(args)

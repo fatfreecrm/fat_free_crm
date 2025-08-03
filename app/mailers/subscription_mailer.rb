@@ -14,7 +14,7 @@ class SubscriptionMailer < ActionMailer::Base
     @comment = comment
     @user = comment.user
 
-    # If entity has tags, join them and wrap in parantheses
+    # If entity has tags, join them and wrap in parentheses
     subject = "RE: [#{@entity_type.downcase}:#{@entity.id}] #{@entity_name}"
     subject += " (#{@entity.tags.join(', ')})" if @entity.tags.any?
 

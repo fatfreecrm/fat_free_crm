@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe EmailsController, "handling GET /emails" do
+describe EmailsController do
   MEDIATOR = %i[account campaign contact lead opportunity].freeze
 
   before(:each) do

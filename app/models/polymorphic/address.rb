@@ -54,7 +54,8 @@ class Address < ActiveRecord::Base
     exists = attributes['id'].present?
     empty = %w[street1 street2 city state zipcode country full_address].map { |name| attributes[name].blank? }.all?
     attributes[:_destroy] = 1 if exists && empty
-    (!exists && empty)
+
+    !exists && empty
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_address, self)

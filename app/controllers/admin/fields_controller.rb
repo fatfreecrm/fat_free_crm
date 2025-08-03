@@ -42,7 +42,7 @@ class Admin::FieldsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def create
     as = field_params["as"]
-    klass= Field.lookup_class(as).safe_constantize
+    klass = Field.lookup_class(as).safe_constantize
     @field =
       if as.match?(/pair/)
         klass.create_pair("pair" => pair_params, "field" => field_params).first
@@ -117,7 +117,7 @@ class Admin::FieldsController < Admin::ApplicationController
   end
 
   def pair_params
-    params.require(:pair).permit("0": [:hint, :required, :disabled, :id], "1": [:hint, :required, :disabled, :id])
+    params.require(:pair).permit("0": %i[hint required disabled id], "1": %i[hint required disabled id])
   end
 
   def setup_current_tab

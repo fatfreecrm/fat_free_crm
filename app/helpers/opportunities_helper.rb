@@ -17,7 +17,7 @@ module OpportunitiesHelper
   def opportunity_summary(opportunity)
     summary = []
     amount = []
-    summary << (opportunity.stage ? t(opportunity.stage) : t(:other))
+    summary << t(opportunity.stage || :other)
     summary << number_to_currency(opportunity.weighted_amount, precision: 0)
     unless %w[won lost].include?(opportunity.stage)
       amount << number_to_currency(opportunity.amount.to_f, precision: 0)

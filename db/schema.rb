@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[7.1].define(version: 2023_05_26_212613) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -53,6 +50,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
     t.integer "opportunities_count", default: 0
     t.index ["assigned_to"], name: "index_accounts_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_accounts_on_user_id_and_name_and_deleted_at", unique: true
+  end
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -247,12 +254,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
     t.text "collection"
     t.boolean "disabled"
     t.boolean "required"
-    t.integer "maxlength"
+    t.integer "maxlength", limit: 4
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.integer "pair_id"
     t.text "settings"
-    t.integer "minlength", default: 0
+    t.integer "minlength", limit: 4, default: 0
     t.string "pattern"
     t.string "autofocus"
     t.string "autocomplete"
@@ -417,7 +424,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
 
   create_table "users", force: :cascade do |t|
     t.string "username", limit: 32, default: "", null: false
-    t.string "email", limit: 254, default: "", null: false
+    t.string "email", limit: 254
     t.string "first_name", limit: 32
     t.string "last_name", limit: 32
     t.string "title", limit: 64
@@ -448,8 +455,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
     t.datetime "remember_created_at", precision: nil
     t.string "authentication_token"
     t.string "confirmation_token", limit: 255
-    t.datetime "confirmed_at", precision: nil
-    t.datetime "confirmation_sent_at", precision: nil
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
@@ -461,7 +468,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_212613) do
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
-    t.string "event", limit: 512, null: false
+    t.string "event", limit: 512
     t.string "whodunnit"
     t.text "object"
     t.datetime "created_at", precision: nil
