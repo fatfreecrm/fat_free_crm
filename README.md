@@ -43,9 +43,10 @@ contact lists, and opportunity tracking.
   </tr>
 </table>
 
-Extend the core with plugins for webhooks handling and sending, merging records, time tracking and more.
+Extend the core with [plugins for webhooks handling and sending, merging records, time tracking and more](https://github.com/fatfreecrm/fat_free_crm/wiki/Available-Plugins).
 
-https://github.com/fatfreecrm/fat_free_crm/wiki/Available-Plugins
+Join a [large community](https://github.com/fatfreecrm/fat_free_crm/wiki/People-Using-Fat-Free-CRM) building on open source solutions.
+
 
 Pull requests and bug reports are always welcome!
 
