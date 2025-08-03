@@ -20,5 +20,4 @@ Rails.application.config.after_initialize do
     end
 
     I18n.backend.store_translations(Setting.locale.to_sym, translations)
-
 end
