@@ -1,6 +1,6 @@
 GIT
-  remote: https://github.com/RedPatchTechnologies/responds_to_parent.git
-  revision: 36337ac1cb69245bdf551bc852abb9bd77c3826f
+  remote: https://github.com/fatfreecrm/responds_to_parent.git
+  revision: a4f87ff1fb2f7760bb8f2925f99cd79eefb2228f
   branch: master
   specs:
     responds_to_parent (2.0.0)

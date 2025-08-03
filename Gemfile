@@ -93,7 +93,7 @@ group :heroku do
   gem 'puma'
 end
 
-gem 'responds_to_parent', git: 'https://github.com/RedPatchTechnologies/responds_to_parent.git', branch: 'master' # Temporarily pointed at git until https://github.com/zendesk/responds_to_parent/pull/7 is released
+gem 'responds_to_parent', git: 'https://github.com/fatfreecrm/responds_to_parent.git', branch: 'master' # Temporarily pointed at git until https://github.com/zendesk/responds_to_parent/pull/7 is released
 gem 'acts_as_commentable2'
 gem 'sassc-rails'
 gem 'coffee-rails'
