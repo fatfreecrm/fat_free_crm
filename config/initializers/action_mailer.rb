@@ -19,6 +19,5 @@ Rails.application.config.after_initialize do
     if (host = Setting.host).present?
       (Rails.application.routes.default_url_options ||= {})[:host] = host.gsub('http://', '')
     end
-
   end
 end
