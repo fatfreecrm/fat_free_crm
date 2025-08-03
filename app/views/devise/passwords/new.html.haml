@@ -1,6 +1,8 @@
-.standalone#standalone
-  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-    .title= t(:forgot_password)
+.row.justify-content-center
+  .col-md-6
+    .standalone#standalone
+      = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+        .title= t(:forgot_password)
     .intro= t(:password_intro)
     .section
       .label= t(:email)

@@ -83,13 +83,11 @@ $sidebar_width: 210px;
   border: 20px lightsteelblue solid;
   margin: 75px auto 6px auto;
   padding: 20px;
-  width: 400px;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   input[type="text"], input[type="email"], input[type="password"] {
     font-size: 16px;
-    padding: 2px;
-    width: 355px; }
+    padding: 2px; }
   input[type="submit"] {
     font-size: 14px; } }
 
@@ -152,9 +150,8 @@ $sidebar_width: 210px;
   margin: 0px 0px 2px 0px;
   padding: 4px 15px 8px 15px;
   table {
-    width: 500px;
     &.address {
-      width: 240px; }
+ }
     border-spacing: 0px;
     border-collapse: collapse;
     td {
@@ -167,11 +164,9 @@ $sidebar_width: 210px;
         display: inline;
         vertical-align: bottom; }
       input, select, textarea {
-        width: 240px;
         display: block; }
       input[type="checkbox"], input[type="radio"] {
         display: inline;
-        width: auto; }
       label {
         vertical-align: bottom; }
       div.input.check_boxes > span {
@@ -374,8 +369,7 @@ $bg_color9: #FFDD4A;
     color: grey;
     font-size: 11px;
     margin: 3px 0px 0px 0px;
-    padding: 3px;
-    width: 500px; }
+    padding: 3px; }
   .gravatar {
     float: left;
     margin: 3px 10px 3px 3px; }
@@ -400,8 +394,7 @@ $bg_color9: #FFDD4A;
   font-size: 11px;
   height: 110px;
   margin: 3px 0px 0px 0px;
-  padding: 3px;
-  width: 500px; }
+  padding: 3px; }
 
 // Avoid collision with .email CSS class which is used to display Task category strip.
 .mail {
