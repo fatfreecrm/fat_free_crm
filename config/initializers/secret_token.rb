@@ -25,7 +25,7 @@ if FatFreeCRM.application?
 
   Rails.application.config.after_initialize do
     require 'fat_free_crm/secret_token_generator'
-    
+
     FatFreeCRM::SecretTokenGenerator.setup!
   end
 end
