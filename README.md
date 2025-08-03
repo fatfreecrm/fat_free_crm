@@ -1,7 +1,5 @@
-# Fat Free CRM  [![Code Climate][codeclimate-img-url]][codeclimate-url] [![Discord][discord-img-url]][discord-url]
+# Fat Free CRM [![Discord][discord-img-url]][discord-url]
 
-[codeclimate-img-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm.svg
-[codeclimate-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm
 [discord-img-url]: https://img.shields.io/badge/chat-on%20discord-7289da.svg?sanitize=true
 [discord-url]: https://discord.gg/JVrzD8RYyk
 ### An open source, Ruby on Rails [customer relationship management][crm-wiki] platform (CRM).
@@ -45,9 +43,14 @@ contact lists, and opportunity tracking.
   </tr>
 </table>
 
+Extend the core with plugins for webhooks handling and sending, merging records, time tracking and more.
+
+https://github.com/fatfreecrm/fat_free_crm/wiki/Available-Plugins
+
 Pull requests and bug reports are always welcome!
 
 Visit our website at http://www.fatfreecrm.com/
+
 
 
 ## System Requirements
@@ -73,7 +76,7 @@ Setting up a Heroku instance for Fat Free CRM
 
 ### [Setup Microsoft Windows](http://guides.fatfreecrm.com/Setup-Microsoft-Windows)
 
-Installing Fat Free CRM on Microsoft Windows
+Installing Fat Free CRM on Microsoft Windows (Deprecated)
 
 ### [Running Fat Free CRM as a Rails Engine](http://guides.fatfreecrm.com/Running-as-a-Rails-Engine)
 
@@ -83,7 +86,7 @@ This is the best way to deploy Fat Free CRM if you need to add plugins or make a
 
 ## Upgrading from previous versions of Fat Free CRM
 
-Please read the [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG.md) document for more detailed information on upgrading from previous versions.
+Please read the [Release notes](https://github.com/fatfreecrm/fat_free_crm/releases) or [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG.md) document for more detailed information on upgrading from previous versions.
 
 
 ## Resources
@@ -93,14 +96,10 @@ Please read the [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/mast
 |                 **Home Page**: | http://www.fatfreecrm.com |
 |                    **Guides**: | http://guides.fatfreecrm.com |
 |       **Github Project Page**: | http://github.com/fatfreecrm/fat_free_crm |
-| **Feature Requests and Bugs**: | http://support.fatfreecrm.com/ |
-|                  **RDoc API**: | http://api.fatfreecrm.com |
+| **Feature Requests and Bugs**: | http://github.com/fatfreecrm/fat_free_crm/issues |
 |                  **Ruby gem**: | https://rubygems.org/gems/fat_free_crm |
-|    **Twitter Commit Updates**: | http://twitter.com/fatfreecrm |
 |       **User's Google Group**: | http://groups.google.com/group/fat-free-crm-users |
 |  **Developer's Google Group**: | http://groups.google.com/group/fat-free-crm-dev |
-|               **IRC Channel**: | [#fatfreecrm](http://webchat.freenode.net/) on irc.freenode.net |
-
 
 ## For Developers
 

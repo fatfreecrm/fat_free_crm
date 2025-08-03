@@ -34,7 +34,7 @@ class CreateAddresses < ActiveRecord::Migration[4.2]
       Address.create(street1: asset.address, full_address: asset.address, address_type: "Business", addressable: asset)
     end
 
-    # Remove addresses columns from assets allready migrated
+    # Remove addresses columns from assets already migrated
     remove_column(:contacts, :address)
     remove_column(:accounts, :billing_address)
     remove_column(:accounts, :shipping_address)
