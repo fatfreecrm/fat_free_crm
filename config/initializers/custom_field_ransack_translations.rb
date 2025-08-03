@@ -8,6 +8,7 @@
 # Load field names for custom fields, for Ransack search
 
 Rails.application.config.after_initialize do
+  if ActiveRecord::Base.connection.table_exists?(:custom_fields)
     I18n.backend.load_translations
 
     translations = { ransack: { attributes: {} } }
@@ -20,4 +21,5 @@ Rails.application.config.after_initialize do
     end
 
     I18n.backend.store_translations(Setting.locale.to_sym, translations)
+  end
 end
