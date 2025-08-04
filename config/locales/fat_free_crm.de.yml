@@ -128,8 +128,8 @@ de:
   keep_private: nur für mich sichtbar
   select_none: -- Kein(e) --
   about_ffc_version: Fat Free CRM version
-  budget_label: Budget (€)
-  currency: (€)
+  budget_label: Budget (%{currency})
+  currency: "€"
   close_date: Abschlussdatum
   login_now_link: Login!
   user_signed_up_on: Angemeldet am %{value}
@@ -453,7 +453,7 @@ de:
   select_contact: Wähle einen Kontakt aus
   create_field_group: Erstelle Gruppe.
   create_opportunity: Erstelle Chance
-  revenue_label: Umsatz (€)
+  revenue_label: Umsatz (%{currency})
   about_project_page: Projekt-Page
   tab_dashboard: Dashboard
   weighted_amount: Gewichteter Betrag

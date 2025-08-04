@@ -340,7 +340,7 @@ es:
   actual: Actual
   actual_performance: Rendimiento Actual
   budget: Presupuesto
-  budget_label: Presupuesto (€)
+  budget_label: Presupuesto (%{currency})
   campaign: Campaña
   campaign_and_leads: campaña y sus iniciativas
   campaign_small: campaña
@@ -366,7 +366,7 @@ es:
     real de la campaña.
   objectives_small: campañas esperadas
   revenue: Ingresos
-  revenue_label: Ingresos (€)
+  revenue_label: Ingresos (%{currency})
   revenue_number: ! '%{value} en ingresos'
   save_campaign: Guardar Campaña
   start_date: Fecha de inicio
@@ -463,7 +463,7 @@ es:
   closes_today: ¡Se espera que se cierre hoy!
   closing_date: la fecha de cierre es %{value}
   create_opportunity: Crear Oportunidad
-  currency: (€)
+  currency: "€"
   days_late: Tarde por
   days_left: Días que quedan
   discount: Descuento
