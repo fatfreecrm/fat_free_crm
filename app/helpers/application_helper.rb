@@ -170,6 +170,25 @@ module ApplicationHelper
     end
   end
 
+  # Format a phone number as a tel: hyperlink.
+  #----------------------------------------------------------------------------
+  def link_to_phone(number)
+    return nil if number.blank?
+
+    sanitized_number = number.gsub(/[^0-9+]/, '')
+    link_to number, "tel:#{sanitized_number}"
+  end
+
+  # Render a phone field with an optional pattern for international format.
+  #----------------------------------------------------------------------------
+  def phone_field_with_pattern(form, method, options = {})
+    if Setting.enforce_international_phone_format
+      options[:pattern] ||= '\+[0-9]{1,3}\s?[0-9]{1,14}'
+      options[:placeholder] ||= '+1 123 456 7890'
+    end
+    form.phone_field(method, options)
+  end
+
   #----------------------------------------------------------------------------
   def jumpbox(current)
     tabs = %i[campaigns accounts leads contacts opportunities]

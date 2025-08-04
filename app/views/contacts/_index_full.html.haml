@@ -35,11 +35,11 @@
           |
         - if contact.phone.present?
           == #{t :phone_small}:
-          %b= contact.phone
+          %b= link_to_phone(contact.phone)
           |
         - if contact.mobile.present?
           == #{t :mobile_small}:
-          %b= contact.mobile
+          %b= link_to_phone(contact.mobile)
           |
       = t(:added_ago, value: timeago(contact.created_at)).html_safe
     - if contact.tags.present?

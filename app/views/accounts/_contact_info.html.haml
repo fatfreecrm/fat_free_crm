@@ -12,15 +12,15 @@
             %tr
               %td
                 .label #{t :phone_toll_free}:
-                = f.phone_field :toll_free_phone, style: "width:154px"
+                = phone_field_with_pattern(f, :toll_free_phone, style: "width:154px")
               %td= spacer
               %td
                 .label #{t :phone}:
-                = f.phone_field :phone, style: "width:154px"
+                = phone_field_with_pattern(f, :phone, style: "width:154px")
               %td= spacer
               %td
                 .label #{t :fax}:
-                = f.phone_field :fax, style: "width:154px"
+                = phone_field_with_pattern(f, :fax, style: "width:154px")
       %tr
         %td
           .label.top #{t :website}:

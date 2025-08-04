@@ -83,4 +83,57 @@ describe ApplicationHelper do
       expect(helper.send(:current_view_name)).to eq('long')
     end
   end
+
+  describe "link_to_phone" do
+    it "should return a tel link for a given phone number" do
+      expect(helper.link_to_phone("123-456-7890")).to have_tag("a", with: { href: "tel:1234567890" }, text: "123-456-7890")
+    end
+
+    it "should handle phone numbers with a plus sign" do
+      expect(helper.link_to_phone("+1 (123) 456-7890")).to have_tag("a", with: { href: "tel:+11234567890" }, text: "+1 (123) 456-7890")
+    end
+
+    it "should return nil if the phone number is blank" do
+      expect(helper.link_to_phone("")).to be_nil
+      expect(helper.link_to_phone(nil)).to be_nil
+    end
+  end
+
+  describe "phone_field_with_pattern" do
+    let(:user) { create(:user) }
+    let(:form) { ActionView::Helpers::FormBuilder.new(:user, user, helper, {}) }
+
+    context "when enforce_international_phone_format is false" do
+      before { allow(Setting).to receive(:enforce_international_phone_format).and_return(false) }
+
+      it "should render a normal phone field" do
+        expect(helper.phone_field_with_pattern(form, :phone)).to have_tag("input", with: { type: "tel", name: "user[phone]", id: "user_phone" })
+        expect(helper.phone_field_with_pattern(form, :phone)).not_to have_tag("input", with: { pattern: true })
+      end
+    end
+
+    context "when enforce_international_phone_format is true" do
+      before { allow(Setting).to receive(:enforce_international_phone_format).and_return(true) }
+
+      it "should render a phone field with pattern and placeholder" do
+        expect(helper.phone_field_with_pattern(form, :phone)).to have_tag("input", with: {
+                                                                            type: "tel",
+                                                                            name: "user[phone]",
+                                                                            id: "user_phone",
+                                                                            pattern: '\+[0-9]{1,3}\s?[0-9]{1,14}',
+                                                                            placeholder: '+1 123 456 7890'
+                                                                          })
+      end
+
+      it "should not override existing options" do
+        expect(helper.phone_field_with_pattern(form, :phone, pattern: "custom", placeholder: "custom")).to have_tag("input", with: {
+                                                                                                                     type: "tel",
+                                                                                                                     name: "user[phone]",
+                                                                                                                     id: "user_phone",
+                                                                                                                     pattern: 'custom',
+                                                                                                                     placeholder: 'custom'
+                                                                                                                   })
+      end
+    end
+  end
 end

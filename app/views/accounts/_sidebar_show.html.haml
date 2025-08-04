@@ -12,13 +12,13 @@
 
   %div
     - if @account.toll_free_phone
-      #{t :phone_toll_free}: <b>#{@account.toll_free_phone}</b><br />
+      == #{t :phone_toll_free}: <b>#{link_to_phone(@account.toll_free_phone)}</b><br />
 
     - if @account.phone
-      #{t :phone}: <b>#{@account.phone}</b><br />
+      == #{t :phone}: <b>#{link_to_phone(@account.phone)}</b><br />
 
     - if @account.fax
-      #{t :fax}: <b>#{@account.fax}</b><br />
+      == #{t :fax}: <b>#{link_to_phone(@account.fax)}</b><br />
 
   %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address
   %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address

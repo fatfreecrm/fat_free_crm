@@ -6,11 +6,11 @@
 
   %div
     - unless @contact.phone.blank?
-      == #{t :phone}: <b>#{@contact.do_not_call ? content_tag(:strike, h(@contact.phone)) : h(@contact.phone)}</b><br />
+      == #{t :phone}: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.phone) : link_to_phone(@contact.phone)}</b><br />
     - unless @contact.mobile.blank?
-      == #{t :mobile}: <b>#{@contact.do_not_call ? content_tag(:strike, h(@contact.mobile)) : h(@contact.mobile)}</b><br />
+      == #{t :mobile}: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.mobile) : link_to_phone(@contact.mobile)}</b><br />
     - unless @contact.fax.blank?
-      == #{t :fax}: <b>#{@contact.do_not_call ? content_tag(:strike, h(@contact.fax)) : h(@contact.fax)}</b><br />
+      == #{t :fax}: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.fax) : link_to_phone(@contact.fax)}</b><br />
   %div
     - unless @contact.email.blank?
       == #{t :email}: <b>#{link_to_email(@contact.email)}</b><br />
