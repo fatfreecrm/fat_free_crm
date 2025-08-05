@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_05_26_212613) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -48,6 +48,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_05_26_212613) do
     t.text "subscribed_users"
     t.integer "contacts_count", default: 0
     t.integer "opportunities_count", default: 0
+    t.string "wikidata_id"
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
     t.index ["assigned_to"], name: "index_accounts_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_accounts_on_user_id_and_name_and_deleted_at", unique: true
   end
@@ -364,6 +367,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_05_26_212613) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["user_id", "name"], name: "index_preferences_on_user_id_and_name"
+  end
+
+  create_table "research_tools", force: :cascade do |t|
+    t.string "name"
+    t.string "url_template"
+    t.boolean "enabled", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sessions", force: :cascade do |t|
