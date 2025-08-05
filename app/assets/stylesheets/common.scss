@@ -350,8 +350,7 @@ $bg_color9: #FFDD4A;
   margin: 0px 0px 10px 0px; }
 
 .prefix {
-  width: 30px;
-  font-size: 10px; }
+  width: 30px; }
 
 .comment {
   background: #f2f2f2;
@@ -382,7 +381,6 @@ $bg_color9: #FFDD4A;
     display: inline;
     font-size: 0.9em; }
   tt {
-    font-size: 10px;
     color: #666666; }
   dt {
     padding: 0px;
@@ -419,7 +417,6 @@ $bg_color9: #FFDD4A;
     display: inline;
     font-size: 0.9em; }
   tt {
-    font-size: 10px;
     color: #666666; }
   dt {
     padding: 0px;
@@ -436,7 +433,7 @@ $bg_color9: #FFDD4A;
 
 #paginate {
   float: right;
-  font-size: 10px;
+  font-size: 0.9em;
   margin: 4px 0px 0px 0px; }
 
 #paging {
