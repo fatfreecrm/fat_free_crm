@@ -44,4 +44,6 @@ account<%= i %>:
   category         : <%= category.sample %>
   created_at       : <%= created_at = (rand(60) + 2).days.ago + rand(600).minutes; created_at.to_fs(:db) %>
   updated_at       : <%= (created_at + rand(36_000).seconds).to_fs(:db) %>
+  latitude         : <%= FFaker::Geolocation.lat %>
+  longitude        : <%= FFaker::Geolocation.lng %>
 <% end %>

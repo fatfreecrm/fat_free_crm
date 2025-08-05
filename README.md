@@ -6,42 +6,46 @@
 
 [crm-wiki]: http://en.wikipedia.org/wiki/Customer_relationship_management
 
+<img width="100%" alt="image" src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/dashboard.png" />
+
 
 Out of the box it features group collaboration, campaign and lead management,
 contact lists, and opportunity tracking.
 
 <table>
   <tr>
-    <td align="center">
+    <td align="center" width="25%">
       <a href="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_create.png" target="_blank" title="Create Contacts">
-        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_create_t.png" alt="Create Contacts">
+        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_create.png" alt="Create Contacts">
       </a>
       <br />
       <em>Contacts</em>
     </td>
-    <td align="center">
+    <td align="center" width="25%">
       <a href="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_opportunity.png" target="_blank" title="Manage Opportunities">
-        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_opportunity_t.png" alt="Manage Opportunities">
+        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_opportunity.png" alt="Manage Opportunities">
       </a>
       <br />
       <em>Opportunities</em>
     </td>
-    <td align="center">
+    <td align="center" width="25%">
       <a href="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/account_edit.png" target="_blank" title="Edit Accounts">
-        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/account_edit_t.png" alt="Edit Accounts">
+        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/account_edit.png" alt="Edit Accounts">
       </a>
       <br />
       <em>Accounts</em>
     </td>
-    <td align="center">
+    <td align="center" width="25%">
       <a href="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/task_create.png" target="_blank" title="Create Tasks">
-        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/task_create_t.png" alt="Create Tasks">
+        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/task_create.png" alt="Create Tasks">
       </a>
       <br />
       <em>Tasks</em>
     </td>
   </tr>
 </table>
+
+Build out your data with *custom fields*, organise with *tags*, model your organisation's _groups_ and _teams_.
 
 Extend the core with [plugins for webhooks handling and sending, merging records, time tracking and more](https://github.com/fatfreecrm/fat_free_crm/wiki/Available-Plugins).
 
