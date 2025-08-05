@@ -3,8 +3,6 @@
     = research_tool.name
   .url.ellipsis
     = research_tool.url_template
-  .enabled
-    = research_tool.enabled? ? t(:yes) : t(:no)
   .tools
     = link_to_edit(research_tool, url: edit_admin_research_tool_path(research_tool))
     |

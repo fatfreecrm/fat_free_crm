@@ -4,9 +4,9 @@
       %tr
         %td
           .label.top.req Name:
-          = f.text_field :name, placeholder: 'e.g. Google Scholar'
+          = f.text_field :name, placeholder: 'e.g. Google Scholar', required: true
       %tr
         %td
           .label.top.req URL Template:
-          = f.text_field :url_template, placeholder: 'e.g. https://example.com/search?q={query}'
+          = f.text_field :url_template, placeholder: 'e.g. https://example.com/search?q={query}', required: true
 
