@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ImagesHelper
   def render_image(entity)
     if entity.image_url.present?
