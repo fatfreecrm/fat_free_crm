@@ -2,7 +2,7 @@
 - lost = @account.opportunities.lost.map(&:amount).compact.sum
 - pipeline = @account.opportunities.pipeline.map(&:weighted_amount).compact.sum
 
-.panel.row#summary
+.panel#summary
   - if @account.website
     %div
       %b= link_to(truncate(@account.website, length: 30), @account.website.to_url, :"data-popup" => true, title: t(:open_in_window, @account.website))
