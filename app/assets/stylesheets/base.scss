@@ -25,7 +25,7 @@ html, body {
 
 body, ol, ul, li, dt, tt, label, input, select, textarea {
   font: {
-    size: 12px;
+    size: 11pt;
     family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" }; }
 
 body, h1, h2, h3, h4, h5, h6, ol, ul, li {
@@ -73,16 +73,16 @@ a.btn, a.btn-sm {
 // Smaller fonts.
 //------------------------------------------------------------------------------
 abbr {
-  font-size: 9px; }
+  font-size: 0.7rem; }
 
 small {
-  font-size: 10px; }
+  font-size: 0.8rem; }
 
 dt {
-  font-size: 11px; }
+  font-size: 0.85rem; }
 
 tt {
-  font-size: 12px; }
+  font-size: 0.9rem; }
 
 @view-transition {
   navigation: auto;

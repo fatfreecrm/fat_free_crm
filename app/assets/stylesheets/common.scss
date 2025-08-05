@@ -87,11 +87,11 @@ $sidebar_width: 210px;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   input[type="text"], input[type="email"], input[type="password"] {
-    font-size: 16px;
+    font-size: 1.2em;
     padding: 2px;
     width: 355px; }
   input[type="submit"] {
-    font-size: 14px; } }
+    font-size: 1.1em; } }
 
 .tabbed {
   padding: 12px 12px 12px 16px; }
@@ -304,7 +304,6 @@ $bg_color9: #FFDD4A;
 .amount {
   background: palegreen;
   color: black;
-  font-size: 11px;
   text-align: center;
   padding: 0px 3px 0px 3px;
   -moz-border-radius: {
@@ -322,7 +321,7 @@ $bg_color9: #FFDD4A;
   background: gainsboro;
   color: black;
   float: left;
-  font-size: 11px;
+  font-size: 0.85em;
   margin: 0px 6px 0px 0px;
   padding: 1px 4px 1px 3px;
   text-align: right;
@@ -351,8 +350,7 @@ $bg_color9: #FFDD4A;
   margin: 0px 0px 10px 0px; }
 
 .prefix {
-  width: 30px;
-  font-size: 10px; }
+  width: 30px; }
 
 .comment {
   background: #f2f2f2;
@@ -372,7 +370,7 @@ $bg_color9: #FFDD4A;
   input[type=text] {
     border: 1px #cfcfcf solid;
     color: grey;
-    font-size: 11px;
+    font-size: 0.9em;
     margin: 3px 0px 0px 0px;
     padding: 3px;
     width: 500px; }
@@ -381,9 +379,8 @@ $bg_color9: #FFDD4A;
     margin: 3px 10px 3px 3px; }
   .body {
     display: inline;
-    font-size: 11px; }
+    font-size: 0.9em; }
   tt {
-    font-size: 10px;
     color: #666666; }
   dt {
     padding: 0px;
@@ -394,10 +391,10 @@ $bg_color9: #FFDD4A;
     margin-top: 7px;
     margin-left: 4px;
     a {
-      font-size: 11px; } } }
+      font-size: 0.9em; } } }
 
 .comment textarea, textarea#comment_body {
-  font-size: 11px;
+  font-size: 0.9em;
   height: 110px;
   margin: 3px 0px 0px 0px;
   padding: 3px;
@@ -418,9 +415,8 @@ $bg_color9: #FFDD4A;
     color: black; }
   .body {
     display: inline;
-    font-size: 11px; }
+    font-size: 0.9em; }
   tt {
-    font-size: 10px;
     color: #666666; }
   dt {
     padding: 0px;
@@ -432,12 +428,12 @@ $bg_color9: #FFDD4A;
   font-weight: normal; }
 
 #export {
-  font-size: 9px;
+  font-size: 0.8em;
   margin: 12px 0px 0px 0px; }
 
 #paginate {
   float: right;
-  font-size: 10px;
+  font-size: 0.9em;
   margin: 4px 0px 0px 0px; }
 
 #paging {
@@ -447,7 +443,7 @@ $bg_color9: #FFDD4A;
 .confirm {
   background: #cdfecd;
   border-left: 10px palegreen solid;
-  font-size: 11px;
+  font-size: 0.9em;
   margin: 0px 0px 6px 0px;
   padding: 6px; }
 
@@ -544,7 +540,7 @@ $bg_color9: #FFDD4A;
       margin: 4px 0px 4px 0px; } } }
 
 .arrow {
-  font-size: 9px;
+  font-size: 0.8em;
   padding: 0px 2px 3px 0px; }
 
 .left {
