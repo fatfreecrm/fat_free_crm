@@ -54,6 +54,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
+    @account = Account.new(account_params)
     respond_with(@account) do |_format|
       if @account.save
         @account.add_comment_by_user(@comment_body, current_user)
@@ -71,7 +72,7 @@ class AccountsController < EntitiesController
     respond_with(@account) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @account.access = params[:account][:access] if params[:account][:access]
-      get_data_for_sidebar if @account.update(resource_params)
+      get_data_for_sidebar if @account.update(account_params)
     end
   end
 
@@ -159,6 +160,27 @@ class AccountsController < EntitiesController
     categorized = @account_category_total.values.sum
     @account_category_total[:all] = Account.my(current_user).count
     @account_category_total[:other] = @account_category_total[:all] - categorized
+  end
+
+  def account_params
+    params.require(:account).permit(
+      :name,
+      :access,
+      :assigned_to,
+      :website,
+      :toll_free_phone,
+      :phone,
+      :fax,
+      :email,
+      :background_info,
+      :rating,
+      :category,
+      :subscribed_users,
+      :latitude,
+      :longitude,
+      billing_address_attributes: %i[id street1 street2 city state zipcode country address_type],
+      shipping_address_attributes: %i[id street1 street2 city state zipcode country address_type]
+    )
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_accounts_controller, self)
