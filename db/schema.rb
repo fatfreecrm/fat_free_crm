@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+#
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -48,7 +50,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
     t.text "subscribed_users"
     t.integer "contacts_count", default: 0
     t.integer "opportunities_count", default: 0
-    t.string "wikidata_id"
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
     t.index ["assigned_to"], name: "index_accounts_on_assigned_to"
