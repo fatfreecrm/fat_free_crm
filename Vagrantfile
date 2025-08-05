@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/jammy64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -71,7 +71,9 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/fatfreecrm/fat_free_crm.git
     cd fat_free_crm
     cp config/database.postgres.yml config/database.yml
-    apt-get install -y nginx-full postgresql ruby-all-dev ruby-bundler libmagick++-dev libxml2 libxml2-dev libxslt1.1 libxslt1-dev libyaml-dev libpq-dev libsqlite3-dev
+    apt-get install -y git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev libmysqlclient-dev
+    apt-get install -y postgresql postgresql-contrib libpq-dev
+    apt-get install -y nginx-full ruby-all-dev ruby-bundler libmagick++-dev libxml2 libxslt1.1
     bundle install
     echo "ALTER USER postgres PASSWORD '123456';" | sudo -u postgres psql
     sed -i 's/  username:/  username: postgres/g' 'config/database.yml'

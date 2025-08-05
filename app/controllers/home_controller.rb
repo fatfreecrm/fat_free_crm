@@ -130,7 +130,7 @@ class HomeController < ApplicationController
 
   #----------------------------------------------------------------------------
   # TODO: this is ugly, ugly code. It's being security patched now but urgently
-  # needs refactoring to use user id instead. Permuations based on name or email
+  # needs refactoring to use user id instead. Permutations based on name or email
   # yield incorrect results.
   def activity_user
     return nil if current_user.pref[:activity_user] == "all_users"

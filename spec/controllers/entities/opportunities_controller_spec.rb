@@ -588,7 +588,7 @@ describe OpportunitiesController do
           expect(@campaign.reload.revenue.to_i).to eq(2000) # 1000 -> 2000
         end
 
-        it "should substract from actual revenue when opportunity is no longer closed/won" do
+        it "should subtract from actual revenue when opportunity is no longer closed/won" do
           @campaign = create(:campaign, revenue: 1000)
           @opportunity = create(:opportunity, campaign: @campaign, stage: "won", amount: 1100, discount: 100)
           # @campaign.revenue is now $2000 since we created winning opportunity.
@@ -606,7 +606,7 @@ describe OpportunitiesController do
         end
       end
 
-      describe "updating campaign revenue (diferent campaigns)" do
+      describe "updating campaign revenue (different campaigns)" do
         it "should update newly assigned campaign when opportunity is closed/won" do
           @campaigns = { old: create(:campaign, revenue: 1000), new: create(:campaign, revenue: 1000) }
           @opportunity = create(:opportunity, campaign: @campaigns[:old], stage: 'prospecting', amount: 1100, discount: 100)

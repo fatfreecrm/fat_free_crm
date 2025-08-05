@@ -269,7 +269,7 @@ it:
   actual: Attuale
   actual_performance: Performance attuale
   budget: Budget
-  budget_label: Budget (€)
+  budget_label: Budget (%{currency})
   campaign: Campagna
   campaign_and_leads: campagna e suoi potenziali
   campaign_small: campagna
@@ -294,7 +294,7 @@ it:
     campagna.
   objectives_small: obiettivi campagna
   revenue: Gettito
-  revenue_label: Gettito (€)
+  revenue_label: Gettito (%{currency})
   revenue_number: ! '%{value} in gettito'
   save_campaign: Salva Campagna
   start_date: Data Iniziale
@@ -375,7 +375,7 @@ it:
   closes_today: conclusione prevista oggi!
   closing_date: data di chiusura e' %{value}
   create_opportunity: Crea Opportunita'
-  currency: ($)
+  currency: "€"
   days_late: Ritardo di
   days_left: Giorni rimasti
   discount: Sconto

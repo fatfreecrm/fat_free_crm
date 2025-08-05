@@ -1,0 +1,6 @@
+# https://github.com/codespell-project/codespell#using-a-config-file
+[codespell]
+skip = *.log,*.cache,./tmp/*,./config/locales/*,./vendor/*,./lib/tasks/ffcrm/update_data.rake
+
+# Comma separated list of words to be ignored. Words must be lowercased.
+ignore-words-list = uncomplete,outter,isnt,rememberable

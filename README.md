@@ -1,12 +1,12 @@
-# Fat Free CRM  [![Code Climate][codeclimate-img-url]][codeclimate-url] [![Discord][discord-img-url]][discord-url]
+# Fat Free CRM [![Discord][discord-img-url]][discord-url]
 
-[codeclimate-img-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm.svg
-[codeclimate-url]: https://codeclimate.com/github/fatfreecrm/fat_free_crm
 [discord-img-url]: https://img.shields.io/badge/chat-on%20discord-7289da.svg?sanitize=true
 [discord-url]: https://discord.gg/JVrzD8RYyk
 ### An open source, Ruby on Rails [customer relationship management][crm-wiki] platform (CRM).
 
 [crm-wiki]: http://en.wikipedia.org/wiki/Customer_relationship_management
+
+<img width="100%" alt="image" src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/dashboard.png" />
 
 
 Out of the box it features group collaboration, campaign and lead management,
@@ -14,30 +14,30 @@ contact lists, and opportunity tracking.
 
 <table>
   <tr>
-    <td align="center">
+    <td align="center" width="25%">
       <a href="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_create.png" target="_blank" title="Create Contacts">
-        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_create_t.png" alt="Create Contacts">
+        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_create.png" alt="Create Contacts">
       </a>
       <br />
       <em>Contacts</em>
     </td>
-    <td align="center">
+    <td align="center" width="25%">
       <a href="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_opportunity.png" target="_blank" title="Manage Opportunities">
-        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_opportunity_t.png" alt="Manage Opportunities">
+        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/contact_opportunity.png" alt="Manage Opportunities">
       </a>
       <br />
       <em>Opportunities</em>
     </td>
-    <td align="center">
+    <td align="center" width="25%">
       <a href="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/account_edit.png" target="_blank" title="Edit Accounts">
-        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/account_edit_t.png" alt="Edit Accounts">
+        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/account_edit.png" alt="Edit Accounts">
       </a>
       <br />
       <em>Accounts</em>
     </td>
-    <td align="center">
+    <td align="center" width="25%">
       <a href="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/task_create.png" target="_blank" title="Create Tasks">
-        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/task_create_t.png" alt="Create Tasks">
+        <img src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/task_create.png" alt="Create Tasks">
       </a>
       <br />
       <em>Tasks</em>
@@ -45,9 +45,16 @@ contact lists, and opportunity tracking.
   </tr>
 </table>
 
+Build out your data with *custom fields*, organise with *tags*, model your organisation's _groups_ and _teams_.
+
+Extend the core with [plugins for webhooks handling and sending, merging records, time tracking and more](https://github.com/fatfreecrm/fat_free_crm/wiki/Available-Plugins).
+
+Join a [large community](https://github.com/fatfreecrm/fat_free_crm/wiki/People-Using-Fat-Free-CRM) building on open source solutions.
+
+
 Pull requests and bug reports are always welcome!
 
-Visit our website at http://www.fatfreecrm.com/
+Visit our website at http://www.fatfreecrm.com/ or check out the [documentation](https://www.rubydoc.info/github/fatfreecrm/fat_free_crm.git/master).
 
 
 ## System Requirements
@@ -73,7 +80,7 @@ Setting up a Heroku instance for Fat Free CRM
 
 ### [Setup Microsoft Windows](http://guides.fatfreecrm.com/Setup-Microsoft-Windows)
 
-Installing Fat Free CRM on Microsoft Windows
+Installing Fat Free CRM on Microsoft Windows (Deprecated)
 
 ### [Running Fat Free CRM as a Rails Engine](http://guides.fatfreecrm.com/Running-as-a-Rails-Engine)
 
@@ -83,7 +90,7 @@ This is the best way to deploy Fat Free CRM if you need to add plugins or make a
 
 ## Upgrading from previous versions of Fat Free CRM
 
-Please read the [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG.md) document for more detailed information on upgrading from previous versions.
+Please read the [Release notes](https://github.com/fatfreecrm/fat_free_crm/releases) or [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/master/CHANGELOG.md) document for more detailed information on upgrading from previous versions.
 
 
 ## Resources
@@ -93,14 +100,10 @@ Please read the [Changelog](https://github.com/fatfreecrm/fat_free_crm/blob/mast
 |                 **Home Page**: | http://www.fatfreecrm.com |
 |                    **Guides**: | http://guides.fatfreecrm.com |
 |       **Github Project Page**: | http://github.com/fatfreecrm/fat_free_crm |
-| **Feature Requests and Bugs**: | http://support.fatfreecrm.com/ |
-|                  **RDoc API**: | http://api.fatfreecrm.com |
+| **Feature Requests and Bugs**: | http://github.com/fatfreecrm/fat_free_crm/issues |
 |                  **Ruby gem**: | https://rubygems.org/gems/fat_free_crm |
-|    **Twitter Commit Updates**: | http://twitter.com/fatfreecrm |
 |       **User's Google Group**: | http://groups.google.com/group/fat-free-crm-users |
 |  **Developer's Google Group**: | http://groups.google.com/group/fat-free-crm-dev |
-|               **IRC Channel**: | [#fatfreecrm](http://webchat.freenode.net/) on irc.freenode.net |
-
 
 ## For Developers
 

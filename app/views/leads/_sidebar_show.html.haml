@@ -11,9 +11,9 @@
 
   %div
     - if @lead.phone.present?
-      == #{t :phone}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : @lead.phone}</b><br />
+      == #{t :phone}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : link_to_phone(@lead.phone)}</b><br />
     - if @lead.mobile.present?
-      == #{t :mobile}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : @lead.mobile}</b><br />
+      == #{t :mobile}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : link_to_phone(@lead.mobile)}</b><br />
     - if @lead.email.present?
       == #{t :email}: <b>#{link_to_email(@lead.email)}</b><br />
     - if @lead.alt_email.present?

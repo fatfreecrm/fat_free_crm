@@ -53,7 +53,7 @@ feature 'Opportunities', '
     end
   end
 
-  scenario 'should not display ammount with zero value', js: true do
+  scenario 'should not display amount with zero value', js: true do
     with_amount = create(:opportunity, name: 'With Amount', amount: 3000, probability: 90, discount: nil, stage: 'proposal')
     without_amount = create(:opportunity, name: 'Without Amount', amount: nil, probability: nil, discount: nil, stage: 'proposal')
     with_versioning do
@@ -115,7 +115,7 @@ feature 'Opportunities', '
     fill_in 'query', with: "Opportunity"
     expect(find('#opportunities')).to have_content("Opportunity 0")
     expect(find('#opportunities')).to have_content("Opportunity 1")
-    fill_in 'query', with: "Non-existant opportunity"
+    fill_in 'query', with: "Non-existent opportunity"
     expect(find('#opportunities')).not_to have_content("Opportunity 0")
     expect(find('#opportunities')).not_to have_content("Opportunity 1")
   end

@@ -7,4 +7,6 @@
 #------------------------------------------------------------------------------
 # Set relative url root for assets
 
-ActionController::Base.relative_url_root = Setting.base_url if Setting.base_url.present?
+Rails.application.config.after_initialize do
+  ActionController::Base.relative_url_root = Setting.base_url if Setting.base_url.present?
+end

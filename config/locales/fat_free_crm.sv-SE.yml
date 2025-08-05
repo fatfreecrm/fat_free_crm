@@ -255,7 +255,7 @@ sv-SE:
   actual: Faktisk
   actual_performance: Faktisk prestanda
   budget: Budget
-  budget_label: Budget (kr)
+  budget_label: Budget (%{currency})
   campaign: Kampanj
   campaign_and_leads: kampanj och leads
   campaign_small: kampan
@@ -279,7 +279,7 @@ sv-SE:
     faktiska prestanda.
   objectives_small: campaign objectives
   revenue: Intäkter
-  revenue_label: Intäkter (kr)
+  revenue_label: Intäkter (%{currency})
   revenue_number: ! '%{value} intäkter'
   save_campaign: Spara kampanj
   start_date: Startdatum
@@ -362,7 +362,7 @@ sv-SE:
   closes_today: förväntas bli avslutad idag!
   closing_date: avslutningsdatum är %{value}
   create_opportunity: Skapa affär
-  currency: (kr)
+  currency: "kr"
   days_late: Försenad med
   days_left: Dagar kvar
   discount: Rabatt

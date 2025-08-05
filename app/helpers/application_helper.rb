@@ -170,6 +170,25 @@ module ApplicationHelper
     end
   end
 
+  # Format a phone number as a tel: hyperlink.
+  #----------------------------------------------------------------------------
+  def link_to_phone(number)
+    return nil if number.blank?
+
+    sanitized_number = number.gsub(/[^0-9+]/, '')
+    link_to number, "tel:#{sanitized_number}"
+  end
+
+  # Render a phone field with an optional pattern for international format.
+  #----------------------------------------------------------------------------
+  def phone_field_with_pattern(form, method, options = {})
+    if Setting.enforce_international_phone_format
+      options[:pattern] ||= '\+[0-9]{1,3}\s?[0-9]{1,14}'
+      options[:placeholder] ||= '+1 123 456 7890'
+    end
+    form.phone_field(method, options)
+  end
+
   #----------------------------------------------------------------------------
   def jumpbox(current)
     tabs = %i[campaigns accounts leads contacts opportunities]
@@ -248,7 +267,15 @@ module ApplicationHelper
   # Display web presence mini-icons for Contact or Lead.
   #----------------------------------------------------------------------------
   def web_presence_icons(person)
-    %i[blog linkedin facebook twitter skype].map do |site|
+    sites = []
+    icon_for_site = {
+      skype: "skype",
+      facebook: "facebook",
+      linkedin: "linkedin",
+      twitter: "twitter",
+      blog: "external-link"
+    }
+    %i[blog linkedin facebook twitter skype].each do |site|
       url = person.send(site)
       next if url.blank?
 
@@ -257,8 +284,19 @@ module ApplicationHelper
       else
         url = "http://" + url unless url.match?(%r{^https?://})
       end
-      link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
-    end.compact.join("\n").html_safe
+      sites << if icon_for_site[site]
+                 link_to(content_tag(:i, "", { class: "fa fa-#{icon_for_site[site]}" }), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
+               else
+                 link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
+               end
+    end
+
+    if person.is_a?(Contact)
+      sites << link_to(content_tag(:i, "", { class: "fa fa-address-card" }), contact_path(person, format: :vcf), title: "VCard")
+    elsif person.is_a?(Lead)
+      sites << link_to(content_tag(:i, "", { class: "fa fa-address-card" }), lead_path(person, format: :vcf), title: "VCard")
+    end
+    content_tag(:span, class: "web-presence-icons") { safe_join(sites, "\n") }
   end
 
   # Ajax helper to refresh current index page once the user selects an option.
@@ -319,7 +357,7 @@ module ApplicationHelper
 
   # Entities can have associated avatars or gravatars. Only calls Gravatar
   # in production env. Gravatar won't serve default images if they are not
-  # publically available: https://en.gravatar.com/site/implement/images
+  # public: https://en.gravatar.com/site/implement/images
   #----------------------------------------------------------------------------
   def avatar_for(model, args = {})
     args = { class: 'gravatar', size: :large }.merge(args)

@@ -20,14 +20,15 @@
         - unless @user.alt_email.blank?
           #{t :or} #{auto_link(@user.alt_email)}
       - if !@user.phone.blank? && !@user.mobile.blank?
-        %div #{t :phone}: <b>#{@user.phone}</b>, #{t :mobile}: <b>#{@user.mobile}</b>
+        %div
+          == #{t :phone}: <b>#{link_to_phone(@user.phone)}</b>, #{t :mobile}: <b>#{link_to_phone(@user.mobile)}</b>
       - else
         - if @user.phone.present?
-          = t(:phone) + ":"
-          = content_tag(:b, @user.phone)
+          %div
+            == #{t :phone}: <b>#{link_to_phone(@user.phone)}</b>
         - if @user.mobile.present?
-          = t(:mobile) + ":"
-          = content_tag(:b, @user.mobile)
+          %div
+            == #{t :mobile}: <b>#{link_to_phone(@user.mobile)}</b>
 
 - if Setting.per_user_locale
   %script= render "languages"

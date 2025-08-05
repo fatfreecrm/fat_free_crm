@@ -17,7 +17,7 @@
         %td= spacer
         %td
           .label #{t :phone}:
-          = f.text_field :phone
+          = phone_field_with_pattern(f, :phone)
 
       - if Setting.background_info && Setting.background_info.include?(:lead)
         %tr

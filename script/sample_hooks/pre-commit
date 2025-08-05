@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Stash unstaged changes
+git stash -q --keep-index
+
+rubocop_exit_code=0
+# Run rubocop on staged .rb files
+files=$(git diff --name-only --cached --diff-filter=AM | grep '\.rb$')
+if [ -n "$files" ]; then
+  echo "$files" | xargs bundle exec rubocop
+  rubocop_exit_code=$?
+fi
+
+codespell
+codespell_exit_code=$?
+
+# Unstash unstaged changes
+git stash pop -q
+
+if [ $rubocop_exit_code -ne 0 ] || [ $codespell_exit_code -ne 0 ] ; then
+  exit 1
+fi
+
+exit 0

@@ -26,7 +26,7 @@
 
     crm.flick('empty', 'remove');
 
-  - else # Inline [Create Task] form reqested from any of the core asset landing pages.
+  - else # Inline [Create Task] form requested from any of the core asset landing pages.
     $('#create_task_title').html('#{ j t(:tasks) }');
     - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
     $('#tasks').prepend('#{ j render(partial: "tasks/#{partial}", collection: [@task], locals: { bucket: nil }) }');
