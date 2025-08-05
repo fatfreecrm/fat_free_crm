@@ -341,7 +341,7 @@ et:
   actual: Aktuaalne
   actual_performance: Aktuaalne jõudlus
   budget: Eelarve
-  budget_label: Eelarve (€)
+  budget_label: Eelarve (%{currency})
   campaign: Kampaania
   campaign_and_leads: kampaania ja selle juhtlõngad
   campaign_small: kampaania
@@ -366,7 +366,7 @@ et:
     Need numbrid aitavad Sul jälgida tegelikku kampaania jõudlust.
   objectives_small: kampaania eesmärgid
   revenue: Tulu
-  revenue_label: Tulu (€)
+  revenue_label: Tulu (%{currency})
   revenue_number: ! '%{value} tulu'
   save_campaign: Salvesta kampaania
   start_date: Alguskuupäev
@@ -468,7 +468,7 @@ et:
   closes_today: lõppeb täna!
   closing_date: lõppkuupäev on %{value}
   create_opportunity: Loo väljavaade
-  currency: (€)
+  currency: "€"
   days_late: üle aja
   days_left: Päevi jäänud
   discount: Allahindlus

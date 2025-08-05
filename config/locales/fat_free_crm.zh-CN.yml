@@ -345,7 +345,7 @@ zh-CN:
   actual: 实际
   actual_performance: 实际效益
   budget: 预算
-  budget_label: 预算(￥)
+  budget_label: 预算(%{currency})
   campaign: 促销
   campaign_and_leads: 促销与领导
   campaign_small: 促销
@@ -371,7 +371,7 @@ zh-CN:
 
   objectives_small: 战役目标
   revenue: 收入
-  revenue_label: 收入(￥)
+  revenue_label: 收入(%{currency})
   revenue_number: 收入%{value}
   save_campaign: 保存促销
   start_date: 开始日期
@@ -475,7 +475,7 @@ zh-CN:
   closes_today: 预计今天结束!
   closing_date: 结束日期是 %{value}
   create_opportunity: 创建商机
-  currency: (￥)
+  currency: "￥"
   days_late: 晚了
   days_left: 天剩余
   discount: 折扣

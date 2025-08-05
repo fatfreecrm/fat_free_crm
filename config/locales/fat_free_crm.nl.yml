@@ -341,7 +341,7 @@ nl:
   actual: Werkelijk
   actual_performance: Werkelijke prestaties
   budget: Budget
-  budget_label: Budget (€)
+  budget_label: Budget (%{currency})
   campaign: Campagne
   campaign_and_leads: campagne en zijn leads
   campaign_small: campagne
@@ -366,7 +366,7 @@ nl:
     conversie ratio, doel opbrengst, en het campagne budget. Deze getallen worden gebruikt om het succes van de campange te berekenen.
   objectives_small: campange doelen
   revenue: Opbrengst
-  revenue_label: Opbrengst (€)
+  revenue_label: Opbrengst (%{currency})
   revenue_number: ! '%{value} in opbrengst'
   save_campaign: Bewaar Campagne
   start_date: Start datum
@@ -465,7 +465,7 @@ nl:
   closes_today: zal naar verwachting vandaag afronden!
   closing_date: sluitdatum is %{value}
   create_opportunity: Maak Kans
-  currency: (€)
+  currency: "€"
   days_late: Te laat met
   days_left: Dagen over
   discount: Korting

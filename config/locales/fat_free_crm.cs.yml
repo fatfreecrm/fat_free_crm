@@ -293,7 +293,7 @@ cs:
   actual: Aktuální
   actual_performance: Aktuální výkonnost
   budget: Rozpočet
-  budget_label: Ropočet (CZK)
+  budget_label: Ropočet (%{currency})
   campaign: Kampaň
   campaign_and_leads: Kampaň a potenciální klienti
   campaign_small: kampaň
@@ -317,7 +317,7 @@ cs:
     pomohou určit výkonost kampaně.
   objectives_small: cíle kampaně
   revenue: tržba
-  revenue_label: Tržba (CZK)
+  revenue_label: Tržba (%{currency})
   revenue_number: ! '%{value} tržba'
   save_campaign: Uložit kampaň
   start_date: Počáteční datum
@@ -396,7 +396,7 @@ cs:
   closes_today: Očekávané uzavření dnes!
   closing_date: datum uzavření je %{value}
   create_opportunity: Vytvořit příležitost
-  currency: (CZK)
+  currency: "CZK"
   days_late: Spoždění
   days_left: Zbývá dnů
   discount: Rabat
