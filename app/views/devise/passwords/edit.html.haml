@@ -1,6 +1,8 @@
-.standalone
-  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-    .title= t(:reset_password)
+.row.justify-content-center
+  .col-md-6
+    .standalone
+      = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+        .title= t(:reset_password)
 
     = f.error_messages object_name: t('password')
 

@@ -1,6 +1,8 @@
-.standalone
-  = simple_form_for(@user, html: one_submit_only) do |f|
-    .title_tools
+.row.justify-content-center
+  .col-md-6
+    .standalone
+      = simple_form_for(@user, html: one_submit_only) do |f|
+        .title_tools
       = t(:already_signed_up)
       = link_to t(:login_now_link), new_session_path(resource_name)
     .title= t(:sign_up)
