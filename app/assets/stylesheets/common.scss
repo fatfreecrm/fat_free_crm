@@ -393,10 +393,10 @@ $bg_color9: #FFDD4A;
     margin-top: 7px;
     margin-left: 4px;
     a {
-      font-size: 11px; } } }
+      font-size: 0.9em; } } }
 
 .comment textarea, textarea#comment_body {
-  font-size: 11px;
+  font-size: 0.9em;
   height: 110px;
   margin: 3px 0px 0px 0px;
   padding: 3px;
@@ -417,7 +417,7 @@ $bg_color9: #FFDD4A;
     color: black; }
   .body {
     display: inline;
-    font-size: 11px; }
+    font-size: 0.9em; }
   tt {
     font-size: 10px;
     color: #666666; }
@@ -446,7 +446,7 @@ $bg_color9: #FFDD4A;
 .confirm {
   background: #cdfecd;
   border-left: 10px palegreen solid;
-  font-size: 11px;
+  font-size: 0.9em;
   margin: 0px 0px 6px 0px;
   padding: 6px; }
 
