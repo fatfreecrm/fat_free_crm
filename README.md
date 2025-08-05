@@ -45,6 +45,8 @@ contact lists, and opportunity tracking.
   </tr>
 </table>
 
+Build out your data with *custom fields*, organise with *tags*, model your organisation's _groups_ and _teams_.
+
 Extend the core with [plugins for webhooks handling and sending, merging records, time tracking and more](https://github.com/fatfreecrm/fat_free_crm/wiki/Available-Plugins).
 
 Join a [large community](https://github.com/fatfreecrm/fat_free_crm/wiki/People-Using-Fat-Free-CRM) building on open source solutions.
