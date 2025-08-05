@@ -32,6 +32,7 @@ en-GB:
   admin_tab_tags: Tags
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
+  admin_tab_research_tools: Research Tools
   affiliate: Affiliate
   competitor: Competitor
   customer: Customer
@@ -83,6 +84,9 @@ en-GB:
   completed_last_week: Last week
   completed_this_month: This month
   completed_last_month: Last month
+  research_tools: Research Tools
+  research_tool_small: research tool
+  create_research_tool: Create Research Tool
 
   # Models/Activity.
   #----------------------------------------------------------------------------
