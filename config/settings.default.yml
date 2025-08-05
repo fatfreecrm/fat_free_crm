@@ -358,3 +358,11 @@ task_completed:
   - :completed_last_week
   - :completed_this_month
   - :completed_last_month
+
+# Phone Numbers
+#------------------------------------------------------------------------------
+# Enforce international phone number format (e.g. +1-555-555-5555)
+# When set to true, a 'pattern' attribute will be added to all phone input fields
+# to help guide users to enter phone numbers in international format.
+#
+:enforce_international_phone_format: false

@@ -22,14 +22,14 @@
           %td= spacer
           %td
             .label #{t :mobile}:
-            = f.phone_field :mobile
+            = phone_field_with_pattern(f, :mobile)
         %tr
           %td
             = render "shared/address", f: f, asset: @contact, type: 'business', title: :address
           %td= spacer
           %td
             .label #{t :fax}:
-            = f.text_field :fax
+            = phone_field_with_pattern(f, :fax)
             %div{style: "margin-top:6px"}
               .check_box
                 = f.check_box :do_not_call, {}, true

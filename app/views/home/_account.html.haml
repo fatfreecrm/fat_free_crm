@@ -20,7 +20,7 @@
       %dt
         = link_to(account.website, account.website.to_url) + " | " if account.website.present?
         = link_to_email(account.email) + " | " if account.email.present?
-        = t(:phone_small) + ": " + (account.toll_free_phone || account.phone) << " | " if account.toll_free_phone? || account.phone?
+        = (t(:phone_small) + ": ").html_safe + link_to_phone(account.toll_free_phone || account.phone) + " | ".html_safe if account.toll_free_phone? || account.phone?
         = t('pluralize.contact', account.contacts_count) + " | "
         = t('pluralize.opportunity', account.opportunities_count)
       - if account.tags.present?
