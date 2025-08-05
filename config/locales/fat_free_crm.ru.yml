@@ -352,7 +352,7 @@ ru:
   actual: Фактически
   actual_performance: Фактический Результат
   budget: Бюджет
-  budget_label: Бюджет (грн.)
+  budget_label: Бюджет (%{currency})
   campaign: Кампания
   campaign_and_leads: кампании и ее потенциальные клиенты
   campaign_small: кампании
@@ -379,7 +379,7 @@ ru:
     кампании.
   objectives_small: целях кампании
   revenue: Доход
-  revenue_label: Доход (грн.)
+  revenue_label: Доход (%{currency})
   revenue_number: ! '%{value} дохода'
   save_campaign: Сохранить Изменения
   start_date: Дата начала
@@ -482,7 +482,7 @@ ru:
   closes_today: завершение ожидается сегодня!
   closing_date: дата завершения %{value}
   create_opportunity: Создать возможность
-  currency: (грн.)
+  currency: "грн."
   days_late: Задержка
   days_left: Осталось дней
   discount: Скидка

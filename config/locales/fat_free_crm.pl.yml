@@ -264,7 +264,7 @@ pl:
   actual: Bieżące
   actual_performance: Bieżący postęp
   budget: Budżet
-  budget_label: Budżet (zł)
+  budget_label: Budżet (%{currency})
   campaign: Kampania
   campaign_and_leads: Kampania i jej leady
   campaign_small: kampania
@@ -288,7 +288,7 @@ pl:
     kampanii.
   objectives_small: cele kampanii
   revenue: Sprzedaż
-  revenue_label: Sprzedaż (zł)
+  revenue_label: Sprzedaż (%{currency})
   revenue_number: ! '%{value} sprzedaży'
   save_campaign: Zapisz kampanię
   start_date: Data rozpoczęcia
@@ -367,7 +367,7 @@ pl:
   closes_today: planowane zamknięcie - dziś!
   closing_date: ! 'data zamknięcia: %{value}'
   create_opportunity: Dodaj szansę
-  currency: (zł)
+  currency: "zł"
   days_late: Opóźniona o
   days_left: Pozostało dni
   discount: Rabat

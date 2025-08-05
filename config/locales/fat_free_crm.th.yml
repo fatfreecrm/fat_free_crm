@@ -259,7 +259,7 @@ th:
   actual: เกิดขึ้นจริง
   actual_performance: ประสิทธิที่เกิดขึ้นจริง
   budget: งบประมาณ
-  budget_label: งบประมาณ (฿)
+  budget_label: งบประมาณ (%{currency})
   campaign: แคมเปญ
   campaign_and_leads: แคมเปณ และผู้สนใจในแคมเปณ
   campaign_small: แคมเปญ
@@ -283,7 +283,7 @@ th:
     ของโครงการ
   objectives_small: เป้าหมายของแคมเปญ
   revenue: รายได้
-  revenue_label: รายได้ (฿)
+  revenue_label: รายได้ (%{currency})
   revenue_number: รายได้ %{value}
   save_campaign: บันทึกแคมเปญ
   start_date: วันเริ่มต้น
@@ -360,7 +360,7 @@ th:
   closes_today: คาดว่าจะปิดในวันนี้
   closing_date: วันที่ปิดคือ %{value}
   create_opportunity: สร้างโอกาสปิดการขาย
-  currency: (฿)
+  currency: "฿"
   days_late: ล่าช้าไป
   days_left: จำนวนวันที่เหลือ
   discount: ส่วนลด

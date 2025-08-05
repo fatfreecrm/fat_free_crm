@@ -336,7 +336,7 @@ ja:
   actual: 実際
   actual_performance: 実際結果
   budget: 予算
-  budget_label: 予算($)
+  budget_label: 予算(%{currency})
   campaign: キャンペーン
   campaign_and_leads: キャンペーンとリード
   campaign_small: キャンペーン
@@ -362,7 +362,7 @@ ja:
     これらの数字は、実際のキャンペーン結果をトラッキングします。
   objectives_small: キャンペーン目的
   revenue: 売上
-  revenue_label: 売上($)
+  revenue_label: 売上(%{currency})
   revenue_number: ! '%{value}の売上'
   save_campaign: キャンペーンを保存
   start_date: 開始日
@@ -473,7 +473,7 @@ ja:
   closes_today: 本日終了の見込み
   closing_date: 終了日は%{value}
   create_opportunity: 商談を作成
-  currency: (円)
+  currency: "円"
   days_late: 遅くて
   days_left: 残りの日
   discount: 値引き
