@@ -1,0 +1,6 @@
+= simple_form_for([:admin, @research_tool]) do |f|
+  = f.input :name
+  = f.input :url_template, as: :text
+  = f.input :enabled, as: :boolean
+  = f.submit t(:save)
+  = link_to_cancel(admin_research_tools_path)

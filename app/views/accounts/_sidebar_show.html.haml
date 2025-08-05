@@ -54,4 +54,6 @@
     %dt
       .tags= tags_for_index(@account)
 
+  = render "shared/research_tools", entity: @account
+
   = hook(:show_account_sidebar_bottom, self, account: @account)

@@ -1,0 +1,11 @@
+.row{ id: dom_id(research_tool) }
+  .name.ellipsis
+    = research_tool.name
+  .url.ellipsis
+    = research_tool.url_template
+  .enabled
+    = research_tool.enabled? ? t(:yes) : t(:no)
+  .tools
+    = link_to_edit(research_tool)
+    |
+    = link_to_delete(research_tool)
