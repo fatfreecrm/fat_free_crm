@@ -3,6 +3,12 @@
 - pipeline = @account.opportunities.pipeline.map(&:weighted_amount).compact.sum
 
 .panel#summary
+  - if @account.latitude.present? && @account.longitude.present?
+    %div
+      %b= link_to "View on Google Maps", "https://www.google.com/maps/search/?api=1&query=#{@account.latitude},#{@account.longitude}", target: "_blank"
+    %div
+      %b= link_to "geo:#{@account.latitude},#{@account.longitude}", "geo:#{@account.latitude},#{@account.longitude}"
+    #map{style: "width: 250px; height: 250px;"}
   - if @account.website
     %div
       %b= link_to(truncate(@account.website, length: 30), @account.website.to_url, :"data-popup" => true, title: t(:open_in_window, @account.website))
@@ -55,3 +61,11 @@
       .tags= tags_for_index(@account)
 
   = hook(:show_account_sidebar_bottom, self, account: @account)
+
+- if @account.latitude.present? && @account.longitude.present?
+  :javascript
+    var map = L.map('map').setView([#{@account.latitude}, #{@account.longitude}], 18);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    L.marker([#{@account.latitude}, #{@account.longitude}]).addTo(map);
