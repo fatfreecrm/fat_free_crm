@@ -15,8 +15,8 @@ module CommentsHelper
     fragment = Loofah.fragment(text)
     # Allow only a limited set of tags and attributes
     fragment.scrub!(Loofah::Scrubber.new do |node|
-      if %w(strong em p u a).include?(node.name)
-        node.attributes.each do |name, value|
+      if %w[strong em p u a].include?(node.name)
+        node.attributes.each_key do |name|
           node.remove_attribute(name) unless name == 'href'
         end
       else
