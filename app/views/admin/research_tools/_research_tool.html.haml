@@ -1,8 +1,5 @@
-.row{ id: dom_id(research_tool) }
-  .name.ellipsis
-    = research_tool.name
-  .url.ellipsis
-    = research_tool.url_template
+%li.highlight[research_tool]
+  = research_tool.name
   .tools
     = link_to_edit(research_tool, url: edit_admin_research_tool_path(research_tool))
     |

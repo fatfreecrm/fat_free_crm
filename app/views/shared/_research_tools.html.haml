@@ -1,8 +1,8 @@
-.panel.research-tools
-  .panel-heading
-    %h3= t(:research_tools)
-  .panel-body
-    %ul.list-group
-      - ResearchTool.where(enabled: true).each do |tool|
-        %li.list-group-item
+- tools = ResearchTool.all
+- if tools.any?
+  .research-tools
+    .caption= t(:research_tools)
+    %ul.list-inline
+      - tools.each do |tool|
+        %li.list-inline-item
           = link_to tool.name, expand_research_tool_url(tool, entity), target: "_blank"

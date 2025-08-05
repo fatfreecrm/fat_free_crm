@@ -1,0 +1,12 @@
+research_tool1:
+  name: "Google"
+  url_template: "https://www.google.com/search?q={name}"
+research_tool2:
+  name: "LinkedIn"
+  url_template: "https://www.linkedin.com/search/results/all/?keywords={name}"
+research_tool3:
+  name: "OpenCorporates"
+  url_template: "https://opencorporates.com/companies?q={name}"
+research_tool4:
+  name: "Australian Business Register"
+  url_template: "https://abr.business.gov.au/Search/ResultsActive?SearchText={name}"
