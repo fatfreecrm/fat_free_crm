@@ -177,7 +177,8 @@ class TasksController < ApplicationController
       :completed_at,
       :deleted_at,
       :background_info,
-      :calendar
+      :calendar,
+      *Task.fields.map(&:name)
     )
   end
 

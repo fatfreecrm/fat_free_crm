@@ -45,3 +45,8 @@
     - unless assigned.background_info.blank?
       %div
         %dt= h(assigned.background_info)
+
+    - if assigned.field_groups.present?
+      .custom_fields
+        - assigned.field_groups.each do |field_group|
+          = render partial: 'fields/group_view', locals: {f: assigned, field_group: field_group}
