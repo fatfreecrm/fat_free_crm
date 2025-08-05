@@ -19,7 +19,6 @@ module FatFreeCRM
 
       def admin
         tabs = Setting[:admin_tabs]&.dup || []
-        tabs << { text: :admin_tab_research_tools, icon: :fa_search, url: { controller: 'admin/research_tools' } }
         @@admin ||= tabs
       end
     end

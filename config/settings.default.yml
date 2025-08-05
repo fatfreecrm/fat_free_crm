@@ -263,7 +263,7 @@
     :controller: admin/tags
 - :active: false
   :text: :admin_tab_research_tools
-  :icon: :fa-plus-circle
+  :icon: :fa_search
   :url:
     :controller: admin/research_tools
 #- :active: false
