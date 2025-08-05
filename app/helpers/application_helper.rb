@@ -573,7 +573,7 @@ module ApplicationHelper
   def expand_research_tool_url(tool, entity)
     template = Addressable::Template.new(tool.url_template)
     mappings = {}
-    template.keys.each do |key|
+    template.each_key do |key|
       mappings[key] = entity.send(key) if entity.respond_to?(key)
     end
     template.expand(mappings).to_s

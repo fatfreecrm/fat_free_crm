@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateResearchTools < ActiveRecord::Migration[6.1]
   def change
     create_table :research_tools do |t|

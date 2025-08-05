@@ -1,4 +1,6 @@
-puts "Seeding Research Tools..."
+# frozen_string_literal: true
+
+Rails.logger.debug "Seeding Research Tools..."
 
 ResearchTool.find_or_create_by!(name: "Google") do |tool|
   tool.url_template = "https://www.google.com/search?q={name}"
@@ -20,4 +22,4 @@ ResearchTool.find_or_create_by!(name: "Australian Business Register") do |tool|
   tool.enabled = true
 end
 
-puts "Seeding Research Tools complete."
+Rails.logger.debug "Seeding Research Tools complete."

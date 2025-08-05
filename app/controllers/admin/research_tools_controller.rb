@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::ResearchToolsController < Admin::ApplicationController
   before_action :setup_current_tab, only: %i[index]
 
