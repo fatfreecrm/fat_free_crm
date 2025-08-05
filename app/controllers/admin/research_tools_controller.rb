@@ -3,7 +3,7 @@
 class Admin::ResearchToolsController < Admin::ApplicationController
   before_action :setup_current_tab, only: %i[index]
 
-  load_and_authorize_resource
+  load_resource
 
   def index
     @research_tools = ResearchTool.all
