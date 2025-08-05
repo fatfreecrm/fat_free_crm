@@ -6,7 +6,7 @@
       = hidden_field_tag "comment[user_id]", current_user.id
       = hidden_field_tag "comment[commentable_id]", commentable.id
       = hidden_field_tag "comment[commentable_type]", class_name.capitalize
-      = f.text_area :comment
+      = f.trix_editor :comment
       %div{style: "padding:6px 0px 0px 40px;"}
         = f.submit t :edit_note
         #{t :or}

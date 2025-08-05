@@ -10,4 +10,26 @@ module CommentsHelper
     config = Setting.email_comment_replies || {}
     config[:server].present? && config[:user].present? && config[:password].present?
   end
+
+  def sanitize_comment(text)
+    fragment = Loofah.fragment(text)
+    # Allow only a limited set of tags and attributes
+    fragment.scrub!(Loofah::Scrubber.new do |node|
+      if %w(strong em p u a).include?(node.name)
+        node.attributes.each do |name, value|
+          node.remove_attribute(name) unless name == 'href'
+        end
+      else
+        node.remove
+      end
+    end)
+
+    # Add target and rel to links
+    fragment.xpath('.//a').each do |link|
+      link['rel'] = 'noopener'
+      link['target'] = '_blank'
+    end
+
+    fragment.to_s.html_safe
+  end
 end
