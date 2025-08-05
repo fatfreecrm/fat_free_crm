@@ -2,13 +2,7 @@
 - lost = @account.opportunities.lost.map(&:amount).compact.sum
 - pipeline = @account.opportunities.pipeline.map(&:weighted_amount).compact.sum
 
-.panel#summary
-  - if @account.latitude.present? && @account.longitude.present?
-    %div
-      %b= link_to "View on Google Maps", "https://www.google.com/maps/search/?api=1&query=#{@account.latitude},#{@account.longitude}", target: "_blank"
-    %div
-      %b= link_to "geo:#{@account.latitude},#{@account.longitude}", "geo:#{@account.latitude},#{@account.longitude}"
-    #map{style: "width: 250px; height: 250px;"}
+.panel.row#summary
   - if @account.website
     %div
       %b= link_to(truncate(@account.website, length: 30), @account.website.to_url, :"data-popup" => true, title: t(:open_in_window, @account.website))
@@ -26,8 +20,18 @@
     - if @account.fax
       #{t :fax}: <b>#{@account.fax}</b><br />
 
-  %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address
-  %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address
+    %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address
+    %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address
+
+
+  - if @account.latitude.present? && @account.longitude.present?
+    #map{style: "width: 100%; height: 150px;"}
+
+    %p.text-end
+      %small
+        %b= link_to "Google Maps", "https://www.google.com/maps/search/?api=1&query=#{@account.latitude},#{@account.longitude}", target: "_blank"
+        |
+        %b= link_to "Other", "geo:#{@account.latitude},#{@account.longitude}"
 
   .caption #{t :account_summary}
   %dl
