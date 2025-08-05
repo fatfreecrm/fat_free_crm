@@ -54,7 +54,6 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
-    @account = Account.new(account_params)
     respond_with(@account) do |_format|
       if @account.save
         @account.add_comment_by_user(@comment_body, current_user)
@@ -72,7 +71,7 @@ class AccountsController < EntitiesController
     respond_with(@account) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @account.access = params[:account][:access] if params[:account][:access]
-      get_data_for_sidebar if @account.update(account_params)
+      get_data_for_sidebar if @account.update(resource_params)
     end
   end
 
