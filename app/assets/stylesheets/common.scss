@@ -304,7 +304,6 @@ $bg_color9: #FFDD4A;
 .amount {
   background: palegreen;
   color: black;
-  font-size: 11px;
   text-align: center;
   padding: 0px 3px 0px 3px;
   -moz-border-radius: {
@@ -322,7 +321,7 @@ $bg_color9: #FFDD4A;
   background: gainsboro;
   color: black;
   float: left;
-  font-size: 11px;
+  font-size: 0.85em;
   margin: 0px 6px 0px 0px;
   padding: 1px 4px 1px 3px;
   text-align: right;
@@ -372,7 +371,7 @@ $bg_color9: #FFDD4A;
   input[type=text] {
     border: 1px #cfcfcf solid;
     color: grey;
-    font-size: 11px;
+    font-size: 0.9em;
     margin: 3px 0px 0px 0px;
     padding: 3px;
     width: 500px; }
@@ -381,7 +380,7 @@ $bg_color9: #FFDD4A;
     margin: 3px 10px 3px 3px; }
   .body {
     display: inline;
-    font-size: 11px; }
+    font-size: 0.9em; }
   tt {
     font-size: 10px;
     color: #666666; }
