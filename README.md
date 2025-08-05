@@ -6,7 +6,7 @@
 
 [crm-wiki]: http://en.wikipedia.org/wiki/Customer_relationship_management
 
-<img width="1918" height="1047" alt="image" src="https://github.com/user-attachments/assets/a18c9aa4-3195-4b1a-898a-7970efddbdc6" />
+<img width="100%" alt="image" src="https://github.com/fatfreecrm/fatfreecrm.github.com/raw/master/images/dashboard.png" />
 
 
 Out of the box it features group collaboration, campaign and lead management,
