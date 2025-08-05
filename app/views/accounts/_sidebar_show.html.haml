@@ -20,8 +20,18 @@
     - if @account.fax
       == #{t :fax}: <b>#{link_to_phone(@account.fax)}</b><br />
 
-  %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address
-  %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address
+    %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address
+    %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address
+
+
+  - if @account.latitude.present? && @account.longitude.present?
+    #map{style: "width: 100%; height: 150px;"}
+
+    %p.text-end
+      %small
+        %b= link_to "Google Maps", "https://www.google.com/maps/search/?api=1&query=#{@account.latitude},#{@account.longitude}", target: "_blank"
+        |
+        %b= link_to "Other", "geo:#{@account.latitude},#{@account.longitude}"
 
   .caption #{t :account_summary}
   %dl
@@ -55,3 +65,11 @@
       .tags= tags_for_index(@account)
 
   = hook(:show_account_sidebar_bottom, self, account: @account)
+
+- if @account.latitude.present? && @account.longitude.present?
+  :javascript
+    var map = L.map('map').setView([#{@account.latitude}, #{@account.longitude}], 18);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    L.marker([#{@account.latitude}, #{@account.longitude}]).addTo(map);

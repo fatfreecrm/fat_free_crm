@@ -31,6 +31,14 @@
           = f.email_field :email
       %tr
         %td
+          .label.top Latitude:
+          = f.text_field :latitude, pattern: "^-?\\d+(\\.\\d+)?$"
+        %td= spacer
+        %td
+          .label.top Longitude:
+          = f.text_field :longitude, pattern: "^-?\\d+(\\.\\d+)?$"
+      %tr
+        %td
           = render "shared/address", f: f, asset: @account, type: :billing, title: :billing_address
         %td= spacer
         %td
