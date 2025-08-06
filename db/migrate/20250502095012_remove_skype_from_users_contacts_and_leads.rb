@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveSkypeFromUsersContactsAndLeads < ActiveRecord::Migration[6.0]
   def self.up
     remove_column :users, :skype

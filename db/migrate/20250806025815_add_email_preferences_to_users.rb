@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddEmailPreferencesToUsers < ActiveRecord::Migration[5.2]
   def change
     add_column :users, :subscribe_to_comment_replies, :boolean, default: true, null: false
