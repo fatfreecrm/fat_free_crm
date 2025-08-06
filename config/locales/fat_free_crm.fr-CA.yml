@@ -218,7 +218,7 @@ fr-CA:
   google: Google IM
   gravatar_help: Vous ne connaissez pas Gravatar? Informations sur Gravatar
   image_file: Fichier image
-  image_help: L'image que vous envoyez sera redimensionnée à 75 x 75 pixels. Les formats
+  image_help: L'image que vous envoyez sera redimensionnée à 180 x 180 pixels. Les formats
     supportés sont GIF, JPEG et PNG.
   job_title: Titre/Fonction
   last_name: Nom

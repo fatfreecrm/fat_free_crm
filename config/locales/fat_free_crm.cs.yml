@@ -236,7 +236,7 @@ cs:
   google: Google IM
   gravatar_help: Neznáte Gravatars? Více o Gravatars
   image_file: Soubor obráku
-  image_help: Obrázek který nahrajete bude automaticky převeden na velikost 75 x 75
+  image_help: Obrázek který nahrajete bude automaticky převeden na velikost 180 x 180
     pixelů. Podporované formáty jsou GIF, JPG, and PNG.
   job_title: Popis
   last_name: Příjmení

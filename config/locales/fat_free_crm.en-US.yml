@@ -275,7 +275,7 @@ en-US:
   google: Google IM
   gravatar_help: Not familiar with Gravatars? Learn about Gravatars
   image_file: Image file
-  image_help: The image will be resized to 180x180 pixels. Supported formats: PNG, JPG, GIF.
+  image_help: The image will be resized to 180x180 pixels. Supported formats - PNG, JPG, GIF.
   job_title: Title
   last_name: Last name
   login_now_link: Login Now!

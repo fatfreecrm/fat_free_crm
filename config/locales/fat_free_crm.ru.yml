@@ -278,7 +278,7 @@ ru:
   google: Google IM
   gravatar_help: Не знаете что такое Gravatar? Почитать про Gravatar
   image_file: Файл с Изображением
-  image_help: ! 'Размер изображения будет автоматически изменен на 75 x 75 пикселей. Поддерживаются форматы: GIF, JPG и PNG.'
+  image_help: ! 'Размер изображения будет автоматически изменен на 180 x 180 пикселей. Поддерживаются форматы: GIF, JPG и PNG.'
   job_title: Должность
   last_name: Фамилия
   login_now_link: Войти!

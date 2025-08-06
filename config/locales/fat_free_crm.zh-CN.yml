@@ -271,7 +271,7 @@ zh-CN:
   google: Google IM
   gravatar_help: 不熟悉 Gravatars? 了解 Gravatars
   image_file: 图片文件
-  image_help: 你上传的图片将会被自动改为 75 x 75 像素，支持 GIF, JPG, 和 PNG.
+  image_help: 你上传的图片将会被自动改为 180 x 180 像素，支持 GIF, JPG, 和 PNG.
 
   job_title: 职位
   last_name: 姓

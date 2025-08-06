@@ -202,7 +202,7 @@ sv-SE:
   gravatar_help: Känner du inte till Gravatars? Lär dig om Gravatars
   image_file: Bildfil
   image_help: Bildfilen som du laddar upp kommer automatiskt att ändras till storlek
-    75 x 75 pixlar. Godkända format är GIF, JPG och PNG.
+    180 x 180 pixlar. Godkända format är GIF, JPG och PNG.
   job_title: Titel
   last_name: Efternamn
   login_now_link: Logga in nu!

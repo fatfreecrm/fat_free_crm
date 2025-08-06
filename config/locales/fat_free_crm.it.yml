@@ -212,7 +212,7 @@ it:
   google: Google IM
   gravatar_help: Non conosci Gravatars? Acquisisci informazioni riguardo Gravatars
   image_file: File immagine
-  image_help: Il file immagine che hai caricato sara' ridimensionato a 75 x 75 pixels.
+  image_help: Il file immagine che hai caricato sara' ridimensionato a 180 x 180 pixels.
     Formati supportati sono GIF, JPG e PNG.
   job_title: Titolo
   last_name: Cognome

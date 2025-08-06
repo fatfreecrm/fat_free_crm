@@ -405,7 +405,7 @@ de:
   option_revenue: aktueller Umsatz
   total_opportunities: Anzahl Chancen
   mobile: Mobiltelefon
-  image_help: Das hochgeladene Bild wird automatisch auf eine Größe von 75 x 75 Pixels
+  image_help: Das hochgeladene Bild wird automatisch auf eine Größe von 180 x 180 Pixels
     berechnet. Unterstützte Formate sind GIF, JPG, und PNG.
   view_pending_tasks: ausstehende Aufgaben anzeigen
   about_features: Features und Fehler
