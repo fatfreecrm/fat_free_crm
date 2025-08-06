@@ -144,7 +144,6 @@ class UsersController < ApplicationController
       :aim,
       :yahoo,
       :google,
-      :skype,
       :subscribe_to_comment_replies,
       :receive_assigned_notifications
     )

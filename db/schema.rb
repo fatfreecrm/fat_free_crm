@@ -206,7 +206,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "background_info"
-    t.string "skype", limit: 128
     t.text "subscribed_users"
     t.index ["assigned_to"], name: "index_contacts_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
@@ -311,7 +310,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "background_info"
-    t.string "skype", limit: 128
     t.text "subscribed_users"
     t.index ["assigned_to"], name: "index_leads_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "index_leads_on_user_id_and_last_name_and_deleted_at", unique: true
@@ -437,7 +435,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
     t.string "aim", limit: 32
     t.string "yahoo", limit: 32
     t.string "google", limit: 32
-    t.string "skype", limit: 32
     t.string "encrypted_password", default: "", null: false
     t.string "password_salt", default: "", null: false
     t.datetime "last_sign_in_at", precision: nil
