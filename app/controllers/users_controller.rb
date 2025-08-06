@@ -143,8 +143,7 @@ class UsersController < ApplicationController
       :mobile,
       :aim,
       :yahoo,
-      :google,
-      :skype
+      :google
     )
   end
 

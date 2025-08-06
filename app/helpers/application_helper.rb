@@ -269,21 +269,16 @@ module ApplicationHelper
   def web_presence_icons(person)
     sites = []
     icon_for_site = {
-      skype: "skype",
       facebook: "facebook",
       linkedin: "linkedin",
       twitter: "twitter",
       blog: "external-link"
     }
-    %i[blog linkedin facebook twitter skype].each do |site|
+    %i[blog linkedin facebook twitter].each do |site|
       url = person.send(site)
       next if url.blank?
 
-      if site == :skype
-        url = "callto:" + url
-      else
-        url = "http://" + url unless url.match?(%r{^https?://})
-      end
+      url = "http://" + url unless url.match?(%r{^https?://})
       sites << if icon_for_site[site]
                  link_to(content_tag(:i, "", { class: "fa fa-#{icon_for_site[site]}" }), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
                else
