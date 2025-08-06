@@ -16,6 +16,7 @@ class CreateUsers < ActiveRecord::Migration[4.2]
       t.string :aim,              limit: 32
       t.string :yahoo,            limit: 32
       t.string :google,           limit: 32
+      t.string :skype,             limit: 32
       # >>> The following fields are required and maintained by [authlogic] plugin.
       t.string :password_hash,    null: false, default: ""
       t.string :password_salt,    null: false, default: ""
