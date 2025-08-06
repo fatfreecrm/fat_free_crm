@@ -260,6 +260,8 @@ en-US:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
+  subscribe_to_comment_replies: "Subscribe to comment replies by email"
+  receive_assigned_notifications: "Receive assigned notifications by email"
   aim: AOL IM
   already_signed_up: Already signed up?
   alt_email: Alternative email
@@ -286,6 +288,7 @@ en-US:
   phone: Phone
   profile: Profile
   profile_language: Language
+  email_notifications: Email Notifications
   save_profile: Save Profile
   sign_up: Sign Up
   sign_up_button: Sign Up
