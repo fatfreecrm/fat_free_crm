@@ -263,7 +263,7 @@ ja:
   google: Google IM
   gravatar_help: Gravatarとは？
   image_file: 画像ファイル
-  image_help: アップロードされた画像ファイルは自動的に 75 x 75 ピクセルの大きさに調整されます。対応フォーマットは GIF, JPG, PNG
+  image_help: アップロードされた画像ファイルは自動的に 180 x 180 ピクセルの大きさに調整されます。対応フォーマットは GIF, JPG, PNG
   job_title: 役職
   last_name: 姓
   login_now_link: 今すぐログイン！

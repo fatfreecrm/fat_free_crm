@@ -338,7 +338,7 @@ module ApplicationHelper
     raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});" unless session[:timezone_offset]
   end
 
-  STYLES = { large: "75x75#", medium: "50x50#", small: "25x25#", thumb: "16x16#" }.freeze
+  STYLES = { large: "180x180#", medium: "50x50#", small: "25x25#", thumb: "16x16#" }.freeze
 
   # Convert STYLE symbols to 'w x h' format for Gravatar and Rails
   # e.g. size_from_style(:size => :large) -> '75x75'
@@ -365,10 +365,10 @@ module ApplicationHelper
     if model.respond_to?(:avatar) && model.avatar.present?
       size = args[:size].split('x').map(&:to_i) # convert '75x75' into [75, 75]
 
-      image_tag model.avatar.image.variant(resize_to_limit: size)
+      image_tag model.avatar.image.variant(resize_to_limit: size), args
     else
       gravatar_image_tag(model.email, args)
-        end
+    end
   end
 
   # Returns default permissions intro.
@@ -473,7 +473,7 @@ module ApplicationHelper
                     link_to_email(fmt_value)
                   else
                     fmt_value.gsub(%r{((http|ftp|https)://[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/\+#]*[\w\-\@?^=%&amp;/\+#])?)}, "<a href=\"\\1\">\\1</a>")
-      end
+                  end
       out << content_tag(:td, fmt_value, class: last_class)
     end
     out
@@ -511,7 +511,7 @@ module ApplicationHelper
                     "#{h view.name}-button active"
                   else
                     "#{h view.name}-button"
-          end
+                  end
         lis << content_tag(:li) do
           url = show_or_index_action == "index" ? send("redraw_#{controller.controller_name}_path") : send("#{controller.controller_name.singularize}_path")
           link_to('#', title: t(view.name, default: h(view.title)), "data-view": h(view.name), "data-url": h(url), "data-context": show_or_index_action, class: classes) do

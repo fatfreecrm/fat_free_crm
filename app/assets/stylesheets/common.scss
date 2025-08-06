@@ -78,6 +78,11 @@ $sidebar_width: 210px;
   margin: auto;
   width: 480px; }
 
+.gravatar {
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 1px #aaa
+}
+
 .standalone {
   background: whitesmoke;
   border: 20px lightsteelblue solid;
@@ -338,7 +343,7 @@ $bg_color9: #FFDD4A;
   margin-left: 88px; }
 
 .indentslim {
-  margin-left: 38px; }
+  margin-left: 4em; }
 
 .indentwide {
   margin-left: 106px; }
@@ -376,7 +381,8 @@ $bg_color9: #FFDD4A;
     width: 500px; }
   .gravatar {
     float: left;
-    margin: 3px 10px 3px 3px; }
+    margin: 3px 10px 3px 3px;
+  }
   .body {
     display: inline;
     font-size: 0.9em; }
@@ -483,7 +489,7 @@ $bg_color9: #FFDD4A;
     padding: 6px 0px 6px 0px;
     .gravatar {
       float: left;
-      padding: 0px 8px 0px 0px; }
+      margin: 0 0.5em ; }
     tt {
       color: dimgray;
     }

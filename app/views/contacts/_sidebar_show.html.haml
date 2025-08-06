@@ -1,5 +1,5 @@
 .panel#summary
-  %span{style: "float:right"}= avatar_for(@contact, size: "50x50")
+  %span{style: "float:right"}= avatar_for(@contact, size: "180x180")
   = account_with_title_and_department(@contact)
 
   %div= render "shared/address_show", asset: @contact, type: 'business', title: :address
