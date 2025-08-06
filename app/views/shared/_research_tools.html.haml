@@ -1,0 +1,8 @@
+- tools = ResearchTool.all
+- if tools.any?
+  .research-tools
+    .caption= t(:research_tools)
+    %ul.list-inline
+      - tools.each do |tool|
+        %li.list-inline-item
+          = link_to tool.name, expand_research_tool_url(tool, entity), target: "_blank"

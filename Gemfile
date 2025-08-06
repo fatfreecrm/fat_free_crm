@@ -125,3 +125,5 @@ gem 'base64'
 
 # Workaround problems from concurrent-ruby 1.3.5
 require "logger"
+
+gem "addressable", "~> 2.8"

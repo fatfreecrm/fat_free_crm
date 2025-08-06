@@ -1,0 +1,8 @@
+%li.highlight[research_tool]
+  = research_tool.name
+  .tools
+    = link_to_edit(research_tool, url: edit_admin_research_tool_path(research_tool))
+    |
+    = link_to_delete(research_tool, url: admin_research_tool_path(research_tool),
+      data: { confirm: t(:are_you_sure) },
+      method: :delete)
