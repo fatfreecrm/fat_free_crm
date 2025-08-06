@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -48,7 +48,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
     t.text "subscribed_users"
     t.integer "contacts_count", default: 0
     t.integer "opportunities_count", default: 0
-    t.string "wikidata_id"
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
     t.index ["assigned_to"], name: "index_accounts_on_assigned_to"
@@ -369,14 +368,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
     t.index ["user_id", "name"], name: "index_preferences_on_user_id_and_name"
   end
 
-  create_table "research_tools", force: :cascade do |t|
-    t.string "name"
-    t.string "url_template"
-    t.boolean "enabled", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -468,6 +459,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
     t.string "confirmation_token", limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.boolean "subscribe_to_comment_replies", default: true, null: false
+    t.boolean "receive_assigned_notifications", default: true, null: false
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
