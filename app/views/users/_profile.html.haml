@@ -58,6 +58,17 @@
             .label #{t :skype}:
             = f.text_field :skype, style: "width:112px"
 
+    .subtitle #{t :email_notifications}
+    .section
+      %table
+        %tr
+          %td
+            = f.check_box :subscribe_to_comment_replies
+            = f.label :subscribe_to_comment_replies, t(:subscribe_to_comment_replies), class: 'check_box'
+        %tr
+          %td
+            = f.check_box :receive_assigned_notifications
+            = f.label :receive_assigned_notifications, t(:receive_assigned_notifications), class: 'check_box'
     .buttonbar
       = f.submit t :save_profile
       #{t :or}
