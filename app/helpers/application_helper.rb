@@ -362,7 +362,6 @@ module ApplicationHelper
   def avatar_for(model, args = {})
     args = { class: 'gravatar', size: :large }.merge(args)
     args = size_from_style!(args)
-    args[:style] = "clip-path: circle(#{args[:size].split('x')[0].to_i / 2}px at center);"
     if model.respond_to?(:avatar) && model.avatar.present?
       size = args[:size].split('x').map(&:to_i) # convert '75x75' into [75, 75]
 
