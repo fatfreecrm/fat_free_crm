@@ -18,7 +18,7 @@ namespace :ffcrm do
       end
 
       puts "Fetching avatars for users..."
-      User.all.each do |user|
+      User.find_each do |user|
         avatar = user.avatar || user.build_avatar
         begin
           downloaded_image = URI.open("https://i.pravatar.cc/180")

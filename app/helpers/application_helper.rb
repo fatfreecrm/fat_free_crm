@@ -368,7 +368,7 @@ module ApplicationHelper
       image_tag model.avatar.image.variant(resize_to_limit: size)
     else
       gravatar_image_tag(model.email, args)
-        end
+    end
   end
 
   # Returns default permissions intro.
@@ -473,7 +473,7 @@ module ApplicationHelper
                     link_to_email(fmt_value)
                   else
                     fmt_value.gsub(%r{((http|ftp|https)://[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/\+#]*[\w\-\@?^=%&amp;/\+#])?)}, "<a href=\"\\1\">\\1</a>")
-      end
+                  end
       out << content_tag(:td, fmt_value, class: last_class)
     end
     out
@@ -511,7 +511,7 @@ module ApplicationHelper
                     "#{h view.name}-button active"
                   else
                     "#{h view.name}-button"
-          end
+                  end
         lis << content_tag(:li) do
           url = show_or_index_action == "index" ? send("redraw_#{controller.controller_name}_path") : send("#{controller.controller_name.singularize}_path")
           link_to('#', title: t(view.name, default: h(view.title)), "data-view": h(view.name), "data-url": h(url), "data-context": show_or_index_action, class: classes) do
