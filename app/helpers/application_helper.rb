@@ -365,7 +365,7 @@ module ApplicationHelper
     if model.respond_to?(:avatar) && model.avatar.present?
       size = args[:size].split('x').map(&:to_i) # convert '75x75' into [75, 75]
 
-      image_tag model.avatar.image.variant(resize_to_limit: size)
+      image_tag model.avatar.image.variant(resize_to_limit: size), args
     else
       gravatar_image_tag(model.email, args)
     end

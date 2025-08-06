@@ -8,6 +8,7 @@ cp script/sample_hooks/pre-commit/ .git/hooks/
 
 sudo apt-get update
 
+sudo apt install -y libvips
 sudo apt install -y libpq-dev # Not strictly needed, but easier than explaining to users to constantly pass DB=sqlite
 sudo apt install -y firefox 
 sudo apt install -y codespell
