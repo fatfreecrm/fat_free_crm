@@ -35,7 +35,6 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  background_info :string(255)
-#  background_info :string(255)
 #
 
 class Contact < ActiveRecord::Base
