@@ -25,6 +25,7 @@ class Avatar < ActiveRecord::Base
   belongs_to :entity, polymorphic: true
 
   has_one_attached :image
+  validates :image, content_type: ['image/png', 'image/jpeg', 'image/gif']
 
   ActiveSupport.run_load_hooks(:fat_free_crm_avatar, self)
 end

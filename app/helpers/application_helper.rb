@@ -338,7 +338,7 @@ module ApplicationHelper
     raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});" unless session[:timezone_offset]
   end
 
-  STYLES = { large: "75x75#", medium: "50x50#", small: "25x25#", thumb: "16x16#" }.freeze
+  STYLES = { large: "180x180#", medium: "50x50#", small: "25x25#", thumb: "16x16#" }.freeze
 
   # Convert STYLE symbols to 'w x h' format for Gravatar and Rails
   # e.g. size_from_style(:size => :large) -> '75x75'
