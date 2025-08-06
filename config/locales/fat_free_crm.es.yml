@@ -266,7 +266,7 @@ es:
   google: Google IM
   gravatar_help: ¿No conoces Gravatars? más sobre Gravatars
   image_file: Archivo de imagen
-  image_help: El archivo de image subido se redimensionara automaticamente a 75 x 75 pixeles.
+  image_help: El archivo de image subido se redimensionara automaticamente a 180 x 180 pixeles.
     Los formatos soportados son GIF, JPG and PNG.
   job_title: Titulo
   last_name: Apellido
@@ -282,7 +282,6 @@ es:
   save_profile: Guardar Perfil
   sign_up: Darse de Alta
   sign_up_button: Date de Alta
-  skype: Skype
   upload_picture: Subir Foto
   use_gravatar: Usar Gravatar
   user: Usuario

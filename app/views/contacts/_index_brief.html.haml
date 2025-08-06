@@ -1,5 +1,5 @@
 %li.highlight[contact]
-  = avatar_for(contact, size: "16x16")
+  = avatar_for(contact, size: "20x20")
 
   %ul.tools
     = hook(:contact_tools_before, self, contact: contact)
@@ -13,7 +13,7 @@
     - if can?(:destroy, contact)
       %li= link_to_delete(contact)
 
-  .indentslim
+  %div
     = link_to_if can?(:read, contact), contact.full_name(current_user.preference[:contacts_naming]), contact
     %tt
       = brief_account_info(contact)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -206,7 +206,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "background_info"
-    t.string "skype", limit: 128
     t.text "subscribed_users"
     t.index ["assigned_to"], name: "index_contacts_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
@@ -311,7 +310,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "background_info"
-    t.string "skype", limit: 128
     t.text "subscribed_users"
     t.index ["assigned_to"], name: "index_leads_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "index_leads_on_user_id_and_last_name_and_deleted_at", unique: true
@@ -366,14 +364,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["user_id", "name"], name: "index_preferences_on_user_id_and_name"
-  end
-
-  create_table "research_tools", force: :cascade do |t|
-    t.string "name"
-    t.string "url_template"
-    t.boolean "enabled", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -445,7 +435,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
     t.string "aim", limit: 32
     t.string "yahoo", limit: 32
     t.string "google", limit: 32
-    t.string "skype", limit: 32
     t.string "encrypted_password", default: "", null: false
     t.string "password_salt", default: "", null: false
     t.datetime "last_sign_in_at", precision: nil
@@ -467,6 +456,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_093408) do
     t.string "confirmation_token", limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.boolean "subscribe_to_comment_replies", default: true, null: false
+    t.boolean "receive_assigned_notifications", default: true, null: false
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"

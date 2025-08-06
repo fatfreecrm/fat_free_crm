@@ -264,6 +264,8 @@ en-US:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
+  subscribe_to_comment_replies: "Subscribe to comment replies by email"
+  receive_assigned_notifications: "Receive assigned notifications by email"
   aim: AOL IM
   already_signed_up: Already signed up?
   alt_email: Alternative email
@@ -277,8 +279,7 @@ en-US:
   google: Google IM
   gravatar_help: Not familiar with Gravatars? Learn about Gravatars
   image_file: Image file
-  image_help: The image file you upload will be automatically resized to 75 x 75 pixels.
-    Supported formats are GIF, JPG, and PNG.
+  image_help: The image will be resized to 180x180 pixels. Supported formats - PNG, JPG, GIF.
   job_title: Title
   last_name: Last name
   login_now_link: Login Now!
@@ -290,10 +291,10 @@ en-US:
   phone: Phone
   profile: Profile
   profile_language: Language
+  email_notifications: Email Notifications
   save_profile: Save Profile
   sign_up: Sign Up
   sign_up_button: Sign Up
-  skype: Skype
   upload_picture: Upload Picture
   use_gravatar: Use Gravatar
   user: User

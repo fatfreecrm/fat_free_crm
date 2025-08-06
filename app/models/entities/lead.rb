@@ -35,7 +35,6 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  background_info :string(255)
-#  skype           :string(128)
 #
 
 class Lead < ActiveRecord::Base

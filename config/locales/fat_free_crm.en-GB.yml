@@ -277,7 +277,7 @@ en-GB:
   google: Google IM
   gravatar_help: Not familiar with Gravatars? Learn about Gravatars
   image_file: Image file
-  image_help: The image file you upload will be automatically resized to 75 x 75 pixels.
+  image_help: The image file you upload will be automatically resized to 180 x 180 pixels.
     Supported formats are GIF, JPG, and PNG.
   job_title: Title
   last_name: Last name
@@ -290,10 +290,10 @@ en-GB:
   phone: Phone
   profile: Profile
   profile_language: Language
+  email_notifications: Email Notifications
   save_profile: Save Profile
   sign_up: Sign Up
   sign_up_button: Sign Up
-  skype: Skype
   upload_picture: Upload Picture
   use_gravatar: Use Gravatar
   user: User

@@ -5,6 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
+require 'open-uri'
+
 namespace :ffcrm do
   namespace :demo do
     desc "Load demo data"
@@ -14,6 +16,19 @@ namespace :ffcrm do
       Dir.glob(FatFreeCRM.root.join('db', 'demo', '*.{yml,csv}')).each do |fixture_file|
         ActiveRecord::FixtureSet.create_fixtures(FatFreeCRM.root.join('db/demo'), File.basename(fixture_file, '.*'))
       end
+
+      puts "Fetching avatars for users..."
+      User.find_each do |user|
+        avatar = user.avatar || user.build_avatar
+        begin
+          downloaded_image = URI.open("https://i.pravatar.cc/180")
+          avatar.image.attach(io: downloaded_image, filename: "avatar.jpg")
+          print "."
+        rescue OpenURI::HTTPError => e
+          puts "Error fetching avatar for #{user.email}: #{e.message}"
+        end
+      end
+      puts
 
       def create_version(options)
         version = Version.new

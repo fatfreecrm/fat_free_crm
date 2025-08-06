@@ -32,8 +32,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Field do
   it "should create a new instance given valid attributes" do
     Field.create!(
-      name:      'skype_address',
-      label:     'Skype address',
+      name:      'test_field',
+      label:     'Test Field',
       as:        'string',
       minlength: 12,
       maxlength: 220,
