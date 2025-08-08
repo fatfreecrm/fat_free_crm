@@ -32,7 +32,9 @@ en-US:
   admin_tab_tags: Tags
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
-  ai_prompts: AI Prompts
+  ai_prompts: Describe your business
+  ai_prompts_description: Describe your business, the products or services you offer,
+    and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
   about_my_business: About my business
   how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
   affiliate: Affiliate
