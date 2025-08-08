@@ -371,9 +371,9 @@ module ApplicationHelper
 
     full_prompt = [Setting[:about_my_business], Setting[:how_i_plan_to_use_ffcrm], prompt].compact.compact_blank.join(". ")
 
-    link_to("Design help", "https://chat.openai.com/?model=gpt-4o&prompt=#{URI.encode_uri_component(full_prompt)}",
+    link_to(t(:ai_prompt_link), "https://chat.openai.com/?model=gpt-4o&prompt=#{URI.encode_uri_component(full_prompt)}",
             target: "_blank",
-            title: "OpenAI Chat with prompt: #{prompt}",
+            title: "#{t(:ai_prompt_link_tooltip)}: #{prompt}",
             rel: "noopener noreferrer",
             class: "ai-prompt-link")
   end

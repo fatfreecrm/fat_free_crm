@@ -876,7 +876,8 @@ en-US:
   save_tag: Save Tag
   field_group_tags: Field Groups shown for this Tag
   ai_prompt_tags: Generate tags for potential leads, focused on the industry areas of specialisation
-
+  ai_prompt_link: "Design Help"
+  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from
