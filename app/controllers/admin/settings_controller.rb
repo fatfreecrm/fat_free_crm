@@ -28,7 +28,7 @@ class Admin::SettingsController < Admin::ApplicationController
   private
 
   def settings_params
-    params.require(:settings).permit!
+    params.require(:settings).permit(:about_my_business, :how_i_plan_to_use_ffcrm)
   end
 
   def setup_current_tab
