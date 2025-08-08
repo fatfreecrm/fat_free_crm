@@ -366,6 +366,18 @@ module ApplicationHelper
     end
   end
 
+  def ai_prompt_link(prompt)
+    return unless Setting[:about_my_business].present? || Setting[:how_i_plan_to_use_ffcrm].present?
+
+    full_prompt = [Setting[:about_my_business], Setting[:how_i_plan_to_use_ffcrm], prompt].compact.compact_blank.join(". ")
+
+    link_to("Design help", "https://chat.openai.com/?model=gpt-4o&prompt=#{URI.encode_uri_component(full_prompt)}",
+            target: "_blank",
+            title: "OpenAI Chat with prompt: #{prompt}",
+            rel: "noopener noreferrer",
+            class: "ai-prompt-link")
+  end
+
   # Returns default permissions intro.
   #----------------------------------------------------------------------------
   def get_default_permissions_intro(access, text)

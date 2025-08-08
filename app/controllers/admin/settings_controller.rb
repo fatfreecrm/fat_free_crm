@@ -17,12 +17,10 @@ class Admin::SettingsController < Admin::ApplicationController
   # PUT /admin/settings
   #----------------------------------------------------------------------------
   def update
-    if Setting.update(settings_params)
-      flash[:notice] = t(:msg_asset_updated, "Settings")
-      redirect_to admin_settings_path
-    else
-      render :index
-    end
+    Setting[:about_my_business] = params[:settings][:about_my_business]
+    Setting[:how_i_plan_to_use_ffcrm] = params[:settings][:how_i_plan_to_use_ffcrm]
+
+    redirect_to admin_settings_path
   end
 
   private
