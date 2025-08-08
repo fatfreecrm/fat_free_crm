@@ -1,0 +1,15 @@
+%fieldset.panel.panel-default
+  .panel-heading
+    %h4= t(:ai_prompts)
+    %p= t(:ai_prompts_description)
+  .panel-body
+    .row
+      .col-md-6
+        .form-group
+          = f.label :about_my_business, t(:about_my_business)
+          = f.text_area :about_my_business, class: 'form-control', placeholder: t(:about_my_business_placeholder), rows: 5, value: Setting[:about_my_business]
+      .col-md-6
+        .form-group
+          = f.label :how_i_plan_to_use_ffcrm, t(:how_i_plan_to_use_ffcrm)
+          = f.text_area :how_i_plan_to_use_ffcrm, class: 'form-control', placeholder: t(:how_i_plan_to_use_ffcrm_placeholder), rows: 5, value: Setting[:how_i_plan_to_use_ffcrm]
+    .row

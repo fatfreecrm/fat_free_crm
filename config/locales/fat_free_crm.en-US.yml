@@ -32,6 +32,13 @@ en-US:
   admin_tab_tags: Tags
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
+  ai_prompts: Describe your business
+  ai_prompts_description: Describe your business, the products or services you offer,
+    and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
+  about_my_business: About my business
+  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare. 
   affiliate: Affiliate
   competitor: Competitor
   customer: Customer
@@ -868,7 +875,9 @@ en-US:
   create_tag: Create Tag
   save_tag: Save Tag
   field_group_tags: Field Groups shown for this Tag
-
+  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
+  ai_prompt_link: "Design Help"
+  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from

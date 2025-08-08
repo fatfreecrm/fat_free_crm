@@ -1,3 +1,6 @@
-.title Settings
+.title= t(:admin_tab_settings)
 
-%p #{t :not_implemented}
+= form_for "settings", url: admin_settings_path, method: :put do |f|
+  = render partial: "ai_prompts", locals: { f: f }
+  .form-group
+    = f.submit t(:update), class: "btn btn-primary"

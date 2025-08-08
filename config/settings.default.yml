@@ -261,11 +261,11 @@
   :icon: :fa-tags
   :url:
     :controller: admin/tags
-#- :active: false
-#  :text: :admin_tab_settings
-#  :icon: :fa-cogs
-#  :url:
-#    :controller: admin/settings
+- :active: false
+  :text: :admin_tab_settings
+  :icon: :fa-cogs
+  :url:
+    :controller: admin/settings
 #- :active: false
 #  :text: :admin_tab_plugins
 #  :icon: :fa-plus-circle
@@ -366,3 +366,12 @@ task_completed:
 # to help guide users to enter phone numbers in international format.
 #
 :enforce_international_phone_format: false
+
+
+# AI Prompts
+#------------------------------------------------------------------------------
+# The following settings are for system-wide AI prompts.
+#
+:ai_prompts:
+  :about_my_business: ""
+  :how_i_plan_to_use_ffcrm: ""
