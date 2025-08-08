@@ -366,3 +366,12 @@ task_completed:
 # to help guide users to enter phone numbers in international format.
 #
 :enforce_international_phone_format: false
+
+
+# AI Prompts
+#------------------------------------------------------------------------------
+# The following settings are for system-wide AI prompts.
+#
+:ai_prompts:
+  :about_my_business: ""
+  :how_i_plan_to_use_ffcrm: ""

@@ -204,7 +204,7 @@ Rails.application.routes.draw do
     resources :fields, as: :custom_fields
     resources :fields, as: :core_fields
 
-    resources :settings, only: :index
+    resources :settings, only: [:index, :update]
     resources :plugins,  only: :index
   end
 end
