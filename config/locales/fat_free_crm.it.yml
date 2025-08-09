@@ -22,19 +22,19 @@ it-IT:
   tab_accounts: Conto
   tab_contacts: Contatti
   tab_opportunities: Opportunita'
-  tab_team: Team
-  admin_tab_groups: Groups
+  tab_team: Squadra
+  admin_tab_groups: Gruppi
   admin_tab_users: Utenti
-  admin_tab_fields: Custom Fields
-  admin_tab_tags: Tags
+  admin_tab_fields: Campi Personalizzati
+  admin_tab_tags: Etichette
   admin_tab_settings: Impostazioni
   admin_tab_plugins: Plugins
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
+  ai_prompts: Descrivi il tuo business
+  ai_prompts_description: Descrivi il tuo business, i prodotti o i servizi che offrite e il tuo target di riferimento. Questo ci aiuterà a personalizzare il CRM in base alle tue esigenze, e agirà come prompt di sistema per ovunque l'IA sia utilizzata.
+  about_my_business: Informazioni sulla mia attività
+  about_my_business_placeholder: ie Example Pty Ltd è una società di medie dimensioni specializzata nella fornitura di soluzioni software di alta qualità per le piccole e medie imprese. Ci concentriamo sul settore sanitario e vendiamo il nostro prodotto di punta, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: Come ho intenzione di utilizzare Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: cioè Un piccolo team di vendita di 5 persone userà Grasso Free CRM. Useremo Mailchimp, Google Ads, Zapier e Slack. Vogliamo filtrare e classificare i lead in base a settori specifici in cui sono interessati all'assistenza sanitaria.
   affiliate: Affiliato
   competitor: Concorrente
   customer: Cliente
@@ -156,21 +156,21 @@ it-IT:
               missing_email: '^Specificare l''indirizzo email.'
               email_in_use: '^C''e'' un altro utente con la stessa email.'
         custom_field:
-          required: '^%{field} is required.'
-          minlength: '^%{field} is too short.'
-          maxlength: '^%{field} is too long.'
-          endbeforestart: '^%{field} cannot end before it begins.'
+          required: '^%{field} è richiesto.'
+          minlength: '^%{field} è troppo breve.'
+          maxlength: '^%{field} è troppo lungo.'
+          endbeforestart: '^%{field} non può terminare prima dell''inizio.'
     attribute_options:
       opportunity:
         stage:
-          prospecting: Prospecting
-          analysis: Analysis
-          presentation: Presentation
-          proposal: Proposal
-          negotiation: Negotiation
-          final_review: Final Review
-          won: Closed/Won
-          lost: Closed/Lost
+          prospecting: Prospezione
+          analysis: Analisi
+          presentation: Presentazione
+          proposal: Proposta
+          negotiation: Negoziati
+          final_review: Revisione Finale
+          won: Chiuso/Vinto
+          lost: Chiuso/Perso
       account:
         rating:
           "0": "-"
@@ -187,7 +187,7 @@ it-IT:
   msg_account_not_approved: Il tuo account non e' ancora stato approvato.
   msg_asset_deleted: ! '%{value} e'' stato eliminato.'
   msg_asset_not_available: Questo %{value} non e' piu' valido.
-  msg_not_authorized: You are not authorized to take this action.
+  msg_not_authorized: Non sei autorizzato a intraprendere questa azione.
   msg_assets_not_available: I %{value} non sono disponibili.
   msg_asset_rejected: ! '%{value} e'' stato respinto.'
   msg_bad_image_file: '^Impossibile caricare o ridimensionare il file con l''immagine specificata.'
@@ -209,7 +209,7 @@ it-IT:
   msg_require_admin: Devi essere un Amministratore per accedere a questa pagina.
   msg_successful_signup: Registrazione con successo, benvenuto a Fat Free CRM!
   msg_welcome: Benvenuto a Fat Free CRM!
-  msg_user_updated: Profile updated successfully.
+  msg_user_updated: Profilo aggiornato con successo.
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: ammonotare pesato
@@ -240,18 +240,18 @@ it-IT:
   show_per_page: Mostra %{number} %{models} per pagina usando %{fmt} formato.
   sort_by: Ordina per %{field}.
   sort_by_displaying: Ordina %{models} per %{field} mostrando nome %{position} cognome
-  entities_per_page: ! '%{entity} per page:'
-  contacts_index_long: Long format
-  contacts_index_brief: Brief format
-  contacts_index_full: Full format
-  opportunities_index_normal: Normal format
-  accounts_index_normal: Normal format
-  leads_index_normal: Normal format
-  campaigns_index_normal: Normal format
+  entities_per_page: ! '%{entity} per pagina:'
+  contacts_index_long: Formato lungo
+  contacts_index_brief: Formato breve
+  contacts_index_full: Formato completo
+  opportunities_index_normal: Formato normale
+  accounts_index_normal: Formato normale
+  leads_index_normal: Formato normale
+  campaigns_index_normal: Formato normale
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "Iscriviti per commentare le risposte via email"
+  receive_assigned_notifications: "Ricevi notifiche assegnate via email"
   aim: AOL IM
   already_signed_up: Gia' iscritto?
   alt_email: Email alternativa
@@ -277,7 +277,7 @@ it-IT:
   phone: Telefono
   profile: Profilo
   profile_language: Languaggio
-  email_notifications: Email Notifications
+  email_notifications: Notifiche Email
   save_profile: Salva Profilo
   sign_up: Iscriviti
   sign_up_button: Iscriviti
@@ -286,9 +286,9 @@ it-IT:
   user: Utente
   username: Username
   yahoo: Yahoo IM
-  born_on: Born on
-  reports_to: Reports to
-  access: Access
+  born_on: Nato il
+  reports_to: Rapporti a
+  access: Accesso
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
   forgot_password: Password dimenticata
@@ -300,10 +300,10 @@ it-IT:
   #----------------------------------------------------------------------------
   account: Conto
   account_id: Account
-  select_an_account: Select an Account
+  select_an_account: Seleziona un account
   account_small: conto
   account_summary: Sommario Conto
-  account_categories: Account Categories
+  account_categories: Categorie Account
   accounts: Conti
   accounts_options: Opzioni Conti
   accounts_small: conti
@@ -328,8 +328,8 @@ it-IT:
   shipping_address: Indirizzo spedizione
   total_accounts: Totale Conti
   website: Website
-  account_with_title_department: ! '%{title}, %{department} at %{account}'
-  account_with_title: ! '%{title} at %{account}'
+  account_with_title_department: ! '%{title}, %{department} a %{account}'
+  account_with_title: ! '%{title} a %{account}'
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
   actual: Attuale
@@ -341,7 +341,7 @@ it-IT:
   campaign_small: campagna
   campaign_summary: Sommario Campagna
   campaign_targets: Obiettivi Campagna
-  campaign_statuses: Campaign Statuses
+  campaign_statuses: Stati Della Campagna
   campaigns: Campagne
   campaigns_options: Opzioni Campagne
   campaigns_small: campagne
@@ -371,7 +371,7 @@ it-IT:
   was_supposed_to_finish: la conclusione era prevista per il %{value}
   was_supposed_to_start: l'inizio era prevista %{time_ago} fa, il %{start_date}
   was_supposed_to_start_in: l'inizio era prevista tra %{starts_in} il %{start_date}
-  select_a_campaign: Select a campaign
+  select_a_campaign: Seleziona una campagna
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: Altro
@@ -381,7 +381,7 @@ it-IT:
   contacts: Contatti
   contacts_options: Opzioni Contatti
   contacts_small: contatti
-  contact_summary: Contact Summary
+  contact_summary: Riepilogo Contatti
   create_contact: Crea Contatto
   department: Dipartimento
   department_small: ! '%{value} dipartimento'
@@ -398,18 +398,18 @@ it-IT:
   referred_by_small: riferito da
   save_contact: Salva Contatto
   twitter: Twitter
-  unassigned: Unassigned
+  unassigned: Non Assegnato
   web_presence: Presenza Web
   web_presence_small: presenza web
   works_at: ! '%{job_title} presso %{company}'
-  general_info: General Information
-  show_general_info_small: Show general information for this contact.
-  show_extra_info_small: Show extra information for this contact.
-  tag_details: ! '%{tag} Details'
-  show_tag_info_small: Show %{tag} information for this contact.
-  shared_with_everyone: Shared with everyone
-  title: Title
-  subscriptions: Subscriptions
+  general_info: Informazioni Generali
+  show_general_info_small: Mostra informazioni generali per questo contatto.
+  show_extra_info_small: Mostra informazioni aggiuntive per questo contatto.
+  tag_details: ! 'Dettagli %{tag}'
+  show_tag_info_small: Mostra le informazioni %{tag} per questo contatto.
+  shared_with_everyone: Condiviso con tutti
+  title: Titolo
+  subscriptions: Abbonamenti
   # Views -> Leads.
   #----------------------------------------------------------------------------
   convert: Converti
@@ -426,7 +426,7 @@ it-IT:
   lead_small: potenziale
   lead_status_small: stato del potenziale
   lead_summary: Sommario del Potenziale
-  lead_statuses: Lead Statuses
+  lead_statuses: Stato Del Piombo
   leads: Potenziali
   leads_options: Opzioni Potenziali
   leads_small: potenziali
@@ -438,13 +438,13 @@ it-IT:
   source: Sorgente
   status: Stato
   total_leads: Potenziali Totali
-  show_status_info_small: Show status information for this lead.
-  show_contact_info_small: Show contact information for this lead.
+  show_status_info_small: Mostra informazioni di stato per questo lead.
+  show_contact_info_small: Mostra le informazioni di contatto per questo lead.
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
   amount: Importo
   close_date: Data chiusura
-  closes_on: Closes on
+  closes_on: Chiude il
   closed_ago_on: chiuso %{time_ago} fa, il %{date}
   closes_today: conclusione prevista oggi!
   closing_date: data di chiusura e' %{value}
@@ -463,7 +463,7 @@ it-IT:
   opportunities_small: opportunita'
   opportunity: Opportunita'
   opportunity_small: opportunita'
-  opportunity_stages: Opportunity Stages
+  opportunity_stages: Fasi Di Opportunità
   opportunity_summary: Opportunita' a colpo d'occhio
   opportunity_summary_text: ! '%{amount} con %{discount} sconto e %{probability} probabilita'''
   past_due: scadenza superata, era previsto concludersi %{value} fa
@@ -475,10 +475,10 @@ it-IT:
   weighted_amount: Importo pesato
   # Views -> Tasks.
   #----------------------------------------------------------------------------
-  task: Task
+  task: Attività
   task_small: lavoro
   tasks: Lavori
-  tasks_small: tasks
+  tasks_small: compiti
   assign_to: Assegnato a
   assigned_tab: Assegnato
   assigned_tasks: Lavori Assegnati
@@ -517,47 +517,47 @@ it-IT:
   view_pending_tasks: vedi i lavori pendenti
   # Views -> Team.
   #----------------------------------------------------------------------------
-  unassigned_opportunities: Unassigned Opportunities
-  no_opportunities_found: There are currently no outstanding opportunities.
+  unassigned_opportunities: Opportunità Non Assegnate
+  no_opportunities_found: Al momento non ci sono opportunità eccezionali.
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_completed: completato
-  action_create: created
-  action_destroy: deleted
+  action_create: creato
+  action_destroy: eliminato
   action_reassigned: riassegnato
   action_rejected: respinto
   action_rescheduled: riprogrammato
-  action_update: updated
-  action_view: viewed
+  action_update: aggiornato
+  action_view: visualizzato
   action_won: vinto
   activities: Attivita'
   no_activity_records: Nessun record di attivita' trovato.
   recent_activity: Attivita' Recenti
   recent_activity_options: Opzioni Attivita' Recenti
   subject_account: conto
-  subject_address: address on
+  subject_address: indirizzo il
   subject_campaign: campagna
-  subject_comment: comment on
+  subject_comment: commento su
   subject_contact: contatto
   subject_email: email on
   subject_lead: potenziale
   subject_opportunity: opportunita'
   subject_task: lavoro
-  subject_user: user
-  tag_list: Tags
-  create_past_participle: Record Creations
-  view_past_participle: Views
-  update_past_participle: Updates
-  destroy_past_participle: Deletions
-  all_events_past_participle: Activities
+  subject_user: utente
+  tag_list: Etichette
+  create_past_participle: Registra Creazioni
+  view_past_participle: Viste
+  update_past_participle: Aggiornamenti
+  destroy_past_participle: Cancellazioni
+  all_events_past_participle: Attività
   action_create_comment: ! '- &quot;%{comment}&quot;'
-  my_tasks: My Tasks
-  no_task_records: You have no tasks.
-  my_opportunities: My Opportunities
-  no_opportunity_records: You have no opportunities.
-  my_accounts: My Accounts
-  no_account_records: You have no accounts
-  not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
+  my_tasks: Le Mie Attività
+  no_task_records: Non hai nessuna attività.
+  my_opportunities: Le Mie Opportunità
+  no_opportunity_records: Non hai alcuna opportunità.
+  my_accounts: I Miei Account
+  no_account_records: Non hai alcun account
+  not_showing_hidden_entities: Non mostrando %{count} nascosto %{entity}.
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Aggiungi Nota
@@ -569,7 +569,7 @@ it-IT:
   back: Indietro
   cancel: Annulla
   close_form: Modello chisura
-  comment_intro: You can add comments later.
+  comment_intro: Puoi aggiungere commenti più tardi.
   confirm_delete: Sei sicuro di voler eliminare questo %{value}?
   copy_permissions: Copia %{value} permessi
   could_not_find: Non e' stato possibile trovare alcun/a %{value}. Ti e' possibile
@@ -606,7 +606,7 @@ it-IT:
   zipcode: CAP
   state: Stato
   country: Nazione
-  select_a_country: Select a Country
+  select_a_country: Seleziona un Paese
   expand_all: Mostra tutti
   collapse_all: Raggruppa tutti
   expanded: Espandi
@@ -629,22 +629,22 @@ it-IT:
   quick_find: Ricerca veloce
   welcome: Benvenuto
   # Advanced search
-  accounts_advanced_search: Accounts Advanced search
-  advanced_search: Advanced search
-  basic_search: Basic search
+  accounts_advanced_search: Ricerca avanzata account
+  advanced_search: Ricerca avanzata
+  basic_search: Ricerca di base
   search_results_count:
-    one: Search found %{count} result.
-    other: Search found %{count} results.
+    one: Ricerca trovata risultato %{count}.
+    other: Ricerca trovata risultati %{count}.
   # Views -> Comments.
   #----------------------------------------------------------------------------
-  comment: Comment
+  comment: Commento
   edit_comment: Modificando commento
   show: Mostra
   update: Aggiorna
-  following_users_will_be_notified: The following users will be notified by email
-  notifications_tooltip: Subscribers will receive new comments via email
-  subscribe_via_email: Subscribe via email
-  disable_email_subscriptions: Disable email subscription
+  following_users_will_be_notified: I seguenti utenti saranno avvisati via email
+  notifications_tooltip: Gli abbonati riceveranno nuovi commenti via email
+  subscribe_via_email: Iscriviti via email
+  disable_email_subscriptions: Disabilita abbonamento email
   added_note: added comment %{value}
   # Views -> Emails.
   #----------------------------------------------------------------------------
@@ -660,12 +660,12 @@ it-IT:
   crm_admin_page: Fat Free CRM Amministrazione
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
-  create_group: Create Group
-  save_group: Save Group
-  group_members: members
-  groups: Groups
-  groups_small: groups
-  group_small: group
+  create_group: Crea Gruppo
+  save_group: Salva Gruppo
+  group_members: membri
+  groups: Gruppi
+  groups_small: gruppi
+  group_small: gruppo
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
   confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
@@ -673,7 +673,7 @@ it-IT:
   create_user: Utente creato
   last_logged_in: last logged in %{value}
   personal_information: Informazione Personale
-  group_memberships: Group Memberships
+  group_memberships: Membri Di Gruppo
   reactivate: Riattiva
   save_user: Salva Utente
   suspend: Sospeso
@@ -692,20 +692,20 @@ it-IT:
   users_small: utenti
   # Views -> Versions
   #----------------------------------------------------------------------------
-  versions: History
+  versions: Storico
   version:
-    create: ! '%{item} created by %{by}'
-    update: ! '%{item} modified by %{by}'
-    destroy: ! '%{item} destroyed by %{by}'
-    set_html: ! '%{attr} set to %{to}'
-    unset_html: ! '%{attr} unset'
-    change_html: ! '%{attr} changed from %{from} to %{to}'
-    anonymous: anonymous
-  account_contact_id: Account id
-  account_contact_name: Account name
-  user_id: User id
-  created_at: Created at
-  updated_at: Updated at
+    create: ! '%{item} creato da %{by}'
+    update: ! '%{item} modificato da %{by}'
+    destroy: ! '%{item} distrutto da %{by}'
+    set_html: ! '%{attr} impostato su %{to}'
+    unset_html: ! '%{attr} azzerato'
+    change_html: ! '%{attr} cambiato da %{from} a %{to}'
+    anonymous: anonimo
+  account_contact_id: Id account
+  account_contact_name: Nome account
+  user_id: Id utente
+  created_at: Creato il
+  updated_at: Aggiornato il
   # Export.
   #----------------------------------------------------------------------------
   to_xls: Esporta a Excel
@@ -723,16 +723,16 @@ it-IT:
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
-    intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
-    reply_instructions: Reply to this email directly to add a new comment, or view the %{entity} online
+    intro: ! '%{user_full_name} ha commentato su %{entity_type}: %{entity_name}'
+    reply_instructions: Rispondi a questa email direttamente per aggiungere un nuovo commento o visualizzare l' %{entity} online
   # Lists
   #----------------------------------------------------------------------------
-  global_lists: Global lists
-  personal_lists: My lists
-  list: List
-  no_saved_lists: No saved lists
-  make_current_view_list: Make current view a list
-  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
+  global_lists: Elenco globale
+  personal_lists: Le mie liste
+  list: Elenco
+  no_saved_lists: Nessuna lista salvata
+  make_current_view_list: Rendi la vista corrente un elenco
+  list_name_info: Se si utilizza il nome di una lista esistente, si sovrascriverà quella lista con le impostazioni correnti
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
@@ -768,108 +768,108 @@ it-IT:
   # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------
   will_paginate:
-    previous_label: ! '&#8592; Previous'
-    next_label: 'Next &#8594;'
+    previous_label: ! '&#8592; Precedente'
+    next_label: 'Prossima &#8594;'
     page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        one: Displaying 1 %{name}
-        other: Displaying all %{count} %{plural}
-      multi_page: Displaying %{plural} %{from} - %{to} of %{total} in total
+        one: Visualizzazione 1 %{name}
+        other: Visualizzazione di tutti %{count} %{plural}
+      multi_page: Visualizzazione %{plural} %{from} - %{to} di %{total} in totale
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
-  label: Label
-  custom_fields: Custom Fields
-  custom_field_options: Custom Field Options
-  create_field: Create field
-  save_field: Save field
-  create_field_group: Create field group
-  edit_field_group: Edit field group
-  save_field_group: Save field group
-  field_group_empty: There are no fields in this group.
-  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
-  restrict_by_tag: ! 'Restrict by Tag:'
-  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
-  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
-  field_group_unrestricted: This field group applies to all %{assets}
-  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
-  msg_cant_delete_field_group: Field Group could not be deleted.
-  admin_fields_info: ! 'Custom fields are displayed in groups. Create a new field group, or add fields to one of the groups below. You can drag and drop fields to change their display order or move them between field groups.'
+  label: Etichetta
+  custom_fields: Campi Personalizzati
+  custom_field_options: Opzioni Campo Personalizzato
+  create_field: Crea campo
+  save_field: Salva campo
+  create_field_group: Crea gruppo di campi
+  edit_field_group: Modifica gruppo campo
+  save_field_group: Salva gruppo campo
+  field_group_empty: Non ci sono campi in questo gruppo.
+  select_or_create_tags: Seleziona alcuni tag, o crea un nuovo tag premendo 'Invio'.
+  restrict_by_tag: ! 'Limita per Tag:'
+  restrict_by_tag_info: (Mostra solo i campi per %{assets} che sono contrassegnati con quanto segue)
+  field_group_tag_restriction: Questo gruppo di campi si applica a %{assets} taggato con "%{tag}"
+  field_group_unrestricted: Questo gruppo di campi si applica a tutti gli %{assets}
+  field_group_confirm_delete: Se un gruppo di campi viene eliminato, tutti i campi verranno spostati nel gruppo di campi predefinito.
+  msg_cant_delete_field_group: Il gruppo di campi non può essere eliminato.
+  admin_fields_info: ! 'I campi personalizzati sono visualizzati in gruppi. Crea un nuovo gruppo di campi o aggiungi campi a uno dei gruppi sottostanti. È possibile trascinare i campi per cambiare l''ordine di visualizzazione o spostarli tra i gruppi di campi.'
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'It is strongly recommended you restart your server after adding or removing any custom field. '
-  tags: Tags
+  admin_fields_info2: ! 'Si consiglia vivamente di riavviare il server dopo aver aggiunto o rimosso qualsiasi campo personalizzato. '
+  tags: Etichette
   tag_small: tag
-  tagged: Tagged
-  create_tag: Create Tag
-  save_tag: Save Tag
-  field_group_tags: Field Groups shown for this Tag
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  tagged: Etichettato
+  create_tag: Crea Tag
+  save_tag: Salva Tag
+  field_group_tags: Gruppi di campi mostrati per questa etichetta
+  ai_prompt_tags: Generare tag per potenziali lead, account o campagne, incentrati sui settori industriali di specializzazione
+  ai_prompt_link: "Aiuto Design"
+  ai_prompt_link_tooltip: "Chat OpenAI con prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from %{value} records.
-  msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
+  tag_with_taggings_confirm_delete: Se questo tag viene eliminato, verrà rimosso dai record %{value}.
+  msg_cant_delete_tag: Impossibile eliminare '%{value}' dal momento che ha associato Gruppi di Campi.
   views:
     admin:
       plugins:
-        author: Author
-        version: Version
-        description: Description
+        author: Autore
+        version: Versione
+        description: Descrizione
   # Simple Form translations
   #----------------------------------------------------------------------------
   simple_form:
-    yes: 'Yes'
+    yes: 'Sì'
     no: 'No'
     required:
-      text: required
+      text: obbligatorio
       mark: ! '*'
     # You can uncomment the line below if you need to overwrite the whole required html.
     # When using html, text and mark won't be used.
     # html: '<abbr title="required">*</abbr>'
     error_notification:
-      default_message: ! 'Some errors were found, please take a look:'
+      default_message: ! 'Sono stati trovati alcuni errori, si prega di dare un''occhiata:'
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
     string:
-      title: Short Answer
+      title: Risposta Breve
     text:
-      title: Long Answer
+      title: Risposta Lunga
     select:
-      title: Select List
+      title: Seleziona Lista
     multiselect:
-      title: Multi Select
+      title: Selezione Multipla
     radio_buttons:
-      title: Radio Buttons
+      title: Pulsanti Scelta
     boolean:
       title: Checkbox
     check_boxes:
-      title: Checkbox List
+      title: Lista Checkbox
     date:
-      title: Date
+      title: Data
     date_pair:
-      title: Date Pair
+      title: Coppia Data
     datetime:
-      title: Date & Time
+      title: Data E Ora
     datetime_pair:
-      title: Date & Time Pair
+      title: Coppia Data E Ora
     email:
-      title: Email Address
+      title: Indirizzo Email
     url:
       title: URL
     tel:
-      title: Phone Number
+      title: Numero Di Telefono
     decimal:
-      title: Number (Decimal)
+      title: Numero (Decimale)
     integer:
-      title: Number (Integer)
+      title: Numero (Intero)
     float:
-      title: Number (Floating Point)
+      title: Numero (punto di rottura)
   pair:
-    start: Start
-    end: End
-    from_to: From %{from} to %{to}
-    from_only: From %{from}
-    to_only: Until %{to}
+    start: Inizia
+    end: Fine
+    from_to: Da %{from} a %{to}
+    from_only: Da %{from}
+    to_only: Fino All' %{to}
