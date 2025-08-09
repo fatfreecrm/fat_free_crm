@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     post 'reauthenticate/new_challenge', to: 'users/reauthentication#new_challenge', as: :new_user_reauthentication_challenge
     post 'reauthenticate', to: 'users/reauthentication#reauthenticate', as: :user_reauthentication
 
-    namespace :users do
+    resources :users, only: %i[index show] do
       resources :passkeys, only: %i[index create destroy] do
         collection do
           post :new_create_challenge
@@ -36,9 +36,7 @@ Rails.application.routes.draw do
           post :new_destroy_challenge
         end
       end
-    end
 
-    resources :users, only: %i[index show] do
       collection do
         get :opportunities_overview
         match :auto_complete, via: %i[get post]
