@@ -108,7 +108,7 @@ gem 'devise', '~>4.6'
 gem 'devise-i18n'
 gem "devise-encryptable"
 gem 'devise-two-factor'
-gem 'devise-passkeys', git: 'https://github.com/ruby-passkeys/devise-passkeys.git'
+gem 'devise-passkeys', git: 'https://github.com/ruby-passkeys/devise-passkeys.git' # TODO: Is git really needed?
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob'
 gem 'ransack_ui'
