@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   devise :two_factor_authenticatable, :passkey_authenticatable, :registerable, :confirmable,
          :encryptable, :recoverable, :rememberable, :trackable
 
-  attr_encrypted :otp_secret, key: Rails.application.credentials.secret_key_base
+  encrypts :otp_secret, key: Rails.application.credentials.secret_key_base
   before_create :suspend_if_needs_approval
 
   has_many :passkeys
