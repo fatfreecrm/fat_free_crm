@@ -2,7 +2,7 @@
 
 #confirm{ hidden }
 .title_tools#menu
-  = link_to_inline(:edit_field, edit_admin_field_path(@field), :text => "Edit") + " | "
+  = link_to_inline(:edit_field, edit_admin_field_path(@field), text: "Edit") + " | "
 .title#edit_field_title= @field.field_label
 
 %div#edit_field{ hidden }

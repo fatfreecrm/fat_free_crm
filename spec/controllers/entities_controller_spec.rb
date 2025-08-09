@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -15,6 +17,11 @@ describe EntitiesController do
     it "should parse #tags" do
       str = "#test"
       expect(controller.send(:parse_query_and_tags, str)).to eq(['', 'test'])
+    end
+
+    it 'should parse #multiword tags' do
+      str = "#multiword tag#"
+      expect(controller.send(:parse_query_and_tags, str)).to eq(['', 'multiword tag'])
     end
 
     it "should parse no tags" do

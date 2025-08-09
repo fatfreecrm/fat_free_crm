@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -9,14 +11,13 @@ feature 'Accounts', '
   In order to increase customer satisfaction
   As a user
   I want to manage accounts
-
 ' do
   before(:each) do
     do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
   end
 
   scenario 'should view a list of accounts' do
-    2.times { |i| FactoryGirl.create(:account, name: "Account #{i}") }
+    2.times { |i| create(:account, name: "Account #{i}") }
     visit accounts_page
     expect(page).to have_content('Account 0')
     expect(page).to have_content('Account 1')
@@ -30,7 +31,10 @@ feature 'Accounts', '
       click_link 'Create Account'
       expect(page).to have_selector('#account_name', visible: true)
       fill_in 'account_name', with: 'My new account'
-      click_link 'Contact Information'
+      select2 'Affiliate', from: 'Category:'
+      select2 'Myself', from: 'Assigned to:'
+
+      expect(page).to have_link 'Contact Information'
       fill_in 'account_phone', with: '+1 2345 6789'
       fill_in 'account_website', with: 'http://www.example.com'
       click_link 'Comment'
@@ -42,6 +46,7 @@ feature 'Accounts', '
       expect(page).to have_content('+1 2345 6789')
       expect(page).to have_content('http://www.example.com')
       expect(page).to have_content('This account is very important')
+      expect(page).to have_content('Affiliate')
 
       click_link "Dashboard"
       expect(page).to have_content("Bill Murray created account My new account")
@@ -54,7 +59,7 @@ feature 'Accounts', '
     expect(page).to have_content('Create Account')
     click_link 'Create Account'
 
-    click_link 'Contact Information'
+    expect(page).to have_link 'Contact Information'
     fill_in 'account_phone', with: '+1 2345 6789'
 
     click_link 'Comment'
@@ -66,23 +71,23 @@ feature 'Accounts', '
   end
 
   scenario 'should view and edit an account', js: true, versioning: true do
-    FactoryGirl.create(:account, name: "A new account")
+    create(:account, name: "A new account")
     with_versioning do
       visit accounts_page
       find('div#accounts').click_link('A new account')
       expect(page).to have_content('A new account')
       click_link 'Edit'
-      fill_in 'account_name', with: 'A new account *editted*'
+      fill_in 'account_name', with: 'A new account *edited!*'
       click_button 'Save Account'
-      expect(page).to have_content('A new account *editted*')
+      expect(page).to have_content('A new account *edited!*')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray updated account A new account *editted*")
+      expect(page).to have_content("Bill Murray updated account A new account *edited!*")
     end
   end
 
   scenario 'should delete an account', js: true do
-    FactoryGirl.create(:account, name: "My new account")
+    create(:account, name: "My new account")
     visit accounts_page
     find('div#accounts').click_link('My new account')
     click_link 'Delete?'
@@ -92,7 +97,7 @@ feature 'Accounts', '
   end
 
   scenario 'should search for an account', js: true do
-    2.times { |i| FactoryGirl.create(:account, name: "Account #{i}") }
+    2.times { |i| create(:account, name: "Account #{i}") }
     visit accounts_page
     expect(find('#accounts')).to have_content("Account 0")
     expect(find('#accounts')).to have_content("Account 1")
@@ -105,5 +110,18 @@ feature 'Accounts', '
     fill_in 'query', with: "Contact"
     expect(find('#accounts')).not_to have_content("Account 0")
     expect(find('#accounts')).not_to have_content("Account 1")
+  end
+
+  scenario 'should attach task to account', js: true, versioning: true do
+    create(:task, name: 'Task', user: @user)
+    create(:account, name: 'Account')
+    with_versioning do
+      visit accounts_page
+      expect(find('#accounts')).to have_content("Account")
+      click_link 'Account'
+      click_link 'Select Task'
+      fill_autocomplete('auto_complete_query', with: 'Ta')
+      expect(find('#tasks')).to have_content('Task re: Account')
+    end
   end
 end

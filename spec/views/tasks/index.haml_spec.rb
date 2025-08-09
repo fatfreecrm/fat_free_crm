@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,28 +7,28 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/index" do
+describe "tasks/index" do
   include TasksHelper
 
   before do
-    login_and_assign
+    login
   end
 
   TASK_STATUSES.each do |status|
     before do
-      user = FactoryGirl.build_stubbed(:user)
-      account = FactoryGirl.build_stubbed(:account)
-      @due  = FactoryGirl.build_stubbed(:task, asset: account, bucket: "due_asap", assignee: user)
-      @completed = FactoryGirl.build_stubbed(:task, asset: account, bucket: "completed_today", assignee: user, completed_at: 1.hour.ago, completor: user)
+      user = build_stubbed(:user)
+      account = build_stubbed(:account)
+      @due = build_stubbed(:task, asset: account, bucket: "due_asap", assignee: user)
+      @completed = build_stubbed(:task, asset: account, bucket: "completed_today", assignee: user, completed_at: 1.hour.ago, completor: user)
     end
 
     it "should render list of #{status} tasks if list of tasks is not empty" do
       assign(:view, status)
-      assign(:tasks,  due_asap: [@due], completed_today: [@completed])
+      assign(:tasks, due_asap: [@due], completed_today: [@completed])
 
       render
 
-      expect(view).to render_template(partial: "_" << status, count: 1)
+      expect(view).to render_template(partial: "_#{status}", count: 1)
       expect(view).not_to render_template(partial: "_empty")
     end
   end
@@ -34,7 +36,7 @@ describe "/tasks/index" do
   TASK_STATUSES.each do |status|
     it "should render a message if there're no #{status} tasks" do
       assign(:view, status)
-      assign(:tasks,  due_asap: [], due_today: [])
+      assign(:tasks, due_asap: [], due_today: [])
 
       render
 

@@ -1,8 +1,8 @@
 %li.highlight[contact]
-  = avatar_for(contact, :size => "30x30")
+  = avatar_for(contact, size: "40x40")
 
   %ul.tools
-    = hook(:contact_tools_before, self, :contact => contact)
+    = hook(:contact_tools_before, self, contact: contact)
 
     - if can?(:update, contact)
       %li= link_to_edit(contact)
@@ -14,7 +14,7 @@
       %li= link_to_delete(contact)
 
   .indentslim
-    = link_to_if can?(:read, contact), contact.full_name(@current_user.preference[:contacts_naming]), contact
+    = link_to_if can?(:read, contact), contact.full_name(current_user.preference[:contacts_naming]), contact
     %tt
       = brief_account_info(contact)
 
@@ -22,23 +22,23 @@
         &ndash;
         == #{t :referred_by_small} #{lead.referred_by}
 
-    %dt{ :style => "padding: 2px 0px 0px 0px" }
+    %dt{ style: "padding: 2px 0px 0px 0px" }
       - if can?(:read, contact)
         - if contact.email.present?
           = link_to_email(contact.email)
           |
         - if contact.phone.present?
           == #{t :phone_small}:
-          %b= contact.phone
+          %b= link_to_phone(contact.phone)
         |
         - if contact.mobile.present?
           == #{t :mobile_small}:
-          %b= contact.mobile
+          %b= link_to_phone(contact.mobile)
           |
       = t(:added_ago, value: timeago(contact.created_at)).html_safe
 
-    - if contact.tag_list.present?
+    - if contact.tags.present?
       %dt
         .tags= tags_for_index(contact)
 
-    = hook(:contact_bottom, self, :contact => contact)
+    = hook(:contact_bottom, self, contact: contact)

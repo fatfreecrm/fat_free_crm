@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class HomeController < ApplicationController
-  before_action :require_user, except: [:toggle, :timezone]
+  skip_before_action :authenticate_user!, only: %i[timezone]
   before_action :set_current_tab, only: :index
 
   #----------------------------------------------------------------------------
@@ -13,7 +15,9 @@ class HomeController < ApplicationController
     @my_tasks = Task.visible_on_dashboard(current_user).includes(:user, :asset).by_due_at
     @my_opportunities = Opportunity.visible_on_dashboard(current_user).includes(:account, :user, :tags).by_closes_on.by_amount
     @my_accounts = Account.visible_on_dashboard(current_user).includes(:user, :tags).by_name
-    respond_with(@activities)
+    respond_with @activities do |format|
+      format.xls { render xls: @activities, layout: 'header' }
+    end
   end
 
   # GET /home/options                                                      AJAX
@@ -45,21 +49,24 @@ class HomeController < ApplicationController
   # GET /home/toggle                                                       AJAX
   #----------------------------------------------------------------------------
   def toggle
-    if session[params[:id].to_sym]
-      session.delete(params[:id].to_sym)
-    else
-      session[params[:id].to_sym] = true
+    if (toggle_param = params[:id]&.to_sym)
+      session[:toggle_states] ||= {}
+      if session[:toggle_states][toggle_param]
+        session[:toggle_states].delete(toggle_param)
+      else
+        session[:toggle_states][toggle_param] = true
+      end
     end
-    render nothing: true
+    head :ok
   end
 
   # GET /home/timeline                                                     AJAX
   #----------------------------------------------------------------------------
   def timeline
     state = params[:state].to_s
-    if %w(Collapsed Expanded).include?(state)
+    if %w[Collapsed Expanded].include?(state)
       if (model_type = params[:type].to_s).present?
-        if %w(comment email).include?(model_type)
+        if %w[comment email].include?(model_type)
           model = model_type.camelize.constantize
           item = model.find(params[:id])
           item.update_attribute(:state, state)
@@ -71,7 +78,7 @@ class HomeController < ApplicationController
       end
     end
 
-    render nothing: true
+    head :ok
   end
 
   # GET /home/timezone                                                     AJAX
@@ -85,7 +92,7 @@ class HomeController < ApplicationController
       session[:timezone_offset] = params[:offset].to_i * -60
       ActiveSupport::TimeZone[session[:timezone_offset]]
     end
-    render nothing: true
+    head :ok
   end
 
   private
@@ -115,7 +122,7 @@ class HomeController < ApplicationController
   def activity_event
     event = current_user.pref[:activity_event]
     if event == "all_events"
-      %w(create update destroy)
+      %w[create update destroy]
     else
       event
     end
@@ -123,24 +130,31 @@ class HomeController < ApplicationController
 
   #----------------------------------------------------------------------------
   # TODO: this is ugly, ugly code. It's being security patched now but urgently
-  # needs refactoring to use user id instead. Permuations based on name or email
+  # needs refactoring to use user id instead. Permutations based on name or email
   # yield incorrect results.
   def activity_user
-    user = current_user.pref[:activity_user]
-    if user && user != "all_users"
-      user = if user =~ /@/ # email
-               User.where(email: user).first
-             else # first_name middle_name last_name any_name
-               name_query = if user.include?(" ")
-                              user.name_permutations.map do |first, last|
-                                User.where(first_name: first, last_name: last)
-                              end.map(&:to_a).flatten.first
-                            else
-                              [User.where(first_name: user), User.where(last_name: user)].map(&:to_a).flatten.first
-               end
-        end
-    end
+    return nil if current_user.pref[:activity_user] == "all_users"
+    return nil unless current_user.pref[:activity_user]
+
+    is_email = current_user.pref[:activity_user].include?("@")
+
+    user = if is_email
+             User.where(email: current_user.pref[:activity_user]).first
+           else # first_name middle_name last_name any_name
+             name_query(current_user.pref[:activity_user])
+           end
+
     user.is_a?(User) ? user.id : nil
+  end
+
+  def name_query(user)
+    if user.include?(" ")
+      user.name_permutations.map do |first, last|
+        User.where(first_name: first, last_name: last)
+      end.map(&:to_a).flatten.first
+    else
+      [User.where(first_name: user), User.where(last_name: user)].map(&:to_a).flatten.first
+    end
   end
 
   #----------------------------------------------------------------------------
@@ -148,9 +162,9 @@ class HomeController < ApplicationController
     duration = current_user.pref[:activity_duration]
     if duration
       words = duration.split("_") # "two_weeks" => 2.weeks
-      if %w(one two).include?(words.first) && %w(hour day days week weeks month).include?(words.last)
-        %w(zero one two).index(words.first).send(words.last)
-      end
+      %w[zero one two].index(words.first).send(words.last) if %w[one two].include?(words.first) && %w[hour day days week weeks month].include?(words.last)
     end
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_home_controller, self)
 end

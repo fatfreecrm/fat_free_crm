@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -7,17 +9,14 @@ class ListsController < ApplicationController
   # POST /lists
   #----------------------------------------------------------------------------
   def create
-    if params[:is_global].to_i.zero?
-      list_params[:user_id] = current_user.id
-    else
-      list_params[:user_id] = nil
-    end
+    list_attr = list_params.to_h
+    list_attr["user_id"] = current_user.id if params["is_global"] != "1"
 
     # Find any existing list with the same name (case insensitive)
-    if @list = List.where("lower(name) = ?", list_params[:name].downcase).where(user_id: list_params[:user_id]).first
-      @list.update_attributes(list_params)
+    if @list = List.where("lower(name) = ?", list_attr[:name].downcase).where(user_id: list_attr[:user_id]).first
+      @list.update(list_attr)
     else
-      @list = List.create(list_params)
+      @list = List.create(list_attr)
     end
 
     respond_with(@list)
@@ -35,6 +34,12 @@ class ListsController < ApplicationController
   protected
 
   def list_params
-    params[:list].permit!
+    params.require(:list).permit(
+      :name,
+      :url,
+      :user_id
+    )
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_lists_controller, self)
 end

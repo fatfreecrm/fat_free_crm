@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -45,12 +47,11 @@ class Ability
           scope = scope.or(t[:group_id].eq_any(group_ids))
         end
 
-        entities.each do |klass|
-          if (asset_ids = Permission.where(scope.and(t[:asset_type].eq(klass.name))).pluck(:asset_id)).any?
-            can :manage, klass, id: asset_ids
-          end
+        permissions = Permission.select(:asset_type, :asset_id).where(scope).where(asset_type: entities.map { |k| k.name.to_s })
+        permissions.each do |p|
+          can :manage, p.asset_type.constantize, id: p.asset_id
         end
-      end # if user.admin?
+      end
 
     end
   end

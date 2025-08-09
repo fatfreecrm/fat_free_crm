@@ -6,15 +6,15 @@
       %span#welcome_username= current_user.name
       %span> !&nbsp;&nbsp;
 
-      = link_to(t(:quick_find), "#", :id => "jumper") << " |"
+      = link_to(t(:quick_find), "#", id: "jumper") << " |"
       = link_to(t(:profile), profile_path) << " |"
       - if current_user.admin?
         = link_to(t(:admin), admin_path) << " |"
-      = link_to(t(:logout), logout_path, :method => :delete)
+      = link_to(t(:logout), destroy_user_session_path, method: :delete)
       = render "/layouts/jumpbox"
     - else
-      = link_to(t(:login), login_path) << " |"
-      = link_to(t(:sign_up), signup_path) << " |" if can_signup?
-      = link_to(t(:about), "#", :title => t(:about_ffc), :onclick => "$('#about').dialog({ title: this.title, modal: true }); return false;")
+      = link_to(t(:login), new_user_session_path) << " |"
+      = link_to(t(:sign_up), new_user_registration_path) << " |" if User.can_signup?
+      = link_to(t(:about), "#", title: t(:about_ffc), onclick: "$('#about').dialog({ title: this.title, modal: true }); return false;")
   %h3
     = link_to("Fat Free CRM", root_path)

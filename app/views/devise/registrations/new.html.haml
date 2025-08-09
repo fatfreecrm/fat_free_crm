@@ -1,0 +1,21 @@
+.standalone
+  = simple_form_for(@user, html: one_submit_only) do |f|
+    .title_tools
+      = t(:already_signed_up)
+      = link_to t(:login_now_link), new_session_path(resource_name)
+    .title= t(:sign_up)
+
+    = f.error_messages object_name: t('user')
+
+    .section
+      .label= t(:username)
+      = f.input_field :username, minlength: 1
+      .label= t(:email)
+      = f.input_field :email
+      .label= t(:password)
+      = f.input_field :password
+      .label= t(:password_confirmation)
+      = f.input_field :password_confirmation
+
+    .buttonbar
+      = f.submit t(:sign_up_button)

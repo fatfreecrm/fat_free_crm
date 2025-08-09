@@ -1,4 +1,6 @@
-class CreateAccountContacts < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateAccountContacts < ActiveRecord::Migration[4.2]
   def self.up
     create_table :account_contacts, force: true do |t|
       t.references :account

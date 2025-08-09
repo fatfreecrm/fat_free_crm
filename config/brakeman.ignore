@@ -1,0 +1,139 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "100bd27b675db63563a2aa0de82022a2119af30503571cd503288fdf4bde25b0",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/home/_account.html.haml",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "t(:added_ago, :value => timeago(Account.new.created_at))",
+      "render_path": [{"type":"controller","class":"HomeController","method":"index","line":19,"file":"app/controllers/home_controller.rb"},{"type":"template","name":"home/index","line":26,"file":"app/views/home/index.html.haml"}],
+      "location": {
+        "type": "template",
+        "template": "home/_account"
+      },
+      "user_input": "Account.new.created_at",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "2843f0dae3f31458dc00c7fa7e9e5944aa0aa155d60236d8c97d72ef70ddec1e",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/fields/_field.html.haml",
+      "line": 14,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "t(:added_ago, :value => timeago((Unresolved Model).new.created_at))",
+      "render_path": [{"type":"template","name":"admin/field_groups/_field_group","line":22,"file":"app/views/admin/field_groups/_field_group.html.haml"}],
+      "location": {
+        "type": "template",
+        "template": "admin/fields/_field"
+      },
+      "user_input": "(Unresolved Model).new.created_at",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "6c45e6cf0d6e61819782455353ab37edc4062fbe6ea2d085e3bb8611e1026330",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/users/_user.html.haml",
+      "line": 44,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "t(:last_logged_in, timeago((Unresolved Model).new.current_sign_in_at))",
+      "render_path": [{"type":"template","name":"admin/users/index","line":11,"file":"app/views/admin/users/index.html.haml"}],
+      "location": {
+        "type": "template",
+        "template": "admin/users/_user"
+      },
+      "user_input": "(Unresolved Model).new.current_sign_in_at",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "b4d60598e6437c34eaf6215fa47bb2fec050b556c0467c7124279b98dd9a8079",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/home/_opportunity.html.haml",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "t(:added_ago, :value => timeago(Opportunity.new.created_at))",
+      "render_path": [{"type":"controller","class":"HomeController","method":"index","line":19,"file":"app/controllers/home_controller.rb"},{"type":"template","name":"home/index","line":17,"file":"app/views/home/index.html.haml"}],
+      "location": {
+        "type": "template",
+        "template": "home/_opportunity"
+      },
+      "user_input": "Opportunity.new.created_at",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "bd48a463fc9dfd02569c959225eabf9e9486e6ed2a9077c264f4e005df734a7e",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/application.html.haml",
+      "line": 30,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "raw(User.all.map do\n \"'#{j(u.full_name)} (@#{j(u.username)})'\"\n end.join(\",\\n\"))",
+      "render_path": [{"type":"controller","class":"AccountsController","method":"show","line":30,"file":"app/controllers/entities/accounts_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "layouts/application"
+      },
+      "user_input": "User.all.map",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "d496ab28166e569e049733e44555316961769f72c1cb3928f1f8b0d3291c99ae",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/home/_account.html.haml",
+      "line": 15,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "t(:added_by, :time_ago => timeago(Account.new.created_at), :user => h(Account.new.user.full_name))",
+      "render_path": [{"type":"controller","class":"HomeController","method":"index","line":19,"file":"app/controllers/home_controller.rb"},{"type":"template","name":"home/index","line":26,"file":"app/views/home/index.html.haml"}],
+      "location": {
+        "type": "template",
+        "template": "home/_account"
+      },
+      "user_input": "Account.new.created_at",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "f7c2504bcdf33fa16064570a42da7afe0ddac86a64beebb8786b519c3fbe4a8b",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/home/_opportunity.html.haml",
+      "line": 15,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "t(:added_by, :time_ago => timeago(Opportunity.new.created_at), :user => h(Opportunity.new.user.full_name))",
+      "render_path": [{"type":"controller","class":"HomeController","method":"index","line":19,"file":"app/controllers/home_controller.rb"},{"type":"template","name":"home/index","line":17,"file":"app/views/home/index.html.haml"}],
+      "location": {
+        "type": "template",
+        "template": "home/_opportunity"
+      },
+      "user_input": "Opportunity.new.created_at",
+      "confidence": "Weak",
+      "note": ""
+    }
+  ],
+  "updated": "2018-01-18 16:15:02 +0900",
+  "brakeman_version": "4.1.1"
+}

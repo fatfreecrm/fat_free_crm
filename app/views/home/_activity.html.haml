@@ -8,27 +8,27 @@
     - link_to item.name, polymorphic_url(item)
 
   - elsif item.respond_to?(:name)
-    - content_tag :span, item.name, :style => "color:black;" # Individual tasks have no landing pages where we could link to.
+    - content_tag :span, item.name, style: "color:black;" # Individual tasks have no landing pages where we could link to.
 
-- known_event = t('action_' + activity.event, :default => 0) != 0
+- known_event = t('action_' + activity.event, default: 0) != 0
 
 - if (user.present? && subject.present?) || !known_event
   %li[activity]
     .tools
       %small
-        = l(activity.created_at, :format => :short)
+        = l(activity.created_at, format: :short)
     %tt
       - if known_event
         - action = t('action_' + activity.event)
         - type = t('subject_' + activity.item_type.downcase)
-        = link_to avatar_for(activity.user, :size => :thumb), user_path(activity.user)
-        = t("activity_text", :user => h(user), :action => h(action), :type => h(type), :subject => h(subject), :default => "#{h user} #{h action} #{h type} #{h subject}").html_safe # locales optionally can change the word order for activities using 'activity_text'
+        = link_to avatar_for(activity.user, size: :thumb), user_path(activity.user)
+        = t("activity_text", user: h(user), action: h(action), type: h(type), subject: h(subject), default: "#{h user} #{h action} #{h type} #{h subject}").html_safe # locales optionally can change the word order for activities using 'activity_text'
         - if ((item = activity.item).class == Comment) and Setting.comments_visible_on_dashboard
-          = t('action_create_comment', :comment => truncate(h(item.comment), :length => 90)).html_safe
+          = t('action_create_comment', comment: truncate(h(item.comment), length: 90)).html_safe
       - else
         - type = t(activity.item_type.downcase)
         - if item.respond_to? :email
-          = avatar_for(item, :size => :thumb)
+          = avatar_for(item, size: :thumb)
         = type
         = subject
         = ":"

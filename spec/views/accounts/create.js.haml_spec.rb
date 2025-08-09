@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,25 +7,25 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/create" do
+describe "accounts/create" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
   end
 
-  # Note: [Create Account] is only called from Accounts index. Unlike other
+  # NOTE: [Create Account] is only called from Accounts index. Unlike other
   # core object Account partial is not embedded.
   describe "create success" do
     before do
-      assign(:account, @account = FactoryGirl.build_stubbed(:account))
+      assign(:account, @account = build_stubbed(:account))
       assign(:accounts, [@account].paginate)
       assign(:account_category_total, Hash.new(1))
       render
     end
 
     it "should hide [Create Account] form and insert account partial" do
-      expect(rendered).to include("$('#accounts').prepend('<li class=\\'account highlight\\' id=\\'account_#{@account.id}\\'")
+      expect(rendered).to include("$('#accounts').prepend('<li class=\\'highlight account\\' id=\\'account_#{@account.id}\\'")
       expect(rendered).to include(%/$('#account_#{@account.id}').effect("highlight"/)
     end
 
@@ -40,12 +42,11 @@ describe "/accounts/create" do
 
   describe "create failure" do
     it "should re-render [create] template in :create_account div" do
-      assign(:account, FactoryGirl.build(:account, name: nil)) # make it invalid
+      assign(:account, build(:account, name: nil)) # make it invalid
       assign(:users, [current_user])
       render
 
       expect(rendered).to include("#create_account")
-      expect(rendered).to include(%/$('#create_account').effect("shake"/)
     end
   end
 end

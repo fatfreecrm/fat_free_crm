@@ -1,10 +1,10 @@
 .remote
-  = form_for([:admin, @user], :html => one_submit_only.merge({:autocomplete => 'off'}), :remote => true) do |f|
+  = form_for([:admin, @user], html: one_submit_only.merge({autocomplete: 'off'}), remote: true) do |f|
     = link_to_close edit_admin_user_path(@user)
 
-    = f.error_messages :object_name => t('user')
+    = f.error_messages object_name: t('user')
 
-    = render "admin/users/profile", :f => f, :edit => true
+    = render "admin/users/profile", f: f, edit: true
     .buttonbar
       = f.submit t(:save_user)
       #{t :or}

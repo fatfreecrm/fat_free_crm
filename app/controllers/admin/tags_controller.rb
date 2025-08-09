@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::TagsController < Admin::ApplicationController
-  before_action "set_current_tab('admin/tags')", only: [:index, :show]
+  before_action :setup_current_tab, only: %i[index show]
 
   load_resource
 
@@ -26,16 +28,14 @@ class Admin::TagsController < Admin::ApplicationController
   # GET /admin/tags/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   def edit
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Tag.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Tag.find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
   end
 
   # POST /admin/tags
   # POST /admin/tags.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def create
-    @tag.update_attributes(tag_params)
+    @tag.update(tag_params)
 
     respond_with(@tag)
   end
@@ -44,7 +44,7 @@ class Admin::TagsController < Admin::ApplicationController
   # PUT /admin/tags/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def update
-    @tag.update_attributes(tag_params)
+    @tag.update(tag_params)
 
     respond_with(@tag)
   end
@@ -66,6 +66,10 @@ class Admin::TagsController < Admin::ApplicationController
   protected
 
   def tag_params
-    params[:tag].permit!
+    params.require(:tag).permit(:name, :taggings_count)
+  end
+
+  def setup_current_tab
+    set_current_tab('admin/tags')
   end
 end

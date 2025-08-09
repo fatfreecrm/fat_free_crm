@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,20 +7,20 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/index" do
+describe "opportunities/index" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
+    login
     view.lookup_context.prefixes << 'entities'
     assign :stage, Setting.unroll(:opportunity_stage)
     assign :per_page, Opportunity.per_page
     assign :sort_by,  Opportunity.sort_by
-    assign :ransack_search, Opportunity.search
+    assign :ransack_search, Opportunity.ransack
   end
 
   it "should render list of accounts if list of opportunities is not empty" do
-    assign(:opportunities, [FactoryGirl.build_stubbed(:opportunity)].paginate)
+    assign(:opportunities, [build_stubbed(:opportunity)].paginate)
 
     render
     expect(view).to render_template(partial: "_opportunity")

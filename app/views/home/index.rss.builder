@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # http://cyber.law.harvard.edu/rss/rss.html
-xml.instruct! :xml, :version => "1.0"
-xml.rss :version => "2.0" do
+xml.instruct! :xml, version: "1.0"
+xml.rss version: "2.0" do
   xml.channel do
     xml.generator  "Fat Free CRM v#{FatFreeCRM::VERSION::STRING}"
     xml.link       root_url
-    xml.pubDate    Time.now.to_s(:rfc822)
+    xml.pubDate    Time.now.to_fs(:rfc822)
     xml.title      t(:activities)
 
     @activities.each do |activity|
@@ -12,7 +14,7 @@ xml.rss :version => "2.0" do
         xml.author      activity.user.try(:full_name)
         # xml.guid        activity.id
         # xml.link        nil
-        xml.pubDate     activity.created_at.to_s(:rfc822)
+        xml.pubDate     activity.created_at.to_fs(:rfc822)
         xml.title       activity_title(activity)
       end
     end

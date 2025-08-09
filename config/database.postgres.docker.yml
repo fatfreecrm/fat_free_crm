@@ -2,10 +2,10 @@
 development: &development
   adapter: postgresql
   database: fat_free_crm_development
-  username: postgres
-  password:
-  host:     db
-  port:     5432
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host:     <%= ENV['DB_HOST'] %>
+  port:     <%= ENV['DB_PORT'] %>
   schema_search_path: public
   min_messages: warning
 
@@ -18,7 +18,7 @@ test:
 
 production:
   <<: *development
-  database: fat_free_crm_production
+  database: <%= ENV['DB_DATABASE'] %>
 
 staging:
   <<: *development

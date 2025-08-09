@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class String
-  alias_method :-, :delete
+  alias - delete
 
   def n2br
     strip.gsub("\n", "<br />")
@@ -15,11 +17,11 @@ class String
   end
 
   def digitize
-    gsub(/[^\d]/, "")  # "$100,000".digitize # => 100000
+    gsub(/[^\d]/, "") # "$100,000".digitize # => 100000
   end
 
   def to_url
-    match(/^https?:\/\//) ? self : "http://" << self
+    match?(%r{^https?://}) ? self : "http://#{self}"
   end
 
   def true?
@@ -34,10 +36,10 @@ class String
   # A query with 4 words will generate 6 permutations
   def name_permutations
     parts = split(" ")
-    (parts.size - 1).times.map do|i|
+    Array.new(parts.size - 1) do |i|
       # ["A", "B", "C", "D"]  =>  [["A B C", "D"], ["A B", "C D"], ["A", "B C D"]]
       [parts[(0..i)].join(" "), parts[(i + 1)..-1].join(" ")]
-    end.inject([]) do |arr, perm|
+    end.each_with_object([]) do |perm, arr|
       # Search both [first, last] and [last, first]
       # e.g. for every ["A B C", "D"], also include ["D", "A B C"]
       arr << perm

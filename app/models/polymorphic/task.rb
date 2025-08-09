@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -26,19 +28,22 @@
 #
 
 class Task < ActiveRecord::Base
+  include ActiveModel::Serializers::Xml
+
   attr_accessor :calendar
-  ALLOWED_VIEWS = %w(pending assigned completed)
+
+  ALLOWED_VIEWS = %w[pending assigned completed]
 
   belongs_to :user
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
-  belongs_to :completor, class_name: "User", foreign_key: :completed_by
-  belongs_to :asset, polymorphic: true
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
+  belongs_to :completor, class_name: "User", foreign_key: :completed_by, optional: true # TODO: Is this really optional?
+  belongs_to :asset, polymorphic: true, optional: true # TODO: Is this really optional?
 
-  serialize :subscribed_users, Array
+  serialize :subscribed_users, type: Array
 
   # Tasks created by the user for herself, or assigned to her by others. That's
   # what gets shown on Tasks/Pending and Tasks/Completed pages.
-  scope :my, ->(*args) {
+  scope :my, lambda { |*args|
     options = args[0] || {}
     user_option = (options.is_a?(Hash) ? options[:user] : options) || User.current_user
     includes(:assignee)
@@ -51,24 +56,24 @@ class Task < ActiveRecord::Base
   scope :assigned_to, ->(user) { where(assigned_to: user.id) }
 
   # Tasks assigned by the user to others. That's what we see on Tasks/Assigned.
-  scope :assigned_by, ->(user) {
+  scope :assigned_by, lambda { |user|
     includes(:assignee)
       .where('user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?', user.id, user.id)
   }
 
   # Tasks created by the user or assigned to the user, i.e. the union of the two
   # scopes above. That's the tasks the user is allowed to see and track.
-  scope :tracked_by, ->(user) {
+  scope :tracked_by, lambda { |user|
     includes(:assignee)
       .where('user_id = ? OR assigned_to = ?', user.id, user.id)
   }
 
   # Show tasks which either belong to the user and are unassigned, or are assigned to the user
-  scope :visible_on_dashboard, ->(user) {
+  scope :visible_on_dashboard, lambda { |user|
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where('completed_at IS NULL')
   }
 
-  scope :by_due_at, -> {
+  scope :by_due_at, lambda {
     order({
       "MySQL"      => "due_at NOT NULL, due_at ASC",
       "PostgreSQL" => "due_at ASC NULLS FIRST"
@@ -97,20 +102,20 @@ class Task < ActiveRecord::Base
   scope :completed_this_month, -> { where('completed_at >= ? AND completed_at < ?', Time.zone.now.beginning_of_month.utc, Time.zone.now.beginning_of_week.utc - 7.days) }
   scope :completed_last_month, -> { where('completed_at >= ? AND completed_at < ?', (Time.zone.now.beginning_of_month.utc - 1.day).beginning_of_month.utc, Time.zone.now.beginning_of_month.utc) }
 
-  scope :text_search, ->(query) {
-    query = query.gsub(/[^\w\s\-\.'\p{L}]/u, '').strip
+  scope :text_search, lambda { |query|
+    query = query.gsub(/[^\w\s\-.'\p{L}]/u, '').strip
     where('upper(name) LIKE upper(?)', "%#{query}%")
   }
 
   acts_as_commentable
-  has_paper_trail class_name: 'Version', meta: { related: :asset },
+  has_paper_trail versions: { class_name: 'Version' }, meta: { related: :asset },
                   ignore: [:subscribed_users]
   has_fields
   exportable
 
   validates_presence_of :user
   validates_presence_of :name, message: :missing_task_name
-  validates_presence_of :calendar, if: "self.bucket == 'specific_time' && !self.completed_at"
+  validates_presence_of :calendar, if: -> { bucket == 'specific_time' && !completed_at }
   validate :specific_time, unless: :completed?
 
   before_create :set_due_date
@@ -151,25 +156,27 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def computed_bucket
     return bucket if bucket != "specific_time"
-    case
-    when overdue?
+
+    if overdue?
       "overdue"
-    when due_today?
+    elsif due_today?
       "due_today"
-    when due_tomorrow?
+    elsif due_tomorrow?
       "due_tomorrow"
-    when due_this_week? && !due_today? && !due_tomorrow?
+    elsif due_this_week? && !due_today? && !due_tomorrow?
       "due_this_week"
-    when due_next_week?
+    elsif due_next_week?
       "due_next_week"
     else
       "due_later"
     end
   end
+
   # Returns list of tasks grouping them by due date as required by tasks/index.
   #----------------------------------------------------------------------------
   def self.find_all_grouped(user, view)
     return {} unless ALLOWED_VIEWS.include?(view)
+
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
     Hash[
       settings.map do |key, _value|
@@ -182,6 +189,8 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.bucket_empty?(bucket, user, view = "pending")
     return false if bucket.blank? || !ALLOWED_VIEWS.include?(view)
+    return false unless Setting.task_bucket.map(&:to_s).include?(bucket.to_s)
+
     if view == "assigned"
       assigned_by(user).send(bucket).pending.count
     else
@@ -193,8 +202,9 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.totals(user, view = "pending")
     return {} unless ALLOWED_VIEWS.include?(view)
+
     settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-    settings.inject(HashWithIndifferentAccess[all: 0]) do |hash, key|
+    settings.each_with_object(HashWithIndifferentAccess[all: 0]) do |key, hash|
       hash[key] = (view == "assigned" ? assigned_by(user).send(key).pending.count : my(user).send(key).send(view).count)
       hash[:all] += hash[key]
       hash
@@ -206,28 +216,26 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def set_due_date
     self.due_at = case bucket
-    when "overdue"
-      due_at || Time.zone.now.midnight.yesterday
-    when "due_today"
-      Time.zone.now.midnight
-    when "due_tomorrow"
-      Time.zone.now.midnight.tomorrow
-    when "due_this_week"
-      Time.zone.now.end_of_week
-    when "due_next_week"
-      Time.zone.now.next_week.end_of_week
-    when "due_later"
-      Time.zone.now.midnight + 100.years
-    when "specific_time"
-      calendar ? parse_calendar_date : nil
-    else # due_later or due_asap
-      nil
+                  when "overdue"
+                    due_at || Time.zone.now.midnight.yesterday
+                  when "due_today"
+                    Time.zone.now.midnight
+                  when "due_tomorrow"
+                    Time.zone.now.midnight.tomorrow
+                  when "due_this_week"
+                    Time.zone.now.end_of_week
+                  when "due_next_week"
+                    Time.zone.now.next_week.end_of_week
+                  when "due_later"
+                    Time.zone.now.midnight + 100.years
+                  when "specific_time"
+                    calendar ? parse_calendar_date : nil
     end
   end
 
   #----------------------------------------------------------------------------
   def due_end_of_day?
-    due_at.present? && (due_at == due_at.end_of_day)
+    due_at.present? && (due_at.change(usec: 0) == due_at.end_of_day.change(usec: 0))
   end
 
   #----------------------------------------------------------------------------

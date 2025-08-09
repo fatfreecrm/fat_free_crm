@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -8,23 +10,36 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
+  # Deprecated: Compatibility with legacy Authlogic routes
+  get '/login',  to: redirect('/users/sign_in')
+  get '/signup', to: redirect('/users/sign_up')
+
+  devise_for :users, controllers: { registrations: 'registrations',
+                                    sessions: 'sessions',
+                                    passwords: 'passwords',
+                                    confirmations: 'confirmations' }
+
+  devise_scope :user do
+    resources :users, only: %i[index show] do
+      collection do
+        get :opportunities_overview
+        match :auto_complete, via: %i[get post]
+      end
+    end
+  end
+
   get 'activities' => 'home#index'
-  get 'admin'      => 'admin/users#index',       :as => :admin
-  get 'login'      => 'authentications#new',     :as => :login
-  delete 'logout'  => 'authentications#destroy', :as => :logout
-  get 'profile'    => 'users#show',              :as => :profile
-  get 'signup'     => 'users#new',               :as => :signup
+  get 'admin'      => 'admin/users#index',       as: :admin
+  get 'profile'    => 'users#show',              as: :profile
 
   get '/home/options',  as: :options
   get '/home/toggle',   as: :toggle
-  match '/home/timeline', as: :timeline, via: [:get, :put, :post]
-  match '/home/timezone', as: :timezone, via: [:get, :put, :post]
-  post '/home/redraw',   as: :redraw
+  match '/home/timeline', as: :timeline, via: %i[get put post]
+  match '/home/timezone', as: :timezone, via: %i[get put post]
+  post '/home/redraw', as: :redraw
 
-  resource :authentication, except: [:index, :edit]
-  resources :comments,       except: [:new, :show]
+  resources :comments,       except: %i[new show]
   resources :emails,         only: [:destroy]
-  resources :passwords,      only: [:new, :create, :edit, :update]
 
   resources :accounts, id: /\d+/ do
     collection do
@@ -32,7 +47,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
     end
@@ -52,7 +67,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
     end
@@ -72,7 +87,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
     end
@@ -91,7 +106,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
       get :autocomplete_account_name
@@ -102,7 +117,7 @@ Rails.application.routes.draw do
       post :subscribe
       post :unsubscribe
       put :attach
-      match :promote, via: [:patch, :put]
+      match :promote, via: %i[patch put]
       put :reject
     end
   end
@@ -113,7 +128,7 @@ Rails.application.routes.draw do
       post :filter
       get :options
       get :field_group
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
       get :redraw
       get :versions
     end
@@ -129,7 +144,7 @@ Rails.application.routes.draw do
   resources :tasks, id: /\d+/ do
     collection do
       post :filter
-      match :auto_complete, via: [:get, :post]
+      match :auto_complete, via: %i[get post]
     end
     member do
       put :complete
@@ -137,17 +152,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, id: /\d+/, except: [:index, :destroy] do
+  resources :users, id: /\d+/, except: %i[index destroy create] do
     member do
       get :avatar
       get :password
-      match :upload_avatar, via: [:put, :patch]
+      match :upload_avatar, via: %i[put patch]
       patch :change_password
       post :redraw
-    end
-    collection do
-      match :auto_complete, via: [:get, :post]
-      get :opportunities_overview
     end
   end
 
@@ -156,7 +167,7 @@ Rails.application.routes.draw do
 
     resources :users do
       collection do
-        match :auto_complete, via: [:get, :post]
+        match :auto_complete, via: %i[get post]
       end
       member do
         get :confirm
@@ -165,7 +176,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :field_groups, except: [:index, :show] do
+    resources :field_groups, except: %i[index show] do
       collection do
         post :sort
       end
@@ -176,7 +187,7 @@ Rails.application.routes.draw do
 
     resources :fields do
       collection do
-        match :auto_complete, via: [:get, :post]
+        match :auto_complete, via: %i[get post]
         get :options
         get :redraw
         post :sort
@@ -193,7 +204,11 @@ Rails.application.routes.draw do
     resources :fields, as: :custom_fields
     resources :fields, as: :core_fields
 
-    resources :settings, only: :index
-    resources :plugins,  only: :index
+    resources :settings, only: %i[index] do
+      collection do
+        put :update
+      end
+    end
+    resources :plugins, only: :index
   end
 end

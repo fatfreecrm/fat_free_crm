@@ -1,7 +1,7 @@
 crm.flip_form('create_group');
 
 - unless params[:cancel].true?
-  $('#create_group').html('#{ j render(:partial => "new") }');
+  $('#create_group').html('#{ j render(partial: "new") }');
   $('#empty').html('');
   crm.set_title('create_group', '#{t(:create_group)}');
 

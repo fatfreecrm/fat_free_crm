@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Compares two locale files and detects missing translations.
 class MissingTranslationDetector
   attr_reader :missing_translations
@@ -37,6 +39,7 @@ class MissingTranslationDetector
 
     keys.each do |key|
       return true if !h.is_a?(Hash) || !h.key?(key)
+
       h = h[key]
     end
 

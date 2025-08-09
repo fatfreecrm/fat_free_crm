@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,12 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/destroy" do
+describe "contacts/destroy" do
   include ContactsHelper
 
   before do
-    login_and_assign
-    assign(:contact, @contact = FactoryGirl.build_stubbed(:contact))
+    login
+    assign(:contact, @contact = build_stubbed(:contact))
     assign(:contacts, [@contact].paginate)
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,12 +7,12 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/contacts/_new" do
+describe "contacts/_new" do
   include ContactsHelper
 
   before do
-    login_and_assign
-    @account = FactoryGirl.build_stubbed(:account)
+    login
+    @account = build_stubbed(:account)
     assign(:contact, Contact.new)
     assign(:users, [current_user])
     assign(:account, @account)
@@ -24,7 +26,7 @@ describe "/contacts/_new" do
     expect(view).to render_template(partial: "contacts/_web")
     expect(view).to render_template(partial: "entities/_permissions")
 
-    expect(rendered).to have_tag("form[class=new_contact]")
+    expect(rendered).to have_tag('form[class="simple_form new_contact"]')
   end
 
   it "should pick default assignee (Myself)" do

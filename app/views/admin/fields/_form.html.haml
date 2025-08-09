@@ -4,32 +4,32 @@
 - url = new_field ? admin_fields_path : admin_field_path
 - html_id = new_field ? nil : "edit_field_#{@field.id}"
 
-%div{:class => new_field ? nil : 'remote edit_field'}
-  = form_for([:admin, @field], :url => url, :as => :field, :html => {:class => nil, :id => html_id}, :remote => true) do |f|
-    = link_to( 'x', '#', :class => 'close', :title => t(:close_form) )
+%div{class: new_field ? nil : 'remote edit_field'}
+  = form_for([:admin, @field], url: url, as: :field, html: {class: nil, id: html_id}, remote: true) do |f|
+    = link_to( 'x', '#', class: 'close', title: t(:close_form) )
     = f.error_messages
 
-    = hidden_field_tag 'field[field_group_id]', field_group_id, :id => nil
+    = hidden_field_tag 'field[field_group_id]', field_group_id, id: nil
 
     .section
       %table
         %tr
           %td
             .label.top.req Field label:
-            = f.text_field :label, :id => nil
+            = f.text_field :label, id: nil
 
           %td= spacer
           %td
             .label.top.req Field type:
-            = select :field, :as, field_edit_as_options(@field), :include_blank => true, :id => nil
+            = select :field, :as, field_edit_as_options(@field), include_blank: true, id: nil, class: 'select2'
 
       .subform
-        = render(:partial => 'admin/fields/subform') unless new_field
+        = render(partial: 'admin/fields/subform') unless new_field
 
     .buttonbar
       - if new_field
-        = f.submit t(:create_field), :id => :field_submit
+        = f.submit t(:create_field), id: :field_submit
       - else
-        = f.submit t(:save_field), :id => :field_submit
+        = f.submit t(:save_field), id: :field_submit
       or
-      = link_to( t(:cancel), '#', :class => 'cancel' )
+      = link_to( t(:cancel), '#', class: 'cancel' )

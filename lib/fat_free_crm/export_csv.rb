@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -12,6 +14,7 @@ module FatFreeCRM
     #----------------------------------------------------------------------------
     def self.from_array(items = [])
       return '' if items.empty?
+
       # Infer column types from the first item in the array
       klass = items.first.class
       columns = klass.columns.map(&:name).reject { |column| column =~ /password|token/ }
@@ -21,7 +24,7 @@ module FatFreeCRM
         items.each do |item|
           csv << columns.map do |column|
             if column == 'tags'
-              item.tag_list.join(' ')
+              item.tags.join(' ')
             else
               item.send(column)
             end

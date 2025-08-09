@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -7,7 +9,7 @@ module TagsHelper
   # Generate tag links for use on asset index pages.
   #----------------------------------------------------------------------------
   def tags_for_index(model)
-    model.tag_list.inject("".html_safe) do |out, tag|
+    model.tags.inject("".html_safe) do |out, tag|
       query = controller.send(:current_query) || ""
       hashtag = "##{tag}"
       if query.empty?
@@ -15,7 +17,7 @@ module TagsHelper
       elsif !query.include?(hashtag)
         query += " #{hashtag}"
       end
-      out << link_to_function(tag, "crm.search_tagged('#{query}', '#{model.class.to_s.tableize}')", title: tag)
+      out << link_to_function(tag, "crm.search_tagged('#{escape_javascript(query)}', '#{model.class.to_s.tableize}')", title: tag)
     end
   end
 

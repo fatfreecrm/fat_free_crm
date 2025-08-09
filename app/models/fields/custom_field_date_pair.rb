@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -9,6 +11,7 @@ class CustomFieldDatePair < CustomFieldPair
   #------------------------------------------------------------------------------
   def render_value(object)
     return "" unless paired_with.present?
+
     from = render(object.send(name))
     to = render(object.send(paired_with.name))
     if from.present? && to.present?
@@ -23,7 +26,7 @@ class CustomFieldDatePair < CustomFieldPair
   end
 
   def render(value)
-    value && value.strftime(I18n.t("date.formats.mmddyy"))
+    value&.strftime(I18n.t("date.formats.mmddyy"))
   end
 
   def custom_validator(obj)
@@ -32,6 +35,7 @@ class CustomFieldDatePair < CustomFieldPair
     if pair_id.present?
       start = CustomFieldPair.find(pair_id)
       return if start.nil?
+
       from = obj.send(start.name)
       to = obj.send(name)
       obj.errors.add(name.to_sym, ::I18n.t('activerecord.errors.models.custom_field.endbeforestart', field: start.label)) if from.present? && to.present? && (from > to)

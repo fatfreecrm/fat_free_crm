@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -19,6 +21,7 @@
 #  collection     :text
 #  disabled       :boolean
 #  required       :boolean
+#  minlength      :integer
 #  maxlength      :integer
 #  created_at     :datetime
 #  updated_at     :datetime
@@ -54,7 +57,7 @@ class CustomField < Field
   after_create :add_ransack_translation
 
   SAFE_DB_TRANSITIONS = {
-    any: [%w(date time timestamp), %w(integer float)],
+    any: [%w[date time timestamp], %w[integer float]],
     one: { 'string' => 'text' }
   }
 
@@ -70,6 +73,7 @@ class CustomField < Field
   def custom_validator(obj)
     attr = name.to_sym
     obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.required', field: label)) if required? && obj.send(attr).blank?
+    obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.minlength', field: label)) if (minlength.to_i > 0) && (obj.send(attr).to_s.length < minlength.to_i)
     obj.errors.add(attr, ::I18n.t('activerecord.errors.models.custom_field.maxlength', field: label)) if (maxlength.to_i > 0) && (obj.send(attr).to_s.length > maxlength.to_i)
   end
 
@@ -85,13 +89,14 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def db_transition_safety(old_type, new_type = as)
     old_col, new_col = [old_type, new_type].map { |t| column_type(t).to_s }
-    return :null if old_col == new_col  # no transition needed
+    return :null if old_col == new_col # no transition needed
     return :safe if SAFE_DB_TRANSITIONS[:one].any? do |start, final|
-      old_col == start.to_s && new_col == final.to_s  # one-to-one
+      old_col == start.to_s && new_col == final.to_s # one-to-one
     end
     return :safe if SAFE_DB_TRANSITIONS[:any].any? do |col_set|
-      [old_col, new_col].all? { |c| col_set.include?(c.to_s) }  # any-to-any
+      [old_col, new_col].all? { |c| col_set.include?(c.to_s) } # any-to-any
     end
+
     :unsafe # Else, unsafe.
   end
 
@@ -119,7 +124,7 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def add_column
     self.name = generate_column_name if name.blank?
-    klass.connection.add_column(table_name, name, column_type, column_options)
+    klass.connection.add_column(table_name, name, column_type, **column_options)
     klass.reset_column_information
     klass.serialize_custom_fields!
   end
@@ -127,8 +132,7 @@ class CustomField < Field
   # Adds custom field translation for Ransack
   def add_ransack_translation
     I18n.backend.store_translations(Setting.locale.to_sym,
-                                    ransack: { attributes: { klass.model_name.singular => { name => label } } }
-    )
+                                    ransack: { attributes: { klass.model_name.singular => { name => label } } })
     # Reset Ransack cache
     # Ransack::Helpers::FormBuilder.cached_searchable_attributes_for_base = {}
   end
@@ -138,7 +142,7 @@ class CustomField < Field
   #------------------------------------------------------------------------------
   def update_column
     if errors.empty? && db_transition_safety(as_was) == :safe
-      klass.connection.change_column(table_name, name, column_type, column_options)
+      klass.connection.change_column(table_name, name, column_type, **column_options)
       klass.reset_column_information
       klass.serialize_custom_fields!
     end

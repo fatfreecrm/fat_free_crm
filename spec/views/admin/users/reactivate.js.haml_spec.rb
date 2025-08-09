@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -7,8 +9,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/users/reactivate" do
   before do
-    login_and_assign(admin: true)
-    assign(:user, @user = FactoryGirl.build_stubbed(:user, suspended_at: Time.now.yesterday))
+    login_admin
+    assign(:user, @user = build_stubbed(:user, suspended_at: Time.now.yesterday))
   end
 
   it "reloads the requested user partial" do

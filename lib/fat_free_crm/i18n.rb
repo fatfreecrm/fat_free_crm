@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -12,8 +14,8 @@ module FatFreeCRM
       if args.size == 1
         super(args.first, default: args.first.to_s)
       elsif args.second.is_a?(Hash)
-        super(*args)
-      elsif args.second.is_a?(Fixnum)
+        super(args.first, **args.second)
+      elsif args.second.is_a?(Integer)
         super(args.first, count: args.second)
       else
         super(args.first, value: args.second)
@@ -38,5 +40,5 @@ module FatFreeCRM
   end
 end
 
-ActionView::Base.send(:include, FatFreeCRM::I18n)
-ActionController::Base.send(:include, FatFreeCRM::I18n)
+ActionView::Base.include FatFreeCRM::I18n
+ActionController::Base.include FatFreeCRM::I18n

@@ -3,14 +3,14 @@
 
 %li.highlight[tag]
   .tools
-    = link_to_edit(tag, :url => edit_admin_tag_path(tag)) << " |"
+    = link_to_edit(tag, url: edit_admin_tag_path(tag)) + " |"
     - if tag_field_groups.any?
-      %span{:style => "color: #777"} Delete
+      %span{style: "color: #777"} Delete
     - else
       - if model_tagging_counts.any?
         = link_to_confirm(tag)
       - else
-        = link_to_delete(tag, :url => url_for([:admin, tag]))
+        = link_to_delete(tag, url: url_for([:admin, tag]))
 
   %span.black= tag.name
   %tt
@@ -19,7 +19,7 @@
       = model_tagging_counts.map {|k, c| t(pluralize(c, k.downcase)) }.join(", ")
 
   - if tag_field_groups.any?
-    %dt{ :style => "padding: 2px 0px 0px 0px" }
+    %dt{ style: "padding: 2px 0px 0px 0px" }
       = t(:field_group_tags) + ":"
       - tag_field_groups.each_with_index do |field_group, i|
         %strong= field_group.label_i18n

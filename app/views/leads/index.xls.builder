@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
   xml.Table do
     unless @leads.empty?
@@ -18,7 +20,6 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
                  I18n.t('linked_in'),
                  I18n.t('facebook'),
                  I18n.t('twitter'),
-                 I18n.t('skype'),
                  I18n.t('date_created'),
                  I18n.t('date_updated'),
                  I18n.t('assigned_to'),
@@ -67,7 +68,6 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
                      lead.linkedin,
                      lead.facebook,
                      lead.twitter,
-                     lead.skype,
                      lead.created_at,
                      lead.updated_at,
                      lead.assignee.try(:name),
@@ -92,7 +92,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
           data.each do |value|
             xml.Cell do
               xml.Data value,
-                      'ss:Type' => "#{value.respond_to?(:abs) ? 'Number' : 'String'}"
+                       'ss:Type' => (value.respond_to?(:abs) ? 'Number' : 'String').to_s
             end
           end
         end

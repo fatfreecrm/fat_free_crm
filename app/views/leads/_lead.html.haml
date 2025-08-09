@@ -1,5 +1,5 @@
-- if (params['controller'] == 'leads') and (template = template_for_current_view).present?
-  = render(template, :lead => lead)
+- if (controller.controller_name == 'leads') and (template = template_for_current_view).present?
+  = render(template, lead: lead)
 - else
   -# default view
-  = render 'leads/index_brief', :lead => lead
+  = render 'leads/index_brief', lead: lead

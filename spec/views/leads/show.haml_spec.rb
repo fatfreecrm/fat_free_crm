@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,15 +7,18 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/show" do
+describe "leads/show" do
   include LeadsHelper
 
   before do
-    login_and_assign
-    assign(:lead, @lead = FactoryGirl.build_stubbed(:lead, id: 42))
+    login
+    assign(:lead, @lead = build_stubbed(:lead, id: 42))
     assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:timeline, [FactoryGirl.build_stubbed(:comment, commentable: @lead)])
+    assign(:timeline, [build_stubbed(:comment, commentable: @lead)])
+
+    # controller#controller_name and controller#action_name are not set in view specs
+    allow(view).to receive(:template_for_current_view).and_return(nil)
   end
 
   it "should render lead landing page" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -28,15 +30,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Opportunity do
-  before { login }
-
   it "should create a new instance given valid attributes" do
     Opportunity.create!(name: "Opportunity", stage: 'analysis')
   end
 
   it "should be possible to create opportunity with the same name" do
-    first  = FactoryGirl.create(:opportunity, name: "Hello", user: current_user)
-    expect { FactoryGirl.create(:opportunity, name: "Hello", user: current_user) }.to_not raise_error
+    create(:opportunity, name: "Hello")
+    expect { create(:opportunity, name: "Hello") }.to_not raise_error
   end
 
   it "have a default stage" do
@@ -50,65 +50,77 @@ describe Opportunity do
 
   describe "Update existing opportunity" do
     before(:each) do
-      @account = FactoryGirl.create(:account)
-      @opportunity = FactoryGirl.create(:opportunity, account: @account)
+      @account = create(:account)
+      @opportunity = create(:opportunity, account: @account)
     end
 
     it "should create new account if requested so" do
-      expect {
+      expect do
         @opportunity.update_with_account_and_permissions(
-        account: { name: "New account" },
-        opportunity: { name: "Hello" }
-      )
-      }.to change(Account, :count).by(1)
+          account: { name: "New account" },
+          opportunity: { name: "Hello" }
+        )
+      end.to change(Account, :count).by(1)
       expect(Account.last.name).to eq("New account")
       expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
     end
 
     it "should update the account another account was selected" do
-      @another_account = FactoryGirl.create(:account)
-      expect {
+      @another_account = create(:account)
+      expect do
         @opportunity.update_with_account_and_permissions(
-        account: { id: @another_account.id },
-        opportunity: { name: "Hello" }
-      )
-      }.not_to change(Account, :count)
+          account: { id: @another_account.id },
+          opportunity: { name: "Hello" }
+        )
+      end.not_to change(Account, :count)
       expect(@opportunity.account).to eq(@another_account)
       expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
     end
 
     it "should drop existing Account if [create new account] is blank" do
-      expect {
+      expect do
         @opportunity.update_with_account_and_permissions(
-        account: { name: "" },
-        opportunity: { name: "Hello" }
-      )
-      }.not_to change(Account, :count)
+          account: { name: "" },
+          opportunity: { name: "Hello" }
+        )
+      end.not_to change(Account, :count)
       expect(@opportunity.account).to be_nil
       expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
     end
 
     it "should drop existing Account if [-- None --] is selected from list of accounts" do
-      expect {
+      expect do
         @opportunity.update_with_account_and_permissions(
-        account: { id: "" },
-        opportunity: { name: "Hello" }
-      )
-      }.not_to change(Account, :count)
+          account: { id: "" },
+          opportunity: { name: "Hello" }
+        )
+      end.not_to change(Account, :count)
       expect(@opportunity.account).to be_nil
       expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
     end
 
+    it "should change account if entered name of another account was found" do
+      @another_account = create(:account, name: "Another name")
+      expect do
+        @opportunity.update_with_account_and_permissions(
+          account: { name: "Another name" },
+          opportunity: { name: "Hello" }
+        )
+      end.not_to change(Account, :count)
+      expect(@opportunity.account).to eq(@another_account)
+      expect(@opportunity.name.gsub(/#\d+ /, '')).to eq("Hello")
+    end
+
     it "should set the probability to 0% if opportunity has been lost" do
-      opportunity = FactoryGirl.create(:opportunity, stage: "prospecting", probability: 25)
-      opportunity.update_attributes(stage: 'lost')
+      opportunity = create(:opportunity, stage: "prospecting", probability: 25)
+      opportunity.update(stage: 'lost')
       opportunity.reload
       expect(opportunity.probability).to eq(0)
     end
 
-    it "should set the probablility to 100% if opportunity has been won" do
-      opportunity = FactoryGirl.create(:opportunity, stage: "prospecting", probability: 65)
-      opportunity.update_attributes(stage: 'won')
+    it "should set the probability to 100% if opportunity has been won" do
+      opportunity = create(:opportunity, stage: "prospecting", probability: 65)
+      opportunity.update(stage: 'won')
       opportunity.reload
       expect(opportunity.probability).to eq(100)
     end
@@ -118,12 +130,12 @@ describe Opportunity do
     it "should find non-closed opportunities" do
       Opportunity.delete_all
       @opportunities = [
-        FactoryGirl.create(:opportunity, stage: "prospecting", amount: 1),
-        FactoryGirl.create(:opportunity, stage: "analysis", amount: 1),
-        FactoryGirl.create(:opportunity, stage: "won",      amount: 2),
-        FactoryGirl.create(:opportunity, stage: "won",      amount: 2),
-        FactoryGirl.create(:opportunity, stage: "lost",     amount: 3),
-        FactoryGirl.create(:opportunity, stage: "lost",     amount: 3)
+        create(:opportunity, stage: "prospecting", amount: 1),
+        create(:opportunity, stage: "analysis", amount: 1),
+        create(:opportunity, stage: "won",      amount: 2),
+        create(:opportunity, stage: "won",      amount: 2),
+        create(:opportunity, stage: "lost",     amount: 3),
+        create(:opportunity, stage: "lost",     amount: 3)
       ]
       expect(Opportunity.pipeline.sum(:amount)).to eq(2)
       expect(Opportunity.won.sum(:amount)).to eq(4)
@@ -132,8 +144,8 @@ describe Opportunity do
     end
 
     context "unassigned" do
-      let(:unassigned_opportunity) { FactoryGirl.create(:opportunity, assignee: nil) }
-      let(:assigned_opportunity) { FactoryGirl.create(:opportunity, assignee: FactoryGirl.create(:user)) }
+      let(:unassigned_opportunity) { create(:opportunity, assignee: nil) }
+      let(:assigned_opportunity) { create(:opportunity, assignee: create(:user)) }
 
       it "includes unassigned opportunities" do
         expect(Opportunity.unassigned).to include(unassigned_opportunity)
@@ -147,12 +159,12 @@ describe Opportunity do
 
   describe "Attach" do
     before do
-      @opportunity = FactoryGirl.create(:opportunity)
+      @opportunity = create(:opportunity)
     end
 
     it "should return nil when attaching existing asset" do
-      @task = FactoryGirl.create(:task, asset: @opportunity, user: current_user)
-      @contact = FactoryGirl.create(:contact)
+      @task = create(:task, asset: @opportunity)
+      @contact = create(:contact)
       @opportunity.contacts << @contact
 
       expect(@opportunity.attach!(@task)).to eq(nil)
@@ -160,8 +172,8 @@ describe Opportunity do
     end
 
     it "should return non-empty list of attachments when attaching new asset" do
-      @task = FactoryGirl.create(:task, user: current_user)
-      @contact = FactoryGirl.create(:contact)
+      @task = create(:task)
+      @contact = create(:contact)
 
       expect(@opportunity.attach!(@task)).to eq([@task])
       expect(@opportunity.attach!(@contact)).to eq([@contact])
@@ -170,11 +182,11 @@ describe Opportunity do
 
   describe "Discard" do
     before do
-      @opportunity = FactoryGirl.create(:opportunity)
+      @opportunity = create(:opportunity)
     end
 
     it "should discard a task" do
-      @task = FactoryGirl.create(:task, asset: @opportunity, user: current_user)
+      @task = create(:task, asset: @opportunity)
       expect(@opportunity.tasks.count).to eq(1)
 
       @opportunity.discard!(@task)
@@ -183,7 +195,7 @@ describe Opportunity do
     end
 
     it "should discard an contact" do
-      @contact = FactoryGirl.create(:contact)
+      @contact = create(:contact)
       @opportunity.contacts << @contact
       expect(@opportunity.contacts.count).to eq(1)
 
@@ -195,16 +207,16 @@ describe Opportunity do
 
   describe "Exportable" do
     describe "assigned opportunity" do
-      let(:opportunity1) { FactoryGirl.build(:opportunity, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user)) }
-      let(:opportunity2) { FactoryGirl.build(:opportunity, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: FactoryGirl.create(:user, first_name: nil, last_name: nil)) }
+      let(:opportunity1) { build(:opportunity, user: create(:user), assignee: create(:user)) }
+      let(:opportunity2) { build(:opportunity, user: create(:user, first_name: nil, last_name: nil), assignee: create(:user, first_name: nil, last_name: nil)) }
       it_should_behave_like("exportable") do
         let(:exported) { [opportunity1, opportunity2] }
       end
     end
 
     describe "unassigned opportunity" do
-      let(:opportunity1) { FactoryGirl.build(:opportunity, user: FactoryGirl.create(:user), assignee: nil) }
-      let(:opportunity2) { FactoryGirl.build(:opportunity, user: FactoryGirl.create(:user, first_name: nil, last_name: nil), assignee: nil) }
+      let(:opportunity1) { build(:opportunity, user: create(:user), assignee: nil) }
+      let(:opportunity2) { build(:opportunity, user: create(:user, first_name: nil, last_name: nil), assignee: nil) }
       it_should_behave_like("exportable") do
         let(:exported) { [opportunity1, opportunity2] }
       end
@@ -218,14 +230,14 @@ describe Opportunity do
   describe "scopes" do
     context "visible_on_dashboard" do
       before :each do
-        @user = FactoryGirl.create(:user)
-        @o1 = FactoryGirl.create(:opportunity_in_pipeline, user: @user, stage: 'prospecting')
-        @o2 = FactoryGirl.create(:opportunity_in_pipeline, user: @user, assignee: FactoryGirl.create(:user), stage: 'prospecting')
-        @o3 = FactoryGirl.create(:opportunity_in_pipeline, user: FactoryGirl.create(:user), assignee: @user, stage: 'prospecting')
-        @o4 = FactoryGirl.create(:opportunity_in_pipeline, user: FactoryGirl.create(:user), assignee: FactoryGirl.create(:user), stage: 'prospecting')
-        @o5 = FactoryGirl.create(:opportunity_in_pipeline, user: FactoryGirl.create(:user), assignee: @user, stage: 'prospecting')
-        @o6 = FactoryGirl.create(:opportunity, assignee: @user, stage: 'won')
-        @o7 = FactoryGirl.create(:opportunity, assignee: @user, stage: 'lost')
+        @user = create(:user)
+        @o1 = create(:opportunity_in_pipeline, user: @user, stage: 'prospecting')
+        @o2 = create(:opportunity_in_pipeline, user: @user, assignee: create(:user), stage: 'prospecting')
+        @o3 = create(:opportunity_in_pipeline, user: create(:user), assignee: @user, stage: 'prospecting')
+        @o4 = create(:opportunity_in_pipeline, user: create(:user), assignee: create(:user), stage: 'prospecting')
+        @o5 = create(:opportunity_in_pipeline, user: create(:user), assignee: @user, stage: 'prospecting')
+        @o6 = create(:opportunity, assignee: @user, stage: 'won')
+        @o7 = create(:opportunity, assignee: @user, stage: 'lost')
       end
 
       it "should show opportunities which have been created by the user and are unassigned" do
@@ -251,9 +263,9 @@ describe Opportunity do
     end
 
     context "by_closes_on" do
-      let(:o1) { FactoryGirl.create(:opportunity, closes_on: 3.days.from_now) }
-      let(:o2) { FactoryGirl.create(:opportunity, closes_on: 7.days.from_now) }
-      let(:o3) { FactoryGirl.create(:opportunity, closes_on: 5.days.from_now) }
+      let(:o1) { create(:opportunity, closes_on: 3.days.from_now) }
+      let(:o2) { create(:opportunity, closes_on: 7.days.from_now) }
+      let(:o3) { create(:opportunity, closes_on: 5.days.from_now) }
 
       it "should show opportunities ordered by closes on" do
         expect(Opportunity.by_closes_on).to eq([o1, o3, o2])
@@ -261,9 +273,9 @@ describe Opportunity do
     end
 
     context "by_amount" do
-      let(:o1) { FactoryGirl.create(:opportunity, amount:  50_000) }
-      let(:o2) { FactoryGirl.create(:opportunity, amount:  10_000) }
-      let(:o3) { FactoryGirl.create(:opportunity, amount: 750_000) }
+      let(:o1) { create(:opportunity, amount:  50_000) }
+      let(:o2) { create(:opportunity, amount:  10_000) }
+      let(:o3) { create(:opportunity, amount: 750_000) }
 
       it "should show opportunities ordered by amount" do
         expect(Opportunity.by_amount).to eq([o3, o1, o2])
@@ -271,9 +283,9 @@ describe Opportunity do
     end
 
     context "not lost" do
-      let(:o1) { FactoryGirl.create(:opportunity, stage: 'won') }
-      let(:o2) { FactoryGirl.create(:opportunity, stage: 'lost') }
-      let(:o3) { FactoryGirl.create(:opportunity, stage: 'analysis') }
+      let(:o1) { create(:opportunity, stage: 'won') }
+      let(:o2) { create(:opportunity, stage: 'lost') }
+      let(:o3) { create(:opportunity, stage: 'analysis') }
 
       it "should show opportunities which are not lost" do
         expect(Opportunity.not_lost).to include(o1, o3)

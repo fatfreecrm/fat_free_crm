@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -8,14 +10,14 @@ namespace :ffcrm do
     desc "Run dropbox crawler and process incoming emails"
     task run: :environment do
       require "fat_free_crm/mail_processor/dropbox"
-      FatFreeCRM::MailProcessor::Dropbox.new.run(dry_run = false)
+      FatFreeCRM::MailProcessor::Dropbox.new.run(false)
     end
 
     namespace :run do
       desc "[Dry run] - Run dropbox crawler and process incoming emails"
       task dry: :environment do
         require "fat_free_crm/mail_processor/dropbox"
-        FatFreeCRM::MailProcessor::Dropbox.new.run(dry_run = true)
+        FatFreeCRM::MailProcessor::Dropbox.new.run(true)
       end
     end
 

@@ -16,7 +16,7 @@
         %th=t(:address) + ":"
         %td
           %div
-            %strong= render "shared/address_show", :asset => contact, :type => 'business', :title => nil
+            %strong= render "shared/address_show", asset: contact, type: 'business', title: nil
       %tr
         %th= t(:web_presence)
         %td= web_presence_icons(contact)

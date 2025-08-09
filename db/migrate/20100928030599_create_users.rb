@@ -1,4 +1,6 @@
-class CreateUsers < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateUsers < ActiveRecord::Migration[4.2]
   def self.up
     create_table :users, force: true do |t|
       t.string :uuid,             limit: 36
@@ -26,13 +28,13 @@ class CreateUsers < ActiveRecord::Migration
       t.datetime :current_login_at
       t.string :last_login_ip
       t.string :current_login_ip
-      t.integer :login_count,      null: false, default: 0
+      t.integer :login_count, null: false, default: 0
       # >>> End of [authlogic] maintained fields.
       t.datetime :deleted_at
       t.timestamps
     end
 
-    add_index :users, [:username, :deleted_at], unique: true
+    add_index :users, %i[username deleted_at], unique: true
     add_index :users, :email
     add_index :users, :last_request_at
     add_index :users, :remember_token

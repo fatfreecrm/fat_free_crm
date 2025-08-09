@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -6,17 +8,17 @@
 require 'paper_trail'
 
 class Version < PaperTrail::Version
-  ASSETS = %w(all tasks campaigns leads accounts contacts opportunities comments emails)
-  EVENTS = %w(all_events create view update destroy)
-  DURATION = %w(one_hour one_day two_days one_week two_weeks one_month)
+  ASSETS = %w[all tasks campaigns leads accounts contacts opportunities comments emails]
+  EVENTS = %w[all_events create view update destroy]
+  DURATION = %w[one_hour one_day two_days one_week two_weeks one_month]
 
-  belongs_to :related, polymorphic: true
-  belongs_to :user, foreign_key: :whodunnit
+  belongs_to :related, polymorphic: true, optional: true # TODO: Is this really optional?
+  belongs_to :user, foreign_key: :whodunnit, optional: true # TODO: Is this really optional?
 
-  scope :default_order,  lambda { order('created_at DESC') }
-  scope :include_events, lambda { |*events| where(event: events) }
-  scope :exclude_events, lambda { |*events| where('event NOT IN (?)', events) }
-  scope :for,            lambda { |user| where(whodunnit: user.id.to_s) }
+  scope :default_order,  -> { order('created_at DESC') }
+  scope :include_events, ->(*events) { where(event: events) }
+  scope :exclude_events, ->(*events) { where('event NOT IN (?)', events) }
+  scope :for,            ->(user) { where(whodunnit: user.id.to_s) }
 
   class << self
     def recent_for_user(user, limit = 10)
@@ -32,7 +34,8 @@ class Version < PaperTrail::Version
                 .offset(offset)
                 .default_order
 
-        break if query.size == 0
+        break if query.empty?
+
         versions += query.select { |v| v.item.present? }
         versions.uniq! { |v| [v.item_id, v.item_type] }
         offset += limit * 2
@@ -44,7 +47,7 @@ class Version < PaperTrail::Version
       includes(:item, :related, :user)
         .where(({ item_type: options[:asset] } if options[:asset]))
         .where(({ event:     options[:event] } if options[:event]))
-        .where(({ whodunnit: options[:user].to_s }  if options[:user]))
+        .where(({ whodunnit: options[:user].to_s } if options[:user]))
         .where('versions.created_at >= ?', Time.zone.now - (options[:duration] || 2.days))
         .limit(options[:max])
         .default_order

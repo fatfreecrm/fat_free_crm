@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -8,7 +10,7 @@ require 'fat_free_crm/mail_processor/base'
 module FatFreeCRM
   module MailProcessor
     class Dropbox < Base
-      KEYWORDS = %w(account campaign contact lead opportunity).freeze
+      KEYWORDS = %w[account campaign contact lead opportunity].freeze
 
       #--------------------------------------------------------------------------------------
       def initialize
@@ -52,9 +54,7 @@ module FatFreeCRM
       #--------------------------------------------------------------------------------------
       def with_explicit_keyword(email)
         first_line = plain_text_body(email).split("\n").first
-        if first_line =~ %r{(#{KEYWORDS.join('|')})[^a-zA-Z0-9]+(.+)$}i
-          yield Regexp.last_match[1].capitalize, Regexp.last_match[2].strip
-        end
+        yield Regexp.last_match[1].capitalize, Regexp.last_match[2].strip if first_line =~ /(#{KEYWORDS.join('|')})[^a-zA-Z0-9]+(.+)$/i
       end
 
       # Checks the email to detect assets on to/bcc addresses
@@ -66,9 +66,7 @@ module FatFreeCRM
 
         # Ignore the dropbox email address, and any address aliases
         ignored_addresses = [@settings[:address]]
-        if @settings[:address_aliases].is_a?(Array)
-          ignored_addresses += @settings[:address_aliases]
-        end
+        ignored_addresses += @settings[:address_aliases] if @settings[:address_aliases].is_a?(Array)
         recipients -= ignored_addresses
 
         # Process each recipient until email has been attached
@@ -81,9 +79,7 @@ module FatFreeCRM
       # Checks the email to detect valid email address in body (first email), detect forwarded emails
       #----------------------------------------------------------------------------------------
       def with_forwarded_recipient(email, _options = {})
-        if plain_text_body(email) =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
-          yield Regexp.last_match[1]
-        end
+        yield Regexp.last_match[1] if plain_text_body(email) =~ /\b([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})\b/
       end
 
       # Process pipe_separated_data or explicit keyword.
@@ -130,9 +126,7 @@ module FatFreeCRM
           asset = klass.where(["(lower(email) = ?)", recipient.downcase]).first
 
           # Leads and Contacts have an alt_email: try it if lookup by primary email has failed.
-          if !asset && klass.column_names.include?("alt_email")
-            asset = klass.where(["(lower(alt_email) = ?)", recipient.downcase]).first
-          end
+          asset = klass.where(["(lower(alt_email) = ?)", recipient.downcase]).first if !asset && klass.column_names.include?("alt_email")
 
           if asset && sender_has_permissions_for?(asset)
             attach(email, asset)
@@ -174,9 +168,7 @@ module FatFreeCRM
         )
         asset.touch
 
-        if asset.is_a?(Lead) && asset.status == "new"
-          asset.update_attribute(:status, "contacted")
-        end
+        asset.update_attribute(:status, "contacted") if asset.is_a?(Lead) && asset.status == "new"
 
         if @settings[:attach_to_account] && asset.respond_to?(:account) && asset.account
           Email.create(
@@ -207,14 +199,14 @@ module FatFreeCRM
 
         case keyword
         when "Account", "Campaign", "Opportunity"
-          defaults[:status] = "planned" if keyword == "Campaign"      # TODO: I18n
+          defaults[:status] = "planned" if keyword == "Campaign" # TODO: I18n
           defaults[:stage] = Opportunity.default_stage if keyword == "Opportunity" # TODO: I18n
 
         when "Contact", "Lead"
           first_name, *last_name = data.delete("Name").split(' ')
           defaults[:first_name] = first_name
           defaults[:last_name] = (last_name.any? ? last_name.join(" ") : "(unknown)")
-          defaults[:status] = "contacted" if keyword == "Lead"        # TODO: I18n
+          defaults[:status] = "contacted" if keyword == "Lead" # TODO: I18n
         end
 
         data.each do |key, value|
@@ -240,7 +232,7 @@ module FatFreeCRM
         # Search for domain name in Accounts.
         account = Account.where('(lower(email) like ? OR lower(website) like ?)', "%#{recipient_domain.downcase}", "%#{recipient_domain.downcase}%").first
         if account
-          log "asociating new contact #{recipient} with the account #{account.name}"
+          log "associating new contact #{recipient} with the account #{account.name}"
           defaults[:account] = account
         else
           log "creating new account #{recipient_domain.capitalize} for the contact #{recipient}"
@@ -266,7 +258,7 @@ module FatFreeCRM
       def notify(email, mediator_links)
         DropboxMailer.create_dropbox_notification(
           @sender, @settings[:address], email, mediator_links
-        ).deliver_now
+        ).deliver_later
       end
     end
   end

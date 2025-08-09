@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,19 +7,19 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/index" do
+describe "leads/index" do
   include LeadsHelper
 
   before do
     view.lookup_context.prefixes << 'entities'
     assign :per_page, Lead.per_page
     assign :sort_by,  Lead.sort_by
-    assign :ransack_search, Lead.search
-    login_and_assign
+    assign :ransack_search, Lead.ransack
+    login
   end
 
   it "should render list of accounts if list of leads is not empty" do
-    assign(:leads, [FactoryGirl.build_stubbed(:lead)].paginate(page: 1, per_page: 20))
+    assign(:leads, [build_stubbed(:lead)].paginate(page: 1, per_page: 20))
 
     render
     expect(view).to render_template(partial: "_lead")

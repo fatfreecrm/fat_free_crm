@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -26,9 +28,7 @@ module FatFreeCRM
 end
 
 # Load Fat Free CRM as a Rails Engine, unless running as a Rails Application
-unless defined?(FatFreeCRM::Application)
-  require 'fat_free_crm/engine'
-end
+require 'fat_free_crm/engine' unless defined?(FatFreeCRM::Application)
 
 require 'fat_free_crm/load_settings' # register load hook for Setting
 
@@ -53,5 +53,6 @@ require "fat_free_crm/tabs"
 require "fat_free_crm/callback"
 require "fat_free_crm/view_factory"
 
+require "activemodel-serializers-xml"
 require "country_select"
 require "gravatar_image_tag"

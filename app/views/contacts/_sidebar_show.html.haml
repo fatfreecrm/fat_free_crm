@@ -1,17 +1,16 @@
 .panel#summary
-  %span{:style => "float:right"}= avatar_for(@contact, :size => "50x50")
-  %h4= h(@contact.full_name)
+  %span{style: "float:right"}= avatar_for(@contact, size: "180x180")
   = account_with_title_and_department(@contact)
 
-  %div= render "shared/address_show", :asset => @contact, :type => 'business', :title => :address
+  %div= render "shared/address_show", asset: @contact, type: 'business', title: :address
 
   %div
     - unless @contact.phone.blank?
-      == #{t :phone}: <b>#{@contact.do_not_call ? content_tag(:strike, h(@contact.phone)) : h(@contact.phone)}</b><br />
+      == #{t :phone}: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.phone) : link_to_phone(@contact.phone)}</b><br />
     - unless @contact.mobile.blank?
-      == #{t :mobile}: <b>#{@contact.do_not_call ? content_tag(:strike, h(@contact.mobile)) : h(@contact.mobile)}</b><br />
+      == #{t :mobile}: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.mobile) : link_to_phone(@contact.mobile)}</b><br />
     - unless @contact.fax.blank?
-      == #{t :fax}: <b>#{@contact.do_not_call ? content_tag(:strike, h(@contact.fax)) : h(@contact.fax)}</b><br />
+      == #{t :fax}: <b>#{@contact.do_not_call ? content_tag(:strike, @contact.fax) : link_to_phone(@contact.fax)}</b><br />
   %div
     - unless @contact.email.blank?
       == #{t :email}: <b>#{link_to_email(@contact.email)}</b><br />
@@ -21,32 +20,33 @@
   = web_presence_icons(@contact)
 
   .caption #{t :contact_summary}
-  %li
-    %dt= @contact.assigned_to ? truncate(@contact.assignee.full_name, :length => 16) : nil
-    %tt #{t :assigned_to}:
-  %li
-    %dt
-      - if @contact.lead
-        = link_to(truncate(@contact.lead.name, :length => 16), @contact.lead, :title => @contact.lead.name)
-      - else
-        #{t :n_a}
-    %tt #{t :lead}:
-  %li
-    %dt
-      - if @contact.lead.try(:campaign)
-        = link_to(truncate(@contact.lead.campaign.name, :length => 16), @contact.lead.campaign, :title => @contact.lead.campaign.name)
-      - else
-        #{t :n_a}
-    %tt #{t :campaign}:
+  %dl
+    %li
+      %dt= @contact.assigned_to ? truncate(@contact.assignee.full_name, length: 16) : nil
+      %tt #{t :assigned_to}:
+    %li
+      %dt
+        - if @contact.lead
+          = link_to(truncate(@contact.lead.name, length: 16), @contact.lead, title: @contact.lead.name)
+        - else
+          #{t :n_a}
+      %tt #{t :lead}:
+    %li
+      %dt
+        - if @contact.lead.try(:campaign)
+          = link_to(truncate(@contact.lead.campaign.name, length: 16), @contact.lead.campaign, title: @contact.lead.campaign.name)
+        - else
+          #{t :n_a}
+      %tt #{t :campaign}:
 
   - unless @contact.background_info.blank?
     .caption #{t :background_info}
     = auto_link(simple_format @contact.background_info)
 
-  = render "fields/sidebar_show", :asset => @contact
+  = render "fields/sidebar_show", asset: @contact
 
-  - if @contact.tag_list.present?
+  - if @contact.tags.present?
     %dt
       .tags= tags_for_index(@contact)
 
-  = hook(:show_contact_sidebar_bottom, self, :contact => @contact)
+  = hook(:show_contact_sidebar_bottom, self, contact: @contact)

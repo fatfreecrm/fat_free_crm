@@ -1,6 +1,8 @@
 %table
   %tr
     %td
+      .label.top Minlength:
+      = f.text_field :minlength
       .label.top Maxlength:
       = f.text_field :maxlength
     %td= spacer
@@ -13,9 +15,9 @@
         = f.label :disabled
   %tr
     %td
-      = f.label :hint, :class => "label top"
+      = f.label :hint, class: "label top"
       = f.text_field :hint
     %td= spacer
     %td
-      = f.label :placeholder, :class => "label top"
+      = f.label :placeholder, class: "label top"
       = f.text_field :placeholder

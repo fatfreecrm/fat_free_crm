@@ -1,4 +1,6 @@
-class CreateAccounts < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateAccounts < ActiveRecord::Migration[4.2]
   def self.up
     create_table :accounts, force: true do |t|
       t.string :uuid, limit: 36
@@ -16,7 +18,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :accounts, [:user_id, :name, :deleted_at], unique: true
+    add_index :accounts, %i[user_id name deleted_at], unique: true
     add_index :accounts, :assigned_to
   end
 

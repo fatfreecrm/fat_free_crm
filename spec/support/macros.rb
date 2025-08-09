@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -10,19 +12,22 @@ end
 
 #----------------------------------------------------------------------------
 def stub_task(view)
-  if view == "completed"
-    assigns[:task] = FactoryGirl.create(:task, completed_at: Time.now - 1.minute)
-  elsif view == "assigned"
-    assigns[:task] = FactoryGirl.create(:task, assignee: FactoryGirl.create(:user))
-  else
-    assigns[:task] = FactoryGirl.create(:task)
-  end
+  assigns[:task] = if view == "completed"
+                     create(:task, completed_at: Time.now - 1.minute)
+                   elsif view == "assigned"
+                     create(:task, assignee: create(:user))
+                   else
+                     create(:task)
+                   end
 end
 
 #----------------------------------------------------------------------------
 def stub_task_total(view = "pending")
   settings = (view == "completed" ? Setting.task_completed : Setting.task_bucket)
-  settings.inject(all: 0) { |hash, key| hash[key] = 1; hash }
+  settings.each_with_object(all: 0) do |key, hash|
+    hash[key] = 1
+    hash
+  end
 end
 
 # Get current server timezone and set it (see rake time:zones:local for details).

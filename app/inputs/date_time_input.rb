@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -7,7 +9,7 @@ class DateTimeInput < SimpleForm::Inputs::DateTimeInput
   def input(wrapper_options)
     add_autocomplete!
     input_html_options.merge(input_options)
-    input_html_options.merge!(value: value)
+    input_html_options[:value] = value
     @builder.text_field(attribute_name, merge_wrapper_options(input_html_options, wrapper_options))
   end
 

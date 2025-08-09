@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 {
   'Account' => [
     {
@@ -10,9 +12,7 @@
     },
     {
       params: { label: 'Contact Information', tooltip: '' },
-      fields: [
-
-      ]
+      fields: []
     }
   ],
   'Campaign' => [
@@ -26,29 +26,21 @@
     },
     {
       params: { label: 'Contact Information', tooltip: '' },
-      fields: [
-
-      ]
+      fields: []
     }
   ],
   'Contact' => [
     {
       params: { label: 'General Information', tooltip: '' },
-      fields: [
-
-      ]
+      fields: []
     },
     {
       params: { label: 'Extra Information', tooltip: '' },
-      fields: [
-
-      ]
+      fields: []
     },
     {
       params: { label: 'Web presence', tooltip: '' },
-      fields: [
-
-      ]
+      fields: []
     }
   ],
   'Lead' => [
@@ -62,9 +54,7 @@
     },
     {
       params: { label: 'Contact Information', tooltip: '' },
-      fields: [
-
-      ]
+      fields: []
     }
   ],
   'Opportunity' => [
@@ -78,9 +68,7 @@
     },
     {
       params: { label: 'Contact Information', tooltip: '' },
-      fields: [
-
-      ]
+      fields: []
     }
   ]
 }.each_with_index do |(klass_name, groups), group_position|

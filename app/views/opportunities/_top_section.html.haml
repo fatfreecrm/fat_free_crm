@@ -1,32 +1,32 @@
-= hook(:opportunity_top_section, self, :f => f) do
+= hook(:opportunity_top_section, self, f: f) do
   .section
     %table
       %tr
-        %td
+        %td{class: (@opportunity.errors['name'].present? ? 'fieldWithErrors' : nil)}
           .label.req.top #{t :name}:
-          = f.text_field :name, :autofocus => true, :style => "width:325px"
+          = f.text_field :name, autofocus: true, style: "width:325px", required: "required"
         %td= spacer
         %td
           .label.req.top #{t :stage}:
-          = f.select :stage, @stage, { :selected => @opportunity.stage ? @opportunity.stage.to_sym : nil }, { :style => "width:160px" }
+          = f.select :stage, @stage, { selected: @opportunity.stage ? @opportunity.stage.to_sym : nil }, { style: "width:160px", class: 'select2' }
 
-    %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
+    %table{ border: 0, width: 500, cellpadding: 0, cellspacing: 0 }
       %tr
         %td
           .label #{t :close_date}:
-          = f.text_field :closes_on, :value => f.object.closes_on, :style => "width:110px;", :autocomplete => :off, :class => 'date'
+          = f.text_field :closes_on, value: f.object.closes_on, style: "width:110px;", autocomplete: :off, class: 'date'
         %td= spacer
         %td
           .label #{t :probability} (%):
-          = f.text_field :probability, :style => "width:110px; text-align:right;"
+          = f.text_field :probability, style: "width:110px; text-align:right;"
         %td= spacer
         %td
-          .label #{t :amount} #{t :currency}:
-          = f.text_field :amount, :style => "width:110px; text-align:right;"
+          .label #{t :amount} (#{t :currency}):
+          = f.text_field :amount, style: "width:110px; text-align:right;"
         %td= spacer
         %td
-          .label #{t :discount} #{t :currency}:
-          = f.text_field :discount, :style => "width:110px; text-align:right;"
+          .label #{t :discount} (#{t :currency}):
+          = f.text_field :discount, style: "width:110px; text-align:right;"
 
     = fields_for(@account) do |a|
       = a.hidden_field :user_id
@@ -37,8 +37,8 @@
           %td
             != account_select_or_create(a) do |options|
               -# Add [-- None --] account choice when editing existing opportunity that has an account.
-              - options[:selected] = @account.id || 0
-              - options[:include_blank] = true #t(:select_none) unless @opportunity.new_record? || @opportunity.account.blank?
+              - options[:selected] = @account.id.to_i
+
           %td= spacer
           %td
             .label.req #{t :assigned_to}:
@@ -46,14 +46,14 @@
         %tr
           %td
             .label #{t :campaign}:
-            = opportunity_campaign_select( selected: (@campaign.try(:id) || @opportunity.campaign_id), include_blank: true )
+            = opportunity_campaign_select(selected: (@campaign.try(:id) || @opportunity.campaign_id), include_blank: true)
 
         - if Setting.background_info && Setting.background_info.include?(:opportunity)
           %tr
             %td(colspan="3")
-              .label= t(:background_info) << ':'
-              = f.text_area :background_info, :style =>"width:500px", :rows => 3
+              .label= t(:background_info) + ':'
+              = f.text_area :background_info, style: "width:500px", rows: 3
 
-        = render :partial => "/shared/tags", :locals => {:f => f, :span => 3}
+        = render partial: "/shared/tags", locals: {f: f, span: 3}
 
-        = hook(:opportunity_top_section_bottom, self, :f => f)
+        = hook(:opportunity_top_section_bottom, self, f: f)

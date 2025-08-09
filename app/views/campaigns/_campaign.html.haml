@@ -1,5 +1,5 @@
-- if (params['controller'] == 'campaigns') and (template = template_for_current_view).present?
-  = render(template, :campaign => campaign)
+- if (controller.controller_name == 'campaigns') and (template = template_for_current_view).present?
+  = render(template, campaign: campaign)
 - else
   -# default view
-  = render 'campaigns/index_brief', :campaign => campaign
+  = render 'campaigns/index_brief', campaign: campaign

@@ -17,17 +17,14 @@
             
             # Only autocomplete if search term starts with '@'
             return []  unless text.indexOf("@") is 0
-            words = []
-            i = 0
-
-            while i < _ffcrm_users.length
-              name_query = text.replace("@", "").toLowerCase()
-              words.push _ffcrm_users[i]  unless _ffcrm_users[i].toLowerCase().indexOf(name_query) is -1
-              i++
-            cb words, text.replace("@", "")
+            $.ajax
+              url: "/users/auto_complete"
+              data:
+                term: text.replace("@", "")
+              success: (response) ->
+                cb response, text.replace("@", "")
 
           selected: (text, data) ->
             username_regEx = new RegExp("\\((@[^)]+)\\)")
             text.match(username_regEx)[1]
-
 ) jQuery

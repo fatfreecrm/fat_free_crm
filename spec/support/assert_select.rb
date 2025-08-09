@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -8,7 +10,7 @@
 module RSpec # :nodoc:
   module Rails
     module Matchers
-      class AssertSelect #:nodoc:
+      class AssertSelect # :nodoc:
         attr_reader :options
 
         def initialize(selector_assertion, spec_scope, *args, &block)
@@ -153,6 +155,7 @@ module RSpec # :nodoc:
 
       def prepare_args(args, current_scope = nil)
         return args if current_scope.nil?
+
         defaults = current_scope.options || { strict: false, xml: false }
         args << {} unless args.last.is_a?(::Hash)
         args.last[:strict] = defaults[:strict] if args.last[:strict].nil?

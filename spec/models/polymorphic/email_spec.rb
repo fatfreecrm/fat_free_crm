@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -36,5 +38,16 @@ describe Email do
 
   it "should be valid" do
     expect(@email).to be_valid
+  end
+
+  describe "body formatting" do
+    before(:each) do
+      @email.body = "this\n\nhas\nline breaks"
+    end
+
+    it "should render" do
+      expect(@email.body_html).to eq "this<br><br>has<br>line breaks"
+      expect(@email.body_inline).to eq "this  has line breaks"
+    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,15 +7,15 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/opportunities/edit" do
+describe "opportunities/edit" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
+    login
 
-    assign(:opportunity, @opportunity = FactoryGirl.build_stubbed(:opportunity, user: current_user))
+    assign(:opportunity, @opportunity = build_stubbed(:opportunity, user: current_user))
     assign(:users, [current_user])
-    assign(:account, @account = FactoryGirl.build_stubbed(:account))
+    assign(:account, @account = build_stubbed(:account))
     assign(:accounts, [@account])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
@@ -35,7 +37,7 @@ describe "/opportunities/edit" do
 
   it "edit: should hide previously open [Edit Opportunity] for and replace it with opportunity partial" do
     params[:cancel] = nil
-    assign(:previous, previous = FactoryGirl.build_stubbed(:opportunity, user: current_user))
+    assign(:previous, previous = build_stubbed(:opportunity, user: current_user))
 
     render
     expect(rendered).to include("$('#opportunity_#{previous.id}').replaceWith")

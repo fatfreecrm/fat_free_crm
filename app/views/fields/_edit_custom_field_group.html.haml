@@ -1,8 +1,8 @@
 
-= hook(:custom_field_top_section, self, :f => f) do
+= hook(:custom_field_top_section, self, f: f) do
   -# produce inputs for custom fields that do not belong to a particular field group
   -# i.e. they belong to the 'custom_fields' group
   - f.object.field_groups.select{|fg| fg.name == 'custom_fields'}.each do |field_group|
     - if field_group.fields.present?
       - field_groups[field_group.tag.name.downcase] = "#{field_group.key}_container" if field_group.tag
-      = render :partial => 'fields/group', :locals => {:f => f, :field_group => field_group}
+      = render partial: 'fields/group', locals: {f: f, field_group: field_group}

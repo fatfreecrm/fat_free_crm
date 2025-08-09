@@ -1,0 +1,49 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: Rspec
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['3.4']
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        # bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install dependencies
+      run: bundle install
+    - name: Prepare DB
+      run: DB=sqlite RAILS_ENV=test bundle exec rake spec:preparedb
+    - name: Run model tests
+      run: DB=sqlite bundle exec rake spec:models
+    - name: Run controller tests
+      run: bundle exec rake spec:controllers
+    - name: Run view tests
+      run: bundle exec rake spec:views
+    - name: Run helper tests
+      run: bundle exec rake spec:helpers
+    - name: Run route tests
+      run: bundle exec rake spec:routing
+    - name: Run mailer tests
+      run: bundle exec rake spec:mailers
+    - name: Run lib tests
+      run: bundle exec rake spec:lib
+    - name: Run feature tests
+      run: bundle exec rake spec:features

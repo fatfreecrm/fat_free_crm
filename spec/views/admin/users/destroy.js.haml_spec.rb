@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -7,12 +9,12 @@ require 'spec_helper'
 
 describe "admin/users/destroy" do
   before do
-    login_and_assign(admin: true)
+    login_admin
   end
 
   describe "user got deleted" do
     before do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       @user.destroy
       assign(:user, @user)
     end
@@ -26,19 +28,13 @@ describe "admin/users/destroy" do
 
   describe "user was not deleted" do
     before do
-      assign(:user, @user = FactoryGirl.build_stubbed(:user))
+      assign(:user, @user = build_stubbed(:user))
     end
 
     it "should remove confirmation panel" do
       render
 
       expect(rendered).to include(%/crm.flick('#{dom_id(@user, :confirm)}', 'remove');/)
-    end
-
-    it "should shake user partial" do
-      render
-
-      expect(rendered).to include(%/$('#user_#{@user.id}').effect('shake'/)
     end
 
     it "should show flash message" do

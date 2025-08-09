@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -23,10 +25,10 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, polymorphic: true
 
-  scope :created_by, lambda { |user| where(user_id: user.id) }
+  scope :created_by, ->(user) { where(user_id: user.id) }
 
   validates_presence_of :user, :commentable, :comment
-  has_paper_trail class_name: 'Version', meta: { related: :commentable },
+  has_paper_trail versions: { class_name: 'Version' }, meta: { related: :commentable },
                   ignore: [:state]
 
   before_create :subscribe_mentioned_users
@@ -50,10 +52,9 @@ class Comment < ActiveRecord::Base
 
   # Notify subscribed users when a comment is added, unless user created this comment
   def notify_subscribers
-    commentable.subscribed_users.reject { |user_id| user_id == user.id }.each do |subscriber_id|
-      if subscriber = User.find_by_id(subscriber_id)
-        SubscriptionMailer.comment_notification(subscriber, self).deliver_now
-      end
+    users_to_notify = User.where(id: commentable.subscribed_users.reject { |user_id| user_id == user.id })
+    users_to_notify.select(&:emailable?).each do |subscriber|
+      SubscriptionMailer.comment_notification(subscriber, self).deliver_later if subscriber.subscribe_to_comment_replies?
     end
   end
 

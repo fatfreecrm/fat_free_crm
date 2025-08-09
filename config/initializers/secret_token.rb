@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -20,6 +22,10 @@
 # We should setup a secret token if FFCRM is running in application mode but NOT in engine mode.
 # This functionality has been extracted to lib so it can be tested.
 if FatFreeCRM.application?
-  require 'fat_free_crm/secret_token_generator'
-  FatFreeCRM::SecretTokenGenerator.setup!
+
+  Rails.application.config.after_initialize do
+    require 'fat_free_crm/secret_token_generator'
+
+    FatFreeCRM::SecretTokenGenerator.setup!
+  end
 end

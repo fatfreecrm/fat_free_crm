@@ -1,8 +1,10 @@
-class CreatePermissions < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreatePermissions < ActiveRecord::Migration[4.2]
   def self.up
     create_table :permissions, force: true do |t|
-      t.references :user                          # User who is allowed to access the asset.
-      t.references :asset, polymorphic: true   # Creates asset_id and asset_type.
+      t.references :user                      # User who is allowed to access the asset.
+      t.references :asset, polymorphic: true  # Creates asset_id and asset_type.
       t.timestamps
     end
 

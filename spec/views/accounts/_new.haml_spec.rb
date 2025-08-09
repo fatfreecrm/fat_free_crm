@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,11 +7,11 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/accounts/_new" do
+describe "accounts/_new" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
     assign(:account, Account.new)
     assign(:users, [current_user])
   end
@@ -21,7 +23,7 @@ describe "/accounts/_new" do
     expect(view).to render_template(partial: "_contact_info")
     expect(view).to render_template(partial: "_permissions")
 
-    expect(rendered).to have_tag("form[class=new_account]")
+    expect(rendered).to have_tag('form[class="simple_form new_account"]')
   end
 
   it "should render background info field if settings require so" do

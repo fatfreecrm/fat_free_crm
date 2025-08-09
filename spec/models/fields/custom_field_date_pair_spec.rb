@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -65,7 +67,8 @@ describe CustomFieldDatePair do
 
     it "when from > to it should not be valid" do
       foo = double(cf_event_from: @today, cf_event_to: @today - 1.day)
-      err = double(:errors); allow(err).to receive(:add)
+      err = double(:errors)
+      allow(err).to receive(:add)
       expect(foo).to receive(:errors).and_return(err)
       @to.custom_validator(foo)
     end
@@ -80,7 +83,8 @@ describe CustomFieldDatePair do
     it "should call custom field validation on super class" do
       from = CustomFieldDatePair.new(name: 'cf_event_from', required: true)
       foo = double(cf_event_from: nil)
-      err = double(:errors); allow(err).to receive(:add)
+      err = double(:errors)
+      allow(err).to receive(:add)
       expect(foo).to receive(:errors).and_return(err)
       from.custom_validator(foo)
     end

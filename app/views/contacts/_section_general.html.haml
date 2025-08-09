@@ -8,7 +8,7 @@
         = col(t(:last_name), contact.last_name)
       %tr
         = col(t(:email), contact.email, false, true)
-        = col(t(:phone), contact.phone)
+        = col(t(:phone)) { link_to_phone(contact.phone) }
       %tr
         = col(t(:account)) do
           = account_with_url_for(contact)
@@ -23,4 +23,4 @@
     - custom_field_group = contact.field_groups.select{|f| f.name == 'custom_fields'}.first
     - if custom_field_group.present?
       - fields = custom_field_group.fields.without_pairs
-      = render("fields/group_view", :fields => fields, :entity => contact) unless fields.nil?
+      = render("fields/group_view", fields: fields, entity: contact) unless fields.nil?

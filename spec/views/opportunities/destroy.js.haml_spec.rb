@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,10 +7,10 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/opportunities/destroy" do
+describe "opportunities/destroy" do
   before do
-    login_and_assign
-    assign(:opportunity, @opportunity = FactoryGirl.build_stubbed(:opportunity))
+    login
+    assign(:opportunity, @opportunity = build_stubbed(:opportunity))
     assign(:stage, Setting.unroll(:opportunity_stage))
     assign(:opportunity_stage_total, Hash.new(1))
   end
@@ -25,7 +27,6 @@ describe "/opportunities/destroy" do
 
     expect(rendered).to include("#sidebar")
     expect(rendered).to have_text("Recent Items")
-    expect(rendered).to include("$('#filters').effect('shake'")
   end
 
   it "should update pagination when called from opportunities index" do
@@ -37,22 +38,20 @@ describe "/opportunities/destroy" do
   end
 
   it "should update related account sidebar when called from related account" do
-    assign(:account, account = FactoryGirl.build_stubbed(:account))
+    assign(:account, account = build_stubbed(:account))
     controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/#{account.id}"
     render
 
     expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Account Summary")
     expect(rendered).to have_text("Recent Items")
   end
 
   it "should update related campaign sidebar when called from related campaign" do
-    assign(:campaign, campaign = FactoryGirl.build_stubbed(:campaign))
+    assign(:campaign, campaign = build_stubbed(:campaign))
     controller.request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{campaign.id}"
     render
 
     expect(rendered).to include("#sidebar")
-    expect(rendered).to have_text("Campaign Summary")
     expect(rendered).to have_text("Recent Items")
   end
 

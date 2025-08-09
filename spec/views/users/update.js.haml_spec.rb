@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,11 +7,11 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/users/update" do
+describe "users/update" do
   include UsersHelper
 
   before do
-    login_and_assign
+    login
     assign(:user, @user = current_user)
   end
 
@@ -28,18 +30,17 @@ describe "/users/update" do
       render
       expect(rendered).to include("$('#profile').html")
     end
-  end # no errors
+  end
 
   describe "validation errors :" do
     before do
       @user.errors.add(:first_name)
     end
 
-    it "should redraw the [Edit Profile] form and shake it" do
+    it "should redraw the [Edit Profile] form" do
       render
       expect(rendered).to include("$('#edit_profile').html")
-      expect(rendered).to include(%/$('#edit_profile').effect("shake"/)
       expect(rendered).to include("$('#user_email').focus();")
     end
-  end # errors
+  end
 end

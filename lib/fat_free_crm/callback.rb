@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -43,6 +45,7 @@ module FatFreeCRM
     def self.view_responder(method)
       @@responder[method] ||= @@classes.map(&:instance).select { |instance| instance.class.view_hooks[method] }
     end
+
     # Invokes the view hook Proc stored under :hook and captures its output.
     # => Instead of defining methods on the class, view hooks are
     #    stored as Procs in a hash. This allows the same hook to be manipulated in
@@ -52,7 +55,7 @@ module FatFreeCRM
     # - a hash of arrays containing Procs and positions to insert content.
     #--------------------------------------------------------------------------
     def self.view_hook(hook, caller, context = {})
-      view_responder(hook).inject(Hash.new([])) do |response, instance|
+      view_responder(hook).each_with_object(Hash.new([])) do |instance, response|
         # Process each operation within each view hook, storing the data in a hash.
         instance.class.view_hooks[hook].each do |op|
           response[op[:position]] += [op[:proc].call(caller, context)]
@@ -97,7 +100,7 @@ module FatFreeCRM
           add_view_hook(hook, proc { "" }, :replace)
         end
       end
-    end # class Base
+    end
 
     # This makes it possible to call hook() without FatFreeCRM::Callback prefix.
     # Returns stringified data when called from within templates, and the actual
@@ -105,10 +108,8 @@ module FatFreeCRM
     #--------------------------------------------------------------------------
     module Helper
       def hook(method, caller, context = {}, &block)
-        is_view_hook = caller.is_haml?
-
-        # If a block was given, hooks are able to replace, append or prepend view content.
-        if is_view_hook
+        # In a view template context, hooks are able to replace, append or prepend content.
+        if caller.is_a?(ActionView::Base)
           hooks = FatFreeCRM::Callback.view_hook(method, caller, context)
           # Add content to the view in the following order:
           # -- before
@@ -136,9 +137,9 @@ module FatFreeCRM
           FatFreeCRM::Callback.hook(method, caller, context)
         end
       end
-    end # module Helper
-  end # module Callback
-end # module FatFreeCRM
+    end
+  end
+end
 
-ActionView::Base.send(:include, FatFreeCRM::Callback::Helper)
-ActionController::Base.send(:include, FatFreeCRM::Callback::Helper)
+ActionView::Base.include FatFreeCRM::Callback::Helper
+ActionController::Base.include FatFreeCRM::Callback::Helper

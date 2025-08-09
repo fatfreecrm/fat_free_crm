@@ -3,5 +3,5 @@
 if ($('##{id}').size() > 0) {
 crm.flick('#{id}', 'remove');
 } else {
-$('##{dom_id(@field_group)}').prepend('#{ j (render :partial => "confirm") }');
+$('##{dom_id(@field_group)}').prepend('#{ j (render partial: "confirm") }');
 }

@@ -1,6 +1,8 @@
-class AddSubscribedUsersToEntities < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class AddSubscribedUsersToEntities < ActiveRecord::Migration[4.2]
   def change
-    %w(accounts campaigns contacts leads opportunities tasks).each do |table|
+    %w[accounts campaigns contacts leads opportunities tasks].each do |table|
       add_column table.to_sym, :subscribed_users, :text
       # Reset the column information of each model
       table.singularize.capitalize.constantize.reset_column_information

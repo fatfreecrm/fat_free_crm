@@ -1,10 +1,10 @@
-- asset ||= instance_variable_get("@" << controller.controller_name.singularize)
+- asset ||= instance_variable_get("@" + controller.controller_name.singularize)
 - asset.tasks.each do |task|
   - if task.completed_at?
-    = render "tasks/completed", :completed => task, :bucket => nil
+    = render "tasks/completed", completed: task, bucket: nil
   - elsif task.my?(current_user)
-    = render "tasks/pending", :pending => task, :bucket => nil
+    = render "tasks/pending", pending: task, bucket: nil
   - elsif task.assigned_by?(current_user)
-    = render "tasks/assigned", :assigned => task, :bucket => nil
+    = render "tasks/assigned", assigned: task, bucket: nil
   - else
-    = render "tasks/related", :related => task, :bucket => nil
+    = render "tasks/related", related: task, bucket: nil

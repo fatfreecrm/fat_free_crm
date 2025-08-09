@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -34,12 +36,12 @@ describe ApplicationHelper do
   end
 
   it "link_to_discard" do
-    lead = FactoryGirl.create(:lead)
+    lead = create(:lead)
     allow(controller.request).to receive(:fullpath).and_return("http://www.example.com/leads/#{lead.id}")
 
     link = helper.link_to_discard(lead)
     expect(link).to match(%r{leads/#{lead.id}/discard})
-    expect(link).to match(%r{attachment=Lead&amp;attachment_id=#{lead.id}})
+    expect(link).to match(/attachment=Lead&amp;attachment_id=#{lead.id}/)
   end
 
   describe "shown_on_landing_page?" do
@@ -72,12 +74,59 @@ describe ApplicationHelper do
     before(:each) do
       @user = mock_model(User)
       allow(helper).to receive(:current_user).and_return(@user)
-      allow(controller).to receive(:params).and_return('action' => 'show', 'controller' => 'contacts')
+      allow(controller).to receive(:action_name).and_return('show')
+      allow(controller).to receive(:controller_name).and_return('contacts')
     end
 
     it "should return the contact 'show' outline stored in the user preferences" do
       expect(@user).to receive(:pref).and_return(contacts_show_view: 'long')
-      expect(helper.current_view_name).to eq('long')
+      expect(helper.send(:current_view_name)).to eq('long')
+    end
+  end
+
+  describe "link_to_phone" do
+    it "should return a tel link for a given phone number" do
+      expect(helper.link_to_phone("123-456-7890")).to eq('<a href="tel:1234567890">123-456-7890</a>')
+    end
+
+    it "should handle phone numbers with a plus sign" do
+      expect(helper.link_to_phone("+1 (123) 456-7890")).to eq('<a href="tel:+11234567890">+1 (123) 456-7890</a>')
+    end
+
+    it "should return nil if the phone number is blank" do
+      expect(helper.link_to_phone("")).to be_nil
+      expect(helper.link_to_phone(nil)).to be_nil
+    end
+  end
+
+  describe "phone_field_with_pattern" do
+    let(:user) { create(:user) }
+    let(:form) { ActionView::Helpers::FormBuilder.new(:user, user, helper, {}) }
+
+    context "when enforce_international_phone_format is false" do
+      before { allow(Setting).to receive(:enforce_international_phone_format).and_return(false) }
+
+      it "should render a normal phone field" do
+        expect(helper.phone_field_with_pattern(form, :phone)).to include('type="tel"')
+        expect(helper.phone_field_with_pattern(form, :phone)).not_to include('pattern=')
+      end
+    end
+
+    context "when enforce_international_phone_format is true" do
+      before { allow(Setting).to receive(:enforce_international_phone_format).and_return(true) }
+
+      it "should render a phone field with pattern and placeholder" do
+        rendered_html = helper.phone_field_with_pattern(form, :phone)
+        expect(rendered_html).to include('type="tel"')
+        expect(rendered_html).to include('pattern="\\+[0-9]{1,3}\\s?[0-9]{1,14}"')
+        expect(rendered_html).to include('placeholder="+1 123 456 7890"')
+      end
+
+      it "should not override existing options" do
+        rendered_html = helper.phone_field_with_pattern(form, :phone, pattern: "custom", placeholder: "custom")
+        expect(rendered_html).to include('pattern="custom"')
+        expect(rendered_html).to include('placeholder="custom"')
+      end
     end
   end
 end

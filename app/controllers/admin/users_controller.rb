@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::UsersController < Admin::ApplicationController
-  before_action "set_current_tab('admin/users')", only: [:index, :show]
+  before_action :setup_current_tab, only: %i[index show]
 
   load_resource except: [:create]
 
@@ -33,9 +35,7 @@ class Admin::UsersController < Admin::ApplicationController
   # GET /admin/users/1/edit                                                AJAX
   #----------------------------------------------------------------------------
   def edit
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = User.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = User.find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
 
     respond_with(@user)
   end
@@ -44,11 +44,9 @@ class Admin::UsersController < Admin::ApplicationController
   # POST /admin/users.xml                                                  AJAX
   #----------------------------------------------------------------------------
   def create
-    params[:user][:email].try(:strip!)
-    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.new(user_params)
-    @user.check_if_needs_approval
-    @user.save_without_session_maintenance
+    @user.suspend_if_needs_approval
+    @user.save
 
     respond_with(@user)
   end
@@ -57,11 +55,9 @@ class Admin::UsersController < Admin::ApplicationController
   # PUT /admin/users/1.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def update
-    params[:user][:email].try(:strip!)
-    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
     @user = User.find(params[:id])
     @user.attributes = user_params
-    @user.save_without_session_maintenance
+    @user.save
 
     respond_with(@user)
   end
@@ -76,9 +72,7 @@ class Admin::UsersController < Admin::ApplicationController
   # DELETE /admin/users/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   def destroy
-    unless @user.destroyable? && @user.destroy
-      flash[:warning] = t(:msg_cant_delete_user, @user.full_name)
-    end
+    flash[:warning] = t(:msg_cant_delete_user, @user.full_name) unless @user.destroyable?(current_user) && @user.destroy
 
     respond_with(@user)
   end
@@ -108,6 +102,12 @@ class Admin::UsersController < Admin::ApplicationController
   protected
 
   def user_params
+    return {} unless params[:user]
+
+    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation].blank?
+    params[:user][:email].try(:strip!)
+    params[:user][:alt_email].try(:strip!)
+
     params[:user].permit(
       :admin,
       :username,
@@ -122,7 +122,6 @@ class Admin::UsersController < Admin::ApplicationController
       :aim,
       :yahoo,
       :google,
-      :skype,
       :password,
       :password_confirmation,
       group_ids: []
@@ -136,7 +135,7 @@ class Admin::UsersController < Admin::ApplicationController
     self.current_page  = options[:page] if options[:page]
     self.current_query = params[:query] if params[:query]
 
-    @search = klass.search(params[:q])
+    @search = klass.ransack(params[:q])
     @search.build_grouping unless @search.groupings.any?
 
     wants = request.format
@@ -145,5 +144,9 @@ class Admin::UsersController < Admin::ApplicationController
     scope = scope.text_search(current_query)      if current_query.present?
     scope = scope.paginate(page: current_page) if wants.html? || wants.js? || wants.xml?
     scope
+  end
+
+  def setup_current_tab
+    set_current_tab('admin/users')
   end
 end

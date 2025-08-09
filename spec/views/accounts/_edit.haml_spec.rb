@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,13 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/_edit" do
+describe "accounts/_edit" do
   include AccountsHelper
 
   before do
-    login_and_assign
-    assign(:account, @account = FactoryGirl.build_stubbed(:account))
-    assign(:users, [current_user])
+    login
+    assign(:account, @account = create(:account))
   end
 
   it "should render [edit account] form" do
@@ -21,7 +22,7 @@ describe "/accounts/_edit" do
     expect(view).to render_template(partial: "_contact_info")
     expect(view).to render_template(partial: "_permissions")
 
-    expect(rendered).to have_tag("form[class=edit_account]") do |form|
+    expect(rendered).to have_tag('form[class="simple_form edit_account"]') do |form|
       expect(form).to have_tag "input[type=hidden][id=account_user_id][value='#{@account.user_id}']"
     end
   end

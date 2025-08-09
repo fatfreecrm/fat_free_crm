@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,23 +7,23 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/create" do
+describe "contacts/create" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   describe "create success" do
     before do
-      assign(:contact, @contact = FactoryGirl.build_stubbed(:contact))
+      assign(:contact, @contact = build_stubbed(:contact))
       assign(:contacts, [@contact].paginate)
     end
 
     it "should hide [Create Contact] form and insert contact partial" do
       render
 
-      expect(rendered).to include("$('#contacts').prepend('<li class=\\'contact highlight\\' id=\\'contact_#{@contact.id}\\'")
+      expect(rendered).to include("$('#contacts').prepend('<li class=\\'highlight contact\\' id=\\'contact_#{@contact.id}\\'")
       expect(rendered).to include(%/$('#contact_#{@contact.id}').effect("highlight"/)
     end
 
@@ -49,16 +51,15 @@ describe "/contacts/create" do
 
   describe "create failure" do
     it "create (failure): should re-render [create] template in :create_contact div" do
-      assign(:contact, FactoryGirl.build(:contact, first_name: nil)) # make it invalid
-      @account = FactoryGirl.build_stubbed(:account)
-      assign(:users, [FactoryGirl.build_stubbed(:user)])
+      assign(:contact, build(:contact, first_name: nil)) # make it invalid
+      @account = build_stubbed(:account)
+      assign(:users, [build_stubbed(:user)])
       assign(:account, @account)
       assign(:accounts, [@account])
 
       render
 
       expect(rendered).to include("$('#create_contact').html")
-      expect(rendered).to include(%/$('#create_contact').effect("shake"/)
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -33,24 +35,23 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  background_info :string(255)
-#  skype           :string(128)
 #
 
 class Lead < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :campaign
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
+  belongs_to :user, optional: true # TODO: Is this really optional?
+  belongs_to :campaign, optional: true # TODO: Is this really optional?
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
   has_one :contact, dependent: :nullify # On destroy keep the contact, but nullify its lead_id
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
   has_one :business_address, -> { where "address_type='Business'" }, dependent: :destroy, as: :addressable, class_name: "Address"
   has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
   has_many :emails, as: :mediator
 
-  serialize :subscribed_users, Set
+  serialize :subscribed_users, type: Array
 
-  accepts_nested_attributes_for :business_address, allow_destroy: true
+  accepts_nested_attributes_for :business_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where(['status IN (?)' + (filters.delete('other') ? ' OR status IS NULL' : ''), filters])
   }
   scope :converted,    ->       { where(status: 'converted') }
@@ -58,18 +59,18 @@ class Lead < ActiveRecord::Base
   scope :created_by,   ->(user) { where(user_id: user.id) }
   scope :assigned_to,  ->(user) { where(assigned_to: user.id) }
 
-  scope :text_search, ->(query) { search('first_name_or_last_name_or_company_or_email_cont' => query).result }
+  scope :text_search, ->(query) { ransack('first_name_or_last_name_or_company_or_email_cont' => query).result }
 
   uses_user_permissions
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail class_name: 'Version', ignore: [:subscribed_users]
+  has_paper_trail versions: { class_name: 'Version' }, ignore: [:subscribed_users]
   has_fields
   exportable
   sortable by: ["first_name ASC", "last_name ASC", "company ASC", "rating DESC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
-  has_ransackable_associations %w(contact campaign tasks tags activities emails addresses comments)
+  has_ransackable_associations %w[contact campaign tasks tags activities emails addresses comments]
   ransack_can_autocomplete
 
   validates_presence_of :first_name, message: :missing_first_name, if: -> { Setting.require_first_names }
@@ -85,6 +86,7 @@ class Lead < ActiveRecord::Base
   def self.per_page
     20
   end
+
   def self.first_name_position
     "before"
   end
@@ -99,13 +101,6 @@ class Lead < ActiveRecord::Base
       self.attributes = params[:lead]
       save
     end
-  end
-
-  # Deprecated: see update_with_lead_counters
-  #----------------------------------------------------------------------------
-  def update_with_permissions(attributes, _users = nil)
-    ActiveSupport::Deprecation.warn "lead.update_with_permissions is deprecated and may be removed from future releases, use user_ids and group_ids inside attributes instead and call lead.update_with_lead_counters"
-    update_with_lead_counters(attributes)
   end
 
   # Update lead attributes taking care of campaign lead counters when necessary.
@@ -127,8 +122,8 @@ class Lead < ActiveRecord::Base
   # successful promotion Lead status gets set to :converted.
   #----------------------------------------------------------------------------
   def promote(params)
-    account_params = params[:account] ? params[:account] : {}
-    opportunity_params = params[:opportunity] ? params[:opportunity] : {}
+    account_params = params[:account] || {}
+    opportunity_params = params[:opportunity] || {}
 
     account     = Account.create_or_select_for(self, account_params)
     opportunity = Opportunity.create_for(self, account, opportunity_params)
@@ -150,9 +145,7 @@ class Lead < ActiveRecord::Base
   # Attach a task to the lead if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(task)
-    unless task_ids.include?(task.id)
-      tasks << task
-    end
+    tasks << task unless task_ids.include?(task.id)
   end
 
   # Discard a task from the lead.
@@ -169,28 +162,24 @@ class Lead < ActiveRecord::Base
       "#{last_name}, #{first_name}"
     end
   end
-  alias_method :name, :full_name
+  alias name full_name
 
   private
 
   #----------------------------------------------------------------------------
   def increment_leads_count
-    if campaign_id
-      Campaign.increment_counter(:leads_count, campaign_id)
-    end
+    Campaign.increment_counter(:leads_count, campaign_id) if campaign_id
   end
 
   #----------------------------------------------------------------------------
   def decrement_leads_count
-    if campaign_id
-      Campaign.decrement_counter(:leads_count, campaign_id)
-    end
+    Campaign.decrement_counter(:leads_count, campaign_id) if campaign_id
   end
 
   # Make sure at least one user has been selected if the lead is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, :share_lead) if self[:access] == "Shared" && !permissions.any?
+    errors.add(:access, :share_lead) if self[:access] == "Shared" && permissions.none?
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_lead, self)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -12,18 +14,20 @@ require 'nokogiri'
 module FatFreeCRM
   module MailProcessor
     class Base
-      KEYWORDS = %w(account campaign contact lead opportunity).freeze
+      KEYWORDS = %w[account campaign contact lead opportunity].freeze
 
       #--------------------------------------------------------------------------------------
       def initialize
-        @archived, @discarded, @dry_run = 0, 0, false
+        @archived = 0
+        @discarded = 0
+        @dry_run = false
       end
 
       # Setup imap folders in settings.
       #--------------------------------------------------------------------------------------
       def setup
         log "connecting to #{@settings[:server]}..."
-        connect!(setup: true) or return nil
+        connect!(setup: true) || (return nil)
         log "logged in to #{@settings[:server]}, checking folders..."
         folders = [@settings[:scan_folder]]
         folders << @settings[:move_to_folder] unless @settings[:move_to_folder].blank?
@@ -38,18 +42,16 @@ module FatFreeCRM
             @imap.create(folder)
           end
         end
-      rescue => e
-        $stderr.puts "setup error #{e.inspect}"
+      rescue Exception => e
+        warn "setup error #{e.inspect}"
       ensure
         disconnect!
       end
 
       #--------------------------------------------------------------------------------------
       def run(dry_run = false)
-        if @dry_run = dry_run
-          log "Not discarding or archiving any new messages..."
-        end
-        connect! or return nil
+        log "Not discarding or archiving any new messages..." if @dry_run = dry_run
+        connect! || (return nil)
         with_new_emails do |uid, email|
           # Subclasses must define a #process method that takes arguments: uid, email
           process(uid, email)
@@ -72,7 +74,7 @@ module FatFreeCRM
         @imap.select(@settings[:scan_folder]) unless options[:setup]
         @imap
       rescue Exception => e
-        $stderr.puts "Could not login to the IMAP server: #{e.inspect}" unless Rails.env == "test"
+        warn "Could not login to the IMAP server: #{e.inspect}" unless Rails.env == "test"
         nil
       end
 
@@ -81,14 +83,18 @@ module FatFreeCRM
         if @imap
           @imap.logout
           unless @imap.disconnected?
-            @imap.disconnect rescue nil
+            begin
+              @imap.disconnect
+            rescue Exception
+              nil
+            end
           end
         end
       end
 
       #--------------------------------------------------------------------------------------
       def with_new_emails
-        @imap.uid_search(%w(NOT SEEN)).each do |uid|
+        @imap.uid_search(%w[NOT SEEN]).each do |uid|
           begin
             email = Mail.new(@imap.uid_fetch(uid, 'RFC822').first.attr['RFC822'])
             log "fetched new message...", email
@@ -98,10 +104,8 @@ module FatFreeCRM
               discard(uid)
             end
           rescue Exception => e
-            if %w(test development).include?(Rails.env)
-              $stderr.puts e
-              $stderr.puts e.backtrace
-            end
+            warn e
+            warn e.backtrace
             log "error processing email: #{e.inspect}", email
             discard(uid)
           end
@@ -119,9 +123,7 @@ module FatFreeCRM
         if @dry_run
           log "Not discarding message"
         else
-          if @settings[:move_invalid_to_folder]
-            @imap.uid_copy(uid, @settings[:move_invalid_to_folder])
-          end
+          @imap.uid_copy(uid, @settings[:move_invalid_to_folder]) if @settings[:move_invalid_to_folder]
           @imap.uid_store(uid, "+FLAGS", [:Deleted])
         end
         @discarded += 1
@@ -133,9 +135,7 @@ module FatFreeCRM
         if @dry_run
           log "Not archiving message"
         else
-          if @settings[:move_to_folder]
-            @imap.uid_copy(uid, @settings[:move_to_folder])
-          end
+          @imap.uid_copy(uid, @settings[:move_to_folder]) if @settings[:move_to_folder]
           @imap.uid_store(uid, "+FLAGS", [:Seen])
         end
         @archived += 1
@@ -159,10 +159,11 @@ module FatFreeCRM
       #------------------------------------------------------------------------------
       def find_sender(email_address)
         if @sender = User.find_by(
-            '(lower(email) = :email OR lower(alt_email) = :email) AND suspended_at IS NULL',
-            email: email_address.downcase)
+          '(lower(email) = :email OR lower(alt_email) = :email) AND suspended_at IS NULL',
+          email: email_address.downcase
+        )
           # Set the PaperTrail user for versions (if user is found)
-          PaperTrail.whodunnit = @sender.id.to_s
+          PaperTrail.request.whodunnit = @sender.id.to_s
         end
       end
 
@@ -178,12 +179,10 @@ module FatFreeCRM
       # Centralized logging.
       #--------------------------------------------------------------------------------------
       def log(message, email = nil)
-        unless %w(test cucumber).include?(Rails.env)
-          klass = self.class.to_s.split("::").last
-          klass << " [Dry Run]" if @dry_run
-          puts "[#{Time.now.rfc822}] #{klass}: #{message}"
-          puts "[#{Time.now.rfc822}] #{klass}: From: #{email.from}, Subject: #{email.subject} (#{email.message_id})" if email
-        end
+        klass = self.class.to_s.split("::").last
+        klass << " [Dry Run]" if @dry_run
+        Rails.logger.info("[#{Time.now.rfc822}] #{klass}: #{message}")
+        Rails.logger.info("[#{Time.now.rfc822}] #{klass}: From: #{email.from}, Subject: #{email.subject} (#{email.message_id})") if email
       end
 
       # Returns the plain-text version of an email, or strips html tags

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -17,14 +19,15 @@ class TaskObserver < ActiveRecord::Observer
     if original
       return log_activity(item, :complete)   if item.completed_at && original.completed_at.nil?
       return log_activity(item, :reassign)   if item.assigned_to != original.assigned_to
-      return log_activity(item, :reschedule) if item.bucket != original.bucket
+
+      log_activity(item, :reschedule) if item.bucket != original.bucket
     end
   end
 
   private
 
   def log_activity(item, event)
-    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.whodunnit)
+    item.send(item.class.versions_association_name).create(event: event, whodunnit: PaperTrail.request.whodunnit)
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_task_observer, self)

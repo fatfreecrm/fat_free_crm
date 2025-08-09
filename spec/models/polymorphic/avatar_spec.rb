@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -22,22 +24,22 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Avatar do
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @user = create(:user)
   end
 
   it "should create a new instance given valid attributes" do
-    expect(FactoryGirl.create(:avatar, entity: @user)).to be_valid
+    expect(create(:avatar, entity: @user)).to be_valid
   end
 
   it "user should have one avatar as entity" do
-    avatar = FactoryGirl.create(:avatar, entity: @user)
+    avatar = create(:avatar, entity: @user)
     expect(@user.avatar).to eq(avatar)
   end
 
   it "user might have many avatars as owner" do
     avatars = [
-      FactoryGirl.create(:avatar, user: @user, entity: FactoryGirl.create(:user)),
-      FactoryGirl.create(:avatar, user: @user, entity: FactoryGirl.create(:user))
+      create(:avatar, user: @user, entity: create(:user)),
+      create(:avatar, user: @user, entity: create(:user))
     ]
     expect(@user.avatars).to eq(avatars)
   end

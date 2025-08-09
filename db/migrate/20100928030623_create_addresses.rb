@@ -1,4 +1,6 @@
-class CreateAddresses < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateAddresses < ActiveRecord::Migration[4.2]
   def self.up
     create_table :addresses do |t|
       t.string :street1
@@ -16,7 +18,7 @@ class CreateAddresses < ActiveRecord::Migration
       t.datetime :deleted_at
     end
 
-    add_index :addresses, [:addressable_id, :addressable_type]
+    add_index :addresses, %i[addressable_id addressable_type]
 
     # Migrate data from assets to Address table into full_address blob
     Contact.all.each do |asset|
@@ -32,7 +34,7 @@ class CreateAddresses < ActiveRecord::Migration
       Address.create(street1: asset.address, full_address: asset.address, address_type: "Business", addressable: asset)
     end
 
-    # Remove addresses columns from assets allready migrated
+    # Remove addresses columns from assets already migrated
     remove_column(:contacts, :address)
     remove_column(:accounts, :billing_address)
     remove_column(:accounts, :shipping_address)

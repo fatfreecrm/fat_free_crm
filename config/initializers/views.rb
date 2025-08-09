@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -42,6 +44,4 @@
  { name: 'campaigns_index_long', title: 'Long format', icon: 'fa-list',
    controllers: ['campaigns'], actions: ['index'], template: 'campaigns/index_long' },
  { name: 'campaigns_show_normal', title: 'Normal format', icon: 'fa-list',
-   controllers: ['campaigns'], actions: ['show'], template: nil }, # default show view
-
-].each { |view| FatFreeCRM::ViewFactory.new(view) }
+   controllers: ['campaigns'], actions: ['show'], template: nil }].each { |view| FatFreeCRM::ViewFactory.new(view) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GravatarImageTag
   class << self
     attr_accessor :configuration
@@ -12,7 +14,7 @@ module GravatarImageTag
   end
 
   class Configuration
-    attr_accessor :default_image, :filetype, :rating, :size, :secure
+    attr_accessor :default_image, :filetype, :rating, :size
    end
 
   def self.included(base)
@@ -22,6 +24,8 @@ module GravatarImageTag
 
   module InstanceMethods
     def gravatar_image_tag(email, options = {})
+      raise ArgumentError, "Options must be a hash, got #{options.inspect}" unless options.is_a? Hash
+
       options[:alt] ||= 'Gravatar'
       image_tag(GravatarImageTag.gravatar_url(email, options.delete(:gravatar)), options)
     end
@@ -33,26 +37,24 @@ module GravatarImageTag
       default:     GravatarImageTag.configuration.default_image,
       filetype:    GravatarImageTag.configuration.filetype,
       rating:      GravatarImageTag.configuration.rating,
-      secure:      GravatarImageTag.configuration.secure,
       size:        GravatarImageTag.configuration.size
     }.merge(overrides).delete_if { |_key, value| value.nil? }
-    "#{gravatar_url_base(gravatar_params.delete(:secure))}/#{gravatar_id(email, gravatar_params.delete(:filetype))}#{url_params(gravatar_params)}"
+    "#{gravatar_url_base}/#{gravatar_id(email, gravatar_params.delete(:filetype))}#{url_params(gravatar_params)}"
   end
 
-  private
-
-  def self.gravatar_url_base(secure = false)
-    'http' + (!!secure ? 's://secure.' : '://') + 'gravatar.com/avatar'
+  def self.gravatar_url_base
+    'https://gravatar.com/avatar'
   end
 
   def self.gravatar_id(email, filetype = nil)
-    "#{ Digest::MD5.hexdigest(email) }#{ ".#{filetype}" unless filetype.nil? }" unless email.nil?
+    "#{Digest::MD5.hexdigest(email)}#{".#{filetype}" unless filetype.nil?}" unless email.nil?
   end
 
   def self.url_params(gravatar_params)
-    return nil if gravatar_params.keys.size == 0
-    "?#{gravatar_params.map { |key, value| "#{key}=#{URI.escape(value.is_a?(String) ? value : value.to_s, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))}" }.join('&amp;')}"
+    return nil if gravatar_params.keys.empty?
+
+    "?#{gravatar_params.map { |key, value| "#{key}=#{CGI.escape(value.is_a?(String) ? value : value.to_s)}" }.join('&amp;')}"
   end
 end
 
-ActionView::Base.send(:include, GravatarImageTag) if defined?(ActionView::Base)
+ActionView::Base.include GravatarImageTag if defined?(ActionView::Base)

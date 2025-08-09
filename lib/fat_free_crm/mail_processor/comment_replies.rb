@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -39,7 +41,8 @@ module FatFreeCRM
       #--------------------------------------------------------------------------------------
       def with_subject_line(email)
         if /\[([^:]*):([^\]]*)\]/ =~ email.subject
-          entity_name, entity_id = Regexp.last_match[1], Regexp.last_match[2]
+          entity_name = Regexp.last_match[1]
+          entity_id = Regexp.last_match[2]
           # Check that entity is a known model
           if ENTITY_SHORTCUTS.values.include?(entity_name)
             yield entity_name, entity_id

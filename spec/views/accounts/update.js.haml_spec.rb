@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,13 +7,13 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/update" do
+describe "accounts/update" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
 
-    assign(:account, @account = FactoryGirl.build_stubbed(:account, user: current_user))
+    assign(:account, @account = build_stubbed(:account, user: current_user))
     assign(:users, [current_user])
     assign(:account_category_total, Hash.new(1))
   end
@@ -32,7 +34,6 @@ describe "/accounts/update" do
         render
         expect(rendered).to include("$('#sidebar').html")
         expect(rendered).to have_text("Recent Items")
-        expect(rendered).to include("$('#summary').effect('shake'")
       end
     end
 
@@ -56,7 +57,7 @@ describe "/accounts/update" do
         expect(rendered).to include(%/$('#account_#{@account.id}').effect("highlight"/)
       end
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     before do
@@ -68,11 +69,10 @@ describe "/accounts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
       end
 
-      it "should redraw the [edit_account] form and shake it" do
+      it "should redraw the [edit_account] form" do
         render
 
         expect(rendered).to include("#edit_account")
-        expect(rendered).to include(%/$('#edit_account').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
@@ -82,13 +82,12 @@ describe "/accounts/update" do
         controller.request.env["HTTP_REFERER"] = "http://localhost/accounts"
       end
 
-      it "should redraw the [edit_account] form and shake it" do
+      it "should redraw the [edit_account] form" do
         render
 
         expect(rendered).to include("account_#{@account.id}")
-        expect(rendered).to include(%/$('#account_#{@account.id}').effect("shake"/)
         expect(rendered).to include('focus()')
       end
     end
-  end # errors
+  end
 end

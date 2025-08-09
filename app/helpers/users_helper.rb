@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,9 +7,7 @@
 #------------------------------------------------------------------------------
 module UsersHelper
   def language_for(user)
-    if user.preference[:locale]
-      locale, language = languages.detect { |locale, _language| locale == user.preference[:locale] }
-    end
+    _locale, language = languages.detect { |locale, _language| locale == user.preference[:locale] } if user.preference[:locale]
     language || "English"
   end
 
@@ -25,7 +25,7 @@ module UsersHelper
     user_options = user_options_for_select(users, myself)
     select(asset, :assigned_to, user_options,
            { include_blank: t(:unassigned) },
-           style:         "width:160px",
+           style: 'width: 160px;', "data-allow-clear" => false,
            class: 'select2')
   end
 

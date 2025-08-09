@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,19 +7,19 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/contacts/index" do
+describe "contacts/index" do
   include ContactsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   it "should render [contact] template with @contacts collection if there are contacts" do
-    assign(:contacts, [FactoryGirl.build_stubbed(:contact, id: 42)].paginate)
+    assign(:contacts, [build_stubbed(:contact, id: 42)].paginate)
 
     render template: 'contacts/index', formats: [:js]
 
-    expect(rendered).to include("$('#contacts').html('<li class=\\'contact highlight\\' id=\\'contact_42\\'")
+    expect(rendered).to include("$('#contacts').html('<li class=\\'highlight contact\\' id=\\'contact_42\\'")
     expect(rendered).to include("#paginate")
   end
 

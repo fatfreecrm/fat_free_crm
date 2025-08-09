@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -22,11 +24,13 @@ module FatFreeCRM
 
     module SingletonMethods
       def field_groups
-        if ActiveRecord::Base.connection.table_exists? 'field_groups'
-          FieldGroup.where(klass_name: name).order(:position)
-        else
-          []
-        end
+        # catches cases where this code runs before database has been created or migrated
+        return [] unless ActiveRecord::Base.connection.active?
+        return [] unless ActiveRecord::Base.connection.table_exists?(:field_groups)
+
+        FieldGroup.where(klass_name: name).order(:position)
+      rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
+        []
       end
 
       def fields
@@ -35,9 +39,7 @@ module FatFreeCRM
 
       def serialize_custom_fields!
         fields.each do |field|
-          if !serialized_attributes.keys.include?(field.name) && field.as == 'check_boxes'
-            serialize(field.name.to_sym, Array)
-          end
+          serialize(field.name.to_sym, Array) if field.as == 'check_boxes'
         end
       end
 
@@ -75,11 +77,11 @@ module FatFreeCRM
       end
 
       def method_missing(method_id, *args, &block)
-        if method_id.to_s =~ /\Acf_.*[^=]\Z/
+        if method_id.to_s.match?(/\Acf_.*[^=]\Z/)
           # Refresh columns and try again.
           self.class.reset_column_information
           # If new record, create new object from class, else reload class
-          object = self.new_record? ? self.class.new : (reload && self)
+          object = new_record? ? self.class.new : (reload && self)
           # ensure serialization is setup if needed
           self.class.serialize_custom_fields!
           # Try again if object now responds to method, else return nil
@@ -92,4 +94,4 @@ module FatFreeCRM
   end
 end
 
-ActiveRecord::Base.send(:include, FatFreeCRM::Fields)
+ActiveRecord::Base.include FatFreeCRM::Fields

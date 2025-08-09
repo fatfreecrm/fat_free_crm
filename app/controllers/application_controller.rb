@@ -1,23 +1,27 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  protect_from_forgery with: :exception
 
+  before_action :configure_devise_parameters, if: :devise_controller?
+  before_action :authenticate_user!
+  before_action :set_paper_trail_whodunnit
   before_action :set_context
   before_action :clear_setting_cache
   before_action :cors_preflight_check
-  before_action "hook(:app_before_filter, self)"
-  after_action "hook(:app_after_filter,  self)"
+  before_action { hook(:app_before_filter, self) }
+  after_action { hook(:app_after_filter, self) }
   after_action :cors_set_access_control_headers
 
-  helper_method :current_user_session, :current_user, :can_signup?
   helper_method :called_from_index_page?, :called_from_landing_page?
   helper_method :klass
 
-  respond_to :html, only: [:index, :show, :auto_complete]
+  respond_to :html, only: %i[index show auto_complete]
   respond_to :js
   respond_to :json, :xml, except: :edit
   respond_to :atom, :csv, :rss, :xls, only: :index
@@ -30,23 +34,39 @@ class ApplicationController < ActionController::Base
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
-    @query = params[:auto_complete_query] || ''
+    @query = params[:term] || ''
     @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
-      @auto_complete = klass.my.text_search(@query).search(id_not_in: exclude_ids).result.limit(10)
+      @auto_complete = klass.my(current_user).text_search(@query).ransack(id_not_in: exclude_ids).result.limit(10)
     else
       @auto_complete = @auto_complete.last
     end
 
     session[:auto_complete] = controller_name.to_sym
     respond_to do |format|
-      format.any(:js, :html)   { render partial: 'auto_complete' }
+      format.any(:js, :html) { render partial: 'auto_complete' }
       format.json do
-        render json: @auto_complete.inject({}){|h, a|
-                       h[a.id] = a.respond_to?(:full_name) ? h(a.full_name) : h(a.name); h
-                     }
+        results = @auto_complete.map do |a|
+          {
+            id: a.id,
+            text: a.respond_to?(:full_name) ? a.full_name : a.name
+          }
+        end
+        render json: {
+          results: results
+        }
       end
+    end
+  end
+
+  # To deal with pre rails 6 users, reset the session and ask them to relogin
+  rescue_from ArgumentError do |exception|
+    if request.format.html? && exception.message == "invalid base64"
+      request.reset_session
+      redirect_to login_path
+    else
+      raise(exception)
     end
   end
 
@@ -59,20 +79,21 @@ class ApplicationController < ActionController::Base
   # See http://blog.nvisium.com/2014/09/understanding-protectfromforgery.html for more details.
   #----------------------------------------------------------------------------
   def handle_unverified_request
-    raise ActionController::InvalidAuthenticityToken
+    raise ActionController::InvalidAuthenticityToken unless ENV.fetch('CODESPACE_NAME', nil) && Rails.env.development?
   end
 
   #
-  # Takes { :related => 'campaigns/7' } or { :related => '5' }
+  # Takes { related: 'campaigns/7' } or { related: '5' }
   #   and returns array of object ids that should be excluded from search
   #   assumes controller_name is a method on 'related' class that returns a collection
   #----------------------------------------------------------------------------
   def auto_complete_ids_to_exclude(related)
     return [] if related.blank?
     return [related.to_i].compact unless related.index('/')
+
     related_class, id = related.split('/')
     obj = related_class.classify.constantize.find_by_id(id)
-    if obj && obj.respond_to?(controller_name)
+    if obj&.respond_to?(controller_name)
       obj.send(controller_name).map(&:id)
     else
       []
@@ -105,49 +126,6 @@ class ApplicationController < ActionController::Base
   end
 
   #----------------------------------------------------------------------------
-  def current_user_session
-    @current_user_session ||= Authentication.find
-    if @current_user_session && @current_user_session.record.suspended?
-      @current_user_session = nil
-    end
-    @current_user_session
-  end
-
-  #----------------------------------------------------------------------------
-  def current_user
-    unless @current_user
-      @current_user = (current_user_session && current_user_session.record)
-      if @current_user
-        @current_user.set_individual_locale
-        @current_user.set_single_access_token
-      end
-      User.current_user = @current_user
-    end
-    @current_user
-  end
-
-  #----------------------------------------------------------------------------
-  def require_user
-    unless current_user
-      store_location
-      flash[:notice] = t(:msg_login_needed) if request.fullpath != "/"
-      respond_to do |format|
-        format.html { redirect_to login_url }
-        format.js   { render text: "window.location = '#{login_url}';" }
-      end
-    end
-  end
-
-  #----------------------------------------------------------------------------
-  def require_no_user
-    if current_user
-      store_location
-      flash[:notice] = t(:msg_logout_needed)
-      redirect_to profile_url
-    end
-  end
-
-  #----------------------------------------------------------------------------
   def store_location
     session[:return_to] = request.fullpath
   end
@@ -165,11 +143,11 @@ class ApplicationController < ActionController::Base
 
   #----------------------------------------------------------------------------
   def called_from_index_page?(controller = controller_name)
-    if controller != "tasks"
-      request.referer =~ %r{/#{controller}$}
-    else
-      request.referer =~ /tasks\?*/
-    end
+    request.referer =~ if controller != "tasks"
+                         %r{/#{controller}$}
+                       else
+                         /tasks\?*/
+                       end
   end
 
   #----------------------------------------------------------------------------
@@ -215,8 +193,8 @@ class ApplicationController < ActionController::Base
 
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
-      format.js   { render text: 'window.location.reload();' }
-      format.json { render text: flash[:warning],  status: :not_found }
+      format.js   { render plain: 'window.location.reload();' }
+      format.json { render plain: flash[:warning], status: :not_found }
       format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
@@ -229,8 +207,8 @@ class ApplicationController < ActionController::Base
     url = send("#{related.pluralize}_path")
     respond_to do |format|
       format.html { redirect_to(url) }
-      format.js   { render text: %(window.location.href = "#{url}";) }
-      format.json { render text: flash[:warning],  status: :not_found }
+      format.js   { render plain: %(window.location.href = "#{url}";) }
+      format.json { render plain: flash[:warning], status: :not_found }
       format.xml  { render xml: [flash[:warning]], status: :not_found }
     end
   end
@@ -240,8 +218,8 @@ class ApplicationController < ActionController::Base
     flash[:warning] = t(:msg_not_authorized, default: 'You are not authorized to take this action.')
     respond_to do |format|
       format.html { redirect_to(redirection_url) }
-      format.js   { render text: 'window.location.reload();' }
-      format.json { render text: flash[:warning],  status: :unauthorized }
+      format.js   { render plain: 'window.location.reload();' }
+      format.json { render plain: flash[:warning], status: :unauthorized }
       format.xml  { render xml: [flash[:warning]], status: :unauthorized }
     end
   end
@@ -249,10 +227,10 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def redirection_url
     # Try to redirect somewhere sensible. Note: not all controllers have an index action
-    url = if current_user.present?
-            (respond_to?(:index) && action_name != 'index') ? { action: 'index' } : root_url
-          else
-            login_url
+    if current_user.present?
+      respond_to?(:index) && action_name != 'index' ? { action: 'index' } : root_url
+    else
+      login_url
     end
   end
 
@@ -270,7 +248,35 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Token'
       headers['Access-Control-Max-Age'] = '1728000'
 
-      render :text => '', :content_type => 'text/plain'
+      render plain: ''
     end
   end
+
+  def configure_devise_parameters
+    devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+      user_params.permit(:username, :email, :password, :password_confirmation)
+    end
+  end
+
+  def find_class(asset)
+    Rails.application.eager_load! unless Rails.application.config.cache_classes
+    classes = ActiveRecord::Base.descendants.map(&:name)
+    find = classes.find { |m| m == asset.classify }
+    if find
+      find.safe_constantize
+    else
+      raise "Unknown resource"
+    end
+  end
+
+  # In a number of places, we pass ?previous=(id) or ?previous=crm.find_form...
+  # This method centralises all of the places we can pass in a previous param
+  # and extracts an int ID, or nil
+  def detect_previous_id
+    return unless params[:previous]
+    return if params[:previous].start_with?("crm")
+
+    params[:previous].to_i
+  end
+  ActiveSupport.run_load_hooks(:fat_free_crm_application_controller, self)
 end

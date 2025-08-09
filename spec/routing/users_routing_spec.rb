@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -7,12 +9,38 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UsersController do
   describe "routing" do
-    it "doesn't recognize #index" do
-      expect(get: "/users").not_to be_routable
+    it "recognizes #index" do
+      expect(get: "/users").to route_to(controller: "users", action: "index")
     end
 
-    it "recognizes and generates #new as /signup" do
-      expect(get: "/signup").to route_to(controller: "users", action: "new")
+    it "recognizes and generates Devise registrations routes" do
+      expect(get: "/users/sign_up").to route_to(controller: "registrations", action: "new")
+      expect(get: "/users/edit").to route_to(controller: "registrations", action: "edit")
+      expect(get: "/users/cancel").to route_to(controller: "registrations", action: "cancel")
+      expect(post: "/users").to route_to(controller: "registrations", action: "create")
+      expect(put: "/users").to route_to(controller: "registrations", action: "update")
+      expect(patch: "/users").to route_to(controller: "registrations", action: "update")
+      expect(delete: "/users").to route_to(controller: "registrations", action: "destroy")
+    end
+
+    it "recognizes and generates Devise sessions routes" do
+      expect(get: "/users/sign_in").to route_to(controller: "sessions", action: "new")
+      expect(post: "/users/sign_in").to route_to(controller: "sessions", action: "create")
+      expect(delete: "/users/sign_out").to route_to(controller: "sessions", action: "destroy")
+    end
+
+    it "recognizes and generates Devise passwords routes" do
+      expect(get: "/users/password/new").to route_to(controller: "passwords", action: "new")
+      expect(get: "/users/password/edit").to route_to(controller: "passwords", action: "edit")
+      expect(post: "/users/password").to route_to(controller: "passwords", action: "create")
+      expect(put: "/users/password").to route_to(controller: "passwords", action: "update")
+      expect(patch: "/users/password").to route_to(controller: "passwords", action: "update")
+    end
+
+    it "recognizes and generates Devise confirmations routes" do
+      expect(get: "/users/confirmation/new").to route_to(controller: "confirmations", action: "new")
+      expect(get: "/users/confirmation").to route_to(controller: "confirmations", action: "show")
+      expect(post: "/users/confirmation").to route_to(controller: "confirmations", action: "create")
     end
 
     it "recognizes and generates #show as /profile" do
@@ -25,10 +53,6 @@ describe UsersController do
 
     it "doesn't recognize #edit with non-numeric id" do
       expect(get: "/users/aaron/edit").not_to be_routable
-    end
-
-    it "recognizes and generates #create" do
-      expect(post: "/users").to route_to(controller: "users", action: "create")
     end
 
     it "recognizes and generates #update" do

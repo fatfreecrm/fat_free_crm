@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::FieldsController < Admin::ApplicationController
-  before_action "set_current_tab('admin/fields')", only: [:index]
-
-  load_resource except: [:create, :subform]
+  before_action :setup_current_tab, only: [:index]
+  load_resource except: %i[create subform]
 
   # GET /fields
   # GET /fields.xml                                                      HTML
@@ -32,7 +33,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # GET /fields/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @field = Field.find(params[:id])
+    @field = Field.find(params["id"])
     respond_with(@field)
   end
 
@@ -40,12 +41,12 @@ class Admin::FieldsController < Admin::ApplicationController
   # POST /fields.xml                                                     AJAX
   #----------------------------------------------------------------------------
   def create
-    as = field_params[:as]
+    as = field_params["as"]
+    klass = Field.lookup_class(as).safe_constantize
     @field =
-      if as =~ /pair/
-        CustomFieldPair.create_pair(params).first
+      if as.match?(/pair/)
+        klass.create_pair("pair" => pair_params, "field" => field_params).first
       elsif as.present?
-        klass = Field.lookup_class(as).classify.constantize
         klass.create(field_params)
       else
         Field.new(field_params).tap(&:valid?)
@@ -58,11 +59,11 @@ class Admin::FieldsController < Admin::ApplicationController
   # PUT /fields/1.xml                                                    AJAX
   #----------------------------------------------------------------------------
   def update
-    if field_params[:as] =~ /pair/
-      @field = CustomFieldPair.update_pair(params).first
+    if field_params["as"].match?(/pair/)
+      @field = CustomFieldPair.update_pair("pair" => pair_params, "field" => field_params).first
     else
-      @field = Field.find(params[:id])
-      @field.update_attributes(field_params)
+      @field = Field.find(params["id"])
+      @field.update(field_params)
     end
 
     respond_with(@field)
@@ -72,7 +73,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # DELETE /fields/1.xml                                        HTML and AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @field = Field.find(params[:id])
+    @field = Field.find(params["id"])
     @field.destroy
 
     respond_with(@field)
@@ -81,7 +82,7 @@ class Admin::FieldsController < Admin::ApplicationController
   # POST /fields/sort
   #----------------------------------------------------------------------------
   def sort
-    field_group_id = params[:field_group_id].to_i
+    field_group_id = params["field_group_id"].to_i
     field_ids = params["fields_field_group_#{field_group_id}"] || []
 
     field_ids.each_with_index do |id, index|
@@ -95,13 +96,12 @@ class Admin::FieldsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def subform
     field = field_params
-    as = field[:as]
-
+    as = field_params["as"]
     @field = if (id = field[:id]).present?
                Field.find(id).tap { |f| f.as = as }
              else
                field_group_id = field[:field_group_id]
-               klass = Field.lookup_class(as).classify.constantize
+               klass = Field.lookup_class(as).safe_constantize
                klass.new(field_group_id: field_group_id, as: as)
       end
 
@@ -113,6 +113,14 @@ class Admin::FieldsController < Admin::ApplicationController
   protected
 
   def field_params
-    params[:field].permit!
+    params.require(:field).permit(:as, :collection_string, :disabled, :field_group_id, :hint, :label, :maxlength, :minlength, :name, :pair_id, :placeholder, :position, :required, :type, settings: {})
+  end
+
+  def pair_params
+    params.require(:pair).permit("0": %i[hint required disabled id], "1": %i[hint required disabled id])
+  end
+
+  def setup_current_tab
+    set_current_tab('admin/fields')
   end
 end

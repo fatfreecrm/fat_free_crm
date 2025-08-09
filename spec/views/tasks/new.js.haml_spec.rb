@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,12 +7,12 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/new" do
+describe "tasks/new" do
   include TasksHelper
 
   before do
-    login_and_assign
-    assign(:task, FactoryGirl.build(:task))
+    login
+    assign(:task, build(:task))
     assign(:users, [current_user])
     assign(:bucket, Setting.task_bucket[1..-1] << ["On Specific Date...", :specific_time])
     assign(:category, Setting.unroll(:task_category))

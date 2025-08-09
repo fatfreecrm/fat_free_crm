@@ -1,4 +1,6 @@
-class AddBackgroundInfoToModels < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class AddBackgroundInfoToModels < ActiveRecord::Migration[4.2]
   def self.up
     add_column :accounts, :background_info, :string
     add_column :campaigns, :background_info, :string

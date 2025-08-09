@@ -8,14 +8,14 @@
     crm.flip_form('edit_#{entity_name}');
     crm.set_title('edit_#{entity_name}', '#{h @entity.name}');
   - else                                            # Called from index page...
-    $('##{id}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @entity ]) }');
+    $('##{id}').replaceWith('#{ j render(partial: entity_name, collection: [ @entity ]) }');
 
 - else # <----------------------------------------  Show [Edit] form.
 
   - if params[:cancel].blank?                       # Called from index page...
     - if @previous                                  # Hide open [Edit] form if any.
       - if @previous.is_a?(@entity.class)
-        $('##{dom_id(@previous)}').replaceWith('#{ j render(:partial => entity_name, :collection => [ @previous ]) }');
+        $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: entity_name, collection: [ @previous ]) }');
       - else
         crm.flick('#{entity_name}_#{@previous}', 'remove');
     -# Disable onMouseOver for the list item.
@@ -23,9 +23,9 @@
     -# Hide [Create] form if any.
     crm.hide_form('create_#{entity_name}');
     -# Show [Edit] form.
-    $('##{id}').html('#{ j render(:partial => "edit") }');
+    $('##{id}').html('#{ j render(partial: "edit") }');
 
   - elsif params[:cancel].false?                    # Called from title of the landing page...
-    $('#edit_#{entity_name}').html('#{ j render(:partial => "edit") }');
+    $('#edit_#{entity_name}').html('#{ j render(partial: "edit") }');
     crm.flip_form('edit_#{entity_name}');
-    crm.set_title('edit_#{entity_name}', "#{t :edit} #{h @entity.name}");
+    crm.set_title('edit_#{entity_name}', "#{t :edit} #{j @entity.name}");

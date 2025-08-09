@@ -4,8 +4,8 @@
 - if @entities.any?
   $('##{entities}').html('#{ j render(@entities) }');
 - else
-  $('##{entities}').html('#{ j render(:partial => "shared/empty") }');
+  $('##{entities}').html('#{ j render(partial: "shared/empty") }');
 
-$('#paginate').html('#{ j render(:partial => "shared/paginate_with_per_page") }');
-$('#export').html('#{ j render(:partial => "shared/export") }');
-$('#search_results_count').html('#{ j render(:text => t('search_results_count', :count => @search_results_count)) }');
+$('#paginate').html('#{ j render(partial: "shared/paginate_with_per_page") }');
+$('#export').html('#{ j render(partial: "shared/export") }');
+$('#search_results_count').html('#{ j render(plain: t('search_results_count', count: @search_results_count)) }');

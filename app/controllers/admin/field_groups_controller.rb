@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -20,10 +22,6 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   def edit
     @field_group = FieldGroup.find(params[:id])
 
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = FieldGroup.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
-
     respond_with(@field_group)
   end
 
@@ -41,7 +39,7 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   #----------------------------------------------------------------------------
   def update
     @field_group = FieldGroup.find(params[:id])
-    @field_group.update_attributes(field_group_params)
+    @field_group.update(field_group_params)
 
     respond_with(@field_group)
   end
@@ -78,6 +76,13 @@ class Admin::FieldGroupsController < Admin::ApplicationController
   protected
 
   def field_group_params
-    params[:field_group].permit!
+    params.require(:field_group).permit(
+      :name,
+      :label,
+      :position,
+      :hint,
+      :tag_id,
+      :klass_name
+    )
   end
 end

@@ -80,7 +80,7 @@
 :email_dropbox:
   :server                     : ""        # IMAP server name.
   :port                       : ""        # IMAP server port number.
-  :ssl                        : ""        # True for secure IMAP connection, false othewise.
+  :ssl                        : ""        # True for secure IMAP connection, false otherwise.
   :address                    : ""        # Dropbox email address.
   :user                       : ""        # User to login to the IMAP server.
   :password                   : ""        # Password to login to the IMAP server.
@@ -99,7 +99,7 @@
 :email_comment_replies:
   :server                     : ""        # IMAP server name.
   :port                       : ""        # IMAP server port number.
-  :ssl                        : ""        # True for secure IMAP connection, false othewise.
+  :ssl                        : ""        # True for secure IMAP connection, false otherwise.
   :address                    : ""        # Comment reply email address.
   :user                       : ""        # User to login to the IMAP server.
   :password                   : ""        # Password to login to the IMAP server.
@@ -192,7 +192,8 @@
 #------------------------------------------------------------------------------
 # Specify which countries (if any) should appear at the top of country pickers
 # priority_countries:
-#  - Burkina Faso
+#  - AU
+#  - BF
 
 # Main and Admin Tabs
 #------------------------------------------------------------------------------
@@ -260,11 +261,11 @@
   :icon: :fa-tags
   :url:
     :controller: admin/tags
-#- :active: false
-#  :text: :admin_tab_settings
-#  :icon: :fa-cogs
-#  :url:
-#    :controller: admin/settings
+- :active: false
+  :text: :admin_tab_settings
+  :icon: :fa-cogs
+  :url:
+    :controller: admin/settings
 #- :active: false
 #  :text: :admin_tab_plugins
 #  :icon: :fa-plus-circle
@@ -285,14 +286,6 @@ account_category:
   - :reseller
   - :vendor
 
-account_category_color:
-  :affiliate   : lavender
-  :competitor  : paleturquoise
-  :customer    : pink
-  :partner     : bisque
-  :reseller    : thistle
-  :vendor      : skyblue
-
 # Campaign Status. To add custom status use string value, for example:
 #
 # campaign_status:
@@ -306,13 +299,6 @@ campaign_status:
   - :on_hold
   - :called_off
 
-campaign_status_color:
-  :planned    : Gold
-  :started    : Turquoise
-  :completed  : Lime
-  :on_hold    : Orchid
-  :called_off : OrangeRed
-
 # Lead Status and Source.
 #------------------------------------------------------------------------------
 lead_status:
@@ -320,12 +306,6 @@ lead_status:
   - :contacted
   - :converted
   - :rejected
-
-lead_status_color:
-  :new       : Silver
-  :contacted : Turquoise
-  :converted : Lime
-  :rejected  : OrangeRed
 
 lead_source:
   - :campaign
@@ -351,16 +331,6 @@ opportunity_stage:
   - :won
   - :lost
 
-opportunity_stage_color:
-  :prospecting  : Silver
-  :analysis     : PaleGoldenRod
-  :presentation : Salmon
-  :proposal     : Gold
-  :negotiation  : Orchid
-  :final_review : Turquoise
-  :won          : Lime
-  :lost         : OrangeRed
-
 # Task Category, Due Date, and Completed Date.
 #------------------------------------------------------------------------------
 task_category:
@@ -372,16 +342,6 @@ task_category:
   - :money
   - :presentation
   - :trip
-
-task_category_color:
-  :call         : Silver
-  :email        : Turquoise
-  :follow_up    : Gold
-  :lunch        : Tomato
-  :meeting      : Orchid
-  :money        : Lime
-  :presentation : Salmon
-  :trip         : Turquoise
 
 task_bucket:
   - :overdue
@@ -398,3 +358,20 @@ task_completed:
   - :completed_last_week
   - :completed_this_month
   - :completed_last_month
+
+# Phone Numbers
+#------------------------------------------------------------------------------
+# Enforce international phone number format (e.g. +1-555-555-5555)
+# When set to true, a 'pattern' attribute will be added to all phone input fields
+# to help guide users to enter phone numbers in international format.
+#
+:enforce_international_phone_format: false
+
+
+# AI Prompts
+#------------------------------------------------------------------------------
+# The following settings are for system-wide AI prompts.
+#
+:ai_prompts:
+  :about_my_business: ""
+  :how_i_plan_to_use_ffcrm: ""

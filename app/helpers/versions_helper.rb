@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -23,7 +25,7 @@ module VersionsHelper
         first = link_to(h(account.name), account_path(account))
       end
       if second.present? && (account = Account.find_by_id(second))
-        second  = link_to(h(account.name), account_path(account))
+        second = link_to(h(account.name), account_path(account))
       end
     end
 

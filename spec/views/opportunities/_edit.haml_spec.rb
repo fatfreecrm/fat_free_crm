@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,22 +7,22 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/opportunities/_edit" do
+describe "opportunities/_edit" do
   include OpportunitiesHelper
 
   before do
-    login_and_assign
-    assign(:account, @account = FactoryGirl.build_stubbed(:account))
+    login
+    assign(:account, @account = build_stubbed(:account))
     assign(:accounts, [@account])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 
   it "should render [edit opportunity] form" do
     assign(:users, [current_user])
-    assign(:opportunity, @opportunity = FactoryGirl.build_stubbed(:opportunity, campaign: @campaign = FactoryGirl.build_stubbed(:campaign)))
+    assign(:opportunity, @opportunity = build_stubbed(:opportunity, campaign: @campaign = build_stubbed(:campaign)))
     render
 
-    expect(rendered).to have_tag("form[class=edit_opportunity]") do
+    expect(rendered).to have_tag('form[class="simple_form edit_opportunity"]') do
       with_tag "input[type=hidden][id=opportunity_user_id][value='#{@opportunity.user_id}']"
       with_tag "input[type=hidden][id=opportunity_campaign_id][value='#{@opportunity.campaign_id}']"
     end
@@ -28,7 +30,7 @@ describe "/opportunities/_edit" do
 
   it "should pick default assignee (Myself)" do
     assign(:users, [current_user])
-    assign(:opportunity, FactoryGirl.build_stubbed(:opportunity, assignee: nil))
+    assign(:opportunity, build_stubbed(:opportunity, assignee: nil))
     render
 
     expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |options|
@@ -37,9 +39,9 @@ describe "/opportunities/_edit" do
   end
 
   it "should show correct assignee" do
-    @user = FactoryGirl.create(:user)
+    @user = create(:user)
     assign(:users, [current_user, @user])
-    assign(:opportunity, FactoryGirl.create(:opportunity, assignee: @user))
+    assign(:opportunity, create(:opportunity, assignee: @user))
     render
 
     expect(rendered).to have_tag("select[id=opportunity_assigned_to]") do |_options|
@@ -50,7 +52,7 @@ describe "/opportunities/_edit" do
 
   it "should render background info field if settings require so" do
     assign(:users, [current_user])
-    assign(:opportunity, FactoryGirl.build_stubbed(:opportunity))
+    assign(:opportunity, build_stubbed(:opportunity))
     Setting.background_info = [:opportunity]
 
     render
@@ -59,7 +61,7 @@ describe "/opportunities/_edit" do
 
   it "should not render background info field if settings do not require so" do
     assign(:users, [current_user])
-    assign(:opportunity, FactoryGirl.build_stubbed(:opportunity))
+    assign(:opportunity, build_stubbed(:opportunity))
     Setting.background_info = []
 
     render

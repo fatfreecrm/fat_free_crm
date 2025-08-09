@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,11 +7,11 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/users/edit" do
+describe "users/edit" do
   include UsersHelper
 
   before do
-    login_and_assign
+    login
     assign(:user, @user = current_user)
   end
 

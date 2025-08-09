@@ -1,15 +1,18 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class UsersController < ApplicationController
-  before_action :set_current_tab, only: [:show, :opportunities_overview] # Don't hightlight any tabs.
+  before_action :set_current_tab, only: %i[show opportunities_overview] # Don't highlight any tabs.
 
   check_authorization
+
   load_and_authorize_resource # handles all security
 
-  respond_to :html, only: [:show, :new]
+  respond_to :html, only: %i[show new]
 
   # GET /users/1
   # GET /users/1.js
@@ -17,30 +20,6 @@ class UsersController < ApplicationController
   def show
     @user = current_user if params[:id].nil?
     respond_with(@user)
-  end
-
-  # GET /users/new
-  # GET /users/new.js
-  #----------------------------------------------------------------------------
-  def new
-    respond_with(@user)
-  end
-
-  # POST /users
-  # POST /users.js
-  #----------------------------------------------------------------------------
-  def create
-    if @user.save
-      if Setting.user_signup == :needs_approval
-        flash[:notice] = t(:msg_account_created)
-        redirect_to login_url
-      else
-        flash[:notice] = t(:msg_successful_signup)
-        redirect_back_or_default profile_url
-      end
-    else
-      render :new
-    end
   end
 
   # GET /users/1/edit.js
@@ -53,7 +32,8 @@ class UsersController < ApplicationController
   # PUT /users/1.js
   #----------------------------------------------------------------------------
   def update
-    @user.update_attributes(user_params)
+    @user.update(user_params)
+    flash[:notice] = t(:msg_user_updated)
     respond_with(@user)
   end
 
@@ -74,18 +54,16 @@ class UsersController < ApplicationController
       render
     else
       if params[:avatar]
-        avatar = Avatar.create(avatar_params)
-        if avatar.valid?
-          @user.avatar = avatar
+        @avatar = Avatar.create(avatar_params)
+        if @avatar.valid?
+          @user.avatar = @avatar
         else
           @user.avatar.errors.clear
           @user.avatar.errors.add(:image, t(:msg_bad_image_file))
         end
       end
       responds_to_parent do
-        # Without return RSpec2 screams bloody murder about rendering twice:
-        # within the block and after yield in responds_to_parent.
-        render && (return if Rails.env.test?)
+        render
       end
     end
   end
@@ -101,14 +79,14 @@ class UsersController < ApplicationController
   # PUT /users/1/change_password.js
   #----------------------------------------------------------------------------
   def change_password
-    if @user.valid_password?(params[:current_password], true) || @user.password_hash.blank?
-      unless params[:user][:password].blank?
+    if @user.valid_password?(params[:current_password])
+      if params[:user][:password].blank?
+        flash[:notice] = t(:msg_password_not_changed)
+      else
         @user.password = params[:user][:password]
         @user.password_confirmation = params[:user][:password_confirmation]
         @user.save
         flash[:notice] = t(:msg_password_changed)
-      else
-        flash[:notice] = t(:msg_password_not_changed)
       end
     else
       @user.errors.add(:current_password, t(:msg_invalid_password))
@@ -128,13 +106,31 @@ class UsersController < ApplicationController
   #----------------------------------------------------------------------------
   def opportunities_overview
     @users_with_opportunities = User.have_assigned_opportunities.order(:first_name)
-    @unassigned_opportunities = Opportunity.my.unassigned.pipeline.order(:stage)
+    @unassigned_opportunities = Opportunity.my(current_user).unassigned.pipeline.order(:stage).includes(:account, :user, :tags)
+  end
+
+  def auto_complete
+    @query = params[:term] || ''
+    @users = User.my(current_user).text_search(@query).limit(10).order(:first_name, :last_name)
+
+    respond_to do |format|
+      format.json do
+        results = @users.map do |a|
+          helpers.j(a.full_name + " (@" + a.username + ")")
+        end
+        render json: results
+      end
+    end
   end
 
   protected
 
   def user_params
+    return {} unless params[:user]
+
     params[:user][:email].try(:strip!)
+    params[:user][:alt_email].try(:strip!)
+
     params[:user].permit(
       :username,
       :email,
@@ -148,13 +144,18 @@ class UsersController < ApplicationController
       :aim,
       :yahoo,
       :google,
-      :skype
+      :subscribe_to_comment_replies,
+      :receive_assigned_notifications
     )
   end
 
   def avatar_params
+    return {} unless params[:avatar]
+
     params[:avatar]
       .permit(:image)
-      .merge(entity: @user)
+      .merge(entity: @user, user_id: @user.id)
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_users_controller, self)
 end

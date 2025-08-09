@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,18 +7,18 @@
 #------------------------------------------------------------------------------
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/leads/_sidebar_show" do
+describe "leads/_sidebar_show" do
   include LeadsHelper
 
   before do
-    login_and_assign
+    login
     assign(:users, [current_user])
     assign(:comment, Comment.new)
-    assign(:lead, FactoryGirl.build_stubbed(:lead,
-                                     blog: 'http://www.blogger.com/home',
-                                     linkedin: 'www.linkedin.com',
-                                     twitter: 'twitter.com/account',
-                                     facebook: ''))
+    assign(:lead, build_stubbed(:lead,
+                                blog: 'http://www.blogger.com/home',
+                                linkedin: 'www.linkedin.com',
+                                twitter: 'twitter.com/account',
+                                facebook: ''))
   end
 
   it "should render working web presence links whether a protocol is provided or not" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,11 +7,11 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/users/change_password" do
+describe "users/change_password" do
   include UsersHelper
 
   before do
-    login_and_assign
+    login
     assign(:user, @user = current_user)
   end
 
@@ -28,15 +30,14 @@ describe "/users/change_password" do
       expect(rendered).to include("#flash")
       expect(rendered).to include("crm.flash('notice')")
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
-    it "should redraw the [Change Password] form and shake it" do
+    it "should redraw the [Change Password] form" do
       @user.errors.add(:current_password, "error")
       render
 
       expect(rendered).to include("$('#change_password').html")
-      expect(rendered).to include(%/$('#change_password').effect("shake"/)
       expect(rendered).to include("$('#current_password').focus();")
     end
 
@@ -46,5 +47,5 @@ describe "/users/change_password" do
 
       expect(rendered).to include("$('#user_password').focus();")
     end
-  end # errors
+  end
 end

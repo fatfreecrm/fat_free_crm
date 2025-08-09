@@ -1,12 +1,12 @@
-- amount = account.opportunities.pipeline.map(&:weighted_amount).sum
+- amount = account.pipeline_opportunities.map(&:weighted_amount).sum
 %li.highlight[account]
   - if account.category
-    .strip{:class => account.category} #{t(account.category)}
+    .strip{class: account.category} #{t(account.category)}
   - else
-    .strip{:style => "color: gray;"} #{t :other}
+    .strip{style: "color: gray;"} #{t :other}
 
   %ul.tools
-    = hook(:account_tools_before, self, :account => account)
+    = hook(:account_tools_before, self, account: account)
 
     - if can?(:update, account)
       %li= link_to_edit(account)
@@ -17,16 +17,16 @@
   .indent
     = link_to(account.name, account)
     - if amount != 0.0
-      %span.amount= number_to_currency(amount, :precision => 0)
+      %span.amount= number_to_currency(amount, precision: 0)
     &ndash;
     %tt
-      = account.location << ", " unless account.location.blank?
+      = account.location + ", " unless account.location.blank?
       - user_name = account.user.try(:full_name)
       - if user_name
-        = t(:added_by, :time_ago => timeago(account.created_at), :user => h(user_name)).html_safe << " | "
+        = t(:added_by, time_ago: timeago(account.created_at), user: h(user_name)).html_safe << " | "
       - else
-        = t(:added_ago, :value => timeago(account.created_at)).html_safe << " | "
-      = t('pluralize.contact', account.contacts.count) << " | "
-      = t('pluralize.opportunity', account.opportunities.count)
+        = t(:added_ago, value: timeago(account.created_at)).html_safe << " | "
+      = t('pluralize.contact', account.contacts_count) + " | "
+      = t('pluralize.opportunity', account.opportunities_count)
 
-    = hook(:account_bottom, self, :account => account)
+    = hook(:account_bottom, self, account: account)

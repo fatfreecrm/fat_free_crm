@@ -4,36 +4,885 @@ It does not matter how slowly you go as long as you do not stop.
 First they ignore you, then they laugh at you, then they fight you,
 then you win. –- Mahatma Gandhi
 
-0.15.0
+See the live details via https://github.com/fatfreecrm/fat_free_crm/releases
+
+Jul 27, 2025 (0.24.1)
+======
+## What's Changed
+* Add capybara-screenshot by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1501
+* Rails 7.1: Fix .to_s(:format) usage by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1505
+
+
+**Full Changelog**: https://github.com/fatfreecrm/fat_free_crm/compare/v0.24.0...v0.24.1
+
+Jul 27, 2025 (0.24.0)
+======
+
+## What's Changed
+* Fully target Ruby 3.4 by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1493
+* Update to Rails 7.1 by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1494
+
+
+**Full Changelog**: https://github.com/fatfreecrm/fat_free_crm/compare/v0.23.0...v0.24.0
+
+Jul 27, 2025 (0.23.0)
+======
+
+## What's Changed
+
+We've bumped a number of dependencies with security and other improvements; as well as a handful of small but useful bugfixes.
+
+* Add features test to Github workflow by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1353
+* Dev environment: Add basic Devcontainer pointed at sqlite by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1484
+* Don't send comment email to suspended or inactive users. by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1363
+* Fix campaigns specs comment textarea not getting value by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1352
+* Fix DB migrations on other DBs that aren't postgres by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1483
+* Fix Rails.application.secrets deprecation warning in Devise config by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1354
+* Fix Selenium Chrome options by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1351
+* Fix textarea autocomplete by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1339
+* Fix version serialization by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1341
+* Remove Test ENV condition by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1362
+* Rubocop: Fix all current warnings and enable further areas by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1489
+* Update ransack_ui and ransack by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1340
+
+## Dependency updates
+
+* Bump activejob from 7.0.8.4 to 7.0.8.6 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1375
+* Bump activemodel-serializers-xml from 1.0.2 to 1.0.3 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1359
+* Bump acts_as_list from 1.2.2 to 1.2.4 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1387
+* Bump bootsnap from 1.18.4 to 1.18.5 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1458
+* Bump bootsnap from 1.18.5 to 1.18.6 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1459
+* Bump brakeman from 6.2.1 to 6.2.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1378
+* Bump brakeman from 6.2.2 to 7.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1411
+* Bump brakeman from 7.0.0 to 7.0.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1447
+* Bump brakeman from 7.0.1 to 7.0.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1448
+* Bump brakeman from 7.0.2 to 7.1.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1482
+* Bump byebug from 11.1.3 to 12.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1442
+* Bump capistrano from 3.19.1 to 3.19.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1393
+* Bump capistrano-rails from 1.6.3 to 1.7.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1410
+* Bump country_select from 10.0.0 to 10.0.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1413
+* Bump country_select from 9.0.0 to 10.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1366
+* Bump database_cleaner from 2.0.2 to 2.1.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1379
+* Bump devise-i18n from 1.12.1 to 1.13.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1435
+* Bump devise-i18n from 1.13.0 to 1.14.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1469
+* Bump execjs from 2.9.1 to 2.10.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1377
+* Bump factory_bot_rails from 6.4.3 to 6.4.4 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1381
+* Bump factory_bot_rails from 6.4.4 to 6.5.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1468
+* Bump ffaker from 2.23.0 to 2.24.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1418
+* Bump font-awesome-rails from 4.7.0.8 to 4.7.0.9 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1391
+* Bump guard from 2.18.1 to 2.19.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1384
+* Bump guard from 2.19.0 to 2.19.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1412
+* Bump headless from 2.3.1 to 3.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1456
+* Bump image_processing from 1.13.0 to 1.14.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1423
+* Bump jquery-ui-rails from `413265e` to 7.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1449
+* Bump jquery-ui-rails from `413265e` to 8.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1455
+* Bump jquery-ui-rails from `413265e` to 8.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1457
+* Bump jquery-ui-rails from `413265e` to 8.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1461
+* Bump jquery-ui-rails from `413265e` to 8.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1466
+* Bump json from 2.10.1 to 2.10.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1437
+* Bump mini_magick from 4.13.2 to 5.1.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1424
+* Bump mini_magick from 5.1.2 to 5.2.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1429
+* Bump mini_magick from 5.2.0 to 5.3.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1479
+* Bump mini_racer from 0.14.1 to 0.16.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1347
+* Bump mini_racer from 0.16.0 to 0.18.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1445
+* Bump mini_racer from 0.18.1 to 0.19.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1476
+* Bump net-imap from 0.5.1 to 0.5.6 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1422
+* Bump net-imap from 0.5.6 to 0.5.7 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1452
+* Bump nokogiri from 1.16.8 to 1.17.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1406
+* Bump nokogiri from 1.17.2 to 1.18.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1408
+* Bump nokogiri from 1.18.0 to 1.18.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1409
+* Bump nokogiri from 1.18.1 to 1.18.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1415
+* Bump nokogiri from 1.18.2 to 1.18.3 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1428
+* Bump nokogiri from 1.18.3 to 1.18.4 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1439
+* Bump nokogiri from 1.18.4 to 1.18.5 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1440
+* Bump nokogiri from 1.18.5 to 1.18.6 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1441
+* Bump nokogiri from 1.18.6 to 1.18.7 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1444
+* Bump nokogiri from 1.18.7 to 1.18.8 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1450
+* Bump nokogiri from 1.18.8 to 1.18.9 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1480
+* Bump pg from 1.5.7 to 1.5.9 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1376
+* Bump premailer from 1.26.0 to 1.27.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1338
+* Bump puma from 6.4.2 to 6.4.3 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1360
+* Bump puma from 6.4.3 to 6.5.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1390
+* Bump puma from 6.5.0 to 6.6.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1417
+* Bump rack from 2.2.10 to 2.2.11 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1425
+* Bump rack from 2.2.11 to 2.2.13 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1436
+* Bump rails from 7.0.8.6 to 7.0.8.7 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1402
+* Bump rails-html-sanitizer from 1.6.0 to 1.6.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1395
+* Bump rails-i18n from 7.0.9 to 7.0.10 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1383
+* Bump ransack_ui from 2.0.0 to 2.0.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1356
+* Bump rexml from 3.3.6 to 3.3.9 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1382
+* Bump rspec-activemodel-mocks from 1.2.0 to 1.2.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1367
+* Bump rspec-rails from 6.1.4 to 7.0.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1345
+* Bump rspec-rails from 7.0.0 to 7.0.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1346
+* Bump rspec-rails from 7.0.1 to 7.1.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1389
+* Bump rspec-rails from 7.1.0 to 7.1.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1421
+* Bump rubocop from 1.65.1 to 1.66.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1344
+* Bump rubocop from 1.66.0 to 1.66.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1348
+* Bump rubocop from 1.66.1 to 1.67.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1380
+* Bump rubocop from 1.67.0 to 1.68.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1386
+* Bump rubocop from 1.68.0 to 1.69.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1392
+* Bump rubocop from 1.69.0 to 1.69.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1396
+* Bump rubocop from 1.69.1 to 1.69.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1405
+* Bump rubocop from 1.69.2 to 1.70.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1414
+* Bump rubocop from 1.70.0 to 1.71.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1420
+* Bump rubocop from 1.71.2 to 1.72.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1426
+* Bump rubocop from 1.72.1 to 1.72.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1427
+* Bump rubocop from 1.72.2 to 1.73.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1430
+* Bump rubocop from 1.73.0 to 1.73.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1431
+* Bump rubocop from 1.73.1 to 1.73.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1433
+* Bump rubocop from 1.73.2 to 1.75.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1443
+* Bump rubocop from 1.75.1 to 1.75.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1446
+* Bump rubocop from 1.75.2 to 1.75.4 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1453
+* Bump rubocop from 1.75.4 to 1.75.5 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1454
+* Bump rubocop from 1.75.5 to 1.75.6 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1460
+* Bump rubocop from 1.75.6 to 1.75.7 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1462
+* Bump rubocop from 1.75.7 to 1.76.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1465
+* Bump rubocop from 1.76.1 to 1.76.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1470
+* Bump rubocop from 1.76.2 to 1.77.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1471
+* Bump rubocop from 1.77.0 to 1.78.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1477
+* Bump rubocop from 1.78.0 to 1.79.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1486
+* Bump thor from 1.3.1 to 1.3.2 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1342
+* Bump thor from 1.3.2 to 1.4.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1481
+* Bump uglifier from 4.2.0 to 4.2.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1364
+* Bump webrick from 1.8.1 to 1.9.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1385
+* Bump webrick from 1.9.0 to 1.9.1 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1394
+* Bump zeus from 0.16.0 to 0.17.0 by @dependabot[bot] in https://github.com/fatfreecrm/fat_free_crm/pull/1350
+
+**Full Changelog**: https://github.com/fatfreecrm/fat_free_crm/compare/v0.22.1...v0.23.0
+
+Aug 26, 2024 (0.22.1)
+======
+
+## What's Changed
+* Bump bootsnap from 1.17.0 to 1.17.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1223
+* Bump rubocop from 1.59.0 to 1.60.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1224
+* Bump rubocop from 1.60.0 to 1.60.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1225
+* Bump rubocop from 1.60.1 to 1.60.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1226
+* Bump rspec-rails from 6.1.0 to 6.1.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1227
+* Bump capybara from 3.39.2 to 3.40.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1228
+* Bump bootsnap from 1.17.1 to 1.18.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1229
+* Bump bootsnap from 1.18.1 to 1.18.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1230
+* Bump brakeman from 6.1.1 to 6.1.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1231
+* Bump nokogiri from 1.16.0 to 1.16.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1232
+* Bump country_select from 8.0.3 to 9.0.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1234
+* Correct font-sizes for mobile views using dl layouts. by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1237
+* Fix layout of custom field inputs. Now consistent with other form inputs by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1239
+* Removed border around 'remember me' and used primary button colour for Login button by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1238
+* Fix arrow rendering by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1236
+* Bump pg from 1.5.4 to 1.5.5 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1233
+* Fixed missing select2 box on address country input by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1242
+* Handle edge case where application is unable to run tasks/migrations by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1191
+* Fix load paths - this works for both Application and Engine mode. by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1240
+* Fix case where entity is updated but the view doesn't refresh by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1241
+* Fix ActionView::MissingTempateError when requesting entity views by JS by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1243
+* Bump thor from 1.3.0 to 1.3.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1244
+* Bump rack from 2.2.8 to 2.2.8.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1246
+* Bump rubocop from 1.60.2 to 1.61.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1247
+* Fix validation issues by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1245
+* Bump pg from 1.5.5 to 1.5.6 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1250
+* Fix changes in select2 since v3 -> v4 a while ago by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1251
+* Bump premailer from 1.22.0 to 1.23.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1252
+* Bump rubocop from 1.61.0 to 1.62.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1253
+* Bump rubocop from 1.62.0 to 1.62.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1257
+* Bump rails-i18n from 7.0.8 to 7.0.9 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1258
+* Bump nokogiri from 1.16.2 to 1.16.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1259
+* Bump rspec-rails from 6.1.1 to 6.1.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1260
+* Bump mini_racer from 0.8.0 to 0.9.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1261
+* Bump capistrano from 3.18.0 to 3.18.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1256
+* Bump rubocop from 1.62.1 to 1.63.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1263
+* Bump devise from 4.9.3 to 4.9.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1266
+* Bump nokogiri from 1.16.3 to 1.16.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1265
+* Bump rubocop from 1.63.0 to 1.63.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1264
+* Bump rubocop from 1.63.1 to 1.63.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1267
+* Bump rubocop from 1.63.2 to 1.63.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1269
+* Bump mini_racer from 0.9.0 to 0.12.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1268
+* Bump rubocop from 1.63.3 to 1.63.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1270
+* Bump rubocop from 1.63.4 to 1.63.5 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1271
+* Bump nokogiri from 1.16.4 to 1.16.5 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1272
+* Bump rb-inotify from 0.10.1 to 0.11.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1274
+* Bump cancancan from 3.5.0 to 3.6.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1276
+* Bump cancancan from 3.6.0 to 3.6.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1279
+* Bump devise-i18n from 1.12.0 to 1.12.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1278
+* Bump simple_form from 5.3.0 to 5.3.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1277
+* Bump rubocop from 1.63.5 to 1.64.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1280
+* Bump acts_as_list from 1.1.0 to 1.2.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1282
+* Bump timecop from 0.9.8 to 0.9.9 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1281
+* Bump rails to 7.0.8.3 by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1284
+* Bump actionpack from 7.0.8.3 to 7.0.8.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1286
+* Ruby 3.3 (stacked PR) by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1221
+* Bump acts_as_list from 1.2.0 to 1.2.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1287
+* Bump sprockets-rails from 3.4.2 to 3.5.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1288
+* Bump will_paginate from 4.0.0 to 4.0.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1290
+* Bump mini_magick from 4.12.0 to 4.13.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1292
+* Bump nokogiri from 1.16.5 to 1.16.6 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1291
+* Bump sprockets-rails from 3.5.0 to 3.5.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1289
+* Bump timecop from 0.9.9 to 0.9.10 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1293
+* Bump mini_magick from 4.13.0 to 4.13.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1294
+* Bump rspec-rails from 6.1.2 to 6.1.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1296
+* Bump pry-rails from 0.3.9 to 0.3.11 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1295
+* Bump capistrano from 3.18.1 to 3.19.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1297
+* Bump capistrano from 3.19.0 to 3.19.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1299
+* Bump mini_magick from 4.13.1 to 4.13.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1300
+* Bump rubocop from 1.64.1 to 1.65.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1302
+* Fix saving search list by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1305
+* Bump image_processing from 1.12.2 to 1.13.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1307
+* Bump acts_as_list from 1.2.1 to 1.2.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1304
+* Bump rexml from 3.3.1 to 3.3.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1308
+* Bump pg from 1.5.6 to 1.5.7 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1311
+* Bump nokogiri from 1.16.6 to 1.16.7 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1309
+* Bump mini_racer from 0.12.0 to 0.13.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1310
+* Bump rubocop from 1.65.0 to 1.65.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1313
+* Bump sprockets-rails from 3.5.1 to 3.5.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1312
+* Bump bootsnap from 1.18.3 to 1.18.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1314
+* Fix formatting base URL by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1316
+* Bump capistrano-bundler from 2.1.0 to 2.1.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1321
+* Bump mini_racer from 0.13.0 to 0.14.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1320
+* Fix custom fields text new line not showing by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1317
+* Bump mini_racer from 0.14.0 to 0.14.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1322
+* Bump premailer from 1.23.0 to 1.24.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1323
+* Bump rspec-rails from 6.1.3 to 6.1.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1324
+* Fix delete confirmation with new Rails syntax by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1326
+* Fix multiple custom field groups on new entity creation by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1325
+* Fix custom fields checkbox list by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1318
+* Use group view for custom fields by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1315
+* Bump premailer from 1.24.0 to 1.25.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1327
+* Bump rexml from 3.3.3 to 3.3.6 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1329
+* Fix custom fields date pair and datetime pair not saving by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1319
+* Fix Opportunities Campaign selection auto complete by @stanleylhs in https://github.com/fatfreecrm/fat_free_crm/pull/1328
+* Settings attributes are unknown at runtime so must be arbitarily whitelisted by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1332
+* Bump brakeman from 6.1.2 to 6.2.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1331
+* Deleting a campaign shouldn't delete related leads and opportunities. by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1330
+* Added a placeholder to ensure the 'x' button works on Select2 dropdown by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1333
+* Bump premailer from 1.25.0 to 1.26.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1335
+* Bump acts-as-taggable-on from 10.0.0 to 11.0.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1334
+* Prep 0.22.1 by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1337
+
+
+**Full Changelog**: https://github.com/fatfreecrm/fat_free_crm/compare/v0.22.0...v0.22.1
+
+Jan 9, 2024 (0.22.0)
+======
+
+Support for Rails 7 and Ruby 3.2.2
+
+Thanks @romanbsd
+
+## What's Changed
+* correct travis url, per notice on the travis-ci.org site by @hasandiwan in https://github.com/fatfreecrm/fat_free_crm/pull/1002
+* Support for Postgres prepare statement #1122 by @ferrisoxide in https://github.com/fatfreecrm/fat_free_crm/pull/1137
+* Bump timecop from 0.9.6 to 0.9.7 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1151
+* Bump nokogiri from 1.15.3 to 1.15.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1149
+* Bump selenium-webdriver from 4.9.0 to 4.10.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1148
+* Bump mini_racer from 0.6.4 to 0.8.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1147
+* Bump timecop from 0.9.7 to 0.9.8 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1152
+* Bump rails-i18n from 7.0.7 to 7.0.8 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1153
+* Bump ffaker from 2.21.0 to 2.22.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1156
+* Bump puma from 6.3.0 to 6.3.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1154
+* Bump rubocop from 1.56.0 to 1.56.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1155
+* Bump pg from 1.5.3 to 1.5.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1158
+* Bump actions/checkout from 3 to 4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1159
+* Bump rubocop from 1.56.1 to 1.56.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1160
+* Bump execjs from 2.8.1 to 2.9.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1161
+* Bump guard from 2.18.0 to 2.18.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1162
+* Bump ffaker from 2.22.0 to 2.23.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1164
+* Bump execjs from 2.9.0 to 2.9.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1163
+* Bump rubocop from 1.56.3 to 1.56.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1168
+* Bump puma from 6.3.1 to 6.4.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1165
+* Bump devise-i18n from 1.11.0 to 1.12.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1170
+* Bump country_select from 8.0.2 to 8.0.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1171
+* Bump devise from 4.9.2 to 4.9.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1177
+* Bump responders from 3.1.0 to 3.1.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1174
+* Update gemspec to match Gemfile by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1173
+* Bump rubocop from 1.56.4 to 1.57.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1176
+* Bump simple_form from 5.2.0 to 5.3.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1175
+* Bump zeus from 0.15.14 to 0.16.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1172
+* Bump rubocop from 1.57.0 to 1.57.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1179
+* Bump acts-as-taggable-on from 9.0.1 to 10.0.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1178
+* Bump capistrano from 3.17.3 to 3.18.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1180
+* Bump thor from 1.2.2 to 1.3.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1182
+* Added controller hooks to make it easier to hook plugins into the FFCRM bootup sequence by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1181
+* Fix db/demo/field_groups.yml to generate valid entries by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1184
+* is_haml? is no longer available. Use ActionView::Base instead by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1185
+* Bump haml from 5.2.2 to 6.2.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1186
+* Enable FFCRM to export assets when run as an engine by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1193
+* Whitelist HashWithIndifferentAccess for field serialization by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1192
+* Fix custom field error by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1190
+* Schedule emails to deliver asynchronously by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1188
+* Replace usage of request.fullpath / request.referrer by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1189
+* Bump rubocop from 1.57.1 to 1.57.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1187
+* Bump dynamic_form from 1.2.0 to 1.3.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1195
+* Bump bootsnap from 1.16.0 to 1.17.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1194
+* Bump rubocop from 1.57.2 to 1.58.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1202
+* Bump factory_bot_rails from 6.2.0 to 6.4.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1200
+* Bump nokogiri from 1.15.4 to 1.15.5 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1197
+* Bump rspec-rails from 6.0.3 to 6.1.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1199
+* Adjust rubocop by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/958
+* Safer setting check by @ferrisoxide in https://github.com/fatfreecrm/fat_free_crm/pull/1205
+* Revert "Replace usage of request.fullpath / request.referrer with object entity approach." by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1203
+* Bump rubocop from 1.58.0 to 1.59.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1209
+* Bump haml from 6.2.3 to 6.3.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1208
+* Bump rspec-activemodel-mocks from 1.1.0 to 1.2.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1207
+* Bump github/codeql-action from 2 to 3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1210
+* Bump brakeman from 6.0.1 to 6.1.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1211
+* Bump nokogiri from 1.15.5 to 1.16.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1212
+* Bump premailer from 1.21.0 to 1.22.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1213
+* Bump factory_bot_rails from 6.4.2 to 6.4.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1215
+* Bump dynamic_form from 1.3.0 to 1.3.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1214
+* Bump puma from 6.4.0 to 6.4.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1216
+* Bump puma from 6.4.1 to 6.4.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1217
+* Rails 7 by @romanbsd in https://github.com/fatfreecrm/fat_free_crm/pull/1196
+* Bump jquery-ui by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1219
+* Default to Ruby 3.2 by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1220
+* Centralise detection of previous route by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1222
+
+## New Contributors
+* @hasandiwan made their first contribution in https://github.com/fatfreecrm/fat_free_crm/pull/1002
+* @romanbsd made their first contribution in https://github.com/fatfreecrm/fat_free_crm/pull/1196
+
+**Full Changelog**: https://github.com/fatfreecrm/fat_free_crm/compare/v0.21.0...v0.22.0
+
+
+Thu Aug 10, 2023 (0.21.0)
+======
+
+#1114 Migrate from Paperclip to Active Storage.
+Upgrade to Ruby 3.1
+
+## What's Changed
+* Bump nokogiri by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/956
+* Bump rails by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/957
+* Bump puma by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/959
+* Rubocop by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/960
+* Rails 6.1 by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/954
+* Bump by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/963
+* Bump by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/964
+* Remove globby by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/965
+* Update Dockerfile Ruby Version by @doconnor-clintel in https://github.com/fatfreecrm/fat_free_crm/pull/962
+* Bump rb-fsevent from 0.11.0 to 0.11.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/976
+* Bump font-awesome-rails from 4.7.0.7 to 4.7.0.8 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/974
+* Bump webdrivers from 4.6.1 to 4.7.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/973
+* Bump capistrano from 3.16.0 to 3.17.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/969
+* Bump devise-i18n from 1.10.0 to 1.10.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/968
+* Bump actions/checkout from 2 to 3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/966
+* Bump ffaker from 2.19.0 to 2.21.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/970
+* Bump acts-as-taggable-on from 8.1.0 to 9.0.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/972
+* Bump rainbow from 3.0.0 to 3.1.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/967
+* Bump brakeman from 5.1.1 to 5.2.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/979
+* Bump ransack from 2.4.2 to 2.6.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/977
+* Bump capybara from 3.35.3 to 3.36.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/980
+* Bump rails-i18n from 6.0.0 to 7.0.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/978
+* Bump rspec-rails from 5.0.2 to 5.1.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/981
+* Bump capistrano-rails from 1.6.1 to 1.6.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/983
+* Bump github/codeql-action from 1 to 2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/986
+* Bump rubocop from 1.22.1 to 1.28.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/989
+* Bump timecop from 0.9.4 to 0.9.5 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/984
+* Bump bootsnap from 1.9.1 to 1.11.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/988
+* Bump devise from 4.8.0 to 4.8.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/987
+* Bump selenium-webdriver from 3.142.7 to 4.1.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/982
+* Bump rails by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/992
+* Bump bootsnap from 1.11.1 to 1.12.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/995
+* Bump capistrano-bundler from 2.0.1 to 2.1.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/994
+* Bump rack from 2.2.3 to 2.2.3.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/996
+* Bump sqlite3 from 1.4.2 to 1.4.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/998
+* Bump cancancan from 3.3.0 to 3.4.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1000
+* Bump rails-html-sanitizer from 1.4.2 to 1.4.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1001
+* Bump capistrano from 3.17.0 to 3.17.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1004
+* Bump rb-fsevent from 0.11.1 to 0.11.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1006
+* Bump puma from 5.6.4 to 5.6.5 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1005
+* Bump mini_racer by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1014
+* Swap to sassc-rails by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1013
+* Bump country_select from 6.0.0 to 7.0.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/985
+* Improve actions by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1015
+* Fixed issue with ActiveStorage missing storage.yml in production mode. by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1019
+* Bump nokogiri from 1.13.8 to 1.13.10 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1020
+* Bump brakeman from 5.2.2 to 5.4.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1022
+* Bump bootsnap from 1.12.0 to 1.15.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1029
+* Bump webdrivers from 4.7.0 to 5.2.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1021
+* Bump rails-i18n from 7.0.3 to 7.0.6 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1028
+* Bump rubocop from 1.28.2 to 1.40.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1025
+* Bump timecop from 0.9.5 to 0.9.6 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1034
+* Bump capybara from 3.36.0 to 3.38.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1033
+* Bump premailer from 1.15.0 to 1.18.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1023
+* Bump rspec-rails from 5.1.2 to 6.0.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1026
+* Bump selenium-webdriver from 4.1.0 to 4.7.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1032
+* Bump pg from 1.2.3 to 1.4.5 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1031
+* Bump rails-html-sanitizer from 1.4.3 to 1.4.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1036
+* Bump loofah from 2.19.0 to 2.19.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1035
+* Bump rubocop from 1.40.0 to 1.41.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1038
+* Bump puma from 5.6.5 to 6.0.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1037
+* Bump rubocop from 1.41.0 to 1.42.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1042
+* Bump puma from 6.0.1 to 6.0.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1041
+* Bump country_select from 8.0.0 to 8.0.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1043
+* Bump rack from 2.2.4 to 2.2.6.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1046
+* Bump rubocop from 1.42.0 to 1.43.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1044
+* Bump globalid from 1.0.0 to 1.0.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1047
+* Bump nokogiri from 1.13.10 to 1.14.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1045
+* Bump selenium-webdriver from 4.7.1 to 4.8.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1049
+* Bump rubocop from 1.43.0 to 1.44.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1050
+* Bump premailer from 1.18.0 to 1.19.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1051
+* Bump rubocop from 1.44.0 to 1.44.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1053
+* Bump bootsnap from 1.15.0 to 1.16.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1052
+* Bump simple_form from 5.1.0 to 5.2.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1055
+* Bump nokogiri from 1.14.0 to 1.14.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1056
+* Bump acts_as_list from 1.0.4 to 1.1.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1057
+* Bump responders from 3.0.1 to 3.1.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1058
+* Bump rubocop from 1.44.1 to 1.45.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1060
+* Bump puma from 6.0.2 to 6.1.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1061
+* Bump nokogiri from 1.14.1 to 1.14.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1062
+* Bump devise-i18n from 1.10.2 to 1.10.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1063
+* Bump devise from 4.8.1 to 4.9.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1066
+* Bump brakeman from 5.4.0 to 5.4.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1069
+* Bump capistrano from 3.17.1 to 3.17.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1068
+* Bump devise-i18n from 1.10.3 to 1.11.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1067
+* Bump pg from 1.4.5 to 1.4.6 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1071
+* Bump rubocop from 1.45.1 to 1.47.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1073
+* Bump puma from 6.1.0 to 6.1.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1072
+* Bump rack from 2.2.6.2 to 2.2.6.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1076
+* Bump cancancan from 3.4.0 to 3.5.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1074
+* Bump rubocop from 1.47.0 to 1.48.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1075
+* Bump premailer from 1.19.0 to 1.20.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1077
+* Bump selenium-webdriver from 4.8.0 to 4.8.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1065
+* Bump database_cleaner from 2.0.1 to 2.0.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1078
+* Bump rubocop from 1.48.0 to 1.48.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1079
+* Bump rack from 2.2.6.3 to 2.2.6.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1080
+* Bump premailer from 1.20.0 to 1.21.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1081
+* Bump selenium-webdriver from 4.8.1 to 4.8.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1082
+* Bump puma from 6.1.1 to 6.2.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1086
+* Bump devise from 4.9.0 to 4.9.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1090
+* Bump capybara from 3.38.0 to 3.39.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1087
+* Bump rubocop from 1.48.1 to 1.49.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1089
+* Bump selenium-webdriver from 4.8.3 to 4.8.6 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1085
+* Bump rubocop from 1.49.0 to 1.50.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1092
+* Bump selenium-webdriver from 4.8.6 to 4.9.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1097
+* Bump puma from 6.2.1 to 6.2.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1096
+* Bump nokogiri from 1.14.2 to 1.14.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1093
+* Bump rubocop from 1.50.0 to 1.50.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1095
+* Bump pg from 1.4.6 to 1.5.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1099
+* Bump pg from 1.5.2 to 1.5.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1100
+* Bump rspec-rails from 6.0.1 to 6.0.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1101
+* Bump thor from 1.2.1 to 1.2.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1104
+* Bump nokogiri from 1.14.3 to 1.14.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1103
+* Bump rubocop from 1.50.2 to 1.51.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1107
+* Bump rails-i18n from 7.0.6 to 7.0.7 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1106
+* Bump capybara from 3.39.0 to 3.39.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1105
+* Bump nokogiri from 1.14.4 to 1.15.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1108
+* Bump nokogiri from 1.15.0 to 1.15.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1110
+* Bump capistrano from 3.17.2 to 3.17.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1111
+* Bump nokogiri from 1.15.1 to 1.15.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1112
+* Bump mini_racer from 0.6.3 to 0.6.4 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1113
+* Migrate from Paperclip (EOL) to Active Storage by @johnbumgardner in https://github.com/fatfreecrm/fat_free_crm/pull/1114
+* Bump puma from 6.2.2 to 6.3.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1117
+* Bump will_paginate from 3.3.1 to 4.0.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1116
+* Bump rspec-rails from 6.0.2 to 6.0.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1118
+* Bump rubocop from 1.51.0 to 1.52.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1119
+* Bump capybara from 3.39.1 to 3.39.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1124
+* Fixes #1120 error raised when running rake db:create db:migrate the first time by @steveyken in https://github.com/fatfreecrm/fat_free_crm/pull/1121
+* Bump rubocop from 1.52.0 to 1.52.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1125
+* Bump jquery-rails from 4.5.1 to 4.6.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1127
+* Bump rubocop from 1.52.1 to 1.53.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1128
+* Bump nokogiri from 1.15.2 to 1.15.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1132
+* Bump capistrano-rails from 1.6.2 to 1.6.3 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1131
+* Bump rubocop from 1.53.1 to 1.54.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1130
+* Bump rails by @CloCkWeRX in https://github.com/fatfreecrm/fat_free_crm/pull/1059
+* Bump rubocop from 1.54.1 to 1.54.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1133
+* Bump rubocop from 1.54.2 to 1.55.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1136
+* Bump country_select from 8.0.1 to 8.0.2 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1142
+* Bump webdrivers from 5.2.0 to 5.3.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1141
+* Bump rubocop from 1.55.0 to 1.55.1 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1140
+* Support for hash arguments in i18n. Fixes #1102 by @ferrisoxide in https://github.com/fatfreecrm/fat_free_crm/pull/1144
+* Bump rubocop from 1.55.1 to 1.56.0 by @dependabot in https://github.com/fatfreecrm/fat_free_crm/pull/1145
+* App and specs working under Ruby 3.1.4 #1138  by @ferrisoxide in https://github.com/fatfreecrm/fat_free_crm/pull/1139
+
+## New Contributors
+* @doconnor-clintel made their first contribution in https://github.com/fatfreecrm/fat_free_crm/pull/962
+* @dependabot made their first contribution in https://github.com/fatfreecrm/fat_free_crm/pull/976
+* @ferrisoxide made their first contribution in https://github.com/fatfreecrm/fat_free_crm/pull/1144
+
+**Full Changelog**: https://github.com/fatfreecrm/fat_free_crm/compare/v0.20.0...v0.21.0
+
+Fri Oct 07, 2022 (0.20.1)
+======
+CVE-2022-39281
+
+Mon Oct 04, 2021 (0.20.0)
+======
+#905 Swap from Marshal.load. Be sure to run `bundle exec rake ffcrm:preference_update` to migrate your users from old to new format
+
+settings.yml - Background, foreground colors for tasks, accounts, opportunities, and more - these are now defined in CSS by default 
+
+Refactoring to Bootstrap for forms, buttons, layouts.
+
+Drop ruby 2.5 support
+
+Upgrade to rails 6, papertail 12, devise 4.8
+
+A variety of minor bug fixes and security updates
+
+#946
+#947
+#950
+#951
+#952
+
+Wed May 09, 2021 (0.19.2)
+======
+CVE-2021-22885
+
+Wed Apr 04, 2021 (0.19.1)
+======
+
+Minor gem updates
+
+Wed Apr 04, 2021 (0.19.0)
+======
+
+### Important changes
+
+#### Fixed XSS flaw in tags_helper
+Credit Antonin Steinhauser (asteinhauser) for discovery and responsible disclosure.
+
+#### Devise replaces Authlogic for user authentication
+Ticket #742 replaces Authlogic with the latest Devise (4.3.0) which has wider adoption.
+This change requires a database migration on the User model. Please note:
+ - Most User fields are renamed and can hence be rolled back. Existing Authlogic passwords will continue to work.
+ - Users will be forced logged out. Existing user sessions will not be kept and the fields `persistence_token, single_access_token, perishable_token` will be dropped from the database.
+ - Though the migration is generally safe **we recommend to make a backup of your database** before migrating.
+
+#### Existing OAuth broken
+The Devise change will break any OAuth login plugins which depend on Authlogic.
+You can [configure OAuth for Devise using the guides here](https://github.com/plataformatec/devise/wiki/omniauth:-overview).
+
+#### Login and user-related routes changed
+The login URL routes have been changed to use the defaults of Devise.
+
+#### User mailers changed
+Mailers related to user password reset, etc. are changed to use the defaults of Devise.
+
+#### PaperClip version updated from 5.2.1 to 6.0.0
+PaperClip now only depends on `aws-sdk-s3` instead of `aws-sdk`. For more info see https://github.com/thoughtbot/paperclip/pull/2481.
+Replace the Cocaine gem with Terrapin. https://github.com/thoughtbot/terrapin/ Apart from the namespace change, this is a drop in replacement.
+
+#### Rails 5.2
+The underlying framework is now rails 5.2.*
+
+#### Ruby 2.4 deprecated
+Ruby 2.4 has reached end of life and is no longer activity tested against.
+
+#### Other changes
+ * #794 Fix defect with unpermitted params in advanced search
+ * 2bc6184779a26070496e6f4caefa0cc9ba555d7b Remove broken support for delete links on arrays.
+ * #851 upgrade paper_trail
+ * Security fixes CVE-2019-16109, CVE-2019-16676, CVE-2019-5477, CVE-2019-16892
+ * Dependency updates
+ * Simple Form upgrades to use HTML5 and browser validations by default
+
+
+Sat Apr 21, 2018 (0.18.0)
+---------------------------------------------------------------------
+
+### Important changes
+
+#### Minimum Ruby version
+#665 Support for Ruby 2.3 has been dropped, with test coverage for 2.4 and 2.5 enabled.
+
+#### Swap to FactoryBot
+If you consume fat free crm as an engine and reuse any factories, you'll need to [upgrade to FactoryBot](https://github.com/thoughtbot/factory_bot/blob/4-9-0-stable/UPGRADE_FROM_FACTORY_GIRL.md).
+
+#### Removed methods
+`Lead.update_with_permissions` is removed, use user_ids and group_ids inside attributes instead and call lead.update_with_account_and_lead_counters
+`FatFreeCRM::Permissions.save_with_permissions` is removed, use user_ids and group_ids inside attributes and call save
+`FatFreeCRM::Permissions.update_with_permissions` is removed, use user_ids and group_ids inside attributes and call update_attributes
+
+#### Other changes
+ - CVE-2018-8048 (loofah gem)
+ - CVE-2018-3741 (rails-html-sanitizer gem)
+ - #768 Fix comment creation on entities
+ - #762 #764 Fix bug in select menu
+ - #759 Improve zero revenue display
+ - #753 Opportunities sort by weighted amount
+ - #749 Fix unsafe reflection and mass assignment
+
+Wed Jan 24, 2018 (0.17.2)
+---------------------------------------------------------------------
+ - CVE-2017-0889
+ - #724 Fixes #589 Autocomplete regression
+ - #723 Fixes #687 Passing string to define a callback is not supported.
+
+Wed Jan 24, 2018 (0.16.3)
+---------------------------------------------------------------------
+CVE-2017-0889
+
+Wed Jan 24, 2018 (0.15.1)
+---------------------------------------------------------------------
+CVE-2017-0889
+
+Wed Jan 24, 2018 (0.14.1)
+---------------------------------------------------------------------
+CVE-2017-0889
+
+Sat Jan 20, 2018 (0.17.1)
+---------------------------------------------------------------------
+ - #709 Revert accidental minimum ruby version 2.4 changes (#665)
+ - Fix #687 Passing string to define a callback is not supported.
+
+Mon Jan 22, 2018 (0.16.2)
+---------------------------------------------------------------------
+Fix #687
+
+Sat Jan 20, 2018 (0.17.0)
+---------------------------------------------------------------------
+
+### Important changes
+
+#### Select2 for select boxes
+This release replaces [Chozen](https://harvesthq.github.io/chosen/) with [Select2](https://select2.org/) consistently across the app.
+This may break plugins which rely on Chozen. To fix any issues please
+migrate to Select2 or add Chozen to your plugins.
+
+#### Counter caches
+To improve performance, a number of [counter caches](http://guides.rubyonrails.org/association_basics.html#options-for-belongs-to-counter-cache) have been added.
+
+Users with large amounts of records may find certain [database migrations](https://github.com/fatfreecrm/fat_free_crm/blob/master/db/migrate/20180102075234_add_account_counter_caches.rb) taking a large amount of time, as each record is cached upfront.
+
+#### Minimum ruby version is now Ruby 2.3
+See #647 #654 Adopt min ruby version of 2.3.0 and apply safe navigiation rubocop rules
+
+#### Other changes
+ - #691 Wording
+ - #688 Preparation for Devise
+ - #686 Bundle update
+ - #683 Rubocop: Refactoring
+ - #680 Alternative build setup
+ - #682 Rubocop: Hashrockets
+ - #693 Update Japanese translations
+ - #697 Minor security improvements
+ - #703 #696 Replace Chozen with select2
+ - #678 Find an account by name when name is in params (fixes #397) 
+ - #673 Improve JS escaping 
+ - #671 Devise Readiness (+ thread-safety): Refactor User.my scope 
+ - #670 Fix #563 invalid default custom field minlength 
+ - #668 Rubocop fixes for xls/rss builder classes 
+ - #667 Rubocop: Autocorrect various assignment-if statements, case statements, etc. 
+ - #666 Various rubocop corrected items 
+ - #661 Bundle Update on 2018-01-06 
+ - #655 Upgrade rubocop
+
+ - #658 Upgrade Bootsnap gem, fixing an issue with windows
+
+Sat Jan 6, 2018 (0.16.1)
+---------------------------------------------------------------------
+- #653 Fix regression with emails
+
+Fri Jan 5, 2018 (0.16.0)
+---------------------------------------------------------------------
+- #633 Upgrade to rails 5.1.0
+- #641 Swap default server from thin/unicorn to puma
+- #631 Clean up locale files
+- #612 DEPRECATION WARNING: #table_exists? currently checks both tables and views
+
+Thu Dec 14, 2017 (0.15.0)
+---------------------------------------------------------------------
+This release upgrades to rails 5.0.0.
+
+Be aware of https://github.com/rails/sprockets/issues/426 if you were using FFCRM as an engine.
+
+ - #500 - Upgrade rails
+ - #554 - Upgrade authlogic
+ - #614 - Rails5 warnings
+ - #643 Use FixtureSet instead of Fixtures module 
+ - #642 Cleanup: Use Ruby style guide syntax for arrays
+ - #640 Speed up builds with Bootsnap
+ - #639 Code cleanup: Remove block-end comments (extracted from Rubocop PR) 
+ - #637 Replace render :text with render :plain (Rails 5.1 prep) 
+ - #636 Upgrade Migrations (preparation for Rails 5.1) 
+ - #635 Fix alias_method_chain via @johnnyshields 
+ - #632 Fix Travis CI chrome runs; Travis now requiring Chrome as an addon 
+ - #628 Security Update on 2017-11-29 
+ - #626 Use headless Chrome browser for feature testing 
+ - #623 Fix license Rake task 
+ - #617 Bundle Update on 2017-07-19 
+
+Thu Feb 23, 2017 (0.15.0-beta.2)
+---------------------------------------------------------------------
+This release is aimed at minor updates and ruby 2.4 compatibility via
+the relevant rails updates.
+
+Other improvements include:
+  - #480 Improve select2 behaviour
+
+Wed, Dec 7, 2016 (0.15.0-beta)
+---------------------------------------------------------------------
+This release is aimed at getting as many dependencies as possible up to date without significant refactoring.
+
+ - Refactoring: Tests prefer build, build_record over ```FactoryGirl.create``` where possible
+ - Refactoring: View tests minimize DB interaction greatly
  - Refactoring: ```@user.check_if_needs_approval``` must be explicitly called in rake tasks or similar, it is no longer a before_create hook
  - Refactoring: ```@user.destroyable?``` must be called in rake tasks or similar, it is no longer a before_destroy check
  - Various gem updates
+ - Upgrade to Paperclip 5 (see https://github.com/thoughtbot/paperclip/wiki/Upgrade-Paperclip-4x-to-5x)
+ - Upgrade to paper_trail 6+ (https://github.com/airblade/paper_trail/blob/master/CHANGELOG.md)
 
 Mon, Dec 5, 2016 (0.14.0)
 ---------------------------------------------------------------------
-Forked to publish 'reduced_fat_crm', a version of fat-free-crm with 
-more pull requests merged and more contributors.
-
-At this stage, no classes etc have been renamed.
-
 - Various security fixes
 - Enable CORS headers
 - Ruby 2.0 or less dropped from CI
 
 
-Missing release notes
----------------------------------------------------------------------
 0.13.6 - February 12, 2015
-0.13.5 - January 22, 2015
-0.13.4 - September 4, 2014
-0.13.3 - August 26, 2014
-0.13.2 - January 9, 2014
-0.13.1 - January 7, 2014
-0.13.0 - December 27, 2013
-0.12.3 - January 9, 2014
-0.12.2 - January 7, 2014
-0.12.1 - December 27, 2013
+---------------------------------------------------------------------
+ - Fixes #413 and #414 - bold tag being escaped on user profile.
+ - Fix for CVE-2015-1585 - CSRF vulnerability.
 
+Full list:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.5...v0.13.6
+
+0.13.5 - January 22, 2015
+---------------------------------------------------------------------
+ - Update gems
+ - Fixed #337 Added index on Versions created_at
+ - [Security] Team section should not display opportunities current user is not allowed to see...
+ - Update to rails 3.2.20
+ - Fixed issue #347
+ - Fixed issue #349
+ - Fixed #351 - missing interpolation argument.
+ - Fixed #353 - observes is a prototype function that is no longer used.
+ - Fixed #283 - email max length is 254 according to IETF
+ - Fix avatar issue in recent_activity
+ - Merge pull request #354 
+ - Fixed custom field handling of html entities.
+ - Merge pull request #355
+ - Fixed issue #374 - global lists missing from UK translation file.
+ - Fix #356 - default SMTP session should have no auth
+
+
+Full list:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.4...v0.13.5
+
+0.13.4 - September 4, 2014
+---------------------------------------------------------------------
+ - Fixed XSS vulnerability in helper method.
+ - Use rails_autolink gem which contains updated XSS fixes.
+ - Fixed XSS vulnerability if email data is manipulated.
+
+Full list:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.3...v0.13.4
+
+0.13.3 - August 26, 2014
+---------------------------------------------------------------------
+ - Fixed bug where starts_on was being used instead of ends_on.      a0f69d7
+ - fixes bug with toggling select/create account when converting lead      7c76b9c
+ - Russian locale fixes. 
+ - Add entity_observer to list of observers when running as an engine.
+ - Allow notification emails to be sent from a particular address. Many 
+ - Convert tag select box to Select2. We're deprecating Chosen
+ - Enable fallback translations.
+ - Fixed 'end of week' spec in tasks using Timecop.
+ - Fixed bug with recent items box replacement.
+ - #311 - problem with Thor being reference before it is loa
+ - Fixed some bugs related to sorting custom fields.
+ - #334 Added byebug for ruby2+.      5dca0ba
+ - Update rails
+ - Update gems
+ - removes prototype-rails dependency
+ - replaces prototype with jquery
+
+Full list:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.2...v0.13.3
+
+0.13.2 - January 9, 2014
+---------------------------------------------------------------------
+ - Fixed issue with secret token not being saved if DB does not exist.
+  
+0.13.1 - January 7, 2014
+---------------------------------------------------------------------
+ - Lock down routes.
+ - Remove stub hook
+ - Remove unnecessary function
+ - Don't spam gmail by default
+ - consider_all_requests_local should be off by default in production mode
+ - Remove pysch by default (optimise for ruby 2 now)
+ - Fixed regular expression logic to be more sensitive to newline attacks.
+ - users_controller requires security on its actions.
+ - Send emails to file in development mode
+ - Don't show user list if not logged in.
+ - Remove old 'rake acceptance' task     2d4411a
+ - Refactored secret token generation code
+ - Hide password related attributes from the logs.
+ - File syntax layout tweak.
+ - Escape autocomplete output safely.
+ - Locked down available views in Task.
+ - sanitize list.url
+ - Don't generate secret token in test mode.
+ - Don't raise secret token generation error during tests.
+
+Full list
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.13.0...v0.13.1
+
+Fri Dec 27, 2013 (0.13.0)
+---------------------------------------------------------------------
+- Add user_id to lists table    
+- Add campaign to opportunity advanced search.
+- Add id to export formats. 
+- Added ActiveSupport lazy load hooks for all models in Fat Free CRM.
+- Added timeago library to enable future caching of search results. 
+- Atom and RSS feeds now deal with cases where user doesn't exist.
+- Better solution to internationalizing jquery.timeago plugin. 
+- Configurationise the uniqueness constraint for account first names 
+- Convert settings from syck to psych and remove dependency on Syck.
+- Enforce available locales in latest version of I18n. 
+- German translations
+- Introducing client-side unobtrusive javascript for new comments.
+- Peg paper_trail to v2.7
+- Replaces rjs with erb/haml
+- Updated to latest rails version
+
+Bug fixes
+- Ensure user isn't deleted if they still have tasks.
+- Fix delete button not showing    
+- Fix global list save problem     
+- Closes #268: Replace the contents of "div#leads_pagination"
+- #242 and #245. Fix cohsen_select helper to be able to
+- Fixed issue #282
+- Fixed issue with account categories inclusion matcher.
+- Fixed issue with timeago plugin not precompiling. Resolves issue #286
+- Fixed issue#281 - psych v2 is not supported.      
+- Fixed one_submit_only js format and fixed red background highlight
+- Fixed uninitialized constant 'Version' error on dashboard ATOM/RSS
+- #270. Fixed procfile command for heroku. 
+- #273 from notentered/testFixes      
+- #279 from roadt/bugfix       
+- #284 from roadt/bugfix   
+- #287 from szetobo/fix_test_case   
+- #288 from szetobo/update_scope     
+- rake ffcrm:setup no longer nukes the database before starting.
+
+Full changes:
+https://github.com/fatfreecrm/fat_free_crm/compare/v0.12.3...v0.13.0
+
+
+0.12.3 - January 9, 2014
+---------------------------------------------------------------------
+No changes
+
+0.12.2 - January 7, 2014
+---------------------------------------------------------------------
+ - users_controller requires security on its actions.
+ - Refactored secret token generation code to generate and persist a secret token in the DB if one doesn't exist
+ - Don't show user list if not logged in.
+ - Hide password related attributes from the logs.
+ - consider_all_requests_local should be off by default in production mode
+ - Fixed issue with secret token not being saved if DB does not exist. 
+
+
+0.12.1 - December 27, 2013
+---------------------------------------------------------------------
+- Strengthen case to generate unique secret token.
+- Ensure requests are protected.
+- Add custom serializers for xml and json.
+- Fixed sql injection in timeline method.
+- Refactor activity_user to remove possible SQL injection points.
+- Update gems to compile through
 
 Fri, Jun 28, 2013 (0.12.0)
 ---------------------------------------------------------------------
@@ -183,7 +1032,7 @@ Thu, Aug 5, 2010
 
 Wed, Aug 4, 2010
 ---------------------------------------------------------------------
-- Made dropbox email address comparision was case-insensitve (thanks, Ralf!)
+- Made dropbox email address comparison was case-insensitive (thanks, Ralf!)
 - Removed duplicate association Opportunity#account (was: has_one + belongs_to) (thanks, Ralf!)
 - Multiple fixes for Rails 2.3.8 upgrade (thanks, Ralf!)
 
@@ -261,7 +1110,7 @@ Tue, Jun 8, 2010
 
 Fri, Jun 4, 2010
 ---------------------------------------------------------------------
-- Initial prototype of seleting related asset from the asset's landing page.
+- Initial prototype of selecting related asset from the asset's landing page.
 - Added discard action related specs.
 
 Fri, May 28, 2010
@@ -1829,7 +2678,7 @@ Sun, Dec 14, 2008
 
 Sat, Dec 13, 2008
 ---------------------------------------------------------------------
-- Insalled [annotate_models] plugin and generated model annotations.
+- Installed [annotate_models] plugin and generated model annotations.
 - Generated campaign fixtures.
 - Updated [Campaign] model to include actual vs. targets.
 - Added permissions to [Campaign/New].
@@ -1848,7 +2697,7 @@ Wed, Dec 10, 2008
 
 Tue, Dec 9, 2008
 ---------------------------------------------------------------------
-- Implemented [Campaing/New] with dates validation and status set.
+- Implemented [Campaign/New] with dates validation and status set.
 
 Mon, Dec 8, 2008
 ---------------------------------------------------------------------

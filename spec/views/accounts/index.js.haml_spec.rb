@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,15 +7,15 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/accounts/index" do
+describe "accounts/index" do
   include AccountsHelper
 
   before do
-    login_and_assign
+    login
   end
 
   it "should render [account] template with @accounts collection if there are accounts" do
-    assign(:accounts, [FactoryGirl.build_stubbed(:account, id: 42)].paginate)
+    assign(:accounts, [build_stubbed(:account, id: 42)].paginate)
 
     render template: 'accounts/index', formats: [:js]
 

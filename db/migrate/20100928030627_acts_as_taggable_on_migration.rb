@@ -1,4 +1,6 @@
-class ActsAsTaggableOnMigration < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class ActsAsTaggableOnMigration < ActiveRecord::Migration[4.2]
   def self.up
     create_table :tags do |t|
       t.column :name, :string
@@ -19,7 +21,7 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
     end
 
     add_index :taggings, :tag_id
-    add_index :taggings, [:taggable_id, :taggable_type, :context]
+    add_index :taggings, %i[taggable_id taggable_type context]
   end
 
   def self.down

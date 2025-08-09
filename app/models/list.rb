@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -6,11 +8,11 @@
 class List < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :url
-  belongs_to :user
+  belongs_to :user, optional: true
 
   # Parses the controller from the url
   def controller
-    (url || "").sub(/\A\//, '').split(/\/|\?/).first
+    (url || "").sub(%r{\A/}, '').split(%r{/|\?}).first
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_list, self)

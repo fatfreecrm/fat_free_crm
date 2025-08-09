@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -9,7 +11,6 @@ module Admin::ApplicationHelper
     link_to(t(:yes_button),
             url_for([:admin, model]),
             method:  :delete,
-            remote:  true
-    )
+            remote:  true)
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -26,7 +28,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
 
     it "should discard a message if it's invalid" do
       expect(@crawler).to receive(:is_valid?).once.and_return(false)
-      FactoryGirl.create(:user, email: "aaron@example.com")
+      create(:user, email: "aaron@example.com")
       expect(@crawler).not_to receive(:archive)
       expect(@crawler).to receive(:discard).once
       @crawler.run
@@ -40,7 +42,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
     end
 
     it "should process a message if it finds the user" do
-      FactoryGirl.create(:user, email: "aaron@example.com")
+      create(:user, email: "aaron@example.com")
       expect(@crawler).to receive(:archive).once
       expect(@crawler).not_to receive(:discard)
       @crawler.run
@@ -52,12 +54,12 @@ describe FatFreeCRM::MailProcessor::Dropbox do
     before(:each) do
       mock_connect
       mock_disconnect
-      FactoryGirl.create(:user, email: "aaron@example.com")
+      create(:user, email: "aaron@example.com")
     end
 
     it "should find the named asset and attach the email message" do
       mock_message(DROPBOX_EMAILS[:first_line])
-      @campaign = FactoryGirl.create(:campaign, name: "Got milk!?")
+      @campaign = create(:campaign, name: "Got milk!?")
       expect(@crawler).to receive(:archive).once
       expect(@crawler).not_to receive(:with_recipients)
       @crawler.run
@@ -80,7 +82,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
 
     it "should find the lead and attach the email message" do
       mock_message(DROPBOX_EMAILS[:first_line_lead])
-      @lead = FactoryGirl.create(:lead, first_name: "Cindy", last_name: "Cluster")
+      @lead = create(:lead, first_name: "Cindy", last_name: "Cluster")
       expect(@crawler).to receive(:archive).once
       expect(@crawler).not_to receive(:with_recipients)
       @crawler.run
@@ -104,7 +106,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
 
     it "should find the contact and attach the email message" do
       mock_message(DROPBOX_EMAILS[:first_line_contact])
-      @contact = FactoryGirl.create(:contact, first_name: "Cindy", last_name: "Cluster")
+      @contact = create(:contact, first_name: "Cindy", last_name: "Cluster")
       expect(@crawler).to receive(:archive).once
       expect(@crawler).not_to receive(:with_recipients)
       @crawler.run
@@ -139,11 +141,11 @@ describe FatFreeCRM::MailProcessor::Dropbox do
       mock_connect
       mock_disconnect
       mock_message(DROPBOX_EMAILS[:plain])
-      FactoryGirl.create(:user, email: "aaron@example.com")
+      create(:user, email: "aaron@example.com")
     end
 
     it "should find the asset and attach the email message" do
-      @lead = FactoryGirl.create(:lead, email: "ben@example.com", access: "Public")
+      @lead = create(:lead, email: "ben@example.com", access: "Public")
       expect(@crawler).to receive(:archive).once
       expect(@crawler).not_to receive(:with_forwarded_recipient)
       @crawler.run
@@ -167,12 +169,12 @@ describe FatFreeCRM::MailProcessor::Dropbox do
     before(:each) do
       mock_connect
       mock_disconnect
-      FactoryGirl.create(:user, email: "aaron@example.com")
+      create(:user, email: "aaron@example.com")
       mock_message(DROPBOX_EMAILS[:forwarded])
     end
 
     it "should find the asset and attach the email message" do
-      @lead = FactoryGirl.create(:lead, email: "ben@example.com", access: "Public")
+      @lead = create(:lead, email: "ben@example.com", access: "Public")
       expect(@crawler).to receive(:archive).once
       @crawler.run
 
@@ -182,20 +184,20 @@ describe FatFreeCRM::MailProcessor::Dropbox do
 
     it "should touch the asset" do
       now = Time.zone.now
-      timezone = ActiveRecord::Base.default_timezone
+      timezone = ActiveRecord.default_timezone
       begin
-        ActiveRecord::Base.default_timezone = :utc
-        @lead = FactoryGirl.create(:lead, email: "ben@example.com", access: "Public", updated_at: 5.day.ago)
+        ActiveRecord.default_timezone = :utc
+        @lead = create(:lead, email: "ben@example.com", access: "Public", updated_at: 5.day.ago)
 
         @crawler.run
         expect(@lead.reload.updated_at.to_i).to be >= now.to_i
       ensure
-        ActiveRecord::Base.default_timezone = timezone
+        ActiveRecord.default_timezone = timezone
       end
     end
 
     it "should change lead's status (:new => :contacted)" do
-      @lead = FactoryGirl.create(:lead, email: "ben@example.com", access: "Public", status: "new")
+      @lead = create(:lead, email: "ben@example.com", access: "Public", status: "new")
 
       @crawler.run
       expect(@lead.reload.status).to eq("contacted")
@@ -217,13 +219,13 @@ describe FatFreeCRM::MailProcessor::Dropbox do
       @settings = @crawler.instance_variable_get("@settings")
       @settings[:address_aliases] = ["dropbox@example.com"]
 
-      FactoryGirl.create(:user, email: "aaron@example.com")
+      create(:user, email: "aaron@example.com")
       mock_message(DROPBOX_EMAILS[:forwarded])
     end
 
     it "should not match the dropbox email address if routed to an alias" do
-      @lead = FactoryGirl.create(:lead, email: "ben@example.com", access: "Public")
-      @lead_dropbox = FactoryGirl.create(:lead, email: "dropbox@example.com", access: "Public")
+      @lead = create(:lead, email: "ben@example.com", access: "Public")
+      @lead_dropbox = create(:lead, email: "dropbox@example.com", access: "Public")
 
       expect(@crawler).to receive(:archive).once
       @crawler.run
@@ -238,7 +240,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
     before(:each) do
       mock_connect
       mock_disconnect
-      FactoryGirl.create(:user, email: "aaron@example.com")
+      create(:user, email: "aaron@example.com")
     end
 
     it "should create a contact from the email recipient (To: recipient, Bcc: dropbox)" do
@@ -278,7 +280,7 @@ describe FatFreeCRM::MailProcessor::Dropbox do
     it "should extract text and strip tags from multipart text/html" do
       text = @dropbox.send(:plain_text_body, Mail.new(DROPBOX_EMAILS[:html]))
       expect(text).to be_present
-      expect(text).not_to match(/<\/?[^>]*>/)
+      expect(text).not_to match(%r{</?[^>]*>})
     end
   end
 

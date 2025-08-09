@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,17 +7,17 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/edit" do
+describe "tasks/edit" do
   include TasksHelper
 
   before do
-    login_and_assign
+    login
     assign(:users, [current_user])
     assign(:bucket, Setting.task_bucket[1..-1] << ["On Specific Date...", :specific_time])
     assign(:category, Setting.unroll(:task_category))
   end
 
-  %w(pending assigned).each do |view|
+  %w[pending assigned].each do |view|
     it "cancel for #{view} view: should replace [Edit Task] form with the task partial" do
       params[:cancel] = "true"
       @task = stub_task(view)

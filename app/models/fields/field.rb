@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -21,6 +23,7 @@
 #  disabled       :boolean
 #  required       :boolean
 #  maxlength      :integer
+#  minlength      :integer
 #  created_at     :datetime
 #  updated_at     :datetime
 #
@@ -28,10 +31,10 @@
 class Field < ActiveRecord::Base
   acts_as_list
 
-  serialize :collection, Array
-  serialize :settings, HashWithIndifferentAccess
+  serialize :collection, type: Array
+  serialize :settings, type: HashWithIndifferentAccess
 
-  belongs_to :field_group
+  belongs_to :field_group, optional: true
 
   scope :core_fields,   -> { where(type: 'CoreField') }
   scope :custom_fields, -> { where("type != 'CoreField'") }
@@ -46,7 +49,7 @@ class Field < ActiveRecord::Base
     'url'         => { klass: 'CustomField', type: 'string' },
     'tel'         => { klass: 'CustomField', type: 'string' },
     'select'      => { klass: 'CustomField', type: 'string' },
-    'radio_buttons'       => { klass: 'CustomField', type: 'string' },
+    'radio_buttons' => { klass: 'CustomField', type: 'string' },
     'check_boxes' => { klass: 'CustomField', type: 'text' },
     'boolean'     => { klass: 'CustomField', type: 'boolean' },
     'date'        => { klass: 'CustomField', type: 'date' },
@@ -58,18 +61,20 @@ class Field < ActiveRecord::Base
 
   validates_presence_of :label, message: "^Please enter a field label."
   validates_length_of :label, maximum: 64, message: "^The field name must be less than 64 characters in length."
-  validates_numericality_of :maxlength, only_integer: true, allow_blank: true, message: "^Max size can only be whole number."
+  validates_numericality_of :minlength, only_integer: true, greater_than_or_equal_to: 0, allow_blank: true, message: "^Min size can only be whole number."
+  validates_numericality_of :minlength, less_than_or_equal_to: :maxlength, allow_blank: true, if: :maxlength, message: "^Min size cannot be greater than max size."
+  validates_numericality_of :maxlength, only_integer: true, greater_than: 0, allow_blank: true, message: "^Max size can only be whole number."
   validates_presence_of :as, message: "^Please specify a field type."
   validates_inclusion_of :as, in: proc { field_types.keys }, message: "^Invalid field type.", allow_blank: true
 
   def column_type(field_type = as)
-    (opts = Field.field_types[field_type]) ? opts[:type] : fail("Unknown field_type: #{field_type}")
+    (opts = Field.field_types[field_type]) ? opts[:type] : raise("Unknown field_type: #{field_type}")
   end
 
   def input_options
     input_html = {}
     attributes.reject do |k, v|
-      !%w(as collection disabled label placeholder required maxlength).include?(k) || v.blank?
+      !%w[as collection disabled label placeholder required minlength maxlength].include?(k) || v.blank?
     end.symbolize_keys.merge(input_html)
   end
 
@@ -87,20 +92,16 @@ class Field < ActiveRecord::Base
 
   def render(value)
     case as
-    when 'checkbox'
-      value.to_s == '0' ? "no" : "yes"
     when 'date'
-      value && value.strftime(I18n.t("date.formats.mmddyy"))
+      value&.strftime(I18n.t("date.formats.mmddyy"))
     when 'datetime'
-      value && value.in_time_zone.strftime(I18n.t("time.formats.mmddyyyy_hhmm"))
+      value&.in_time_zone&.strftime(I18n.t("time.formats.mmddyyyy_hhmm"))
     when 'check_boxes'
       value.select(&:present?).in_groups_of(2, false).map { |g| g.join(', ') }.join("<br />".html_safe) if Array === value
     else
       value.to_s
     end
   end
-
-  protected
 
   class << self
     # Provides access to registered field_types
@@ -113,7 +114,6 @@ class Field < ActiveRecord::Base
     # Example options: :as => 'datepair', :type => 'date', :klass => 'CustomFieldDatePair'
     #------------------------------------------------------------------------------
     def register(options)
-      opts = options.dup
       as = options.delete(:as)
       (@@field_types ||= BASE_FIELD_TYPES).merge!(as => options)
     end

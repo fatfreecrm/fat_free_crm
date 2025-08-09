@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -9,7 +11,7 @@ class AccountsController < EntitiesController
   # GET /accounts
   #----------------------------------------------------------------------------
   def index
-    @accounts = get_accounts(page: params[:page], per_page: params[:per_page])
+    @accounts = get_accounts(page: page_param, per_page: per_page_param)
 
     respond_with @accounts do |format|
       format.xls { render layout: 'header' }
@@ -43,9 +45,7 @@ class AccountsController < EntitiesController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    if params[:previous].to_s =~ /(\d+)\z/
-      @previous = Account.my.find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i
-    end
+    @previous = Account.my(current_user).find_by_id(detect_previous_id) || detect_previous_id if detect_previous_id
 
     respond_with(@account)
   end
@@ -71,7 +71,7 @@ class AccountsController < EntitiesController
     respond_with(@account) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @account.access = params[:account][:access] if params[:account][:access]
-      get_data_for_sidebar if @account.update_attributes(resource_params)
+      get_data_for_sidebar if @account.update(resource_params)
     end
   end
 
@@ -101,9 +101,9 @@ class AccountsController < EntitiesController
   # GET /accounts/redraw                                                   AJAX
   #----------------------------------------------------------------------------
   def redraw
-    current_user.pref[:accounts_per_page] = params[:per_page] if params[:per_page]
+    current_user.pref[:accounts_per_page] = per_page_param if per_page_param
     current_user.pref[:accounts_sort_by]  = Account.sort_by_map[params[:sort_by]] if params[:sort_by]
-    @accounts = get_accounts(page: 1, per_page: params[:per_page])
+    @accounts = get_accounts(page: 1, per_page: per_page_param)
     set_options # Refresh options
 
     respond_with(@accounts) do |format|
@@ -115,7 +115,7 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def filter
     session[:accounts_filter] = params[:category]
-    @accounts = get_accounts(page: 1, per_page: params[:per_page])
+    @accounts = get_accounts(page: 1, per_page: per_page_param)
 
     respond_with(@accounts) do |format|
       format.js { render :index }
@@ -125,7 +125,12 @@ class AccountsController < EntitiesController
   private
 
   #----------------------------------------------------------------------------
-  alias_method :get_accounts, :get_list_of_records
+  alias get_accounts get_list_of_records
+
+  #----------------------------------------------------------------------------
+  def list_includes
+    %i[pipeline_opportunities user tags].freeze
+  end
 
   #----------------------------------------------------------------------------
   def respond_to_destroy(method)
@@ -148,11 +153,13 @@ class AccountsController < EntitiesController
   def get_data_for_sidebar
     @account_category_total = HashWithIndifferentAccess[
                               Setting.account_category.map do |key|
-                                [key, Account.my.where(category: key.to_s).count]
+                                [key, Account.my(current_user).where(category: key.to_s).count]
                               end
     ]
     categorized = @account_category_total.values.sum
-    @account_category_total[:all] = Account.my.count
+    @account_category_total[:all] = Account.my(current_user).count
     @account_category_total[:other] = @account_category_total[:all] - categorized
   end
+
+  ActiveSupport.run_load_hooks(:fat_free_crm_accounts_controller, self)
 end

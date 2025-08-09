@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -33,14 +35,13 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  background_info :string(255)
-#  skype           :string(128)
 #
 
 class Contact < ActiveRecord::Base
   belongs_to :user
-  belongs_to :lead
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
-  belongs_to :reporting_user, class_name: "User", foreign_key: :reports_to
+  belongs_to :lead, optional: true # TODO: Is this really optional?
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
+  belongs_to :reporting_user, class_name: "User", foreign_key: :reports_to, optional: true # TODO: Is this really optional?
   has_one :account_contact, dependent: :destroy
   has_one :account, through: :account_contact
   has_many :contact_opportunities, dependent: :destroy
@@ -52,17 +53,17 @@ class Contact < ActiveRecord::Base
 
   delegate :campaign, to: :lead, allow_nil: true
 
-  has_ransackable_associations %w(account opportunities tags activities emails addresses comments tasks)
+  has_ransackable_associations %w[account opportunities tags activities emails addresses comments tasks]
   ransack_can_autocomplete
 
-  serialize :subscribed_users, Set
+  serialize :subscribed_users, type: Array
 
   accepts_nested_attributes_for :business_address, allow_destroy: true, reject_if: proc { |attributes| Address.reject_address(attributes) }
 
   scope :created_by,  ->(user) { where(user_id: user.id) }
   scope :assigned_to, ->(user) { where(assigned_to: user.id) }
 
-  scope :text_search, ->(query) {
+  scope :text_search, lambda { |query|
     t = Contact.arel_table
     # We can't always be sure that names are entered in the right order, so we must
     # split the query into all possible first/last name permutations.
@@ -86,21 +87,36 @@ class Contact < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail class_name: 'Version', ignore: [:subscribed_users]
+  has_paper_trail versions: { class_name: 'Version' }, ignore: [:subscribed_users]
 
   has_fields
   exportable
-  sortable by: ["first_name ASC",  "last_name ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
+  sortable by: ["first_name ASC", "last_name ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
   validates_presence_of :first_name, message: :missing_first_name, if: -> { Setting.require_first_names }
   validates_presence_of :last_name,  message: :missing_last_name,  if: -> { Setting.require_last_names  }
   validate :users_for_shared_access
+
+  validates_length_of :first_name, maximum: 64
+  validates_length_of :last_name, maximum: 64
+  validates_length_of :title, maximum: 64
+  validates_length_of :department, maximum: 64
+  validates_length_of :email, maximum: 254
+  validates_length_of :alt_email, maximum: 254
+  validates_length_of :phone, maximum: 32
+  validates_length_of :mobile, maximum: 32
+  validates_length_of :fax, maximum: 32
+  validates_length_of :blog, maximum: 128
+  validates_length_of :linkedin, maximum: 128
+  validates_length_of :facebook, maximum: 128
+  validates_length_of :twitter, maximum: 128
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
   def self.per_page
     20
   end
+
   def self.first_name_position
     "before"
   end
@@ -113,7 +129,7 @@ class Contact < ActiveRecord::Base
       "#{last_name}, #{first_name}"
     end
   end
-  alias_method :name, :full_name
+  alias name full_name
 
   # Backend handler for [Create New Contact] form (see contact/create).
   #----------------------------------------------------------------------------
@@ -137,9 +153,7 @@ class Contact < ActiveRecord::Base
   # Attach given attachment to the contact if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      send(attachment.class.name.tableize) << attachment
-    end
+    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the contact.
@@ -157,11 +171,11 @@ class Contact < ActiveRecord::Base
   def self.create_for(model, account, opportunity, params)
     attributes = {
       lead_id:     model.id,
-      user_id:     params[:account][:user_id],
+      user_id:     params[:account][:user_id] || account.user_id,
       assigned_to: params[:account][:assigned_to],
       access:      params[:access]
     }
-    %w(first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info).each do |name|
+    %w[first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter do_not_call background_info].each do |name|
       attributes[name] = model.send(name.intern)
     end
 
@@ -170,9 +184,7 @@ class Contact < ActiveRecord::Base
     # Set custom fields.
     if model.class.respond_to?(:fields)
       model.class.fields.each do |field|
-        if contact.respond_to?(field.name)
-          contact.send "#{field.name}=", model.send(field.name)
-        end
+        contact.send "#{field.name}=", model.send(field.name) if contact.respond_to?(field.name)
       end
     end
 
@@ -197,18 +209,19 @@ class Contact < ActiveRecord::Base
   # Make sure at least one user has been selected if the contact is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, :share_contact) if self[:access] == "Shared" && !permissions.any?
+    errors.add(:access, :share_contact) if self[:access] == "Shared" && permissions.none?
   end
 
   # Handles the saving of related accounts
   #----------------------------------------------------------------------------
   def save_account(params)
     account_params = params[:account]
-    if account_params[:id] == "" || account_params[:name] == ""
-      self.account = nil
-    else
-      self.account = Account.create_or_select_for(self, account_params)
-    end
+    valid_account = account_params && (account_params[:id].present? || account_params[:name].present?)
+    self.account = if valid_account
+                     Account.create_or_select_for(self, account_params)
+                   else
+                     nil
+                   end
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_contact, self)

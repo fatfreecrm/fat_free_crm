@@ -11,20 +11,20 @@
       %tr
         %td
           .label #{t :number_of_leads}:
-          = f.text_field :target_leads, :style => "width:110px; text-align:right;"
+          = f.text_field :target_leads, style: "width:110px; text-align:right;"
         %td= spacer
         %td
           .label #{t :conversion_label}:
-          = f.text_field :target_conversion, :style => "width:110px; text-align:right;"
+          = f.text_field :target_conversion, style: "width:110px; text-align:right;"
         %td= spacer
         %td
           .label #{t :revenue_label}:
-          = f.text_field :target_revenue, :value => @campaign.target_revenue ? @campaign.target_revenue.to_i : "", :style => "width:110px; text-align:right;"
+          = f.text_field :target_revenue, value: @campaign.target_revenue ? @campaign.target_revenue.to_i : "", style: "width:110px; text-align:right;"
         %td= spacer
         %td
           .label #{t :budget_label}:
-          = f.text_field :budget, :value => @campaign.budget ? @campaign.budget.to_i : "", :style => "width:110px; text-align:right;"
+          = f.text_field :budget, value: @campaign.budget ? @campaign.budget.to_i : "", style: "width:110px; text-align:right;"
       %tr
-        %td{ :colspan => 7 }
+        %td{ colspan: 7 }
           .label #{t :objectives}:
-          = f.text_area :objectives, :style => "width:500px", :rows => 2
+          = f.text_area :objectives, style: "width:500px", rows: 2

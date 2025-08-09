@@ -1,5 +1,5 @@
-- if (params['controller'] == 'opportunities') and (template = template_for_current_view).present?
-  = render(template, :opportunity => opportunity)
+- if (controller.controller_name == 'opportunities') and (template = template_for_current_view).present?
+  = render(template, opportunity: opportunity)
 - else
   -# default view
-  = render 'opportunities/index_long', :opportunity => opportunity
+  = render 'opportunities/index_long', opportunity: opportunity

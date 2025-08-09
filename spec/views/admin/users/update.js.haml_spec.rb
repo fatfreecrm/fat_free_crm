@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -7,8 +9,8 @@ require 'spec_helper'
 
 describe "admin/users/update" do
   before do
-    login_and_assign(admin: true)
-    assign(:user, @user = FactoryGirl.build_stubbed(:user))
+    login_admin
+    assign(:user, @user = build_stubbed(:user))
   end
 
   describe "no errors:" do
@@ -18,19 +20,18 @@ describe "admin/users/update" do
       expect(rendered).to include("user_#{@user.id}")
       expect(rendered).to include(%/$('#user_#{@user.id}').effect("highlight"/)
     end
-  end # no errors
+  end
 
   describe "validation errors:" do
     before do
       @user.errors.add(:name)
     end
 
-    it "redraws [Edit User] form and shakes it" do
+    it "redraws [Edit User] form" do
       render
 
       expect(rendered).to include("user_#{@user.id}")
-      expect(rendered).to include(%/$('#user_#{@user.id}').effect("shake"/)
       expect(rendered).to include(%/$('#user_username').focus()/)
     end
-  end # errors
+  end
 end

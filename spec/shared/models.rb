@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -45,7 +47,7 @@ end
 shared_examples Ability do |klass|
   subject { ability }
   let(:ability) { Ability.new(user) }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
   let(:factory) { klass.model_name.to_s.underscore }
 
   context "create" do
@@ -53,86 +55,86 @@ shared_examples Ability do |klass|
   end
 
   context "when public access" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Public') }
+    let!(:asset) { create(factory, access: 'Public') }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when private access owner" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Private', user_id: user.id) }
+    let!(:asset) { create(factory, access: 'Private', user_id: user.id) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when private access administrator" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Private') }
-    let(:user) { FactoryGirl.create(:user, admin: true) }
+    let!(:asset) { create(factory, access: 'Private') }
+    let(:user) { create(:user, admin: true) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when private access not owner" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Private') }
+    let!(:asset) { create(factory, access: 'Private') }
 
     it { is_expected.not_to be_able_to(:manage, asset) }
   end
 
   context "when private access not owner but is assigned" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Private', assigned_to: user.id) }
+    let!(:asset) { create(factory, access: 'Private', assigned_to: user.id) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when shared access with permission" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Shared', permissions: [permission]) }
+    let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
     let(:permission) { Permission.new(user: user) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when shared access with no permission" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Shared', permissions: [permission]) }
-    let(:permission) { Permission.new(user: FactoryGirl.create(:user)) }
+    let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
+    let(:permission) { Permission.new(user: create(:user)) }
 
     it { is_expected.not_to be_able_to(:manage, asset) }
   end
 
   context "when shared access with no permission but administrator" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Shared', permissions: [permission]) }
-    let(:permission) { Permission.new(user: FactoryGirl.create(:user)) }
-    let(:user) { FactoryGirl.create(:user, admin: true) }
+    let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
+    let(:permission) { Permission.new(user: create(:user)) }
+    let(:user) { create(:user, admin: true) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when shared access with no permission but assigned" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Shared', permissions: [permission], assigned_to: user.id) }
-    let(:permission) { Permission.new(user: FactoryGirl.create(:user)) }
+    let!(:asset) { create(factory, access: 'Shared', permissions: [permission], assigned_to: user.id) }
+    let(:permission) { Permission.new(user: create(:user)) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when shared access with group permission" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Shared', permissions: [permission]) }
+    let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
     let(:permission) { Permission.new(group: group) }
-    let(:group) { FactoryGirl.create(:group, users: [user]) }
+    let(:group) { create(:group, users: [user]) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when shared access with several group permissions" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Shared', permissions: permissions) }
+    let!(:asset) { create(factory, access: 'Shared', permissions: permissions) }
     let(:permissions) { [Permission.new(group: group1), Permission.new(group: group2)] }
-    let(:group1) { FactoryGirl.create(:group, users: [user]) }
-    let(:group2) { FactoryGirl.create(:group, users: [user]) }
+    let(:group1) { create(:group, users: [user]) }
+    let(:group2) { create(:group, users: [user]) }
 
     it { is_expected.to be_able_to(:manage, asset) }
   end
 
   context "when shared access with no group permission" do
-    let!(:asset) { FactoryGirl.create(factory, access: 'Shared', permissions: [permission]) }
+    let!(:asset) { create(factory, access: 'Shared', permissions: [permission]) }
     let(:permission) { Permission.new(group: group) }
-    let(:group) { FactoryGirl.create(:group) }
+    let(:group) { create(:group) }
 
     it { is_expected.not_to be_able_to(:manage, asset) }
   end

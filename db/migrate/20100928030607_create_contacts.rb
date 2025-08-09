@@ -1,7 +1,9 @@
-class CreateContacts < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateContacts < ActiveRecord::Migration[4.2]
   def self.up
     create_table :contacts, force: true do |t|
-      t.string :uuid,   limit: 36
+      t.string :uuid, limit: 36
       t.references :user
       t.references :lead
       t.integer :assigned_to
@@ -28,7 +30,7 @@ class CreateContacts < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :contacts, [:user_id, :last_name, :deleted_at], unique: true, name: 'id_last_name_deleted'
+    add_index :contacts, %i[user_id last_name deleted_at], unique: true, name: 'id_last_name_deleted'
     add_index :contacts, :assigned_to
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,15 +7,15 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/_edit" do
+describe "tasks/_edit" do
   include TasksHelper
 
   before do
-    login_and_assign
-    assign(:task, FactoryGirl.build_stubbed(:task, asset: FactoryGirl.build_stubbed(:account), bucket: "due_asap"))
+    login
+    assign(:task, build_stubbed(:task, asset: build_stubbed(:account), bucket: "due_asap"))
     assign(:users, [current_user])
-    assign(:bucket, %w(due_asap due_today))
-    assign(:category, %w(meeting money))
+    assign(:bucket, %w[due_asap due_today])
+    assign(:category, %w[meeting money])
   end
 
   it "should render [edit task] form" do
@@ -21,7 +23,7 @@ describe "/tasks/_edit" do
 
     expect(view).to render_template(partial: "tasks/_top_section")
 
-    expect(rendered).to have_tag("form[class=edit_task]")
+    expect(rendered).to have_tag('form[class="simple_form edit_task"]')
   end
 
   ["As Soon As Possible", "Today", "Tomorrow", "This Week", "Next Week", "Sometime Later"].each do |day|

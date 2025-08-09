@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -51,7 +53,7 @@ describe FatFreeCRM::MailProcessor::Base do
 
   #------------------------------------------------------------------------------
   describe "Disconnecting from the IMAP server" do
-    it "should logout and diconnect" do
+    it "should logout and disconnect" do
       mock_connect
       mock_disconnect
       expect(@imap).to receive(:logout).once
@@ -134,19 +136,19 @@ describe FatFreeCRM::MailProcessor::Base do
     end
 
     it "should find non-suspended user that matches From: field" do
-      @user = FactoryGirl.create(:user, email: @from.first, suspended_at: nil)
+      @user = create(:user, email: @from.first, suspended_at: nil)
       expect(@crawler.send(:sent_from_known_user?, @email)).to eq(true)
       expect(@crawler.instance_variable_get("@sender")).to eq(@user)
     end
 
     it "should not find user if his email doesn't match From: field" do
-      FactoryGirl.create(:user, email: "nobody@example.com")
+      create(:user, email: "nobody@example.com")
       expect(@crawler.send(:sent_from_known_user?, @email)).to eq(false)
       expect(@crawler.instance_variable_get("@sender")).to eq(nil)
     end
 
     it "should not find user if his email matches From: field but is suspended" do
-      FactoryGirl.create(:user, email: @from.first, suspended_at: Time.now)
+      create(:user, email: @from.first, suspended_at: Time.now)
       expect(@crawler.send(:sent_from_known_user?, @email)).to eq(false)
       expect(@crawler.instance_variable_get("@sender")).to eq(nil)
     end

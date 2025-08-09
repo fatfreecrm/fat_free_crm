@@ -1,5 +1,5 @@
-- if (params['controller'] == 'contacts') and (template = template_for_current_view).present?
-  = render(template, :contact => contact)
+- if (controller.controller_name == 'contacts') and (template = template_for_current_view).present?
+  = render(template, contact: contact)
 - else
   -# default view
-  = render 'contacts/index_long', :contact => contact
+  = render 'contacts/index_long', contact: contact

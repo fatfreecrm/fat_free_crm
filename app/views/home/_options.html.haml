@@ -1,9 +1,9 @@
 %p
-  = link_to_close url_for(:action => "options")
+  = link_to_close url_for(action: "options")
   = hidden_field_tag "account[user_id]", current_user.id
 
   -# activity_options: Show %{models} %{action_type} performed by %{user} in the past %{period}
-  = t(:activity_options, :models => link_to(t(h(@asset)).singularize.downcase, "#", :id => :asset), :action_type => link_to(t(h(@action) + "_past_participle").downcase, "#", :id => :event), :user => link_to(t(h(@user)), "#", :id => :user), :period => link_to(t(h(@duration)).downcase, "#", :id => :duration)).html_safe
+  = t(:activity_options, models: link_to(t(h(@asset)).singularize.downcase, "#", id: :asset), action_type: link_to(t(h(@action) + "_past_participle").downcase, "#", id: :event), user: link_to(t(h(@user)), "#", id: :user), period: link_to(t(h(@duration)).downcase, "#", id: :duration)).html_safe
 
 %script
   = render "assets_menu"

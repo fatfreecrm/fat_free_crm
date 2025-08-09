@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -26,9 +28,9 @@
 #
 
 class Opportunity < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :campaign
-  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to
+  belongs_to :user, optional: true
+  belongs_to :campaign, optional: true
+  belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true
   has_one :account_opportunity, dependent: :destroy
   has_one :account, through: :account_opportunity
   has_many :contact_opportunities, dependent: :destroy
@@ -36,9 +38,9 @@ class Opportunity < ActiveRecord::Base
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
   has_many :emails, as: :mediator
 
-  serialize :subscribed_users, Set
+  serialize :subscribed_users, type: Array
 
-  scope :state, ->(filters) {
+  scope :state, lambda { |filters|
     where('stage IN (?)' + (filters.delete('other') ? ' OR stage IS NULL' : ''), filters)
   }
   scope :created_by,  ->(user) { where('user_id = ?', user.id) }
@@ -48,17 +50,18 @@ class Opportunity < ActiveRecord::Base
   scope :not_lost,    -> { where("opportunities.stage <> 'lost'") }
   scope :pipeline,    -> { where("opportunities.stage IS NULL OR (opportunities.stage != 'won' AND opportunities.stage != 'lost')") }
   scope :unassigned,  -> { where("opportunities.assigned_to IS NULL") }
+  scope :weighted_sort, -> { select('*, amount*probability') }
 
   # Search by name OR id
-  scope :text_search, ->(query) {
-    if query =~ /\A\d+\z/
+  scope :text_search, lambda { |query|
+    if query.match?(/\A\d+\z/)
       where('upper(name) LIKE upper(:name) OR opportunities.id = :id', name: "%#{query}%", id: query)
     else
-      search('name_cont' => query).result
+      ransack('name_cont' => query).result
     end
   }
 
-  scope :visible_on_dashboard, ->(user) {
+  scope :visible_on_dashboard, lambda { |user|
     # Show opportunities which either belong to the user and are unassigned, or are assigned to the user and haven't been closed (won/lost)
     where('(user_id = :user_id AND assigned_to IS NULL) OR assigned_to = :user_id', user_id: user.id).where("opportunities.stage != 'won'").where("opportunities.stage != 'lost'")
   }
@@ -70,16 +73,16 @@ class Opportunity < ActiveRecord::Base
   acts_as_commentable
   uses_comment_extensions
   acts_as_taggable_on :tags
-  has_paper_trail class_name: 'Version', ignore: [:subscribed_users]
+  has_paper_trail versions: { class_name: 'Version' }, ignore: [:subscribed_users]
   has_fields
   exportable
   sortable by: ["name ASC", "amount DESC", "amount*probability DESC", "probability DESC", "closes_on ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
-  has_ransackable_associations %w(account contacts tags campaign activities emails comments)
+  has_ransackable_associations %w[account contacts tags campaign activities emails comments]
   ransack_can_autocomplete
 
   validates_presence_of :name, message: :missing_opportunity_name
-  validates_numericality_of [:probability, :amount, :discount], allow_nil: true
+  validates_numericality_of %i[probability amount discount], allow_nil: true
   validate :users_for_shared_access
   validates :stage, inclusion: { in: proc { Setting.unroll(:opportunity_stage).map { |s| s.last.to_s } } }, allow_blank: true
 
@@ -91,13 +94,14 @@ class Opportunity < ActiveRecord::Base
   def self.per_page
     20
   end
+
   def self.default_stage
     Setting[:opportunity_default_stage].try(:to_s) || 'prospecting'
   end
 
   #----------------------------------------------------------------------------
   def weighted_amount
-    ((amount || 0) - (discount || 0)) * (probability || 0) / 100.0
+    (amount.to_f - discount.to_f) * probability.to_i / 100.0
   end
 
   # Backend handler for [Create New Opportunity] form (see opportunity/create).
@@ -131,9 +135,7 @@ class Opportunity < ActiveRecord::Base
   # Attach given attachment to the opportunity if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
-      send(attachment.class.name.tableize) << attachment
-    end
+    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the opportunity.
@@ -169,21 +171,17 @@ class Opportunity < ActiveRecord::Base
   # Make sure at least one user has been selected if the contact is being shared.
   #----------------------------------------------------------------------------
   def users_for_shared_access
-    errors.add(:access, :share_opportunity) if self[:access] == "Shared" && !permissions.any?
+    errors.add(:access, :share_opportunity) if self[:access] == "Shared" && permissions.none?
   end
 
   #----------------------------------------------------------------------------
   def increment_opportunities_count
-    if campaign_id
-      Campaign.increment_counter(:opportunities_count, campaign_id)
-    end
+    Campaign.increment_counter(:opportunities_count, campaign_id) if campaign_id
   end
 
   #----------------------------------------------------------------------------
   def decrement_opportunities_count
-    if campaign_id
-      Campaign.decrement_counter(:opportunities_count, campaign_id)
-    end
+    Campaign.decrement_counter(:opportunities_count, campaign_id) if campaign_id
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_opportunity, self)

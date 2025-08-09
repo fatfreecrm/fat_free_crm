@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 xml.Worksheet 'ss:Name' => I18n.t(:tab_campaigns) do
   xml.Table do
     unless @campaigns.empty?
@@ -39,25 +41,25 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_campaigns) do
       # Campaign rows.
       @campaigns.each do |campaign|
         xml.Row do
-          data    = [campaign.id,
-                     campaign.user.try(:name),
-                     campaign.assignee.try(:name),
-                     campaign.name,
-                     campaign.access,
-                     campaign.status,
-                     campaign.budget,
-                     campaign.target_leads,
-                     campaign.target_conversion,
-                     campaign.target_revenue,
-                     campaign.leads_count,
-                     campaign.opportunities_count,
-                     campaign.revenue,
-                     campaign.starts_on,
-                     campaign.ends_on,
-                     campaign.objectives,
-                     campaign.background_info,
-                     campaign.created_at,
-                     campaign.updated_at]
+          data = [campaign.id,
+                  campaign.user.try(:name),
+                  campaign.assignee.try(:name),
+                  campaign.name,
+                  campaign.access,
+                  campaign.status,
+                  campaign.budget,
+                  campaign.target_leads,
+                  campaign.target_conversion,
+                  campaign.target_revenue,
+                  campaign.leads_count,
+                  campaign.opportunities_count,
+                  campaign.revenue,
+                  campaign.starts_on,
+                  campaign.ends_on,
+                  campaign.objectives,
+                  campaign.background_info,
+                  campaign.created_at,
+                  campaign.updated_at]
 
           # Append custom field values.
           Campaign.fields.each do |field|
@@ -67,7 +69,7 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_campaigns) do
           data.each do |value|
             xml.Cell do
               xml.Data value,
-                       'ss:Type' => "#{value.respond_to?(:abs) ? 'Number' : 'String'}"
+                       'ss:Type' => (value.respond_to?(:abs) ? 'Number' : 'String').to_s
             end
           end
         end

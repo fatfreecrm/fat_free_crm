@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -7,12 +9,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/users/index" do
   before do
-    login_and_assign
+    login
   end
 
   it "renders [admin/user] template with @users collection" do
-    amy = FactoryGirl.build_stubbed(:user)
-    bob = FactoryGirl.build_stubbed(:user)
+    amy = build_stubbed(:user)
+    bob = build_stubbed(:user)
     assign(:users, [amy, bob].paginate)
 
     render template: 'admin/users/index', formats: [:js]

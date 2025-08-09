@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -5,14 +7,14 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "/tasks/create" do
+describe "tasks/create" do
   include TasksHelper
 
   before do
-    login_and_assign
+    login
   end
 
-  (TASK_STATUSES - %w(completed)).each do |status|
+  (TASK_STATUSES - ['completed']).each do |status|
     describe "create from #{status} tasks page" do
       before do
         assign(:view, status)
@@ -39,14 +41,13 @@ describe "/tasks/create" do
         expect(rendered).to include("$('#sidebar').html")
         expect(rendered).to have_text("Recent Items")
         expect(rendered).to have_text("Sometime Later")
-        expect(rendered).to include("$('#filters').effect('shake'")
       end
     end
   end
 
   it "should show flash message when assigning a task from pending tasks view" do
     assign(:view, "pending")
-    assign(:task, FactoryGirl.build_stubbed(:task, id: 42, assignee: FactoryGirl.build_stubbed(:user)))
+    assign(:task, build_stubbed(:task, id: 42, assignee: build_stubbed(:user)))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
@@ -56,7 +57,7 @@ describe "/tasks/create" do
 
   it "should update recent items when assigning a task from pending tasks view" do
     assign(:view, "pending")
-    assign(:task, FactoryGirl.build_stubbed(:task, id: 42, assignee: FactoryGirl.build_stubbed(:user)))
+    assign(:task, build_stubbed(:task, id: 42, assignee: build_stubbed(:user)))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks"
     render
 
@@ -66,7 +67,7 @@ describe "/tasks/create" do
 
   it "should show flash message when creating a pending task from assigned tasks view" do
     assign(:view, "assigned")
-    assign(:task, FactoryGirl.build_stubbed(:task, id: 42, assignee: nil))
+    assign(:task, build_stubbed(:task, id: 42, assignee: nil))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
@@ -76,7 +77,7 @@ describe "/tasks/create" do
 
   it "should update recent items when creating a pending task from assigned tasks view" do
     assign(:view, "assigned")
-    assign(:task, FactoryGirl.build_stubbed(:task, id: 42, assignee: nil))
+    assign(:task, build_stubbed(:task, id: 42, assignee: nil))
     controller.request.env["HTTP_REFERER"] = "http://localhost/tasks?view=assigned"
     render
 
@@ -84,10 +85,10 @@ describe "/tasks/create" do
     expect(rendered).to have_text("Recent Items")
   end
 
-  (TASK_STATUSES - %w(assigned)).each do |status|
+  (TASK_STATUSES - ['assigned']).each do |status|
     describe "create from outside the Tasks tab" do
       before do
-        @task = FactoryGirl.build_stubbed(:task, id: 42)
+        @task = build_stubbed(:task, id: 42)
         assign(:view, status)
         assign(:task, @task)
         render
@@ -110,10 +111,9 @@ describe "/tasks/create" do
   end
 
   it "create failure: should re-render [create] template in :create_task div" do
-    assign(:task, FactoryGirl.build(:task, name: nil)) # make it invalid
+    assign(:task, build(:task, name: nil)) # make it invalid
     render
 
-    expect(rendered).to include(%/$('#create_task').effect("shake"/)
     expect(rendered).to include(%/$('#new_task input[type=submit]').enable()/)
   end
 end

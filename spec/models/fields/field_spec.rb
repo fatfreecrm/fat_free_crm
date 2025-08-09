@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (c) 2008-2013 Michael Dvorkin and contributors.
 #
 # Fat Free CRM is freely distributable under the terms of MIT license.
@@ -19,6 +21,7 @@
 #  collection     :text
 #  disabled       :boolean
 #  required       :boolean
+#  minlength      :integer
 #  maxlength      :integer
 #  created_at     :datetime
 #  updated_at     :datetime
@@ -29,9 +32,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Field do
   it "should create a new instance given valid attributes" do
     Field.create!(
-      name:      'skype_address',
-      label:     'Skype address',
+      name:      'test_field',
+      label:     'Test Field',
       as:        'string',
+      minlength: 12,
       maxlength: 220,
       position:  10
     )
@@ -45,21 +49,23 @@ describe Field do
     expect(Field.new.input_options).to be_a(Hash)
   end
 
-  it "should be able to display a empty multi_select value" do
-    field = Field.new(
-      label: "Availability",
-      name:  "availability"
-    )
-    object = double('Object')
+  context "render" do
+    let(:field) { FactoryBot.create(:field, as: as) }
 
-    #  as  |  value  |  expected
-    [["check_boxes", [1, 2, 3],               "1, 2<br />3"],
-     %w(checkbox 0 no),
-     ["checkbox",    1,                       "yes"],
-     ["date",        DateTime.new(2011, 4, 19), DateTime.new(2011, 4, 19).strftime(I18n.t("date.formats.mmddyy"))]].each do |as, value, expected|
-      field.as = as
-      allow(object).to receive(field.name).and_return(value)
-      expect(field.render_value(object)).to eq(expected)
+    context "check_boxes" do
+      let(:as) { "check_boxes" }
+      it { expect(field.render([1, 2, 3])).to eql("1, 2<br />3") }
+      it { expect(field.render([1, 2, 3])).to eql("1, 2<br />3") }
+    end
+
+    context "date" do
+      let(:as) { "date" }
+      it { expect(field.render(Time.parse('2011-04-19'))).to eql("Apr 19, 2011") }
+    end
+
+    context "datetime" do
+      let(:as) { "datetime" }
+      it { expect(field.render(Time.parse('2011-04-19 14:47 +0000'))).to eql("19 Apr 2011 at  2:47PM") }
     end
   end
 end
