@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_08_173157) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -345,6 +345,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
     t.index ["user_id", "name", "deleted_at"], name: "id_name_deleted", unique: true
   end
 
+  create_table "passkeys", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "label", null: false
+    t.string "external_id", null: false
+    t.string "public_key", null: false
+    t.integer "sign_count", default: 0, null: false
+    t.datetime "last_used_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["external_id"], name: "index_passkeys_on_external_id", unique: true
+    t.index ["user_id"], name: "index_passkeys_on_user_id"
+  end
+
   create_table "permissions", force: :cascade do |t|
     t.integer "user_id"
     t.string "asset_type"
@@ -458,12 +471,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
     t.datetime "confirmation_sent_at"
     t.boolean "subscribe_to_comment_replies", default: true, null: false
     t.boolean "receive_assigned_notifications", default: true, null: false
+    t.string "otp_secret"
+    t.integer "consumed_timestep"
+    t.boolean "otp_required_for_login"
+    t.string "webauthn_id"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username", "deleted_at"], name: "index_users_on_username_and_deleted_at", unique: true
+    t.index ["webauthn_id"], name: "index_users_on_webauthn_id", unique: true
   end
 
   create_table "versions", force: :cascade do |t|
@@ -486,4 +504,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "passkeys", "users"
 end

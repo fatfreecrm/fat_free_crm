@@ -46,10 +46,13 @@
 #
 
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :confirmable,
+  devise :two_factor_authenticatable, :passkey_authenticatable, :registerable, :confirmable,
          :encryptable, :recoverable, :rememberable, :trackable
+
+  encrypts :otp_secret, key: Rails.application.credentials.secret_key_base
   before_create :suspend_if_needs_approval
 
+  has_many :passkeys
   has_one :avatar, as: :entity, dependent: :destroy  # Personal avatar.
   has_many :avatars                                  # As owner who uploaded it, ex. Contact avatar.
   has_many :comments, as: :commentable               # As owner who created a comment.
@@ -194,9 +197,21 @@ class User < ActiveRecord::Base
     !sum.nil?
   end
 
+  def after_passkey_authentication(passkey:)
+    # TODO: investigate why this is needed
+  end
+
   # Define class methods
   #----------------------------------------------------------------------------
   class << self
+    def passkeys_class
+      Passkey
+    end
+
+    def find_for_passkey(passkey)
+      find_by(id: passkey.user.id)
+    end
+
     def can_signup?
       %i[allowed needs_approval].include? Setting.user_signup
     end
