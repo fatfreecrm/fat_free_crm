@@ -1,0 +1,12 @@
+%h2 Passkeys
+
+%p
+  Manage your passkeys below.
+
+%ul
+  - current_user.passkeys.each do |passkey|
+    %li
+      = passkey.label
+      = link_to 'Delete', users_passkey_path(passkey), method: :delete, data: { confirm: 'Are you sure?' }
+
+= link_to 'Add a new passkey', new_users_passkey_path, class: 'btn btn-primary'
