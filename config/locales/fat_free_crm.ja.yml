@@ -1,20 +1,18 @@
 ---
-ja:
+ja-JP:
   language: Japanese (日本語)
-
   # Generic terms.
   #----------------------------------------------------------------------------
   id: ID
   all: 全て
   at: に
   here: こちら
-  no_button: いいえ
+  no_button: 'いいえ'
   not_implemented: まだ未実装です。
   or: または
-  select_none: -- なし --
-  select_blank: -- 選択 --
-  yes_button: はい
-
+  select_none: '-- なし --'
+  select_blank: '-- 選択 --'
+  yes_button: 'はい'
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: ダッシュボード
@@ -31,6 +29,12 @@ ja:
   admin_tab_tags: タグ
   admin_tab_settings: 管理設定
   admin_tab_plugins: プラグイン
+  ai_prompts: Describe your business
+  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
+  about_my_business: About my business
+  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
   affiliate: アフリエイト
   competitor: コンペティター
   customer: カスタマー
@@ -82,7 +86,6 @@ ja:
   completed_last_week: 先週
   completed_this_month: 今月
   completed_last_month: 先月
-
   # Models/Activity.
   #----------------------------------------------------------------------------
   one_hour: 1時間
@@ -91,7 +94,6 @@ ja:
   one_week: 1週間
   two_weeks: 2週間
   one_month: 1ヶ月
-
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
@@ -106,57 +108,58 @@ ja:
         account:
           attributes:
             name:
-              missing_account_name: ^取引先名を指定してください。
+              missing_account_name: '^取引先名を指定してください。'
             access:
-              share_account: ^取引先を共有するユーザーを指定してください。
+              share_account: '^取引先を共有するユーザーを指定してください。'
         campaign:
           attributes:
             name:
-              missing_campaign_name: ^キャンペーン名を指定してください。
+              missing_campaign_name: '^キャンペーン名を指定してください。'
             ends_on:
-              dates_not_in_sequence: ^キャンペーンの終了日が開始日の後であることを確認してください。
+              dates_not_in_sequence: '^キャンペーンの終了日が開始日の後であることを確認してください。'
             access:
-              share_campaign: ^キャンペーンを共有するユーザーを指定してください。
+              share_campaign: '^キャンペーンを共有するユーザーを指定してください。'
         contact:
           attributes:
             first_name:
-              missing_first_name: ^名を指定してください。
+              missing_first_name: '^名を指定してください。'
             last_name:
-              missing_last_name: ^姓を指定してください。
+              missing_last_name: '^姓を指定してください。'
             access:
-              share_contact: ^取引先責任者を共有するユーザーを指定してください。
+              share_contact: '^取引先責任者を共有するユーザーを指定してください。'
         lead:
           attributes:
             first_name:
-              missing_first_name: ^名を指定してください。
+              missing_first_name: '^名を指定してください。'
             last_name:
-              missing_last_name: ^姓を指定してください。
+              missing_last_name: '^姓を指定してください。'
             access:
-              share_lead: ^リードを共有するユーザーを指定してください。
+              share_lead: '^リードを共有するユーザーを指定してください。'
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: ^商談名を指定してください。
+              missing_opportunity_name: '^商談名を指定してください。'
             access:
-              share_opportunity: ^商談を共有するユーザーを指定してください。
+              share_opportunity: '^商談を共有するユーザーを指定してください。'
         task:
           attributes:
             name:
-              missing_task_name: ^タスク名を指定してください。
+              missing_task_name: '^タスク名を指定してください。'
             calendar:
-              invalid_date: ^正しい日付を指定してください。
+              invalid_date: '^正しい日付を指定してください。'
         user:
           attributes:
             username:
-              missing_username: ^ユーザ名を指定してください。
-              username_taken: ^このユーザ名は既に取得されています。
+              missing_username: '^ユーザ名を指定してください。'
+              username_taken: '^このユーザ名は既に取得されています。'
             email:
-              missing_email: ^Eメールアドレスを指定してください。
-              email_in_use: ^同じEメールアドレスを持つ他のユーザがいます。
+              missing_email: '^Eメールアドレスを指定してください。'
+              email_in_use: '^同じEメールアドレスを持つ他のユーザがいます。'
         custom_field:
-          required: ^%{field}が必要です。
-          maxlength: ^%{field}が長すぎます。
-          endbeforestart: ^%{field}は始まる前に終了できません。
+          required: '^%{field}が必要です。'
+          minlength: '^%{field} is too short.'
+          maxlength: '^%{field}が長すぎます。'
+          endbeforestart: '^%{field}は始まる前に終了できません。'
     attribute_options:
       opportunity:
         stage:
@@ -176,10 +179,8 @@ ja:
           "3": "★★★"
           "4": "★★★★"
           "5": "★★★★★"
-
   msg_account_suspended: ユーザーアカウントが一時停止されました。
   password_reset_instruction: パスワードリセットの説明
-
   # Controllers.
   #----------------------------------------------------------------------------
   msg_account_created: あなたのアカウントは生成され、システム管理者の承認待ちです。
@@ -187,16 +188,16 @@ ja:
   msg_asset_deleted: ! '%{value}は削除されています。'
   msg_asset_not_available: この%{value}は、もはや存在しません。
   msg_not_authorized: この行動を取る権限がありません。
-  msg_assets_not_available: ! '%{value}は存在しません。'
+  msg_assets_not_available: '%{value}は存在しません。'
   msg_asset_rejected: ! '%{value}は拒否されています。'
-  msg_bad_image_file: ^指定されたファイルのアップデートもしくはリサイズができませんでした。
-  msg_cant_create_related: ! '%{related}がもはや存在しないため、%{asset}を生成できません。'
-  msg_cant_delete_user: ^%{value}に関連する項目があるため、ユーザーを削除できません。
-  msg_cant_do: ! '%{asset}は現在存在しないため、%{action}を出来ません。'
+  msg_bad_image_file: '^指定されたファイルのアップデートもしくはリサイズができませんでした。'
+  msg_cant_create_related: '%{related}がもはや存在しないため、%{asset}を生成できません。'
+  msg_cant_delete_user: '^%{value}に関連する項目があるため、ユーザーを削除できません。'
+  msg_cant_do: '%{asset}は現在存在しないため、%{action}を出来ません。'
   msg_email_not_found: そのEメールアドレスを持つユーザが見つかりませんでした。
   msg_enter_new_password: 新しいパスワードを入力してください。
   msg_goodbye: ログアウトしました。Fat Free CRMをご利用いただき、ありがとうございます!
-  msg_invalid_password: ^現在のパスワードを指定してください。
+  msg_invalid_password: '^現在のパスワードを指定してください。'
   msg_invalig_login: ユーザ名かパスワードが不正です。
   msg_last_login: あなたの最終ログインは%{value}です。
   msg_login_needed: このページへのアクセスにはログインが必要です。
@@ -208,7 +209,7 @@ ja:
   msg_require_admin: このページへのアクセスは管理者でなければなりません。
   msg_successful_signup: サインアップ成功です。Fat Free CRMへようこそ!
   msg_welcome: Fat Free CRMへようこそ!
-
+  msg_user_updated: Profile updated successfully.
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: 加重額
@@ -236,8 +237,8 @@ ja:
   option_target_leads: リード目標
   option_target_revenue: 売上目標
   option_updated_at: 更新日
-  show_per_page: ! '%{fmt}書式で1ページ%{number}件ずつ%{models}を表示。'
-  sort_by: ! '%{field}でを並べ替える。'
+  show_per_page: '%{fmt}書式で1ページ%{number}件ずつ%{models}を表示。'
+  sort_by: '%{field}でを並べ替える。'
   sort_by_displaying: 姓を名の%{position}に表示にして、%{field}で%{models}を並べ替える。
   entities_per_page: ! '%{entity}ページ毎の表示件数:'
   contacts_index_long: 長いフォーマット
@@ -247,9 +248,10 @@ ja:
   accounts_index_normal: 標準フォーマット
   leads_index_normal: 標準フォーマット
   campaigns_index_normal: 標準フォーマット
-
   # Views -> Profile.
   #----------------------------------------------------------------------------
+  subscribe_to_comment_replies: "Subscribe to comment replies by email"
+  receive_assigned_notifications: "Receive assigned notifications by email"
   aim: AOL IM
   already_signed_up: サインアップ済みですか？
   alt_email: その他のEメール
@@ -275,6 +277,7 @@ ja:
   phone: 電話
   profile: プロフィール
   profile_language: 言語
+  email_notifications: Email Notifications
   save_profile: プロフィール保存
   sign_up: サインアップ
   sign_up_button: サインアップ
@@ -286,7 +289,6 @@ ja:
   born_on: 生年月日
   reports_to: マネージャー
   access: アクセス
-
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
   forgot_password: パスワードを忘れた場合
@@ -294,7 +296,6 @@ ja:
   no_account: アカウントがない場合
   remember_me: ログインを記憶する
   sign_up_now: 今すぐサインアップ！
-
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: 取引先
@@ -314,7 +315,7 @@ ja:
   fax: FAX
   intro: 後で%{value}の情報を追加することができます。
   keep_private: 秘密扱いにして、他人と共有しない
-  mail_to: ! '%{value}へのメール'
+  mail_to: '%{value}へのメール'
   make_public: 全員と共有する
   mobile_small: 携帯電話
   open_in_window: 新しいウィンドウで%{value}を開く
@@ -329,7 +330,6 @@ ja:
   website: Webサイト
   account_with_title_department: ! '%{title} %{department} %{account}'
   account_with_title: ! '%{title} %{account}'
-
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
   actual: 実際
@@ -351,22 +351,20 @@ ja:
   target_conversion: CVR目標
   create_campaign: キャンペーンを作成
   end_date: 終了日
-  finished_on: ! '%{value}に完了'
-  finishes_in: ! '%{value}後に完了予定'
+  finished_on: '%{value}に完了'
+  finishes_in: '%{value}後に完了予定'
   no_start_date: 開始日未設定
   number_of_leads: リード件数
   objectives: 目的
-  objectives_help: |
-    リード目標数、予想リード・商談CVR、売上目標、キャンペーン予算を指定してください。
-    これらの数字は、実際のキャンペーン結果をトラッキングします。
+  objectives_help: "リード目標数、予想リード・商談CVR、売上目標、キャンペーン予算を指定してください。\nこれらの数字は、実際のキャンペーン結果をトラッキングします。"
   objectives_small: キャンペーン目的
   revenue: 売上
   revenue_label: 売上(%{currency})
   revenue_number: ! '%{value}の売上'
   save_campaign: キャンペーンを保存
   start_date: 開始日
-  started_ago: ! '%{value}前に開始'
-  starts_in: ! '%{value}後に開始予定'
+  started_ago: '%{value}前に開始'
+  starts_in: '%{value}後に開始予定'
   starts_today: 本日開始!
   target: 目標
   total_campaigns: キャンペーンの合計
@@ -374,7 +372,6 @@ ja:
   was_supposed_to_start: は%{time_ago}前に%{start_date}に開始すると予想されました
   was_supposed_to_start_in: は%{starts_in}後に%{start_date}に開始すると予想されました
   select_a_campaign: キャンペーンを選択してください
-
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: その他
@@ -394,15 +391,9 @@ ja:
   facebook: Facebook
   linked_in: LinkedIn
   myself: 自分自身
-  permissions_intro_private: |
-    デフォルトでは、あなただけが%{value}にアクセスできます。
-    権限設定は後で変更することができます。
-  permissions_intro_public: |
-    デフォルトでは、全ユーザが%{value}にアクセスできます。
-    権限設定は後で変更することができます。
-  permissions_intro_shared: |
-    デフォルトでは、指定ユーザが%{value}にアクセスできます。
-    権限設定は後で変更することができます。
+  permissions_intro_private: "デフォルトでは、あなただけが%{value}にアクセスできます。\n権限設定は後で変更することができます。"
+  permissions_intro_public: "デフォルトでは、全ユーザが%{value}にアクセスできます。\n権限設定は後で変更することができます。"
+  permissions_intro_shared: "デフォルトでは、指定ユーザが%{value}にアクセスできます。\n権限設定は後で変更することができます。"
   referred_by: 紹介の方
   referred_by_small: 紹介の方
   save_contact: 取引先責任者を保存
@@ -419,32 +410,19 @@ ja:
   shared_with_everyone: 誰もと共有しました
   title: タイトル
   subscriptions: 定期購読
-
   # Views -> Leads.
   #----------------------------------------------------------------------------
   convert: 変換
   convert_lead: リードを変換する
-  convert_lead_permissions_intro: |
-    連絡先責任者の権限は、変換対象のリードからコピーされます。
-    後で連絡先責任者権限を変更することができます。
-  convert_lead_text: |
-    %{value}というのリードを変換する際に、指定した連絡先に関連付けられた連絡先責任者になります。
-    リードステータスは自動的に「変換済み」に設定されます。
+  convert_lead_permissions_intro: "連絡先責任者の権限は、変換対象のリードからコピーされます。\n後で連絡先責任者権限を変更することができます。"
+  convert_lead_text: "%{value}というのリードを変換する際に、指定した連絡先に関連付けられた連絡先責任者になります。\nリードステータスは自動的に「変換済み」に設定されます。"
   create_lead: リードを作成
-  create_opp_for_contact: |
-    %{value}という連絡先責任者のための商談を任意に作成することも可能です。
-    そうするために、名前、現在のステージ、推定終了日、売却確率、取引金額、および提供された割引を指定してください。
+  create_opp_for_contact: "%{value}という連絡先責任者のための商談を任意に作成することも可能です。\nそうするために、名前、現在のステージ、推定終了日、売却確率、取引金額、および提供された割引を指定してください。"
   lead: リード
   lead_info_small: リード連絡先
-  lead_permissions_intro_private: |
-    デフォルトでは、権限設定はキャンペーンからコピーするか、「他人と共有しない」になります。
-    権限設定は後で変更することができます。
-  lead_permissions_intro_public: |
-    デフォルトでは、権限設定はキャンペーンからコピーするか、「全員と共有する」になります。
-    権限設定は後で変更することができます。
-  lead_permissions_intro_shared: |
-    デフォルトでは、権限設定はキャンペーンからコピーするか、指定されたユーザーがアクセスできるようになります。
-    権限設定は後で変更することができます。
+  lead_permissions_intro_private: "デフォルトでは、権限設定はキャンペーンからコピーするか、「他人と共有しない」になります。\n権限設定は後で変更することができます。"
+  lead_permissions_intro_public: "デフォルトでは、権限設定はキャンペーンからコピーするか、「全員と共有する」になります。\n権限設定は後で変更することができます。"
+  lead_permissions_intro_shared: "デフォルトでは、権限設定はキャンペーンからコピーするか、指定されたユーザーがアクセスできるようになります。\n権限設定は後で変更することができます。"
   lead_small: リード
   lead_status_small: リードステータス
   lead_summary: リード概要
@@ -462,13 +440,12 @@ ja:
   total_leads: リードの合計
   show_status_info_small: このリードのステータス情報を表示する。
   show_contact_info_small: このリードの連絡先情報を表示します。
-
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
   amount: 金額
   close_date: 終了日
   closes_on: 終了
-  closed_ago_on: ! '%{date}の%{time_ago}前に終了'
+  closed_ago_on: '%{date}の%{time_ago}前に終了'
   closes_today: 本日終了の見込み
   closing_date: 終了日は%{value}
   create_opportunity: 商談を作成
@@ -477,7 +454,7 @@ ja:
   days_left: 残りの日
   discount: 値引き
   discount_number: 値引き%{value}
-  expected_to_close: ! '%{date}の%{time}に終了の見込み'
+  expected_to_close: '%{date}の%{time}に終了の見込み'
   from: から
   no_closing_date: 予測終了日なし
   no_discount: 値引きなし
@@ -496,7 +473,6 @@ ja:
   stage: ステージ
   total_opportunities: 商談の合計
   weighted_amount: 加重額
-
   # Views -> Tasks.
   #----------------------------------------------------------------------------
   task: タスク
@@ -514,7 +490,7 @@ ja:
   due: 期日
   feel_free: どうぞお気軽に
   move_to: 移動する
-  no_tasks: ! '%{value}のタスクはありません'
+  no_tasks: '%{value}のタスクはありません'
   no_tasks_pending: 未完了
   no_tasks_assigned: 担当
   no_tasks_completed: 完了
@@ -523,28 +499,26 @@ ja:
   related: ! 're:'
   save_task: タスクを保存
   task_assigned: タスクは%{value}に割り当てられています
-  task_assigned_to: ! '%{value}に割り当てられています'
+  task_assigned_to: '%{value}に割り当てられています'
   task_completed: 完了
   task_uncomplete: 戻す
-  task_completed_ago: ! '%{value}前に完了'
-  task_completed_by: ! '%{user}によって%{time_ago}前に完了'
+  task_completed_ago: '%{value}前に完了'
+  task_completed_by: '%{user}によって%{time_ago}前に完了'
   task_created: タスクが作成されました
-  task_due_in: ! '%{value}に予定'
+  task_due_in: '%{value}に予定'
   task_due_later: 近いうちに予定
   task_due_now: 今すぐ
   task_due_today: 今日中
-  task_from: ! '%{value}～'
+  task_from: '%{value}～'
   task_overdue: 遅い、予定
   task_pending: タスクが未完了ステータスに移動しました
-  total_tasks: ! '%{value}の合計'
+  total_tasks: '%{value}の合計'
   view_assigned_tasks: 担当タスクを表示
   view_pending_tasks: 見完了タスクを表示
-
   # Views -> Team.
   #----------------------------------------------------------------------------
   unassigned_opportunities: 割り当てられていない商談
   no_opportunities_found: 現在、商談はありません
-
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_completed: 完了した
@@ -583,23 +557,22 @@ ja:
   no_opportunity_records: あなたの商談はありません。
   my_accounts: 取引先
   no_account_records: あなたの取引先はありません。
-  not_showing_hidden_entities: ! '%{count}つの隠れた%{entity}を表示していません。'
-
+  not_showing_hidden_entities: '%{count}つの隠れた%{entity}を表示していません。'
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: ノートを追加
   save_note: ノートを保存
   add_note_help: 新しいノートを追加...
   edit_note: ノートを編集
-  added_ago: ! '%{value}前に追加'
-  added_by: ! '%{user}により%{time_ago}前に追加'
+  added_ago: '%{value}前に追加'
+  added_by: '%{user}により%{time_ago}前に追加'
   back: 戻る
   cancel: キャンセル
   close_form: フォームを閉じる
   comment_intro: 後でコメントを追加できます。
   confirm_delete: この%{value}を削除しますか?
-  copy_permissions: ! '%{value}の権限をコピーする'
-  could_not_find: ! '%{value}がありません。どうぞお気軽に'
+  copy_permissions: '%{value}の権限をコピーする'
+  could_not_find: '%{value}がありません。どうぞお気軽に'
   could_not_find_matching: マッチする%{value}がありません。
   create_new: 新規作成してください -
   create_a_new: 新規作成
@@ -607,7 +580,7 @@ ja:
   delete: 削除
   discard: 破棄
   edit: 編集
-  items_total: 合計 %{count}
+  items_total: ! '合計 %{count}'
   less: 減らす...
   me: 自分
   more: もっと...
@@ -622,8 +595,8 @@ ja:
   select_contact: 取引先責任者を選択
   select_lead: リードを選択
   select_task: タスクを選択
-  select_opportunity:  商談を選択
-  search_assets: ! '%{value}を検索'
+  select_opportunity: 商談を選択
+  search_assets: '%{value}を検索'
   time_ago: ! '%{value}前'
   background_info: 背景
   address: 住所
@@ -638,7 +611,6 @@ ja:
   collapse_all: すべてを折り畳む
   expanded: 展開された
   collapsed: 折り畳まれた
-
   # Views -> Layout.
   #----------------------------------------------------------------------------
   about: About
@@ -649,23 +621,19 @@ ja:
   about_ffc_version: Fat Free CRM バージョン
   about_home_page: ホームページ
   about_project_page: プロジェクトページ
-  about_thank_you: |
-    Fat Free CRMをご利用いただきありがとうございます。
+  about_thank_you: Fat Free CRMをご利用いただきありがとうございます。
   about_twitter: Twitterでのコミットのお知らせ
   about_user_group: ユーザのためのディスカッショングループ
   admin: 管理画面
   logout: ログアウト
   quick_find: クイック検索
   welcome: ようこそ
-
   # Advanced search
   accounts_advanced_search: 取引先詳細検索
   advanced_search: 詳細検索
   basic_search: 基本検索
   search_results_count:
-    one: 検索結果 %{count} 件
-    other: 検索結果 %{count} 件
-
+    other: Search found %{count} results.
   # Views -> Comments.
   #----------------------------------------------------------------------------
   comment: コメント
@@ -677,23 +645,18 @@ ja:
   subscribe_via_email: メールで登録
   disable_email_subscriptions: Eメールの購読を無効にする
   added_note: メモを追加しました「%{value}」
-
   # Views -> Emails.
   #----------------------------------------------------------------------------
-
   # Views -> Passwords.
   #----------------------------------------------------------------------------
   confirm_password_intro: 新しいパスワードを入力して確認してください。
-  password_intro: |
-    パスワードの再設定方法を送るために、Eメールアドレスを指定してください。
+  password_intro: パスワードの再設定方法を送るために、Eメールアドレスを指定してください。
   reset_password: パスワードの再設定
   update_password_and_login: パスワードとログインの更新
-
   # Views -> Admin
   #----------------------------------------------------------------------------
   back_to_crm: Fat Free CRMに戻る
   crm_admin_page: Fat Free CRM管理
-
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
   create_group: グループ作成
@@ -702,12 +665,9 @@ ja:
   groups: グループ
   groups_small: グループ
   group_small: グループ
-
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
-  confirm_group_delete: |
-    このグループを本当に削除しますか？
-    関連している項目は%{count}件がまだ残っています。
+  confirm_group_delete: "このグループを本当に削除しますか？\n関連している項目は%{count}件がまだ残っています。"
   approve: 確定
   create_user: ユーザを作成
   last_logged_in: 最終ログイン時刻 %{value}
@@ -723,13 +683,12 @@ ja:
   user_is_admin: このユーザは管理者
   user_never_logged_in: はまだログインしたことありません。
   user_signed_up: 登録しました
-  user_signed_up_on: ! '%{value}に登録しました'
-  user_since: ! '%{value}からのユーザ'
-  user_suspended: ! '一時停止中しました'
-  user_suspended_on: ! '%{value}に一時停止中しました'
+  user_signed_up_on: '%{value}に登録しました'
+  user_since: '%{value}からのユーザ'
+  user_suspended: 一時停止中しました
+  user_suspended_on: '%{value}に一時停止中しました'
   users: ユーザ
   users_small: ユーザ
-
   # Views -> Versions
   #----------------------------------------------------------------------------
   versions: 操作履歴
@@ -746,7 +705,6 @@ ja:
   user_id: ユーザーID
   created_at: 作成日
   updated_at: 更新日
-
   # Export.
   #----------------------------------------------------------------------------
   to_xls: Excelにエクスポート
@@ -754,7 +712,6 @@ ja:
   to_rss: RSSフィード
   to_atom: Atomフィード
   to_perm: パーマリンク
-
   # Dropbox.
   #----------------------------------------------------------------------------
   dropbox_notification_subject: Dropbox - Eメールを追加 - %{subject}
@@ -762,14 +719,11 @@ ja:
   dropbox_notification_to: 受信者
   subject: 件名
   body: 本文
-
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
     intro: ! '%{user_full_name}が%{entity_type}: %{entity_name}にコメントしました'
-    reply_instructions: |
-      このメールに直接返信して新しいコメントを追加するか、オンラインで%{entity}を見てください。
-
+    reply_instructions: このメールに直接返信して新しいコメントを追加するか、オンラインで%{entity}を見てください。
   # Lists
   #----------------------------------------------------------------------------
   global_lists: 全体のリスト
@@ -777,19 +731,22 @@ ja:
   list: リスト
   no_saved_lists: 保存されたリストはありません。
   make_current_view_list: 現在のビューからリストを作る
-  list_name_info: |
-    既存のリストの名前を使用する場合は、そのリストを現在の設定で上書きします。
-
+  list_name_info: 既存のリストの名前を使用する場合は、そのリストを現在の設定で上書きします。
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
-    comment: '%{count}件のコメント'
-    contact: '%{count}件の取引先責任者'
-    opportunity: '%{count}件の商談'
-    lead: '%{count}件のリード'
-    day: '%{count}日'
-    login: '%{count}件のログイン'
-
+    comment:
+      other: ! '%{count} comments'
+    contact:
+      other: ! '%{count} contacts'
+    opportunity:
+      other: ! '%{count} opportunities'
+    lead:
+      other: ! '%{count} leads'
+    day:
+      other: ! '%{count} days'
+    login:
+      other: ! '%{count} logins'
   # Custom date/time formats.
   #----------------------------------------------------------------------------
   date:
@@ -801,25 +758,16 @@ ja:
     formats:
       mmddhhss: ! '%b %e at %l:%M%p'
       mmddyyyy_hhmm: ! '%m/%d/%Y %l:%M %p'
-
-  # will_paginate translations
+  # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------
   will_paginate:
-    next_label: "次へ &#8594;"
+    previous_label: ! '&#8592; 前へ'
+    next_label: '次へ &#8594;'
+    page_gap: ! '&hellip;'
     page_entries_info:
-      multi_page: "%{from}番目から%{to}番目までの%{model}を表示しています（全%{count}件中）"
-      multi_page_html: "<b>%{from}</b>番目から<b>%{to}</b>番目までの%{model}を表示しています（全<b>%{count}</b>件中）"
       single_page:
-        one: 1件の%{model}を表示しています
-        other: "%{count}件の%{model}をすべて表示しています"
-        zero: "%{model}が見つかりません"
-      single_page_html:
-        one: "<b>1</b>件の%{model}を表示しています"
-        other: "<b>%{count}</b>件の%{model}をすべて表示しています"
-        zero: "%{model}が見つかりません"
-    page_gap: "&hellip;"
-    previous_label: "&#8592; 前へ"
-
+        other: Displaying all %{count} %{plural}
+      multi_page: '%{from}番目から%{to}番目までの%{model}を表示しています（全%{count}件中）'
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
   label: ラベル
@@ -836,38 +784,31 @@ ja:
   restrict_by_tag_info: (以下のタグが付いた%{assets}のフィールドのみを表示)
   field_group_tag_restriction: このフィールドグループは、「%{tag}」でタグ付けされた%{assets}に適用されます
   field_group_unrestricted: このフィールドグループはすべての%{assets}に適用されます
-  field_group_confirm_delete: |
-    フィールドグループが削除されると、すべてのフィールドがデフォルトのフィールドグループに移動されます。
+  field_group_confirm_delete: フィールドグループが削除されると、すべてのフィールドがデフォルトのフィールドグループに移動されます。
   msg_cant_delete_field_group: フィールドグループを削除できませんでした。
-  admin_fields_info: |
-    カスタムフィールドはグループ単位で表示されます。
-    新しいフィールドグループを作成して、又は以下のグループのいずれかにフィールドを追加することも可能です。
-    フィールドをドラッグアンドドロップすると、表示順序を変更したり、フィールドグループ間で移動することができます。
-
+  admin_fields_info: ! "カスタムフィールドはグループ単位で表示されます。\n新しいフィールドグループを作成して、又は以下のグループのいずれかにフィールドを追加することも可能です。\nフィールドをドラッグアンドドロップすると、表示順序を変更したり、フィールドグループ間で移動することができます。"
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: |
-    カスタムフィールドの追加または削除後に、サーバーを再起動してください。
+  admin_fields_info2: ! 'カスタムフィールドの追加または削除後に、サーバーを再起動してください。'
   tags: タグ
   tag_small: タグ
   tagged: タグ付き
   create_tag: タグを作成
   save_tag: タグを保存
   field_group_tags: このタグに表示されるフィールドグループ
-
+  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
+  ai_prompt_link: "Design Help"
+  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: |
-    このタグが削除されると、%{value}件の項目から削除されます。
-  msg_cant_delete_tag: |
-    フィールドグループに関連付けられているため、「%{value}」削除できませんでした。
+  tag_with_taggings_confirm_delete: このタグが削除されると、%{value}件の項目から削除されます。
+  msg_cant_delete_tag: フィールドグループに関連付けられているため、「%{value}」削除できませんでした。
   views:
     admin:
       plugins:
         author: 著者
         version: バージョン
         description: 概要
-
   # Simple Form translations
   #----------------------------------------------------------------------------
   simple_form:
@@ -876,12 +817,11 @@ ja:
     required:
       text: 必須
       mark: ! '*'
-      # You can uncomment the line below if you need to overwrite the whole required html.
-      # When using html, text and mark won't be used.
-      # html: '<abbr title="required">*</abbr>'
+    # You can uncomment the line below if you need to overwrite the whole required html.
+    # When using html, text and mark won't be used.
+    # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: ! 'エラーが発生しました：'
-
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
@@ -922,6 +862,6 @@ ja:
   pair:
     start: 開始
     end: 終了
-    from_to: ! '%{from}～%{to}'
-    from_only: ! '%{from}～'
-    to_only: ～%{to}
+    from_to: '%{from}～%{to}'
+    from_only: '%{from}～'
+    to_only: '～%{to}'
