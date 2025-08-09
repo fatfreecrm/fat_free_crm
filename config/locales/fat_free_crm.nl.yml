@@ -29,12 +29,12 @@ nl-NL:
   admin_tab_tags: Tags
   admin_tab_settings: Instellingen
   admin_tab_plugins: Plugins
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
+  ai_prompts: Beschrijf uw bedrijf
+  ai_prompts_description: Beschrijf uw bedrijf, de producten of diensten die u aanbiedt en uw doelpubliek. Dit zal ons helpen om de CRM aan uw behoeften aan te passen en te handelen als systeem vraagt voor overal waar AI wordt gebruikt.
+  about_my_business: Over mijn bedrijf
+  about_my_business_placeholder: bijvoorbeeld Pty Ltd is een klein bedrijf dat zich specialiseert in het bieden van hoogwaardige softwareoplossingen aan kleine en middelgrote ondernemingen. We richten ons op de gezondheidszorgindustrie en verkopen ons vlaggenschipproduct, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: Hoe ik plan om Fat Free CRM te gebruiken
+  how_i_plan_to_use_ffcrm_placeholder: een klein verkoopteam van 5 mensen zal gebruik maken van Fat Free CRM. We zullen Mailchimp, Google Ads, Zapier en Slack. We willen de leidinggevende functies filteren en categoriseren op specifieke gebieden waarin ze geïnteresseerd zijn in de gezondheidszorg.
   affiliate: Filiaal
   competitor: Concurrent
   customer: Klant
@@ -209,7 +209,7 @@ nl-NL:
   msg_require_admin: U moet een administrator zijn om deze pagina te bekijken.
   msg_successful_signup: Aanmelding succesvol, welkom bij Fat Free CRM!
   msg_welcome: Welkom bij Fat Free CRM!
-  msg_user_updated: Profile updated successfully.
+  msg_user_updated: Profiel succesvol bijgewerkt.
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: gewogen aantal
@@ -250,8 +250,8 @@ nl-NL:
   campaigns_index_normal: Normaal formaat
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "Abonneren op reacties via e-mail"
+  receive_assigned_notifications: "Ontvang toegekende meldingen per e-mail"
   aim: AOL IM
   already_signed_up: Bent u al aangemeld?
   alt_email: Alternatief email adres
@@ -277,7 +277,7 @@ nl-NL:
   phone: Telefoon
   profile: Profiel
   profile_language: Taal
-  email_notifications: Email Notifications
+  email_notifications: E-mail notificaties
   save_profile: Sla profiel op
   sign_up: Registreer
   sign_up_button: Registreer
@@ -804,9 +804,9 @@ nl-NL:
   create_tag: Maak Tag
   save_tag: Save Tag
   field_group_tags: Veld groepen getoond voor deze tag
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  ai_prompt_tags: Genereer tags voor potentiële leidingen, accounts of campagnes, gericht op specialisatiegebieden in de industrie
+  ai_prompt_link: "Ontwerp hulp"
+  ai_prompt_link_tooltip: "OpenAI chat met prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: Àls u deze tag verwijderd, zal deze verwijderd worden uit %{value} records.
