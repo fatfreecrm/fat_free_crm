@@ -1,0 +1,3 @@
+files:
+  - source: config/locales/
+    translation: config/locales/
