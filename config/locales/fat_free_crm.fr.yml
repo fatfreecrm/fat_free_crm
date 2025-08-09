@@ -29,12 +29,12 @@ fr-FR:
   admin_tab_tags: Tags
   admin_tab_settings: Paramètres
   admin_tab_plugins: Plugins
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
+  ai_prompts: Décrivez votre entreprise
+  ai_prompts_description: Décrivez votre entreprise, les produits ou services que vous offrez et votre public cible. Cela nous aidera à adapter le CRM à vos besoins, et agira comme une invite de système pour n'importe où AI est utilisée.
+  about_my_business: À propos de mon entreprise
+  about_my_business_placeholder: Example Pty Ltd est une entreprise de taille moyenne qui se spécialise dans la fourniture de solutions logicielles de haute qualité aux petites et moyennes entreprises. Nous nous concentrons sur l'industrie de la santé et vendons notre produit phare, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: Comment je prévois d'utiliser Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: C'est à dire une petite équipe de vente de 5 personnes utilisera Fat Free CRM. Nous utiliserons Mailchimp, Google Ads, Zapier et Slack. Nous voulons filtrer et catégoriser les pistes par des domaines spécifiques qui les intéressent dans les soins de santé.
   affiliate: Affilié
   competitor: Compétiteur
   customer: Client
@@ -209,7 +209,7 @@ fr-FR:
   msg_require_admin: Vous devez être administrateur pour accéder a cette page
   msg_successful_signup: Enregistrement réussi. Bienvenu dans Fat Free CRM
   msg_welcome: Bienvenue dans Fat Free CRM
-  msg_user_updated: Profile updated successfully.
+  msg_user_updated: Profil mis à jour avec succès.
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: Montant pondéré
@@ -250,8 +250,8 @@ fr-FR:
   campaigns_index_normal: Format normal
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "S'abonner aux réponses aux commentaires par e-mail"
+  receive_assigned_notifications: "Recevoir les notifications assignées par e-mail"
   aim: AOL IM
   already_signed_up: Déjà inscrit?
   alt_email: e-mail secondaire
@@ -277,7 +277,7 @@ fr-FR:
   phone: Téléphone
   profile: Profil
   profile_language: Langue
-  email_notifications: Email Notifications
+  email_notifications: Notifications par e-mail
   save_profile: Enregistrer le profil
   sign_up: Créer un compte
   sign_up_button: S'inscrire
@@ -381,7 +381,7 @@ fr-FR:
   contacts: Contacts
   contacts_options: Options des contacts
   contacts_small: contacts
-  contact_summary: Contact Summary
+  contact_summary: Résumé du contact
   create_contact: Créer un Contact
   department: Département
   department_small: ! 'département %{value} '
@@ -444,7 +444,7 @@ fr-FR:
   #----------------------------------------------------------------------------
   amount: Montant
   close_date: Date de clôture
-  closes_on: Closes on
+  closes_on: Ferme le
   closed_ago_on: clôturé il y a %{time_ago} le %{date}
   closes_today: doit être clôturé aujourd'hui!
   closing_date: la date de clôture est %{value}
@@ -522,30 +522,30 @@ fr-FR:
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_completed: a complété le/la
-  action_create: created
-  action_destroy: deleted
+  action_create: créé
+  action_destroy: Supprimé
   action_reassigned: a réassigné le/la
   action_rejected: a rejeté le/la
   action_rescheduled: a re-planifié le/la
-  action_update: updated
-  action_view: viewed
+  action_update: Mis à jour
+  action_view: consulté
   action_won: a gagné une
   activities: Activités
   no_activity_records: Aucune activité trouvée.
   recent_activity: Activité récente
   recent_activity_options: Options des activités récentes
   subject_account: compte
-  subject_address: address on
+  subject_address: adresse sur
   subject_campaign: campagne
-  subject_comment: comment on
+  subject_comment: commentaire sur
   subject_contact: contact
-  subject_email: email on
+  subject_email: email sur
   subject_lead: piste
   subject_opportunity: opportunité
   subject_task: tâche
   subject_user: utilisateur
   tag_list: Tags
-  create_past_participle: Record Creations
+  create_past_participle: Créations d'enregistrements
   view_past_participle: Consultations
   update_past_participle: Modifications
   destroy_past_participle: Supressions
@@ -569,7 +569,7 @@ fr-FR:
   back: Retour
   cancel: Annuler
   close_form: Fermer le formulaire
-  comment_intro: You can add comments later.
+  comment_intro: Vous pouvez ajouter des commentaires plus tard.
   confirm_delete: 'Êtes-vous certain de vouloir supprimer ceci : %{value}?'
   copy_permissions: Copier les permissions de %{value}
   could_not_find: Aucun(e) %{value} n'a été trouvé(e). N'hésitez pas à 
@@ -673,7 +673,7 @@ fr-FR:
   create_user: Créer un utilisateur
   last_logged_in: last logged in %{value}
   personal_information: Informations complémentaires
-  group_memberships: Group Memberships
+  group_memberships: Adhésions de groupe
   reactivate: Réactiver
   save_user: Enregistrer l'utilisateur
   suspend: Suspendre
@@ -697,7 +697,7 @@ fr-FR:
     create: ! 'Créé par %{by} il y a %{item}.'
     update: ! 'Modifié par %{by} il y a %{item}.'
     destroy: ! 'Détruit par %{by} il y a %{item}.'
-    set_html: ! '%{attr} set to %{to}'
+    set_html: ! '%{attr} réglé sur %{to}'
     unset_html: ! '%{attr} unset'
     change_html: ! '%{attr} changed from %{from} to %{to}'
     anonymous: anonyme
@@ -804,9 +804,9 @@ fr-FR:
   create_tag: Créer un tag
   save_tag: Enregistrer le tag
   field_group_tags: Sections visibles pour ce tag
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  ai_prompt_tags: Générer des tags pour les prospects, comptes ou campagnes potentiels, axés sur les domaines de spécialisation de l'industrie
+  ai_prompt_link: "Aide à la conception"
+  ai_prompt_link_tooltip: "Chat OpenAI avec invite"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: En supprimant ce tag, il sera supprimé de %{value} enregistrements.
