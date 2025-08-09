@@ -29,12 +29,12 @@ es-ES:
   admin_tab_tags: Etiquetas
   admin_tab_settings: Configuraciones
   admin_tab_plugins: Plugins
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
+  ai_prompts: Describe tu negocio
+  ai_prompts_description: Describa su negocio, los productos o servicios que ofrece, y su público objetivo. Esto nos ayudará a adaptar el CRM a sus necesidades, y a actuar como sugerencias de sistema para cualquier lugar donde se utilice IA.
+  about_my_business: Acerca de mi negocio
+  about_my_business_placeholder: ie Ejemplo Pty Ltd es una empresa de tamaño medio que se especializa en proporcionar soluciones de software de alta calidad a pequeñas y medianas empresas. Nos centramos en la industria sanitaria, y vendemos nuestro producto de bandera, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: Cómo planeo usar Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: Es decir, Un pequeño equipo de ventas de 5 personas usará el CRM Gratis Gratis. Utilizaremos Mailőp, Google Ads, Zapier y Slack. Queremos filtrar y clasificar los clientes potenciales por áreas específicas en las que estén interesados dentro de la asistencia sanitaria.
   affiliate: Afiliado
   competitor: Competidor
   customer: Cliente
@@ -209,7 +209,7 @@ es-ES:
   msg_require_admin: Debes ser un administrador para acceder a esta página.
   msg_successful_signup: Se ha dado de alta satisfactoriamente. ¡Bienvenido a Fat Free CRM!
   msg_welcome: '¡Bienvenido a Fat Free CRM!'
-  msg_user_updated: Profile updated successfully.
+  msg_user_updated: Perfil actualizado correctamente.
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: cantidad ponderada
@@ -250,8 +250,8 @@ es-ES:
   campaigns_index_normal: Formato normal
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "Suscribirse a las respuestas de comentarios por correo electrónico"
+  receive_assigned_notifications: "Recibir notificaciones asignadas por correo electrónico"
   aim: AOL IM
   already_signed_up: '¿Ya estás dado de alta?'
   alt_email: Email alternativo
@@ -277,7 +277,7 @@ es-ES:
   phone: Teléfono
   profile: Perfil
   profile_language: Idioma
-  email_notifications: Email Notifications
+  email_notifications: Notificaciones por email
   save_profile: Guardar Perfil
   sign_up: Darse de Alta
   sign_up_button: Date de Alta
@@ -804,9 +804,9 @@ es-ES:
   create_tag: Crear Etiqueta
   save_tag: Guardar Etiqueta
   field_group_tags: Grupos de campos mostrados para esta Etiqueta
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  ai_prompt_tags: Generar etiquetas para potenciales clientes potenciales, cuentas o campañas, centradas en las áreas de especialización de la industria
+  ai_prompt_link: "Ayuda de diseño"
+  ai_prompt_link_tooltip: "Chat OpenAI con prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: Si esta etiqueta se borra, se borraran todos los registros de %{value}
