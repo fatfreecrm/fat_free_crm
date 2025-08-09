@@ -1,99 +1,99 @@
 ---
 sv-SE:
-  language: English
+  language: Engelska
   # Generic terms.
   #----------------------------------------------------------------------------
   id: Id
-  all: All
-  at: at
-  here: here
-  no_button: 'No'
-  not_implemented: Not implemented yet.
-  or: or
-  select_none: '-- None --'
-  select_blank: '-- Select --'
-  yes_button: 'Yes'
+  all: Alla
+  at: vid
+  here: här
+  no_button: 'Nej'
+  not_implemented: Inte implementerat ännu.
+  or: eller
+  select_none: '-- Ingen --'
+  select_blank: '-- Välj --'
+  yes_button: 'Ja'
   # Settings.
   #----------------------------------------------------------------------------
-  tab_dashboard: Dashboard
-  tab_tasks: Tasks
-  tab_campaigns: Campaigns
+  tab_dashboard: Instrumentpanel
+  tab_tasks: Uppgifter
+  tab_campaigns: Kampanjer
   tab_leads: Leads
-  tab_accounts: Accounts
-  tab_contacts: Contacts
-  tab_opportunities: Opportunities
-  tab_team: Team
-  admin_tab_groups: Groups
-  admin_tab_users: Users
-  admin_tab_fields: Custom Fields
-  admin_tab_tags: Tags
-  admin_tab_settings: Settings
-  admin_tab_plugins: Plugins
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
+  tab_accounts: Konton
+  tab_contacts: Kontakter
+  tab_opportunities: Möjligheter
+  tab_team: Lag
+  admin_tab_groups: Grupper
+  admin_tab_users: Användare
+  admin_tab_fields: Anpassade fält
+  admin_tab_tags: Taggar
+  admin_tab_settings: Inställningar
+  admin_tab_plugins: Tillägg
+  ai_prompts: Beskriv ditt företag
+  ai_prompts_description: Beskriv ditt företag, de produkter eller tjänster du erbjuder och din målgrupp. Detta kommer att hjälpa oss att skräddarsy CRM efter dina behov, och fungera som en uppmaning för var som helst AI används.
+  about_my_business: Om mitt företag
+  about_my_business_placeholder: Det vill säga Pty Ltd är ett mellanstort företag som specialiserat sig på att tillhandahålla högkvalitativa mjukvarulösningar till små och medelstora företag. Vi fokuserar på sjukvården och säljer vår flaggskeppsprodukt, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: Hur jag planerar att använda Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: dvs ett litet säljteam på 5 personer kommer att använda Fat Free CRM. Vi kommer att använda Mailchimp, Google Ads, Zapier, och Slack. Vi vill filtrera och kategorisera leder efter specifika områden som de är intresserade av inom hälso- och sjukvården.
   affiliate: Affiliate
-  competitor: Competitor
-  customer: Customer
+  competitor: Konkurrent
+  customer: Kund
   partner: Partner
-  reseller: Reseller
-  vendor: Vendor
-  planned: Planned
-  started: Started
-  on_hold: On Hold
-  completed: Completed
-  called_off: Called Off
-  new: New
-  contacted: Contacted
-  converted: Converted
-  rejected: Rejected
-  cold_call: Cold Call
-  conference: Conference
-  online: Online Marketing
-  referral: Referral
-  self: Self Generated
-  web: Website
+  reseller: Återförsäljare
+  vendor: Leverantör
+  planned: Planerat
+  started: Startad
+  on_hold: På håll
+  completed: Slutförd
+  called_off: Ringdes av
+  new: Ny
+  contacted: Kontaktad
+  converted: Konverterad
+  rejected: Avvisad
+  cold_call: Kallt samtal
+  conference: Konferens
+  online: Marknadsföring online
+  referral: Hänvisning
+  self: Själv genererad
+  web: Webbplats
   word_of_mouth: Word of Mouth
-  other: Other
-  prospecting: Prospecting
-  analysis: Analysis
+  other: Annat
+  prospecting: Prospektering
+  analysis: Analys
   presentation: Presentation
-  proposal: Proposal
-  negotiation: Negotiation
-  final_review: Final Review
-  won: Closed/Won
-  lost: Closed/Lost
-  call: Call
-  email: Email
-  follow_up: Follow-up
+  proposal: Förslag
+  negotiation: Förhandlingar
+  final_review: Slutlig granskning
+  won: Stängd/Vann
+  lost: Stängd/förlorade
+  call: Ring
+  email: E-post
+  follow_up: Uppföljning
   lunch: Lunch
-  meeting: Meeting
-  money: Money
-  trip: Trip
-  overdue: Overdue
-  due_asap: As Soon As Possible
-  due_today: Today
-  due_tomorrow: Tomorrow
-  due_this_week: This Week
-  due_next_week: Next Week
-  due_later: Sometime Later
-  due_specific_date: On Specific Date...
-  completed_today: Today
-  completed_yesterday: Yesterday
-  completed_last_week: Last week
-  completed_this_month: This month
-  completed_last_month: Last month
+  meeting: Möte
+  money: Pengar
+  trip: Resa
+  overdue: Förfallen
+  due_asap: Så snart som möjligt
+  due_today: Idag
+  due_tomorrow: Imorgon
+  due_this_week: Denna vecka
+  due_next_week: Nästa vecka
+  due_later: Någon gång senare
+  due_specific_date: På specifika datum...
+  completed_today: Idag
+  completed_yesterday: Igår
+  completed_last_week: Förra veckan
+  completed_this_month: Denna månad
+  completed_last_month: Förra månaden
   # Models/Activity.
   #----------------------------------------------------------------------------
-  one_hour: One Hour
-  one_day: One Day
-  two_days: Two Days
-  one_week: One Week
-  two_weeks: Two Weeks
-  one_month: One Month
+  one_hour: En timme
+  one_day: En dag
+  two_days: Två dagar
+  one_week: En vecka
+  two_weeks: Två veckor
+  one_month: En månad
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
@@ -102,75 +102,75 @@ sv-SE:
         authentication:
           attributes:
             login_field:
-              is_not_valid: is not valid
+              is_not_valid: är inte giltig
             password_field:
-              is_not_valid: is not valid
+              is_not_valid: är inte giltig
         account:
           attributes:
             name:
-              missing_account_name: '^Please specify account name.'
+              missing_account_name: '^Vänligen ange kontonamn.'
             access:
-              share_account: '^Please specify users with whom to share the account.'
+              share_account: Ange användare som du vill dela kontot med.
         campaign:
           attributes:
             name:
-              missing_campaign_name: '^Please specify campaign name.'
+              missing_campaign_name: '^Vänligen ange kampanjnamn.'
             ends_on:
-              dates_not_in_sequence: '^Please make sure the campaign end date is after the start date.'
+              dates_not_in_sequence: '^Se till att kampanjens slutdatum är efter startdatumet.'
             access:
-              share_campaign: '^Please specify users with whom to share the campaign.'
+              share_campaign: Ange användare som du vill dela kampanjen med.
         contact:
           attributes:
             first_name:
-              missing_first_name: '^Please specify first name.'
+              missing_first_name: '^Vänligen ange förnamn.'
             last_name:
-              missing_last_name: '^Please specify last name.'
+              missing_last_name: '^Vänligen ange efternamn.'
             access:
-              share_contact: '^Please specify users with whom to share the contact.'
+              share_contact: Ange användare som du vill dela kontakten med.
         lead:
           attributes:
             first_name:
-              missing_first_name: '^Please specify first name.'
+              missing_first_name: '^Vänligen ange förnamn.'
             last_name:
-              missing_last_name: '^Please specify last name.'
+              missing_last_name: '^Vänligen ange efternamn.'
             access:
-              share_lead: '^Please specify users with whom to share the lead.'
+              share_lead: Ange användare med vilka du ska dela ledningen.
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: '^Please specify opportunity name.'
+              missing_opportunity_name: '^Vänligen ange tillfällets namn.'
             access:
-              share_opportunity: '^Please specify users with whom to share the opportunity.'
+              share_opportunity: Ange användare som du kan dela möjligheten med.
         task:
           attributes:
             name:
-              missing_task_name: '^Please specify task name.'
+              missing_task_name: '^Vänligen ange uppgiftsnamn.'
             calendar:
-              invalid_date: '^Please specify valid date.'
+              invalid_date: '^Ange giltigt datum.'
         user:
           attributes:
             username:
-              missing_username: '^Please specify username.'
-              username_taken: '^This username is already taken.'
+              missing_username: '^Vänligen ange användarnamn.'
+              username_taken: '^Detta användarnamn är redan taget.'
             email:
-              missing_email: '^Please specify email address.'
-              email_in_use: '^There is another user with the same email.'
+              missing_email: '^Ange e-postadress.'
+              email_in_use: '^Det finns en annan användare med samma e-post.'
         custom_field:
-          required: '^%{field} is required.'
-          minlength: '^%{field} is too short.'
-          maxlength: '^%{field} is too long.'
-          endbeforestart: '^%{field} cannot end before it begins.'
+          required: '^%{field} krävs.'
+          minlength: '^%{field} är för kort.'
+          maxlength: '^%{field} är för lång.'
+          endbeforestart: '^%{field} kan inte avslutas innan det börjar.'
     attribute_options:
       opportunity:
         stage:
-          prospecting: Prospecting
-          analysis: Analysis
+          prospecting: Prospektering
+          analysis: Analys
           presentation: Presentation
-          proposal: Proposal
-          negotiation: Negotiation
-          final_review: Final Review
-          won: Closed/Won
-          lost: Closed/Lost
+          proposal: Förslag
+          negotiation: Förhandlingar
+          final_review: Slutlig granskning
+          won: Stängd/Vann
+          lost: Stängd/förlorade
       account:
         rating:
           "0": "-"
@@ -179,581 +179,581 @@ sv-SE:
           "3": "★★★"
           "4": "★★★★"
           "5": "★★★★★"
-  msg_account_suspended: User account has been suspended.
-  password_reset_instruction: password reset instructions
+  msg_account_suspended: Användarkonto har stängts av.
+  password_reset_instruction: instruktioner för återställning av lösenord
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: Your account has been created and is awaiting approval by the system administrator.
-  msg_account_not_approved: Your account has not been approved yet.
-  msg_asset_deleted: ! '%{value} has been deleted.'
-  msg_asset_not_available: This %{value} is no longer available.
-  msg_not_authorized: You are not authorized to take this action.
-  msg_assets_not_available: The %{value} are not available.
-  msg_asset_rejected: ! '%{value} has been rejected.'
-  msg_bad_image_file: '^Could''t upload or resize the image file you specified.'
-  msg_cant_create_related: Can't create the %{asset} since the %{related} is no longer available.
-  msg_cant_delete_user: '^Couldn''t delete the user since %{value} has related assets present.'
-  msg_cant_do: Can't %{action} the %{asset} since it's no longer available.
-  msg_email_not_found: No user was found with that email address.
-  msg_enter_new_password: Please enter your new password.
-  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
+  msg_account_created: Ditt konto har skapats och väntar på godkännande av systemadministratören.
+  msg_account_not_approved: Ditt konto har inte godkänts ännu.
+  msg_asset_deleted: ! '%{value} har tagits bort.'
+  msg_asset_not_available: Denna %{value} är inte längre tillgänglig.
+  msg_not_authorized: Du har inte behörighet att vidta denna åtgärd.
+  msg_assets_not_available: '%{value} är inte tillgängliga.'
+  msg_asset_rejected: ! '%{value} har avvisats.'
+  msg_bad_image_file: Kan inte ladda upp eller ändra storlek på bildfilen du angav.
+  msg_cant_create_related: Kan inte skapa %{asset} eftersom %{related} inte längre är tillgänglig.
+  msg_cant_delete_user: '^Kunde inte ta bort användaren eftersom %{value} har relaterade tillgångar närvarande.'
+  msg_cant_do: Kan inte %{action} %{asset} eftersom den inte längre är tillgänglig.
+  msg_email_not_found: Ingen användare hittades med den e-postadressen.
+  msg_enter_new_password: Ange ditt nya lösenord.
+  msg_goodbye: Du har loggats ut. Tack för att du använder Fat Free CRM!
   msg_invalid_password: '^Please specify valid current password'
-  msg_invalig_login: Invalid username or password.
-  msg_last_login: Your last login was on %{value}.
-  msg_login_needed: You must be logged in to access this page.
-  msg_logout_needed: You must be logged out to access this page.
-  msg_password_changed: Your password has been changed.
-  msg_password_not_changed: Your password has not been changed.
-  msg_password_updated: Password was successfully updated.
-  msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
-  msg_require_admin: You must be Administrator to access this page.
-  msg_successful_signup: Successful signup, welcome to Fat Free CRM!
-  msg_welcome: Welcome to Fat Free CRM!
-  msg_user_updated: Profile updated successfully.
+  msg_invalig_login: Ogiltigt användarnamn eller lösenord.
+  msg_last_login: Din senaste inloggning var på %{value}.
+  msg_login_needed: Du måste vara inloggad för att komma åt denna sida.
+  msg_logout_needed: Du måste vara inloggad för att komma åt denna sida.
+  msg_password_changed: Ditt lösenord har ändrats.
+  msg_password_not_changed: Ditt lösenord har inte ändrats.
+  msg_password_updated: Lösenordet har uppdaterats.
+  msg_pwd_instructions_sent: Instruktioner för att återställa ditt lösenord har skickats till dig. Kontrollera din e-post.
+  msg_require_admin: Du måste vara administratör för att komma åt denna sida.
+  msg_successful_signup: Lyckad registrering, välkommen till Fat Free CRM!
+  msg_welcome: Välkommen till Fat Free CRM!
+  msg_user_updated: Profilen har uppdaterats.
   # Options.
   #----------------------------------------------------------------------------
-  option_amount*probability: weighted amount
-  activity_options: Show %{models} %{action_type} performed by %{user} in the past %{period}.
-  all_users: all users
-  option_after: after
-  option_all: all
-  option_all_users: All Users
-  option_amount: amount
-  option_before: before
-  option_brief: brief
-  option_closes_on: close date
-  option_company: company
-  option_created_at: date created
-  option_ends_on: end date
-  option_first_name: first name
-  option_last_name: last name
-  option_leads_count: actual leads
-  option_long: long
-  option_name: name
-  option_probability: probability
-  option_rating: rating
-  option_revenue: actual revenue
-  option_starts_on: start date
-  option_target_leads: target leads
-  option_target_revenue: target revenue
-  option_updated_at: date updated
-  show_per_page: Show %{number} %{models} per page using %{fmt} format.
-  sort_by: Sort by %{field}
-  sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
-  entities_per_page: ! '%{entity} per page:'
-  contacts_index_long: Long format
-  contacts_index_brief: Brief format
-  contacts_index_full: Full format
-  opportunities_index_normal: Normal format
-  accounts_index_normal: Normal format
-  leads_index_normal: Normal format
-  campaigns_index_normal: Normal format
+  option_amount*probability: Viktat belopp
+  activity_options: Visa %{models} %{action_type} utfört av %{user} tidigare %{period}.
+  all_users: alla användare
+  option_after: efter
+  option_all: alla
+  option_all_users: Alla användare
+  option_amount: belopp
+  option_before: före
+  option_brief: kort
+  option_closes_on: stängningsdatum
+  option_company: företag
+  option_created_at: Skapad datum
+  option_ends_on: slutdatum
+  option_first_name: förnamn
+  option_last_name: efternamn
+  option_leads_count: faktiska leder
+  option_long: lång
+  option_name: namn
+  option_probability: sannolikhet
+  option_rating: betyg
+  option_revenue: faktiska intäkter
+  option_starts_on: startdatum
+  option_target_leads: mål leder
+  option_target_revenue: mål intäkter
+  option_updated_at: datum uppdaterat
+  show_per_page: Visa %{number} %{models} per sida med %{fmt} -format.
+  sort_by: Sortera efter %{field}
+  sort_by_displaying: Sortera %{models} efter %{field} visar förnamn %{position} efternamn.
+  entities_per_page: ! '%{entity} per sida:'
+  contacts_index_long: Lång format
+  contacts_index_brief: Kort format
+  contacts_index_full: Fullt format
+  opportunities_index_normal: Normalt format
+  accounts_index_normal: Normalt format
+  leads_index_normal: Normalt format
+  campaigns_index_normal: Normalt format
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "Prenumerera på kommentarsvar via e-post"
+  receive_assigned_notifications: "Ta emot tilldelade aviseringar via e-post"
   aim: AOL IM
-  already_signed_up: Already signed up?
-  alt_email: Alternative email
-  avatar: Avatar
-  change_password: Change Password
-  company: Company
-  contact_info: Contact Information
-  current_password: Current password
-  edit_profile: Edit Profile
-  first_name: First name
+  already_signed_up: Redan registrerad?
+  alt_email: Alternativ e-post
+  avatar: Profilbild
+  change_password: Ändra lösenord
+  company: Företag
+  contact_info: Kontaktinformation
+  current_password: Nuvarande lösenord
+  edit_profile: Redigera profil
+  first_name: Förnamn
   google: Google IM
-  gravatar_help: Not familiar with Gravatars? Learn about Gravatars
-  image_file: Image file
-  image_help: The image will be resized to 180x180 pixels. Supported formats - PNG, JPG, GIF.
-  job_title: Title
-  last_name: Last name
-  login_now_link: Login Now!
-  mobile: Mobile
-  my_profile: My Profile
-  new_password: New password
-  password: Password
-  password_confirmation: Confirm new password
-  phone: Phone
-  profile: Profile
-  profile_language: Language
-  email_notifications: Email Notifications
-  save_profile: Save Profile
-  sign_up: Sign Up
-  sign_up_button: Sign Up
-  upload_picture: Upload Picture
-  use_gravatar: Use Gravatar
-  user: User
-  username: Username
+  gravatar_help: Inte bekant med Gravatars? Lär dig om Gravatars
+  image_file: Bild fil
+  image_help: Bilden kommer att skalas om till 180x180 pixlar. Format - PNG, JPG, GIF.
+  job_title: Titel
+  last_name: Efternamn
+  login_now_link: Logga in nu!
+  mobile: Mobil
+  my_profile: Min profil
+  new_password: Nytt lösenord
+  password: Lösenord
+  password_confirmation: Bekräfta nytt lösenord
+  phone: Telefon
+  profile: Profil
+  profile_language: Språk
+  email_notifications: E-post aviseringar
+  save_profile: Spara profil
+  sign_up: Registrera dig
+  sign_up_button: Registrera dig
+  upload_picture: Ladda upp bild
+  use_gravatar: Använd Gravatar
+  user: Användare
+  username: Användarnamn
   yahoo: Yahoo IM
-  born_on: Born on
-  reports_to: Reports to
-  access: Access
+  born_on: Född på
+  reports_to: Rapporterar till
+  access: Åtkomst
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Forgot Password
-  login: Login
-  no_account: Do not have an account?
-  remember_me: Remember Me
-  sign_up_now: Sign Up Now!
+  forgot_password: Glömt lösenord
+  login: Inloggning
+  no_account: Har du inget konto?
+  remember_me: Kom ihåg mig
+  sign_up_now: Registrera dig nu!
   # Views -> Accounts.
   #----------------------------------------------------------------------------
-  account: Account
-  account_id: Account
-  select_an_account: Select an Account
-  account_small: account
-  account_summary: Account Summary
-  account_categories: Account Categories
-  accounts: Accounts
-  accounts_options: Accounts Options
-  accounts_small: accounts
-  assigned_to: Assigned to
-  billing_address: Billing address
-  create_account: Create Account
-  date_created: Date Created
-  date_updated: Date Updated
+  account: Konto
+  account_id: Konto
+  select_an_account: Välj ett konto
+  account_small: konto
+  account_summary: Konto Sammanfattning
+  account_categories: Kategorier för konto
+  accounts: Konton
+  accounts_options: Konton alternativ
+  accounts_small: konton
+  assigned_to: Tilldelad till
+  billing_address: Fakturaadress
+  create_account: Skapa konto
+  date_created: Skapad datum
+  date_updated: Datum Uppdaterad
   fax: Fax
-  intro: You can add %{value} information later.
-  keep_private: Keep it private, do not share with others
-  mail_to: Mail to %{value}
-  make_public: Share it with everyone
-  mobile_small: mobile
-  open_in_window: Open %{value} in a new window
-  phone_small: phone
-  phone_toll_free: Toll-free
+  intro: Du kan lägga till %{value} information senare.
+  keep_private: Håll den privat, dela inte med andra
+  mail_to: Maila till %{value}
+  make_public: Dela det med alla
+  mobile_small: mobil
+  open_in_window: Öppna %{value} i ett nytt fönster
+  phone_small: telefon
+  phone_toll_free: Avgiftsfri
   pipeline: Pipeline
-  same_as_billing: same as billing
-  save_account: Save Account
-  share_with: Share it with the following people
-  shipping_address: Shipping address
-  total_accounts: Total Accounts
-  website: Website
-  account_with_title_department: ! '%{title}, %{department} at %{account}'
-  account_with_title: ! '%{title} at %{account}'
+  same_as_billing: samma som fakturering
+  save_account: Spara konto
+  share_with: Dela det med följande personer
+  shipping_address: Leveransadress
+  total_accounts: Totalt antal konton
+  website: Webbplats
+  account_with_title_department: ! '%{title}, %{department} vid %{account}'
+  account_with_title: ! '%{title} vid %{account}'
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
-  actual: Actual
-  actual_performance: Actual Performance
+  actual: Faktisk
+  actual_performance: Faktisk prestanda
   budget: Budget
   budget_label: Budget (%{currency})
-  campaign: Campaign
-  campaign_and_leads: campaign and its leads
-  campaign_small: campaign
-  campaign_summary: Campaign Summary
-  campaign_targets: Campaign Targets
-  campaign_statuses: Campaign Statuses
-  campaigns: Campaigns
-  campaigns_options: Campaigns Options
-  campaigns_small: campaigns
-  conversion: Conversion
-  conversion_label: Conversion (%)
-  conversion_number: ! '%{value} conversion'
+  campaign: Kampanj
+  campaign_and_leads: kampanj och dess ledare
+  campaign_small: kampanj
+  campaign_summary: Kampanj Sammanfattning
+  campaign_targets: Kampanj Mål
+  campaign_statuses: Kampanjens statusar
+  campaigns: Kampanjer
+  campaigns_options: Kampanjer Alternativ
+  campaigns_small: kampanjer
+  conversion: Konvertering
+  conversion_label: Konvertering (%)
+  conversion_number: ! '%{value} konvertering'
   target_conversion: Target conversion
-  create_campaign: Create Campaign
-  end_date: End date
-  finished_on: completed on %{value}
-  finishes_in: finishes in %{value}
-  no_start_date: no start date specified
-  number_of_leads: Number of leads
-  objectives: Objectives
-  objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
-  objectives_small: campaign objectives
-  revenue: Revenue
-  revenue_label: Revenue (%{currency})
-  revenue_number: ! '%{value} in revenue'
-  save_campaign: Save Campaign
-  start_date: Start date
-  started_ago: started %{value} ago
-  starts_in: starts in %{value}
-  starts_today: starts today!
+  create_campaign: Skapa kampanj
+  end_date: Slutdatum
+  finished_on: slutförd på %{value}
+  finishes_in: slutar i %{value}
+  no_start_date: inget startdatum angivet
+  number_of_leads: Antal leads
+  objectives: Mål
+  objectives_help: Vänligen ange mål antal leads, förväntade leads-to-opportunities konvertering förhållande, mål intäkter och kampanj budget. Dessa siffror låter dig spåra faktiska kampanj prestanda.
+  objectives_small: Kampanjens mål
+  revenue: Intäkter
+  revenue_label: Intäkter (%{currency})
+  revenue_number: ! '%{value} i intäkter'
+  save_campaign: Spara kampanj
+  start_date: Startdatum
+  started_ago: startade %{value} sedan
+  starts_in: startar i %{value}
+  starts_today: börjar idag!
   target: Target
-  total_campaigns: Total Campaigns
-  was_supposed_to_finish: was supposed to finish on %{value}
-  was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
-  was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
-  select_a_campaign: Select a campaign
+  total_campaigns: Totalt antal kampanjer
+  was_supposed_to_finish: var tänkt att avsluta på %{value}
+  was_supposed_to_start: var tänkt att starta %{time_ago} sedan på %{start_date}
+  was_supposed_to_start_in: var tänkt att starta i %{starts_in} på %{start_date}
+  select_a_campaign: Välj en kampanj
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  alt_email_small: Other
-  blog: Website/Blog
-  contact: Contact
-  contact_small: contact
-  contacts: Contacts
-  contacts_options: Contacts Options
-  contacts_small: contacts
-  contact_summary: Contact Summary
-  create_contact: Create Contact
-  department: Department
-  department_small: ! '%{value} department'
-  do_not_call: Do not call
+  alt_email_small: Annat
+  blog: Webbplats/blogg
+  contact: Kontakt
+  contact_small: kontakt
+  contacts: Kontakter
+  contacts_options: Kontakter Alternativ
+  contacts_small: kontakter
+  contact_summary: Sammanfattning av kontakt
+  create_contact: Skapa kontakt
+  department: Avdelning
+  department_small: ! '%{value} avdelning'
+  do_not_call: Ring inte
   extra_info: Extra Information
-  extra_info_small: extra contact
+  extra_info_small: extra kontakt
   facebook: Facebook
   linked_in: LinkedIn
-  myself: Myself
-  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.
-  permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
-  referred_by: Referred by
-  referred_by_small: referred by
-  save_contact: Save Contact
+  myself: Själv
+  permissions_intro_private: Som standard har du endast tillgång till %{value}. Du kan ändra behörigheter senare.
+  permissions_intro_public: Som standard kommer alla användare att ha tillgång till %{value}. Du kan ändra behörigheter senare.
+  permissions_intro_shared: Som standard har endast de valda användarna tillgång till %{value}. Du kan ändra behörigheter senare.
+  referred_by: Hänvisad av
+  referred_by_small: refererad av
+  save_contact: Spara kontakt
   twitter: Twitter
-  unassigned: Unassigned
-  web_presence: Web Presence
-  web_presence_small: web presence
-  works_at: ! '%{job_title} at %{company}'
-  general_info: General Information
-  show_general_info_small: Show general information for this contact.
-  show_extra_info_small: Show extra information for this contact.
-  tag_details: ! '%{tag} Details'
-  show_tag_info_small: Show %{tag} information for this contact.
-  shared_with_everyone: Shared with everyone
-  title: Title
-  subscriptions: Subscriptions
+  unassigned: Otilldelad
+  web_presence: Webbnärvaro
+  web_presence_small: webb närvaro
+  works_at: ! '%{job_title} vid %{company}'
+  general_info: Allmän information
+  show_general_info_small: Visa allmän information för denna kontakt.
+  show_extra_info_small: Visa extra information för denna kontakt.
+  tag_details: ! '%{tag} Detaljer'
+  show_tag_info_small: Visa %{tag} information för denna kontakt.
+  shared_with_everyone: Delad med alla
+  title: Titel
+  subscriptions: Prenumerationer
   # Views -> Leads.
   #----------------------------------------------------------------------------
-  convert: Convert
-  convert_lead: Convert Lead
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
-  create_lead: Create Lead
-  create_opp_for_contact: You can optionally create an opportunity for the %{value} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
-  lead: Lead
-  lead_info_small: lead contact
-  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.
-  lead_small: lead
-  lead_status_small: lead status
-  lead_summary: Lead Summary
-  lead_statuses: Lead Statuses
+  convert: Konvertera
+  convert_lead: Konvertera Lead
+  convert_lead_permissions_intro: Kontakta behörigheter kommer att kopieras från ledningen som konverteras. Du kan ändra kontaktbehörigheter senare.
+  convert_lead_text: Genom att konvertera ledningen kommer %{value} att bli en kontakt kopplad till det befintliga eller nyskapade kontot. Lead status kommer automatiskt att sättas till konverterad.
+  create_lead: Skapa Lead
+  create_opp_for_contact: Du kan eventuellt skapa en möjlighet för %{value} kontakt genom att ange namnet, nuvarande skede, beräknat stängningsdatum, försäljning sannolikhet, belopp av affären och rabatten erbjuds.
+  lead: Bly
+  lead_info_small: leda kontakt
+  lead_permissions_intro_private: Som standard kommer behörigheter att kopieras från kampanjen eller sättas till privat. Du kan ändra ledbehörigheter senare.
+  lead_permissions_intro_public: Som standard kommer behörigheter att kopieras från kampanjen eller sättas till offentlig. Du kan ändra ledbehörigheter senare.
+  lead_permissions_intro_shared: Som standard kommer behörigheter att kopieras från kampanjen eller delas med de angivna användarna. Du kan ändra ledbehörigheter senare.
+  lead_small: leda
+  lead_status_small: leda status
+  lead_summary: Bly Sammanfattning
+  lead_statuses: Lead Status
   leads: Leads
-  leads_options: Leads Options
-  leads_small: leads
-  none: None
-  rating: Rating
-  reject: Reject
-  reject_lead_confirm: Are you sure you want to reject this lead?
-  save_lead: Save Lead
-  source: Source
+  leads_options: Leads Alternativ
+  leads_small: leder
+  none: Ingen
+  rating: Betyg
+  reject: Avvisa
+  reject_lead_confirm: Är du säker på att du vill avvisa denna ledning?
+  save_lead: Spara Lead
+  source: Källa
   status: Status
-  total_leads: Total Leads
-  show_status_info_small: Show status information for this lead.
-  show_contact_info_small: Show contact information for this lead.
+  total_leads: Totalt antal leads
+  show_status_info_small: Visa statusinformation för denna ledning.
+  show_contact_info_small: Visa kontaktinformation för denna ledning.
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
-  amount: Amount
-  close_date: Close date
-  closes_on: Closes on
-  closed_ago_on: closed %{time_ago} ago on %{date}
-  closes_today: expected to close today!
-  closing_date: closing date is %{value}
-  create_opportunity: Create Opportunity
+  amount: Belopp
+  close_date: Stäng datum
+  closes_on: Stäng den
+  closed_ago_on: stängd %{time_ago} sedan på %{date}
+  closes_today: förväntas stänga idag!
+  closing_date: stängningsdatum är %{value}
+  create_opportunity: Skapa affärsmöjligheter
   currency: "$"
-  days_late: Late by
-  days_left: Days left
-  discount: Discount
-  discount_number: with %{value} discount
-  expected_to_close: expected to close in %{time} on %{date}
-  from: from
-  no_closing_date: no expected closing date
-  no_discount: with no discount
-  opportunities: Opportunities
-  opportunities_options: Opportunities Options
-  opportunities_small: opportunities
-  opportunity: Opportunity
-  opportunity_small: opportunity
-  opportunity_stages: Opportunity Stages
-  opportunity_summary: Opportunity At a Glance
-  opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability} probability'
-  past_due: past due, was expected to close %{value} ago
-  probability: Probability
-  probability_number: and %{value} probability
-  save_opportunity: Save Opportunity
-  stage: Stage
-  total_opportunities: Total Opportunities
-  weighted_amount: Weighted amount
+  days_late: Sent av
+  days_left: Dagar kvar
+  discount: Rabatt
+  discount_number: med %{value} rabatt
+  expected_to_close: förväntas stängas i %{time} på %{date}
+  from: från
+  no_closing_date: inget förväntat slutdatum
+  no_discount: utan rabatt
+  opportunities: Möjligheter
+  opportunities_options: Möjligheter Alternativ
+  opportunities_small: möjligheter
+  opportunity: Möjlighet
+  opportunity_small: Möjlighet
+  opportunity_stages: Möjlighet Stadier
+  opportunity_summary: Möjlighet i korthet
+  opportunity_summary_text: ! '%{amount} med %{discount} rabatt och %{probability} sannolikhet'
+  past_due: tidigare pga, förväntades stänga %{value} sedan
+  probability: Sannolikhet
+  probability_number: och %{value} sannolikhet
+  save_opportunity: Spara Opportunity
+  stage: Steg
+  total_opportunities: Totalt antal Möjligheter
+  weighted_amount: Viktat belopp
   # Views -> Tasks.
   #----------------------------------------------------------------------------
-  task: Task
-  task_small: task
-  tasks: Tasks
-  tasks_small: tasks
-  assign_to: Assign to
-  assigned_tab: Assigned
-  assigned_tasks: Assigned Tasks
-  category: Category
-  completed_tab: Completed
-  completed_tasks: Completed Tasks
-  create_task: Create Task
-  create_task_small: create new task
-  due: Due
-  feel_free: Feel free to
-  move_to: move to
-  no_tasks: You don't have any %{value} tasks
-  no_tasks_pending: pending
-  no_tasks_assigned: assigned
-  no_tasks_completed: completed
-  pending_tab: Pending
-  pending_tasks: Pending Tasks
-  related: ! 're:'
-  save_task: Save Task
-  task_assigned: The task has been assigned to %{value}
-  task_assigned_to: and assigned to %{value}
-  task_completed: completed
-  task_uncomplete: Uncomplete
-  task_completed_ago: completed %{value} ago
-  task_completed_by: completed %{time_ago} ago (%{date}) by %{user}
-  task_created: The task has been created
-  task_due_in: due in %{value}
-  task_due_later: due sometime soon
-  task_due_now: due now
-  task_due_today: due today
-  task_from: From %{value}
-  task_overdue: late, was due on
-  task_pending: The task has been moved to pending tasks
-  total_tasks: Total %{value}
-  view_assigned_tasks: view assigned tasks
-  view_pending_tasks: view pending tasks
+  task: Uppgift
+  task_small: uppgift
+  tasks: Uppgifter
+  tasks_small: uppgifter
+  assign_to: Tilldela till
+  assigned_tab: Tilldelad
+  assigned_tasks: Tilldelade uppgifter
+  category: Kategori
+  completed_tab: Slutförd
+  completed_tasks: Avslutade uppgifter
+  create_task: Skapa uppgift
+  create_task_small: skapa ny uppgift
+  due: Förfaller
+  feel_free: Känn dig fri att
+  move_to: flytta till
+  no_tasks: Du har inga %{value} uppgifter
+  no_tasks_pending: väntande
+  no_tasks_assigned: tilldelad
+  no_tasks_completed: slutförd
+  pending_tab: Väntande
+  pending_tasks: Väntande uppgifter
+  related: ! 'Om:'
+  save_task: Spara uppgift
+  task_assigned: Uppgiften har tilldelats %{value}
+  task_assigned_to: och tilldelad till %{value}
+  task_completed: slutförd
+  task_uncomplete: Ofullständig
+  task_completed_ago: slutförde %{value} sedan
+  task_completed_by: slutförde %{time_ago} sedan (%{date}) av %{user}
+  task_created: Uppgiften har skapats
+  task_due_in: Klar i %{value}
+  task_due_later: kommer någon gång snart
+  task_due_now: Förfallodag nu
+  task_due_today: förfaller idag
+  task_from: Från %{value}
+  task_overdue: sent, var på gång
+  task_pending: Uppgiften har flyttats till väntande uppgifter
+  total_tasks: Totalt %{value}
+  view_assigned_tasks: visa tilldelade uppgifter
+  view_pending_tasks: visa väntande uppgifter
   # Views -> Team.
   #----------------------------------------------------------------------------
-  unassigned_opportunities: Unassigned Opportunities
-  no_opportunities_found: There are currently no outstanding opportunities.
+  unassigned_opportunities: Otilldelad affärsmöjligheter
+  no_opportunities_found: Det finns för närvarande inga enastående möjligheter.
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_completed: completed
-  action_create: created
-  action_destroy: deleted
-  action_reassigned: reassigned
-  action_rejected: rejected
-  action_rescheduled: rescheduled
-  action_update: updated
-  action_view: viewed
-  action_won: won
-  activities: Activities
-  no_activity_records: No activity records found.
-  recent_activity: Recent Activity
-  recent_activity_options: Recent Activity Options
-  subject_account: account
-  subject_address: address on
-  subject_campaign: campaign
-  subject_comment: comment on
-  subject_contact: contact
-  subject_email: email on
-  subject_lead: lead
-  subject_opportunity: opportunity
-  subject_task: task
-  subject_user: user
-  tag_list: Tags
-  create_past_participle: Record Creations
-  view_past_participle: Views
-  update_past_participle: Updates
-  destroy_past_participle: Deletions
-  all_events_past_participle: Activities
+  action_completed: slutförd
+  action_create: skapad
+  action_destroy: borttagen
+  action_reassigned: omtilldelad
+  action_rejected: avvisad
+  action_rescheduled: omplanerad
+  action_update: uppdaterad
+  action_view: visade
+  action_won: vann
+  activities: Aktiviteter
+  no_activity_records: Inga aktivitetsposter hittades.
+  recent_activity: Senaste aktivitet
+  recent_activity_options: Senaste aktivitetsalternativ
+  subject_account: konto
+  subject_address: adress på
+  subject_campaign: kampanj
+  subject_comment: kommentera på
+  subject_contact: kontakt
+  subject_email: e-post på
+  subject_lead: leda
+  subject_opportunity: Möjlighet
+  subject_task: uppgift
+  subject_user: användare
+  tag_list: Taggar
+  create_past_participle: Spela in skapelser
+  view_past_participle: Visningar
+  update_past_participle: Uppdateringar
+  destroy_past_participle: Raderingar
+  all_events_past_participle: Aktiviteter
   action_create_comment: ! '- &quot;%{comment}&quot;'
-  my_tasks: My Tasks
-  no_task_records: You have no tasks.
-  my_opportunities: My Opportunities
-  no_opportunity_records: You have no opportunities.
-  my_accounts: My Accounts
-  no_account_records: You have no accounts
-  not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
+  my_tasks: Mina uppgifter
+  no_task_records: Du har inga uppgifter.
+  my_opportunities: Mina affärsmöjligheter
+  no_opportunity_records: Du har inga möjligheter.
+  my_accounts: Mina konton
+  no_account_records: Du har inga konton
+  not_showing_hidden_entities: Visar inte %{count} dolda %{entity}.
   # Views -> Common.
   #----------------------------------------------------------------------------
-  add_note: Add Comment
-  save_note: Save Comment
-  add_note_help: Add a new comment...
-  edit_note: Edit Comment
-  added_ago: added %{value}
-  added_by: added %{time_ago} by %{user}
-  back: Back
-  cancel: Cancel
-  close_form: Close form
-  comment_intro: You can add comments later.
-  confirm_delete: Are you sure you want to delete this %{value}?
-  copy_permissions: Copy %{value} permissions
-  could_not_find: Couldn't find any %{value}. Feel free to
-  could_not_find_matching: Couldn't find any %{value} matching
-  create_new: create new
-  create_a_new: create a new
-  select_existing: select existing
-  delete: Delete
-  discard: Discard
-  edit: Edit
-  items_total: ! '%{count} total.'
-  less: Less...
-  me: me
-  more: More...
+  add_note: Lägg till kommentar
+  save_note: Spara kommentar
+  add_note_help: Lägg till en ny kommentar...
+  edit_note: Redigera kommentar
+  added_ago: lade till %{value}
+  added_by: tillagd %{time_ago} av %{user}
+  back: Tillbaka
+  cancel: Avbryt
+  close_form: Stäng formulär
+  comment_intro: Du kan lägga till kommentarer senare.
+  confirm_delete: Är du säker på att du vill ta bort denna %{value}?
+  copy_permissions: Kopiera %{value} behörigheter
+  could_not_find: Kunde inte hitta någon %{value}. Känn dig fri att
+  could_not_find_matching: Kunde inte hitta någon %{value} matchning
+  create_new: skapa ny
+  create_a_new: skapa en ny
+  select_existing: välj befintlig
+  delete: Radera
+  discard: Ignorera
+  edit: Redigera
+  items_total: ! '%{count} totalt.'
+  less: Lek...
+  me: mig
+  more: Mer...
   n_a: N/A
-  name: Name
-  no_match: No %{value} match
-  no_recent_items: There are no recent items to display yet.
-  options: Options
-  permissions: Permissions
-  please_retry: please try another query.
-  recent_items: Recent Items
-  select_contact: Select Contact
-  select_lead: Select Lead
-  select_task: Select Task
-  select_opportunity: Select Opportunity
-  search_assets: Search %{value}
-  time_ago: ! '%{value} ago'
-  background_info: Background
-  address: Address
-  street1: Street 1
-  street2: Street 2
-  city: City
-  zipcode: Zip Code
-  state: State
-  country: Country
-  select_a_country: Select a Country
-  expand_all: Expand all
-  collapse_all: Collapse all
-  expanded: Expanded
+  name: Namn
+  no_match: Ingen %{value} match
+  no_recent_items: Det finns inga nya objekt att visa ännu.
+  options: Alternativ
+  permissions: Behörigheter
+  please_retry: försök med en annan fråga.
+  recent_items: Senaste artiklarna
+  select_contact: Välj kontakt
+  select_lead: Välj Lead
+  select_task: Välj uppgift
+  select_opportunity: Välj Möjlighet
+  search_assets: Sök %{value}
+  time_ago: ! '%{value} sedan'
+  background_info: Bakgrund
+  address: Adress
+  street1: Gata 1
+  street2: Gata 2
+  city: Stad
+  zipcode: Postnummer
+  state: Län
+  country: Land
+  select_a_country: Välj ett land
+  expand_all: Expandera alla
+  collapse_all: Komprimera alla
+  expanded: Utökat
   collapsed: Collapsed
   # Views -> Layout.
   #----------------------------------------------------------------------------
-  about: About
-  about_dev_group: Discussion group for developers
-  about_features: Features and bugs
-  about_ffc: About Fat Free CRM
-  about_ffc_resources: Fat Free CRM resources (links open a new window)
-  about_ffc_version: Fat Free CRM version
-  about_home_page: Home page
-  about_project_page: Project page
-  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
-  about_twitter: Twitter commit updates
-  about_user_group: Discussion group for users
-  admin: Admin
-  logout: Logout
-  quick_find: Quick find
-  welcome: Welcome
+  about: Om
+  about_dev_group: Diskussionsgrupp för utvecklare
+  about_features: Funktioner och buggar
+  about_ffc: Om Fett Gratis CRM
+  about_ffc_resources: Fat gratis CRM-resurser (länkar öppnar ett nytt fönster)
+  about_ffc_version: Fett gratis CRM-version
+  about_home_page: Startsida
+  about_project_page: Projekt sida
+  about_thank_you: Tack för att du använder Fat Free CRM! Vi uppskattar ditt företag och hoppas att du tycker om att använda programvaran.
+  about_twitter: Uppdateringar för Twitter commit
+  about_user_group: Diskussionsgrupp för användare
+  admin: Administratör
+  logout: Utloggning
+  quick_find: Hitta snabbt
+  welcome: Välkommen
   # Advanced search
-  accounts_advanced_search: Accounts Advanced search
-  advanced_search: Advanced search
-  basic_search: Basic search
+  accounts_advanced_search: Konton Avancerad sökning
+  advanced_search: Avancerad sökning
+  basic_search: Enkel sökning
   search_results_count:
-    one: Search found %{count} result.
-    other: Search found %{count} results.
+    one: Sök hittade %{count} resultat.
+    other: Sök hittade %{count} träffar.
   # Views -> Comments.
   #----------------------------------------------------------------------------
-  comment: Comment
-  edit_comment: Editing comment
-  show: Show
-  update: Update
-  following_users_will_be_notified: The following users will be notified by email
-  notifications_tooltip: Subscribers will receive new comments via email
-  subscribe_via_email: Subscribe via email
-  disable_email_subscriptions: Disable email subscription
-  added_note: added comment %{value}
+  comment: Kommentar
+  edit_comment: Redigerar kommentar
+  show: Visa
+  update: Uppdatera
+  following_users_will_be_notified: Följande användare kommer att meddelas via e-post
+  notifications_tooltip: Prenumeranter kommer att få nya kommentarer via e-post
+  subscribe_via_email: Prenumerera via e-post
+  disable_email_subscriptions: Inaktivera e-postprenumeration
+  added_note: tillagd kommentar %{value}
   # Views -> Emails.
   #----------------------------------------------------------------------------
   # Views -> Passwords.
   #----------------------------------------------------------------------------
-  confirm_password_intro: Please type your new password and then confirm it.
-  password_intro: Please specify your email address, and the instructions to reset your password will be sent to you.
-  reset_password: Reset Password
-  update_password_and_login: Update Password and Login
+  confirm_password_intro: Ange ditt nya lösenord och bekräfta det.
+  password_intro: Vänligen ange din e-postadress och instruktionerna för att återställa ditt lösenord kommer att skickas till dig.
+  reset_password: Återställ lösenord
+  update_password_and_login: Uppdatera lösenord och inloggning
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  back_to_crm: Tillbaka till Fettfri CRM
+  crm_admin_page: Fettfri CRM-administration
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
-  create_group: Create Group
-  save_group: Save Group
-  group_members: members
-  groups: Groups
-  groups_small: groups
-  group_small: group
+  create_group: Skapa grupp
+  save_group: Spara grupp
+  group_members: medlemmar
+  groups: Grupper
+  groups_small: grupper
+  group_small: grupp
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
-  confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
-  approve: Approve
-  create_user: Create User
-  last_logged_in: last logged in %{value}
-  personal_information: Personal Information
-  group_memberships: Group Memberships
-  reactivate: Reactivate
-  save_user: Save User
-  suspend: Suspend
-  user_active: Active
-  user_admin: Admin
-  user_awaits_approval: awaits your approval
-  user_confirm_delete: A user can only be deleted if no related assets are left behind.
-  user_is_admin: The user is Administrator
-  user_never_logged_in: hasn't logged in yet
-  user_signed_up: Signed Up
-  user_signed_up_on: signed up on %{value}
-  user_since: user since %{value}
-  user_suspended: Suspended
-  user_suspended_on: suspended on %{value}
-  users: Users
-  users_small: users
+  confirm_group_delete: Är du säker på att du vill ta bort denna grupp? Det finns %{count} objekt som fortfarande refererar till den.
+  approve: Godkänn
+  create_user: Skapa användare
+  last_logged_in: senast inloggad %{value}
+  personal_information: Personlig information
+  group_memberships: Gruppmedlemskap
+  reactivate: Återaktivera
+  save_user: Spara användare
+  suspend: Avbryta
+  user_active: Aktiv
+  user_admin: Administratör
+  user_awaits_approval: väntar på ditt godkännande
+  user_confirm_delete: En användare kan endast tas bort om inga relaterade tillgångar lämnas kvar.
+  user_is_admin: Användaren är administratör
+  user_never_logged_in: har inte loggat in ännu
+  user_signed_up: Registrerad
+  user_signed_up_on: registrerad på %{value}
+  user_since: användare sedan %{value}
+  user_suspended: Avstängd
+  user_suspended_on: avstängd på %{value}
+  users: Användare
+  users_small: användare
   # Views -> Versions
   #----------------------------------------------------------------------------
-  versions: History
+  versions: Historik
   version:
-    create: ! '%{item} created by %{by}'
-    update: ! '%{item} modified by %{by}'
-    destroy: ! '%{item} destroyed by %{by}'
-    set_html: ! '%{attr} set to %{to}'
+    create: ! '%{item} skapad av %{by}'
+    update: ! '%{item} ändrad av %{by}'
+    destroy: ! '%{item} förstört av %{by}'
+    set_html: ! '%{attr} satt till %{to}'
     unset_html: ! '%{attr} unset'
-    change_html: ! '%{attr} changed from %{from} to %{to}'
-    anonymous: anonymous
-  account_contact_id: Account id
-  account_contact_name: Account name
-  user_id: User id
-  created_at: Created at
-  updated_at: Updated at
+    change_html: ! '%{attr} ändrad från %{from} till %{to}'
+    anonymous: anonym
+  account_contact_id: Konto ID
+  account_contact_name: Konto namn
+  user_id: Användar-ID
+  created_at: Skapad den
+  updated_at: Uppdaterad den
   # Export.
   #----------------------------------------------------------------------------
-  to_xls: Export to Excel
-  to_csv: Export to comma-delimited file format (including deleted records)
-  to_rss: RSS feed
-  to_atom: Atom feed
-  to_perm: Permalink
+  to_xls: Exportera till Excel
+  to_csv: Exportera till kommaavgränsat filformat (inklusive raderade poster)
+  to_rss: RSS-flöde
+  to_atom: Atom-flöde
+  to_perm: Permalänk
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_notification_subject: dropbox - Added email - %{subject}
-  dropbox_notification_intro: Succesfully added the email you sent to dropbox
-  dropbox_notification_to: Added to
-  subject: Subject
-  body: Body
+  dropbox_notification_subject: dropbox - Tillagd e-post - %{subject}
+  dropbox_notification_intro: Lade framgångsrikt till e-postmeddelandet du skickade till dropboxen
+  dropbox_notification_to: Tillagd i
+  subject: Ämne
+  body: Kropp
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
-    intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
-    reply_instructions: Reply to this email directly to add a new comment, or view the %{entity} online
+    intro: ! '%{user_full_name} kommenterade %{entity_type}: %{entity_name}'
+    reply_instructions: Svara på denna e-post direkt för att lägga till en ny kommentar eller visa %{entity} online
   # Lists
   #----------------------------------------------------------------------------
-  global_lists: Global lists
-  personal_lists: My lists
-  list: List
-  no_saved_lists: No saved lists
-  make_current_view_list: Make current view a list
-  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
+  global_lists: Globala listor
+  personal_lists: Mina listor
+  list: Lista
+  no_saved_lists: Inga sparade listor
+  make_current_view_list: Gör aktuell vy till en lista
+  list_name_info: Om du använder namnet på en befintlig lista, kommer du skriva över den listan med dina nuvarande inställningar
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
     comment:
-      one: 1 comment
-      other: ! '%{count} comments'
+      one: 1 kommentar
+      other: ! '%{count} kommentarer'
     contact:
-      one: 1 contact
-      other: ! '%{count} contacts'
+      one: 1 kontakt
+      other: ! '%{count} kontakter'
     opportunity:
-      one: 1 opportunity
-      other: ! '%{count} opportunities'
+      one: 1 möjlighet
+      other: ! '%{count} möjligheter'
     lead:
-      one: 1 lead
+      one: 1 ledning
       other: ! '%{count} leads'
     day:
-      one: 1 day
-      other: ! '%{count} days'
+      one: 1 dag
+      other: ! '%{count} dagar'
     login:
-      one: 1 login
-      other: ! '%{count} logins'
+      one: 1 inloggning
+      other: ! '%{count} inloggningar'
   # Custom date/time formats.
   #----------------------------------------------------------------------------
   date:
@@ -763,113 +763,113 @@ sv-SE:
       mmddyy: ! '%b %e, %Y'
   time:
     formats:
-      mmddhhss: ! '%b %e at %l:%M%p'
+      mmddhhss: ! '%b %e på %l:%M%p'
       mmddyyyy_hhmm: ! '%e %b %Y at %l:%M%p'
   # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------
   will_paginate:
-    previous_label: ! '&#8592; Previous'
-    next_label: 'Next &#8594;'
+    previous_label: ! '&#8592; Föregående'
+    next_label: 'Nästa &#8594;'
     page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        one: Displaying 1 %{name}
-        other: Displaying all %{count} %{plural}
-      multi_page: Displaying %{plural} %{from} - %{to} of %{total} in total
+        one: Visar 1 %{name}
+        other: Visar alla %{count} %{plural}
+      multi_page: Visar %{plural} %{from} - %{to} av %{total} totalt
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
-  label: Label
-  custom_fields: Custom Fields
-  custom_field_options: Custom Field Options
-  create_field: Create field
-  save_field: Save field
-  create_field_group: Create field group
-  edit_field_group: Edit field group
-  save_field_group: Save field group
-  field_group_empty: There are no fields in this group.
-  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
-  restrict_by_tag: ! 'Restrict by Tag:'
-  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
-  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
-  field_group_unrestricted: This field group applies to all %{assets}
-  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
-  msg_cant_delete_field_group: Field Group could not be deleted.
-  admin_fields_info: ! 'Custom fields are displayed in groups. Create a new field group, or add fields to one of the groups below. You can drag and drop fields to change their display order or move them between field groups.'
+  label: Etikett
+  custom_fields: Anpassade fält
+  custom_field_options: Anpassade fält alternativ
+  create_field: Skapa fält
+  save_field: Spara fält
+  create_field_group: Skapa fältgrupp
+  edit_field_group: Redigera fältgrupp
+  save_field_group: Spara fältgrupp
+  field_group_empty: Det finns inga fält i denna grupp.
+  select_or_create_tags: Välj några taggar eller skapa en ny tagg genom att trycka på 'enter'.
+  restrict_by_tag: ! 'Begränsa efter tagg:'
+  restrict_by_tag_info: (Visa endast fält för %{assets} som är taggade med följande)
+  field_group_tag_restriction: Denna fältgrupp gäller %{assets} taggade med "%{tag}"
+  field_group_unrestricted: Denna fältgrupp gäller för alla %{assets}
+  field_group_confirm_delete: Om en fältgrupp tas bort kommer alla fält att flyttas till standardfältgruppen.
+  msg_cant_delete_field_group: Fältgruppen kunde inte raderas.
+  admin_fields_info: ! 'Anpassade fält visas i grupper. Skapa en ny fältgrupp, eller lägg till fält i en av grupperna nedan. Du kan dra och släppa fält för att ändra deras visningsordning eller flytta dem mellan fältgrupper.'
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'It is strongly recommended you restart your server after adding or removing any custom field. '
-  tags: Tags
-  tag_small: tag
-  tagged: Tagged
-  create_tag: Create Tag
-  save_tag: Save Tag
-  field_group_tags: Field Groups shown for this Tag
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  admin_fields_info2: ! 'Det rekommenderas starkt att du startar om din server efter att lägga till eller ta bort något anpassat fält. '
+  tags: Taggar
+  tag_small: tagg
+  tagged: Taggad
+  create_tag: Skapa tagg
+  save_tag: Spara tagg
+  field_group_tags: Fältgrupper som visas för denna tagg
+  ai_prompt_tags: Generera taggar för potentiella leads, konton, eller kampanjer, fokuserade på branschens specialiseringsområden
+  ai_prompt_link: "Designa hjälp"
+  ai_prompt_link_tooltip: "OpenAI Chatta med prompten"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from %{value} records.
-  msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
+  tag_with_taggings_confirm_delete: Om denna tagg tas bort kommer den att tas bort från %{value} poster.
+  msg_cant_delete_tag: Kunde inte ta bort '%{value}' eftersom det har associerade fältgrupper.
   views:
     admin:
       plugins:
-        author: Author
+        author: Författare
         version: Version
-        description: Description
+        description: Beskrivning
   # Simple Form translations
   #----------------------------------------------------------------------------
   simple_form:
-    yes: 'Yes'
-    no: 'No'
+    yes: 'Ja'
+    no: 'Nej'
     required:
-      text: required
+      text: obligatorisk
       mark: ! '*'
     # You can uncomment the line below if you need to overwrite the whole required html.
     # When using html, text and mark won't be used.
     # html: '<abbr title="required">*</abbr>'
     error_notification:
-      default_message: ! 'Some errors were found, please take a look:'
+      default_message: ! 'Några fel har hittats, ta en titt:'
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
     string:
-      title: Short Answer
+      title: Kort svar
     text:
-      title: Long Answer
+      title: Långa svar
     select:
-      title: Select List
+      title: Välj lista
     multiselect:
-      title: Multi Select
+      title: Välj flera
     radio_buttons:
-      title: Radio Buttons
+      title: Radioknappar
     boolean:
-      title: Checkbox
+      title: Kryssruta
     check_boxes:
-      title: Checkbox List
+      title: Kryssruta Lista
     date:
-      title: Date
+      title: Datum
     date_pair:
-      title: Date Pair
+      title: Datum par
     datetime:
-      title: Date & Time
+      title: Datum & tid
     datetime_pair:
-      title: Date & Time Pair
+      title: Datum & tid par
     email:
-      title: Email Address
+      title: E-postadress
     url:
       title: URL
     tel:
-      title: Phone Number
+      title: Telefonnummer
     decimal:
-      title: Number (Decimal)
+      title: Nummer (decimal)
     integer:
-      title: Number (Integer)
+      title: Nummer (heltal)
     float:
-      title: Number (Floating Point)
+      title: Nummer (Floating Point)
   pair:
-    start: Start
-    end: End
-    from_to: From %{from} to %{to}
-    from_only: From %{from}
-    to_only: Until %{to}
+    start: Starta
+    end: Slut
+    from_to: Från %{from} till %{to}
+    from_only: Från %{from}
+    to_only: Till %{to}
