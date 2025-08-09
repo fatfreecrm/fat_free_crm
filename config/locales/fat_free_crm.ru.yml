@@ -29,12 +29,12 @@ ru-RU:
   admin_tab_tags: Метки
   admin_tab_settings: Установки
   admin_tab_plugins: Плагины
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
+  ai_prompts: Опишите свой бизнес
+  ai_prompts_description: Опишите ваш бизнес, товары или услуги, которые вы предлагаете, и вашу целевую аудиторию. Это поможет нам адаптировать CRM к вашим потребностям, и выступать в качестве системы подсказки для любого ИИ используется.
+  about_my_business: О моем бизнесе
+  about_my_business_placeholder: ie Пример Pty Ltd это средняя компания, которая специализируется на предоставлении высококачественных программных решений малым и средним предприятиям. Мы специализируемся на здравоохранении и продаем наш флагманский продукт Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: Как я планирую использовать Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: то небольшая команда продаж 5 человек будут использовать Fat Free CRM. Мы будем использовать Mailchimp, Google Ads, Zapier и Slack. Мы хотим фильтровать и классифицировать провода по конкретным областям, которые они заинтересованы в здравоохранении.
   affiliate: Филиал
   competitor: Конкурент
   customer: Клиент
@@ -146,7 +146,7 @@ ru-RU:
             name:
               missing_task_name: '^Пожалуйста введите название для задания.'
             calendar:
-              invalid_date: '^Please specify valid date.'
+              invalid_date: '^Пожалуйста укажите правильную дату.'
         user:
           attributes:
             username:
@@ -187,7 +187,7 @@ ru-RU:
   msg_account_not_approved: Ваш аккаунт еще не активирован.
   msg_asset_deleted: ! 'Этот %{value} был удален.'
   msg_asset_not_available: Этот %{value} более недоступен.
-  msg_not_authorized: You are not authorized to take this action.
+  msg_not_authorized: Вы не авторизованы для совершения этого действия.
   msg_assets_not_available: Эти %{value} более недоступны.
   msg_asset_rejected: ! 'Этот %{value} отклонен.'
   msg_bad_image_file: '^Ошибка при загрузке или изменении размера указанного изображения.'
@@ -209,7 +209,7 @@ ru-RU:
   msg_require_admin: Для доступа к этой странице нужны права Администратора
   msg_successful_signup: Регистрация прошла успешно, добро пожаловать в Fat Free CRM!
   msg_welcome: Добро пожаловать в Fat Free CRM!
-  msg_user_updated: Profile updated successfully.
+  msg_user_updated: Профиль успешно обновлен.
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: взвешенной сумме
@@ -250,8 +250,8 @@ ru-RU:
   campaigns_index_normal: Нормальный формат
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "Подписаться на комментарии по электронной почте"
+  receive_assigned_notifications: "Получать назначенные уведомления по электронной почте"
   aim: AOL IM
   already_signed_up: Уже регистрировались?
   alt_email: Альтернативный E-mail
@@ -277,7 +277,7 @@ ru-RU:
   phone: Телефон
   profile: Профиль
   profile_language: Язык
-  email_notifications: Email Notifications
+  email_notifications: Уведомления по Email
   save_profile: Сохранить Профиль
   sign_up: Регистрация
   sign_up_button: Зарегистрироваться
@@ -739,7 +739,7 @@ ru-RU:
   #----------------------------------------------------------------------------
   pluralize:
     comment:
-      one: 1 comment
+      one: 1 комментарий
       few: ! '%{count} comments'
       many: ! '%{count} comments'
       other: ! '%{count} comments'
@@ -787,10 +787,10 @@ ru-RU:
     page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        one: Displaying 1 %{name}
-        few: Displaying all %{count} %{plural}
-        many: Displaying all %{count} %{plural}
-        other: Displaying all %{count} %{plural}
+        one: Показано 1 %{name}
+        few: Показаны все %{count} %{plural}
+        many: Показаны все %{count} %{plural}
+        other: Показаны все %{count} %{plural}
       multi_page: Ототбражается %{plural} %{from} - %{to}  %{total} в общем
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
@@ -820,9 +820,9 @@ ru-RU:
   create_tag: Создать метку
   save_tag: Сохранить метку
   field_group_tags: Поля групп отображаемых для этой метки
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  ai_prompt_tags: Генерировать теги для потенциальных лидеров, клиентов или кампаний, ориентированных на отраслевые области специализации
+  ai_prompt_link: "Помощь по дизайну"
+  ai_prompt_link_tooltip: "OpenAI чат с запросом"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: Если удлаить эту метку, она будет удален у %{value} записей.
