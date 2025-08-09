@@ -1,7 +1,6 @@
 ---
-es:
+es-ES:
   language: Español (ES)
-
   # Generic terms.
   #----------------------------------------------------------------------------
   id: Id
@@ -11,11 +10,9 @@ es:
   no_button: 'No'
   not_implemented: Aún no implementado.
   or: or
-  select_none: -- Ninguno --
-  select_blank: -- Elige --
+  select_none: '-- Ninguno --'
+  select_blank: '-- Elige --'
   yes_button: 'Si'
-
-
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Tablero
@@ -32,6 +29,12 @@ es:
   admin_tab_tags: Etiquetas
   admin_tab_settings: Configuraciones
   admin_tab_plugins: Plugins
+  ai_prompts: Describe your business
+  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
+  about_my_business: About my business
+  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
   affiliate: Afiliado
   competitor: Competidor
   customer: Cliente
@@ -83,7 +86,6 @@ es:
   completed_last_week: Semana pasada
   completed_this_month: Este mes
   completed_last_month: Mes pasado
-
   # Models/Activity.
   #----------------------------------------------------------------------------
   one_hour: Una Hora
@@ -92,7 +94,6 @@ es:
   one_week: Una Semana
   two_weeks: Dos Semanas
   one_month: Un Mes
-
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
@@ -107,58 +108,58 @@ es:
         account:
           attributes:
             name:
-              missing_account_name: ^Porfavor, específica un nombre de cuenta.
+              missing_account_name: '^Porfavor, específica un nombre de cuenta.'
             access:
-              share_account: ^Porfavor, específica usuarios con los que compartir la cuenta.
+              share_account: '^Porfavor, específica usuarios con los que compartir la cuenta.'
         campaign:
           attributes:
             name:
-              missing_campaign_name: ^Porfavor, específica el nombre de campaña.
+              missing_campaign_name: '^Porfavor, específica el nombre de campaña.'
             ends_on:
-              dates_not_in_sequence: ^Porfavor, asegurese de que el fin de la campaña es posterior al inicio
+              dates_not_in_sequence: '^Porfavor, asegurese de que el fin de la campaña es posterior al inicio'
             access:
-              share_campaign: ^Porfavor, específica usuarios con los que compartir la campaña
+              share_campaign: '^Porfavor, específica usuarios con los que compartir la campaña'
         contact:
           attributes:
             first_name:
-              missing_first_name: ^Porfavor, específica el nombre.
+              missing_first_name: '^Porfavor, específica el nombre.'
             last_name:
-              missing_last_name: ^Porfavor, específica el apellido.
+              missing_last_name: '^Porfavor, específica el apellido.'
             access:
-              share_contact: ^Porfavor, específica usuarios con los que compartir el contacto.
+              share_contact: '^Porfavor, específica usuarios con los que compartir el contacto.'
         lead:
           attributes:
             first_name:
-              missing_first_name: ^Porfavor, específica el nombre.
+              missing_first_name: '^Porfavor, específica el nombre.'
             last_name:
-              missing_last_name: ^Porfavor, específica el apellido.
+              missing_last_name: '^Porfavor, específica el apellido.'
             access:
-              share_lead: ^Porfavor, específica usuarios con los que compartir la iniciativa.
+              share_lead: '^Porfavor, específica usuarios con los que compartir la iniciativa.'
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: ^Porfavor, específica el nombre de la oportunidad.
+              missing_opportunity_name: '^Porfavor, específica el nombre de la oportunidad.'
             access:
-              share_opportunity: ^Porfavor, específica usuarios con los que compartir la oportunidad.
+              share_opportunity: '^Porfavor, específica usuarios con los que compartir la oportunidad.'
         task:
           attributes:
             name:
-              missing_task_name: ^Porfavor, específica el nombre de la tarea.
+              missing_task_name: '^Porfavor, específica el nombre de la tarea.'
             calendar:
-              invalid_date: ^Porfavor, específica una fecha válida.
+              invalid_date: '^Porfavor, específica una fecha válida.'
         user:
           attributes:
             username:
-              missing_username: ^Porfavor, específica el nombre de usuario.
-              username_taken: ^Este nombre de usuario ya existe.
+              missing_username: '^Porfavor, específica el nombre de usuario.'
+              username_taken: '^Este nombre de usuario ya existe.'
             email:
-              missing_email: ^Porfavor, específica una dirección de correo.
-              email_in_use: ^Ya existe otro usuario con el mismo email.
+              missing_email: '^Porfavor, específica una dirección de correo.'
+              email_in_use: '^Ya existe otro usuario con el mismo email.'
         custom_field:
-          required: ^%{field} no puede ser vacio.
-          minlength: ^%{field} es demasiado corto.
-          maxlength: ^%{field} es demasiado largo.
-          endbeforestart: ^%{field} no puede terminar antes de empezar.
+          required: '^%{field} no puede ser vacio.'
+          minlength: '^%{field} es demasiado corto.'
+          maxlength: '^%{field} es demasiado largo.'
+          endbeforestart: '^%{field} no puede terminar antes de empezar.'
     attribute_options:
       opportunity:
         stage:
@@ -178,10 +179,8 @@ es:
           "3": "★★★"
           "4": "★★★★"
           "5": "★★★★★"
-
   msg_account_suspended: Su cuenta de usuario ha sido suspendida.
   password_reset_instruction: instrucciones de recuperación de contraseña
-
   # Controllers.
   #----------------------------------------------------------------------------
   msg_account_created: Su cuenta ha sido creada y esta a la espera de ser aprobada por el administrador.
@@ -191,14 +190,14 @@ es:
   msg_not_authorized: No esta autorizado a realizar esta acción.
   msg_assets_not_available: El %{value} no esta disponible.
   msg_asset_rejected: ! '%{value} ha sido rechazado.'
-  msg_bad_image_file: ^No se puede sobir o redimensionar la imagen seleccionada.
+  msg_bad_image_file: '^No se puede sobir o redimensionar la imagen seleccionada.'
   msg_cant_create_related: No puede crear %{asset} desde el %{related} que ya no esta disponible.
-  msg_cant_delete_user: ^No puedes borrar el usuario %{value} ya que tiene elementos relacionados.
+  msg_cant_delete_user: '^No puedes borrar el usuario %{value} ya que tiene elementos relacionados.'
   msg_cant_do: No puede %{action} el/la %{asset} desde que ya no esta disponible.
   msg_email_not_found: No se ha encontrado ningún usuario con ese correo electrónico.
   msg_enter_new_password: Porfavor, introduce tu nueva contraseña.
   msg_goodbye: Usted ha cerrado sesión. ¡ Gracias por usar Fat Free CRM!
-  msg_invalid_password: ^Porfavor, específica una contraseña válida
+  msg_invalid_password: '^Porfavor, específica una contraseña válida'
   msg_invalig_login: Usuario o contraseña no validos.
   msg_last_login: Su último login fue el %{value}.
   msg_login_needed: Debe iniciar sesión para acceder a esta página.
@@ -209,13 +208,12 @@ es:
   msg_pwd_instructions_sent: Las instrucciones de recuperación de contraseña se han mandado a su email. Porfavor, revise su correo electrónico.
   msg_require_admin: Debes ser un administrador para acceder a esta página.
   msg_successful_signup: Se ha dado de alta satisfactoriamente. ¡Bienvenido a Fat Free CRM!
-  msg_welcome: ¡Bienvenido a Fat Free CRM!
-
+  msg_welcome: '¡Bienvenido a Fat Free CRM!'
+  msg_user_updated: Profile updated successfully.
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: cantidad ponderada
-  activity_options: Mostrar %{models} %{action_type} interpretado por %{user} el pasado
-    %{period}.
+  activity_options: Mostrar %{models} %{action_type} interpretado por %{user} el pasado %{period}.
   all_users: todos los usuarios
   option_after: despues
   option_all: todo
@@ -250,11 +248,12 @@ es:
   accounts_index_normal: Formato normal
   leads_index_normal: Formato normal
   campaigns_index_normal: Formato normal
-
   # Views -> Profile.
   #----------------------------------------------------------------------------
+  subscribe_to_comment_replies: "Subscribe to comment replies by email"
+  receive_assigned_notifications: "Receive assigned notifications by email"
   aim: AOL IM
-  already_signed_up: ¿Ya estás dado de alta?
+  already_signed_up: '¿Ya estás dado de alta?'
   alt_email: Email alternativo
   avatar: Avatar
   change_password: Cambiar contraseña
@@ -264,13 +263,12 @@ es:
   edit_profile: Editar Perfil
   first_name: Nombre
   google: Google IM
-  gravatar_help: ¿No conoces Gravatars? más sobre Gravatars
+  gravatar_help: '¿No conoces Gravatars? más sobre Gravatars'
   image_file: Archivo de imagen
-  image_help: El archivo de image subido se redimensionara automaticamente a 180 x 180 pixeles.
-    Los formatos soportados son GIF, JPG and PNG.
+  image_help: El archivo de image subido se redimensionara automaticamente a 180 x 180 pixeles. Los formatos soportados son GIF, JPG and PNG.
   job_title: Titulo
   last_name: Apellido
-  login_now_link: ¡Inicia Sesión Ahora!
+  login_now_link: '¡Inicia Sesión Ahora!'
   mobile: Móvil
   my_profile: Mi Perfil
   new_password: Nueva contraseña
@@ -279,6 +277,7 @@ es:
   phone: Teléfono
   profile: Perfil
   profile_language: Idioma
+  email_notifications: Email Notifications
   save_profile: Guardar Perfil
   sign_up: Darse de Alta
   sign_up_button: Date de Alta
@@ -290,15 +289,13 @@ es:
   born_on: Nacido el
   reports_to: Reportar a
   access: Acceso
-
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
   forgot_password: Olvido la contraseña
   login: Entrar
-  no_account: ¿No tiene cuenta?
+  no_account: '¿No tiene cuenta?'
   remember_me: Recordarme
-  sign_up_now: ¡Dase de Alta Ahora!
-
+  sign_up_now: '¡Dase de Alta Ahora!'
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Cuenta
@@ -333,7 +330,6 @@ es:
   website: Sitio Web
   account_with_title_department: ! '%{title}, %{department} a %{account}'
   account_with_title: ! '%{title} a %{account}'
-
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
   actual: Actual
@@ -360,9 +356,7 @@ es:
   no_start_date: no ha especificado fecha de inicio
   number_of_leads: Numero de iniciativas
   objectives: Objetivos
-  objectives_help: Porfavor, especifica el número esperado de iniciativas, se espera el ratio de conversión de
-    iniciativas a oportunidades, el ingreso esperado y el presupuesto de campaña. Estos numeros le permitirán el seguimiento
-    real de la campaña.
+  objectives_help: Porfavor, especifica el número esperado de iniciativas, se espera el ratio de conversión de iniciativas a oportunidades, el ingreso esperado y el presupuesto de campaña. Estos numeros le permitirán el seguimiento real de la campaña.
   objectives_small: campañas esperadas
   revenue: Ingresos
   revenue_label: Ingresos (%{currency})
@@ -371,14 +365,13 @@ es:
   start_date: Fecha de inicio
   started_ago: comenzo hace %{value}
   starts_in: comenzo en %{value}
-  starts_today: ¡Empieza hoy!
+  starts_today: '¡Empieza hoy!'
   target: Objetivo
   total_campaigns: Campañas Totales
   was_supposed_to_finish: se suponía que finalizaría el %{value}
   was_supposed_to_start: se suponía que empezaría hace %{time_ago}, el %{start_date}
   was_supposed_to_start_in: se suponía que empezaría en %{starts_in}, el %{start_date}
   select_a_campaign: Seleccionar una campaña
-
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: Otro
@@ -400,8 +393,7 @@ es:
   myself: Yo mismo
   permissions_intro_private: Por defecto solo usted tendra acceso a el/la %{value}. Puedes cambiar los permisos después.
   permissions_intro_public: Por defecto todos los usuarios pueden acceder a el/la %{value}. Puedes cambiar los permisos después.
-  permissions_intro_shared: Por defecto solo los usuarios seleccionados tendran acceso a el/la
-    the %{value}. Puede cambiar los permisos después.
+  permissions_intro_shared: Por defecto solo los usuarios seleccionados tendran acceso a el/la the %{value}. Puede cambiar los permisos después.
   referred_by: Referenciado por
   referred_by_small: referenciado por
   save_contact: Guardar Contacto
@@ -418,18 +410,14 @@ es:
   shared_with_everyone: Compartir con todo el mundo
   title: Titulo
   subscriptions: Subscripciones
-
   # Views -> Leads.
   #----------------------------------------------------------------------------
   convert: Convertir
   convert_lead: Convertir Iniciativa
   convert_lead_permissions_intro: Los permisos de usuario se copiaran de la iniciativa cuando esta se convierta. Puede cambiar los permisos despues.
-  convert_lead_text: Convertir la iniciativa %{value} se convertira al contacto asociado en un usuario existente
-    o en una nueva cuenta. El estado de la iniciativa cambiara automáticamente a convertido.
+  convert_lead_text: Convertir la iniciativa %{value} se convertira al contacto asociado en un usuario existente o en una nueva cuenta. El estado de la iniciativa cambiara automáticamente a convertido.
   create_lead: Crear Iniciativa
-  create_opp_for_contact: Opcionalmente, puedes crear una oportunidad para el contacto %{value}
-    especificando el nombre, la etapa actual, la fecha estimada de cierre, la probabilidad de venta, la
-    cantidad del acuerdo, y el descuento ofertado.
+  create_opp_for_contact: Opcionalmente, puedes crear una oportunidad para el contacto %{value} especificando el nombre, la etapa actual, la fecha estimada de cierre, la probabilidad de venta, la cantidad del acuerdo, y el descuento ofertado.
   lead: Iniciativa
   lead_info_small: contacto de iniciativa
   lead_permissions_intro_private: Por defecto los permisos se copiaran de la campaña o cambiado a privado. Puede cambiar los permisos despues.
@@ -445,21 +433,20 @@ es:
   none: Ninguna
   rating: Clasificación
   reject: Rechazar
-  reject_lead_confirm: ¿Estás seguro de que quieres rechazar esta iniciativa?
+  reject_lead_confirm: '¿Estás seguro de que quieres rechazar esta iniciativa?'
   save_lead: Guardar Iniciativa
   source: Origes
   status: Estados
   total_leads: Iniciativas Totales
   show_status_info_small: Mostrar la información de estado de esta iniciativa.
   show_contact_info_small: Mostrar la información de contacto de esta iniciativa.
-
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
   amount: Cantidad
   close_date: Fecha cerrada
   closes_on: Cerrados en
   closed_ago_on: cerrada hace %{time_ago} el %{date}
-  closes_today: ¡Se espera que se cierre hoy!
+  closes_today: '¡Se espera que se cierre hoy!'
   closing_date: la fecha de cierre es %{value}
   create_opportunity: Crear Oportunidad
   currency: "€"
@@ -486,7 +473,6 @@ es:
   stage: Etapa
   total_opportunities: Oportunidades Totales
   weighted_amount: Cantidad ponderada
-
   # Views -> Tasks.
   #----------------------------------------------------------------------------
   task: Tarea
@@ -529,12 +515,10 @@ es:
   total_tasks: Total %{value}
   view_assigned_tasks: vista de tareas asignadas
   view_pending_tasks: vista de tareas pendientes
-
   # Views -> Team.
   #----------------------------------------------------------------------------
   unassigned_opportunities: Oportunidades sin Asignar
   no_opportunities_found: Actualmente no existen oportunidades.
-
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_completed: completado
@@ -574,7 +558,6 @@ es:
   my_accounts: Mis Cuentas
   no_account_records: No tiene cuentas
   not_showing_hidden_entities: No se muestran %{count} %{entity} ocultas.
-
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Añadir Nota
@@ -628,7 +611,6 @@ es:
   collapse_all: Plegar todo
   expanded: Expandido
   collapsed: Plegado
-
   # Views -> Layout.
   #----------------------------------------------------------------------------
   about: Sobre
@@ -639,14 +621,13 @@ es:
   about_ffc_version: Versión Fat Free CRM
   about_home_page: Página de inicio
   about_project_page: Página de proyecto
-  about_thank_you: ¡Gracias por usar Fat Free CRM! Apreciamos tu negocio y esperamos que disfrute del software.
+  about_thank_you: '¡Gracias por usar Fat Free CRM! Apreciamos tu negocio y esperamos que disfrute del software.'
   about_twitter: Actualizaciones de Twitter
   about_user_group: Grupo de discursión para usuarios
   admin: Administrador
   logout: Cerrar Sesión
   quick_find: Búsqueda rapida
   welcome: Bienvenido
-
   # Advanced search
   accounts_advanced_search: Búsqueda avanzada de cuentas
   advanced_search: Búsqueda avanzada
@@ -654,7 +635,6 @@ es:
   search_results_count:
     one: Se encontro %{count} resultado.
     other: Se encontraron %{count} resultados.
-
   # Views -> Comments.
   #----------------------------------------------------------------------------
   comment: Comentario
@@ -666,22 +646,18 @@ es:
   subscribe_via_email: Subscribirse vía email
   disable_email_subscriptions: Deshabilitar subscripción por email
   added_note: nota añadida %{value}
-
   # Views -> Emails.
   #----------------------------------------------------------------------------
-
   # Views -> Passwords.
   #----------------------------------------------------------------------------
   confirm_password_intro: Porfavor, escribe tu nueva contraseña y confirmala.
   password_intro: Porfavor, facilitanos tu email y te mandaremos las instrucciones de recuperación de contraseña.
   reset_password: Recuperar Contraseña
   update_password_and_login: Actualizar Contraseña e Iniciar Sesión
-
   # Views -> Admin
   #----------------------------------------------------------------------------
   back_to_crm: Volver a Fat Free CRM
   crm_admin_page: Administración de Fat Free CRM
-
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
   create_group: Crear Grupo
@@ -690,10 +666,9 @@ es:
   groups: Grupos
   groups_small: grupos
   group_small: grupo
-
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
-  confirm_group_delete: ¿Está seguro de que desea eliminar este grupo? Hay %{count} elementos que aún lo referencian
+  confirm_group_delete: '¿Está seguro de que desea eliminar este grupo? Hay %{count} elementos que aún lo referencian'
   approve: Aprobar
   create_user: Crear Usuario
   last_logged_in: Último Inicio de Sesión el %{value}
@@ -715,7 +690,6 @@ es:
   user_suspended_on: suspendido en %{value}
   users: Usuarios
   users_small: usuarios
-
   # Views -> Versions
   #----------------------------------------------------------------------------
   versions: Historia
@@ -732,7 +706,6 @@ es:
   user_id: Id de usuario
   created_at: Creado el
   updated_at: Actualizado el
-
   # Export.
   #----------------------------------------------------------------------------
   to_xls: Exportar a Excel
@@ -740,7 +713,6 @@ es:
   to_rss: RSS feed
   to_atom: Atom feed
   to_perm: Permalink
-
   # Dropbox.
   #----------------------------------------------------------------------------
   dropbox_notification_subject: dropbox - Email añadido - %{subject}
@@ -748,13 +720,11 @@ es:
   dropbox_notification_to: Añadido a
   subject: Tema
   body: Cuerpo
-
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
     intro: ! '%{user_full_name} comentado en %{entity_type}: %{entity_name}'
     reply_instructions: Responde al correo automaticamente añadiendo un comentario, o visualiza la %{entity} online
-
   # Lists
   #----------------------------------------------------------------------------
   global_lists: Listas globales
@@ -763,7 +733,6 @@ es:
   no_saved_lists: No se han guardado listas
   make_current_view_list: Hacer la vista actual una lista
   list_name_info: Si está usando un nombre existente de lista, sobreescribirás esa lista con la configuración actual.
-
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
@@ -785,7 +754,6 @@ es:
     login:
       one: 1 inicio de sesión
       other: ! '%{count} inicios de sesión'
-
   # Custom date/time formats.
   #----------------------------------------------------------------------------
   date:
@@ -797,20 +765,17 @@ es:
     formats:
       mmddhhss: ! '%e %b at %l:%M%p'
       mmddyyyy_hhmm: ! '%e %b %Y at %l:%M%p'
-
   # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------
   will_paginate:
     previous_label: ! '&#8592; Anterior'
-    next_label: Next &#8594;
+    next_label: 'Next &#8594;'
     page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        zero: No %{plural} encontrado
         one: Mostrando 1 %{name}
         other: Mostrando todos los %{count} %{plural}
       multi_page: mostrando %{plural} %{from} - %{to} de %{total} en total
-
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
   label: Etiqueta
@@ -826,27 +791,22 @@ es:
   restrict_by_tag: ! 'Restringir por Etiqueta:'
   restrict_by_tag_info: (Solo muestra campos para %{assets} que están etiquetadas con lo siguiente)
   field_group_tag_restriction: Este grupo de campos se aplica a %{assets} etiquetadas por "%{tag}"
-  field_group_unrestricted:  Este grupo de campos se aplica a todos los %{assets}
+  field_group_unrestricted: Este grupo de campos se aplica a todos los %{assets}
   field_group_confirm_delete: Si el grupo de campos se ha eliminado, cualquier campo se movera al grupo de campos por defecto.
   msg_cant_delete_field_group: El grupo de campo no se ha podido eliminar.
-  admin_fields_info: ! 'Los campos personalizados se muestran en grupos.
-    Crea un nurevo grupo de campos, o añade campos a uno de los campos existentes.
-    Puedes arrastrar campos para cambiar el orden en el que se muestran
-    o moverlos entre grupos de campos.'
-
+  admin_fields_info: ! 'Los campos personalizados se muestran en grupos. Crea un nurevo grupo de campos, o añade campos a uno de los campos existentes. Puedes arrastrar campos para cambiar el orden en el que se muestran o moverlos entre grupos de campos.'
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'Es altamente recomendable reiniciar tu servidor despues de añadir o
-    borrar algún campo personalizados.'
-
-
+  admin_fields_info2: ! 'Es altamente recomendable reiniciar tu servidor despues de añadir o borrar algún campo personalizados.'
   tags: Etiquetas
   tag_small: etiqueta
   tagged: Etiquetado
   create_tag: Crear Etiqueta
   save_tag: Guardar Etiqueta
   field_group_tags: Grupos de campos mostrados para esta Etiqueta
-
+  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
+  ai_prompt_link: "Design Help"
+  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: Si esta etiqueta se borra, se borraran todos los registros de %{value}
@@ -857,7 +817,6 @@ es:
         author: Autor
         version: Versión
         description: Descripción
-
   # Simple Form translations
   #----------------------------------------------------------------------------
   simple_form:
@@ -866,12 +825,11 @@ es:
     required:
       text: requerido
       mark: ! '*'
-      # You can uncomment the line below if you need to overwrite the whole required html.
-      # When using html, text and mark won't be used.
-      # html: '<abbr title="required">*</abbr>'
+    # You can uncomment the line below if you need to overwrite the whole required html.
+    # When using html, text and mark won't be used.
+    # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: ! ' Se han encontrado algunos errores, porfavor, presta atención a:'
-
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
