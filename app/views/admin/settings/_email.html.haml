@@ -12,7 +12,7 @@
 
     .tab-content
       .tab-pane.active#smtp{role: 'tabpanel'}
-        = f.fields_for :smtp, (OpenStruct.new(Setting.smtp) || OpenStruct.new) do |smtp|
+        = f.fields_for :smtp, Setting.smtp do |smtp|
           .row
             .col-md-6
               .form-group
@@ -40,7 +40,7 @@
               Enable STARTTLS Auto
 
       .tab-pane#dropbox{role: 'tabpanel'}
-        = f.fields_for :email_dropbox, (OpenStruct.new(Setting.email_dropbox) || OpenStruct.new) do |dropbox|
+        = f.fields_for :email_dropbox, Setting.email_dropbox do |dropbox|
           .row
             .col-md-6
               .form-group
@@ -78,7 +78,7 @@
               Attach emails to contact's account
 
       .tab-pane#replies{role: 'tabpanel'}
-        = f.fields_for :email_comment_replies, (OpenStruct.new(Setting.email_comment_replies) || OpenStruct.new) do |replies|
+        = f.fields_for :email_comment_replies, Setting.email_comment_replies do |replies|
           .row
             .col-md-6
               .form-group

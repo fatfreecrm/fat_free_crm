@@ -3,7 +3,7 @@
     %h4= t(:ai_prompts)
     %p= t(:ai_prompts_description)
   .panel-body
-    = f.fields_for :ai_prompts, (OpenStruct.new(Setting.ai_prompts) || OpenStruct.new) do |ai_fields|
+    = f.fields_for :ai_prompts, Setting.ai_prompts do |ai_fields|
       .row
         .col-md-6
           .form-group

@@ -12,7 +12,7 @@
           = f.text_field :base_url, value: Setting.base_url, class: 'form-control', placeholder: "/crm"
         .form-group
           = f.label :locale, "Default Language"
-          = f.select :locale, options_for_select(available_locales, Setting.locale), {}, class: 'form-control'
+          = f.select :locale, options_for_select(I18n.available_locales, Setting.locale), {}, class: 'form-control'
         .form-group
           = f.label :default_access, "Default record permissions"
           = f.select :default_access, options_for_select([['Public', 'Public'], ['Private', 'Private'], ['Shared', 'Shared']], Setting.default_access), {}, class: 'form-control'
