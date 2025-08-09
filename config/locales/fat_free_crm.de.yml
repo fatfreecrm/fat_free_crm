@@ -29,12 +29,12 @@ de-DE:
   admin_tab_tags: Markierungen
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
+  ai_prompts: Beschreiben Sie Ihr Unternehmen
+  ai_prompts_description: Beschreiben Sie Ihr Unternehmen, die Produkte oder Dienstleistungen, die Sie anbieten, und Ihre Zielgruppe. Dies wird uns helfen, das CRM an Ihre Bedürfnisse anzupassen und als Systemabfragen für überall wo die KI verwendet wird.
+  about_my_business: Über mein Geschäft
+  about_my_business_placeholder: ie Example Pty Ltd ist ein mittelständisches Unternehmen, das sich auf die Bereitstellung hochwertiger Softwarelösungen für kleine und mittlere Unternehmen spezialisiert hat. Wir konzentrieren uns auf die Gesundheitsbranche und verkaufen unser Flaggschiffprodukt Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: Wie ich Fat Free CRM verwenden will
+  how_i_plan_to_use_ffcrm_placeholder: Wir werden Mailchimp, Google Ads, Zapier und Slack verwenden. Wir wollen Leads nach bestimmten Bereichen filtern und kategorisieren, an denen sie innerhalb der Gesundheitsversorgung interessiert sind.
   affiliate: Verbundenes Unternehmen
   competitor: Mitbewerber
   customer: Kunde
@@ -187,7 +187,7 @@ de-DE:
   msg_account_not_approved: Ihr Profil wurde noch nicht freigegeben.
   msg_asset_deleted: ! '%{value} wurde gelöscht.'
   msg_asset_not_available: '%{value} ist nicht länger verfügbar.'
-  msg_not_authorized: You are not authorized to take this action.
+  msg_not_authorized: Sie sind nicht berechtigt, diese Aktion durchzuführen.
   msg_assets_not_available: '%{value} sind nicht verfügbar.'
   msg_asset_rejected: ! '%{value} wurde abgelehnt.'
   msg_bad_image_file: '^Konnte das angegebene Bild nicht hochladen oder zu zuschneiden.'
@@ -209,7 +209,7 @@ de-DE:
   msg_require_admin: Sie müssen Administrator sein, um auf die Seite zu zugreifen.
   msg_successful_signup: Erfolgreiche Anmeldung. Willkommen bei Fat Free CRM!
   msg_welcome: Willkommen bei Fat Free CRM!
-  msg_user_updated: Profile updated successfully.
+  msg_user_updated: Profil erfolgreich aktualisiert.
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: gewichteter Betrag
@@ -250,8 +250,8 @@ de-DE:
   campaigns_index_normal: Normales Format
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "Kommentare per E-Mail abonnieren"
+  receive_assigned_notifications: "Zugewiesene Benachrichtigungen per E-Mail erhalten"
   aim: AOL IM
   already_signed_up: Schon registriert?
   alt_email: Alternative Email
@@ -277,7 +277,7 @@ de-DE:
   phone: Telefon
   profile: Profil
   profile_language: Sprache
-  email_notifications: Email Notifications
+  email_notifications: E-Mail-Benachrichtigungen
   save_profile: Profil sichern
   sign_up: Registrieren
   sign_up_button: Registrieren
@@ -371,7 +371,7 @@ de-DE:
   was_supposed_to_finish: angenommenes Ende am %{value}
   was_supposed_to_start: angenommener Beginn vor %{time_ago} am %{start_date}
   was_supposed_to_start_in: angenommener Beginn in %{starts_in} am %{start_date}
-  select_a_campaign: Select a campaign
+  select_a_campaign: Kampagne auswählen
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: Andere
@@ -645,7 +645,7 @@ de-DE:
   notifications_tooltip: Wenn ein Kommentar hinzugefügt wird, werden alle Abonnenten mittels e-Mail benachrichtigt
   subscribe_via_email: Anmeldung via e-Mail
   disable_email_subscriptions: Deaktiviere e-Mail Benachrichtigungen
-  added_note: added comment %{value}
+  added_note: hinzugefügter Kommentar %{value}
   # Views -> Emails.
   #----------------------------------------------------------------------------
   # Views -> Passwords.
@@ -727,8 +727,8 @@ de-DE:
     reply_instructions: Sie können auf dieses e-Mail antworten um ein Kommentar hinzuzufügen, oder zeigen Sie %{entity} in Ihrem Browser an.
   # Lists
   #----------------------------------------------------------------------------
-  global_lists: Global lists
-  personal_lists: My lists
+  global_lists: Globale Listen
+  personal_lists: Meine Listen
   list: Liste
   no_saved_lists: Keine gespeicherten Listen
   make_current_view_list: Erstelle Liste aus aktueller Ansicht
@@ -804,9 +804,9 @@ de-DE:
   create_tag: Tag erstellen
   save_tag: Speichere Tag
   field_group_tags: Gruppen mit diesem Tag
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  ai_prompt_tags: Erstellen Sie Markierungen für potenzielle Leads, Konten oder Kampagnen, die sich auf die Spezialisierungsbereiche der Branche konzentrieren
+  ai_prompt_link: "Design-Hilfe"
+  ai_prompt_link_tooltip: "OpenAI Chat mit Prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: Wenn dieser Tag gelöscht wird, wird er von %{value} Einträgen entfernt.
@@ -820,8 +820,8 @@ de-DE:
   # Simple Form translations
   #----------------------------------------------------------------------------
   simple_form:
-    yes: 'Yes'
-    no: 'No'
+    yes: 'Ja'
+    no: 'Nein'
     required:
       text: notwendig
       mark: ! '*'
