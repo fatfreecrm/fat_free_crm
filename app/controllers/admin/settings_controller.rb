@@ -28,24 +28,16 @@ class Admin::SettingsController < Admin::ApplicationController
     end
 
     # Nested booleans
-    if settings.key?(:email_dropbox) && settings[:email_dropbox].key?(:ssl)
-      settings[:email_dropbox][:ssl] = (settings[:email_dropbox][:ssl] == '1')
-    end
-    if settings.key?(:email_comment_replies) && settings[:email_comment_replies].key?(:ssl)
-      settings[:email_comment_replies][:ssl] = (settings[:email_comment_replies][:ssl] == '1')
-    end
+    settings[:email_dropbox][:ssl] = (settings[:email_dropbox][:ssl] == '1') if settings.key?(:email_dropbox) && settings[:email_dropbox].key?(:ssl)
+    settings[:email_comment_replies][:ssl] = (settings[:email_comment_replies][:ssl] == '1') if settings.key?(:email_comment_replies) && settings[:email_comment_replies].key?(:ssl)
 
     # Arrays from textareas
     %w[account_category campaign_status lead_status lead_source opportunity_stage task_category task_bucket task_completed priority_countries].each do |key|
-      if settings[key].is_a?(String)
-        settings[key] = settings[key].split(/\r?\n/).map(&:strip).reject(&:blank?)
-      end
+      settings[key] = settings[key].split(/\r?\n/).map(&:strip).compact_blank if settings[key].is_a?(String)
     end
 
     # Symbols
-    if settings[:user_signup].is_a?(String)
-      settings[:user_signup] = settings[:user_signup].to_sym
-    end
+    settings[:user_signup] = settings[:user_signup].to_sym if settings[:user_signup].is_a?(String)
 
     # Save all settings
     settings.each do |key, value|
@@ -74,21 +66,21 @@ class Admin::SettingsController < Admin::ApplicationController
       task_category: [],
       task_bucket: [],
       task_completed: [],
-      smtp: [
-        :address, :from, :enable_starttls_auto, :port, :authentication,
-        :user_name, :password
+      smtp: %i[
+        address from enable_starttls_auto port authentication
+        user_name password
       ],
       email_dropbox: [
         :server, :port, :ssl, :address, :user, :password, :scan_folder,
         :attach_to_account, :move_to_folder, :move_invalid_to_folder,
-        address_aliases: []
+        { address_aliases: [] }
       ],
-      email_comment_replies: [
-        :server, :port, :ssl, :address, :user, :password, :scan_folder,
-        :move_to_folder, :move_invalid_to_folder
+      email_comment_replies: %i[
+        server port ssl address user password scan_folder
+        move_to_folder move_invalid_to_folder
       ],
-      ai_prompts: [
-        :about_my_business, :how_i_plan_to_use_ffcrm
+      ai_prompts: %i[
+        about_my_business how_i_plan_to_use_ffcrm
       ]
     )
   end
