@@ -1,15 +1,20 @@
 ---
-it:
+it-IT:
   language: Italian
+  # Generic terms.
+  #----------------------------------------------------------------------------
+  id: Id
   all: Tutti
   at: presso
   here: qui
   no_button: 'No'
   not_implemented: Non ancora implementato.
   or: o
-  select_none: -- Nessuno --
-  select_blank: -- Seleziona --
-  yes_button: Si
+  select_none: '-- Nessuno --'
+  select_blank: '-- Seleziona --'
+  yes_button: 'Si'
+  # Settings.
+  #----------------------------------------------------------------------------
   tab_dashboard: Cruscotto
   tab_tasks: Lavori
   tab_campaigns: Campagne
@@ -17,9 +22,19 @@ it:
   tab_accounts: Conto
   tab_contacts: Contatti
   tab_opportunities: Opportunita'
+  tab_team: Team
+  admin_tab_groups: Groups
   admin_tab_users: Utenti
+  admin_tab_fields: Custom Fields
+  admin_tab_tags: Tags
   admin_tab_settings: Impostazioni
   admin_tab_plugins: Plugins
+  ai_prompts: Describe your business
+  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
+  about_my_business: About my business
+  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
   affiliate: Affiliato
   competitor: Concorrente
   customer: Cliente
@@ -71,12 +86,16 @@ it:
   completed_last_week: Scorsa settimana
   completed_this_month: Questo mese
   completed_last_month: Scorso mese
+  # Models/Activity.
+  #----------------------------------------------------------------------------
   one_hour: Un'ora
   one_day: Un giorno
   two_days: Due giorni
   one_week: Una settimana
   two_weeks: Due settimane
   one_month: Un mese
+  # Model Validations.
+  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
@@ -89,75 +108,96 @@ it:
         account:
           attributes:
             name:
-              missing_account_name: ^Specificare il nome del conto.
+              missing_account_name: '^Specificare il nome del conto.'
             access:
-              share_account: ^Specificare gli utenti con cui condividere il conto.
+              share_account: '^Specificare gli utenti con cui condividere il conto.'
         campaign:
           attributes:
             name:
-              missing_campaign_name: ^Specificare il nome della campagna.
+              missing_campaign_name: '^Specificare il nome della campagna.'
             ends_on:
-              dates_not_in_sequence: ^Controllare che la data finale della campagna
-                sia successiva a quella iniziale.
+              dates_not_in_sequence: '^Controllare che la data finale della campagna sia successiva a quella iniziale.'
             access:
-              share_campaign: ^Specificare gli utenti con cui condividere la campagna.
+              share_campaign: '^Specificare gli utenti con cui condividere la campagna.'
         contact:
           attributes:
             first_name:
-              missing_first_name: ^Specificare il nome.
+              missing_first_name: '^Specificare il nome.'
             last_name:
-              missing_last_name: ^Specificare il cognome.
+              missing_last_name: '^Specificare il cognome.'
             access:
-              share_contact: ^Specificare gli utenti con cui contdividere il contatto.
+              share_contact: '^Specificare gli utenti con cui contdividere il contatto.'
         lead:
           attributes:
             first_name:
-              missing_first_name: ^Specificare il nome.
+              missing_first_name: '^Specificare il nome.'
             last_name:
-              missing_last_name: ^Specificare il cognome.
+              missing_last_name: '^Specificare il cognome.'
             access:
-              share_lead: ^Specificare gli utenti con cui condividere il potenziale.
+              share_lead: '^Specificare gli utenti con cui condividere il potenziale.'
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: ^Specificare il nome dell'opportunita'.
+              missing_opportunity_name: '^Specificare il nome dell''opportunita''.'
             access:
-              share_opportunity: ^Specificare gli utenti con cui condividere l'opportunita'.
+              share_opportunity: '^Specificare gli utenti con cui condividere l''opportunita''.'
         task:
           attributes:
             name:
-              missing_task_name: ^Specificare il nome del lavoro.
+              missing_task_name: '^Specificare il nome del lavoro.'
             calendar:
-              invalid_date: ^Specificare una data valida.
+              invalid_date: '^Specificare una data valida.'
         user:
           attributes:
             username:
-              missing_username: ^Specificare il nome utente.
-              username_taken: ^Questo nome utente e' gia' assegnato.
+              missing_username: '^Specificare il nome utente.'
+              username_taken: '^Questo nome utente e'' gia'' assegnato.'
             email:
-              missing_email: ^Specificare l'indirizzo email.
-              email_in_use: ^C'e' un altro utente con la stessa email.
+              missing_email: '^Specificare l''indirizzo email.'
+              email_in_use: '^C''e'' un altro utente con la stessa email.'
+        custom_field:
+          required: '^%{field} is required.'
+          minlength: '^%{field} is too short.'
+          maxlength: '^%{field} is too long.'
+          endbeforestart: '^%{field} cannot end before it begins.'
+    attribute_options:
+      opportunity:
+        stage:
+          prospecting: Prospecting
+          analysis: Analysis
+          presentation: Presentation
+          proposal: Proposal
+          negotiation: Negotiation
+          final_review: Final Review
+          won: Closed/Won
+          lost: Closed/Lost
+      account:
+        rating:
+          "0": "-"
+          "1": "★"
+          "2": "★★"
+          "3": "★★★"
+          "4": "★★★★"
+          "5": "★★★★★"
   msg_account_suspended: Questo utente e' stato sospeso.
   password_reset_instruction: istruzioni per il reset della password
-  msg_account_created: Il tuo account e' stato creato ed e' in attesa di approvazione
-    dall'amministratore.
+  # Controllers.
+  #----------------------------------------------------------------------------
+  msg_account_created: Il tuo account e' stato creato ed e' in attesa di approvazione dall'amministratore.
   msg_account_not_approved: Il tuo account non e' ancora stato approvato.
   msg_asset_deleted: ! '%{value} e'' stato eliminato.'
   msg_asset_not_available: Questo %{value} non e' piu' valido.
-  msg_asset_not_authorized: Non sei autorizzato a vedere questo %{value}.
+  msg_not_authorized: You are not authorized to take this action.
   msg_assets_not_available: I %{value} non sono disponibili.
   msg_asset_rejected: ! '%{value} e'' stato respinto.'
-  msg_bad_image_file: ^Impossibile caricare o ridimensionare il file con l'immagine
-    specificata.
-  msg_cant_create_related: Non e' possibile creare %{asset} finche' %{related} non
-    e' piu' disponibile.
-  msg_cant_delete_user: ^Non e' possibilie eliminare l'utente finche' %{value} sono
-    presenti elementi assegnati.
+  msg_bad_image_file: '^Impossibile caricare o ridimensionare il file con l''immagine specificata.'
+  msg_cant_create_related: Non e' possibile creare %{asset} finche' %{related} non e' piu' disponibile.
+  msg_cant_delete_user: '^Non e'' possibilie eliminare l''utente finche'' %{value} sono presenti elementi assegnati.'
   msg_cant_do: Can't %{action} the %{asset} since it's no longer available.
   msg_email_not_found: Non e' stato trovato alcun utente con questa email.
   msg_enter_new_password: Per favore insersci la tua nuova password.
   msg_goodbye: Ti sei sconnesso. Grazie per aver usato Fat Free CRM!
-  msg_invalid_password: ^Specifica la tua password corrente
+  msg_invalid_password: '^Specifica la tua password corrente'
   msg_invalig_login: username o password non valida.
   msg_last_login: il tuo ultimo login risale al %{value}.
   msg_login_needed: Devi essere connesso per accedere a questa pagina.
@@ -165,14 +205,15 @@ it:
   msg_password_changed: La tua password e' stata modificata.
   msg_password_not_changed: La tua password non e' stata modificata.
   msg_password_updated: Password aggiornata con successo.
-  msg_pwd_instructions_sent: Ti sono state inviate le istruzioni per resettare la
-    tua password. Per favore controlla la tua email.
+  msg_pwd_instructions_sent: Ti sono state inviate le istruzioni per resettare la tua password. Per favore controlla la tua email.
   msg_require_admin: Devi essere un Amministratore per accedere a questa pagina.
   msg_successful_signup: Registrazione con successo, benvenuto a Fat Free CRM!
   msg_welcome: Benvenuto a Fat Free CRM!
+  msg_user_updated: Profile updated successfully.
+  # Options.
+  #----------------------------------------------------------------------------
   option_amount*probability: ammonotare pesato
-  activity_options: Mostra %{models} %{action_type} eseguito da %{user} nel passato
-    %{period}.
+  activity_options: Mostra %{models} %{action_type} eseguito da %{user} nel passato %{period}.
   all_users: tutti gli utenti
   option_after: dopo
   option_all: tutti
@@ -199,6 +240,18 @@ it:
   show_per_page: Mostra %{number} %{models} per pagina usando %{fmt} formato.
   sort_by: Ordina per %{field}.
   sort_by_displaying: Ordina %{models} per %{field} mostrando nome %{position} cognome
+  entities_per_page: ! '%{entity} per page:'
+  contacts_index_long: Long format
+  contacts_index_brief: Brief format
+  contacts_index_full: Full format
+  opportunities_index_normal: Normal format
+  accounts_index_normal: Normal format
+  leads_index_normal: Normal format
+  campaigns_index_normal: Normal format
+  # Views -> Profile.
+  #----------------------------------------------------------------------------
+  subscribe_to_comment_replies: "Subscribe to comment replies by email"
+  receive_assigned_notifications: "Receive assigned notifications by email"
   aim: AOL IM
   already_signed_up: Gia' iscritto?
   alt_email: Email alternativa
@@ -212,8 +265,7 @@ it:
   google: Google IM
   gravatar_help: Non conosci Gravatars? Acquisisci informazioni riguardo Gravatars
   image_file: File immagine
-  image_help: Il file immagine che hai caricato sara' ridimensionato a 180 x 180 pixels.
-    Formati supportati sono GIF, JPG e PNG.
+  image_help: Il file immagine che hai caricato sara' ridimensionato a 180 x 180 pixels. Formati supportati sono GIF, JPG e PNG.
   job_title: Titolo
   last_name: Cognome
   login_now_link: Connettiti ora!
@@ -225,6 +277,7 @@ it:
   phone: Telefono
   profile: Profilo
   profile_language: Languaggio
+  email_notifications: Email Notifications
   save_profile: Salva Profilo
   sign_up: Iscriviti
   sign_up_button: Iscriviti
@@ -233,14 +286,24 @@ it:
   user: Utente
   username: Username
   yahoo: Yahoo IM
+  born_on: Born on
+  reports_to: Reports to
+  access: Access
+  # Views -> Authenticate.
+  #----------------------------------------------------------------------------
   forgot_password: Password dimenticata
   login: Login
   no_account: Hai un account?
   remember_me: Ricordami
   sign_up_now: Registrati Ora!
+  # Views -> Accounts.
+  #----------------------------------------------------------------------------
   account: Conto
+  account_id: Account
+  select_an_account: Select an Account
   account_small: conto
   account_summary: Sommario Conto
+  account_categories: Account Categories
   accounts: Conti
   accounts_options: Opzioni Conti
   accounts_small: conti
@@ -265,6 +328,10 @@ it:
   shipping_address: Indirizzo spedizione
   total_accounts: Totale Conti
   website: Website
+  account_with_title_department: ! '%{title}, %{department} at %{account}'
+  account_with_title: ! '%{title} at %{account}'
+  # Views -> Campaigns.
+  #----------------------------------------------------------------------------
   actual: Attuale
   actual_performance: Performance attuale
   budget: Budget
@@ -274,12 +341,14 @@ it:
   campaign_small: campagna
   campaign_summary: Sommario Campagna
   campaign_targets: Obiettivi Campagna
+  campaign_statuses: Campaign Statuses
   campaigns: Campagne
   campaigns_options: Opzioni Campagne
   campaigns_small: campagne
   conversion: Conversione
   conversion_label: Conversione (%)
   conversion_number: ! '%{value} conversione'
+  target_conversion: Target conversion
   create_campaign: Crea Campagna
   end_date: Data finale
   finished_on: completato il %{value}
@@ -287,10 +356,7 @@ it:
   no_start_date: data iniziale non specificata
   number_of_leads: Numero di Potenziali
   objectives: Obiettivi
-  objectives_help: Per favore indica il numero di potenziali obiettivo, eccetto la
-    percentuale di conversione verso le opportunita', gettito obiettivo, e il budget
-    della campagna. Questi numeri ti consentiranno di tracciare le performance della
-    campagna.
+  objectives_help: Per favore indica il numero di potenziali obiettivo, eccetto la percentuale di conversione verso le opportunita', gettito obiettivo, e il budget della campagna. Questi numeri ti consentiranno di tracciare le performance della campagna.
   objectives_small: obiettivi campagna
   revenue: Gettito
   revenue_label: Gettito (%{currency})
@@ -305,6 +371,9 @@ it:
   was_supposed_to_finish: la conclusione era prevista per il %{value}
   was_supposed_to_start: l'inizio era prevista %{time_ago} fa, il %{start_date}
   was_supposed_to_start_in: l'inizio era prevista tra %{starts_in} il %{start_date}
+  select_a_campaign: Select a campaign
+  # Views -> Contacts.
+  #----------------------------------------------------------------------------
   alt_email_small: Altro
   blog: Website/Blog
   contact: Contatto
@@ -312,6 +381,7 @@ it:
   contacts: Contatti
   contacts_options: Opzioni Contatti
   contacts_small: contatti
+  contact_summary: Contact Summary
   create_contact: Crea Contatto
   department: Dipartimento
   department_small: ! '%{value} dipartimento'
@@ -321,42 +391,42 @@ it:
   facebook: Facebook
   linked_in: LinkedIn
   myself: Me stesso
-  permissions_intro_private: Di default solo tu avrai accesso a %{value}. Potrai cambiare
-    i permessi piu' tardi.
-  permissions_intro_public: Di default tutti gli utenti avranno accesso a %{value}.
-    Potrai cambiare i permessi piu' tardi.
-  permissions_intro_shared: Di default solo gli utenti selezionati avranno accesso
-    a %{value}. Potrai cambiare i permessi piu' tardi.
+  permissions_intro_private: Di default solo tu avrai accesso a %{value}. Potrai cambiare i permessi piu' tardi.
+  permissions_intro_public: Di default tutti gli utenti avranno accesso a %{value}. Potrai cambiare i permessi piu' tardi.
+  permissions_intro_shared: Di default solo gli utenti selezionati avranno accesso a %{value}. Potrai cambiare i permessi piu' tardi.
   referred_by: Riferito da
   referred_by_small: riferito da
   save_contact: Salva Contatto
   twitter: Twitter
+  unassigned: Unassigned
   web_presence: Presenza Web
   web_presence_small: presenza web
   works_at: ! '%{job_title} presso %{company}'
+  general_info: General Information
+  show_general_info_small: Show general information for this contact.
+  show_extra_info_small: Show extra information for this contact.
+  tag_details: ! '%{tag} Details'
+  show_tag_info_small: Show %{tag} information for this contact.
+  shared_with_everyone: Shared with everyone
+  title: Title
+  subscriptions: Subscriptions
+  # Views -> Leads.
+  #----------------------------------------------------------------------------
   convert: Converti
   convert_lead: Converti Potenziale
-  convert_lead_permissions_intro: I permessi del contatto saranno copiati dalla conversione
-    del potenziale. Potrai cambiare i permessi piu' tardi.
-  convert_lead_text: Convertendo il potenziale %{value} verra' associato ad un contatto
-    esistente oppure ad un nuovo contatto creato. Lo stato del potenziale sara' automaticamente
-    inmpostato a Convertito.
+  convert_lead_permissions_intro: I permessi del contatto saranno copiati dalla conversione del potenziale. Potrai cambiare i permessi piu' tardi.
+  convert_lead_text: Convertendo il potenziale %{value} verra' associato ad un contatto esistente oppure ad un nuovo contatto creato. Lo stato del potenziale sara' automaticamente inmpostato a Convertito.
   create_lead: Crea potenziale
-  create_opp_for_contact: E' possibile creare una opoortunita' per il %{value} contatto
-    attraverso l'indicazione del nome, stato corrente, data chiusura stimata, probabilita'
-    vendita, ammontare dell'affare e sconto offerto.
+  create_opp_for_contact: E' possibile creare una opoortunita' per il %{value} contatto attraverso l'indicazione del nome, stato corrente, data chiusura stimata, probabilita' vendita, ammontare dell'affare e sconto offerto.
   lead: Potenziale
   lead_info_small: contatti potenziale
-  lead_permissions_intro_private: Di default i permessi saranno copiati dalla campagna
-    o impostati a privato. Potrai cambiare i permessi del potenziale piu' tardi.
-  lead_permissions_intro_public: Di default i permessi saranno copiati dalla campagna
-    o impostati a pubblico. Potrai cambiare i permessi del potenziale piu' tardi.
-  lead_permissions_intro_shared: Di default i permessi saranno copiati dalla campagna
-    o condivisi con gli utenti specificati. Potrai cambiare i permessi del potenziale
-    piu' tardi.
+  lead_permissions_intro_private: Di default i permessi saranno copiati dalla campagna o impostati a privato. Potrai cambiare i permessi del potenziale piu' tardi.
+  lead_permissions_intro_public: Di default i permessi saranno copiati dalla campagna o impostati a pubblico. Potrai cambiare i permessi del potenziale piu' tardi.
+  lead_permissions_intro_shared: Di default i permessi saranno copiati dalla campagna o condivisi con gli utenti specificati. Potrai cambiare i permessi del potenziale piu' tardi.
   lead_small: potenziale
   lead_status_small: stato del potenziale
   lead_summary: Sommario del Potenziale
+  lead_statuses: Lead Statuses
   leads: Potenziali
   leads_options: Opzioni Potenziali
   leads_small: potenziali
@@ -368,8 +438,13 @@ it:
   source: Sorgente
   status: Stato
   total_leads: Potenziali Totali
+  show_status_info_small: Show status information for this lead.
+  show_contact_info_small: Show contact information for this lead.
+  # Views -> Opportunities.
+  #----------------------------------------------------------------------------
   amount: Importo
   close_date: Data chiusura
+  closes_on: Closes on
   closed_ago_on: chiuso %{time_ago} fa, il %{date}
   closes_today: conclusione prevista oggi!
   closing_date: data di chiusura e' %{value}
@@ -388,6 +463,7 @@ it:
   opportunities_small: opportunita'
   opportunity: Opportunita'
   opportunity_small: opportunita'
+  opportunity_stages: Opportunity Stages
   opportunity_summary: Opportunita' a colpo d'occhio
   opportunity_summary_text: ! '%{amount} con %{discount} sconto e %{probability} probabilita'''
   past_due: scadenza superata, era previsto concludersi %{value} fa
@@ -397,6 +473,12 @@ it:
   stage: Punto
   total_opportunities: Totale Opportunita'
   weighted_amount: Importo pesato
+  # Views -> Tasks.
+  #----------------------------------------------------------------------------
+  task: Task
+  task_small: lavoro
+  tasks: Lavori
+  tasks_small: tasks
   assign_to: Assegnato a
   assigned_tab: Assegnato
   assigned_tasks: Lavori Assegnati
@@ -430,32 +512,54 @@ it:
   task_from: Da %{value}
   task_overdue: in ritardo, era in scadenza il
   task_pending: Il lavoro e' stato spostato tra i lavori in attesa
-  task_small: lavoro
-  tasks: Lavori
   total_tasks: Totale %{value}
   view_assigned_tasks: vedi i lavori assegnati
   view_pending_tasks: vedi i lavori pendenti
-  action_commented: commentato il
+  # Views -> Team.
+  #----------------------------------------------------------------------------
+  unassigned_opportunities: Unassigned Opportunities
+  no_opportunities_found: There are currently no outstanding opportunities.
+  # Views -> Home.
+  #----------------------------------------------------------------------------
   action_completed: completato
-  action_created: creato
-  action_deleted: eliminato
-  action_email: scambio di email con
+  action_create: created
+  action_destroy: deleted
   action_reassigned: riassegnato
   action_rejected: respinto
   action_rescheduled: riprogrammato
-  action_updated: aggiornato
-  action_viewed: visto
+  action_update: updated
+  action_view: viewed
   action_won: vinto
   activities: Attivita'
   no_activity_records: Nessun record di attivita' trovato.
   recent_activity: Attivita' Recenti
   recent_activity_options: Opzioni Attivita' Recenti
   subject_account: conto
+  subject_address: address on
   subject_campaign: campagna
+  subject_comment: comment on
   subject_contact: contatto
+  subject_email: email on
   subject_lead: potenziale
   subject_opportunity: opportunita'
   subject_task: lavoro
+  subject_user: user
+  tag_list: Tags
+  create_past_participle: Record Creations
+  view_past_participle: Views
+  update_past_participle: Updates
+  destroy_past_participle: Deletions
+  all_events_past_participle: Activities
+  action_create_comment: ! '- &quot;%{comment}&quot;'
+  my_tasks: My Tasks
+  no_task_records: You have no tasks.
+  my_opportunities: My Opportunities
+  no_opportunity_records: You have no opportunities.
+  my_accounts: My Accounts
+  no_account_records: You have no accounts
+  not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
+  # Views -> Common.
+  #----------------------------------------------------------------------------
   add_note: Aggiungi Nota
   save_note: Salva Nota
   add_note_help: Aggiungi una nuova nota...
@@ -465,6 +569,7 @@ it:
   back: Indietro
   cancel: Annulla
   close_form: Modello chisura
+  comment_intro: You can add comments later.
   confirm_delete: Sei sicuro di voler eliminare questo %{value}?
   copy_permissions: Copia %{value} permessi
   could_not_find: Non e' stato possibile trovare alcun/a %{value}. Ti e' possibile
@@ -501,10 +606,13 @@ it:
   zipcode: CAP
   state: Stato
   country: Nazione
+  select_a_country: Select a Country
   expand_all: Mostra tutti
   collapse_all: Raggruppa tutti
   expanded: Espandi
   collapsed: Raggruppa
+  # Views -> Layout.
+  #----------------------------------------------------------------------------
   about: Info
   about_dev_group: Gruppo di discussione per gli sviluppatori
   about_features: Caratteristiche e bug
@@ -513,36 +621,66 @@ it:
   about_ffc_version: Fat Free CRM versione
   about_home_page: Home page
   about_project_page: Pagina del Progetto
-  about_thank_you: Grazie per usare Fat Free CRM! Appreziamo il tuo business e speriamo
-    ti sia gradito l'uso di questo programma.
+  about_thank_you: Grazie per usare Fat Free CRM! Appreziamo il tuo business e speriamo ti sia gradito l'uso di questo programma.
   about_twitter: Aggiornamenti Twitter delle modifiche
   about_user_group: Gruppo di discussione per gli utenti
   admin: Amministrazione
   logout: Logout
   quick_find: Ricerca veloce
   welcome: Benvenuto
+  # Advanced search
+  accounts_advanced_search: Accounts Advanced search
+  advanced_search: Advanced search
+  basic_search: Basic search
+  search_results_count:
+    one: Search found %{count} result.
+    other: Search found %{count} results.
+  # Views -> Comments.
+  #----------------------------------------------------------------------------
+  comment: Comment
   edit_comment: Modificando commento
   show: Mostra
   update: Aggiorna
+  following_users_will_be_notified: The following users will be notified by email
+  notifications_tooltip: Subscribers will receive new comments via email
+  subscribe_via_email: Subscribe via email
+  disable_email_subscriptions: Disable email subscription
+  added_note: added comment %{value}
+  # Views -> Emails.
+  #----------------------------------------------------------------------------
+  # Views -> Passwords.
+  #----------------------------------------------------------------------------
   confirm_password_intro: Per favore digita la tua password e la conferma.
-  password_intro: Specifica il tuo indirizzo email, e le istruzioni per resettare
-    la password ti saranno inviate.
+  password_intro: Specifica il tuo indirizzo email, e le istruzioni per resettare la password ti saranno inviate.
   reset_password: Resetta Password
   update_password_and_login: Aggiorna Password e Login
+  # Views -> Admin
+  #----------------------------------------------------------------------------
   back_to_crm: Ritorna a Fat Free CRM
   crm_admin_page: Fat Free CRM Amministrazione
+  # Views -> Admin -> Groups
+  #----------------------------------------------------------------------------
+  create_group: Create Group
+  save_group: Save Group
+  group_members: members
+  groups: Groups
+  groups_small: groups
+  group_small: group
+  # Views -> Admin -> Users
+  #----------------------------------------------------------------------------
+  confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
   approve: Approva
   create_user: Utente creato
   last_logged_in: last logged in %{value}
   personal_information: Informazione Personale
+  group_memberships: Group Memberships
   reactivate: Riattiva
   save_user: Salva Utente
   suspend: Sospeso
   user_active: Attivo
   user_admin: Admin
   user_awaits_approval: in attesa di approvazione
-  user_confirm_delete: Un utente puo' essere cancellato se non ha assests assegnati
-    lasciati indietro.
+  user_confirm_delete: Un utente puo' essere cancellato se non ha assests assegnati lasciati indietro.
   user_is_admin: L'utente e' Amministratore
   user_never_logged_in: non si e' ancora collegato
   user_signed_up: Iscritto
@@ -552,15 +690,51 @@ it:
   user_suspended_on: sospeso il %{value}
   users: Utenti
   users_small: utenti
+  # Views -> Versions
+  #----------------------------------------------------------------------------
+  versions: History
+  version:
+    create: ! '%{item} created by %{by}'
+    update: ! '%{item} modified by %{by}'
+    destroy: ! '%{item} destroyed by %{by}'
+    set_html: ! '%{attr} set to %{to}'
+    unset_html: ! '%{attr} unset'
+    change_html: ! '%{attr} changed from %{from} to %{to}'
+    anonymous: anonymous
+  account_contact_id: Account id
+  account_contact_name: Account name
+  user_id: User id
+  created_at: Created at
+  updated_at: Updated at
+  # Export.
+  #----------------------------------------------------------------------------
   to_xls: Esporta a Excel
   to_csv: Esporta al formato file delimitato da virgole (inclusi i record cancellati)
   to_rss: RSS feed
   to_atom: Atom feed
+  to_perm: Permalink
+  # Dropbox.
+  #----------------------------------------------------------------------------
   dropbox_notification_subject: dropbox - Aggiunta email - %{subject}
   dropbox_notification_intro: Email inviata a dropbox aggiunta con successo
   dropbox_notification_to: Aggiunto a
   subject: Oggetto
   body: Corpo
+  # Comment Inbox
+  #----------------------------------------------------------------------------
+  comment_notification:
+    intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
+    reply_instructions: Reply to this email directly to add a new comment, or view the %{entity} online
+  # Lists
+  #----------------------------------------------------------------------------
+  global_lists: Global lists
+  personal_lists: My lists
+  list: List
+  no_saved_lists: No saved lists
+  make_current_view_list: Make current view a list
+  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     comment:
       one: 1 commento
@@ -580,6 +754,8 @@ it:
     login:
       one: 1 login
       other: ! '%{count} logins'
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
   date:
     formats:
       mmddyyyy: ! '%d/%m/%Y'
@@ -589,3 +765,111 @@ it:
     formats:
       mmddhhss: ! '%b %e at %l:%M%p'
       mmddyyyy_hhmm: ! '%d/%m/%Y %H:%M'
+  # will_paginate translations copied for 'en-US'
+  #----------------------------------------------------------------------------
+  will_paginate:
+    previous_label: ! '&#8592; Previous'
+    next_label: 'Next &#8594;'
+    page_gap: ! '&hellip;'
+    page_entries_info:
+      single_page:
+        one: Displaying 1 %{name}
+        other: Displaying all %{count} %{plural}
+      multi_page: Displaying %{plural} %{from} - %{to} of %{total} in total
+  # Views -> Admin -> Custom Fields
+  #----------------------------------------------------------------------------
+  label: Label
+  custom_fields: Custom Fields
+  custom_field_options: Custom Field Options
+  create_field: Create field
+  save_field: Save field
+  create_field_group: Create field group
+  edit_field_group: Edit field group
+  save_field_group: Save field group
+  field_group_empty: There are no fields in this group.
+  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
+  restrict_by_tag: ! 'Restrict by Tag:'
+  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
+  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
+  field_group_unrestricted: This field group applies to all %{assets}
+  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
+  msg_cant_delete_field_group: Field Group could not be deleted.
+  admin_fields_info: ! 'Custom fields are displayed in groups. Create a new field group, or add fields to one of the groups below. You can drag and drop fields to change their display order or move them between field groups.'
+  # Views -> Admin -> Tags
+  #----------------------------------------------------------------------------
+  admin_fields_info2: ! 'It is strongly recommended you restart your server after adding or removing any custom field. '
+  tags: Tags
+  tag_small: tag
+  tagged: Tagged
+  create_tag: Create Tag
+  save_tag: Save Tag
+  field_group_tags: Field Groups shown for this Tag
+  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
+  ai_prompt_link: "Design Help"
+  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  # Views -> Admin -> Plugins
+  #----------------------------------------------------------------------------
+  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from %{value} records.
+  msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
+  views:
+    admin:
+      plugins:
+        author: Author
+        version: Version
+        description: Description
+  # Simple Form translations
+  #----------------------------------------------------------------------------
+  simple_form:
+    yes: 'Yes'
+    no: 'No'
+    required:
+      text: required
+      mark: ! '*'
+    # You can uncomment the line below if you need to overwrite the whole required html.
+    # When using html, text and mark won't be used.
+    # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: ! 'Some errors were found, please take a look:'
+  # Form field types
+  #----------------------------------------------------------------------------
+  field_types:
+    string:
+      title: Short Answer
+    text:
+      title: Long Answer
+    select:
+      title: Select List
+    multiselect:
+      title: Multi Select
+    radio_buttons:
+      title: Radio Buttons
+    boolean:
+      title: Checkbox
+    check_boxes:
+      title: Checkbox List
+    date:
+      title: Date
+    date_pair:
+      title: Date Pair
+    datetime:
+      title: Date & Time
+    datetime_pair:
+      title: Date & Time Pair
+    email:
+      title: Email Address
+    url:
+      title: URL
+    tel:
+      title: Phone Number
+    decimal:
+      title: Number (Decimal)
+    integer:
+      title: Number (Integer)
+    float:
+      title: Number (Floating Point)
+  pair:
+    start: Start
+    end: End
+    from_to: From %{from} to %{to}
+    from_only: From %{from}
+    to_only: Until %{to}
