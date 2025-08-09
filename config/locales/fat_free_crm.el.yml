@@ -1,99 +1,99 @@
 ---
 el-GR:
-  language: English
+  language: Αγγλικά
   # Generic terms.
   #----------------------------------------------------------------------------
   id: Id
-  all: All
-  at: at
-  here: here
-  no_button: 'No'
-  not_implemented: Not implemented yet.
-  or: or
-  select_none: '-- None --'
-  select_blank: '-- Select --'
-  yes_button: 'Yes'
+  all: Όλα
+  at: στις
+  here: εδώ
+  no_button: 'Όχι'
+  not_implemented: Δεν έχει εφαρμοστεί ακόμα.
+  or: ή
+  select_none: '-- Κανένα --'
+  select_blank: '-- Επιλογή --'
+  yes_button: 'Ναι'
   # Settings.
   #----------------------------------------------------------------------------
-  tab_dashboard: Dashboard
-  tab_tasks: Tasks
-  tab_campaigns: Campaigns
-  tab_leads: Leads
-  tab_accounts: Accounts
-  tab_contacts: Contacts
-  tab_opportunities: Opportunities
-  tab_team: Team
-  admin_tab_groups: Groups
-  admin_tab_users: Users
-  admin_tab_fields: Custom Fields
-  admin_tab_tags: Tags
-  admin_tab_settings: Settings
-  admin_tab_plugins: Plugins
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
-  affiliate: Affiliate
-  competitor: Competitor
-  customer: Customer
-  partner: Partner
-  reseller: Reseller
-  vendor: Vendor
-  planned: Planned
-  started: Started
-  on_hold: On Hold
-  completed: Completed
-  called_off: Called Off
-  new: New
-  contacted: Contacted
-  converted: Converted
-  rejected: Rejected
-  cold_call: Cold Call
-  conference: Conference
-  online: Online Marketing
-  referral: Referral
-  self: Self Generated
-  web: Website
-  word_of_mouth: Word of Mouth
-  other: Other
-  prospecting: Prospecting
-  analysis: Analysis
-  presentation: Presentation
-  proposal: Proposal
-  negotiation: Negotiation
-  final_review: Final Review
-  won: Closed/Won
-  lost: Closed/Lost
-  call: Call
-  email: Email
-  follow_up: Follow-up
-  lunch: Lunch
-  meeting: Meeting
-  money: Money
-  trip: Trip
-  overdue: Overdue
-  due_asap: As Soon As Possible
-  due_today: Today
-  due_tomorrow: Tomorrow
-  due_this_week: This Week
-  due_next_week: Next Week
-  due_later: Sometime Later
-  due_specific_date: On Specific Date...
-  completed_today: Today
-  completed_yesterday: Yesterday
-  completed_last_week: Last week
-  completed_this_month: This month
-  completed_last_month: Last month
+  tab_dashboard: Ταμπλό
+  tab_tasks: Εργασίες
+  tab_campaigns: Εκστρατείες
+  tab_leads: Δυνητικοί Πελάτες
+  tab_accounts: Λογαριασμοί
+  tab_contacts: Επαφές
+  tab_opportunities: Ευκαιρίες
+  tab_team: Ομάδα
+  admin_tab_groups: Ομάδες
+  admin_tab_users: Χρήστες
+  admin_tab_fields: Προσαρμοσμένα Πεδία
+  admin_tab_tags: Ετικέτες
+  admin_tab_settings: Ρυθμίσεις
+  admin_tab_plugins: Πρόσθετα
+  ai_prompts: Περιγράψτε την επιχείρησή σας
+  ai_prompts_description: Περιγράψτε την επιχείρησή σας, τα προϊόντα ή τις υπηρεσίες που προσφέρετε και το κοινό-στόχο σας. Αυτό θα μας βοηθήσει να προσαρμόσουμε το CRM στις ανάγκες σας, και να ενεργήσει ως προτροπή του συστήματος για οπουδήποτε AI χρησιμοποιείται.
+  about_my_business: Σχετικά με την επιχείρησή μου
+  about_my_business_placeholder: ie Παράδειγμα Pty Ltd είναι μια μεσαίου μεγέθους εταιρεία που ειδικεύεται στην παροχή υψηλής ποιότητας λύσεις λογισμικού σε μικρές και μεσαίες επιχειρήσεις. Εστιάζουμε στη βιομηχανία υγειονομικής περίθαλψης, και πωλούμε το προϊόν ναυαρχίδας, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: Πώς σκοπεύω να χρησιμοποιήσω το Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: δηλαδή Μια μικρή ομάδα πωλήσεων 5 ανθρώπων θα χρησιμοποιήσει το Fat Free CRM. Θα χρησιμοποιήσουμε το Mailchimp, το Google Ads, το Zapier, και το Slack. Θέλουμε να φιλτράρουμε και να κατηγοριοποιήσουμε τις ηγεσίες σε συγκεκριμένους τομείς που ενδιαφέρονται για την υγειονομική περίθαλψη.
+  affiliate: Συνεργάτης
+  competitor: Ανταγωνιστής
+  customer: Πελάτης
+  partner: Συνεργάτης
+  reseller: Μεταπωλητής
+  vendor: Προμηθευτής
+  planned: Προγραμματισμένο
+  started: Ξεκίνησε
+  on_hold: Σε Αναμονή
+  completed: Ολοκληρώθηκε
+  called_off: Κλήση Ανενεργή
+  new: Νέο
+  contacted: Επαλήθευση
+  converted: Μετατράπηκε
+  rejected: Απορρίφθηκε
+  cold_call: Ψυχρή Κλήση
+  conference: Συνδιάσκεψη
+  online: Online Μάρκετινγκ
+  referral: Παραπομπή
+  self: Αυτο Παραγόμενο
+  web: Ιστοσελίδα
+  word_of_mouth: Λέξη του στόματος
+  other: Άλλο
+  prospecting: Προοπτική
+  analysis: Ανάλυση
+  presentation: Παρουσίαση
+  proposal: Πρόταση
+  negotiation: Διαπραγμάτευση
+  final_review: Τελική Αναθεώρηση
+  won: Κλειστό/Νίκη
+  lost: Κλειστό/χαμένο
+  call: Κλήση
+  email: E-mail
+  follow_up: Παρακολούθηση
+  lunch: Μεσημεριανό
+  meeting: Συνάντηση
+  money: Χρήματα
+  trip: Ταξίδι
+  overdue: Εκπρόθεσμο
+  due_asap: Όσο Το Δυνατό Σύντομα
+  due_today: Σήμερα
+  due_tomorrow: Αύριο
+  due_this_week: Αυτή Την Εβδομάδα
+  due_next_week: Επόμενη Εβδομάδα
+  due_later: Κάποια Αργότερα
+  due_specific_date: Για Συγκεκριμένη Ημερομηνία...
+  completed_today: Σήμερα
+  completed_yesterday: Χθες
+  completed_last_week: Προηγούμενη εβδομάδα
+  completed_this_month: Αυτό το μήνα
+  completed_last_month: Προηγούμενος μήνας
   # Models/Activity.
   #----------------------------------------------------------------------------
-  one_hour: One Hour
-  one_day: One Day
-  two_days: Two Days
-  one_week: One Week
-  two_weeks: Two Weeks
-  one_month: One Month
+  one_hour: Μία Ώρα
+  one_day: Μία Μέρα
+  two_days: Δύο Ημέρες
+  one_week: Μία Εβδομάδα
+  two_weeks: Δύο Εβδομάδες
+  one_month: Ένας Μήνας
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
@@ -102,75 +102,75 @@ el-GR:
         authentication:
           attributes:
             login_field:
-              is_not_valid: is not valid
+              is_not_valid: δεν είναι έγκυρο
             password_field:
-              is_not_valid: is not valid
+              is_not_valid: δεν είναι έγκυρο
         account:
           attributes:
             name:
-              missing_account_name: '^Please specify account name.'
+              missing_account_name: '^Παρακαλώ καθορίστε το όνομα λογαριασμού.'
             access:
-              share_account: '^Please specify users with whom to share the account.'
+              share_account: '^Παρακαλώ καθορίστε τους χρήστες με τους οποίους θα μοιραστούν το λογαριασμό.'
         campaign:
           attributes:
             name:
-              missing_campaign_name: '^Please specify campaign name.'
+              missing_campaign_name: '^Παρακαλώ καθορίστε το όνομα της εκστρατείας.'
             ends_on:
-              dates_not_in_sequence: '^Please make sure the campaign end date is after the start date.'
+              dates_not_in_sequence: '^Παρακαλώ βεβαιωθείτε ότι η ημερομηνία λήξης της εκστρατείας είναι μετά την ημερομηνία έναρξης.'
             access:
-              share_campaign: '^Please specify users with whom to share the campaign.'
+              share_campaign: '^Παρακαλώ καθορίστε τους χρήστες με τους οποίους θα μοιραστούν την καμπάνια.'
         contact:
           attributes:
             first_name:
-              missing_first_name: '^Please specify first name.'
+              missing_first_name: '^Παρακαλώ καθορίστε όνομα.'
             last_name:
-              missing_last_name: '^Please specify last name.'
+              missing_last_name: '^Παρακαλώ καθορίστε το επώνυμο.'
             access:
-              share_contact: '^Please specify users with whom to share the contact.'
+              share_contact: '^Παρακαλώ καθορίστε τους χρήστες με τους οποίους θα μοιραστούν την επαφή.'
         lead:
           attributes:
             first_name:
-              missing_first_name: '^Please specify first name.'
+              missing_first_name: '^Παρακαλώ καθορίστε όνομα.'
             last_name:
-              missing_last_name: '^Please specify last name.'
+              missing_last_name: '^Παρακαλώ καθορίστε το επώνυμο.'
             access:
-              share_lead: '^Please specify users with whom to share the lead.'
+              share_lead: '^Παρακαλώ καθορίστε τους χρήστες με τους οποίους θα μοιραστούν το προβάδισμα.'
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: '^Please specify opportunity name.'
+              missing_opportunity_name: '^Παρακαλούμε προσδιορίστε το όνομα ευκαιρίας.'
             access:
-              share_opportunity: '^Please specify users with whom to share the opportunity.'
+              share_opportunity: '^Παρακαλώ καθορίστε τους χρήστες με τους οποίους θα μοιραστούν την ευκαιρία.'
         task:
           attributes:
             name:
-              missing_task_name: '^Please specify task name.'
+              missing_task_name: '^Παρακαλούμε καθορίστε το όνομα της εργασίας.'
             calendar:
-              invalid_date: '^Please specify valid date.'
+              invalid_date: '^Παρακαλώ καθορίστε έγκυρη ημερομηνία.'
         user:
           attributes:
             username:
-              missing_username: '^Please specify username.'
-              username_taken: '^This username is already taken.'
+              missing_username: '^Παρακαλώ καθορίστε όνομα χρήστη.'
+              username_taken: '^Αυτό το όνομα χρήστη χρησιμοποιείται ήδη.'
             email:
-              missing_email: '^Please specify email address.'
-              email_in_use: '^There is another user with the same email.'
+              missing_email: '^Παρακαλώ καθορίστε τη διεύθυνση email.'
+              email_in_use: '^Υπάρχει ένας άλλος χρήστης με το ίδιο email.'
         custom_field:
           required: '^%{field} is required.'
-          minlength: '^%{field} is too short.'
+          minlength: '^ Το%{field} είναι πολύ μικρό.'
           maxlength: '^%{field} is too long.'
           endbeforestart: '^%{field} cannot end before it begins.'
     attribute_options:
       opportunity:
         stage:
-          prospecting: Prospecting
-          analysis: Analysis
-          presentation: Presentation
-          proposal: Proposal
-          negotiation: Negotiation
-          final_review: Final Review
-          won: Closed/Won
-          lost: Closed/Lost
+          prospecting: Προοπτική
+          analysis: Ανάλυση
+          presentation: Παρουσίαση
+          proposal: Πρόταση
+          negotiation: Διαπραγμάτευση
+          final_review: Τελική Αναθεώρηση
+          won: Κλειστό/Νίκη
+          lost: Κλειστό/χαμένο
       account:
         rating:
           "0": "-"
@@ -179,580 +179,580 @@ el-GR:
           "3": "★★★"
           "4": "★★★★"
           "5": "★★★★★"
-  msg_account_suspended: User account has been suspended.
-  password_reset_instruction: password reset instructions
+  msg_account_suspended: Ο λογαριασμός χρήστη έχει ανασταλεί.
+  password_reset_instruction: οδηγίες επαναφοράς κωδικού πρόσβασης
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: Your account has been created and is awaiting approval by the system administrator.
-  msg_account_not_approved: Your account has not been approved yet.
-  msg_asset_deleted: ! '%{value} has been deleted.'
-  msg_asset_not_available: This %{value} is no longer available.
-  msg_not_authorized: You are not authorized to take this action.
-  msg_assets_not_available: The %{value} are not available.
-  msg_asset_rejected: ! '%{value} has been rejected.'
-  msg_bad_image_file: '^Could''t upload or resize the image file you specified.'
-  msg_cant_create_related: Can't create the %{asset} since the %{related} is no longer available.
-  msg_cant_delete_user: '^Couldn''t delete the user since %{value} has related assets present.'
+  msg_account_created: Ο λογαριασμός σας έχει δημιουργηθεί και αναμένει έγκριση από το διαχειριστή του συστήματος.
+  msg_account_not_approved: Ο λογαριασμός σας δεν έχει εγκριθεί ακόμα.
+  msg_asset_deleted: ! 'Το %{value} έχει διαγραφεί.'
+  msg_asset_not_available: Αυτό το %{value} δεν είναι πλέον διαθέσιμο.
+  msg_not_authorized: Δεν είστε εξουσιοδοτημένοι να προβείτε σε αυτήν την ενέργεια.
+  msg_assets_not_available: Το %{value} δεν είναι διαθέσιμο.
+  msg_asset_rejected: ! 'Το %{value} απορρίφθηκε.'
+  msg_bad_image_file: '^Δεν ήταν δυνατή η μεταφόρτωση ή η αλλαγή μεγέθους του αρχείου εικόνας που ορίσατε.'
+  msg_cant_create_related: Δεν είναι δυνατή η δημιουργία του %{asset} δεδομένου ότι το %{related} δεν είναι πλέον διαθέσιμο.
+  msg_cant_delete_user: '^Δεν ήταν δυνατή η διαγραφή του χρήστη από το %{value} υπάρχουν σχετιζόμενα στοιχεία.'
   msg_cant_do: Can't %{action} the %{asset} since it's no longer available.
-  msg_email_not_found: No user was found with that email address.
-  msg_enter_new_password: Please enter your new password.
-  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
-  msg_invalid_password: '^Please specify valid current password'
-  msg_invalig_login: Invalid username or password.
-  msg_last_login: Your last login was on %{value}.
-  msg_login_needed: You must be logged in to access this page.
-  msg_logout_needed: You must be logged out to access this page.
-  msg_password_changed: Your password has been changed.
-  msg_password_not_changed: Your password has not been changed.
-  msg_password_updated: Password was successfully updated.
-  msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
-  msg_require_admin: You must be Administrator to access this page.
-  msg_successful_signup: Successful signup, welcome to Fat Free CRM!
-  msg_welcome: Welcome to Fat Free CRM!
-  msg_user_updated: Profile updated successfully.
+  msg_email_not_found: Δεν βρέθηκε χρήστης με αυτή τη διεύθυνση ηλεκτρονικού ταχυδρομείου.
+  msg_enter_new_password: Παρακαλώ εισάγετε το νέο κωδικό πρόσβασης.
+  msg_goodbye: Έχετε αποσυνδεθεί. Σας ευχαριστούμε που χρησιμοποιείτε το Fat Free CRM!
+  msg_invalid_password: '^Παρακαλώ καθορίστε τον έγκυρο κωδικό πρόσβασης'
+  msg_invalig_login: Μη έγκυρο όνομα χρήστη ή κωδικός πρόσβασης.
+  msg_last_login: Η τελευταία σας σύνδεση ήταν στο %{value}.
+  msg_login_needed: Πρέπει να συνδεθείτε για να αποκτήσετε πρόσβαση σε αυτή τη σελίδα.
+  msg_logout_needed: Πρέπει να αποσυνδεθείτε για να αποκτήσετε πρόσβαση σε αυτή τη σελίδα.
+  msg_password_changed: Ο κωδικός σας έχει αλλάξει.
+  msg_password_not_changed: Ο κωδικός πρόσβασής σας δεν άλλαξε.
+  msg_password_updated: Ο κωδικός πρόσβασης ενημερώθηκε με επιτυχία.
+  msg_pwd_instructions_sent: Οδηγίες για να επαναφέρετε τον κωδικό πρόσβασής σας έχουν σταλεί σε εσάς. Ελέγξτε το email σας.
+  msg_require_admin: Πρέπει να είστε Διαχειριστής για να αποκτήσετε πρόσβαση σε αυτή τη σελίδα.
+  msg_successful_signup: Επιτυχής εγγραφή, καλώς ήρθατε στο Fat Free CRM!
+  msg_welcome: Καλώς ήλθατε στο Fat Free CRM!
+  msg_user_updated: Το προφίλ ενημερώθηκε επιτυχώς.
   # Options.
   #----------------------------------------------------------------------------
-  option_amount*probability: weighted amount
-  activity_options: Show %{models} %{action_type} performed by %{user} in the past %{period}.
-  all_users: all users
-  option_after: after
-  option_all: all
-  option_all_users: All Users
-  option_amount: amount
-  option_before: before
-  option_brief: brief
-  option_closes_on: close date
-  option_company: company
-  option_created_at: date created
-  option_ends_on: end date
-  option_first_name: first name
-  option_last_name: last name
-  option_leads_count: actual leads
-  option_long: long
-  option_name: name
-  option_probability: probability
-  option_rating: rating
-  option_revenue: actual revenue
-  option_starts_on: start date
-  option_target_leads: target leads
-  option_target_revenue: target revenue
-  option_updated_at: date updated
-  show_per_page: Show %{number} %{models} per page using %{fmt} format.
-  sort_by: Sort by %{field}
-  sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
-  entities_per_page: ! '%{entity} per page:'
-  contacts_index_long: Long format
-  contacts_index_brief: Brief format
-  contacts_index_full: Full format
-  opportunities_index_normal: Normal format
-  accounts_index_normal: Normal format
-  leads_index_normal: Normal format
-  campaigns_index_normal: Normal format
+  option_amount*probability: σταθμισμένο ποσό
+  activity_options: Show %{models} %{action_type} performed by %{user} in past %{period}.
+  all_users: όλοι οι χρήστες
+  option_after: μετά
+  option_all: όλα
+  option_all_users: Όλοι Οι Χρήστες
+  option_amount: ποσό
+  option_before: πριν
+  option_brief: σύντομη
+  option_closes_on: ημερομηνία κλεισίματος
+  option_company: εταιρεία
+  option_created_at: ημερομηνία δημιουργίας
+  option_ends_on: ημερομηνία λήξης
+  option_first_name: όνομα
+  option_last_name: επίθετο
+  option_leads_count: πραγματικές τιμές
+  option_long: μακρύ
+  option_name: όνομα
+  option_probability: πιθανότητα
+  option_rating: αξιολόγηση
+  option_revenue: πραγματικά έσοδα
+  option_starts_on: ημερομηνία έναρξης
+  option_target_leads: ο στόχος οδηγεί
+  option_target_revenue: στόχος εσόδων
+  option_updated_at: ημερομηνία ενημέρωσης
+  show_per_page: Εμφάνιση %{number} %{models} ανά σελίδα χρησιμοποιώντας μορφή %{fmt}.
+  sort_by: Ταξινόμηση κατά %{field}
+  sort_by_displaying: Ταξινόμηση %{models} από %{field} εμφανίζοντας το όνομα %{position} επώνυμο.
+  entities_per_page: ! '%{entity} ανά σελίδα:'
+  contacts_index_long: Μεγάλη μορφή
+  contacts_index_brief: Σύντομη μορφή
+  contacts_index_full: Πλήρης μορφή
+  opportunities_index_normal: Κανονική μορφή
+  accounts_index_normal: Κανονική μορφή
+  leads_index_normal: Κανονική μορφή
+  campaigns_index_normal: Κανονική μορφή
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "Εγγραφείτε για να σχολιάσετε απαντήσεις μέσω ηλεκτρονικού ταχυδρομείου"
+  receive_assigned_notifications: "Λήψη αντιστοιχισμένων ειδοποιήσεων μέσω email"
   aim: AOL IM
-  already_signed_up: Already signed up?
-  alt_email: Alternative email
-  avatar: Avatar
-  change_password: Change Password
-  company: Company
-  contact_info: Contact Information
-  current_password: Current password
-  edit_profile: Edit Profile
-  first_name: First name
+  already_signed_up: Έχει ήδη εγγραφεί?
+  alt_email: Εναλλακτικό email
+  avatar: Άβαταρ
+  change_password: Αλλαγή Κωδικού Πρόσβασης
+  company: Εταιρεία
+  contact_info: Στοιχεία Επικοινωνίας
+  current_password: Τρέχων κωδικός πρόσβασης
+  edit_profile: Επεξεργασία Προφίλ
+  first_name: Όνομα
   google: Google IM
-  gravatar_help: Not familiar with Gravatars? Learn about Gravatars
-  image_file: Image file
-  image_help: The image will be resized to 180x180 pixels. Supported formats - PNG, JPG, GIF.
-  job_title: Title
-  last_name: Last name
-  login_now_link: Login Now!
-  mobile: Mobile
-  my_profile: My Profile
-  new_password: New password
-  password: Password
-  password_confirmation: Confirm new password
-  phone: Phone
-  profile: Profile
-  profile_language: Language
-  email_notifications: Email Notifications
-  save_profile: Save Profile
-  sign_up: Sign Up
-  sign_up_button: Sign Up
-  upload_picture: Upload Picture
-  use_gravatar: Use Gravatar
-  user: User
-  username: Username
+  gravatar_help: Δεν είναι εξοικειωμένοι με τους Gravatars?
+  image_file: Αρχείο εικόνας
+  image_help: Η εικόνα θα αλλάξει μέγεθος σε 180x180 pixels. Υποστηριζόμενες μορφές - PNG, JPG, GIF.
+  job_title: Τίτλος
+  last_name: Επώνυμο
+  login_now_link: Συνδεθείτε Τώρα!
+  mobile: Κινητό
+  my_profile: Το Προφίλ Μου
+  new_password: Νέος κωδικός πρόσβασης
+  password: Κωδικός
+  password_confirmation: Επιβεβαίωση νέου κωδικού πρόσβασης
+  phone: Τηλέφωνο
+  profile: Προφίλ
+  profile_language: Γλώσσα
+  email_notifications: Ειδοποιήσεις Email
+  save_profile: Αποθήκευση Προφίλ
+  sign_up: Εγγραφή
+  sign_up_button: Εγγραφή
+  upload_picture: Μεταφόρτωση Εικόνας
+  use_gravatar: Χρήση Gravatar
+  user: Χρήστης
+  username: Όνομα Χρήστη
   yahoo: Yahoo IM
-  born_on: Born on
-  reports_to: Reports to
-  access: Access
+  born_on: Γεννήθηκε στις
+  reports_to: Αναφέρεται σε
+  access: Πρόσβαση
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Forgot Password
-  login: Login
-  no_account: Do not have an account?
-  remember_me: Remember Me
-  sign_up_now: Sign Up Now!
+  forgot_password: Ξέχασα Τον Κωδικό
+  login: Είσοδος
+  no_account: Δεν έχετε λογαριασμό?
+  remember_me: Να Με Θυμάσαι
+  sign_up_now: Εγγραφείτε Τώρα!
   # Views -> Accounts.
   #----------------------------------------------------------------------------
-  account: Account
-  account_id: Account
-  select_an_account: Select an Account
-  account_small: account
-  account_summary: Account Summary
-  account_categories: Account Categories
-  accounts: Accounts
-  accounts_options: Accounts Options
-  accounts_small: accounts
-  assigned_to: Assigned to
-  billing_address: Billing address
-  create_account: Create Account
-  date_created: Date Created
-  date_updated: Date Updated
-  fax: Fax
-  intro: You can add %{value} information later.
-  keep_private: Keep it private, do not share with others
-  mail_to: Mail to %{value}
-  make_public: Share it with everyone
-  mobile_small: mobile
-  open_in_window: Open %{value} in a new window
-  phone_small: phone
-  phone_toll_free: Toll-free
-  pipeline: Pipeline
-  same_as_billing: same as billing
-  save_account: Save Account
-  share_with: Share it with the following people
-  shipping_address: Shipping address
-  total_accounts: Total Accounts
-  website: Website
-  account_with_title_department: ! '%{title}, %{department} at %{account}'
+  account: Λογαριασμός
+  account_id: Λογαριασμός
+  select_an_account: Επιλέξτε λογαριασμό
+  account_small: λογαριασμός
+  account_summary: Περίληψη Λογαριασμού
+  account_categories: Κατηγορίες Λογαριασμού
+  accounts: Λογαριασμοί
+  accounts_options: Επιλογές Λογαριασμών
+  accounts_small: λογαριασμοί
+  assigned_to: Ανατέθηκε σε
+  billing_address: Διεύθυνση χρέωσης
+  create_account: Δημιουργία Λογαριασμού
+  date_created: Ημερομηνία Δημιουργίας
+  date_updated: Ημερομηνία Ενημέρωσης
+  fax: Φαξ
+  intro: Μπορείτε να προσθέσετε πληροφορίες %{value} αργότερα.
+  keep_private: Κρατήστε το ιδιωτικό, μην το μοιράζεστε με άλλους
+  mail_to: Αλληλογραφία στο %{value}
+  make_public: Μοιραστείτε το με όλους
+  mobile_small: κινητό
+  open_in_window: Άνοιγμα %{value} σε νέο παράθυρο
+  phone_small: τηλέφωνο
+  phone_toll_free: Χωρίς καθόλου
+  pipeline: Αγωγός
+  same_as_billing: ίδιο με την τιμολόγηση
+  save_account: Αποθήκευση Λογαριασμού
+  share_with: Μοιραστείτε το με τους ακόλουθους ανθρώπους
+  shipping_address: Διεύθυνση αποστολής
+  total_accounts: Σύνολο Λογαριασμών
+  website: Ιστοσελίδα
+  account_with_title_department: ! '%{title}, %{department} στο %{account}'
   account_with_title: ! '%{title} at %{account}'
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
-  actual: Actual
-  actual_performance: Actual Performance
-  budget: Budget
+  actual: Πραγματικό
+  actual_performance: Πραγματική Απόδοση
+  budget: Προϋπολογισμός
   budget_label: Budget (%{currency})
-  campaign: Campaign
-  campaign_and_leads: campaign and its leads
-  campaign_small: campaign
-  campaign_summary: Campaign Summary
-  campaign_targets: Campaign Targets
-  campaign_statuses: Campaign Statuses
-  campaigns: Campaigns
-  campaigns_options: Campaigns Options
-  campaigns_small: campaigns
-  conversion: Conversion
-  conversion_label: Conversion (%)
-  conversion_number: ! '%{value} conversion'
+  campaign: Εκστρατεία
+  campaign_and_leads: καμπάνια και τα καλώδια της
+  campaign_small: καμπάνια
+  campaign_summary: Περίληψη Εκστρατείας
+  campaign_targets: Στόχοι Εκστρατείας
+  campaign_statuses: Καταστάσεις Εκστρατείας
+  campaigns: Εκστρατείες
+  campaigns_options: Επιλογές Εκστρατείας
+  campaigns_small: καμπάνιες
+  conversion: Μετατροπή
+  conversion_label: Μετατροπή (%)
+  conversion_number: ! 'Μετατροπή %{value}'
   target_conversion: Target conversion
-  create_campaign: Create Campaign
-  end_date: End date
-  finished_on: completed on %{value}
+  create_campaign: Δημιουργία Εκστρατείας
+  end_date: Ημερομηνία λήξης
+  finished_on: ολοκληρώθηκε στο %{value}
   finishes_in: finishes in %{value}
-  no_start_date: no start date specified
-  number_of_leads: Number of leads
-  objectives: Objectives
-  objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
-  objectives_small: campaign objectives
-  revenue: Revenue
-  revenue_label: Revenue (%{currency})
+  no_start_date: δεν καθορίστηκε ημερομηνία έναρξης
+  number_of_leads: Αριθμός οδηγών
+  objectives: Στόχοι
+  objectives_help: Παρακαλείστε να προσδιορίσετε τον αριθμό στόχου των οδηγών, την αναμενόμενη αναλογία προσδοκιών προς ευκαιρίες, τα έσοδα στόχου και τον προϋπολογισμό καμπάνιας. Αυτοί οι αριθμοί θα σας επιτρέψουν να παρακολουθείτε την πραγματική απόδοση της εκστρατείας.
+  objectives_small: στόχοι καμπάνιας
+  revenue: Έσοδα
+  revenue_label: Έσοδα (%{currency})
   revenue_number: ! '%{value} in revenue'
-  save_campaign: Save Campaign
-  start_date: Start date
-  started_ago: started %{value} ago
+  save_campaign: Αποθήκευση Εκστρατείας
+  start_date: Ημερομηνία έναρξης
+  started_ago: ξεκίνησε πριν από %{value}
   starts_in: starts in %{value}
-  starts_today: starts today!
+  starts_today: ξεκινά σήμερα!
   target: Target
-  total_campaigns: Total Campaigns
+  total_campaigns: Συνολικές Εκστρατείες
   was_supposed_to_finish: was supposed to finish on %{value}
-  was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
-  was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
-  select_a_campaign: Select a campaign
+  was_supposed_to_start: υποτίθεται ότι έπρεπε να ξεκινήσει %{time_ago} πριν από %{start_date}
+  was_supposed_to_start_in: υποτίθεται ότι ξεκίνησε στο %{starts_in} στο %{start_date}
+  select_a_campaign: Επιλέξτε μια καμπάνια
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  alt_email_small: Other
-  blog: Website/Blog
-  contact: Contact
-  contact_small: contact
-  contacts: Contacts
-  contacts_options: Contacts Options
-  contacts_small: contacts
-  contact_summary: Contact Summary
-  create_contact: Create Contact
-  department: Department
+  alt_email_small: Άλλο
+  blog: Ιστοσελίδα/Ιστολόγιο
+  contact: Επικοινωνία
+  contact_small: επαφή
+  contacts: Επαφές
+  contacts_options: Επιλογές Επαφών
+  contacts_small: επαφές
+  contact_summary: Περίληψη Επαφής
+  create_contact: Δημιουργία Επαφής
+  department: Τμήμα
   department_small: ! '%{value} department'
-  do_not_call: Do not call
+  do_not_call: Να μην γίνει κλήση
   extra_info: Extra Information
-  extra_info_small: extra contact
+  extra_info_small: επιπλέον επαφή
   facebook: Facebook
   linked_in: LinkedIn
-  myself: Myself
-  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.
-  permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
-  referred_by: Referred by
-  referred_by_small: referred by
-  save_contact: Save Contact
+  myself: Εμένα
+  permissions_intro_private: Από προεπιλογή μόνο θα έχετε πρόσβαση στο %{value}. Μπορείτε να αλλάξετε τα δικαιώματα αργότερα.
+  permissions_intro_public: Από προεπιλογή όλοι οι χρήστες θα έχουν πρόσβαση στο %{value}. Μπορείτε να αλλάξετε τα δικαιώματα αργότερα.
+  permissions_intro_shared: Από προεπιλογή μόνο οι επιλεγμένοι χρήστες θα έχουν πρόσβαση στο %{value}. Μπορείτε να αλλάξετε τα δικαιώματα αργότερα.
+  referred_by: Συστήθηκε από
+  referred_by_small: που αναφέρονται από
+  save_contact: Αποθήκευση Επαφής
   twitter: Twitter
-  unassigned: Unassigned
-  web_presence: Web Presence
-  web_presence_small: web presence
+  unassigned: Ανεκχώρησε
+  web_presence: Παρουσία Ιστού
+  web_presence_small: παρουσία στο διαδίκτυο
   works_at: ! '%{job_title} at %{company}'
-  general_info: General Information
-  show_general_info_small: Show general information for this contact.
-  show_extra_info_small: Show extra information for this contact.
+  general_info: Γενικές Πληροφορίες
+  show_general_info_small: Εμφάνιση γενικών πληροφοριών για αυτήν την επαφή.
+  show_extra_info_small: Εμφάνιση επιπλέον πληροφοριών για αυτήν την επαφή.
   tag_details: ! '%{tag} Details'
   show_tag_info_small: Show %{tag} information for this contact.
-  shared_with_everyone: Shared with everyone
-  title: Title
-  subscriptions: Subscriptions
+  shared_with_everyone: Μοιραστείτε με όλους
+  title: Τίτλος
+  subscriptions: Συνδρομές
   # Views -> Leads.
   #----------------------------------------------------------------------------
-  convert: Convert
-  convert_lead: Convert Lead
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
-  create_lead: Create Lead
+  convert: Μετατροπή
+  convert_lead: Μετατροπή Δυνητικού Πελάτη
+  convert_lead_permissions_intro: Τα δικαιώματα επαφής θα αντιγραφούν από τον οδηγό που μετατρέπεται. Μπορείτε να αλλάξετε τα δικαιώματα επαφής αργότερα.
+  convert_lead_text: Μετατρέποντας το προβάδισμα %{value} θα γίνει μια επαφή που θα συσχετιστεί με τον υπάρχοντα ή πρόσφατα δημιουργημένο λογαριασμό.
+  create_lead: Δημιουργία Δυνητικού Πελάτη
   create_opp_for_contact: You can optionally create an opportunity for the %{value} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
-  lead: Lead
-  lead_info_small: lead contact
-  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.
-  lead_small: lead
-  lead_status_small: lead status
-  lead_summary: Lead Summary
-  lead_statuses: Lead Statuses
-  leads: Leads
-  leads_options: Leads Options
-  leads_small: leads
-  none: None
-  rating: Rating
-  reject: Reject
-  reject_lead_confirm: Are you sure you want to reject this lead?
-  save_lead: Save Lead
-  source: Source
-  status: Status
-  total_leads: Total Leads
-  show_status_info_small: Show status information for this lead.
-  show_contact_info_small: Show contact information for this lead.
+  lead: Μόλυβδος
+  lead_info_small: επαφή μολύβδου
+  lead_permissions_intro_private: Από προεπιλογή τα δικαιώματα θα αντιγραφούν από την καμπάνια ή θα οριστούν σε ιδιωτικό. Μπορείτε να αλλάξετε τα δικαιώματα επικεφαλής αργότερα.
+  lead_permissions_intro_public: Από προεπιλογή τα δικαιώματα θα αντιγραφούν από την καμπάνια ή θα οριστούν σε δημόσια. Μπορείτε να αλλάξετε τα προηγμένα δικαιώματα αργότερα.
+  lead_permissions_intro_shared: Από προεπιλογή τα δικαιώματα θα αντιγραφούν από την καμπάνια ή θα μοιράζονται με τους καθορισμένους χρήστες. Μπορείτε να αλλάξετε τα δικαιώματα επικεφαλής αργότερα.
+  lead_small: μόλυβδος
+  lead_status_small: κατάσταση προβάτου
+  lead_summary: Περίληψη Δυνητικού Πελάτη
+  lead_statuses: Κατάσταση Δυνητικού Πελάτη
+  leads: Δυνητικοί Πελάτες
+  leads_options: Επιλογές Δυνητικών Πελάτη
+  leads_small: οδηγεί
+  none: Κανένα
+  rating: Βαθμολογία
+  reject: Απόρριψη
+  reject_lead_confirm: Είστε βέβαιοι ότι θέλετε να απορρίψετε αυτό το προβάδισμα?
+  save_lead: Αποθήκευση Δυνητικού Πελάτη
+  source: Πηγή
+  status: Κατάσταση
+  total_leads: Σύνολο Δυνητικών Πελάτη
+  show_status_info_small: Εμφάνιση πληροφοριών κατάστασης για αυτό το προβάδισμα.
+  show_contact_info_small: Εμφάνιση πληροφοριών επαφής για αυτό το προβάδισμα.
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
-  amount: Amount
-  close_date: Close date
-  closes_on: Closes on
-  closed_ago_on: closed %{time_ago} ago on %{date}
-  closes_today: expected to close today!
-  closing_date: closing date is %{value}
-  create_opportunity: Create Opportunity
+  amount: Ποσό
+  close_date: Ημερομηνία κλεισίματος
+  closes_on: Κλείσιμο στις
+  closed_ago_on: Έκλεισε το %{time_ago} πριν στο %{date}
+  closes_today: αναμένεται να κλείσει σήμερα!
+  closing_date: η ημερομηνία λήξης είναι %{value}
+  create_opportunity: Δημιουργία Ευκαιρίας
   currency: "$"
-  days_late: Late by
-  days_left: Days left
-  discount: Discount
-  discount_number: with %{value} discount
-  expected_to_close: expected to close in %{time} on %{date}
-  from: from
-  no_closing_date: no expected closing date
-  no_discount: with no discount
-  opportunities: Opportunities
-  opportunities_options: Opportunities Options
-  opportunities_small: opportunities
-  opportunity: Opportunity
-  opportunity_small: opportunity
-  opportunity_stages: Opportunity Stages
-  opportunity_summary: Opportunity At a Glance
-  opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability} probability'
-  past_due: past due, was expected to close %{value} ago
-  probability: Probability
+  days_late: Αργά την
+  days_left: Ημέρες που απομένουν
+  discount: Έκπτωση
+  discount_number: με έκπτωση %{value}
+  expected_to_close: αναμένεται να κλείσει στο %{time} στο %{date}
+  from: από
+  no_closing_date: καμία αναμενόμενη ημερομηνία κλεισίματος
+  no_discount: χωρίς έκπτωση
+  opportunities: Ευκαιρίες
+  opportunities_options: Επιλογές Ευκαιριών
+  opportunities_small: ευκαιρίες
+  opportunity: Ευκαιρία
+  opportunity_small: ευκαιρία
+  opportunity_stages: Στάδια Ευκαιρίας
+  opportunity_summary: Ευκαιρία με μια ματιά
+  opportunity_summary_text: ! '%{amount} με %{discount} έκπτωση και %{probability} πιθανότητα'
+  past_due: παρελθόν λόγω, αναμενόταν να κλείσει %{value} πριν
+  probability: Πιθανότητα
   probability_number: and %{value} probability
-  save_opportunity: Save Opportunity
-  stage: Stage
-  total_opportunities: Total Opportunities
-  weighted_amount: Weighted amount
+  save_opportunity: Αποθήκευση Ευκαιρίας
+  stage: Σκηνή
+  total_opportunities: Σύνολο Ευκαιριών
+  weighted_amount: Σταθμισμένο ποσό
   # Views -> Tasks.
   #----------------------------------------------------------------------------
-  task: Task
-  task_small: task
-  tasks: Tasks
-  tasks_small: tasks
-  assign_to: Assign to
-  assigned_tab: Assigned
-  assigned_tasks: Assigned Tasks
-  category: Category
-  completed_tab: Completed
-  completed_tasks: Completed Tasks
-  create_task: Create Task
-  create_task_small: create new task
-  due: Due
-  feel_free: Feel free to
-  move_to: move to
-  no_tasks: You don't have any %{value} tasks
-  no_tasks_pending: pending
-  no_tasks_assigned: assigned
-  no_tasks_completed: completed
-  pending_tab: Pending
-  pending_tasks: Pending Tasks
+  task: Εργασία
+  task_small: εργασία
+  tasks: Εργασίες
+  tasks_small: εργασίες
+  assign_to: Ανάθεση σε
+  assigned_tab: Ανατεθειμένο
+  assigned_tasks: Εκχωρημένες Εργασίες
+  category: Κατηγορία
+  completed_tab: Ολοκληρώθηκε
+  completed_tasks: Ολοκληρωμένες Εργασίες
+  create_task: Δημιουργία Εργασίας
+  create_task_small: δημιουργία νέας εργασίας
+  due: Λήξη
+  feel_free: Μη διστάσετε να
+  move_to: μετακινηθείτε προς
+  no_tasks: Δεν έχετε καμία εργασία %{value}
+  no_tasks_pending: εκκρεμεί
+  no_tasks_assigned: εκχωρημένο
+  no_tasks_completed: ολοκληρώθηκε
+  pending_tab: Εκκρεμεί
+  pending_tasks: Εκκρεμείς Εργασίες
   related: ! 're:'
-  save_task: Save Task
-  task_assigned: The task has been assigned to %{value}
-  task_assigned_to: and assigned to %{value}
-  task_completed: completed
-  task_uncomplete: Uncomplete
-  task_completed_ago: completed %{value} ago
-  task_completed_by: completed %{time_ago} ago (%{date}) by %{user}
-  task_created: The task has been created
+  save_task: Αποθήκευση Εργασίας
+  task_assigned: Η εργασία έχει ανατεθεί στο %{value}
+  task_assigned_to: και ανατέθηκε στο %{value}
+  task_completed: ολοκληρώθηκε
+  task_uncomplete: Μη Ολοκληρωμένο
+  task_completed_ago: πριν από ολοκληρωμένο %{value}
+  task_completed_by: Ολοκληρώθηκε πριν από το %{time_ago} (%{date}) από τον %{user}
+  task_created: Η εργασία έχει δημιουργηθεί
   task_due_in: due in %{value}
-  task_due_later: due sometime soon
-  task_due_now: due now
-  task_due_today: due today
+  task_due_later: λόγω κάποια στιγμή σύντομα
+  task_due_now: λήγουν τώρα
+  task_due_today: ημερομηνία λήξης
   task_from: From %{value}
-  task_overdue: late, was due on
-  task_pending: The task has been moved to pending tasks
+  task_overdue: καθυστέρηση, ήταν αναμενόμενη στις
+  task_pending: Η εργασία έχει μετακινηθεί σε εκκρεμείς εργασίες
   total_tasks: Total %{value}
-  view_assigned_tasks: view assigned tasks
-  view_pending_tasks: view pending tasks
+  view_assigned_tasks: προβολή εκχωρημένων εργασιών
+  view_pending_tasks: προβολή εκκρεμών εργασιών
   # Views -> Team.
   #----------------------------------------------------------------------------
-  unassigned_opportunities: Unassigned Opportunities
-  no_opportunities_found: There are currently no outstanding opportunities.
+  unassigned_opportunities: Μη Εκχωρημένες Ευκαιρίες
+  no_opportunities_found: Επί του παρόντος δεν υπάρχουν εξαιρετικές ευκαιρίες.
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_completed: completed
-  action_create: created
-  action_destroy: deleted
-  action_reassigned: reassigned
-  action_rejected: rejected
-  action_rescheduled: rescheduled
-  action_update: updated
-  action_view: viewed
-  action_won: won
-  activities: Activities
-  no_activity_records: No activity records found.
-  recent_activity: Recent Activity
-  recent_activity_options: Recent Activity Options
-  subject_account: account
-  subject_address: address on
-  subject_campaign: campaign
-  subject_comment: comment on
-  subject_contact: contact
-  subject_email: email on
-  subject_lead: lead
-  subject_opportunity: opportunity
-  subject_task: task
-  subject_user: user
-  tag_list: Tags
-  create_past_participle: Record Creations
-  view_past_participle: Views
-  update_past_participle: Updates
-  destroy_past_participle: Deletions
-  all_events_past_participle: Activities
+  action_completed: ολοκληρώθηκε
+  action_create: δημιουργήθηκε
+  action_destroy: διαγράφηκε
+  action_reassigned: επανεκχωρήθηκε
+  action_rejected: απορρίφθηκε
+  action_rescheduled: επαναπρογραμματισμένο
+  action_update: ενημερώθηκε
+  action_view: προβλήθηκαν
+  action_won: κέρδισε
+  activities: Δραστηριότητες
+  no_activity_records: Δεν βρέθηκαν εγγραφές δραστηριοτήτων.
+  recent_activity: Πρόσφατη Δραστηριότητα
+  recent_activity_options: Επιλογές Πρόσφατων Δραστηριοτήτων
+  subject_account: λογαριασμός
+  subject_address: διεύθυνση στη
+  subject_campaign: καμπάνια
+  subject_comment: σχόλιο σχετικά με
+  subject_contact: επαφή
+  subject_email: email στο
+  subject_lead: μόλυβδος
+  subject_opportunity: ευκαιρία
+  subject_task: εργασία
+  subject_user: χρήστης
+  tag_list: Ετικέτες
+  create_past_participle: Δημιουργία Εγγραφής
+  view_past_participle: Προβολές
+  update_past_participle: Ενημερώσεις
+  destroy_past_participle: Διαγραφές
+  all_events_past_participle: Δραστηριότητες
   action_create_comment: ! '- &quot;%{comment}&quot;'
-  my_tasks: My Tasks
-  no_task_records: You have no tasks.
-  my_opportunities: My Opportunities
-  no_opportunity_records: You have no opportunities.
-  my_accounts: My Accounts
-  no_account_records: You have no accounts
-  not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
+  my_tasks: Οι Εργασίες Μου
+  no_task_records: Δεν έχετε καμία εργασία.
+  my_opportunities: Οι Ευκαιρίες Μου
+  no_opportunity_records: Δεν έχετε ευκαιρίες.
+  my_accounts: Οι Λογαριασμοί Μου
+  no_account_records: Δεν έχετε λογαριασμούς
+  not_showing_hidden_entities: Δεν εμφανίζεται το %{count} κρυμμένο %{entity}.
   # Views -> Common.
   #----------------------------------------------------------------------------
-  add_note: Add Comment
-  save_note: Save Comment
-  add_note_help: Add a new comment...
-  edit_note: Edit Comment
-  added_ago: added %{value}
-  added_by: added %{time_ago} by %{user}
-  back: Back
-  cancel: Cancel
-  close_form: Close form
-  comment_intro: You can add comments later.
-  confirm_delete: Are you sure you want to delete this %{value}?
-  copy_permissions: Copy %{value} permissions
-  could_not_find: Couldn't find any %{value}. Feel free to
-  could_not_find_matching: Couldn't find any %{value} matching
-  create_new: create new
-  create_a_new: create a new
-  select_existing: select existing
-  delete: Delete
-  discard: Discard
-  edit: Edit
+  add_note: Προσθήκη Σχολίου
+  save_note: Αποθήκευση Σχολίου
+  add_note_help: Προσθήκη νέου σχολίου...
+  edit_note: Επεξεργασία Σχολίου
+  added_ago: προστέθηκε %{value}
+  added_by: πρόσθεσε %{time_ago} από τον %{user}
+  back: Πίσω
+  cancel: Ακύρωση
+  close_form: Κλείσιμο φόρμας
+  comment_intro: Μπορείτε να προσθέσετε σχόλια αργότερα.
+  confirm_delete: Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το %{value}?
+  copy_permissions: Αντιγραφή δικαιωμάτων %{value}
+  could_not_find: Δεν βρέθηκε κανένα %{value}. Μη διστάσετε να
+  could_not_find_matching: Αδυναμία εύρεσης κάποιου %{value} ταιριάσματος
+  create_new: δημιουργία νέου
+  create_a_new: δημιουργήστε ένα νέο
+  select_existing: επιλογή υπάρχοντος
+  delete: Διαγραφή
+  discard: Απορρίψτε
+  edit: Επεξεργασία
   items_total: ! '%{count} total.'
-  less: Less...
-  me: me
-  more: More...
-  n_a: N/A
-  name: Name
-  no_match: No %{value} match
-  no_recent_items: There are no recent items to display yet.
-  options: Options
-  permissions: Permissions
-  please_retry: please try another query.
-  recent_items: Recent Items
-  select_contact: Select Contact
-  select_lead: Select Lead
-  select_task: Select Task
-  select_opportunity: Select Opportunity
+  less: Μαθήμα...
+  me: εγώ
+  more: Περισσότερα...
+  n_a: Δ/Υ
+  name: Όνομα
+  no_match: Χωρίς %{value} ταίριασμα
+  no_recent_items: Δεν υπάρχουν πρόσφατα στοιχεία για εμφάνιση ακόμα.
+  options: Επιλογές
+  permissions: Δικαιώματα
+  please_retry: παρακαλώ δοκιμάστε ένα άλλο ερώτημα.
+  recent_items: Πρόσφατα Στοιχεία
+  select_contact: Επιλογή Επαφής
+  select_lead: Επιλογή Δυνητικού Πελάτη
+  select_task: Επιλογή Εργασίας
+  select_opportunity: Επιλέξτε Ευκαιρία
   search_assets: Search %{value}
-  time_ago: ! '%{value} ago'
-  background_info: Background
-  address: Address
-  street1: Street 1
-  street2: Street 2
-  city: City
-  zipcode: Zip Code
-  state: State
-  country: Country
-  select_a_country: Select a Country
-  expand_all: Expand all
-  collapse_all: Collapse all
-  expanded: Expanded
+  time_ago: ! '%{value} πριν'
+  background_info: Φόντο
+  address: Διεύθυνση
+  street1: Οδός 1
+  street2: Οδός 2
+  city: Πόλη
+  zipcode: Ταχυδρομικός Κώδικας
+  state: Κατάσταση
+  country: Χώρα
+  select_a_country: Επιλέξτε μια χώρα
+  expand_all: Ανάπτυξη όλων
+  collapse_all: Σύμπτυξη όλων
+  expanded: Επεκταμένη
   collapsed: Collapsed
   # Views -> Layout.
   #----------------------------------------------------------------------------
-  about: About
-  about_dev_group: Discussion group for developers
-  about_features: Features and bugs
-  about_ffc: About Fat Free CRM
-  about_ffc_resources: Fat Free CRM resources (links open a new window)
-  about_ffc_version: Fat Free CRM version
-  about_home_page: Home page
-  about_project_page: Project page
-  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
-  about_twitter: Twitter commit updates
-  about_user_group: Discussion group for users
-  admin: Admin
-  logout: Logout
-  quick_find: Quick find
-  welcome: Welcome
+  about: Σχετικά
+  about_dev_group: Ομάδα συζήτησης για προγραμματιστές
+  about_features: Χαρακτηριστικά και σφάλματα
+  about_ffc: Σχετικά Με Το Fat Free Crm
+  about_ffc_resources: Fat Free CRM resources (συνδέσεις ανοίγουν ένα νέο παράθυρο)
+  about_ffc_version: Λίπος δωρεάν CRM έκδοση
+  about_home_page: Αρχική σελίδα
+  about_project_page: Σελίδα έργου
+  about_thank_you: Σας ευχαριστούμε που χρησιμοποιείτε το Fat Free CRM! Εκτιμούμε την επιχείρησή σας και ελπίζουμε να απολαύσετε τη χρήση του λογισμικού.
+  about_twitter: Ενημερώσεις υποβολής Twitter
+  about_user_group: Ομάδα συζήτησης για τους χρήστες
+  admin: Διαχειριστής
+  logout: Αποσύνδεση
+  quick_find: Γρήγορη εύρεση
+  welcome: Καλωσόρισμα
   # Advanced search
-  accounts_advanced_search: Accounts Advanced search
-  advanced_search: Advanced search
-  basic_search: Basic search
+  accounts_advanced_search: Προχωρημένη αναζήτηση
+  advanced_search: Προηγμένη αναζήτηση
+  basic_search: Βασική αναζήτηση
   search_results_count:
-    one: Search found %{count} result.
-    other: Search found %{count} results.
+    one: Η αναζήτηση βρέθηκε %{count} αποτέλεσμα.
+    other: Η αναζήτηση βρήκε %{count} αποτελέσματα.
   # Views -> Comments.
   #----------------------------------------------------------------------------
-  comment: Comment
-  edit_comment: Editing comment
-  show: Show
-  update: Update
-  following_users_will_be_notified: The following users will be notified by email
-  notifications_tooltip: Subscribers will receive new comments via email
-  subscribe_via_email: Subscribe via email
-  disable_email_subscriptions: Disable email subscription
+  comment: Σχόλιο
+  edit_comment: Επεξεργασία σχολίου
+  show: Εμφάνιση
+  update: Ενημέρωση
+  following_users_will_be_notified: Οι ακόλουθοι χρήστες θα ειδοποιηθούν μέσω ηλεκτρονικού ταχυδρομείου
+  notifications_tooltip: Οι συνδρομητές θα λάβουν νέα σχόλια μέσω ηλεκτρονικού ταχυδρομείου
+  subscribe_via_email: Εγγραφείτε μέσω email
+  disable_email_subscriptions: Απενεργοποίηση συνδρομής email
   added_note: added comment %{value}
   # Views -> Emails.
   #----------------------------------------------------------------------------
   # Views -> Passwords.
   #----------------------------------------------------------------------------
-  confirm_password_intro: Please type your new password and then confirm it.
-  password_intro: Please specify your email address, and the instructions to reset your password will be sent to you.
-  reset_password: Reset Password
-  update_password_and_login: Update Password and Login
+  confirm_password_intro: Παρακαλώ πληκτρολογήστε το νέο κωδικό πρόσβασης και στη συνέχεια επιβεβαιώστε το.
+  password_intro: Παρακαλώ καθορίστε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας και θα σας αποσταλούν οι οδηγίες επαναφοράς του κωδικού πρόσβασής σας.
+  reset_password: Επαναφορά Κωδικού Πρόσβασης
+  update_password_and_login: Ενημέρωση κωδικού πρόσβασης και σύνδεσης
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  back_to_crm: Επιστροφή στο Fat Free CRM
+  crm_admin_page: Fat Free CRM Διαχείριση
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
-  create_group: Create Group
-  save_group: Save Group
-  group_members: members
-  groups: Groups
-  groups_small: groups
-  group_small: group
+  create_group: Δημιουργία Ομάδας
+  save_group: Αποθήκευση Ομάδας
+  group_members: μέλη
+  groups: Ομάδες
+  groups_small: ομάδες
+  group_small: ομάδα
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
   confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
-  approve: Approve
-  create_user: Create User
-  last_logged_in: last logged in %{value}
-  personal_information: Personal Information
-  group_memberships: Group Memberships
-  reactivate: Reactivate
-  save_user: Save User
-  suspend: Suspend
-  user_active: Active
-  user_admin: Admin
-  user_awaits_approval: awaits your approval
-  user_confirm_delete: A user can only be deleted if no related assets are left behind.
-  user_is_admin: The user is Administrator
-  user_never_logged_in: hasn't logged in yet
-  user_signed_up: Signed Up
-  user_signed_up_on: signed up on %{value}
-  user_since: user since %{value}
-  user_suspended: Suspended
-  user_suspended_on: suspended on %{value}
-  users: Users
-  users_small: users
+  approve: Έγκριση
+  create_user: Δημιουργία Χρήστη
+  last_logged_in: τελευταία σύνδεση σε %{value}
+  personal_information: Προσωπικές Πληροφορίες
+  group_memberships: Συμμετοχές Σε Ομάδα
+  reactivate: Επανενεργοποίηση
+  save_user: Αποθήκευση Χρήστη
+  suspend: Αναστολή
+  user_active: Ενεργό
+  user_admin: Διαχειριστής
+  user_awaits_approval: αναμένει την έγκρισή σας
+  user_confirm_delete: Ένας χρήστης μπορεί να διαγραφεί μόνο εάν δεν μείνει κανένα σχετιζόμενο περιουσιακό στοιχείο πίσω.
+  user_is_admin: Ο χρήστης είναι διαχειριστής
+  user_never_logged_in: δεν έχει συνδεθεί ακόμα
+  user_signed_up: Εγγραφείτε
+  user_signed_up_on: εγγραφή στο %{value}
+  user_since: χρήστης από το %{value}
+  user_suspended: Αναστολή
+  user_suspended_on: αναστολή στο %{value}
+  users: Χρήστες
+  users_small: χρήστες
   # Views -> Versions
   #----------------------------------------------------------------------------
-  versions: History
+  versions: Ιστορικό
   version:
-    create: ! '%{item} created by %{by}'
-    update: ! '%{item} modified by %{by}'
-    destroy: ! '%{item} destroyed by %{by}'
+    create: ! '%{item} δημιουργήθηκε από %{by}'
+    update: ! 'Το %{item} τροποποιήθηκε από τον %{by}'
+    destroy: ! '%{item} καταστράφηκε από %{by}'
     set_html: ! '%{attr} set to %{to}'
     unset_html: ! '%{attr} unset'
-    change_html: ! '%{attr} changed from %{from} to %{to}'
-    anonymous: anonymous
-  account_contact_id: Account id
-  account_contact_name: Account name
-  user_id: User id
-  created_at: Created at
-  updated_at: Updated at
+    change_html: ! 'Το %{attr} άλλαξε από %{from} σε %{to}'
+    anonymous: ανώνυμος
+  account_contact_id: Ταυτότητα λογαριασμού
+  account_contact_name: Όνομα λογαριασμού
+  user_id: Id χρήστη
+  created_at: Δημιουργήθηκε στις
+  updated_at: Ενημερώθηκε στις
   # Export.
   #----------------------------------------------------------------------------
-  to_xls: Export to Excel
-  to_csv: Export to comma-delimited file format (including deleted records)
-  to_rss: RSS feed
-  to_atom: Atom feed
+  to_xls: Εξαγωγή στο Excel
+  to_csv: Εξαγωγή σε οριοθετημένη μορφή αρχείου (συμπεριλαμβανομένων των διαγραμμένων εγγραφών)
+  to_rss: Ροή RSS
+  to_atom: Τροφοδοσία Atom
   to_perm: Permalink
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_notification_subject: dropbox - Added email - %{subject}
-  dropbox_notification_intro: Succesfully added the email you sent to dropbox
-  dropbox_notification_to: Added to
-  subject: Subject
-  body: Body
+  dropbox_notification_subject: dropbox - Προστέθηκε email - %{subject}
+  dropbox_notification_intro: Επιτυχής προσθήκη του email που στείλατε στο dropbox
+  dropbox_notification_to: Προστέθηκε στο
+  subject: Θέμα
+  body: Σώμα
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
-    intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
-    reply_instructions: Reply to this email directly to add a new comment, or view the %{entity} online
+    intro: ! 'Ο %{user_full_name} σχολίασε στο %{entity_type}: %{entity_name}'
+    reply_instructions: Απάντηση σε αυτό το email απευθείας για να προσθέσετε ένα νέο σχόλιο, ή δείτε το %{entity} σε απευθείας σύνδεση
   # Lists
   #----------------------------------------------------------------------------
-  global_lists: Global lists
-  personal_lists: My lists
-  list: List
-  no_saved_lists: No saved lists
-  make_current_view_list: Make current view a list
-  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
+  global_lists: Καθολικές λίστες
+  personal_lists: Οι λίστες μου
+  list: Λίστα
+  no_saved_lists: Δεν υπάρχουν αποθηκευμένες λίστες
+  make_current_view_list: Κάντε την τρέχουσα προβολή λίστας
+  list_name_info: Αν χρησιμοποιήσετε το όνομα μιας υπάρχουσας λίστας, θα αντικαταστήσετε αυτή τη λίστα με τις τρέχουσες ρυθμίσεις σας
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
     comment:
-      one: 1 comment
+      one: 1 σχόλιο
       other: ! '%{count} comments'
     contact:
-      one: 1 contact
+      one: 1 επαφή
       other: ! '%{count} contacts'
     opportunity:
-      one: 1 opportunity
+      one: 1 ευκαιρία
       other: ! '%{count} opportunities'
     lead:
-      one: 1 lead
+      one: 1 μόλυβδος
       other: ! '%{count} leads'
     day:
-      one: 1 day
+      one: 1 ημέρα
       other: ! '%{count} days'
     login:
-      one: 1 login
+      one: 1 σύνδεση
       other: ! '%{count} logins'
   # Custom date/time formats.
   #----------------------------------------------------------------------------
@@ -774,102 +774,102 @@ el-GR:
     page_entries_info:
       single_page:
         one: Displaying 1 %{name}
-        other: Displaying all %{count} %{plural}
-      multi_page: Displaying %{plural} %{from} - %{to} of %{total} in total
+        other: Εμφάνιση όλων %{count} %{plural}
+      multi_page: Εμφάνιση %{plural} %{from} - %{to} από %{total} συνολικά
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
-  label: Label
-  custom_fields: Custom Fields
-  custom_field_options: Custom Field Options
-  create_field: Create field
-  save_field: Save field
-  create_field_group: Create field group
-  edit_field_group: Edit field group
-  save_field_group: Save field group
-  field_group_empty: There are no fields in this group.
-  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
-  restrict_by_tag: ! 'Restrict by Tag:'
-  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
-  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
-  field_group_unrestricted: This field group applies to all %{assets}
-  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
-  msg_cant_delete_field_group: Field Group could not be deleted.
-  admin_fields_info: ! 'Custom fields are displayed in groups. Create a new field group, or add fields to one of the groups below. You can drag and drop fields to change their display order or move them between field groups.'
+  label: Ετικέτα
+  custom_fields: Προσαρμοσμένα Πεδία
+  custom_field_options: Επιλογές Προσαρμοσμένου Πεδίου
+  create_field: Δημιουργία πεδίου
+  save_field: Αποθήκευση πεδίου
+  create_field_group: Δημιουργία ομάδας πεδίων
+  edit_field_group: Επεξεργασία ομάδας πεδίων
+  save_field_group: Αποθήκευση ομάδας πεδίων
+  field_group_empty: Δεν υπάρχουν πεδία σε αυτήν την ομάδα.
+  select_or_create_tags: Επιλέξτε μερικές ετικέτες ή δημιουργήστε μια νέα ετικέτα πατώντας το πλήκτρο 'enter'.
+  restrict_by_tag: ! 'Περιορισμός ανά ετικέτα:'
+  restrict_by_tag_info: (Εμφάνιση μόνο πεδίων για το %{assets} που έχουν ετικέτα με τα παρακάτω)
+  field_group_tag_restriction: Αυτή η ομάδα πεδίων ισχύει για %{assets} με ετικέτα "%{tag}"
+  field_group_unrestricted: Αυτή η ομάδα πεδίων ισχύει για όλα τα %{assets}
+  field_group_confirm_delete: Εάν μια ομάδα πεδίων έχει διαγραφεί, οποιαδήποτε πεδία θα μετακινηθεί στην προεπιλεγμένη ομάδα πεδίων.
+  msg_cant_delete_field_group: Η ομάδα πεδίων δεν μπορεί να διαγραφεί.
+  admin_fields_info: ! 'Τα προσαρμοσμένα πεδία εμφανίζονται σε ομάδες. Δημιουργήστε μια νέα ομάδα πεδίων, ή προσθέστε πεδία σε μία από τις παρακάτω ομάδες. Μπορείτε να σύρετε και να αποθέσετε πεδία για να αλλάξετε τη σειρά εμφάνισης τους ή να τα μετακινήσετε μεταξύ των ομάδων πεδίων.'
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'It is strongly recommended you restart your server after adding or removing any custom field. '
-  tags: Tags
-  tag_small: tag
-  tagged: Tagged
-  create_tag: Create Tag
-  save_tag: Save Tag
-  field_group_tags: Field Groups shown for this Tag
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  admin_fields_info2: ! 'Συνιστάται να επανεκκινήσετε το διακομιστή σας μετά την προσθήκη ή την αφαίρεση οποιουδήποτε προσαρμοσμένου πεδίου. '
+  tags: Ετικέτες
+  tag_small: ετικέτα
+  tagged: Επισημανθηκε
+  create_tag: Δημιουργία Ετικέτας
+  save_tag: Αποθήκευση Ετικέτας
+  field_group_tags: Ομάδες πεδίων που εμφανίζονται για αυτήν την ετικέτα
+  ai_prompt_tags: Δημιουργία ετικετών για πιθανά leads, λογαριασμούς, ή καμπάνιες, επικεντρωμένη στους τομείς της βιομηχανίας της εξειδίκευσης
+  ai_prompt_link: "Βοήθεια Σχεδίασης"
+  ai_prompt_link_tooltip: "Συζήτηση OpenAI με την προτροπή"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from %{value} records.
+  tag_with_taggings_confirm_delete: Αν αυτή η ετικέτα διαγραφεί, θα αφαιρεθεί από τις εγγραφές %{value}.
   msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
   views:
     admin:
       plugins:
-        author: Author
-        version: Version
-        description: Description
+        author: Συγγραφέας
+        version: Έκδοση
+        description: Περιγραφή
   # Simple Form translations
   #----------------------------------------------------------------------------
   simple_form:
-    yes: 'Yes'
-    no: 'No'
+    yes: 'Ναι'
+    no: 'Όχι'
     required:
-      text: required
+      text: απαιτείται
       mark: ! '*'
     # You can uncomment the line below if you need to overwrite the whole required html.
     # When using html, text and mark won't be used.
     # html: '<abbr title="required">*</abbr>'
     error_notification:
-      default_message: ! 'Some errors were found, please take a look:'
+      default_message: ! 'Βρέθηκαν κάποια σφάλματα, παρακαλώ ρίξτε μια ματιά:'
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
     string:
-      title: Short Answer
+      title: Σύντομη Απάντηση
     text:
-      title: Long Answer
+      title: Μακρά Απάντηση
     select:
-      title: Select List
+      title: Επιλογή Λίστας
     multiselect:
-      title: Multi Select
+      title: Πολλαπλή Επιλογή
     radio_buttons:
-      title: Radio Buttons
+      title: Κουμπιά Επιλογής
     boolean:
-      title: Checkbox
+      title: Πλαίσιο
     check_boxes:
-      title: Checkbox List
+      title: Λίστα Πλαισίων Ελέγχου
     date:
-      title: Date
+      title: Ημερομηνία
     date_pair:
-      title: Date Pair
+      title: Ημερομηνία Ζεύγος
     datetime:
-      title: Date & Time
+      title: Ημερομηνία & Ώρα
     datetime_pair:
-      title: Date & Time Pair
+      title: Ημερομηνία & Σύζευξη Ώρας
     email:
-      title: Email Address
+      title: Διεύθυνση Email
     url:
       title: URL
     tel:
-      title: Phone Number
+      title: Αριθμός Τηλεφώνου
     decimal:
-      title: Number (Decimal)
+      title: Αριθμός (Δεκαδικό)
     integer:
-      title: Number (Integer)
+      title: Αριθμός (Ακέραιος Αριθμός
     float:
-      title: Number (Floating Point)
+      title: Αριθμός (Υποψήφιο Σημείο)
   pair:
-    start: Start
-    end: End
+    start: Έναρξη
+    end: Τέλος
     from_to: From %{from} to %{to}
     from_only: From %{from}
     to_only: Until %{to}
