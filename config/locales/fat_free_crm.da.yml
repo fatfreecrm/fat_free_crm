@@ -1,0 +1,875 @@
+---
+da-DK:
+  language: Engelsk
+  # Generic terms.
+  #----------------------------------------------------------------------------
+  id: Id
+  all: Alle
+  at: på
+  here: her
+  no_button: 'Nej'
+  not_implemented: Ikke implementeret endnu.
+  or: eller
+  select_none: '-- Ingen --'
+  select_blank: '-- Vælg --'
+  yes_button: 'Ja'
+  # Settings.
+  #----------------------------------------------------------------------------
+  tab_dashboard: Instrumentbræt
+  tab_tasks: Opgaver
+  tab_campaigns: Kampagner
+  tab_leads: Bly
+  tab_accounts: Konti
+  tab_contacts: Kontakter
+  tab_opportunities: Muligheder
+  tab_team: Hold
+  admin_tab_groups: Grupper
+  admin_tab_users: Brugere
+  admin_tab_fields: Brugerdefinerede Felter
+  admin_tab_tags: Mærker
+  admin_tab_settings: Indstillinger
+  admin_tab_plugins: Plugins
+  ai_prompts: Beskriv din virksomhed
+  ai_prompts_description: Beskriv din virksomhed, de produkter eller tjenester, du tilbyder, og din målgruppe. Dette vil hjælpe os med at skræddersy CRM til dine behov, og fungere som systemprompter til hvor som helst AI bruges.
+  about_my_business: Om min virksomhed
+  about_my_business_placeholder: ie Eksempel Pty Ltd er en mellemstor virksomhed, der har specialiseret sig i at levere høj kvalitet software løsninger til små og mellemstore virksomheder. Vi fokuserer på sundhedsindustrien, og sælger vores flagskib produkt, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: Hvordan jeg planlægger at bruge fedt gratis CRM
+  how_i_plan_to_use_ffcrm_placeholder: dvs Et lille salgsteam på 5 personer vil bruge Fat Free CRM. Vi vil bruge Mailchimp, Google Ads, Zapier og Slack. Vi ønsker at filtrere og kategorisere kundeemner efter specifikke områder, som de er interesseret i inden for sundhedspleje.
+  affiliate: Partner
+  competitor: Konkurrent
+  customer: Kunde
+  partner: Partner
+  reseller: Forhandler
+  vendor: Forhandler
+  planned: Planlagt
+  started: Startet
+  on_hold: På Hold
+  completed: Afsluttet
+  called_off: Kaldet Fra
+  new: Ny
+  contacted: Kontaktet
+  converted: Konverteret
+  rejected: Afvist
+  cold_call: Koldt Opkald
+  conference: Konference
+  online: Online Marketing
+  referral: Henvisning
+  self: Selvgenereret
+  web: Hjemmeside
+  word_of_mouth: Ord af Mundhed
+  other: Andet
+  prospecting: Prospektion
+  analysis: Analyse
+  presentation: Præsentation
+  proposal: Forslag
+  negotiation: Forhandling
+  final_review: Endelig Gennemgang
+  won: Lukket/Vundet
+  lost: Lukket/Tabt
+  call: Opkald
+  email: E-mail
+  follow_up: Opfølgning
+  lunch: Frokost
+  meeting: Møde
+  money: Penge
+  trip: Tur
+  overdue: Forsinket
+  due_asap: Så Snart Som Muligt
+  due_today: Idag
+  due_tomorrow: I Morgen
+  due_this_week: Denne Uge
+  due_next_week: Næste Uge
+  due_later: Engang Senere
+  due_specific_date: På Den Specifikke Dato...
+  completed_today: Idag
+  completed_yesterday: Igår
+  completed_last_week: Sidste uge
+  completed_this_month: Denne måned
+  completed_last_month: Sidste måned
+  # Models/Activity.
+  #----------------------------------------------------------------------------
+  one_hour: En Time
+  one_day: En Dag
+  two_days: To Dage
+  one_week: En Uge
+  two_weeks: To Uger
+  one_month: En Måned
+  # Model Validations.
+  #----------------------------------------------------------------------------
+  activerecord:
+    errors:
+      models:
+        authentication:
+          attributes:
+            login_field:
+              is_not_valid: er ugyldig
+            password_field:
+              is_not_valid: er ugyldig
+        account:
+          attributes:
+            name:
+              missing_account_name: '^Angiv kontonavn.'
+            access:
+              share_account: '^Angiv venligst hvilke brugere der skal dele kontoen med.'
+        campaign:
+          attributes:
+            name:
+              missing_campaign_name: '^Angiv venligst kampagne navn.'
+            ends_on:
+              dates_not_in_sequence: '^Sørg for, at kampagnen slutdato er efter startdatoen.'
+            access:
+              share_campaign: '^Angiv venligst brugere med hvem kampagnen skal deles.'
+        contact:
+          attributes:
+            first_name:
+              missing_first_name: '^Angiv fornavn.'
+            last_name:
+              missing_last_name: '^Angiv efternavn.'
+            access:
+              share_contact: '^Angiv venligst brugere med hvem kontakten skal deles.'
+        lead:
+          attributes:
+            first_name:
+              missing_first_name: '^Angiv fornavn.'
+            last_name:
+              missing_last_name: '^Angiv efternavn.'
+            access:
+              share_lead: '^Angiv venligst hvilke brugere der skal dele føringen med.'
+        opportunity:
+          attributes:
+            name:
+              missing_opportunity_name: '^Angiv venligst navn på muligheden.'
+            access:
+              share_opportunity: '^Angiv venligst brugere med til at dele denne mulighed.'
+        task:
+          attributes:
+            name:
+              missing_task_name: '^Angiv opgavens navn.'
+            calendar:
+              invalid_date: '^Angiv venligst gyldig dato.'
+        user:
+          attributes:
+            username:
+              missing_username: '^Angiv venligst brugernavn.'
+              username_taken: '^Dette brugernavn er allerede taget.'
+            email:
+              missing_email: '^Angiv venligst e-mailadresse.'
+              email_in_use: '^Der er en anden bruger med den samme e-mail.'
+        custom_field:
+          required: '^%{field} er påkrævet.'
+          minlength: '^%{field} er for kort.'
+          maxlength: '^%{field} er for langt.'
+          endbeforestart: '^%{field} kan ikke slutte før den begynder.'
+    attribute_options:
+      opportunity:
+        stage:
+          prospecting: Prospektion
+          analysis: Analyse
+          presentation: Præsentation
+          proposal: Forslag
+          negotiation: Forhandling
+          final_review: Endelig Gennemgang
+          won: Lukket/Vundet
+          lost: Lukket/Tabt
+      account:
+        rating:
+          "0": "-"
+          "1": "★"
+          "2": "★★"
+          "3": "★★★"
+          "4": "★★★★"
+          "5": "★★★★★"
+  msg_account_suspended: Brugerkonto er blevet suspenderet.
+  password_reset_instruction: instruktioner til nulstilling af adgangskode
+  # Controllers.
+  #----------------------------------------------------------------------------
+  msg_account_created: Din konto er blevet oprettet og afventer godkendelse fra systemadministratoren.
+  msg_account_not_approved: Din konto er ikke godkendt endnu.
+  msg_asset_deleted: ! '%{value} er blevet slettet.'
+  msg_asset_not_available: Denne %{value} er ikke længere tilgængelig.
+  msg_not_authorized: Du har ikke tilladelse til at tage denne handling.
+  msg_assets_not_available: '%{value} er ikke tilgængelige.'
+  msg_asset_rejected: ! '%{value} er blevet afvist.'
+  msg_bad_image_file: '^Kunne ikke uploade eller ændre størrelsen på den billedfil, du har angivet.'
+  msg_cant_create_related: Kan ikke oprette %{asset} da %{related} ikke længere er tilgængelig.
+  msg_cant_delete_user: '^Kunne ikke slette brugeren, da %{value} har relaterede aktiver til stede.'
+  msg_cant_do: Kan ikke %{action} %{asset} , da den ikke længere er tilgængelig.
+  msg_email_not_found: Ingen bruger blev fundet med denne e-mailadresse.
+  msg_enter_new_password: Indtast venligst din nye adgangskode.
+  msg_goodbye: Du er blevet logget ud. Tak fordi du har brugt Fat Free CRM!
+  msg_invalid_password: '^Angiv venligst gyldig nuværende adgangskode'
+  msg_invalig_login: Ugyldigt brugernavn eller adgangskode.
+  msg_last_login: Dit sidste login var på %{value}.
+  msg_login_needed: Du skal være logget ind for at få adgang til denne side.
+  msg_logout_needed: Du skal være logget ud for at få adgang til denne side.
+  msg_password_changed: Din adgangskode er blevet ændret.
+  msg_password_not_changed: Din adgangskode er ikke blevet ændret.
+  msg_password_updated: Adgangskoden blev opdateret.
+  msg_pwd_instructions_sent: Instruktioner til at nulstille din adgangskode er blevet sendt til dig. Tjek venligst din e-mail.
+  msg_require_admin: Du skal være administrator for at få adgang til denne side.
+  msg_successful_signup: Tilmelding lykkedes, velkommen til Fat Free CRM!
+  msg_welcome: Velkommen til Fat Free CRM!
+  msg_user_updated: Profil opdateret.
+  # Options.
+  #----------------------------------------------------------------------------
+  option_amount*probability: vægtet beløb
+  activity_options: Vis %{models} %{action_type} udført af %{user} tidligere %{period}.
+  all_users: alle brugere
+  option_after: efter
+  option_all: alle
+  option_all_users: Alle Brugere
+  option_amount: beløb
+  option_before: før
+  option_brief: kort
+  option_closes_on: luk dato
+  option_company: virksomhed
+  option_created_at: dato oprettet
+  option_ends_on: slutdato
+  option_first_name: fornavn
+  option_last_name: efternavn
+  option_leads_count: faktiske kundeemner
+  option_long: lang
+  option_name: navn
+  option_probability: sandsynlighed
+  option_rating: rating
+  option_revenue: faktiske indtægter
+  option_starts_on: startdato
+  option_target_leads: målledninger
+  option_target_revenue: målindtægter
+  option_updated_at: dato opdateret
+  show_per_page: Vis %{number} %{models} pr. side ved hjælp af %{fmt} format.
+  sort_by: Sorter efter %{field}
+  sort_by_displaying: Sorter %{models} af %{field} viser fornavn %{position} efternavn.
+  entities_per_page: ! '%{entity} pr. side:'
+  contacts_index_long: Langt format
+  contacts_index_brief: Kort format
+  contacts_index_full: Fuldt format
+  opportunities_index_normal: Normal format
+  accounts_index_normal: Normal format
+  leads_index_normal: Normal format
+  campaigns_index_normal: Normal format
+  # Views -> Profile.
+  #----------------------------------------------------------------------------
+  subscribe_to_comment_replies: "Abonner på kommentarsvar via e-mail"
+  receive_assigned_notifications: "Modtag tildelte notifikationer via e-mail"
+  aim: AOL IM
+  already_signed_up: Allerede tilmeldt?
+  alt_email: Alternativ e-mail
+  avatar: Profilbillede
+  change_password: Skift Adgangskode
+  company: Virksomhed
+  contact_info: Kontakt Information
+  current_password: Nuværende adgangskode
+  edit_profile: Rediger Profil
+  first_name: Fornavn
+  google: Google IM
+  gravatar_help: Ikke fortrolig med Gravatars? Lær om Gravatars
+  image_file: Billede fil
+  image_help: Billedet vil blive skaleret til 180x180 pixels. Understøttede formater - PNG, JPG, GIF.
+  job_title: Titel
+  last_name: Efternavn
+  login_now_link: Log Ind Nu!
+  mobile: Mobil
+  my_profile: Min Profil
+  new_password: Ny adgangskode
+  password: Adgangskode
+  password_confirmation: Bekræft ny adgangskode
+  phone: Telefon
+  profile: Profil
+  profile_language: Sprog
+  email_notifications: E-Mail Notifikationer
+  save_profile: Gem Profil
+  sign_up: Tilmeld Dig
+  sign_up_button: Tilmeld Dig
+  upload_picture: Upload Billede
+  use_gravatar: Brug Gravatar
+  user: Bruger
+  username: Brugernavn
+  yahoo: Yahoo IM
+  born_on: Født den
+  reports_to: Rapporter til
+  access: Adgang
+  # Views -> Authenticate.
+  #----------------------------------------------------------------------------
+  forgot_password: Glemt Adgangskode
+  login: Login
+  no_account: Har du ikke en konto?
+  remember_me: Husk Mig
+  sign_up_now: Tilmeld Dig Nu!
+  # Views -> Accounts.
+  #----------------------------------------------------------------------------
+  account: Konto
+  account_id: Konto
+  select_an_account: Vælg en konto
+  account_small: konto
+  account_summary: Konto Oversigt
+  account_categories: Kontokategorier
+  accounts: Konti
+  accounts_options: Konti Indstillinger
+  accounts_small: konti
+  assigned_to: Tildelt til
+  billing_address: Faktureringsadresse
+  create_account: Opret Konto
+  date_created: Dato Oprettet
+  date_updated: Dato Opdateret
+  fax: Fax
+  intro: Du kan tilføje %{value} information senere.
+  keep_private: Hold den privat, del ikke med andre
+  mail_to: Mail til %{value}
+  make_public: Del det med alle
+  mobile_small: mobil
+  open_in_window: Åbn %{value} i et nyt vindue
+  phone_small: telefon
+  phone_toll_free: Afgiftsfri
+  pipeline: Rørledning
+  same_as_billing: samme som fakturering
+  save_account: Gem Konto
+  share_with: Del det med følgende personer
+  shipping_address: Leveringsadresse
+  total_accounts: Konti I Alt
+  website: Hjemmeside
+  account_with_title_department: ! '%{title}, %{department} på %{account}'
+  account_with_title: ! '%{title} på %{account}'
+  # Views -> Campaigns.
+  #----------------------------------------------------------------------------
+  actual: Faktisk
+  actual_performance: Faktisk Ydelse
+  budget: Budget
+  budget_label: Budget (%{currency})
+  campaign: Kampagne
+  campaign_and_leads: kampagnen og dens ledetråde
+  campaign_small: kampagne
+  campaign_summary: Kampagne Oversigt
+  campaign_targets: Kampagne Mål
+  campaign_statuses: Kampagne Statusser
+  campaigns: Kampagner
+  campaigns_options: Kampagner Indstillinger
+  campaigns_small: kampagner
+  conversion: Konvertering
+  conversion_label: Omregning (%)
+  conversion_number: ! '%{value} konvertering'
+  target_conversion: Target conversion
+  create_campaign: Opret Kampagne
+  end_date: Slut dato
+  finished_on: fuldført på %{value}
+  finishes_in: afslutter i %{value}
+  no_start_date: ingen startdato angivet
+  number_of_leads: Antal ledninger
+  objectives: Mål
+  objectives_help: Angiv venligst antal leads, forventede leads-til-muligheder konvertering ratio, mål indtægter og kampagne budget. Disse tal vil lade dig spore faktiske kampagne ydeevne.
+  objectives_small: mål for kampagnen
+  revenue: Indtægter
+  revenue_label: Indtægter (%{currency})
+  revenue_number: ! '%{value} i indtægter'
+  save_campaign: Gem Kampagne
+  start_date: Start dato
+  started_ago: startet %{value} siden
+  starts_in: starter i %{value}
+  starts_today: starter i dag!
+  target: Target
+  total_campaigns: Kampagner I Alt
+  was_supposed_to_finish: skulle være færdig på %{value}
+  was_supposed_to_start: skulle starte %{time_ago} siden på %{start_date}
+  was_supposed_to_start_in: skulle starte i %{starts_in} på %{start_date}
+  select_a_campaign: Vælg en kampagne
+  # Views -> Contacts.
+  #----------------------------------------------------------------------------
+  alt_email_small: Andet
+  blog: Hjemmeside/blog
+  contact: Kontakt
+  contact_small: kontakt
+  contacts: Kontakter
+  contacts_options: Kontakter Indstillinger
+  contacts_small: kontakter
+  contact_summary: Kontakt Resumé
+  create_contact: Opret Kontakt
+  department: Afdeling
+  department_small: ! '%{value} afdeling'
+  do_not_call: Ring ikke op
+  extra_info: Extra Information
+  extra_info_small: ekstra kontakt
+  facebook: Facebook
+  linked_in: LinkedIn
+  myself: Mig
+  permissions_intro_private: Som standard vil du kun have adgang til %{value}. Du kan ændre tilladelser senere.
+  permissions_intro_public: Som standard vil alle brugere have adgang til %{value}. Du kan ændre tilladelser senere.
+  permissions_intro_shared: Som standard vil kun de valgte brugere have adgang til %{value}. Du kan ændre tilladelser senere.
+  referred_by: Henvist af
+  referred_by_small: henvist af
+  save_contact: Gem Kontakt
+  twitter: Twitter
+  unassigned: Utildelt
+  web_presence: Webtilstedeværelse
+  web_presence_small: webtilstedeværelse
+  works_at: ! '%{job_title} på %{company}'
+  general_info: Generel Information
+  show_general_info_small: Vis generel information for denne kontakt.
+  show_extra_info_small: Vis ekstra information for denne kontakt.
+  tag_details: ! '%{tag} Detaljer'
+  show_tag_info_small: Vis %{tag} information for denne kontakt.
+  shared_with_everyone: Delt med alle
+  title: Titel
+  subscriptions: Abonnementer
+  # Views -> Leads.
+  #----------------------------------------------------------------------------
+  convert: Konverter
+  convert_lead: Konverter Emne
+  convert_lead_permissions_intro: Kontakttilladelser vil blive kopieret fra det lead der konverteres. Du kan ændre kontakttilladelser senere.
+  convert_lead_text: Ved at konvertere bly %{value} vil blive en kontakt tilknyttet den eksisterende eller nyoprettede konto. Emnestatus vil automatisk blive sat til konverteret.
+  create_lead: Opret Emne
+  create_opp_for_contact: Du kan eventuelt oprette en mulighed for %{value} kontakt ved at angive navnet, nuværende fase, anslået slutdato, sandsynligheden for salg, handelens beløb og den tilbudte rabat.
+  lead: Bly
+  lead_info_small: bly kontakt
+  lead_permissions_intro_private: Som standard vil tilladelser blive kopieret fra kampagnen eller sat til privat. Du kan ændre bly tilladelser senere.
+  lead_permissions_intro_public: Som standard vil tilladelser blive kopieret fra kampagnen eller sat til offentlig. Du kan ændre bly tilladelser senere.
+  lead_permissions_intro_shared: Som standard vil tilladelser blive kopieret fra kampagnen eller deles med de angivne brugere. Du kan ændre bly tilladelser senere.
+  lead_small: bly
+  lead_status_small: bly status
+  lead_summary: Lead Oversigt
+  lead_statuses: Emne Status
+  leads: Bly
+  leads_options: Emne Indstillinger
+  leads_small: ledninger
+  none: Ingen
+  rating: Bedømmelse
+  reject: Afvis
+  reject_lead_confirm: Er du sikker på, at du vil afvise denne føring?
+  save_lead: Gem Emne
+  source: Kilde
+  status: Status
+  total_leads: Leads I Alt
+  show_status_info_small: Vis statusinformation for denne hoved.
+  show_contact_info_small: Vis kontaktinformation for denne føring.
+  # Views -> Opportunities.
+  #----------------------------------------------------------------------------
+  amount: Beløb
+  close_date: Luk dato
+  closes_on: Lukker på
+  closed_ago_on: lukket %{time_ago} siden på %{date}
+  closes_today: forventes at lukke i dag!
+  closing_date: lukkedato er %{value}
+  create_opportunity: Opret Mulighed
+  currency: "$"
+  days_late: Sent af
+  days_left: Dage tilbage
+  discount: Rabat
+  discount_number: med %{value} rabat
+  expected_to_close: forventes at lukke i %{time} på %{date}
+  from: fra
+  no_closing_date: ingen forventet slutdato
+  no_discount: uden rabat
+  opportunities: Muligheder
+  opportunities_options: Muligheder
+  opportunities_small: muligheder
+  opportunity: Mulighed
+  opportunity_small: mulighed
+  opportunity_stages: Mulighed Stadie
+  opportunity_summary: Mulighed for et blik
+  opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability} probability'
+  past_due: forbi skyld, forventedes at lukke %{value} siden
+  probability: Sandsynlighed
+  probability_number: og %{value} sandsynlighed
+  save_opportunity: Gem Mulighed
+  stage: Trin
+  total_opportunities: Samlede Muligheder
+  weighted_amount: Vægtet beløb
+  # Views -> Tasks.
+  #----------------------------------------------------------------------------
+  task: Opgave
+  task_small: opgave
+  tasks: Opgaver
+  tasks_small: opgaver
+  assign_to: Tildel til
+  assigned_tab: Tildelt
+  assigned_tasks: Tildelte Opgaver
+  category: Kategori
+  completed_tab: Afsluttet
+  completed_tasks: Afsluttede Opgaver
+  create_task: Opret Opgave
+  create_task_small: opret ny opgave
+  due: Forfalder
+  feel_free: Du er velkommen til
+  move_to: flyt til
+  no_tasks: Du har ingen %{value} opgaver
+  no_tasks_pending: afventer
+  no_tasks_assigned: tildelt
+  no_tasks_completed: fuldført
+  pending_tab: Afventer
+  pending_tasks: Ventende Opgaver
+  related: ! 're:'
+  save_task: Gem Opgave
+  task_assigned: Opgaven er blevet tildelt %{value}
+  task_assigned_to: og tildelt til %{value}
+  task_completed: fuldført
+  task_uncomplete: Ufuldstændig
+  task_completed_ago: fuldført %{value} siden
+  task_completed_by: afsluttet %{time_ago} ago (%{date}) af %{user}
+  task_created: Opgaven er blevet oprettet
+  task_due_in: forfalder til %{value}
+  task_due_later: forfalder snart
+  task_due_now: forfalder nu
+  task_due_today: forfalder i dag
+  task_from: Fra %{value}
+  task_overdue: sent, skulle forfalde den
+  task_pending: Opgaven er blevet flyttet til ventende opgaver
+  total_tasks: Total %{value}
+  view_assigned_tasks: se tildelte opgaver
+  view_pending_tasks: se ventende opgaver
+  # Views -> Team.
+  #----------------------------------------------------------------------------
+  unassigned_opportunities: Ikke-Tildelte Muligheder
+  no_opportunities_found: Der er i øjeblikket ingen enestående muligheder.
+  # Views -> Home.
+  #----------------------------------------------------------------------------
+  action_completed: fuldført
+  action_create: oprettet
+  action_destroy: slettet
+  action_reassigned: gentildelt
+  action_rejected: afvist
+  action_rescheduled: omlagt
+  action_update: opdateret
+  action_view: set
+  action_won: vundet
+  activities: Aktiviteter
+  no_activity_records: Ingen aktivitetsposter fundet.
+  recent_activity: Seneste Aktivitet
+  recent_activity_options: Seneste Aktivitetsindstillinger
+  subject_account: konto
+  subject_address: adresse på
+  subject_campaign: kampagne
+  subject_comment: kommentar til
+  subject_contact: kontakt
+  subject_email: e-mail på
+  subject_lead: bly
+  subject_opportunity: mulighed
+  subject_task: opgave
+  subject_user: bruger
+  tag_list: Mærker
+  create_past_participle: Optag Oprettelser
+  view_past_participle: Visninger
+  update_past_participle: Opdateringer
+  destroy_past_participle: Sletninger
+  all_events_past_participle: Aktiviteter
+  action_create_comment: ! '- &quot;%{comment}&quot;'
+  my_tasks: Mine Opgaver
+  no_task_records: Du har ingen opgaver.
+  my_opportunities: Mine Muligheder
+  no_opportunity_records: Du har ingen muligheder.
+  my_accounts: Mine Konti
+  no_account_records: Du har ingen konti
+  not_showing_hidden_entities: Viser ikke %{count} skjulte %{entity}.
+  # Views -> Common.
+  #----------------------------------------------------------------------------
+  add_note: Tilføj Kommentar
+  save_note: Gem Kommentar
+  add_note_help: Tilføj en ny kommentar...
+  edit_note: Rediger Kommentar
+  added_ago: tilføjede %{value}
+  added_by: tilføjede %{time_ago} af %{user}
+  back: Tilbage
+  cancel: Annuller
+  close_form: Luk formular
+  comment_intro: Du kan tilføje kommentarer senere.
+  confirm_delete: Er du sikker på, at du vil slette denne %{value}?
+  copy_permissions: Kopier %{value} tilladelser
+  could_not_find: Kunne ikke finde nogen %{value}. Du er velkommen til at
+  could_not_find_matching: Kunne ikke finde nogen %{value} matching
+  create_new: opret ny
+  create_a_new: opret en ny
+  select_existing: vælg eksisterende
+  delete: Slet
+  discard: Kassér
+  edit: Rediger
+  items_total: ! '%{count} total.'
+  less: Mindre...
+  me: mig
+  more: Mere...
+  n_a: N/A
+  name: Navn
+  no_match: Ingen %{value} match
+  no_recent_items: Der er ingen seneste elementer at vise endnu.
+  options: Indstillinger
+  permissions: Rettigheder
+  please_retry: prøv venligst en anden forespørgsel.
+  recent_items: Seneste Elementer
+  select_contact: Vælg Kontakt
+  select_lead: Vælg Emne
+  select_task: Vælg Opgave
+  select_opportunity: Vælg Mulighed
+  search_assets: Søg %{value}
+  time_ago: ! '%{value} siden'
+  background_info: Baggrund
+  address: Adresse
+  street1: Gade 1
+  street2: Gade 2
+  city: By
+  zipcode: Postnummer
+  state: Stat
+  country: Land
+  select_a_country: Vælg et land
+  expand_all: Udvid alle
+  collapse_all: Skjul alle
+  expanded: Udvidet
+  collapsed: Collapsed
+  # Views -> Layout.
+  #----------------------------------------------------------------------------
+  about: Om
+  about_dev_group: Diskussionsgruppe for udviklere
+  about_features: Funktioner og fejl
+  about_ffc: Om Fedt Gratis CRM
+  about_ffc_resources: Fat Free CRM ressourcer (links åbner et nyt vindue)
+  about_ffc_version: Fedt gratis CRM version
+  about_home_page: Hjemmeside
+  about_project_page: Projekt side
+  about_thank_you: Tak fordi du bruger Fat Free CRM! Vi sætter pris på din virksomhed og håber du nyder at bruge softwaren.
+  about_twitter: Twitter commit opdateringer
+  about_user_group: Diskussionsgruppe for brugere
+  admin: Administrator
+  logout: Log Ud
+  quick_find: Hurtig søgning
+  welcome: Velkommen
+  # Advanced search
+  accounts_advanced_search: Konti Avanceret søgning
+  advanced_search: Avanceret søgning
+  basic_search: Grundlæggende søgning
+  search_results_count:
+    one: Søgning fundet %{count} resultat.
+    other: Søgning fandt %{count} resultater.
+  # Views -> Comments.
+  #----------------------------------------------------------------------------
+  comment: Kommentar
+  edit_comment: Redigerer kommentar
+  show: Vis
+  update: Opdater
+  following_users_will_be_notified: Følgende brugere vil blive underrettet via e-mail
+  notifications_tooltip: Abonnenter vil modtage nye kommentarer via e-mail
+  subscribe_via_email: Abonner via e-mail
+  disable_email_subscriptions: Deaktivér e-mail abonnement
+  added_note: tilføjede kommentar %{value}
+  # Views -> Emails.
+  #----------------------------------------------------------------------------
+  # Views -> Passwords.
+  #----------------------------------------------------------------------------
+  confirm_password_intro: Indtast venligst din nye adgangskode og bekræft den.
+  password_intro: Angiv venligst din e-mailadresse, og instruktioner til at nulstille din adgangskode vil blive sendt til dig.
+  reset_password: Nulstil Adgangskode
+  update_password_and_login: Opdater adgangskode og login
+  # Views -> Admin
+  #----------------------------------------------------------------------------
+  back_to_crm: Tilbage til Fedtfri CRM
+  crm_admin_page: Fedtfri CRM-administration
+  # Views -> Admin -> Groups
+  #----------------------------------------------------------------------------
+  create_group: Opret Gruppe
+  save_group: Gem Gruppe
+  group_members: medlemmer
+  groups: Grupper
+  groups_small: grupper
+  group_small: gruppe
+  # Views -> Admin -> Users
+  #----------------------------------------------------------------------------
+  confirm_group_delete: Er du sikker på, at du vil slette denne gruppe? Der er %{count} elementer, der stadig refererer til det.
+  approve: Godkend
+  create_user: Opret Bruger
+  last_logged_in: sidst logget ind %{value}
+  personal_information: Personlige Oplysninger
+  group_memberships: Gruppe Medlemskaber
+  reactivate: Genaktivér
+  save_user: Gem Bruger
+  suspend: Suspendér
+  user_active: Aktiv
+  user_admin: Administrator
+  user_awaits_approval: venter på din godkendelse
+  user_confirm_delete: En bruger kan kun slettes, hvis ingen relaterede aktiver er efterladt.
+  user_is_admin: Brugeren er administrator
+  user_never_logged_in: har ikke logget ind endnu
+  user_signed_up: Tilmeldt
+  user_signed_up_on: tilmeldt på %{value}
+  user_since: bruger siden %{value}
+  user_suspended: Suspenderet
+  user_suspended_on: suspenderet på %{value}
+  users: Brugere
+  users_small: brugere
+  # Views -> Versions
+  #----------------------------------------------------------------------------
+  versions: Historik
+  version:
+    create: ! '%{item} oprettet af %{by}'
+    update: ! '%{item} ændret af %{by}'
+    destroy: ! '%{item} ødelagt af %{by}'
+    set_html: ! '%{attr} indstillet til %{to}'
+    unset_html: ! '%{attr} unset'
+    change_html: ! '%{attr} ændret fra %{from} til %{to}'
+    anonymous: anonym
+  account_contact_id: Konto id
+  account_contact_name: Konto navn
+  user_id: Bruger ID
+  created_at: Oprettet den
+  updated_at: Opdateret den
+  # Export.
+  #----------------------------------------------------------------------------
+  to_xls: Eksporter til Excel
+  to_csv: Eksporter til kommasepareret filformat (inklusive slettede poster)
+  to_rss: RSS feed
+  to_atom: Atom feed
+  to_perm: Permalink
+  # Dropbox.
+  #----------------------------------------------------------------------------
+  dropbox_notification_subject: dropbox - Tilføjet e-mail - %{subject}
+  dropbox_notification_intro: Emailen du sendte til dropbox blev tilføjet
+  dropbox_notification_to: Føjet til
+  subject: Emne
+  body: Krop
+  # Comment Inbox
+  #----------------------------------------------------------------------------
+  comment_notification:
+    intro: ! '%{user_full_name} kommenterede %{entity_type}: %{entity_name}'
+    reply_instructions: Besvar denne e-mail direkte for at tilføje en ny kommentar, eller se %{entity} online
+  # Lists
+  #----------------------------------------------------------------------------
+  global_lists: Globale lister
+  personal_lists: Mine lister
+  list: Liste
+  no_saved_lists: Ingen gemte lister
+  make_current_view_list: Gør nuværende visning til en liste
+  list_name_info: Hvis du bruger navnet på en eksisterende liste, vil du overskrive listen med dine aktuelle indstillinger
+  # Pluralizations.
+  #----------------------------------------------------------------------------
+  pluralize:
+    comment:
+      one: 1 kommentar
+      other: ! '%{count} kommentarer'
+    contact:
+      one: 1 kontakt
+      other: ! '%{count} kontakter'
+    opportunity:
+      one: 1 mulighed
+      other: ! '%{count} muligheder'
+    lead:
+      one: 1 bly
+      other: ! '%{count} ledninger'
+    day:
+      one: 1 dag
+      other: ! '%{count} dage'
+    login:
+      one: 1 login
+      other: ! '%{count} logins'
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: ! '%m/%d/%Y'
+      mmdd: ! '%b %e'
+      mmddyy: ! '%b %e, %Y'
+  time:
+    formats:
+      mmddhhss: ! '%b %e at %l:%M%p'
+      mmddyyyy_hhmm: ! '%e %b %Y at %l:%M%p'
+  # will_paginate translations copied for 'en-US'
+  #----------------------------------------------------------------------------
+  will_paginate:
+    previous_label: ! '&#8592; Forrige'
+    next_label: 'Næste &#8594;'
+    page_gap: ! '&hellip;'
+    page_entries_info:
+      single_page:
+        one: Viser 1 %{name}
+        other: Viser alle %{count} %{plural}
+      multi_page: Viser %{plural} %{from} - %{to} af %{total} i alt
+  # Views -> Admin -> Custom Fields
+  #----------------------------------------------------------------------------
+  label: Etiket
+  custom_fields: Brugerdefinerede Felter
+  custom_field_options: Brugerdefinerede Feltindstillinger
+  create_field: Opret felt
+  save_field: Gem felt
+  create_field_group: Opret feltgruppe
+  edit_field_group: Rediger feltgruppe
+  save_field_group: Gem feltgruppe
+  field_group_empty: Der er ingen felter i denne gruppe.
+  select_or_create_tags: Vælg nogle tags, eller opret et nyt tag ved at trykke på 'enter'.
+  restrict_by_tag: ! 'Begræns af Tag:'
+  restrict_by_tag_info: (Vis kun felter for %{assets} som er mærket med følgende)
+  field_group_tag_restriction: Denne feltgruppe gælder for %{assets} tagget med "%{tag}"
+  field_group_unrestricted: Denne feltgruppe gælder for alle %{assets}
+  field_group_confirm_delete: Hvis en feltgruppe slettes, vil alle felter blive flyttet til standard feltgruppen.
+  msg_cant_delete_field_group: Feltgruppen kunne ikke slettes.
+  admin_fields_info: ! 'Brugerdefinerede felter vises i grupper. Opret en ny feltgruppe, eller tilføj felter til en af grupperne nedenfor. Du kan trække og slippe felter for at ændre deres visningsrækkefølge eller flytte dem mellem feltgrupper.'
+  # Views -> Admin -> Tags
+  #----------------------------------------------------------------------------
+  admin_fields_info2: ! 'Det anbefales kraftigt, at du genstarter din server efter at have tilføjet eller fjernet et brugerdefineret felt. '
+  tags: Mærker
+  tag_small: tag
+  tagged: Mærket
+  create_tag: Opret Tag
+  save_tag: Gem Mærke
+  field_group_tags: Feltgrupper vist for dette tag
+  ai_prompt_tags: Generer tags for potentielle leads, konti eller kampagner, fokuseret på branchens specialiseringsområder
+  ai_prompt_link: "Design Hjælp"
+  ai_prompt_link_tooltip: "OpenAI Chat med prompt"
+  # Views -> Admin -> Plugins
+  #----------------------------------------------------------------------------
+  tag_with_taggings_confirm_delete: Hvis dette tag slettes, vil det blive fjernet fra %{value} posteringer.
+  msg_cant_delete_tag: Kunne ikke slette '%{value}', da det har tilknyttede feltgrupper.
+  views:
+    admin:
+      plugins:
+        author: Forfatter
+        version: Version
+        description: Varebeskrivelse
+  # Simple Form translations
+  #----------------------------------------------------------------------------
+  simple_form:
+    yes: 'Ja'
+    no: 'Nej'
+    required:
+      text: påkrævet
+      mark: ! '*'
+    # You can uncomment the line below if you need to overwrite the whole required html.
+    # When using html, text and mark won't be used.
+    # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: ! 'Nogle fejl blev fundet, tag venligst et kig:'
+  # Form field types
+  #----------------------------------------------------------------------------
+  field_types:
+    string:
+      title: Kort Svar
+    text:
+      title: Langt Svar
+    select:
+      title: Vælg Liste
+    multiselect:
+      title: Multi Vælg
+    radio_buttons:
+      title: Radioknapper
+    boolean:
+      title: Afkrydsningsfelt
+    check_boxes:
+      title: Afkrydsningsfelt Liste
+    date:
+      title: Dato
+    date_pair:
+      title: Dato Par
+    datetime:
+      title: Dato & Tid
+    datetime_pair:
+      title: Dato & Tidspar
+    email:
+      title: E-Mail Adresse
+    url:
+      title: URL
+    tel:
+      title: Telefonnummer
+    decimal:
+      title: Antal (Decimal)
+    integer:
+      title: Nummer (Heltal)
+    float:
+      title: Nummer (Floating Point)
+  pair:
+    start: Start
+    end: Slut
+    from_to: Fra %{from} til %{to}
+    from_only: Fra %{from}
+    to_only: Indtil %{to}
