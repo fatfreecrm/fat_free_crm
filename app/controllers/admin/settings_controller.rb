@@ -44,7 +44,7 @@ class Admin::SettingsController < Admin::ApplicationController
       Setting[key] = value
     end
 
-    redirect_to admin_settings_path, notice: "Settings were successfully updated."
+    redirect_to admin_settings_path
   end
 
   private
