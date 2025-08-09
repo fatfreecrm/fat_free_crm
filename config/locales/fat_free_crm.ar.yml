@@ -1,99 +1,99 @@
 ---
 ar-SA:
-  language: English
+  language: الإنكليزية
   # Generic terms.
   #----------------------------------------------------------------------------
   id: Id
-  all: All
-  at: at
-  here: here
-  no_button: 'No'
-  not_implemented: Not implemented yet.
-  or: or
-  select_none: '-- None --'
-  select_blank: '-- Select --'
-  yes_button: 'Yes'
+  all: الكل
+  at: في
+  here: هنا
+  no_button: 'لا'
+  not_implemented: لم يتم التنفيذ بعد.
+  or: أو
+  select_none: '-- لا شيء --'
+  select_blank: '-- اختر --'
+  yes_button: 'نعم'
   # Settings.
   #----------------------------------------------------------------------------
-  tab_dashboard: Dashboard
-  tab_tasks: Tasks
-  tab_campaigns: Campaigns
-  tab_leads: Leads
-  tab_accounts: Accounts
-  tab_contacts: Contacts
-  tab_opportunities: Opportunities
-  tab_team: Team
-  admin_tab_groups: Groups
-  admin_tab_users: Users
-  admin_tab_fields: Custom Fields
-  admin_tab_tags: Tags
-  admin_tab_settings: Settings
-  admin_tab_plugins: Plugins
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
-  affiliate: Affiliate
-  competitor: Competitor
-  customer: Customer
-  partner: Partner
-  reseller: Reseller
-  vendor: Vendor
-  planned: Planned
-  started: Started
-  on_hold: On Hold
-  completed: Completed
-  called_off: Called Off
-  new: New
-  contacted: Contacted
-  converted: Converted
-  rejected: Rejected
-  cold_call: Cold Call
-  conference: Conference
-  online: Online Marketing
-  referral: Referral
-  self: Self Generated
-  web: Website
-  word_of_mouth: Word of Mouth
-  other: Other
-  prospecting: Prospecting
-  analysis: Analysis
-  presentation: Presentation
-  proposal: Proposal
-  negotiation: Negotiation
-  final_review: Final Review
-  won: Closed/Won
-  lost: Closed/Lost
-  call: Call
-  email: Email
-  follow_up: Follow-up
-  lunch: Lunch
-  meeting: Meeting
-  money: Money
-  trip: Trip
-  overdue: Overdue
-  due_asap: As Soon As Possible
-  due_today: Today
-  due_tomorrow: Tomorrow
-  due_this_week: This Week
-  due_next_week: Next Week
-  due_later: Sometime Later
-  due_specific_date: On Specific Date...
-  completed_today: Today
-  completed_yesterday: Yesterday
-  completed_last_week: Last week
-  completed_this_month: This month
-  completed_last_month: Last month
+  tab_dashboard: لوحة التحكم
+  tab_tasks: مهام
+  tab_campaigns: الحملات
+  tab_leads: العملاء المحتملين
+  tab_accounts: الحسابات
+  tab_contacts: جهات
+  tab_opportunities: الفرص
+  tab_team: الفريق
+  admin_tab_groups: المجموعات
+  admin_tab_users: المستخدمون
+  admin_tab_fields: حقول مخصصة
+  admin_tab_tags: الوسوم
+  admin_tab_settings: الإعدادات
+  admin_tab_plugins: الإضافات
+  ai_prompts: وصف عملك
+  ai_prompts_description: صف عملك، المنتجات أو الخدمات التي تعرضها، والجمهور المستهدف. هذا سيساعدنا على تصميم CRM حسب احتياجاتك، ويعمل كحافز للنظام لأي مكان يستخدم فيه AI.
+  about_my_business: حول عملي
+  about_my_business_placeholder: ومثال شركة "بي بي ليت" هي شركة متوسطة الحجم متخصصة في توفير حلول برمجية عالية الجودة للأعمال التجارية الصغيرة والمتوسطة الحجم. نحن نركز على صناعة الرعاية الصحية ونبيع منتجنا الرئيسي فيز بوزز أوليك برو.
+  how_i_plan_to_use_ffcrm: كيف أخطط لاستخدام CRM الخالي من الدهون
+  how_i_plan_to_use_ffcrm_placeholder: سوف يستخدم فريق مبيعات صغير مكون من 5 أشخاص CRM الخفافيش مجاناً. سوف نستخدم Mailchimp, Google Ads, Zapier, Sack. نريد تصفية وتصنيف القيادات حسب مجالات محددة يهتمون بها في إطار الرعاية الصحية.
+  affiliate: انتساب
+  competitor: منافس
+  customer: عميل
+  partner: شريك
+  reseller: الموزع
+  vendor: البائع
+  planned: المخطط له
+  started: بدأ
+  on_hold: قيد الانتظار
+  completed: مكتمل
+  called_off: غير متوقف
+  new: جديد
+  contacted: متصل
+  converted: تم تحويلها
+  rejected: مرفوض
+  cold_call: مكالمة باردة
+  conference: المؤتمر
+  online: التسويق عبر الإنترنت
+  referral: الإحالة
+  self: توليد ذاتي
+  web: الموقع
+  word_of_mouth: كلمة الفم
+  other: اخرى
+  prospecting: التنقيب
+  analysis: تحليل
+  presentation: عرض
+  proposal: مقترح
+  negotiation: التفاوض
+  final_review: الاستعراض النهائي
+  won: أغلق/ون
+  lost: مغلق/خسارة
+  call: اتصل
+  email: البريد الإلكتروني
+  follow_up: المتابعة
+  lunch: غداء
+  meeting: الاجتماع
+  money: نقود
+  trip: رحلة
+  overdue: متأخرة
+  due_asap: قريباً كما هو ممكن
+  due_today: اليوم
+  due_tomorrow: غدا
+  due_this_week: هذا الأسبوع
+  due_next_week: الأسبوع القادم
+  due_later: لاحقاً
+  due_specific_date: في تاريخ محدد...
+  completed_today: اليوم
+  completed_yesterday: أمس
+  completed_last_week: الأسبوع الماضي
+  completed_this_month: هذا الشهر
+  completed_last_month: الشهر الماضي
   # Models/Activity.
   #----------------------------------------------------------------------------
-  one_hour: One Hour
-  one_day: One Day
-  two_days: Two Days
-  one_week: One Week
-  two_weeks: Two Weeks
-  one_month: One Month
+  one_hour: ساعة واحدة
+  one_day: يوم واحد
+  two_days: يومين
+  one_week: أسبوع واحد
+  two_weeks: أسبوعان
+  one_month: شهر واحد
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
@@ -102,75 +102,75 @@ ar-SA:
         authentication:
           attributes:
             login_field:
-              is_not_valid: is not valid
+              is_not_valid: غير صالح
             password_field:
-              is_not_valid: is not valid
+              is_not_valid: غير صالح
         account:
           attributes:
             name:
-              missing_account_name: '^Please specify account name.'
+              missing_account_name: '^الرجاء تحديد اسم الحساب.'
             access:
-              share_account: '^Please specify users with whom to share the account.'
+              share_account: '^الرجاء تحديد المستخدمين الذين يتم مشاركتهم في الحساب.'
         campaign:
           attributes:
             name:
-              missing_campaign_name: '^Please specify campaign name.'
+              missing_campaign_name: '^الرجاء تحديد اسم الحملة.'
             ends_on:
-              dates_not_in_sequence: '^Please make sure the campaign end date is after the start date.'
+              dates_not_in_sequence: '^الرجاء التأكد من أن تاريخ انتهاء الحملة بعد تاريخ البدء.'
             access:
-              share_campaign: '^Please specify users with whom to share the campaign.'
+              share_campaign: '^الرجاء تحديد المستخدمين الذين يتم مشاركتهم في الحملة.'
         contact:
           attributes:
             first_name:
-              missing_first_name: '^Please specify first name.'
+              missing_first_name: '^الرجاء تحديد الاسم الأول.'
             last_name:
-              missing_last_name: '^Please specify last name.'
+              missing_last_name: '^الرجاء تحديد اسم العائلة.'
             access:
-              share_contact: '^Please specify users with whom to share the contact.'
+              share_contact: '^الرجاء تحديد المستخدمين الذين يتم مشاركتهم مع جهة الاتصال.'
         lead:
           attributes:
             first_name:
-              missing_first_name: '^Please specify first name.'
+              missing_first_name: '^الرجاء تحديد الاسم الأول.'
             last_name:
-              missing_last_name: '^Please specify last name.'
+              missing_last_name: '^الرجاء تحديد اسم العائلة.'
             access:
-              share_lead: '^Please specify users with whom to share the lead.'
+              share_lead: '^الرجاء تحديد المستخدمين الذين يتم مشاركتهم مع الرصاص.'
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: '^Please specify opportunity name.'
+              missing_opportunity_name: '^الرجاء تحديد اسم الفرصة.'
             access:
-              share_opportunity: '^Please specify users with whom to share the opportunity.'
+              share_opportunity: '^الرجاء تحديد المستخدمين الذين يجب مشاركتهم في الفرصة.'
         task:
           attributes:
             name:
-              missing_task_name: '^Please specify task name.'
+              missing_task_name: '^الرجاء تحديد اسم المهمة.'
             calendar:
-              invalid_date: '^Please specify valid date.'
+              invalid_date: '^الرجاء تحديد تاريخ صحيح.'
         user:
           attributes:
             username:
-              missing_username: '^Please specify username.'
-              username_taken: '^This username is already taken.'
+              missing_username: '^الرجاء تحديد اسم المستخدم.'
+              username_taken: '^ اسم المستخدم هذا مأخوذ مسبقا.'
             email:
-              missing_email: '^Please specify email address.'
-              email_in_use: '^There is another user with the same email.'
+              missing_email: '^الرجاء تحديد عنوان البريد الإلكتروني.'
+              email_in_use: '^ هناك مستخدم آخر بنفس البريد الإلكتروني.'
         custom_field:
-          required: '^%{field} is required.'
-          minlength: '^%{field} is too short.'
-          maxlength: '^%{field} is too long.'
-          endbeforestart: '^%{field} cannot end before it begins.'
+          required: '^%{field} مطلوب.'
+          minlength: '^%{field} قصير جداً.'
+          maxlength: '^%{field} طويل جداً.'
+          endbeforestart: '^%{field} لا يمكن أن ينتهي قبل أن يبدأ.'
     attribute_options:
       opportunity:
         stage:
-          prospecting: Prospecting
-          analysis: Analysis
-          presentation: Presentation
-          proposal: Proposal
-          negotiation: Negotiation
-          final_review: Final Review
-          won: Closed/Won
-          lost: Closed/Lost
+          prospecting: التنقيب
+          analysis: تحليل
+          presentation: عرض
+          proposal: مقترح
+          negotiation: التفاوض
+          final_review: الاستعراض النهائي
+          won: أغلق/ون
+          lost: مغلق/خسارة
       account:
         rating:
           "0": "-"
@@ -179,524 +179,524 @@ ar-SA:
           "3": "★★★"
           "4": "★★★★"
           "5": "★★★★★"
-  msg_account_suspended: User account has been suspended.
-  password_reset_instruction: password reset instructions
+  msg_account_suspended: تم تعليق حساب المستخدم.
+  password_reset_instruction: إرشادات إعادة تعيين كلمة المرور
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: Your account has been created and is awaiting approval by the system administrator.
-  msg_account_not_approved: Your account has not been approved yet.
-  msg_asset_deleted: ! '%{value} has been deleted.'
-  msg_asset_not_available: This %{value} is no longer available.
-  msg_not_authorized: You are not authorized to take this action.
-  msg_assets_not_available: The %{value} are not available.
-  msg_asset_rejected: ! '%{value} has been rejected.'
-  msg_bad_image_file: '^Could''t upload or resize the image file you specified.'
-  msg_cant_create_related: Can't create the %{asset} since the %{related} is no longer available.
-  msg_cant_delete_user: '^Couldn''t delete the user since %{value} has related assets present.'
-  msg_cant_do: Can't %{action} the %{asset} since it's no longer available.
-  msg_email_not_found: No user was found with that email address.
-  msg_enter_new_password: Please enter your new password.
-  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
-  msg_invalid_password: '^Please specify valid current password'
-  msg_invalig_login: Invalid username or password.
-  msg_last_login: Your last login was on %{value}.
-  msg_login_needed: You must be logged in to access this page.
-  msg_logout_needed: You must be logged out to access this page.
-  msg_password_changed: Your password has been changed.
-  msg_password_not_changed: Your password has not been changed.
-  msg_password_updated: Password was successfully updated.
-  msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
-  msg_require_admin: You must be Administrator to access this page.
-  msg_successful_signup: Successful signup, welcome to Fat Free CRM!
-  msg_welcome: Welcome to Fat Free CRM!
-  msg_user_updated: Profile updated successfully.
+  msg_account_created: تم إنشاء الحساب الخاص بك وهو في انتظار الموافقة من قبل مدير النظام.
+  msg_account_not_approved: لم تتم الموافقة على حسابك بعد.
+  msg_asset_deleted: ! 'تم حذف %{value}.'
+  msg_asset_not_available: لم يعد هذا %{value} متاحاً.
+  msg_not_authorized: أنت غير مصرح لك باتخاذ هذا الإجراء.
+  msg_assets_not_available: '%{value} غير متوفر.'
+  msg_asset_rejected: ! 'تم رفض %{value}.'
+  msg_bad_image_file: لا يمكن تحميل أو تغيير حجم ملف الصورة الذي حددته.
+  msg_cant_create_related: لا يمكن إنشاء %{asset} لأن %{related} لم يعد متوفراً.
+  msg_cant_delete_user: تعذر حذف المستخدم منذ أن %{value} لديه أصول ذات صلة موجودة.
+  msg_cant_do: لا يمكن أن يكون %{action} %{asset} منذ أنه لم يعد متوفراً.
+  msg_email_not_found: لم يتم العثور على أي مستخدم بهذا البريد الإلكتروني.
+  msg_enter_new_password: الرجاء إدخال كلمة المرور الجديدة.
+  msg_goodbye: لقد قمت بتسجيل خروجك. شكرا لك على استخدام CRM المجانية
+  msg_invalid_password: '^الرجاء تحديد كلمة المرور الحالية الصالحة'
+  msg_invalig_login: اسم المستخدم أو كلمة المرور غير صالحة.
+  msg_last_login: آخر تسجيل دخول لك كان على %{value}.
+  msg_login_needed: يجب عليك تسجيل الدخول للوصول إلى هذه الصفحة.
+  msg_logout_needed: يجب عليك تسجيل الخروج للوصول إلى هذه الصفحة.
+  msg_password_changed: تم تغيير كلمة المرور الخاصة بك.
+  msg_password_not_changed: لم يتم تغيير كلمة المرور الخاصة بك.
+  msg_password_updated: تم تحديث كلمة المرور بنجاح.
+  msg_pwd_instructions_sent: تم إرسال التعليمات لإعادة تعيين كلمة المرور الخاصة بك لك. الرجاء التحقق من بريدك الإلكتروني.
+  msg_require_admin: يجب أن تكون المسؤول للوصول إلى هذه الصفحة.
+  msg_successful_signup: تم التسجيل بنجاح, مرحبا بك في CRM المجاني!
+  msg_welcome: مرحبا بكم في CRM المجانية!
+  msg_user_updated: تم تحديث الملف الشخصي بنجاح.
   # Options.
   #----------------------------------------------------------------------------
-  option_amount*probability: weighted amount
-  activity_options: Show %{models} %{action_type} performed by %{user} in the past %{period}.
-  all_users: all users
-  option_after: after
-  option_all: all
-  option_all_users: All Users
-  option_amount: amount
-  option_before: before
-  option_brief: brief
-  option_closes_on: close date
-  option_company: company
-  option_created_at: date created
-  option_ends_on: end date
-  option_first_name: first name
-  option_last_name: last name
-  option_leads_count: actual leads
-  option_long: long
-  option_name: name
-  option_probability: probability
-  option_rating: rating
-  option_revenue: actual revenue
-  option_starts_on: start date
-  option_target_leads: target leads
-  option_target_revenue: target revenue
-  option_updated_at: date updated
-  show_per_page: Show %{number} %{models} per page using %{fmt} format.
-  sort_by: Sort by %{field}
-  sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
-  entities_per_page: ! '%{entity} per page:'
-  contacts_index_long: Long format
-  contacts_index_brief: Brief format
-  contacts_index_full: Full format
-  opportunities_index_normal: Normal format
-  accounts_index_normal: Normal format
-  leads_index_normal: Normal format
-  campaigns_index_normal: Normal format
+  option_amount*probability: المبلغ المرجح
+  activity_options: إظهار %{models} %{action_type} الذي قام به %{user} في الماضي %{period}.
+  all_users: جميع المستخدمين
+  option_after: بعد
+  option_all: الكل
+  option_all_users: جميع المستخدمين
+  option_amount: المبلغ
+  option_before: قبل
+  option_brief: موجز
+  option_closes_on: تاريخ الإغلاق
+  option_company: الشركة
+  option_created_at: تاريخ الإنشاء
+  option_ends_on: تاريخ الانتهاء
+  option_first_name: الاسم الأول
+  option_last_name: اسم العائلة
+  option_leads_count: الخيوط الفعلية
+  option_long: طويل
+  option_name: اسم
+  option_probability: الاحتمال
+  option_rating: التقييم
+  option_revenue: الإيرادات الفعلية
+  option_starts_on: تاريخ البدء
+  option_target_leads: العملاء المستهدفون
+  option_target_revenue: الإيرادات المستهدفة
+  option_updated_at: تاريخ التحديث
+  show_per_page: إظهار %{number} %{models} لكل صفحة باستخدام تنسيق %{fmt}.
+  sort_by: الترتيب حسب %{field}
+  sort_by_displaying: الترتيب %{models} حسب %{field} يعرض الاسم الأول %{position} اسم العائلة.
+  entities_per_page: ! '%{entity} لكل صفحة:'
+  contacts_index_long: تنسيق طويل
+  contacts_index_brief: صيغة موجزة
+  contacts_index_full: تنسيق كامل
+  opportunities_index_normal: تنسيق عادي
+  accounts_index_normal: تنسيق عادي
+  leads_index_normal: تنسيق عادي
+  campaigns_index_normal: تنسيق عادي
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "الاشتراك في التعليق على الردود عن طريق البريد الإلكتروني"
+  receive_assigned_notifications: "تلقي الإشعارات المعينة عن طريق البريد الإلكتروني"
   aim: AOL IM
-  already_signed_up: Already signed up?
-  alt_email: Alternative email
-  avatar: Avatar
-  change_password: Change Password
-  company: Company
-  contact_info: Contact Information
-  current_password: Current password
-  edit_profile: Edit Profile
-  first_name: First name
+  already_signed_up: هل قمت بالتسجيل؟
+  alt_email: بريد إلكتروني بديل
+  avatar: الرمزية
+  change_password: تغيير كلمة المرور
+  company: الشركة
+  contact_info: معلومات الاتصال
+  current_password: كلمة المرور الحالية
+  edit_profile: تعديل الملف الشخصي
+  first_name: الاسم الأول
   google: Google IM
-  gravatar_help: Not familiar with Gravatars? Learn about Gravatars
-  image_file: Image file
-  image_help: The image will be resized to 180x180 pixels. Supported formats - PNG, JPG, GIF.
-  job_title: Title
-  last_name: Last name
-  login_now_link: Login Now!
-  mobile: Mobile
-  my_profile: My Profile
-  new_password: New password
-  password: Password
-  password_confirmation: Confirm new password
-  phone: Phone
-  profile: Profile
-  profile_language: Language
-  email_notifications: Email Notifications
-  save_profile: Save Profile
-  sign_up: Sign Up
-  sign_up_button: Sign Up
-  upload_picture: Upload Picture
-  use_gravatar: Use Gravatar
-  user: User
-  username: Username
+  gravatar_help: غير مألوف بـ Gravatar؟ تعلم عن Gravatars
+  image_file: ملف الصورة
+  image_help: سيتم تغيير حجم الصورة إلى 180x180 نقطة. الصيغ المدعومة - PNG، JPG، GIF.
+  job_title: العنوان
+  last_name: اسم العائلة
+  login_now_link: تسجيل الدخول الآن!
+  mobile: الجوال
+  my_profile: ملفي الشخصي
+  new_password: كلمة مرور جديدة
+  password: كلمة المرور
+  password_confirmation: تأكيد كلمة المرور الجديدة
+  phone: الهاتف
+  profile: الملف الشخصي
+  profile_language: اللغة
+  email_notifications: إشعارات البريد الإلكتروني
+  save_profile: حفظ الملف الشخصي
+  sign_up: تسجيل الدخول
+  sign_up_button: تسجيل الدخول
+  upload_picture: تحميل صورة
+  use_gravatar: استخدام Gravatar
+  user: المستخدم
+  username: اسم المستخدم
   yahoo: Yahoo IM
-  born_on: Born on
-  reports_to: Reports to
-  access: Access
+  born_on: ولد في
+  reports_to: التقارير إلى
+  access: الوصول
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Forgot Password
-  login: Login
-  no_account: Do not have an account?
-  remember_me: Remember Me
-  sign_up_now: Sign Up Now!
+  forgot_password: نسيت كلمة المرور
+  login: تسجيل الدخول
+  no_account: ليس لديك حساب؟
+  remember_me: تذكر لي
+  sign_up_now: اشترك الآن!
   # Views -> Accounts.
   #----------------------------------------------------------------------------
-  account: Account
-  account_id: Account
-  select_an_account: Select an Account
-  account_small: account
-  account_summary: Account Summary
-  account_categories: Account Categories
-  accounts: Accounts
-  accounts_options: Accounts Options
-  accounts_small: accounts
-  assigned_to: Assigned to
-  billing_address: Billing address
-  create_account: Create Account
-  date_created: Date Created
-  date_updated: Date Updated
-  fax: Fax
-  intro: You can add %{value} information later.
-  keep_private: Keep it private, do not share with others
-  mail_to: Mail to %{value}
-  make_public: Share it with everyone
-  mobile_small: mobile
-  open_in_window: Open %{value} in a new window
-  phone_small: phone
-  phone_toll_free: Toll-free
-  pipeline: Pipeline
-  same_as_billing: same as billing
-  save_account: Save Account
-  share_with: Share it with the following people
-  shipping_address: Shipping address
-  total_accounts: Total Accounts
-  website: Website
-  account_with_title_department: ! '%{title}, %{department} at %{account}'
-  account_with_title: ! '%{title} at %{account}'
+  account: حساب
+  account_id: حساب
+  select_an_account: اختر حسابا
+  account_small: حساب
+  account_summary: ملخص الحساب
+  account_categories: فئات الحساب
+  accounts: الحسابات
+  accounts_options: خيارات الحسابات
+  accounts_small: الحسابات
+  assigned_to: تم تعيينه إلى
+  billing_address: عنوان الفاتورة
+  create_account: إنشاء حساب
+  date_created: تاريخ الإنشاء
+  date_updated: تاريخ التحديث
+  fax: فاكس
+  intro: يمكنك إضافة معلومات %{value} لاحقاً.
+  keep_private: ابقائها خاصة، لا تشارك مع الآخرين
+  mail_to: البريد إلى %{value}
+  make_public: شاركها مع الجميع
+  mobile_small: الجوال
+  open_in_window: فتح %{value} في نافذة جديدة
+  phone_small: هاتف
+  phone_toll_free: مجاني
+  pipeline: أنابيب
+  same_as_billing: نفس الفوترة
+  save_account: حفظ الحساب
+  share_with: شاركها مع الأشخاص التالية أسماؤهم
+  shipping_address: عنوان الشحن
+  total_accounts: مجموع الحسابات
+  website: الموقع
+  account_with_title_department: ! '%{title}، %{department} في %{account}'
+  account_with_title: ! '%{title} في %{account}'
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
-  actual: Actual
-  actual_performance: Actual Performance
-  budget: Budget
-  budget_label: Budget (%{currency})
-  campaign: Campaign
-  campaign_and_leads: campaign and its leads
-  campaign_small: campaign
-  campaign_summary: Campaign Summary
-  campaign_targets: Campaign Targets
-  campaign_statuses: Campaign Statuses
-  campaigns: Campaigns
-  campaigns_options: Campaigns Options
-  campaigns_small: campaigns
-  conversion: Conversion
-  conversion_label: Conversion (%)
-  conversion_number: ! '%{value} conversion'
+  actual: فعلي
+  actual_performance: الأداء الفعلي
+  budget: الميزانية
+  budget_label: الميزانية (%{currency})
+  campaign: الحملة
+  campaign_and_leads: الحملة وقياداتها
+  campaign_small: حملة
+  campaign_summary: ملخص الحملة الإعلانية
+  campaign_targets: أهداف الحملة
+  campaign_statuses: حالات الحملة الإعلانية
+  campaigns: الحملات
+  campaigns_options: خيارات الحملات
+  campaigns_small: الحملات
+  conversion: التحويل
+  conversion_label: التحويل (%)
+  conversion_number: ! 'تحويل %{value}'
   target_conversion: Target conversion
-  create_campaign: Create Campaign
-  end_date: End date
-  finished_on: completed on %{value}
-  finishes_in: finishes in %{value}
-  no_start_date: no start date specified
-  number_of_leads: Number of leads
-  objectives: Objectives
-  objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
-  objectives_small: campaign objectives
-  revenue: Revenue
-  revenue_label: Revenue (%{currency})
-  revenue_number: ! '%{value} in revenue'
-  save_campaign: Save Campaign
-  start_date: Start date
+  create_campaign: إنشاء حملة
+  end_date: تاريخ الانتهاء
+  finished_on: اكتمل في %{value}
+  finishes_in: ينتهي في %{value}
+  no_start_date: لم يتم تحديد تاريخ البدء
+  number_of_leads: عدد العملاء المحتملين
+  objectives: الأهداف
+  objectives_help: يرجى تحديد العدد المستهدف من القرائن، ونسبة التحويل المتوقعة إلى الفرص، والإيرادات المستهدفة، وميزانية الحملة. هذه الأرقام ستسمح لك بتتبع أداء الحملة.
+  objectives_small: أهداف الحملة
+  revenue: الإيرادات
+  revenue_label: الإيرادات (%{currency})
+  revenue_number: ! '%{value} في الإيرادات'
+  save_campaign: حفظ الحملة
+  start_date: تاريخ البدء
   started_ago: started %{value} ago
-  starts_in: starts in %{value}
-  starts_today: starts today!
+  starts_in: يبدأ في %{value}
+  starts_today: يبدأ اليوم!
   target: Target
-  total_campaigns: Total Campaigns
-  was_supposed_to_finish: was supposed to finish on %{value}
-  was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
-  was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
-  select_a_campaign: Select a campaign
+  total_campaigns: مجموع الحملات
+  was_supposed_to_finish: كان من المفترض أن ينتهي على %{value}
+  was_supposed_to_start: كان من المفترض أن تبدأ قبل %{time_ago} على %{start_date}
+  was_supposed_to_start_in: كان من المفترض أن يبدأ في %{starts_in} على %{start_date}
+  select_a_campaign: حدد حملة
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  alt_email_small: Other
-  blog: Website/Blog
-  contact: Contact
-  contact_small: contact
-  contacts: Contacts
-  contacts_options: Contacts Options
-  contacts_small: contacts
-  contact_summary: Contact Summary
-  create_contact: Create Contact
-  department: Department
+  alt_email_small: اخرى
+  blog: الموقع/سجل
+  contact: الاتصال
+  contact_small: جهة
+  contacts: جهات
+  contacts_options: خيارات جهات الاتصال
+  contacts_small: جهات الاتصال
+  contact_summary: ملخص جهة الاتصال
+  create_contact: إنشاء جهة اتصال
+  department: القسم
   department_small: ! '%{value} department'
-  do_not_call: Do not call
+  do_not_call: لا تتصل
   extra_info: Extra Information
-  extra_info_small: extra contact
-  facebook: Facebook
+  extra_info_small: جهة اتصال إضافية
+  facebook: فيسبوك
   linked_in: LinkedIn
-  myself: Myself
-  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.
-  permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
-  referred_by: Referred by
-  referred_by_small: referred by
-  save_contact: Save Contact
-  twitter: Twitter
-  unassigned: Unassigned
-  web_presence: Web Presence
-  web_presence_small: web presence
-  works_at: ! '%{job_title} at %{company}'
-  general_info: General Information
-  show_general_info_small: Show general information for this contact.
-  show_extra_info_small: Show extra information for this contact.
+  myself: نفسي
+  permissions_intro_private: بشكل افتراضي فقط سيكون لديك حق الوصول إلى %{value}. يمكنك تغيير الأذونات لاحقاً.
+  permissions_intro_public: بشكل افتراضي سيكون لجميع المستخدمين الوصول إلى %{value}. يمكنك تغيير الأذونات لاحقاً.
+  permissions_intro_shared: بشكل افتراضي فقط سيكون للمستخدمين المحددين حق الوصول إلى %{value}. يمكنك تغيير الأذونات لاحقاً.
+  referred_by: مشار إليه بواسطة
+  referred_by_small: مشار إليه بواسطة
+  save_contact: حفظ جهة الاتصال
+  twitter: تويتر
+  unassigned: غير مسند
+  web_presence: تواجد الويب
+  web_presence_small: وجود الويب
+  works_at: ! '%{job_title} في %{company}'
+  general_info: معلومات عامة
+  show_general_info_small: إظهار معلومات عامة عن جهة الاتصال هذه.
+  show_extra_info_small: إظهار معلومات إضافية لجهة الاتصال هذه.
   tag_details: ! '%{tag} Details'
-  show_tag_info_small: Show %{tag} information for this contact.
-  shared_with_everyone: Shared with everyone
-  title: Title
-  subscriptions: Subscriptions
+  show_tag_info_small: إظهار معلومات %{tag} عن جهة الاتصال هذه.
+  shared_with_everyone: مشاركة مع الجميع
+  title: العنوان
+  subscriptions: اشتراكات
   # Views -> Leads.
   #----------------------------------------------------------------------------
-  convert: Convert
-  convert_lead: Convert Lead
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
-  convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
-  create_lead: Create Lead
-  create_opp_for_contact: You can optionally create an opportunity for the %{value} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
-  lead: Lead
-  lead_info_small: lead contact
-  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.
-  lead_small: lead
-  lead_status_small: lead status
-  lead_summary: Lead Summary
-  lead_statuses: Lead Statuses
-  leads: Leads
-  leads_options: Leads Options
-  leads_small: leads
-  none: None
-  rating: Rating
-  reject: Reject
-  reject_lead_confirm: Are you sure you want to reject this lead?
-  save_lead: Save Lead
-  source: Source
-  status: Status
-  total_leads: Total Leads
-  show_status_info_small: Show status information for this lead.
-  show_contact_info_small: Show contact information for this lead.
+  convert: تحويل
+  convert_lead: تحويل الرصاص
+  convert_lead_permissions_intro: سيتم نسخ أذونات جهات الاتصال من الرصاص الذي يتم تحويله. يمكنك تغيير أذونات جهات الاتصال لاحقاً.
+  convert_lead_text: عن طريق تحويل القائد %{value} سيصبح جهة اتصال مرتبطة بحساب موجود أو تم إنشاؤه حديثا. سيتم تعيين حالة العملاء المحتملين تلقائياً للتحويل.
+  create_lead: إنشاء عميل رائد
+  create_opp_for_contact: يمكنك اختياريا إنشاء فرصة لجهة الاتصال %{value} عن طريق تحديد الاسم، المرحلة الحالية، تاريخ الإغلاق التقديري، احتمال البيع، مبلغ الصفقة، الخصم المقدم.
+  lead: القائد
+  lead_info_small: جهة الاتصال الرئيسية
+  lead_permissions_intro_private: سيتم نسخ الأذونات الافتراضية من الحملة الإعلانية أو تعيين إلى خاصة. يمكنك تغيير أذونات القيادة في وقت لاحق.
+  lead_permissions_intro_public: سيتم نسخ الأذونات الافتراضية من الحملة أو تعيين إلى الجمهور. يمكنك تغيير أذونات القيادة في وقت لاحق.
+  lead_permissions_intro_shared: سيتم نسخ الأذونات الافتراضية من الحملة أو مشاركتها مع المستخدمين المحددين. يمكنك تغيير أذونات القيادة في وقت لاحق.
+  lead_small: الرصاص
+  lead_status_small: حالة القيادة
+  lead_summary: موجز العملاء المحتملين
+  lead_statuses: حالات العملاء المحتملين
+  leads: العملاء المحتملين
+  leads_options: خيارات العملاء المحتملين
+  leads_small: العملاء المحتملون
+  none: لا
+  rating: التقييم
+  reject: رفض
+  reject_lead_confirm: هل أنت متأكد من أنك تريد رفض هذا الرصاص؟
+  save_lead: حفظ العملاء المحتملين
+  source: المصدر
+  status: الحالة
+  total_leads: إجمالي العملاء المحتملين
+  show_status_info_small: إظهار معلومات الحالة لهذا الخيار.
+  show_contact_info_small: إظهار معلومات الاتصال لهذا الرصاص.
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
-  amount: Amount
-  close_date: Close date
-  closes_on: Closes on
-  closed_ago_on: closed %{time_ago} ago on %{date}
-  closes_today: expected to close today!
-  closing_date: closing date is %{value}
-  create_opportunity: Create Opportunity
+  amount: المبلغ
+  close_date: تاريخ الإغلاق
+  closes_on: يغلق في
+  closed_ago_on: أغلقت %{time_ago} قبل %{date}
+  closes_today: من المتوقع أن تغلق اليوم!
+  closing_date: تاريخ الإغلاق هو %{value}
+  create_opportunity: إنشاء فرصة
   currency: "$"
-  days_late: Late by
-  days_left: Days left
-  discount: Discount
-  discount_number: with %{value} discount
-  expected_to_close: expected to close in %{time} on %{date}
-  from: from
-  no_closing_date: no expected closing date
-  no_discount: with no discount
-  opportunities: Opportunities
-  opportunities_options: Opportunities Options
-  opportunities_small: opportunities
-  opportunity: Opportunity
-  opportunity_small: opportunity
-  opportunity_stages: Opportunity Stages
-  opportunity_summary: Opportunity At a Glance
-  opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability} probability'
-  past_due: past due, was expected to close %{value} ago
-  probability: Probability
-  probability_number: and %{value} probability
-  save_opportunity: Save Opportunity
-  stage: Stage
-  total_opportunities: Total Opportunities
-  weighted_amount: Weighted amount
+  days_late: متأخرًا بواسطة
+  days_left: الأيام المتبقية
+  discount: خصم
+  discount_number: مع خصم %{value}
+  expected_to_close: من المتوقع أن تغلق في %{time} على %{date}
+  from: من
+  no_closing_date: لا يوجد تاريخ إقفال متوقع
+  no_discount: بدون خصم
+  opportunities: الفرص
+  opportunities_options: خيارات الفرص
+  opportunities_small: الفرص
+  opportunity: فرصة
+  opportunity_small: فرصة
+  opportunity_stages: مراحل الفرصة
+  opportunity_summary: الفرصة في نظرة عامة
+  opportunity_summary_text: ! '%{amount} مع خصم %{discount} و %{probability} احتمال'
+  past_due: الماضي المستحق، كان من المتوقع إغلاق %{value} قبل
+  probability: الاحتمال
+  probability_number: واحتمال %{value}
+  save_opportunity: حفظ الفرصة
+  stage: المرحلة
+  total_opportunities: إجمالي الفرص
+  weighted_amount: المبلغ المرجح
   # Views -> Tasks.
   #----------------------------------------------------------------------------
-  task: Task
-  task_small: task
-  tasks: Tasks
-  tasks_small: tasks
-  assign_to: Assign to
-  assigned_tab: Assigned
-  assigned_tasks: Assigned Tasks
-  category: Category
-  completed_tab: Completed
-  completed_tasks: Completed Tasks
-  create_task: Create Task
-  create_task_small: create new task
-  due: Due
-  feel_free: Feel free to
-  move_to: move to
-  no_tasks: You don't have any %{value} tasks
-  no_tasks_pending: pending
-  no_tasks_assigned: assigned
-  no_tasks_completed: completed
-  pending_tab: Pending
-  pending_tasks: Pending Tasks
-  related: ! 're:'
-  save_task: Save Task
-  task_assigned: The task has been assigned to %{value}
-  task_assigned_to: and assigned to %{value}
-  task_completed: completed
-  task_uncomplete: Uncomplete
-  task_completed_ago: completed %{value} ago
-  task_completed_by: completed %{time_ago} ago (%{date}) by %{user}
-  task_created: The task has been created
-  task_due_in: due in %{value}
-  task_due_later: due sometime soon
-  task_due_now: due now
-  task_due_today: due today
-  task_from: From %{value}
-  task_overdue: late, was due on
-  task_pending: The task has been moved to pending tasks
-  total_tasks: Total %{value}
-  view_assigned_tasks: view assigned tasks
-  view_pending_tasks: view pending tasks
+  task: مهمة
+  task_small: مهمة
+  tasks: مهام
+  tasks_small: المهام
+  assign_to: تعيين إلى
+  assigned_tab: المعين
+  assigned_tasks: المهام المعينة
+  category: الفئة
+  completed_tab: مكتمل
+  completed_tasks: المهام المكتملة
+  create_task: إنشاء مهمة
+  create_task_small: إنشاء مهمة جديدة
+  due: واجب
+  feel_free: لا تتردد في
+  move_to: انتقل إلى
+  no_tasks: ليس لديك أي مهام %{value}
+  no_tasks_pending: معلق
+  no_tasks_assigned: تم تعيينه
+  no_tasks_completed: اكتمل
+  pending_tab: معلق
+  pending_tasks: المهام المعلقة
+  related: ! 'في:'
+  save_task: حفظ المهمة
+  task_assigned: تم تعيين المهمة إلى %{value}
+  task_assigned_to: وتم تعيينه إلى %{value}
+  task_completed: اكتمل
+  task_uncomplete: غير مكتمل
+  task_completed_ago: اكتمل قبل %{value}
+  task_completed_by: اكتمل قبل %{time_ago} (%{date}) بواسطة %{user}
+  task_created: تم إنشاء المهمة
+  task_due_in: مستحق في %{value}
+  task_due_later: مستحق في وقت ما قريبا
+  task_due_now: مستحق الآن
+  task_due_today: الواجب اليوم
+  task_from: من %{value}
+  task_overdue: متأخرة ، كان من المقرر في
+  task_pending: تم نقل المهمة إلى المهام المعلقة
+  total_tasks: المجموع %{value}
+  view_assigned_tasks: عرض المهام المعينة
+  view_pending_tasks: عرض المهام المعلقة
   # Views -> Team.
   #----------------------------------------------------------------------------
-  unassigned_opportunities: Unassigned Opportunities
-  no_opportunities_found: There are currently no outstanding opportunities.
+  unassigned_opportunities: الفرص غير المخصصة
+  no_opportunities_found: ولا توجد حاليا فرص ممتازة.
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_completed: completed
-  action_create: created
-  action_destroy: deleted
-  action_reassigned: reassigned
-  action_rejected: rejected
-  action_rescheduled: rescheduled
-  action_update: updated
-  action_view: viewed
-  action_won: won
-  activities: Activities
-  no_activity_records: No activity records found.
-  recent_activity: Recent Activity
-  recent_activity_options: Recent Activity Options
-  subject_account: account
-  subject_address: address on
-  subject_campaign: campaign
-  subject_comment: comment on
-  subject_contact: contact
-  subject_email: email on
-  subject_lead: lead
-  subject_opportunity: opportunity
-  subject_task: task
-  subject_user: user
-  tag_list: Tags
-  create_past_participle: Record Creations
-  view_past_participle: Views
-  update_past_participle: Updates
-  destroy_past_participle: Deletions
-  all_events_past_participle: Activities
+  action_completed: اكتمل
+  action_create: أنشئ
+  action_destroy: تم الحذف
+  action_reassigned: إعادة التعيين
+  action_rejected: مرفوضة
+  action_rescheduled: إعادة جدولة
+  action_update: تم التحديث
+  action_view: مشاهدة
+  action_won: فوز
+  activities: الأنشطة
+  no_activity_records: لم يتم العثور على سجلات النشاط.
+  recent_activity: النشاط الأخير
+  recent_activity_options: خيارات النشاط الأخيرة
+  subject_account: حساب
+  subject_address: عنوان يعمل
+  subject_campaign: حملة
+  subject_comment: التعليق على
+  subject_contact: جهة
+  subject_email: البريد الإلكتروني على
+  subject_lead: الرصاص
+  subject_opportunity: فرصة
+  subject_task: مهمة
+  subject_user: مستخدم
+  tag_list: الوسوم
+  create_past_participle: إنشاء سجل
+  view_past_participle: المشاهدات
+  update_past_participle: التحديثات
+  destroy_past_participle: حذف
+  all_events_past_participle: الأنشطة
   action_create_comment: ! '- &quot;%{comment}&quot;'
-  my_tasks: My Tasks
-  no_task_records: You have no tasks.
-  my_opportunities: My Opportunities
-  no_opportunity_records: You have no opportunities.
-  my_accounts: My Accounts
-  no_account_records: You have no accounts
-  not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
+  my_tasks: مهامي
+  no_task_records: ليس لديك مهام.
+  my_opportunities: فرصتي
+  no_opportunity_records: ليس لديك أي فرص.
+  my_accounts: حساباتي
+  no_account_records: ليس لديك حسابات
+  not_showing_hidden_entities: لا تظهر %{count} مخفية %{entity}.
   # Views -> Common.
   #----------------------------------------------------------------------------
-  add_note: Add Comment
-  save_note: Save Comment
-  add_note_help: Add a new comment...
-  edit_note: Edit Comment
-  added_ago: added %{value}
-  added_by: added %{time_ago} by %{user}
-  back: Back
-  cancel: Cancel
-  close_form: Close form
-  comment_intro: You can add comments later.
-  confirm_delete: Are you sure you want to delete this %{value}?
-  copy_permissions: Copy %{value} permissions
-  could_not_find: Couldn't find any %{value}. Feel free to
-  could_not_find_matching: Couldn't find any %{value} matching
-  create_new: create new
-  create_a_new: create a new
-  select_existing: select existing
-  delete: Delete
-  discard: Discard
-  edit: Edit
-  items_total: ! '%{count} total.'
-  less: Less...
-  me: me
-  more: More...
-  n_a: N/A
-  name: Name
-  no_match: No %{value} match
-  no_recent_items: There are no recent items to display yet.
-  options: Options
-  permissions: Permissions
-  please_retry: please try another query.
-  recent_items: Recent Items
-  select_contact: Select Contact
-  select_lead: Select Lead
-  select_task: Select Task
-  select_opportunity: Select Opportunity
-  search_assets: Search %{value}
+  add_note: إضافة تعليق
+  save_note: حفظ التعليق
+  add_note_help: إضافة تعليق جديد...
+  edit_note: تعديل التعليق
+  added_ago: أضيف %{value}
+  added_by: أضيف %{time_ago} بواسطة %{user}
+  back: الرجوع
+  cancel: إلغاء
+  close_form: إغلاق النموذج
+  comment_intro: يمكنك إضافة تعليقات لاحقاً.
+  confirm_delete: هل أنت متأكد من أنك تريد حذف هذا %{value}؟
+  copy_permissions: نسخ أذونات %{value}
+  could_not_find: تعذر العثور على أي %{value}. لا تتردد في
+  could_not_find_matching: تعذر العثور على أي مطابقة %{value}
+  create_new: إنشاء جديد
+  create_a_new: إنشاء جديد
+  select_existing: تحديد موجود
+  delete: حذف
+  discard: تجاهل
+  edit: تحرير
+  items_total: ! 'إجمالي %{count}.'
+  less: أقل...
+  me: أنا
+  more: المزيد...
+  n_a: لا
+  name: الاسم
+  no_match: لا يوجد تطابق %{value}
+  no_recent_items: لا توجد عناصر حديثة لعرضها حتى الآن.
+  options: خيارات
+  permissions: الأذونات
+  please_retry: الرجاء تجربة استعلام آخر.
+  recent_items: العناصر الحديثة
+  select_contact: حدد جهة الاتصال
+  select_lead: حدد العميل المحتمل
+  select_task: حدد المهمة
+  select_opportunity: حدد الفرصة
+  search_assets: البحث %{value}
   time_ago: ! '%{value} ago'
-  background_info: Background
-  address: Address
-  street1: Street 1
-  street2: Street 2
-  city: City
-  zipcode: Zip Code
-  state: State
-  country: Country
-  select_a_country: Select a Country
-  expand_all: Expand all
-  collapse_all: Collapse all
-  expanded: Expanded
+  background_info: الخلفية
+  address: العنوان
+  street1: الشارع 1
+  street2: الشارع 2
+  city: المدينة
+  zipcode: الرمز البريدي
+  state: الولاية
+  country: البلد
+  select_a_country: اختر دولة
+  expand_all: توسيع الكل
+  collapse_all: طي الكل
+  expanded: موسع
   collapsed: Collapsed
   # Views -> Layout.
   #----------------------------------------------------------------------------
-  about: About
-  about_dev_group: Discussion group for developers
-  about_features: Features and bugs
-  about_ffc: About Fat Free CRM
-  about_ffc_resources: Fat Free CRM resources (links open a new window)
-  about_ffc_version: Fat Free CRM version
-  about_home_page: Home page
-  about_project_page: Project page
-  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
-  about_twitter: Twitter commit updates
-  about_user_group: Discussion group for users
-  admin: Admin
-  logout: Logout
-  quick_find: Quick find
-  welcome: Welcome
+  about: حول
+  about_dev_group: فريق المناقشة للمطورين
+  about_features: الميزات و الأخطاء
+  about_ffc: حول CRM مجانية الدهون
+  about_ffc_resources: خزن موارد CRM مجانية (الروابط تفتح نافذة جديدة)
+  about_ffc_version: نسخة CRM خالية من الدهون
+  about_home_page: الصفحة الرئيسية
+  about_project_page: صفحة المشروع
+  about_thank_you: شكرًا لك على استخدام CRM! نحن نقدر عملك ونتمنى أن تستمتع باستخدام البرنامج.
+  about_twitter: تحديثات تويتر
+  about_user_group: مجموعة مناقشة للمستخدمين
+  admin: المشرف
+  logout: تسجيل الخروج
+  quick_find: البحث السريع
+  welcome: مرحبا بك
   # Advanced search
-  accounts_advanced_search: Accounts Advanced search
-  advanced_search: Advanced search
-  basic_search: Basic search
+  accounts_advanced_search: البحث المتقدم في الحسابات
+  advanced_search: بحث متقدم
+  basic_search: البحث الأساسي
   search_results_count:
-    zero: Search found %{count} results.
-    one: Search found %{count} result.
-    two: Search found %{count} results.
-    few: Search found %{count} results.
-    many: Search found %{count} results.
-    other: Search found %{count} results.
+    zero: تم العثور على نتائج %{count}.
+    one: تم العثور على نتيجة %{count}.
+    two: تم العثور على نتائج %{count}.
+    few: تم العثور على نتائج %{count}.
+    many: تم العثور على نتائج %{count}.
+    other: تم العثور على نتائج %{count}.
   # Views -> Comments.
   #----------------------------------------------------------------------------
-  comment: Comment
-  edit_comment: Editing comment
-  show: Show
-  update: Update
-  following_users_will_be_notified: The following users will be notified by email
-  notifications_tooltip: Subscribers will receive new comments via email
-  subscribe_via_email: Subscribe via email
-  disable_email_subscriptions: Disable email subscription
-  added_note: added comment %{value}
+  comment: تعليق
+  edit_comment: تحرير التعليق
+  show: إظهار
+  update: تحديث
+  following_users_will_be_notified: سيتم إعلام المستخدمين التاليين عن طريق البريد الإلكتروني
+  notifications_tooltip: سيستلم المشتركون تعليقات جديدة عبر البريد الإلكتروني
+  subscribe_via_email: الاشتراك عبر البريد الإلكتروني
+  disable_email_subscriptions: تعطيل الاشتراك في البريد الإلكتروني
+  added_note: أضاف تعليق %{value}
   # Views -> Emails.
   #----------------------------------------------------------------------------
   # Views -> Passwords.
   #----------------------------------------------------------------------------
-  confirm_password_intro: Please type your new password and then confirm it.
-  password_intro: Please specify your email address, and the instructions to reset your password will be sent to you.
-  reset_password: Reset Password
-  update_password_and_login: Update Password and Login
+  confirm_password_intro: الرجاء كتابة كلمة المرور الجديدة ثم تأكيدها.
+  password_intro: الرجاء تحديد عنوان البريد الإلكتروني الخاص بك، وسيتم إرسال التعليمات لإعادة تعيين كلمة المرور الخاصة بك لك.
+  reset_password: إعادة تعيين كلمة المرور
+  update_password_and_login: تحديث كلمة المرور وتسجيل الدخول
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  back_to_crm: العودة إلى CRM مجانية الدهون
+  crm_admin_page: إدارة CRM خالية من الدهون
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
-  create_group: Create Group
-  save_group: Save Group
-  group_members: members
-  groups: Groups
-  groups_small: groups
-  group_small: group
+  create_group: إنشاء مجموعة
+  save_group: حفظ المجموعة
+  group_members: الأعضاء
+  groups: المجموعات
+  groups_small: المجموعات
+  group_small: مجموعة
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
-  confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
-  approve: Approve
-  create_user: Create User
-  last_logged_in: last logged in %{value}
-  personal_information: Personal Information
-  group_memberships: Group Memberships
-  reactivate: Reactivate
-  save_user: Save User
-  suspend: Suspend
-  user_active: Active
-  user_admin: Admin
-  user_awaits_approval: awaits your approval
-  user_confirm_delete: A user can only be deleted if no related assets are left behind.
-  user_is_admin: The user is Administrator
-  user_never_logged_in: hasn't logged in yet
-  user_signed_up: Signed Up
-  user_signed_up_on: signed up on %{value}
-  user_since: user since %{value}
-  user_suspended: Suspended
-  user_suspended_on: suspended on %{value}
-  users: Users
-  users_small: users
+  confirm_group_delete: هل أنت متأكد من رغبتك في حذف هذه المجموعة؟ هناك عناصر %{count} التي لا تزال تشير إليها.
+  approve: الموافقة
+  create_user: إنشاء مستخدم
+  last_logged_in: آخر تسجيل في %{value}
+  personal_information: المعلومات الشخصية
+  group_memberships: عضوية المجموعة
+  reactivate: إعادة التنشيط
+  save_user: حفظ المستخدم
+  suspend: تعليق
+  user_active: نشط
+  user_admin: المشرف
+  user_awaits_approval: في انتظار موافقتك
+  user_confirm_delete: يمكن حذف المستخدم فقط إذا لم تترك أي أصول ذات صلة وراءها.
+  user_is_admin: المستخدم هو المسؤول
+  user_never_logged_in: لم يتم تسجيل الدخول بعد
+  user_signed_up: تسجيل الدخول
+  user_signed_up_on: تم التسجيل في %{value}
+  user_since: مستخدم منذ %{value}
+  user_suspended: معلق
+  user_suspended_on: معلق في %{value}
+  users: المستخدمون
+  users_small: المستخدمون
   # Views -> Versions
   #----------------------------------------------------------------------------
-  versions: History
+  versions: التاريخ
   version:
     create: ! '%{item} created by %{by}'
     update: ! '%{item} modified by %{by}'
@@ -704,84 +704,84 @@ ar-SA:
     set_html: ! '%{attr} set to %{to}'
     unset_html: ! '%{attr} unset'
     change_html: ! '%{attr} changed from %{from} to %{to}'
-    anonymous: anonymous
-  account_contact_id: Account id
-  account_contact_name: Account name
-  user_id: User id
-  created_at: Created at
-  updated_at: Updated at
+    anonymous: مجهول
+  account_contact_id: معرف الحساب
+  account_contact_name: اسم الحساب
+  user_id: معرف المستخدم
+  created_at: تم إنشاؤها في
+  updated_at: تم التحديث في
   # Export.
   #----------------------------------------------------------------------------
-  to_xls: Export to Excel
-  to_csv: Export to comma-delimited file format (including deleted records)
-  to_rss: RSS feed
-  to_atom: Atom feed
-  to_perm: Permalink
+  to_xls: تصدير إلى Excel
+  to_csv: تصدير إلى تنسيق الملف المحدد بفواصل (بما في ذلك السجلات المحذوفة)
+  to_rss: تغذية RSS
+  to_atom: تغذية عملاقة
+  to_perm: رابط دائم
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_notification_subject: dropbox - Added email - %{subject}
-  dropbox_notification_intro: Succesfully added the email you sent to dropbox
-  dropbox_notification_to: Added to
-  subject: Subject
-  body: Body
+  dropbox_notification_subject: إسقاط - البريد الإلكتروني المضاف- %{subject}
+  dropbox_notification_intro: تم بنجاح إضافة البريد الإلكتروني الذي أرسلته إلى المربع المنسدل
+  dropbox_notification_to: تمت الإضافة إلى
+  subject: الموضوع
+  body: الجسم
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
     intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
-    reply_instructions: Reply to this email directly to add a new comment, or view the %{entity} online
+    reply_instructions: الرد على هذا البريد الإلكتروني مباشرة لإضافة تعليق جديد، أو عرض %{entity} على الإنترنت
   # Lists
   #----------------------------------------------------------------------------
-  global_lists: Global lists
-  personal_lists: My lists
-  list: List
-  no_saved_lists: No saved lists
-  make_current_view_list: Make current view a list
-  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
+  global_lists: القوائم العالمية
+  personal_lists: قائمتي
+  list: قائمة
+  no_saved_lists: لا توجد قوائم محفوظة
+  make_current_view_list: جعل العرض الحالي قائمة
+  list_name_info: إذا كنت تستخدم اسم قائمة موجودة، سوف تستبدل تلك القائمة مع الإعدادات الحالية
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
     comment:
-      zero: ! '%{count} comments'
-      one: 1 comment
-      two: ! '%{count} comments'
-      few: ! '%{count} comments'
-      many: ! '%{count} comments'
-      other: ! '%{count} comments'
+      zero: ! 'تعليقات %{count}'
+      one: تعليق واحد
+      two: ! 'تعليقات %{count}'
+      few: ! 'تعليقات %{count}'
+      many: ! 'تعليقات %{count}'
+      other: ! 'تعليقات %{count}'
     contact:
-      zero: ! '%{count} contacts'
-      one: 1 contact
-      two: ! '%{count} contacts'
-      few: ! '%{count} contacts'
-      many: ! '%{count} contacts'
-      other: ! '%{count} contacts'
+      zero: ! 'جهات اتصال %{count}'
+      one: جهة اتصال واحدة
+      two: ! 'جهات اتصال %{count}'
+      few: ! 'جهات اتصال %{count}'
+      many: ! 'جهات اتصال %{count}'
+      other: ! 'جهات اتصال %{count}'
     opportunity:
-      zero: ! '%{count} opportunities'
-      one: 1 opportunity
-      two: ! '%{count} opportunities'
-      few: ! '%{count} opportunities'
-      many: ! '%{count} opportunities'
-      other: ! '%{count} opportunities'
+      zero: ! 'فرص %{count}'
+      one: فرصة واحدة
+      two: ! 'فرص %{count}'
+      few: ! 'فرص %{count}'
+      many: ! 'فرص %{count}'
+      other: ! 'فرص %{count}'
     lead:
-      zero: ! '%{count} leads'
-      one: 1 lead
-      two: ! '%{count} leads'
-      few: ! '%{count} leads'
-      many: ! '%{count} leads'
-      other: ! '%{count} leads'
+      zero: ! 'رائد %{count}'
+      one: 1 رصاص
+      two: ! 'رائد %{count}'
+      few: ! 'رائد %{count}'
+      many: ! 'رائد %{count}'
+      other: ! 'رائد %{count}'
     day:
       zero: ! '%{count} days'
-      one: 1 day
+      one: 1 يوم
       two: ! '%{count} days'
       few: ! '%{count} days'
       many: ! '%{count} days'
       other: ! '%{count} days'
     login:
-      zero: ! '%{count} logins'
-      one: 1 login
-      two: ! '%{count} logins'
-      few: ! '%{count} logins'
-      many: ! '%{count} logins'
-      other: ! '%{count} logins'
+      zero: ! '%{count} تسجيلات الدخول'
+      one: 1 تسجيل دخول
+      two: ! '%{count} تسجيلات الدخول'
+      few: ! '%{count} تسجيلات الدخول'
+      many: ! '%{count} تسجيلات الدخول'
+      other: ! '%{count} تسجيلات الدخول'
   # Custom date/time formats.
   #----------------------------------------------------------------------------
   date:
@@ -791,117 +791,117 @@ ar-SA:
       mmddyy: ! '%b %e, %Y'
   time:
     formats:
-      mmddhhss: ! '%b %e at %l:%M%p'
-      mmddyyyy_hhmm: ! '%e %b %Y at %l:%M%p'
+      mmddhhss: ! '%b %e في %l:%M%p'
+      mmddyyyy_hhmm: ! '%e %b %Y في %l:%M%p'
   # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------
   will_paginate:
     previous_label: ! '&#8592; Previous'
-    next_label: 'Next &#8594;'
+    next_label: 'التالي &#8594;'
     page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        zero: Displaying all %{count} %{plural}
-        one: Displaying 1 %{name}
-        two: Displaying all %{count} %{plural}
-        few: Displaying all %{count} %{plural}
-        many: Displaying all %{count} %{plural}
-        other: Displaying all %{count} %{plural}
-      multi_page: Displaying %{plural} %{from} - %{to} of %{total} in total
+        zero: عرض كل %{count} %{plural}
+        one: عرض 1 %{name}
+        two: عرض كل %{count} %{plural}
+        few: عرض كل %{count} %{plural}
+        many: عرض كل %{count} %{plural}
+        other: عرض كل %{count} %{plural}
+      multi_page: عرض %{plural} %{from} - %{to} من %{total} في المجموع
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
-  label: Label
-  custom_fields: Custom Fields
-  custom_field_options: Custom Field Options
-  create_field: Create field
-  save_field: Save field
-  create_field_group: Create field group
-  edit_field_group: Edit field group
-  save_field_group: Save field group
-  field_group_empty: There are no fields in this group.
-  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
-  restrict_by_tag: ! 'Restrict by Tag:'
-  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
-  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
-  field_group_unrestricted: This field group applies to all %{assets}
-  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
-  msg_cant_delete_field_group: Field Group could not be deleted.
-  admin_fields_info: ! 'Custom fields are displayed in groups. Create a new field group, or add fields to one of the groups below. You can drag and drop fields to change their display order or move them between field groups.'
+  label: تسمية
+  custom_fields: حقول مخصصة
+  custom_field_options: خيارات الحقل المخصص
+  create_field: إنشاء حقل
+  save_field: حفظ الحقل
+  create_field_group: إنشاء مجموعة حقول
+  edit_field_group: تحرير مجموعة الحقل
+  save_field_group: حفظ مجموعة الحقول
+  field_group_empty: لا توجد حقول في هذه المجموعة.
+  select_or_create_tags: حدد بعض العلامات، أو إنشاء علامة جديدة بالضغط على 'إدخال'.
+  restrict_by_tag: ! 'تقييد بواسطة العلامة:'
+  restrict_by_tag_info: (فقط إظهار الحقول ل %{assets} التي تم وسمها مع التالي)
+  field_group_tag_restriction: تنطبق مجموعة الحقل هذه على %{assets} الموسومة بـ "%{tag}"
+  field_group_unrestricted: هذه المجموعة الحقل تنطبق على جميع %{assets}
+  field_group_confirm_delete: إذا تم حذف مجموعة حقول، سيتم نقل أي حقول إلى مجموعة الحقل الافتراضية.
+  msg_cant_delete_field_group: لا يمكن حذف مجموعة الحقل.
+  admin_fields_info: ! 'يتم عرض الحقول المخصصة في المجموعات. قم بإنشاء مجموعة حقول جديدة، أو قم بإضافة الحقول إلى إحدى المجموعات أدناه. يمكنك سحب وإسقاط الحقول لتغيير ترتيب العرض الخاص بهم أو نقلهم بين مجموعات الحقل.'
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'It is strongly recommended you restart your server after adding or removing any custom field. '
-  tags: Tags
-  tag_small: tag
-  tagged: Tagged
-  create_tag: Create Tag
-  save_tag: Save Tag
-  field_group_tags: Field Groups shown for this Tag
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  admin_fields_info2: ! 'من المستحسن بشدة إعادة تشغيل الخادم الخاص بك بعد إضافة أو إزالة أي حقل مخصص. '
+  tags: الوسوم
+  tag_small: وسم
+  tagged: معلوم
+  create_tag: إنشاء علامة
+  save_tag: حفظ العلامة
+  field_group_tags: مجموعات الحقول المعروضة لهذه العلامة
+  ai_prompt_tags: توليد علامات للرصاص أو الحسابات أو الحملات المحتملة، مع التركيز على مجالات تخصص الصناعة
+  ai_prompt_link: "مساعدة التصميم"
+  ai_prompt_link_tooltip: "دردشة OpenAI مع موجه"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from %{value} records.
-  msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
+  tag_with_taggings_confirm_delete: إذا تم حذف هذه العلامة، سيتم إزالتها من سجلات %{value}.
+  msg_cant_delete_tag: تعذر حذف '%{value}' بما أنه يحتوي على مجموعات حقول مقترنة.
   views:
     admin:
       plugins:
-        author: Author
-        version: Version
-        description: Description
+        author: المؤلف
+        version: الإصدار
+        description: الوصف
   # Simple Form translations
   #----------------------------------------------------------------------------
   simple_form:
-    yes: 'Yes'
-    no: 'No'
+    yes: 'نعم'
+    no: 'لا'
     required:
-      text: required
+      text: مطلوب
       mark: ! '*'
     # You can uncomment the line below if you need to overwrite the whole required html.
     # When using html, text and mark won't be used.
     # html: '<abbr title="required">*</abbr>'
     error_notification:
-      default_message: ! 'Some errors were found, please take a look:'
+      default_message: ! 'تم العثور على بعض الأخطاء، يرجى إلقاء نظرة:'
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
     string:
-      title: Short Answer
+      title: إجابة قصيرة
     text:
-      title: Long Answer
+      title: إجابة طويلة
     select:
-      title: Select List
+      title: حدد قائمة
     multiselect:
-      title: Multi Select
+      title: تحديد متعدد
     radio_buttons:
-      title: Radio Buttons
+      title: أزرار الراديو
     boolean:
-      title: Checkbox
+      title: خانة
     check_boxes:
-      title: Checkbox List
+      title: قائمة خانة الاختيار
     date:
-      title: Date
+      title: التاريخ
     date_pair:
-      title: Date Pair
+      title: تاريخ الاقتران
     datetime:
-      title: Date & Time
+      title: التاريخ والوقت
     datetime_pair:
-      title: Date & Time Pair
+      title: تاريخ ووقت الاقتران
     email:
-      title: Email Address
+      title: عنوان البريد الإلكتروني
     url:
-      title: URL
+      title: الرابط
     tel:
-      title: Phone Number
+      title: رقم الهاتف
     decimal:
-      title: Number (Decimal)
+      title: عدد (عشري
     integer:
-      title: Number (Integer)
+      title: رقم (عدد صحيح)
     float:
-      title: Number (Floating Point)
+      title: رقم (نقطة عائمة)
   pair:
-    start: Start
-    end: End
-    from_to: From %{from} to %{to}
-    from_only: From %{from}
-    to_only: Until %{to}
+    start: ابدأ
+    end: نهاية
+    from_to: من %{from} إلى %{to}
+    from_only: من %{from}
+    to_only: حتى %{to}
