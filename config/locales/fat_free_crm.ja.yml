@@ -29,12 +29,12 @@ ja-JP:
   admin_tab_tags: タグ
   admin_tab_settings: 管理設定
   admin_tab_plugins: プラグイン
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
+  ai_prompts: あなたのビジネスを記述してください
+  ai_prompts_description: あなたのビジネス、あなたが提供する製品やサービス、およびあなたのターゲットオーディエンスを説明します。 これにより、お客様のニーズに合わせてCRMを調整し、AIが使用されるあらゆる場所のシステムプロンプトとして機能します。
+  about_my_business: 私のビジネスについて
+  about_my_business_placeholder: すなわち例Pty Ltdは中小企業に高品質のソフトウェアソリューションを提供することを専門とする中小企業です。 当社はヘルスケア業界に注力し、Fizz Buzz Ultimate Proの旗艦製品を販売しています。
+  how_i_plan_to_use_ffcrm: Fat Free CRMの使い方
+  how_i_plan_to_use_ffcrm_placeholder: すなわち、5人の小さな営業チームは脂肪無料CRMを使用します。Mailchimp、Google Ads、Zapier、Slackを使用します。 私たちは、彼らが医療の中で興味を持っている特定の分野でリードをフィルタリングし、分類したいと考えています。
   affiliate: アフリエイト
   competitor: コンペティター
   customer: カスタマー
@@ -157,7 +157,7 @@ ja-JP:
               email_in_use: '^同じEメールアドレスを持つ他のユーザがいます。'
         custom_field:
           required: '^%{field}が必要です。'
-          minlength: '^%{field} is too short.'
+          minlength: '^%{field} は短すぎます。'
           maxlength: '^%{field}が長すぎます。'
           endbeforestart: '^%{field}は始まる前に終了できません。'
     attribute_options:
@@ -209,7 +209,7 @@ ja-JP:
   msg_require_admin: このページへのアクセスは管理者でなければなりません。
   msg_successful_signup: サインアップ成功です。Fat Free CRMへようこそ!
   msg_welcome: Fat Free CRMへようこそ!
-  msg_user_updated: Profile updated successfully.
+  msg_user_updated: プロファイルが更新されました。
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: 加重額
@@ -250,8 +250,8 @@ ja-JP:
   campaigns_index_normal: 標準フォーマット
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "電子メールによるコメントの返信を購読する"
+  receive_assigned_notifications: "割り当てられた通知をメールで受け取る"
   aim: AOL IM
   already_signed_up: サインアップ済みですか？
   alt_email: その他のEメール
@@ -277,7 +277,7 @@ ja-JP:
   phone: 電話
   profile: プロフィール
   profile_language: 言語
-  email_notifications: Email Notifications
+  email_notifications: メール通知
   save_profile: プロフィール保存
   sign_up: サインアップ
   sign_up_button: サインアップ
@@ -633,7 +633,7 @@ ja-JP:
   advanced_search: 詳細検索
   basic_search: 基本検索
   search_results_count:
-    other: Search found %{count} results.
+    other: 検索で %{count} の結果が見つかりました。
   # Views -> Comments.
   #----------------------------------------------------------------------------
   comment: コメント
@@ -736,17 +736,17 @@ ja-JP:
   #----------------------------------------------------------------------------
   pluralize:
     comment:
-      other: ! '%{count} comments'
+      other: ! '%{count} コメント'
     contact:
-      other: ! '%{count} contacts'
+      other: ! '%{count} 連絡先'
     opportunity:
-      other: ! '%{count} opportunities'
+      other: ! '%{count} 機会'
     lead:
-      other: ! '%{count} leads'
+      other: ! '%{count} リード'
     day:
-      other: ! '%{count} days'
+      other: ! '%{count} 日'
     login:
-      other: ! '%{count} logins'
+      other: ! '%{count} ログイン'
   # Custom date/time formats.
   #----------------------------------------------------------------------------
   date:
@@ -766,7 +766,7 @@ ja-JP:
     page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        other: Displaying all %{count} %{plural}
+        other: すべての %{count} %{plural} を表示
       multi_page: '%{from}番目から%{to}番目までの%{model}を表示しています（全%{count}件中）'
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
@@ -796,9 +796,9 @@ ja-JP:
   create_tag: タグを作成
   save_tag: タグを保存
   field_group_tags: このタグに表示されるフィールドグループ
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  ai_prompt_tags: 専門分野の業界に焦点を当てた潜在的なリード、アカウント、またはキャンペーンのタグを生成する
+  ai_prompt_link: "デザインヘルプ"
+  ai_prompt_link_tooltip: "プロンプト付きOpenAIチャット"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: このタグが削除されると、%{value}件の項目から削除されます。
