@@ -1,99 +1,99 @@
 ---
 uk-UA:
-  language: English
+  language: Українська
   # Generic terms.
   #----------------------------------------------------------------------------
   id: Id
-  all: All
-  at: at
-  here: here
-  no_button: 'No'
-  not_implemented: Not implemented yet.
-  or: or
-  select_none: '-- None --'
-  select_blank: '-- Select --'
-  yes_button: 'Yes'
+  all: Всі
+  at: під
+  here: сюди
+  no_button: 'Ні'
+  not_implemented: Ще не реалізовано.
+  or: або
+  select_none: '-- Нічого --'
+  select_blank: '-- Оберіть--'
+  yes_button: 'Так'
   # Settings.
   #----------------------------------------------------------------------------
-  tab_dashboard: Dashboard
-  tab_tasks: Tasks
-  tab_campaigns: Campaigns
-  tab_leads: Leads
-  tab_accounts: Accounts
-  tab_contacts: Contacts
-  tab_opportunities: Opportunities
-  tab_team: Team
-  admin_tab_groups: Groups
-  admin_tab_users: Users
-  admin_tab_fields: Custom Fields
-  admin_tab_tags: Tags
-  admin_tab_settings: Settings
-  admin_tab_plugins: Plugins
-  ai_prompts: Describe your business
-  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
-  about_my_business: About my business
-  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
-  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
-  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
-  affiliate: Affiliate
-  competitor: Competitor
-  customer: Customer
-  partner: Partner
-  reseller: Reseller
-  vendor: Vendor
-  planned: Planned
-  started: Started
-  on_hold: On Hold
-  completed: Completed
-  called_off: Called Off
-  new: New
-  contacted: Contacted
-  converted: Converted
-  rejected: Rejected
-  cold_call: Cold Call
-  conference: Conference
-  online: Online Marketing
-  referral: Referral
-  self: Self Generated
-  web: Website
-  word_of_mouth: Word of Mouth
-  other: Other
-  prospecting: Prospecting
-  analysis: Analysis
-  presentation: Presentation
-  proposal: Proposal
-  negotiation: Negotiation
-  final_review: Final Review
-  won: Closed/Won
-  lost: Closed/Lost
-  call: Call
-  email: Email
-  follow_up: Follow-up
-  lunch: Lunch
-  meeting: Meeting
-  money: Money
-  trip: Trip
-  overdue: Overdue
-  due_asap: As Soon As Possible
-  due_today: Today
-  due_tomorrow: Tomorrow
-  due_this_week: This Week
-  due_next_week: Next Week
-  due_later: Sometime Later
-  due_specific_date: On Specific Date...
-  completed_today: Today
-  completed_yesterday: Yesterday
-  completed_last_week: Last week
-  completed_this_month: This month
-  completed_last_month: Last month
+  tab_dashboard: Приладна дошка
+  tab_tasks: Завдання
+  tab_campaigns: Маркетингові кампанії
+  tab_leads: Попередні контакти
+  tab_accounts: Облікові записи
+  tab_contacts: Контакти
+  tab_opportunities: Угоди
+  tab_team: Команда
+  admin_tab_groups: Групи
+  admin_tab_users: Спільноти
+  admin_tab_fields: Індивідуальні поля
+  admin_tab_tags: Мітки
+  admin_tab_settings: Налаштування
+  admin_tab_plugins: Плагіни
+  ai_prompts: Опишіть свій бізнес
+  ai_prompts_description: Опишіть свій бізнес, продукти або послуги, які ви пропонуєте, і вашу цільову аудиторію. Це допоможе нам розробляти CRM відповідно до ваших потреб і діяти, як системні підказки для будь-якого місця які використовувалися.
+  about_my_business: Про мій бізнес
+  about_my_business_placeholder: ie Example Pty Ltd - це середня компанія, яка спеціалізується на наданні якісних програмних рішень для малого та середнього бізнесу. Ми зосереджуємось на галузі охорони здоров'я і продаємо наш прапорний продукт, Фіцц Бузз Ультимат-Про.
+  how_i_plan_to_use_ffcrm: Як я планую використовувати Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: Невелика група з 5 осіб буде використовувати Fat Free CRM. Ми будемо використовувати Mailchimp, Google Ads, Zapier і Slack. Ми хочемо відфільтрувати та визначити категорії для певних напрямків, які їх цікавить медична допомога.
+  affiliate: Партнерська програма
+  competitor: Конкурент
+  customer: Замовник
+  partner: Партнер
+  reseller: Посередник
+  vendor: Постачальник
+  planned: Заплановано
+  started: Розпочато
+  on_hold: Призупинено
+  completed: Завершені
+  called_off: Дзвінок вимк
+  new: Новий
+  contacted: Контакт встановлено
+  converted: Перетворений
+  rejected: Відхилено
+  cold_call: Холодний дзвінок
+  conference: Конференція
+  online: Онлайн-маркетинг
+  referral: Реферер
+  self: Власне генероване
+  web: Вебсайт
+  word_of_mouth: З вуст у вуста
+  other: Інше
+  prospecting: Розвідка
+  analysis: Аналіз
+  presentation: Презентація
+  proposal: Пропозиція
+  negotiation: Переговори
+  final_review: Остаточний відгук
+  won: Закрито/Перемога
+  lost: Закриті/Втрачено
+  call: Дзвінок
+  email: Ел. пошта
+  follow_up: Додатково
+  lunch: Обід
+  meeting: Зустріч
+  money: Гроші
+  trip: Поїздка
+  overdue: Протерміновано
+  due_asap: Незабаром як може
+  due_today: Сьогодні
+  due_tomorrow: Завтра
+  due_this_week: На цьому тижні
+  due_next_week: Наступний тиждень
+  due_later: Іноді пізніше
+  due_specific_date: На конкретну дату...
+  completed_today: Сьогодні
+  completed_yesterday: Вчора
+  completed_last_week: Минулий тиждень
+  completed_this_month: Цього місяця
+  completed_last_month: За минулий місяць
   # Models/Activity.
   #----------------------------------------------------------------------------
-  one_hour: One Hour
-  one_day: One Day
-  two_days: Two Days
-  one_week: One Week
-  two_weeks: Two Weeks
-  one_month: One Month
+  one_hour: Одна година
+  one_day: Один день
+  two_days: Два дні
+  one_week: 1 тиждень
+  two_weeks: Два тижні
+  one_month: Один місяць
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
@@ -102,75 +102,75 @@ uk-UA:
         authentication:
           attributes:
             login_field:
-              is_not_valid: is not valid
+              is_not_valid: не дійсний
             password_field:
-              is_not_valid: is not valid
+              is_not_valid: не дійсний
         account:
           attributes:
             name:
-              missing_account_name: '^Please specify account name.'
+              missing_account_name: '^Будь ласка, вкажіть ім''я рахунку.'
             access:
-              share_account: '^Please specify users with whom to share the account.'
+              share_account: '^Будь ласка, вкажіть кому поділитися обліковим записом.'
         campaign:
           attributes:
             name:
-              missing_campaign_name: '^Please specify campaign name.'
+              missing_campaign_name: '^Будь ласка, вкажіть назву кампанії.'
             ends_on:
-              dates_not_in_sequence: '^Please make sure the campaign end date is after the start date.'
+              dates_not_in_sequence: '^Будь ласка, переконайтеся, що дата закінчення кампанії після дати початку.'
             access:
-              share_campaign: '^Please specify users with whom to share the campaign.'
+              share_campaign: '^Будь ласка, вкажіть користувачів, з якими можна поділитись кампанією.'
         contact:
           attributes:
             first_name:
-              missing_first_name: '^Please specify first name.'
+              missing_first_name: '^Будь ласка, вкажіть ім''я користувача.'
             last_name:
-              missing_last_name: '^Please specify last name.'
+              missing_last_name: '^Будь ласка, вкажіть прізвище.'
             access:
-              share_contact: '^Please specify users with whom to share the contact.'
+              share_contact: '^Будь ласка, вкажіть кому поділитися контактом.'
         lead:
           attributes:
             first_name:
-              missing_first_name: '^Please specify first name.'
+              missing_first_name: '^Будь ласка, вкажіть ім''я користувача.'
             last_name:
-              missing_last_name: '^Please specify last name.'
+              missing_last_name: '^Будь ласка, вкажіть прізвище.'
             access:
-              share_lead: '^Please specify users with whom to share the lead.'
+              share_lead: '^Будь ласка, вкажіть користувачів, з якими можна поділитися командою.'
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: '^Please specify opportunity name.'
+              missing_opportunity_name: '^Будь ласка, вкажіть ім''я угоди.'
             access:
-              share_opportunity: '^Please specify users with whom to share the opportunity.'
+              share_opportunity: '^Будь ласка, укажіть користувачам з якими поділитися можливістю.'
         task:
           attributes:
             name:
-              missing_task_name: '^Please specify task name.'
+              missing_task_name: '^Будь ласка, вкажіть назву завдання.'
             calendar:
-              invalid_date: '^Please specify valid date.'
+              invalid_date: '^Будь ласка, вкажіть правильну дату.'
         user:
           attributes:
             username:
-              missing_username: '^Please specify username.'
-              username_taken: '^This username is already taken.'
+              missing_username: '^Будь ласка, вкажіть ім''я користувача.'
+              username_taken: '^Це ім''я користувача вже використовується.'
             email:
-              missing_email: '^Please specify email address.'
-              email_in_use: '^There is another user with the same email.'
+              missing_email: '^Будь ласка, вкажіть адресу електронної пошти.'
+              email_in_use: '^Існує інший користувач з тією ж електронною поштою.'
         custom_field:
-          required: '^%{field} is required.'
+          required: '^%{field} є обов''язковим.'
           minlength: '^%{field} is too short.'
-          maxlength: '^%{field} is too long.'
-          endbeforestart: '^%{field} cannot end before it begins.'
+          maxlength: '^%{field} занадто довгий.'
+          endbeforestart: '^%{field} не може закінчуватися, поки не почнеться.'
     attribute_options:
       opportunity:
         stage:
-          prospecting: Prospecting
-          analysis: Analysis
-          presentation: Presentation
-          proposal: Proposal
-          negotiation: Negotiation
-          final_review: Final Review
-          won: Closed/Won
-          lost: Closed/Lost
+          prospecting: Розвідка
+          analysis: Аналіз
+          presentation: Презентація
+          proposal: Пропозиція
+          negotiation: Переговори
+          final_review: Остаточний відгук
+          won: Закрито/Перемога
+          lost: Закриті/Втрачено
       account:
         rating:
           "0": "-"
@@ -179,595 +179,595 @@ uk-UA:
           "3": "★★★"
           "4": "★★★★"
           "5": "★★★★★"
-  msg_account_suspended: User account has been suspended.
-  password_reset_instruction: password reset instructions
+  msg_account_suspended: Обліковий запис користувача було призупинено.
+  password_reset_instruction: інструкції для скидання пароля
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: Your account has been created and is awaiting approval by the system administrator.
-  msg_account_not_approved: Your account has not been approved yet.
-  msg_asset_deleted: ! '%{value} has been deleted.'
-  msg_asset_not_available: This %{value} is no longer available.
-  msg_not_authorized: You are not authorized to take this action.
-  msg_assets_not_available: The %{value} are not available.
-  msg_asset_rejected: ! '%{value} has been rejected.'
-  msg_bad_image_file: '^Could''t upload or resize the image file you specified.'
+  msg_account_created: Ваш обліковий запис створено і очікує схвалення системним адміністратором.
+  msg_account_not_approved: Ваш обліковий запис ще не було схвалено.
+  msg_asset_deleted: ! '%{value} було видалено.'
+  msg_asset_not_available: Цей %{value} більше не доступний.
+  msg_not_authorized: Ви не маєте прав на вживання цієї дії.
+  msg_assets_not_available: '%{value} недоступний.'
+  msg_asset_rejected: ! '%{value} було відхилено.'
+  msg_bad_image_file: '^Could''t вивантажити або змінити розмір вказаного вами файлу зображення.'
   msg_cant_create_related: Can't create the %{asset} since the %{related} is no longer available.
   msg_cant_delete_user: '^Couldn''t delete the user since %{value} has related assets present.'
-  msg_cant_do: Can't %{action} the %{asset} since it's no longer available.
-  msg_email_not_found: No user was found with that email address.
-  msg_enter_new_password: Please enter your new password.
-  msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
-  msg_invalid_password: '^Please specify valid current password'
-  msg_invalig_login: Invalid username or password.
-  msg_last_login: Your last login was on %{value}.
-  msg_login_needed: You must be logged in to access this page.
-  msg_logout_needed: You must be logged out to access this page.
-  msg_password_changed: Your password has been changed.
-  msg_password_not_changed: Your password has not been changed.
-  msg_password_updated: Password was successfully updated.
-  msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
-  msg_require_admin: You must be Administrator to access this page.
-  msg_successful_signup: Successful signup, welcome to Fat Free CRM!
-  msg_welcome: Welcome to Fat Free CRM!
-  msg_user_updated: Profile updated successfully.
+  msg_cant_do: Не вдається отримати %{action} %{asset} , тому що він більше не доступний.
+  msg_email_not_found: Користувача з цією адресою електронної пошти не знайдено
+  msg_enter_new_password: Будь ласка, введіть новий пароль.
+  msg_goodbye: Ви вийшли з системи. Дякуємо за використання Fat Free CRM!
+  msg_invalid_password: '^Будь ласка, вкажіть припустимий поточний пароль'
+  msg_invalig_login: Недійсне ім'я користувача або пароль.
+  msg_last_login: Ваш останній вхід був на сайті %{value}.
+  msg_login_needed: Для доступу до цієї сторінки ви повинні увійти.
+  msg_logout_needed: Ви повинні увійти для доступу до цієї сторінки.
+  msg_password_changed: Ваш пароль було змінено.
+  msg_password_not_changed: Ваш пароль не змінено.
+  msg_password_updated: Пароль успішно оновлено.
+  msg_pwd_instructions_sent: Інструкції для скидання пароля були відправлені на вас. Будь ласка, перевірте свою електронну пошту.
+  msg_require_admin: Ви повинні бути адміністратором для доступу до цієї сторінки.
+  msg_successful_signup: Успішна реєстрація, ласкаво просимо до Fat Free CRM!
+  msg_welcome: Ласкаво просимо до Fat Free CRM!
+  msg_user_updated: Профіль успішно оновлено.
   # Options.
   #----------------------------------------------------------------------------
-  option_amount*probability: weighted amount
-  activity_options: Show %{models} %{action_type} performed by %{user} in the past %{period}.
-  all_users: all users
-  option_after: after
-  option_all: all
-  option_all_users: All Users
-  option_amount: amount
-  option_before: before
-  option_brief: brief
-  option_closes_on: close date
-  option_company: company
-  option_created_at: date created
-  option_ends_on: end date
-  option_first_name: first name
-  option_last_name: last name
-  option_leads_count: actual leads
-  option_long: long
-  option_name: name
-  option_probability: probability
-  option_rating: rating
-  option_revenue: actual revenue
-  option_starts_on: start date
-  option_target_leads: target leads
-  option_target_revenue: target revenue
-  option_updated_at: date updated
-  show_per_page: Show %{number} %{models} per page using %{fmt} format.
+  option_amount*probability: зважена сума
+  activity_options: Показати %{models} %{action_type} виконаний %{user} в минулому %{period}.
+  all_users: всіх користувачів
+  option_after: після
+  option_all: всі
+  option_all_users: Усі користувачі
+  option_amount: кількість
+  option_before: до
+  option_brief: скорочений
+  option_closes_on: дата закриття
+  option_company: компанія
+  option_created_at: дата створення
+  option_ends_on: дата завершення
+  option_first_name: ім'я
+  option_last_name: прізвище
+  option_leads_count: фактичний спусковий
+  option_long: довго
+  option_name: ім'я
+  option_probability: ймовірність
+  option_rating: рейтинг
+  option_revenue: фактичний дохід
+  option_starts_on: дата початку
+  option_target_leads: цільовий спуск
+  option_target_revenue: цільовий дохід
+  option_updated_at: дату оновлення
+  show_per_page: Показати %{number} %{models} на сторінку, використовуючи %{fmt} формат.
   sort_by: Sort by %{field}
   sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
-  entities_per_page: ! '%{entity} per page:'
-  contacts_index_long: Long format
-  contacts_index_brief: Brief format
-  contacts_index_full: Full format
-  opportunities_index_normal: Normal format
-  accounts_index_normal: Normal format
-  leads_index_normal: Normal format
-  campaigns_index_normal: Normal format
+  entities_per_page: ! '%{entity} на сторінку:'
+  contacts_index_long: Довгий формат
+  contacts_index_brief: Короткий формат
+  contacts_index_full: Повний формат
+  opportunities_index_normal: Нормальний формат
+  accounts_index_normal: Нормальний формат
+  leads_index_normal: Нормальний формат
+  campaigns_index_normal: Нормальний формат
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  subscribe_to_comment_replies: "Subscribe to comment replies by email"
-  receive_assigned_notifications: "Receive assigned notifications by email"
+  subscribe_to_comment_replies: "Підписатися на відповіді на коментар по email"
+  receive_assigned_notifications: "Отримувати призначені сповіщення на електронну пошту"
   aim: AOL IM
-  already_signed_up: Already signed up?
-  alt_email: Alternative email
-  avatar: Avatar
-  change_password: Change Password
-  company: Company
-  contact_info: Contact Information
-  current_password: Current password
-  edit_profile: Edit Profile
-  first_name: First name
+  already_signed_up: Вже зареєстровані?
+  alt_email: Альтернативна електронна пошта
+  avatar: Аватар
+  change_password: Зміна пароля
+  company: Організація
+  contact_info: Контактна інформація
+  current_password: Поточний пароль
+  edit_profile: Редагувати профіль
+  first_name: Ім'я
   google: Google IM
-  gravatar_help: Not familiar with Gravatars? Learn about Gravatars
-  image_file: Image file
-  image_help: The image will be resized to 180x180 pixels. Supported formats - PNG, JPG, GIF.
-  job_title: Title
-  last_name: Last name
-  login_now_link: Login Now!
-  mobile: Mobile
-  my_profile: My Profile
-  new_password: New password
-  password: Password
-  password_confirmation: Confirm new password
-  phone: Phone
-  profile: Profile
-  profile_language: Language
-  email_notifications: Email Notifications
-  save_profile: Save Profile
-  sign_up: Sign Up
-  sign_up_button: Sign Up
-  upload_picture: Upload Picture
-  use_gravatar: Use Gravatar
-  user: User
-  username: Username
+  gravatar_help: Не знайомі з Gravatars? Вивчайте про Gravatars
+  image_file: Файл зображення
+  image_help: Зображення буде змінено на 180x180 пікселів. Допускаються формати - PNG, JPG, GIF.
+  job_title: Найменування
+  last_name: Прізвище
+  login_now_link: Увійдіть зараз!
+  mobile: Мобільний
+  my_profile: Мій профіль
+  new_password: Новий пароль
+  password: Пароль
+  password_confirmation: Підвердіть новий пароль
+  phone: Телефон
+  profile: Анкета
+  profile_language: 'Мова:'
+  email_notifications: Сповіщення електронною поштою
+  save_profile: Зберегти профіль
+  sign_up: Зареєструватися
+  sign_up_button: Зареєструватися
+  upload_picture: Завантажити фотографію
+  use_gravatar: Використовувати Gravatar
+  user: Користувач
+  username: Ім'я користувача
   yahoo: Yahoo IM
-  born_on: Born on
-  reports_to: Reports to
-  access: Access
+  born_on: Народився
+  reports_to: Керівник
+  access: Доступ
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
-  forgot_password: Forgot Password
-  login: Login
-  no_account: Do not have an account?
-  remember_me: Remember Me
-  sign_up_now: Sign Up Now!
+  forgot_password: Забули пароль
+  login: Логін
+  no_account: Ще не зареєстровані?
+  remember_me: Запам'ятати мене
+  sign_up_now: Зареєструйтеся зараз!
   # Views -> Accounts.
   #----------------------------------------------------------------------------
-  account: Account
-  account_id: Account
-  select_an_account: Select an Account
-  account_small: account
-  account_summary: Account Summary
-  account_categories: Account Categories
-  accounts: Accounts
-  accounts_options: Accounts Options
-  accounts_small: accounts
-  assigned_to: Assigned to
-  billing_address: Billing address
-  create_account: Create Account
-  date_created: Date Created
-  date_updated: Date Updated
-  fax: Fax
-  intro: You can add %{value} information later.
-  keep_private: Keep it private, do not share with others
+  account: Обліковий запис
+  account_id: Обліковий запис
+  select_an_account: Вибір облікового запису
+  account_small: обліковий запис
+  account_summary: Всього
+  account_categories: Категорії рахунку
+  accounts: Облікові записи
+  accounts_options: Параметри облікового запису
+  accounts_small: облікові записи
+  assigned_to: Призначено
+  billing_address: Адреса для оплати
+  create_account: Створити обл. запис
+  date_created: Дата створення
+  date_updated: Дата оновлення
+  fax: Факс
+  intro: Ви можете додати %{value} інформацію пізніше.
+  keep_private: Зберегти це приватно, не ділитися з іншими
   mail_to: Mail to %{value}
-  make_public: Share it with everyone
-  mobile_small: mobile
-  open_in_window: Open %{value} in a new window
-  phone_small: phone
-  phone_toll_free: Toll-free
-  pipeline: Pipeline
-  same_as_billing: same as billing
-  save_account: Save Account
-  share_with: Share it with the following people
-  shipping_address: Shipping address
-  total_accounts: Total Accounts
-  website: Website
-  account_with_title_department: ! '%{title}, %{department} at %{account}'
-  account_with_title: ! '%{title} at %{account}'
+  make_public: Поділитися з усіма
+  mobile_small: мобільний
+  open_in_window: Відкрити %{value} у новому вікні
+  phone_small: телефон
+  phone_toll_free: Простій
+  pipeline: Конвеєр
+  same_as_billing: так само, як виставлення рахунків
+  save_account: Зберегти Обліковий запис
+  share_with: Поділитися цим людям
+  shipping_address: Адреса доставки
+  total_accounts: Всього облікових записів
+  website: Вебсайт
+  account_with_title_department: ! '%{title}, %{department} в %{account}'
+  account_with_title: ! '%{title} в %{account}'
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
-  actual: Actual
-  actual_performance: Actual Performance
-  budget: Budget
-  budget_label: Budget (%{currency})
-  campaign: Campaign
-  campaign_and_leads: campaign and its leads
-  campaign_small: campaign
-  campaign_summary: Campaign Summary
-  campaign_targets: Campaign Targets
-  campaign_statuses: Campaign Statuses
-  campaigns: Campaigns
-  campaigns_options: Campaigns Options
-  campaigns_small: campaigns
-  conversion: Conversion
-  conversion_label: Conversion (%)
-  conversion_number: ! '%{value} conversion'
+  actual: Актуальне
+  actual_performance: Фактичні характеристики
+  budget: Бюджет
+  budget_label: Бюджет (%{currency})
+  campaign: Кампанія
+  campaign_and_leads: кампанія та її притягнення
+  campaign_small: кампанія
+  campaign_summary: Підсумок кампанії
+  campaign_targets: Цілі маркетингової кампанії
+  campaign_statuses: Статуси кампанії
+  campaigns: Маркетингові кампанії
+  campaigns_options: Параметри маркетингових кампаній
+  campaigns_small: кампанії
+  conversion: Конверсія
+  conversion_label: Конверсія (%)
+  conversion_number: ! 'Конвертація %{value}'
   target_conversion: Target conversion
-  create_campaign: Create Campaign
-  end_date: End date
+  create_campaign: Створити маркетингову кампанію
+  end_date: Дата закінчення
   finished_on: completed on %{value}
-  finishes_in: finishes in %{value}
-  no_start_date: no start date specified
-  number_of_leads: Number of leads
-  objectives: Objectives
-  objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
-  objectives_small: campaign objectives
-  revenue: Revenue
-  revenue_label: Revenue (%{currency})
-  revenue_number: ! '%{value} in revenue'
-  save_campaign: Save Campaign
-  start_date: Start date
-  started_ago: started %{value} ago
+  finishes_in: завершені в %{value}
+  no_start_date: не вказано дату початку
+  number_of_leads: Кількість свинців
+  objectives: Завдання
+  objectives_help: Будь ласка, визначте цільову кількість братів, очікуване співвідношення конвертацій до нових можливостей, цільовий дохід і бюджет кампанії. Ці цифри дозволять відслідковувати результати кампанії.
+  objectives_small: Цілі кампанії
+  revenue: Дохід
+  revenue_label: Дохід (%{currency})
+  revenue_number: ! '%{value} в доходах'
+  save_campaign: Зберегти кампанію
+  start_date: Дата закінчення
+  started_ago: почали %{value} тому
   starts_in: starts in %{value}
-  starts_today: starts today!
+  starts_today: починається сьогодні!
   target: Target
-  total_campaigns: Total Campaigns
+  total_campaigns: Всього кампанії
   was_supposed_to_finish: was supposed to finish on %{value}
-  was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
-  was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
-  select_a_campaign: Select a campaign
+  was_supposed_to_start: був встановлений %{time_ago} тому на %{start_date}
+  was_supposed_to_start_in: було заплановано почати в %{starts_in} на %{start_date}
+  select_a_campaign: Обрати кампанію
   # Views -> Contacts.
   #----------------------------------------------------------------------------
-  alt_email_small: Other
-  blog: Website/Blog
-  contact: Contact
-  contact_small: contact
-  contacts: Contacts
-  contacts_options: Contacts Options
-  contacts_small: contacts
-  contact_summary: Contact Summary
-  create_contact: Create Contact
-  department: Department
-  department_small: ! '%{value} department'
-  do_not_call: Do not call
+  alt_email_small: Інше
+  blog: Сайт/блог
+  contact: Контакт
+  contact_small: контакт
+  contacts: Контакти
+  contacts_options: Налаштування контактів
+  contacts_small: контакти
+  contact_summary: Короткий зміст контакту
+  create_contact: Створити контакт
+  department: Відділ
+  department_small: ! 'Відділ %{value}'
+  do_not_call: Не телефонувати
   extra_info: Extra Information
-  extra_info_small: extra contact
-  facebook: Facebook
+  extra_info_small: додатковий контакт
+  facebook: Фейсбук
   linked_in: LinkedIn
-  myself: Myself
+  myself: Себе
   permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.
-  permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
-  referred_by: Referred by
-  referred_by_small: referred by
-  save_contact: Save Contact
-  twitter: Twitter
-  unassigned: Unassigned
-  web_presence: Web Presence
-  web_presence_small: web presence
-  works_at: ! '%{job_title} at %{company}'
-  general_info: General Information
-  show_general_info_small: Show general information for this contact.
-  show_extra_info_small: Show extra information for this contact.
-  tag_details: ! '%{tag} Details'
-  show_tag_info_small: Show %{tag} information for this contact.
-  shared_with_everyone: Shared with everyone
-  title: Title
-  subscriptions: Subscriptions
+  permissions_intro_public: За замовчуванням у всіх користувачів буде доступ до %{value}. Ви можете змінити дозволи пізніше.
+  permissions_intro_shared: За замовчуванням тільки обрані користувачі матимуть доступ до %{value}. Ви можете змінити дозволи пізніше.
+  referred_by: Реферал від
+  referred_by_small: реферальний
+  save_contact: Зберегти контакт
+  twitter: Твіттер
+  unassigned: Непризначений
+  web_presence: Веб-присутність
+  web_presence_small: веб присутність
+  works_at: ! '%{job_title} в %{company}'
+  general_info: Загальна інформація
+  show_general_info_small: Показати загальну інформацію для цього контакту.
+  show_extra_info_small: Показати додаткову інформацію для цього контакту.
+  tag_details: ! 'Деталі %{tag}'
+  show_tag_info_small: Показувати інформацію %{tag} для цього контакту.
+  shared_with_everyone: Поділилися з усіма
+  title: Найменування
+  subscriptions: Підписки
   # Views -> Leads.
   #----------------------------------------------------------------------------
-  convert: Convert
-  convert_lead: Convert Lead
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
+  convert: Конвертувати
+  convert_lead: Перетворити попередній контакт
+  convert_lead_permissions_intro: Дозволи для контакту буде скопійовано з перетворення попереднього контакту. Ви можете змінити права доступу до контактів пізніше.
   convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
-  create_lead: Create Lead
-  create_opp_for_contact: You can optionally create an opportunity for the %{value} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
-  lead: Lead
-  lead_info_small: lead contact
-  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.
-  lead_small: lead
-  lead_status_small: lead status
-  lead_summary: Lead Summary
-  lead_statuses: Lead Statuses
-  leads: Leads
-  leads_options: Leads Options
-  leads_small: leads
-  none: None
-  rating: Rating
-  reject: Reject
-  reject_lead_confirm: Are you sure you want to reject this lead?
-  save_lead: Save Lead
-  source: Source
-  status: Status
-  total_leads: Total Leads
-  show_status_info_small: Show status information for this lead.
-  show_contact_info_small: Show contact information for this lead.
+  create_lead: Створити лід
+  create_opp_for_contact: Ви можете створити можливість для контактів %{value} , вказавши ім'я, поточний етап завершення, дата закриття, ймовірність продажу, сума угоди та запропонована знижкою.
+  lead: Свинець
+  lead_info_small: вести контакт
+  lead_permissions_intro_private: За замовчуванням дозволи будуть скопійовані з кампанії або встановлені приватними. Ви можете змінити попередні дозволи пізніше.
+  lead_permissions_intro_public: За замовчуванням дозволи будуть скопійовані з кампанії або створені в загальному. Ви можете змінити права попереднього контакту пізніше.
+  lead_permissions_intro_shared: За замовчуванням дозволи будуть скопійовані з кампанії або ж використовуються спільно з вказаними користувачами. Ви можете змінити попередні дозволи пізніше.
+  lead_small: вести
+  lead_status_small: привести статус
+  lead_summary: Підсумок ліду
+  lead_statuses: Статуси Ліда
+  leads: Попередні контакти
+  leads_options: Опції Попередніх Контактів
+  leads_small: свинцю
+  none: Без ефекту
+  rating: Рейтинг
+  reject: Відхилити
+  reject_lead_confirm: Ви впевнені, що хочете відхилити це керівництво?
+  save_lead: Зберегти попередній контакт
+  source: Джерело
+  status: Статус
+  total_leads: Всього Попередніх Контактів
+  show_status_info_small: Показувати інформацію про статус цього лідера.
+  show_contact_info_small: Показати контактну інформацію для цього лідера.
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
-  amount: Amount
-  close_date: Close date
-  closes_on: Closes on
-  closed_ago_on: closed %{time_ago} ago on %{date}
-  closes_today: expected to close today!
-  closing_date: closing date is %{value}
-  create_opportunity: Create Opportunity
+  amount: Сума
+  close_date: Закрити дату
+  closes_on: Закриється на
+  closed_ago_on: закрито %{time_ago} тому на %{date}
+  closes_today: очікували закриття сьогодні!
+  closing_date: дата закриття складає %{value}
+  create_opportunity: Створення потенційної угоди
   currency: "$"
-  days_late: Late by
-  days_left: Days left
-  discount: Discount
-  discount_number: with %{value} discount
-  expected_to_close: expected to close in %{time} on %{date}
-  from: from
-  no_closing_date: no expected closing date
-  no_discount: with no discount
-  opportunities: Opportunities
-  opportunities_options: Opportunities Options
-  opportunities_small: opportunities
-  opportunity: Opportunity
-  opportunity_small: opportunity
-  opportunity_stages: Opportunity Stages
-  opportunity_summary: Opportunity At a Glance
+  days_late: Запізнення
+  days_left: Залишилось днів
+  discount: Знижка
+  discount_number: зі знижкою %{value}
+  expected_to_close: очікували закриття в %{time} на %{date}
+  from: від
+  no_closing_date: немає очікуваної дати закриття
+  no_discount: без знижки
+  opportunities: Угоди
+  opportunities_options: Параметри угод
+  opportunities_small: можливості
+  opportunity: Угода
+  opportunity_small: можливість
+  opportunity_stages: Етапи угоди
+  opportunity_summary: Можливість на погляд
   opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability} probability'
-  past_due: past due, was expected to close %{value} ago
-  probability: Probability
-  probability_number: and %{value} probability
-  save_opportunity: Save Opportunity
-  stage: Stage
-  total_opportunities: Total Opportunities
-  weighted_amount: Weighted amount
+  past_due: очікується, що хтось закрив %{value} тому
+  probability: Імовірність
+  probability_number: та ймовірність %{value}
+  save_opportunity: Зберегти угоду
+  stage: Етап
+  total_opportunities: Всі угоди
+  weighted_amount: Сума зваження
   # Views -> Tasks.
   #----------------------------------------------------------------------------
-  task: Task
-  task_small: task
-  tasks: Tasks
-  tasks_small: tasks
-  assign_to: Assign to
-  assigned_tab: Assigned
-  assigned_tasks: Assigned Tasks
-  category: Category
-  completed_tab: Completed
-  completed_tasks: Completed Tasks
-  create_task: Create Task
-  create_task_small: create new task
-  due: Due
-  feel_free: Feel free to
-  move_to: move to
-  no_tasks: You don't have any %{value} tasks
-  no_tasks_pending: pending
-  no_tasks_assigned: assigned
-  no_tasks_completed: completed
-  pending_tab: Pending
-  pending_tasks: Pending Tasks
+  task: Завдання
+  task_small: завдання
+  tasks: Завдання
+  tasks_small: Завдання
+  assign_to: Призначити
+  assigned_tab: Призначено
+  assigned_tasks: Призначені завдання
+  category: Категорія
+  completed_tab: Завершені
+  completed_tasks: Завершені завдання
+  create_task: Нове завдання
+  create_task_small: створити нове завдання
+  due: На черзі
+  feel_free: Якщо хочете, можете
+  move_to: рухатись до
+  no_tasks: У вас немає ніяких завдань %{value}
+  no_tasks_pending: в очікуванні
+  no_tasks_assigned: призначено
+  no_tasks_completed: завершено
+  pending_tab: Очікує підтвердження
+  pending_tasks: Завдання, що чекають
   related: ! 're:'
-  save_task: Save Task
-  task_assigned: The task has been assigned to %{value}
-  task_assigned_to: and assigned to %{value}
-  task_completed: completed
-  task_uncomplete: Uncomplete
-  task_completed_ago: completed %{value} ago
-  task_completed_by: completed %{time_ago} ago (%{date}) by %{user}
-  task_created: The task has been created
+  save_task: Зберегти завдання
+  task_assigned: Завдання було призначено на %{value}
+  task_assigned_to: і призначено %{value}
+  task_completed: завершено
+  task_uncomplete: Незакінчено
+  task_completed_ago: завершено %{value} тому
+  task_completed_by: завершено %{time_ago} тому (%{date}) %{user}
+  task_created: Завдання було створено
   task_due_in: due in %{value}
-  task_due_later: due sometime soon
-  task_due_now: due now
-  task_due_today: due today
-  task_from: From %{value}
-  task_overdue: late, was due on
-  task_pending: The task has been moved to pending tasks
+  task_due_later: ось-ось скоро
+  task_due_now: до
+  task_due_today: до сьогодні
+  task_from: З %{value}
+  task_overdue: останнім часом заплановано
+  task_pending: Завдання було переміщене в очікуючі завдання
   total_tasks: Total %{value}
-  view_assigned_tasks: view assigned tasks
-  view_pending_tasks: view pending tasks
+  view_assigned_tasks: перегляд призначених завдань
+  view_pending_tasks: перегляд відкладених завдань
   # Views -> Team.
   #----------------------------------------------------------------------------
-  unassigned_opportunities: Unassigned Opportunities
-  no_opportunities_found: There are currently no outstanding opportunities.
+  unassigned_opportunities: Непризначені угоди
+  no_opportunities_found: Наразі немає видатних можливостей.
   # Views -> Home.
   #----------------------------------------------------------------------------
-  action_completed: completed
-  action_create: created
-  action_destroy: deleted
-  action_reassigned: reassigned
-  action_rejected: rejected
-  action_rescheduled: rescheduled
-  action_update: updated
-  action_view: viewed
-  action_won: won
-  activities: Activities
-  no_activity_records: No activity records found.
-  recent_activity: Recent Activity
-  recent_activity_options: Recent Activity Options
-  subject_account: account
-  subject_address: address on
-  subject_campaign: campaign
-  subject_comment: comment on
-  subject_contact: contact
-  subject_email: email on
-  subject_lead: lead
-  subject_opportunity: opportunity
-  subject_task: task
-  subject_user: user
-  tag_list: Tags
-  create_past_participle: Record Creations
-  view_past_participle: Views
-  update_past_participle: Updates
-  destroy_past_participle: Deletions
-  all_events_past_participle: Activities
+  action_completed: завершено
+  action_create: створено
+  action_destroy: вилучено
+  action_reassigned: перепризначено
+  action_rejected: відхилено
+  action_rescheduled: переплановано
+  action_update: оновлено
+  action_view: переглянуто
+  action_won: переміг
+  activities: Події
+  no_activity_records: Не знайдено записів активності.
+  recent_activity: Остання активність
+  recent_activity_options: Останні опції діяльності
+  subject_account: обліковий запис
+  subject_address: адреса на
+  subject_campaign: кампанія
+  subject_comment: коментар на
+  subject_contact: контакт
+  subject_email: email на
+  subject_lead: вести
+  subject_opportunity: можливість
+  subject_task: завдання
+  subject_user: користувач
+  tag_list: Мітки
+  create_past_participle: Створення записів
+  view_past_participle: Перегляди
+  update_past_participle: Оновлення
+  destroy_past_participle: Видалення
+  all_events_past_participle: Події
   action_create_comment: ! '- &quot;%{comment}&quot;'
-  my_tasks: My Tasks
-  no_task_records: You have no tasks.
-  my_opportunities: My Opportunities
-  no_opportunity_records: You have no opportunities.
-  my_accounts: My Accounts
-  no_account_records: You have no accounts
-  not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
+  my_tasks: Мої завдання
+  no_task_records: У вас немає завдань.
+  my_opportunities: Мої угоди
+  no_opportunity_records: У вас немає можливостей.
+  my_accounts: Мої облікові записи
+  no_account_records: У вас немає облікових записів
+  not_showing_hidden_entities: Не показувати %{count} приховано %{entity}.
   # Views -> Common.
   #----------------------------------------------------------------------------
-  add_note: Add Comment
-  save_note: Save Comment
-  add_note_help: Add a new comment...
-  edit_note: Edit Comment
-  added_ago: added %{value}
-  added_by: added %{time_ago} by %{user}
-  back: Back
-  cancel: Cancel
-  close_form: Close form
-  comment_intro: You can add comments later.
-  confirm_delete: Are you sure you want to delete this %{value}?
-  copy_permissions: Copy %{value} permissions
-  could_not_find: Couldn't find any %{value}. Feel free to
-  could_not_find_matching: Couldn't find any %{value} matching
-  create_new: create new
-  create_a_new: create a new
-  select_existing: select existing
-  delete: Delete
-  discard: Discard
-  edit: Edit
-  items_total: ! '%{count} total.'
-  less: Less...
-  me: me
-  more: More...
-  n_a: N/A
-  name: Name
+  add_note: Додати коментар
+  save_note: Зберегти коментар
+  add_note_help: Додати новий коментар...
+  edit_note: Редагувати коментар
+  added_ago: додано %{value}
+  added_by: додано %{time_ago} за параметром %{user}
+  back: Відмінити
+  cancel: Скасувати
+  close_form: Закрити форму
+  comment_intro: Ви можете додати коментарі пізніше.
+  confirm_delete: Ви дійсно бажаєте видалити це %{value}?
+  copy_permissions: Копіювати права доступу %{value}
+  could_not_find: Не вдалося знайти %{value}. Не соромтеся
+  could_not_find_matching: Не вдалося знайти відповідності %{value}
+  create_new: створити новий
+  create_a_new: створити новий
+  select_existing: вибрати наявний
+  delete: Видалити
+  discard: Відкинути
+  edit: Редагувати
+  items_total: ! 'Всього в %{count}.'
+  less: Менше...
+  me: мені
+  more: Детальніше...
+  n_a: Н/А
+  name: Ім'я
   no_match: No %{value} match
-  no_recent_items: There are no recent items to display yet.
-  options: Options
-  permissions: Permissions
-  please_retry: please try another query.
-  recent_items: Recent Items
-  select_contact: Select Contact
-  select_lead: Select Lead
-  select_task: Select Task
-  select_opportunity: Select Opportunity
-  search_assets: Search %{value}
-  time_ago: ! '%{value} ago'
-  background_info: Background
-  address: Address
-  street1: Street 1
-  street2: Street 2
-  city: City
-  zipcode: Zip Code
-  state: State
-  country: Country
-  select_a_country: Select a Country
-  expand_all: Expand all
-  collapse_all: Collapse all
-  expanded: Expanded
+  no_recent_items: Ще немає товарів для відображення.
+  options: Опції
+  permissions: Дозволи
+  please_retry: будь ласка, спробуйте інший запит.
+  recent_items: Недавні елементи
+  select_contact: Виберіть контакт
+  select_lead: Обрати попередній контакт
+  select_task: Виберіть завдання
+  select_opportunity: Виберіть потенційну угоду
+  search_assets: Шукати %{value}
+  time_ago: ! '%{value} тому'
+  background_info: Фон
+  address: Адреса
+  street1: Вулиця 1
+  street2: Вулиця 2
+  city: Місто
+  zipcode: Поштовий індекс
+  state: Держава
+  country: Країна
+  select_a_country: Оберіть країну
+  expand_all: Розгорнути все
+  collapse_all: Згорнути все
+  expanded: Розгорнутий
   collapsed: Collapsed
   # Views -> Layout.
   #----------------------------------------------------------------------------
-  about: About
-  about_dev_group: Discussion group for developers
-  about_features: Features and bugs
-  about_ffc: About Fat Free CRM
-  about_ffc_resources: Fat Free CRM resources (links open a new window)
-  about_ffc_version: Fat Free CRM version
-  about_home_page: Home page
-  about_project_page: Project page
-  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
-  about_twitter: Twitter commit updates
-  about_user_group: Discussion group for users
-  admin: Admin
-  logout: Logout
-  quick_find: Quick find
-  welcome: Welcome
+  about: Про програму
+  about_dev_group: Група обговорення для розробників
+  about_features: Можливості і помилки
+  about_ffc: Про жирний вільний CRM
+  about_ffc_resources: Товсті безкоштовні CRM ресурси (посилання відкривають нове вікно)
+  about_ffc_version: Достатня безкоштовна версія CRM
+  about_home_page: Домашня сторінка
+  about_project_page: Сторінка проекту
+  about_thank_you: Дякуємо за використання Fat Free CRM! Ми цінуємо ваш бізнес і сподіваємося, що вам сподобається програмне забезпечення.
+  about_twitter: Оновлення комітів Twitter для комітів
+  about_user_group: Група обговорення для користувачів
+  admin: Адмін
+  logout: Вихід із системи
+  quick_find: Швидкий пошук
+  welcome: Вітаємо
   # Advanced search
-  accounts_advanced_search: Accounts Advanced search
-  advanced_search: Advanced search
-  basic_search: Basic search
+  accounts_advanced_search: Облікові записи розширений пошук
+  advanced_search: Розширений пошук
+  basic_search: Базовий пошук
   search_results_count:
     one: Search found %{count} result.
-    few: Search found %{count} results.
-    many: Search found %{count} results.
-    other: Search found %{count} results.
+    few: Пошук знайшов результати %{count}
+    many: Пошук знайшов результати %{count}
+    other: Пошук знайшов результати %{count}
   # Views -> Comments.
   #----------------------------------------------------------------------------
-  comment: Comment
-  edit_comment: Editing comment
-  show: Show
-  update: Update
-  following_users_will_be_notified: The following users will be notified by email
-  notifications_tooltip: Subscribers will receive new comments via email
-  subscribe_via_email: Subscribe via email
-  disable_email_subscriptions: Disable email subscription
-  added_note: added comment %{value}
+  comment: Коментар
+  edit_comment: Редагування коментаря
+  show: Показати
+  update: Оновити
+  following_users_will_be_notified: Наступні користувачі будуть повідомлені по електронній пошті
+  notifications_tooltip: Підписники отримають нові коментарі на електронну пошту
+  subscribe_via_email: Підписатися на електронну пошту
+  disable_email_subscriptions: Вимкнути підписку на електронну пошту
+  added_note: додано коментар %{value}
   # Views -> Emails.
   #----------------------------------------------------------------------------
   # Views -> Passwords.
   #----------------------------------------------------------------------------
-  confirm_password_intro: Please type your new password and then confirm it.
-  password_intro: Please specify your email address, and the instructions to reset your password will be sent to you.
-  reset_password: Reset Password
-  update_password_and_login: Update Password and Login
+  confirm_password_intro: Введіть новий пароль і підтвердіть його.
+  password_intro: Будь ласка, вкажіть Вашу адресу електронної пошти, і Вам буде надіслано інструкції для скидання пароля.
+  reset_password: Скидання пароля
+  update_password_and_login: Оновити пароль та увійти
   # Views -> Admin
   #----------------------------------------------------------------------------
-  back_to_crm: Back to Fat Free CRM
-  crm_admin_page: Fat Free CRM Administration
+  back_to_crm: Повернутися до Fat Free CRM
+  crm_admin_page: Достатнє безкоштовне управління CRM
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
-  create_group: Create Group
-  save_group: Save Group
-  group_members: members
-  groups: Groups
-  groups_small: groups
-  group_small: group
+  create_group: Нова група
+  save_group: Зберегти групу
+  group_members: учасники
+  groups: Групи
+  groups_small: групи
+  group_small: група
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
-  confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
-  approve: Approve
-  create_user: Create User
-  last_logged_in: last logged in %{value}
-  personal_information: Personal Information
-  group_memberships: Group Memberships
-  reactivate: Reactivate
-  save_user: Save User
-  suspend: Suspend
-  user_active: Active
-  user_admin: Admin
-  user_awaits_approval: awaits your approval
-  user_confirm_delete: A user can only be deleted if no related assets are left behind.
-  user_is_admin: The user is Administrator
-  user_never_logged_in: hasn't logged in yet
-  user_signed_up: Signed Up
-  user_signed_up_on: signed up on %{value}
-  user_since: user since %{value}
-  user_suspended: Suspended
-  user_suspended_on: suspended on %{value}
-  users: Users
-  users_small: users
+  confirm_group_delete: Ви впевнені, що хочете видалити цю групу? Є пункти %{count} , які все ще посилаються на неї.
+  approve: Схвалити
+  create_user: Створити користувача
+  last_logged_in: останній увійшов в %{value}
+  personal_information: Особисті дані
+  group_memberships: Членство в групі
+  reactivate: Активувати
+  save_user: Зберегти користувача
+  suspend: Призупинення
+  user_active: Активний
+  user_admin: Адмін
+  user_awaits_approval: очікує на ваше підтвердження
+  user_confirm_delete: Користувача можна видалити, лише якщо жодне з пов'язаних активів не залишається позаду.
+  user_is_admin: Користувач з Адміністратором
+  user_never_logged_in: ще не увійшли
+  user_signed_up: Ви увійшли
+  user_signed_up_on: зареєструвалися на %{value}
+  user_since: користувач з %{value}
+  user_suspended: Призупинено
+  user_suspended_on: призупинено на %{value}
+  users: Спільноти
+  users_small: користувачів
   # Views -> Versions
   #----------------------------------------------------------------------------
-  versions: History
+  versions: Історія
   version:
     create: ! '%{item} created by %{by}'
     update: ! '%{item} modified by %{by}'
-    destroy: ! '%{item} destroyed by %{by}'
-    set_html: ! '%{attr} set to %{to}'
-    unset_html: ! '%{attr} unset'
+    destroy: ! '%{item} знищено %{by}'
+    set_html: ! '%{attr} встановлено у %{to}'
+    unset_html: ! 'Змінено %{attr}'
     change_html: ! '%{attr} changed from %{from} to %{to}'
-    anonymous: anonymous
-  account_contact_id: Account id
-  account_contact_name: Account name
-  user_id: User id
-  created_at: Created at
-  updated_at: Updated at
+    anonymous: анонімно
+  account_contact_id: Ідентифікатор рахунку
+  account_contact_name: Контрагент
+  user_id: ID користувача
+  created_at: Створений в
+  updated_at: Оновлено в
   # Export.
   #----------------------------------------------------------------------------
-  to_xls: Export to Excel
-  to_csv: Export to comma-delimited file format (including deleted records)
-  to_rss: RSS feed
-  to_atom: Atom feed
-  to_perm: Permalink
+  to_xls: Експорт в Excel
+  to_csv: Експорт у формат файлу через комою (включаючи видалені записи)
+  to_rss: Канал RSS
+  to_atom: Atom канал
+  to_perm: Постійне посилання
   # Dropbox.
   #----------------------------------------------------------------------------
-  dropbox_notification_subject: dropbox - Added email - %{subject}
-  dropbox_notification_intro: Succesfully added the email you sent to dropbox
-  dropbox_notification_to: Added to
-  subject: Subject
-  body: Body
+  dropbox_notification_subject: dropbox - додано email - %{subject}
+  dropbox_notification_intro: Успішно додано лист з повідомленням, яке ви відправили в dropbox
+  dropbox_notification_to: Додано до
+  subject: Тема
+  body: Тіло
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
     intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
-    reply_instructions: Reply to this email directly to add a new comment, or view the %{entity} online
+    reply_instructions: Відповісти на цей електронний лист, щоб додати новий коментар або перегляньте %{entity} онлайн
   # Lists
   #----------------------------------------------------------------------------
-  global_lists: Global lists
-  personal_lists: My lists
-  list: List
-  no_saved_lists: No saved lists
-  make_current_view_list: Make current view a list
-  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
+  global_lists: Глобальні списки
+  personal_lists: Мої списки
+  list: Список
+  no_saved_lists: Немає збережених списків
+  make_current_view_list: Зробити поточний список перегляду
+  list_name_info: Якщо ви використовуєте ім'я існуючого списку, то перезапишете його поточними параметрами
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
     comment:
-      one: 1 comment
-      few: ! '%{count} comments'
-      many: ! '%{count} comments'
-      other: ! '%{count} comments'
+      one: 1 коментар
+      few: ! 'Коментарі %{count}'
+      many: ! 'Коментарі %{count}'
+      other: ! 'Коментарі %{count}'
     contact:
-      one: 1 contact
-      few: ! '%{count} contacts'
-      many: ! '%{count} contacts'
-      other: ! '%{count} contacts'
+      one: 1 контакт
+      few: ! 'Контакти %{count}'
+      many: ! 'Контакти %{count}'
+      other: ! 'Контакти %{count}'
     opportunity:
-      one: 1 opportunity
-      few: ! '%{count} opportunities'
-      many: ! '%{count} opportunities'
-      other: ! '%{count} opportunities'
+      one: 1 можливість
+      few: ! 'Можливості %{count}'
+      many: ! 'Можливості %{count}'
+      other: ! 'Можливості %{count}'
     lead:
-      one: 1 lead
-      few: ! '%{count} leads'
-      many: ! '%{count} leads'
-      other: ! '%{count} leads'
+      one: 1 свинцю
+      few: ! '%{count} веде'
+      many: ! '%{count} веде'
+      other: ! '%{count} веде'
     day:
-      one: 1 day
-      few: ! '%{count} days'
-      many: ! '%{count} days'
-      other: ! '%{count} days'
+      one: 1 день
+      few: ! '%{count} днів'
+      many: ! '%{count} днів'
+      other: ! '%{count} днів'
     login:
-      one: 1 login
-      few: ! '%{count} logins'
-      many: ! '%{count} logins'
-      other: ! '%{count} logins'
+      one: 1 Логін
+      few: ! 'Вхід %{count}'
+      many: ! 'Вхід %{count}'
+      other: ! 'Вхід %{count}'
   # Custom date/time formats.
   #----------------------------------------------------------------------------
   date:
@@ -777,115 +777,115 @@ uk-UA:
       mmddyy: ! '%b %e, %Y'
   time:
     formats:
-      mmddhhss: ! '%b %e at %l:%M%p'
-      mmddyyyy_hhmm: ! '%e %b %Y at %l:%M%p'
+      mmddhhss: ! '%b %e в %l:%M%p'
+      mmddyyyy_hhmm: ! '%e %b %Y о %l:%M%p'
   # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------
   will_paginate:
-    previous_label: ! '&#8592; Previous'
+    previous_label: ! '&#8592; Попередня'
     next_label: 'Next &#8594;'
     page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        one: Displaying 1 %{name}
-        few: Displaying all %{count} %{plural}
-        many: Displaying all %{count} %{plural}
-        other: Displaying all %{count} %{plural}
-      multi_page: Displaying %{plural} %{from} - %{to} of %{total} in total
+        one: Відображається 1 %{name}
+        few: Відображається вся %{count} %{plural}
+        many: Відображається вся %{count} %{plural}
+        other: Відображається вся %{count} %{plural}
+      multi_page: Відображення %{plural} %{from} - всього %{to} з %{total}
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
-  label: Label
-  custom_fields: Custom Fields
-  custom_field_options: Custom Field Options
-  create_field: Create field
-  save_field: Save field
-  create_field_group: Create field group
-  edit_field_group: Edit field group
-  save_field_group: Save field group
-  field_group_empty: There are no fields in this group.
-  select_or_create_tags: Select some tags, or create a new tag by pressing 'enter'.
-  restrict_by_tag: ! 'Restrict by Tag:'
-  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
-  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
-  field_group_unrestricted: This field group applies to all %{assets}
-  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
-  msg_cant_delete_field_group: Field Group could not be deleted.
-  admin_fields_info: ! 'Custom fields are displayed in groups. Create a new field group, or add fields to one of the groups below. You can drag and drop fields to change their display order or move them between field groups.'
+  label: Мітка
+  custom_fields: Індивідуальні поля
+  custom_field_options: Додаткові параметри поля
+  create_field: Створити поле
+  save_field: Зберегти поле
+  create_field_group: Створення групи полів
+  edit_field_group: Редагувати групу полів
+  save_field_group: Зберегти групу полів
+  field_group_empty: У цій групі немає полів.
+  select_or_create_tags: Виберіть деякі мітки, або створіть новий тег, натиснувши 'enter'.
+  restrict_by_tag: ! 'Обмежити за тегом:'
+  restrict_by_tag_info: (Показувати тільки поля для %{assets} , які відмічені наступним)
+  field_group_tag_restriction: Ця група полів стосується тегу %{assets} з тегом "%{tag}"
+  field_group_unrestricted: Ця група полів застосовується до всіх %{assets}
+  field_group_confirm_delete: У разі видалення групи полів всі поля будуть перенесені до типової групи полів.
+  msg_cant_delete_field_group: Група полів не може бути видалена.
+  admin_fields_info: ! 'Користувацькі поля відображаються в групі. Створіть нову групу полів або додайте поля в одну з груп нижче. Ви можете перетягувати поля, щоб змінити порядок відображення або перемістити їх між групами полів.'
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'It is strongly recommended you restart your server after adding or removing any custom field. '
-  tags: Tags
-  tag_small: tag
-  tagged: Tagged
-  create_tag: Create Tag
-  save_tag: Save Tag
-  field_group_tags: Field Groups shown for this Tag
-  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
-  ai_prompt_link: "Design Help"
-  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  admin_fields_info2: ! 'Наполегливо рекомендуємо перезапустити сервер після додавання або видалення будь-якого настроюваного поля. '
+  tags: Мітки
+  tag_small: тег
+  tagged: З тегами
+  create_tag: Створити нову мітку
+  save_tag: Зберегти мітку
+  field_group_tags: Групи полів для цього тегу
+  ai_prompt_tags: Генеруйте теги для потенційних керівництв, рахунків чи кампаній, орієнтованих на галузь спеціалізації
+  ai_prompt_link: "Допомога з дизайном"
+  ai_prompt_link_tooltip: "Чат OpenAI з запитом"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from %{value} records.
-  msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
+  tag_with_taggings_confirm_delete: Якщо цей тег буде видалений, він буде видалений з %{value} записів.
+  msg_cant_delete_tag: Не вдалося видалити '%{value}, так як вона має пов'язані групи полів.
   views:
     admin:
       plugins:
-        author: Author
-        version: Version
-        description: Description
+        author: Автор
+        version: Версія
+        description: Опис
   # Simple Form translations
   #----------------------------------------------------------------------------
   simple_form:
-    yes: 'Yes'
-    no: 'No'
+    yes: 'Так'
+    no: 'Ні'
     required:
-      text: required
+      text: обов’язково
       mark: ! '*'
     # You can uncomment the line below if you need to overwrite the whole required html.
     # When using html, text and mark won't be used.
     # html: '<abbr title="required">*</abbr>'
     error_notification:
-      default_message: ! 'Some errors were found, please take a look:'
+      default_message: ! 'Знайдено деякі помилки, будь ласка, пошукайте запит:'
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
     string:
-      title: Short Answer
+      title: Коротка відповідь
     text:
-      title: Long Answer
+      title: Довга відповідь
     select:
-      title: Select List
+      title: Список вибору
     multiselect:
-      title: Multi Select
+      title: Множинний вибір
     radio_buttons:
-      title: Radio Buttons
+      title: Радіокнопки
     boolean:
-      title: Checkbox
+      title: Прапорець
     check_boxes:
-      title: Checkbox List
+      title: Список позначок
     date:
-      title: Date
+      title: Дата
     date_pair:
-      title: Date Pair
+      title: Дата Пари
     datetime:
-      title: Date & Time
+      title: Дата та час
     datetime_pair:
-      title: Date & Time Pair
+      title: Дата і час Пара
     email:
-      title: Email Address
+      title: Адреса електронної пошти
     url:
-      title: URL
+      title: Адреса
     tel:
-      title: Phone Number
+      title: Номер телефону
     decimal:
-      title: Number (Decimal)
+      title: Кількість (десяткове значення)
     integer:
-      title: Number (Integer)
+      title: Кількість (ціле число)
     float:
-      title: Number (Floating Point)
+      title: Кількість (Спливаюча точка)
   pair:
-    start: Start
-    end: End
-    from_to: From %{from} to %{to}
-    from_only: From %{from}
-    to_only: Until %{to}
+    start: Старт
+    end: Кінець
+    from_to: Від %{from} до %{to}
+    from_only: З %{from}
+    to_only: До %{to}
