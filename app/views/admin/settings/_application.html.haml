@@ -1,0 +1,44 @@
+%fieldset.panel.panel-default
+  .panel-heading
+    %h4= t('admin.settings.application.title', default: 'Application')
+  .panel-body
+    .row
+      .col-md-6
+        .form-group
+          = f.label :host
+          = f.text_field :host, value: Setting.host, class: 'form-control'
+        .form-group
+          = f.label :base_url, "Base URL"
+          = f.text_field :base_url, value: Setting.base_url, class: 'form-control', placeholder: "/crm"
+        .form-group
+          = f.label :locale, "Default Language"
+          = f.select :locale, options_for_select(I18n.available_locales, Setting.locale), {}, class: 'form-control'
+        .form-group
+          = f.label :default_access, "Default record permissions"
+          = f.select :default_access, options_for_select([['Public', 'Public'], ['Private', 'Private'], ['Shared', 'Shared']], Setting.default_access), {}, class: 'form-control'
+      .col-md-6
+        .form-group
+          .checkbox
+            = f.label :per_user_locale do
+              = f.check_box :per_user_locale, checked: Setting.per_user_locale
+              Allow users to select their own language
+        .form-group
+          .checkbox
+            = f.label :compound_address do
+              = f.check_box :compound_address, checked: Setting.compound_address
+              Use separate fields for addresses
+        .form-group
+          .checkbox
+            = f.label :task_calendar_with_time do
+              = f.check_box :task_calendar_with_time, checked: Setting.task_calendar_with_time
+              Show time in task calendar
+        .form-group
+          .checkbox
+            = f.label :comments_visible_on_dashboard do
+              = f.check_box :comments_visible_on_dashboard, checked: Setting.comments_visible_on_dashboard
+              Show comments on dashboard
+        .form-group
+          .checkbox
+            = f.label :enforce_international_phone_format do
+              = f.check_box :enforce_international_phone_format, checked: Setting.enforce_international_phone_format
+              Enforce international phone number format
