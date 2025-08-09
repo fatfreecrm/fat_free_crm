@@ -1,24 +1,18 @@
-# Czech translations for Ruby on Rails (inspired by the Slovak localization - thanx to Jozef Fulop)
-# by Jozef Chmel (chmel@jchsoft.cz)
-
 ---
-cs:
+cs-CZ:
   language: Český (CZ)
-
   # Generic terms.
   #----------------------------------------------------------------------------
   id: Id
   all: Vše
   at: v
   here: zde
-  no_button: Ne
+  no_button: 'Ne'
   not_implemented: Nelze použít.
   or: nebo
-  select_none: -- nic --
-  select_blank: -- vyberte --
-  yes_button: Ano
-
-
+  select_none: '-- nic --'
+  select_blank: '-- vyberte --'
+  yes_button: 'Ano'
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Hlavní panel
@@ -35,6 +29,12 @@ cs:
   admin_tab_tags: Štítky
   admin_tab_settings: Nastavení
   admin_tab_plugins: Pluginy
+  ai_prompts: Describe your business
+  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
+  about_my_business: About my business
+  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
   affiliate: Pobočka
   competitor: Konkurent
   customer: Klient
@@ -86,7 +86,6 @@ cs:
   completed_last_week: Minulý týden
   completed_this_month: Tento měsíc
   completed_last_month: Minulý měsíc
-
   # Models/Activity.
   #----------------------------------------------------------------------------
   one_hour: Hodina
@@ -95,7 +94,6 @@ cs:
   one_week: Týden
   two_weeks: Dva týdny
   one_month: Měsíc
-
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
@@ -110,71 +108,96 @@ cs:
         account:
           attributes:
             name:
-              missing_account_name: ^Zadejte jméno klienta.
+              missing_account_name: '^Zadejte jméno klienta.'
             access:
-              share_account: ^Určete uživatele pro sdílení klienta.
+              share_account: '^Určete uživatele pro sdílení klienta.'
         campaign:
           attributes:
             name:
-              missing_campaign_name: ^Zadejte název kampaně.
+              missing_campaign_name: '^Zadejte název kampaně.'
             ends_on:
-              dates_not_in_sequence: ^Ujistěte se, že počáteční datum je před konečným.
+              dates_not_in_sequence: '^Ujistěte se, že počáteční datum je před konečným.'
             access:
-              share_campaign: ^Určete uživatele pro sdílení kampaně.
+              share_campaign: '^Určete uživatele pro sdílení kampaně.'
         contact:
           attributes:
             first_name:
-              missing_first_name: ^Zadejte jméno.
+              missing_first_name: '^Zadejte jméno.'
             last_name:
-              missing_last_name: ^Zadejte příjmení.
+              missing_last_name: '^Zadejte příjmení.'
             access:
-              share_contact: ^Určete uživatele pro sdílení kontaktu.
+              share_contact: '^Určete uživatele pro sdílení kontaktu.'
         lead:
           attributes:
             first_name:
-              missing_first_name: ^Zadejte jméno.
+              missing_first_name: '^Zadejte jméno.'
             last_name:
-              missing_last_name: ^Zadejte příjmení.
+              missing_last_name: '^Zadejte příjmení.'
             access:
-              share_lead: ^Určete uživatele pro sdílení s lead.
+              share_lead: '^Určete uživatele pro sdílení s lead.'
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: ^Zadejte název příležitosti.
+              missing_opportunity_name: '^Zadejte název příležitosti.'
             access:
-              share_opportunity: ^Zvolte uživatele pro sdílení příležitosti.
+              share_opportunity: '^Zvolte uživatele pro sdílení příležitosti.'
         task:
           attributes:
             name:
-              missing_task_name: ^Zadejte název úkolu.
+              missing_task_name: '^Zadejte název úkolu.'
             calendar:
-              invalid_date: ^Zadejte platné datum.
+              invalid_date: '^Zadejte platné datum.'
         user:
           attributes:
             username:
-              missing_username: ^Zadejte jméno uživatele.
-              username_taken: ^Uživatel již existuje.
+              missing_username: '^Zadejte jméno uživatele.'
+              username_taken: '^Uživatel již existuje.'
             email:
-              missing_email: ^Zadejte email.
-              email_in_use: ^Uživatel s tímto emailem je již v systému zaveden.
+              missing_email: '^Zadejte email.'
+              email_in_use: '^Uživatel s tímto emailem je již v systému zaveden.'
+        custom_field:
+          required: '^%{field} is required.'
+          minlength: '^%{field} is too short.'
+          maxlength: '^%{field} is too long.'
+          endbeforestart: '^%{field} cannot end before it begins.'
+    attribute_options:
+      opportunity:
+        stage:
+          prospecting: Prospecting
+          analysis: Analysis
+          presentation: Presentation
+          proposal: Proposal
+          negotiation: Negotiation
+          final_review: Final Review
+          won: Closed/Won
+          lost: Closed/Lost
+      account:
+        rating:
+          "0": "-"
+          "1": "★"
+          "2": "★★"
+          "3": "★★★"
+          "4": "★★★★"
+          "5": "★★★★★"
   msg_account_suspended: Uživatelský účet byl pozastaven.
   password_reset_instruction: instrukce resetování hesla
+  # Controllers.
+  #----------------------------------------------------------------------------
   msg_account_created: Váš účet byl vytvořen a čeká na schválení administrátorem.
   msg_account_not_approved: Váš účet ještě nebyl schválen.
   msg_asset_deleted: ! '%{value} byl smazán.'
   msg_asset_not_available: Toto %{value} již není dostupné.
-  msg_asset_not_authorized: Nejste autorizován prohlížet %{value}.
-  msg_assets_not_available: ! '%{value} není dostupné.'
+  msg_not_authorized: You are not authorized to take this action.
+  msg_assets_not_available: '%{value} není dostupné.'
   msg_asset_rejected: ! '%{value} byla odmítnuta.'
-  msg_bad_image_file: ^Nahrávaný obrázek je příliš velký - upravte velikost.
+  msg_bad_image_file: '^Nahrávaný obrázek je příliš velký - upravte velikost.'
   msg_cant_create_related: Nelze vytvořit %{asset} pokud %{related} již není dostupný.
-  msg_cant_delete_user: ^Nelze smazat uživatele pokud %{value} pokud je připárována
-    položka aktivní.
+  msg_cant_delete_user: '^Nelze smazat uživatele pokud %{value} pokud je připárována položka aktivní.'
   msg_cant_do: Nelze %{action} na %{asset} pokud tento již není dostupný.
   msg_email_not_found: Uživatel s tímto emailem není v sytému zadán.
   msg_enter_new_password: Zadejte heslo.
   msg_goodbye: Byl jste odhlášen. Díky za použití Fat Free CRM!
-  msg_invalid_password: ^Zadejte správne aktální heslo
+  msg_invalid_password: '^Zadejte správne aktální heslo'
   msg_invalig_login: Špatné jméno nebo heslo.
   msg_last_login: Váše poslední přihlášení bylo %{value}.
   msg_login_needed: Pro přístup k této stránce musíte být přihlášen.
@@ -182,11 +205,13 @@ cs:
   msg_password_changed: Vaše heslo byl změněno.
   msg_password_not_changed: Vaše heslo nebylo změněno.
   msg_password_updated: Vaše heslo byl úspěšne upraveno.
-  msg_pwd_instructions_sent: Instrukce pro přenastavení hesla vám byly zaslány na
-    email.
+  msg_pwd_instructions_sent: Instrukce pro přenastavení hesla vám byly zaslány na email.
   msg_require_admin: Pro přístup k této stránce musíte být přihlášen jako administrátor.
   msg_successful_signup: Registrace byla úspěšná. Vítejte ve Fat Free CRM!
   msg_welcome: Vítejte ve Fat Free CRM!
+  msg_user_updated: Profile updated successfully.
+  # Options.
+  #----------------------------------------------------------------------------
   option_amount*probability: hodnota zvýhodnění
   activity_options: Zobraz %{models} %{action_type} uživatelem %{user} za období %{period}.
   all_users: všichni uživatelé
@@ -212,17 +237,21 @@ cs:
   option_target_leads: cíloví potenciální klienti
   option_target_revenue: cílový výnos
   option_updated_at: upraveno
-  all_events_past_participle: a všechny akce vytvořené
-  created_past_participle: vytvořené
-  updated_past_participle: upravené
-  viewed_past_participle: zobrazené
-  deleted_past_participle: smazané
-  commented_past_participle: okomentované
-  email_past_participle: email
   show_per_page: Zobraz %{number} %{models} za stránku užívající %{fmt} format.
   sort_by: Setřiď %{field}.
-  sort_by_displaying: Setřiď %{models} podle %{field} zobrazující jméno %{position}
-    příjmení.
+  sort_by_displaying: Setřiď %{models} podle %{field} zobrazující jméno %{position} příjmení.
+  entities_per_page: ! '%{entity} per page:'
+  contacts_index_long: Long format
+  contacts_index_brief: Brief format
+  contacts_index_full: Full format
+  opportunities_index_normal: Normal format
+  accounts_index_normal: Normal format
+  leads_index_normal: Normal format
+  campaigns_index_normal: Normal format
+  # Views -> Profile.
+  #----------------------------------------------------------------------------
+  subscribe_to_comment_replies: "Subscribe to comment replies by email"
+  receive_assigned_notifications: "Receive assigned notifications by email"
   aim: AOL IM
   already_signed_up: Již registrováný?
   alt_email: Alternativní email
@@ -236,8 +265,7 @@ cs:
   google: Google IM
   gravatar_help: Neznáte Gravatars? Více o Gravatars
   image_file: Soubor obráku
-  image_help: Obrázek který nahrajete bude automaticky převeden na velikost 180 x 180
-    pixelů. Podporované formáty jsou GIF, JPG, and PNG.
+  image_help: Obrázek který nahrajete bude automaticky převeden na velikost 180 x 180 pixelů. Podporované formáty jsou GIF, JPG, and PNG.
   job_title: Popis
   last_name: Příjmení
   login_now_link: Přihlašte se!
@@ -249,6 +277,7 @@ cs:
   phone: Telefon
   profile: Profil
   profile_language: Jazyk
+  email_notifications: Email Notifications
   save_profile: Uložit profil
   sign_up: Registrovat
   sign_up_button: Registrovat
@@ -257,14 +286,24 @@ cs:
   user: Uživatel
   username: Uživatelské jméno
   yahoo: Yahoo IM
+  born_on: Born on
+  reports_to: Reports to
+  access: Access
+  # Views -> Authenticate.
+  #----------------------------------------------------------------------------
   forgot_password: Zapomenuté heslo
   login: Přihlásit
   no_account: Nemá účet?
   remember_me: Pamatovat si mě
   sign_up_now: Registrovat teď!
+  # Views -> Accounts.
+  #----------------------------------------------------------------------------
   account: Klient
+  account_id: Account
+  select_an_account: Select an Account
   account_small: klient
   account_summary: Výpis klienta
+  account_categories: Kategorie klientů
   accounts: Klienti
   accounts_options: Nastavení klientů
   accounts_small: klienti
@@ -289,6 +328,10 @@ cs:
   shipping_address: Doručovací adresa
   total_accounts: Celkem klientů
   website: Webstránka
+  account_with_title_department: ! '%{title}, %{department} at %{account}'
+  account_with_title: ! '%{title} at %{account}'
+  # Views -> Campaigns.
+  #----------------------------------------------------------------------------
   actual: Aktuální
   actual_performance: Aktuální výkonnost
   budget: Rozpočet
@@ -298,12 +341,14 @@ cs:
   campaign_small: kampaň
   campaign_summary: Přehled kampaně
   campaign_targets: Cíle kampaně
+  campaign_statuses: Fáze kampaní
   campaigns: Kampaně
   campaigns_options: Nastavení kampaně
   campaigns_small: kampaně
   conversion: Konverze
   conversion_label: Konverze (%)
   conversion_number: ! '%{value} konverze'
+  target_conversion: Target conversion
   create_campaign: Vytvořit kampaň
   end_date: Koncové datum
   finished_on: hotovo na %{value}
@@ -311,9 +356,7 @@ cs:
   no_start_date: nebyl určeno počáteční datum
   number_of_leads: Potenciálních klientů
   objectives: Cíle
-  objectives_help: Zadejte cílový počet budoucích potenciálních klientů, poměr konverze
-    z potenciálních klientů do příležitostí, cílová tržba a rozpočet kampaně. Tato čísla
-    pomohou určit výkonost kampaně.
+  objectives_help: Zadejte cílový počet budoucích potenciálních klientů, poměr konverze z potenciálních klientů do příležitostí, cílová tržba a rozpočet kampaně. Tato čísla pomohou určit výkonost kampaně.
   objectives_small: cíle kampaně
   revenue: tržba
   revenue_label: Tržba (%{currency})
@@ -328,6 +371,9 @@ cs:
   was_supposed_to_finish: má být dokončeno za %{value}
   was_supposed_to_start: má začít v %{time_ago} před %{start_date}
   was_supposed_to_start_in: má začít v %{starts_in} a %{start_date}
+  select_a_campaign: Select a campaign
+  # Views -> Contacts.
+  #----------------------------------------------------------------------------
   alt_email_small: Jiné
   blog: Web/Blog
   contact: Kontakt
@@ -335,6 +381,7 @@ cs:
   contacts: Kontakty
   contacts_options: Nastavení kontaktů
   contacts_small: kontakty
+  contact_summary: Contact Summary
   create_contact: Vytvořit kontakt
   department: Oddělení
   department_small: ! '%{value} oddělení'
@@ -344,40 +391,42 @@ cs:
   facebook: Facebook
   linked_in: LinkedIn
   myself: Já osobně
-  permissions_intro_private: Standardně budete mít přístup k %{value}. Oprávnění můžete
-    změnit později.
-  permissions_intro_public: Standardně budou mít všichni uživatelé přístup k %{value}.
-    Oprávnění můžete změnit později.
-  permissions_intro_shared: Standardně budou mít vybraní uživatelé přístup k %{value}.
-    Oprávnění můžete změnit později.
+  permissions_intro_private: Standardně budete mít přístup k %{value}. Oprávnění můžete změnit později.
+  permissions_intro_public: Standardně budou mít všichni uživatelé přístup k %{value}. Oprávnění můžete změnit později.
+  permissions_intro_shared: Standardně budou mít vybraní uživatelé přístup k %{value}. Oprávnění můžete změnit později.
   referred_by: Dodal
   referred_by_small: dodal
   save_contact: uložit kontakt
   twitter: Twitter
+  unassigned: Nepřiřazeno
   web_presence: Webstránky
   web_presence_small: webstránky
   works_at: ! '%{job_title} v %{company}'
+  general_info: General Information
+  show_general_info_small: Show general information for this contact.
+  show_extra_info_small: Show extra information for this contact.
+  tag_details: ! '%{tag} Details'
+  show_tag_info_small: Show %{tag} information for this contact.
+  shared_with_everyone: Shared with everyone
+  title: Title
+  subscriptions: Subscriptions
+  # Views -> Leads.
+  #----------------------------------------------------------------------------
   convert: Konvertovat
   convert_lead: Konvertovat potenciálního klienta
-  convert_lead_permissions_intro: Oprávnění kontaktu budou přenesena. Oprávnění můžete
-    změnit později.
-  convert_lead_text: Zkonvertováním potenciálního klienta %{value} vznikne kontkat pripojený
-    na existujícího nebo nového klienta. Status potenciálního klienta bude nastaven na konvertovaný.
+  convert_lead_permissions_intro: Oprávnění kontaktu budou přenesena. Oprávnění můžete změnit později.
+  convert_lead_text: Zkonvertováním potenciálního klienta %{value} vznikne kontkat pripojený na existujícího nebo nového klienta. Status potenciálního klienta bude nastaven na konvertovaný.
   create_lead: Přidat potenciálního klienta
-  create_opp_for_contact: Můžete automaticky vytvořit příležitost pro kontkat %{value}
-    tím že určíte jméno, aktuální stádium, očekávaný čas ukončení, prodejní pravděpodobnost,
-    objem nabídky, a nabídnutý rabat.
+  create_opp_for_contact: Můžete automaticky vytvořit příležitost pro kontkat %{value} tím že určíte jméno, aktuální stádium, očekávaný čas ukončení, prodejní pravděpodobnost, objem nabídky, a nabídnutý rabat.
   lead: potenciální klient
   lead_info_small: kontakt potenciálního klienta
-  lead_permissions_intro_private: Standardně budou oprávnění zkopírována z kampaně
-    nebo jako soukromá. Oprávnění můžete změnit později.
-  lead_permissions_intro_public: Standardně budou oprávnění zkopírována z kampaně
-    nebo jako veřejná. Oprávnění můžete změnit později.
-  lead_permissions_intro_shared: Standardně budou oprávnění zkopírována z kampaně
-    nebo sdílená s určenými uživateli. Oprávnění můžete změnit později.
+  lead_permissions_intro_private: Standardně budou oprávnění zkopírována z kampaně nebo jako soukromá. Oprávnění můžete změnit později.
+  lead_permissions_intro_public: Standardně budou oprávnění zkopírována z kampaně nebo jako veřejná. Oprávnění můžete změnit později.
+  lead_permissions_intro_shared: Standardně budou oprávnění zkopírována z kampaně nebo sdílená s určenými uživateli. Oprávnění můžete změnit později.
   lead_small: potenciální klient
   lead_status_small: stav potenciálního klienta
   lead_summary: Souhrn potenciálního klienta
+  lead_statuses: Fáze potenciálních klientů
   leads: Potenciální klienti
   leads_options: Volby potenciálních klientů
   leads_small: Potenciální klienti
@@ -389,8 +438,13 @@ cs:
   source: Zdroj
   status: Stav
   total_leads: Celkem potenciálních klientů
+  show_status_info_small: Show status information for this lead.
+  show_contact_info_small: Show contact information for this lead.
+  # Views -> Opportunities.
+  #----------------------------------------------------------------------------
   amount: Množství
   close_date: Datum uzavření
+  closes_on: Closes on
   closed_ago_on: uzavřeno před %{time_ago} v %{date}
   closes_today: Očekávané uzavření dnes!
   closing_date: datum uzavření je %{value}
@@ -409,6 +463,7 @@ cs:
   opportunities_small: příležitosti
   opportunity: Příležitost
   opportunity_small: příležitost
+  opportunity_stages: Fáze příležitostí
   opportunity_summary: Letmý náhled na příležitost
   opportunity_summary_text: ! '%{amount} s rabatem %{discount} a %{probability} pravděpodobností'
   past_due: zpoždění, očekávaný datum ukončení byl před %{value}
@@ -418,6 +473,8 @@ cs:
   stage: Stadium
   total_opportunities: Celkem příležitostí
   weighted_amount: Množství přízně
+  # Views -> Tasks.
+  #----------------------------------------------------------------------------
   task: Úkol
   task_small: úkol
   tasks: Úkoly
@@ -458,27 +515,51 @@ cs:
   total_tasks: Celkem %{value}
   view_assigned_tasks: zobrazit přiřazené úkoly
   view_pending_tasks: zobrazit nevyřízené úkoly
-  action_commented: zkomentoval
+  # Views -> Team.
+  #----------------------------------------------------------------------------
+  unassigned_opportunities: Unassigned Opportunities
+  no_opportunities_found: Nenalezeny žádné příležitosti
+  # Views -> Home.
+  #----------------------------------------------------------------------------
   action_completed: dokončil
-  action_created: vytvořil
-  action_deleted: smazal
-  action_email: emaily vyměněny s
+  action_create: created
+  action_destroy: deleted
   action_reassigned: znovu přiřadil
   action_rejected: odmítnul
   action_rescheduled: přečasoval
-  action_updated: upravil
-  action_viewed: zobrazil
+  action_update: updated
+  action_view: viewed
   action_won: vyhrál
   activities: Aktivity
   no_activity_records: Nebyly nalezeny další aktivity.
   recent_activity: Aktuální aktivity
   recent_activity_options: Aktuální aktivity - volby
   subject_account: Klient
+  subject_address: address on
   subject_campaign: Kampaň
+  subject_comment: comment on
   subject_contact: Kontakt
+  subject_email: email on
   subject_lead: potenciální klient
   subject_opportunity: Příležitost
   subject_task: Úkol
+  subject_user: user
+  tag_list: Tags
+  create_past_participle: Record Creations
+  view_past_participle: Views
+  update_past_participle: Updates
+  destroy_past_participle: Deletions
+  all_events_past_participle: a všechny akce vytvořené
+  action_create_comment: ! '- &quot;%{comment}&quot;'
+  my_tasks: Moje úkoly
+  no_task_records: Nenalezeny žádné úlohy
+  my_opportunities: Moje příležitosti
+  no_opportunity_records: Nenalezeny žádné příležitosti
+  my_accounts: Moji klienti
+  no_account_records: Nenalezeny žádné záznamy
+  not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
+  # Views -> Common.
+  #----------------------------------------------------------------------------
   add_note: Přidat poznámku
   save_note: Uložit poznámku
   add_note_help: Přidat novou poznámku...
@@ -488,9 +569,10 @@ cs:
   back: Zpět
   cancel: Zrušit
   close_form: Zavřít formulář
+  comment_intro: Přidejte komentář.
   confirm_delete: Jste si jitstý že chcete smazat %{value}?
   copy_permissions: Kopírovat %{value} oprávnění
-  could_not_find: ! 'Nenalezeny žádné záznamy. Zde lze '
+  could_not_find: Nenalezeny žádné záznamy. Zde lze 
   could_not_find_matching: Nemohu nalézt odpovídající %{value}
   create_new: vytvořit
   create_a_new: vytvořit
@@ -515,7 +597,7 @@ cs:
   select_task: Vyber úkol
   select_opportunity: Vyber příležitost
   search_assets: Vyhledat %{value}
-  time_ago: před %{value}
+  time_ago: ! 'před %{value}'
   background_info: Pozadí
   address: Addresa
   street1: Ulice 1
@@ -524,10 +606,13 @@ cs:
   zipcode: PSČ
   state: Stát
   country: Kraj
+  select_a_country: Select a Country
   expand_all: Rozvinout vše
   collapse_all: Sbalit vše
   expanded: Rozvinutý
   collapsed: Sbalený
+  # Views -> Layout.
+  #----------------------------------------------------------------------------
   about: O webu
   about_dev_group: Diskuzní skupina pro vývojáře
   about_features: Vlastnosti a chyby
@@ -536,28 +621,61 @@ cs:
   about_ffc_version: verze Fat Free CRM
   about_home_page: Domácí stránka
   about_project_page: Stránka projektu
-  about_thank_you: Díky že používíte Fat Free CRM! Vážímwe si vašeho businesu a doufáme
-    že jste spokojeni s naším software.
+  about_thank_you: Díky že používíte Fat Free CRM! Vážímwe si vašeho businesu a doufáme že jste spokojeni s naším software.
   about_twitter: Zprávy z Twitteru
   about_user_group: Diskutní skupina pro uživatele
   admin: Admin.
   logout: Odhlásit
   quick_find: Rychlé hledání
   welcome: Vítejte
+  # Advanced search
+  accounts_advanced_search: Accounts Advanced search
+  advanced_search: Pokročilé vyhledávání
+  basic_search: Vyhledávání
+  search_results_count:
+    one: Search found %{count} result.
+    few: Search found %{count} results.
+    many: Search found %{count} results.
+    other: Search found %{count} results.
+  # Views -> Comments.
+  #----------------------------------------------------------------------------
+  comment: Komentáře
   edit_comment: Úprava komentáře
   show: Zobrazit
   update: Upravit
+  following_users_will_be_notified: The following users will be notified by email
+  notifications_tooltip: Subscribers will receive new comments via email
+  subscribe_via_email: Subscribe via email
+  disable_email_subscriptions: Disable email subscription
+  added_note: added comment %{value}
+  # Views -> Emails.
+  #----------------------------------------------------------------------------
+  # Views -> Passwords.
+  #----------------------------------------------------------------------------
   confirm_password_intro: Zadejte vaše nové heslo a potvrďte jej.
-  password_intro: Zadejte váš email a následně vám budou zaslány instrukce pro obnovu
-    hesla.
+  password_intro: Zadejte váš email a následně vám budou zaslány instrukce pro obnovu hesla.
   reset_password: Obnovit heslo
   update_password_and_login: Aktualizujte přihlašovací jméno a heslo
+  # Views -> Admin
+  #----------------------------------------------------------------------------
   back_to_crm: Zpět na Fat Free CRM
   crm_admin_page: Fat Free CRM Administrace
+  # Views -> Admin -> Groups
+  #----------------------------------------------------------------------------
+  create_group: Create Group
+  save_group: Save Group
+  group_members: members
+  groups: Groups
+  groups_small: groups
+  group_small: group
+  # Views -> Admin -> Users
+  #----------------------------------------------------------------------------
+  confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
   approve: Schválit
   create_user: Vytvořit uživatele
   last_logged_in: last logged in %{value}
   personal_information: Osobní informace
+  group_memberships: Group Memberships
   reactivate: Reaktivovat
   save_user: Uložit uživatele
   suspend: Pozastavit
@@ -574,34 +692,84 @@ cs:
   user_suspended_on: pozastaven na %{value}
   users: Uživatelé
   users_small: uživatelé
+  # Views -> Versions
+  #----------------------------------------------------------------------------
+  versions: Aktualizace
+  version:
+    create: ! '%{item} created by %{by}'
+    update: ! '%{item} modified by %{by}'
+    destroy: ! '%{item} destroyed by %{by}'
+    set_html: ! '%{attr} set to %{to}'
+    unset_html: ! '%{attr} unset'
+    change_html: ! '%{attr} changed from %{from} to %{to}'
+    anonymous: anonymous
+  account_contact_id: Account id
+  account_contact_name: Account name
+  user_id: User id
+  created_at: Created at
+  updated_at: Updated at
+  # Export.
+  #----------------------------------------------------------------------------
   to_xls: Export do Excelu
   to_csv: Export do CSV formátu (včetně smazaných záznamů)
   to_rss: RSS feed
   to_atom: Atom feed
+  to_perm: Permalink
+  # Dropbox.
+  #----------------------------------------------------------------------------
   dropbox_notification_subject: dropbox - přidaný email - %{subject}
   dropbox_notification_intro: Úspěšně přidaný email jste odeslal do dropboxu
   dropbox_notification_to: Přidáno do
   subject: Předmět
   body: Tělo
+  # Comment Inbox
+  #----------------------------------------------------------------------------
+  comment_notification:
+    intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
+    reply_instructions: Reply to this email directly to add a new comment, or view the %{entity} online
+  # Lists
+  #----------------------------------------------------------------------------
+  global_lists: Sdílený seznam
+  personal_lists: Osobní seznam
+  list: List
+  no_saved_lists: Není uložený žádný seznam
+  make_current_view_list: Make current view a list
+  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
+  # Pluralizations.
+  #----------------------------------------------------------------------------
   pluralize:
     comment:
-      one: 1 komentář
-      other: ! '%{count} komentářů'
+      one: 1 comment
+      few: ! '%{count} comments'
+      many: ! '%{count} comments'
+      other: ! '%{count} comments'
     contact:
-      one: 1 kontakt
-      other: ! '%{count} kontaktů'
+      one: 1 contact
+      few: ! '%{count} contacts'
+      many: ! '%{count} contacts'
+      other: ! '%{count} contacts'
     opportunity:
-      one: 1 příležitost
-      other: ! '%{count} příležitostí'
+      one: 1 opportunity
+      few: ! '%{count} opportunities'
+      many: ! '%{count} opportunities'
+      other: ! '%{count} opportunities'
     lead:
-      one: 1 potenciální klient
-      other: ! '%{count} potenciálních klientů'
+      one: 1 lead
+      few: ! '%{count} leads'
+      many: ! '%{count} leads'
+      other: ! '%{count} leads'
     day:
-      one: 1 den
-      other: ! '%{count} dní'
+      one: 1 day
+      few: ! '%{count} days'
+      many: ! '%{count} days'
+      other: ! '%{count} days'
     login:
-      one: 1 přihlášení
-      other: ! '%{count} přihlášení'
+      one: 1 login
+      few: ! '%{count} logins'
+      many: ! '%{count} logins'
+      other: ! '%{count} logins'
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
   date:
     formats:
       mmddyyyy: ! '%Y-%m-%d'
@@ -611,38 +779,113 @@ cs:
     formats:
       mmddhhss: ! '%e %b v %H:%M'
       mmddyyyy_hhmm: ! '%Y-%m-%d %H:%M'
+  # will_paginate translations copied for 'en-US'
+  #----------------------------------------------------------------------------
   will_paginate:
-    previous_label: Předchozí
+    previous_label: ! 'Předchozí'
     next_label: Další
     page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        zero: Žádní %{plural} nenalezeni
-        one: Zobrazen 1 %{name}
-        other: Zobrazeni %{count} %{plural}
+        one: Displaying 1 %{name}
+        few: Displaying all %{count} %{plural}
+        many: Displaying all %{count} %{plural}
+        other: Displaying all %{count} %{plural}
       multi_page: Zobrazeni %{plural} %{from} - %{to} z %{total} celkem
+  # Views -> Admin -> Custom Fields
+  #----------------------------------------------------------------------------
+  label: Label
   custom_fields: Uživatelská pole
-  create_custom_field: Vytvořit uživatelské pole
-  create_new_custom_field_for: Vytvořit nové uživatelské pole pro %{klass_name}
-  no_saved_lists: Není uložený žádný seznam
-  personal_lists: Osobní seznam
-  global_lists: Sdílený seznam
-  basic_search: Vyhledávání
-  advanced_search: Pokročilé vyhledávání
-  opportunity_stages: Fáze příležitostí
-  no_opportunities_found: Nenalezeny žádné příležitosti
-  lead_statuses: Fáze potenciálních klientů
-  campaign_statuses: Fáze kampaní
-  my_accounts: Moji klienti
-  my_opportunities: Moje příležitosti
-  no_opportunity_records: Nenalezeny žádné příležitosti
-  my_tasks: Moje úkoly
-  versions: Aktualizace
-  unassigned: Nepřiřazeno
-  tags: Štítky
+  custom_field_options: Custom Field Options
+  create_field: Create field
+  save_field: Save field
+  create_field_group: Create field group
+  edit_field_group: Edit field group
+  save_field_group: Save field group
+  field_group_empty: There are no fields in this group.
   select_or_create_tags: Zvolte nebo vytvořte
-  comment: Komentáře
-  comment_intro: Přidejte komentář.
-  no_task_records: Nenalezeny žádné úlohy
-  no_account_records: Nenalezeny žádné záznamy
-  account_categories: Kategorie klientů
+  restrict_by_tag: ! 'Restrict by Tag:'
+  restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
+  field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
+  field_group_unrestricted: This field group applies to all %{assets}
+  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
+  msg_cant_delete_field_group: Field Group could not be deleted.
+  admin_fields_info: ! 'Custom fields are displayed in groups. Create a new field group, or add fields to one of the groups below. You can drag and drop fields to change their display order or move them between field groups.'
+  # Views -> Admin -> Tags
+  #----------------------------------------------------------------------------
+  admin_fields_info2: ! 'It is strongly recommended you restart your server after adding or removing any custom field. '
+  tags: Štítky
+  tag_small: tag
+  tagged: Tagged
+  create_tag: Create Tag
+  save_tag: Save Tag
+  field_group_tags: Field Groups shown for this Tag
+  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
+  ai_prompt_link: "Design Help"
+  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  # Views -> Admin -> Plugins
+  #----------------------------------------------------------------------------
+  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from %{value} records.
+  msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
+  views:
+    admin:
+      plugins:
+        author: Author
+        version: Version
+        description: Description
+  # Simple Form translations
+  #----------------------------------------------------------------------------
+  simple_form:
+    yes: 'Yes'
+    no: 'No'
+    required:
+      text: required
+      mark: ! '*'
+    # You can uncomment the line below if you need to overwrite the whole required html.
+    # When using html, text and mark won't be used.
+    # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: ! 'Some errors were found, please take a look:'
+  # Form field types
+  #----------------------------------------------------------------------------
+  field_types:
+    string:
+      title: Short Answer
+    text:
+      title: Long Answer
+    select:
+      title: Select List
+    multiselect:
+      title: Multi Select
+    radio_buttons:
+      title: Radio Buttons
+    boolean:
+      title: Checkbox
+    check_boxes:
+      title: Checkbox List
+    date:
+      title: Date
+    date_pair:
+      title: Date Pair
+    datetime:
+      title: Date & Time
+    datetime_pair:
+      title: Date & Time Pair
+    email:
+      title: Email Address
+    url:
+      title: URL
+    tel:
+      title: Phone Number
+    decimal:
+      title: Number (Decimal)
+    integer:
+      title: Number (Integer)
+    float:
+      title: Number (Floating Point)
+  pair:
+    start: Start
+    end: End
+    from_to: From %{from} to %{to}
+    from_only: From %{from}
+    to_only: Until %{to}
