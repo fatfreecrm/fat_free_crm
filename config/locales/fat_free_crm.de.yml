@@ -1,307 +1,165 @@
 ---
-de:
-  all: Alle
-  contact_info: Kontaktinformation
-  leads: Anfragen
-  task_created: Die Aufgabe wurde angelegt
-  about_home_page: Home-Page
-  msg_login_needed: Sie müssen angemeldet sein, um diese Seite zu sehen.
-  user_since: Benutzer seit %{value}
-  objectives_help: Bitte geben Sie die Anzahl erwarteter Anfragen an, die erwartete
-    Lead-Chance-Konversionsrate, Zielumsatz, und das Kampagnenbudget. Diese Angaben
-    ermöglichen die Kontrolle der Kampagneneffizienz.
-  option_closes_on: Abschlussdatum
-  follow_up: Wiedervorlage
-  no_discount: ohne Rabatt
-  probability_number: und %{value} Wahrscheinlichkeit
-  msg_invalig_login: Ungültiger Benutzername oder Passwort.
-  same_as_billing: wie Rechnungsadresse
-  msg_account_not_approved: Ihr Profil wurde noch nicht freigegeben.
-  presentation: Präsentation
-  activities: Aktivitäten
-  fax: Fax
-  account: Firma
-  all_events_past_participle: Aktivitäten
-  facebook: Facebook
-  one_month: Ein Monat
-  one_week: Eine Woche
-  completed_this_month: Diesen Monat
-  web_presence_small: Web-Präsenz
-  list: Liste
-  no_tasks: Sie haben keine Aufgaben, die %{value} sind
-  lead_status_small: Anfrage-Status
-  account_summary: Accountübersicht
-  restrict_by_tag_info: Nur markierte %{assets} zeigen
-  password_confirmation: Bestätige das Password
-  admin_fields_info: Benutzerdefinierte Felder werden in Gruppen angezeigt. Erstelle
-    eine neue Feldgruppe, oder füge Felder zu einer der unteren Gruppen hinzu. Du
-    kannst die Reihenfolge per drag & drop ändern oder die Felder zwischen den Gruppen
-    bewegen.
-  was_supposed_to_start: angenommener Beginn vor %{time_ago} am %{start_date}
-  due_later: Bald fällig
-  action_destroy: gelöscht
-  msg_require_admin: Sie müssen Administrator sein, um auf die Seite zu zugreifen.
-  budget: Budget
-  could_not_find: Konnte %{value} nicht finden. Feel free to
-  leads_small: Anfragen
-  final_review: Abschlussprüf.
-  closed_ago_on: erledigt vor %{time_ago} am %{date}
-  subject_opportunity: Chance
-  create_account: Account anlegen
-  recent_activity: Letzte Aktivitäten
-  tag_small: markiere
-  background_info: Hintergrund-Informationen
-  conversion_number: ! '%{value} Konversion'
-  yes_button: Ja
-  version:
-    create: ! '%{item} erstellt von %{by}'
-    update: ! '%{item} geändert von %{by}'
-    destroy: ! '%{item} gelöscht von %{by}'
-    set_html: ! '%{attr} auf %{to} geändert'
-    unset_html: ! '%{attr} nicht definiert'
-    change_html: ! '%{attr} wurde von %{from} zu %{to} geändert'
-    anonymous: anonym
-  password_reset_instruction: Anleitung zum Zurücksetzen des Passwortes
-  new: Neu
-  select_existing: wähle Vorhandene aus
-  upload_picture: Bild hochladen
-  body: Körper
-  tags: Tags
-  street1: Adresszeile 1
-  street2: Adresszeile 2
-  shipping_address: Lieferadresse
-  here: hier
-  select_task: Wähle Aufgabe aus
-  action_rejected: abgelehnt
-  logout: Logout
-  referred_by: erwähnt von
-  address: Adresse
-  sign_up: Registrieren
-  about_ffc: Über Fat Free CRM
-  convert: Umwandeln
-  msg_asset_not_available: ! '%{value} ist nicht länger verfügbar.'
-  admin_tab_tags: Markierungen
-  about_twitter: Twitter updates
-  copy_permissions: Kopiere %{value} Zugriffsregeln
-  task_assigned: Die Aufgabe wurde %{value} zugeordnet
-  amount: Betrag
-  referred_by_small: erwähnt von
-  make_public: für alle sichtbar
-  options: Optionen
-  starts_today: beginnt heute!
-  option_brief: kurz
-  tasks: Aufgabe
-  campaign: Kampagne
-  option_target_leads: target Anfragen
-  create_user: Erstelle Benutzer
-  opportunities: Chancen
-  accounts_small: accounts
-  msg_account_suspended: Das Benutzerkonto wurde abgelehnt.
-  permissions_intro_public: Standardmäßig haben alle Benutzer Zugriff auf den %{value}.
-    Sie können die Zugriffsregeln für den %{value} auch später ändern.
-  assigned_tasks: zugeordnete Aufgaben
-  objectives: Ziele
-  field_group_unrestricted: Diese Gruppe gilt für alle %{assets}
-  lead_info_small: Anfragekontakt
-  call: Anruf
-  due_asap: So schnell wie möglich
-  action_completed: erledigt
-  start_date: Startdatum
-  msg_last_login: Sie waren zuletzt abgemeldet am %{value}.
-  more: Mehr...
-  option_last_name: Nachname
-  end_date: Enddatum
-  started: Begonnen
-  admin_tab_plugins: Plugins
-  company: Firma
-  to_rss: RSS feed
-  yahoo: Yahoo IM
-  phone: Telefon
-  one_day: Ein Tag
-  personal_information: Persönliche Information
-  save_opportunity: Chance sichern
-  opportunity_small: Chancen
-  me: mir
-  none: Kein(e)
-  field_group_tag_restriction: Diese Gruppe gilt für %{assets} markiert mit "%{tag}
-  option_updated_at: Änderungsdatum
-  keep_private: nur für mich sichtbar
-  select_none: -- Kein(e) --
-  about_ffc_version: Fat Free CRM version
-  budget_label: Budget (%{currency})
-  currency: "€"
-  close_date: Abschlussdatum
-  login_now_link: Login!
-  user_signed_up_on: Angemeldet am %{value}
-  on_hold: Warteschleife
-  gravatar_help: Gravatar ist nicht bekannt? Lern mehr über Gravatar
-  msg_asset_deleted: ! '%{value} wurde gelöscht.'
-  advanced_search_group_first: Ergebnisse zeigen, bei denen %{combinator} des Folgenden
-    übereinstimmen
-  action_view: gesehen
-  reject: Ablehnen
-  use_gravatar: Gravatar verwenden
-  profile: Profil
-  edit_field_group: Editiere Gruppe
-  contacts_options: Kontakt-Einstellungen
-  contacts_small: Kontakte
-  save_user: Benutzer sichern
-  actual_performance: Aktuelle Leistung
-  date:
-    formats:
-      mmddyy: ! ' %e. %b %Y'
-      mmddyyyy: ! '%d %B %Y'
-      mmdd: ! ' %e. %b'
-  prospecting: Neukunde
-  convert_lead: Anfrage umwandeln
-  save_note: Notiz sichern
-  task_due_in: fällig in %{value}
-  reseller: Multiplikator
-  opportunities_small: Chancen
-  no_activity_records: Keine Aktivitäten gefunden.
-  reject_lead_confirm: Sind Sie sicher, diese Anfrage abzulehnen?
-  tagged: Markiert
-  msg_cant_do: Kann %{asset} nicht %{action}, da es nicht mehr verfügbar ist.
-  extra_info_small: zusätzliche Kontaktdaten
-  completed_today: Heute
-  customer: Kunde
-  user_active: Aktiv
-  update_password_and_login: Passwort ändern und Login
-  task_assigned_to: und %{value} zugeordnet
-  completed_yesterday: Gestern
-  completed_tab: Erledigt
-  create_task_small: erstellen Sie eine neue Aufgabe
-  linked_in: LinkedIn
-  pipeline: Pipeline
-  option_amount*probability: gewichteter Betrag
-  views:
-    admin:
-      plugins:
-        version: Version
-        description: Beschreibung
-        author: Autor
-  msg_pwd_instructions_sent: Die Anleitung zum Zurücksetzen des Passwortes wurde Ihnen
-    zugeschickt. Prüfen Sie Ihre Mail.
-  discount_number: mit %{value} Rabatt
-  lunch: Mittag
-  to_atom: Atom feed
-  option_all_users: Alle Benutzer
-  option_amount: Betrag
-  password_intro: Bitte geben Sie Ihre E-Mailadresse an, wir senden Ihnen die Anleitung
-    zum Zurücksetzen des Passwortes.
-  simple_form:
-    true: Ja
-    required:
-      text: notwendig
-      mark: ! '*'
-    error_notification:
-      default_message: ! 'Es wurden ein paar Fehler gefunden. Bitte üperprüfen Sie
-        Ihre Eingaben:'
-    false: Nein
-  permissions: Zugriffsregeln
-  no_match: Kein %{value} Treffer
-  name: Name
-  closing_date: Abschlussdatum ist %{value}
-  no_recent_items: Es gibt hier noch nichts zum Anzeigen.
-  affiliate: Verbundenes Unternehmen
-  last_logged_in: last logged in %{value}
-  status: Status
-  dropbox_notification_to: Hinzugefügt zu
-  related: ! 're:'
-  msg_welcome: Willkommen bei Fat Free CRM!
-  msg_bad_image_file: ^Konnte das angegebene Bild nicht hochladen oder zu zuschneiden.
-  save_lead: Anfrage sichern
-  custom_fields: Benutzerdefinierte Felder
-  category: Kategorie
-  create_lead: Erstelle Anfrage
-  advanced_search_add_condition: Setze einen Filter
-  due_tomorrow: Morgen
-  forgot_password: Passwort vergessen?
-  was_supposed_to_start_in: angenommener Beginn in %{starts_in} am %{start_date}
-  activity_options: Zeige %{models} Aktivitäten, die %{user} in der/den letzten %{period}
-    unternommen hat.
-  job_title: Titel
-  completed_last_month: Letzter Monat
-  campaigns: Kampagnen
-  advanced_search_submit: Suche
-  past_due: überfällig, war vor %{value} fällig
-  destroy_past_participle: Löschungen
-  create_field: Erstelle Feld
-  account_small: Firma
-  started_ago: Gestartet vor %{value}
+de-DE:
   language: Deutsch
-  task_from: Von %{value}
+  # Generic terms.
+  #----------------------------------------------------------------------------
+  id: Id
+  all: Alle
+  at: bei
+  here: hier
+  no_button: 'Nein'
+  not_implemented: Noch nicht implementiert.
+  or: oder
+  select_none: '-- Kein(e) --'
+  select_blank: '-- Auswahl --'
+  yes_button: 'Ja'
+  # Settings.
+  #----------------------------------------------------------------------------
+  tab_dashboard: Dashboard
+  tab_tasks: Aufgaben
+  tab_campaigns: Kampagnen
+  tab_leads: Anfragen
+  tab_accounts: Firmen
+  tab_contacts: Kontakte
+  tab_opportunities: Chancen
+  tab_team: Team
+  admin_tab_groups: Gruppen
+  admin_tab_users: Benutzer
+  admin_tab_fields: Benutzerdefinierte Felder
+  admin_tab_tags: Markierungen
+  admin_tab_settings: Settings
+  admin_tab_plugins: Plugins
+  ai_prompts: Describe your business
+  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
+  about_my_business: About my business
+  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
+  affiliate: Verbundenes Unternehmen
+  competitor: Mitbewerber
+  customer: Kunde
+  partner: Partner
+  reseller: Multiplikator
+  vendor: Verkäufer
+  planned: Geplant
+  started: Begonnen
+  on_hold: Warteschleife
+  completed: Erledigt
+  called_off: Abgesagt
+  new: Neu
+  contacted: Kontaktiert
+  converted: Umgewandelt
+  rejected: Abgelehnt
+  cold_call: Cold Call
+  conference: Konferenz
+  online: Online Marketing
+  referral: Empfehlungen
+  self: Selbst generiert
+  web: Website
+  word_of_mouth: Mundpropaganda
+  other: Andere
+  prospecting: Neukunde
+  analysis: Analyse
+  presentation: Präsentation
+  proposal: Angebot
+  negotiation: Vertrag
+  final_review: Abschlussprüf.
+  won: Erfolg
+  lost: Verloren
+  call: Anruf
+  email: Email
+  follow_up: Wiedervorlage
+  lunch: Mittag
+  meeting: Meeting
+  money: Geld
+  trip: Trip
+  overdue: Verspätet, war fällig am
+  due_asap: So schnell wie möglich
+  due_today: Heute fällig
+  due_tomorrow: Morgen
+  due_this_week: Diese Woche
+  due_next_week: Nächste Woche
+  due_later: Bald fällig
+  due_specific_date: An bestimmten Datum...
+  completed_today: Heute
+  completed_yesterday: Gestern
+  completed_last_week: Letzte Woche
+  completed_this_month: Diesen Monat
+  completed_last_month: Letzter Monat
+  # Models/Activity.
+  #----------------------------------------------------------------------------
+  one_hour: Eine Stunde
+  one_day: Ein Tag
+  two_days: Zwei Tagen
+  one_week: Eine Woche
+  two_weeks: Zwei Wochen
+  one_month: Ein Monat
+  # Model Validations.
+  #----------------------------------------------------------------------------
   activerecord:
     errors:
       models:
-        account:
-          attributes:
-            access:
-              share_account: ^Bitte geben Sie die Benutzer an, mit denen Sie an dieser
-                Firma arbeiten.
-            name:
-              missing_account_name: ^Bitte geben Sie den Firmennamen an.
-        task:
-          attributes:
-            calendar:
-              invalid_date: ^Bitte geben Sie ein gültiges Datum an.
-            name:
-              missing_task_name: ^Bitte geben Sie eine Aufgabenbezeichnung an.
-        campaign:
-          attributes:
-            access:
-              share_campaign: ^Bitte geben Sie die Benutzer an, mit denen Sie an dieser
-                Kampagne arbeiten.
-            ends_on:
-              dates_not_in_sequence: ^Bitte stellen Sie sicher, dass das Enddatum
-                der Kampagne nach dem Startdatum liegt.
-            name:
-              missing_campaign_name: ^Bitte geben Sie den Namen der Kampagne an.
-        lead:
-          attributes:
-            access:
-              share_lead: ^Bitte geben Sie die Benutzer an, mit denen Sie an dieser
-                Kundenanfrage arbeiten.
-            first_name:
-              missing_first_name: ^Bitte geben Sie den Vornamen an.
-            last_name:
-              missing_last_name: ^Bitte geben Sie den Nachnamen an.
         authentication:
           attributes:
-            password_field:
-              is_not_valid: ist nicht gültig
             login_field:
               is_not_valid: ist nicht gültig
+            password_field:
+              is_not_valid: ist nicht gültig
+        account:
+          attributes:
+            name:
+              missing_account_name: '^Bitte geben Sie den Firmennamen an.'
+            access:
+              share_account: '^Bitte geben Sie die Benutzer an, mit denen Sie an dieser Firma arbeiten.'
+        campaign:
+          attributes:
+            name:
+              missing_campaign_name: '^Bitte geben Sie den Namen der Kampagne an.'
+            ends_on:
+              dates_not_in_sequence: '^Bitte stellen Sie sicher, dass das Enddatum der Kampagne nach dem Startdatum liegt.'
+            access:
+              share_campaign: '^Bitte geben Sie die Benutzer an, mit denen Sie an dieser Kampagne arbeiten.'
         contact:
           attributes:
-            access:
-              share_contact: ^Bitte geben Sie die Benutzer an, mit denen Sie an diesem
-                Kontakt arbeiten.
             first_name:
-              missing_first_name: ^Bitte geben Sie den Vornamen an.
+              missing_first_name: '^Bitte geben Sie den Vornamen an.'
             last_name:
-              missing_last_name: ^Bitte geben Sie den Nachnamen an.
+              missing_last_name: '^Bitte geben Sie den Nachnamen an.'
+            access:
+              share_contact: '^Bitte geben Sie die Benutzer an, mit denen Sie an diesem Kontakt arbeiten.'
+        lead:
+          attributes:
+            first_name:
+              missing_first_name: '^Bitte geben Sie den Vornamen an.'
+            last_name:
+              missing_last_name: '^Bitte geben Sie den Nachnamen an.'
+            access:
+              share_lead: '^Bitte geben Sie die Benutzer an, mit denen Sie an dieser Kundenanfrage arbeiten.'
+        opportunity:
+          attributes:
+            name:
+              missing_opportunity_name: '^Bitte geben Sie die Bezeichnung der Chance an.'
+            access:
+              share_opportunity: '^Bitte geben Sie die Benutzer an, mit denen Sie an dieser Chance arbeiten.'
+        task:
+          attributes:
+            name:
+              missing_task_name: '^Bitte geben Sie eine Aufgabenbezeichnung an.'
+            calendar:
+              invalid_date: '^Bitte geben Sie ein gültiges Datum an.'
         user:
           attributes:
             username:
-              missing_username: ^Bitte geben Sie einen Benutzernamen an.
-              username_taken: ^Dieser Benutzername ist schon vergeben.
+              missing_username: '^Bitte geben Sie einen Benutzernamen an.'
+              username_taken: '^Dieser Benutzername ist schon vergeben.'
             email:
-              missing_email: ^Bitte geben Sie eine Mailadresse an.
-              email_in_use: ^Es gibt schon einen Benutzer mit dieser Mailadresse.
-        opportunity:
-          attributes:
-            access:
-              share_opportunity: ^Bitte geben Sie die Benutzer an, mit denen Sie an
-                dieser Chance arbeiten.
-            name:
-              missing_opportunity_name: ^Bitte geben Sie die Bezeichnung der Chance
-                an.
+              missing_email: '^Bitte geben Sie eine Mailadresse an.'
+              email_in_use: '^Es gibt schon einen Benutzer mit dieser Mailadresse.'
         custom_field:
-          required: ^%{field} muss vorhanden sein.
-          minlength: ^%{field} ist zu kurz.
-          maxlength: ^%{field} ist zu lang.
-          endbeforestart: ^%{field} kann nicht enden bevor es beginnt.
+          required: '^%{field} muss vorhanden sein.'
+          minlength: '^%{field} ist zu kurz.'
+          maxlength: '^%{field} ist zu lang.'
+          endbeforestart: '^%{field} kann nicht enden bevor es beginnt.'
     attribute_options:
       opportunity:
         stage:
@@ -313,391 +171,667 @@ de:
           final_review: Finale Überprüfung
           won: Geschlossen/Gewonnen
           lost: Geschlossen/Verloren
-  feel_free: Seien Sie so frei und
-  one_hour: Eine Stunde
-  change_password: Passwort ändern
-  user: Benutzer
-  msg_goodbye: Sie wurden abgemeldet. Danke, dass Sie Fat Free CRM! benutzt haben.
-  option_leads_count: aktuelle Anfragen
-  suspend: Sperren
-  task_completed_ago: vor %{value} erledigt
-  probability: Wahrscheinlk.
-  revenue: Umsatz
-  save_account: Konto sichern
-  all_users: alle Benutzer
-  city: Stadt
-  pending_tab: Wartend
-  sort_by_displaying: Sortiere %{models} nach %{field}, Vorname wird %{position} dem
-    Nachnamen angezeigt.
-  lead_permissions_intro_public: Standardmäßig werden die Zugriffsregeln aus der Kampagne
-    kopiert oder auf öffentlich gesetzt. Dies kann auch später durchgeführt werden.
-  msg_password_not_changed: Ihr Passwort wurde nicht geändert.
-  user_never_logged_in: hat sich bisher nicht eingeloggt
-  completed_tasks: erledigte Aufgaben
-  due_next_week: Nächste Woche
-  billing_address: Rechnungsadresse
-  open_in_window: Öffne %{value} in einem neuen Fenster
-  subject_task: Aufgabe
-  completed: Erledigt
-  rejected: Abgelehnt
-  msg_password_changed: Ihr Passwort wurde geändert.
-  pluralize:
-    comment:
-      other: ! '%{count} Kommentare'
-      one: 1 Kommentar
-    contact:
-      other: ! '%{count} Kontakte'
-      one: 1 Kontakt
-    lead:
-      other: ! '%{count} Anfragen'
-      one: 1 Anfrage
-    login:
-      other: ! '%{count} logins'
-      one: 1 Login
-    opportunity:
-      other: ! '%{count} Chancen'
-      one: 1 Chance
-    day:
-      other: ! '%{count} Tage'
-      one: 1 Tag
-  profile_language: Sprache
-  target: Ziel
-  msg_cant_delete_field_group: Gruppe konnte nicht gelöscht werden.
-  user_signed_up: Angemeldet
-  tab_campaigns: Kampagnen
-  make_current_view_list: Erstelle Liste aus aktueller Ansicht
-  no_closing_date: kein erwartetes Abschlussdatum
-  about_user_group: Diskussionsgruppe für Benutzer
-  create_contact: Erstelle Kontakt
-  msg_logout_needed: Sie müssen abgemeldet sein, um diese Seite zu sehen.
-  view_past_participle: Ansichten
+      account:
+        rating:
+          "0": "-"
+          "1": "★"
+          "2": "★★"
+          "3": "★★★"
+          "4": "★★★★"
+          "5": "★★★★★"
+  msg_account_suspended: Das Benutzerkonto wurde abgelehnt.
+  password_reset_instruction: Anleitung zum Zurücksetzen des Passwortes
+  # Controllers.
+  #----------------------------------------------------------------------------
+  msg_account_created: Ihr Account wurde angelegt und wartet auf die Freigabe durch den Systemadministrator.
+  msg_account_not_approved: Ihr Profil wurde noch nicht freigegeben.
+  msg_asset_deleted: ! '%{value} wurde gelöscht.'
+  msg_asset_not_available: '%{value} ist nicht länger verfügbar.'
+  msg_not_authorized: You are not authorized to take this action.
+  msg_assets_not_available: '%{value} sind nicht verfügbar.'
+  msg_asset_rejected: ! '%{value} wurde abgelehnt.'
+  msg_bad_image_file: '^Konnte das angegebene Bild nicht hochladen oder zu zuschneiden.'
+  msg_cant_create_related: Kann %{asset} nicht erstellen, da %{related} nicht länger verfügbar ist.
+  msg_cant_delete_user: '^Kann den Benutzer nicht löschen, da %{value} noch aktive Anlagen hat.'
+  msg_cant_do: Kann %{asset} nicht %{action}, da es nicht mehr verfügbar ist.
   msg_email_not_found: Es wurde kein Benutzer mit der Mailadresse gefunden.
   msg_enter_new_password: Bitte geben Sie ein neues Passwort ein.
-  self: Selbst generiert
-  list_name_info: Wenn Du den Namen einer bestehenden Liste wählst, wird diese Liste
-    mit deinen aktuellen Einstellungen überschrieben.
-  msg_account_created: Ihr Account wurde angelegt und wartet auf die Freigabe durch
-    den Systemadministrator.
-  contact: Kontakt
-  ransack:
-    predicates:
-      gt: ist größer als
-      cont: enthält
-      matches: entspricht
-      does_not_match: entspricht nicht
-      not_cont: enthält nicht
-      not_null: ist nicht Null
-      lt: ist weniger als
-      blank: ist leer
-      not_eq: ist nicht
-      ! '': ist Null
-      eq: ist
-      present: ist vorhanden
-  online: Online Marketing
-  collapsed: Ausgeblendet
-  advanced_search: Erweiterte Suche
-  basic_search: Einfache Suche
+  msg_goodbye: Sie wurden abgemeldet. Danke, dass Sie Fat Free CRM! benutzt haben.
+  msg_invalid_password: '^Bitte geben Sie Ihr gültiges Passwort ein.'
+  msg_invalig_login: Ungültiger Benutzername oder Passwort.
+  msg_last_login: Sie waren zuletzt abgemeldet am %{value}.
+  msg_login_needed: Sie müssen angemeldet sein, um diese Seite zu sehen.
+  msg_logout_needed: Sie müssen abgemeldet sein, um diese Seite zu sehen.
+  msg_password_changed: Ihr Passwort wurde geändert.
+  msg_password_not_changed: Ihr Passwort wurde nicht geändert.
   msg_password_updated: Passwort wurde erfolgreich geändert.
-  admin_tab_settings: Settings
-  current_password: Aktuelles Passwort
-  lists: Listen
-  accounts_advanced_search: Erweiterte Accountsuche
-  option_revenue: aktueller Umsatz
-  total_opportunities: Anzahl Chancen
-  mobile: Mobiltelefon
-  image_help: Das hochgeladene Bild wird automatisch auf eine Größe von 180 x 180 Pixels
-    berechnet. Unterstützte Formate sind GIF, JPG, und PNG.
-  view_pending_tasks: ausstehende Aufgaben anzeigen
-  about_features: Features und Fehler
-  finished_on: beendet am %{value}
-  assigned_to: Zugeordnet zu
-  date_created: Erstellungsdatum
-  subject_campaign: Kampagne
-  no_account: Sie haben noch keinen Benutzer?
-  rating: Rating
-  last_name: Nachname
-  option_rating: Rating
-  collapse_all: Alles ausblenden
-  contacted: Kontaktiert
-  show: Zeige
-  date_updated: Änderungsdatum
-  total_campaigns: Anzahl Kampagnen
-  msg_cant_create_related: Kann %{asset} nicht erstellen, da %{related} nicht länger
-    verfügbar ist.
-  to_xls: Exportiere ins Excel
-  campaigns_options: Kampagnen-Einstellungen
-  subject_lead: Anfrage
-  option_company: Firma
-  opportunities_options: Chance-Einstellungen
-  finishes_in: beendet in %{value}
-  less: Weniger...
-  expected_to_close: Abschluss erwartet in %{time} am %{date}
-  select_a_country: Wähle ein Land aus
-  msg_assets_not_available: ! '%{value} sind nicht verfügbar.'
-  confirm_password_intro: Bitte geben Sie Ihr neues Passwort ein und bestätigen es.
-  assigned_tab: Zugeordnet
-  tab_leads: Anfragen
-  save_campaign: Kampagne sichern
-  move_to: verschiebe auf
-  add_note: Notiz anfügen
-  edit_profile: Profil bearbeiten
-  field_group_confirm_delete: Exportiere als Comma-separiertes Dateiformat (inklusive
-    gelöschte Datensätze)
-  campaign_and_leads: Kampagne und zugehörige Anfragen
-  comment_notification:
-    reply_instructions: Sie können auf dieses e-Mail antworten um ein Kommentar hinzuzufügen,
-      oder zeigen Sie %{entity} in Ihrem Browser an.
-    intro: ! '%{user_full_name} kommentierte %{entity_type}: %{entity_name}'
-  my_profile: Mein Profil
-  add_note_help: Neue Notiz hinzufügen...
-  select_contact: Wähle einen Kontakt aus
-  create_field_group: Erstelle Gruppe.
-  create_opportunity: Erstelle Chance
-  revenue_label: Umsatz (%{currency})
-  about_project_page: Projekt-Page
-  tab_dashboard: Dashboard
-  weighted_amount: Gewichteter Betrag
-  lead_permissions_intro_shared: Standardmäßig werden die Zugriffsregeln aus der Kampagne
-    kopiert oder wird vom angegebenen Benutzer übernommen. Dies kann auch später durchgeführt
-    werden.
-  completed_last_week: Letzte Woche
-  department_small: ! '%{value} Abteilung'
-  subject: Angelegenheit
-  cold_call: Cold Call
-  label: Beschriftung
-  state: Bundesland
-  won: Erfolg
-  admin_tab_users: Benutzer
-  no_saved_lists: Keine gespeicherten Listen
-  days_late: Verspätet um
-  email: Email
-  tab_contacts: Kontakte
-  campaign_small: Kampagne
-  number_of_leads: Anzahl der Anfragen
-  mail_to: Mail an %{value}
-  sign_up_button: Registrieren
-  campaigns_small: Kampagnen
-  convert_lead_permissions_intro: Die Zugriffsregeln des Kontakts werden von der Anfrage
-    übernommen. Sie können die Zugriffsregeln auch später ändern.
-  referral: Empfehlungen
-  admin: Admin
-  country: Land
-  objectives_small: Kamagnen-Ziele
-  planned: Geplant
-  confirm_delete: Sie wollen wirklich %{value} löschen?
-  closes_today: Abschluss heute erwartet!
-  login: Login
-  approve: Genehmige
-  negotiation: Vertrag
-  option_before: vor
-  convert_lead_text: Mit der Umwandlung wird %{value} zu einem Kontakt, der mit einem
-    existierenden oder neu zu erstellenden account verbunden wird. Der Anfrage-Status
-    wird automatisch auf umgewandelt geändert.
-  subscribe_via_email: Anmeldung via e-Mail
-  items_total: ! '%{count} total.'
-  already_signed_up: Schon registriert?
-  works_at: ! '%{job_title} bei %{company}'
-  cancel: Abbrechen
-  subject_user: Benutzer
-  sign_up_now: Registrieren Sie sich jetzt!
-  select_opportunity: Wähle eine Chance aus
-  contact_small: Kontakt
-  conference: Konferenz
-  tab_accounts: Firmen
-  save_profile: Profil sichern
-  due: Fällig
-  create_new: erstelle neu(e)
-  revenue_number: ! '%{value} Umsatz'
-  total_leads: Anzahl der Anfragen
-  proposal: Angebot
-  do_not_call: Nicht anrufen
-  meeting: Meeting
-  opportunity_summary: Chancen auf einen Blick
-  username: Benutzername
-  option_created_at: Erstellungsdatum
-  users_small: Benutzer
-  custom_field_options: Passe die Feldoptionen an
-  about_ffc_resources: Fat Free CRM Ressourcen (Links öffnen ein neues Fenster)
-  task_due_later: demnächst fällig
-  myself: mir
-  mobile_small: Mobiltelefon
-  expanded: Erweitert
-  alt_email: Alternative Email
-  create_past_participle: Zuletzt erstellte Datensätze
-  sort_by: Sortiere nach %{field}
-  aim: AOL IM
-  update_past_participle: Aktualisierungen
-  called_off: Abgesagt
-  task_due_today: heute fällig
-  converted: Umgewandelt
-  disable_email_subscriptions: Deaktiviere e-Mail Benachrichtigungen
-  total_accounts: Alle Accounts
-  dropbox_notification_intro: Die e-Mail wurde erfolgreich hinzugefügt, welche an
-    die Dropbox geschickt wurde
+  msg_pwd_instructions_sent: Die Anleitung zum Zurücksetzen des Passwortes wurde Ihnen zugeschickt. Prüfen Sie Ihre Mail.
+  msg_require_admin: Sie müssen Administrator sein, um auf die Seite zu zugreifen.
   msg_successful_signup: Erfolgreiche Anmeldung. Willkommen bei Fat Free CRM!
-  following_users_will_be_notified: Die folgenden Benutzer werden mittels e-Mail benachrichtigt
-  partner: Partner
-  n_a: N/A
-  extra_info: Zusatzinformation
-  option_all: alle
-  new_password: Neues Passwort
-  two_weeks: Zwei Wochen
-  campaign_summary: Kampagnen-Zusammenfassung
-  permissions_intro_shared: Standardmäßig haben nur ausgewählte Benutzer Zugriff auf
-    den %{value}. Sie können die Zugriffsregeln für den %{value} auch später ändern.
-  save_task: Aufgabe sichern
-  option_target_revenue: Zielumsatz
-  please_retry: Versuchen Sie eine andere Abfrage.
-  show_per_page: Zeige %{number} %{models} pro Seite in %{fmt}-Format.
-  admin_tab_fields: Benutzerdefinierte Felder
-  user_suspended_on: Gesperrt am %{value}
-  conversion: Konversion
-  due_today: Heute fällig
-  option_probability: Wahrscheinlichkeit
-  select_blank: -- Auswahl --
-  action_reassigned: neu zugeordnet
-  opportunity: Chancen
-  total_tasks: Anzahl %{value}
-  to_csv: Exportiere als Excel-kompatibles Dateiformat (.csv) inklusive gelöschte
-    Datensätze
-  task: Aufgaben
-  analysis: Analyse
-  not_implemented: Noch nicht implementiert.
-  tag_with_taggings_confirm_delete: Wenn dieser Tag gelöscht wird, wird er von %{value}
-    Einträgen entfernt.
-  search_assets: Suche %{value}
-  task_completed_by: vor %{time_ago} von %{user} erledigt
-  comment: Kommentar
-  advanced_search_remove_condition: Entferne Filter
-  user_admin: Admin
-  permissions_intro_private: Standardmäßig haben nur Sie Zugriff auf den %{value}.
-    Sie können die Zugriffsregeln für den %{value} auch später ändern.
-  money: Geld
-  zipcode: Postleitzahl
-  action_rescheduled: neu geplant
-  leads_options: Anfrage-Einstellungen
-  due_this_week: Diese Woche
-  select_an_account: Wähle einen Account aus
-  about_thank_you: Danke, dass Sie Fat Free CRM benutzen! Wir schätzen Ihre Hilfe
-    und hoffen, Sie finden Gefallen an der Software.
-  web: Website
-  accounts_options: Firmen-Optionen
-  crm_admin_page: Fat Free CRM Administration
-  tab_tasks: Aufgaben
-  blog: Website/Blog
-  source: Quelle
+  msg_welcome: Willkommen bei Fat Free CRM!
+  msg_user_updated: Profile updated successfully.
+  # Options.
+  #----------------------------------------------------------------------------
+  option_amount*probability: gewichteter Betrag
+  activity_options: Zeige %{models} Aktivitäten, die %{user} in der/den letzten %{period} unternommen hat.
+  all_users: alle Benutzer
   option_after: nach
-  task_overdue: zu spät, war fällig am
-  alt_email_small: Andere
-  vendor: Verkäufer
-  user_awaits_approval: Genehmigung erforderlich
-  field_group_tags: Gruppen mit diesem Tag
-  save_field: Speichere Feld
-  phone_toll_free: kostenloses Telefon
-  task_due_now: jetzt fällig
-  password: Passwort
-  recent_items: Aktuelle Änderungen
-  image_file: Bilddatei
-  about_dev_group: Diskussionsgruppe für Entwickler
-  lost: Verloren
-  expand_all: Alles anzeigen
-  back_to_crm: Back to Fat Free CRM
+  option_all: alle
+  option_all_users: Alle Benutzer
+  option_amount: Betrag
+  option_before: vor
+  option_brief: kurz
+  option_closes_on: Abschlussdatum
+  option_company: Firma
+  option_created_at: Erstellungsdatum
+  option_ends_on: Enddatum
+  option_first_name: Vorname
+  option_last_name: Nachname
+  option_leads_count: aktuelle Anfragen
   option_long: lang
-  edit: Bearbeiten
-  no_button: Nein
-  msg_asset_not_authorized: You are not authorized to view this %{value}.
+  option_name: Name
+  option_probability: Wahrscheinlichkeit
+  option_rating: Rating
+  option_revenue: aktueller Umsatz
+  option_starts_on: Startdatum
+  option_target_leads: target Anfragen
+  option_target_revenue: Zielumsatz
+  option_updated_at: Änderungsdatum
+  show_per_page: Zeige %{number} %{models} pro Seite in %{fmt}-Format.
+  sort_by: Sortiere nach %{field}
+  sort_by_displaying: Sortiere %{models} nach %{field}, Vorname wird %{position} dem Nachnamen angezeigt.
+  entities_per_page: ! '%{entity} pro Seite:'
+  contacts_index_long: Langes Format
+  contacts_index_brief: Kurzes Format
+  contacts_index_full: Ganzes Format
+  opportunities_index_normal: Normales Format
+  accounts_index_normal: Normales Format
+  leads_index_normal: Normales Format
+  campaigns_index_normal: Normales Format
+  # Views -> Profile.
+  #----------------------------------------------------------------------------
+  subscribe_to_comment_replies: "Subscribe to comment replies by email"
+  receive_assigned_notifications: "Receive assigned notifications by email"
+  aim: AOL IM
+  already_signed_up: Schon registriert?
+  alt_email: Alternative Email
+  avatar: Avatar
+  change_password: Passwort ändern
+  company: Firma
+  contact_info: Kontaktinformation
+  current_password: Aktuelles Passwort
+  edit_profile: Profil bearbeiten
+  first_name: Vorname
+  google: Google IM
+  gravatar_help: Gravatar ist nicht bekannt? Lern mehr über Gravatar
+  image_file: Bilddatei
+  image_help: Das hochgeladene Bild wird automatisch auf eine Größe von 180 x 180 Pixels berechnet. Unterstützte Formate sind GIF, JPG, und PNG.
+  job_title: Titel
+  last_name: Nachname
+  login_now_link: Login!
+  mobile: Mobiltelefon
+  my_profile: Mein Profil
+  new_password: Neues Passwort
+  password: Passwort
+  password_confirmation: Bestätige das Password
+  phone: Telefon
+  profile: Profil
+  profile_language: Sprache
+  email_notifications: Email Notifications
+  save_profile: Profil sichern
+  sign_up: Registrieren
+  sign_up_button: Registrieren
+  upload_picture: Bild hochladen
+  use_gravatar: Gravatar verwenden
+  user: Benutzer
+  username: Benutzername
+  yahoo: Yahoo IM
+  born_on: Geboren am
+  reports_to: Berichtet an
+  access: Zugang
+  # Views -> Authenticate.
+  #----------------------------------------------------------------------------
+  forgot_password: Passwort vergessen?
+  login: Login
+  no_account: Sie haben noch keinen Benutzer?
+  remember_me: Erinnere mich
+  sign_up_now: Registrieren Sie sich jetzt!
+  # Views -> Accounts.
+  #----------------------------------------------------------------------------
+  account: Firma
+  account_id: Firma
+  select_an_account: Wähle einen Account aus
+  account_small: Firma
+  account_summary: Accountübersicht
+  account_categories: Firmen Kategorien
+  accounts: Firmen
+  accounts_options: Firmen-Optionen
+  accounts_small: accounts
+  assigned_to: Zugeordnet zu
+  billing_address: Rechnungsadresse
+  create_account: Account anlegen
+  date_created: Erstellungsdatum
+  date_updated: Änderungsdatum
+  fax: Fax
+  intro: Sie können die Informationen für %{value} später ändern.
+  keep_private: nur für mich sichtbar
+  mail_to: Mail an %{value}
+  make_public: für alle sichtbar
+  mobile_small: Mobiltelefon
+  open_in_window: Öffne %{value} in einem neuen Fenster
+  phone_small: Telefon
+  phone_toll_free: kostenloses Telefon
+  pipeline: Pipeline
+  same_as_billing: wie Rechnungsadresse
+  save_account: Konto sichern
+  share_with: für folgende Personen sichtbar
+  shipping_address: Lieferadresse
+  total_accounts: Alle Accounts
+  website: Website
+  account_with_title_department: ! '%{title}, %{department} bei %{account}'
+  account_with_title: ! '%{title} bei %{account}'
+  # Views -> Campaigns.
+  #----------------------------------------------------------------------------
+  actual: Aktuell
+  actual_performance: Aktuelle Leistung
+  budget: Budget
+  budget_label: Budget (%{currency})
+  campaign: Kampagne
+  campaign_and_leads: Kampagne und zugehörige Anfragen
+  campaign_small: Kampagne
+  campaign_summary: Kampagnen-Zusammenfassung
+  campaign_targets: Kampagnen-Ziele
+  campaign_statuses: Kampagne Status
+  campaigns: Kampagnen
+  campaigns_options: Kampagnen-Einstellungen
+  campaigns_small: Kampagnen
+  conversion: Konversion
+  conversion_label: Konversion (%)
+  conversion_number: ! '%{value} Konversion'
+  target_conversion: Ziel Konversion
+  create_campaign: Erstelle Kampagne
+  end_date: Enddatum
+  finished_on: beendet am %{value}
+  finishes_in: beendet in %{value}
+  no_start_date: kein Startdatum angegeben
+  number_of_leads: Anzahl der Anfragen
+  objectives: Ziele
+  objectives_help: Bitte geben Sie die Anzahl erwarteter Anfragen an, die erwartete Lead-Chance-Konversionsrate, Zielumsatz, und das Kampagnenbudget. Diese Angaben ermöglichen die Kontrolle der Kampagneneffizienz.
+  objectives_small: Kamagnen-Ziele
+  revenue: Umsatz
+  revenue_label: Umsatz (%{currency})
+  revenue_number: ! '%{value} Umsatz'
+  save_campaign: Kampagne sichern
+  start_date: Startdatum
+  started_ago: Gestartet vor %{value}
+  starts_in: beginnt in %{value}
+  starts_today: beginnt heute!
+  target: Ziel
+  total_campaigns: Anzahl Kampagnen
+  was_supposed_to_finish: angenommenes Ende am %{value}
+  was_supposed_to_start: angenommener Beginn vor %{time_ago} am %{start_date}
+  was_supposed_to_start_in: angenommener Beginn in %{starts_in} am %{start_date}
+  select_a_campaign: Select a campaign
+  # Views -> Contacts.
+  #----------------------------------------------------------------------------
+  alt_email_small: Andere
+  blog: Website/Blog
+  contact: Kontakt
+  contact_small: Kontakt
+  contacts: Kontakte
+  contacts_options: Kontakt-Einstellungen
+  contacts_small: Kontakte
+  contact_summary: Kontakt-Zusammenfassung
+  create_contact: Erstelle Kontakt
+  department: Abteilung
+  department_small: ! '%{value} Abteilung'
+  do_not_call: Nicht anrufen
+  extra_info: Zusatzinformation
+  extra_info_small: zusätzliche Kontaktdaten
+  facebook: Facebook
+  linked_in: LinkedIn
+  myself: mir
+  permissions_intro_private: Standardmäßig haben nur Sie Zugriff auf den %{value}. Sie können die Zugriffsregeln für den %{value} auch später ändern.
+  permissions_intro_public: Standardmäßig haben alle Benutzer Zugriff auf den %{value}. Sie können die Zugriffsregeln für den %{value} auch später ändern.
+  permissions_intro_shared: Standardmäßig haben nur ausgewählte Benutzer Zugriff auf den %{value}. Sie können die Zugriffsregeln für den %{value} auch später ändern.
+  referred_by: erwähnt von
+  referred_by_small: erwähnt von
+  save_contact: Kontakt sichern
+  twitter: Twitter
+  unassigned: Nicht zugeordnet
+  web_presence: Web-Präsenz
+  web_presence_small: Web-Präsenz
+  works_at: ! '%{job_title} bei %{company}'
+  general_info: Allgemeine Informationen
+  show_general_info_small: Zeige allgemeine Informationen zu diesem Kontakt
+  show_extra_info_small: Zeige zusätzliche Informationen zu diesem Kontakt
+  tag_details: ! '%{tag} Einzelheiten'
+  show_tag_info_small: Zeige %{tag} Informationen zu diesem Kontakt.
+  shared_with_everyone: Mit jedem teilen
+  title: Titel
+  subscriptions: Beitreten
+  # Views -> Leads.
+  #----------------------------------------------------------------------------
+  convert: Umwandeln
+  convert_lead: Anfrage umwandeln
+  convert_lead_permissions_intro: Die Zugriffsregeln des Kontakts werden von der Anfrage übernommen. Sie können die Zugriffsregeln auch später ändern.
+  convert_lead_text: Mit der Umwandlung wird %{value} zu einem Kontakt, der mit einem existierenden oder neu zu erstellenden account verbunden wird. Der Anfrage-Status wird automatisch auf umgewandelt geändert.
+  create_lead: Erstelle Anfrage
+  create_opp_for_contact: Optional können Sie eine Chance erstellen für %{value} unter Angabe des Namen, aktueller Stand, geschätztes Abschlußdatum, Erfolgswahrscheinlichkeit, Auftragswert und dem angebotenen Rabatt.
+  lead: Anfrage
+  lead_info_small: Anfragekontakt
+  lead_permissions_intro_private: Standardmäßig werden die Zugriffsregeln aus der Kampagne kopiert oder auf privat gesetzt. Dies kann auch später durchgeführt werden.
+  lead_permissions_intro_public: Standardmäßig werden die Zugriffsregeln aus der Kampagne kopiert oder auf öffentlich gesetzt. Dies kann auch später durchgeführt werden.
+  lead_permissions_intro_shared: Standardmäßig werden die Zugriffsregeln aus der Kampagne kopiert oder wird vom angegebenen Benutzer übernommen. Dies kann auch später durchgeführt werden.
+  lead_small: Anfragen
+  lead_status_small: Anfrage-Status
+  lead_summary: Anfrage-Zusammenfassung
+  lead_statuses: Anfragen Status
+  leads: Anfragen
+  leads_options: Anfrage-Einstellungen
+  leads_small: Anfragen
+  none: Kein(e)
+  rating: Rating
+  reject: Ablehnen
+  reject_lead_confirm: Sind Sie sicher, diese Anfrage abzulehnen?
+  save_lead: Anfrage sichern
+  source: Quelle
+  status: Status
+  total_leads: Anzahl der Anfragen
+  show_status_info_small: Zeige Status Informationen zu dieser Anfrage.
+  show_contact_info_small: Zeige Kontakt Informationen zu dieser Anfrage.
+  # Views -> Opportunities.
+  #----------------------------------------------------------------------------
+  amount: Betrag
+  close_date: Abschlussdatum
+  closes_on: Geschlossen am
+  closed_ago_on: erledigt vor %{time_ago} am %{date}
+  closes_today: Abschluss heute erwartet!
+  closing_date: Abschlussdatum ist %{value}
+  create_opportunity: Erstelle Chance
+  currency: "€"
+  days_late: Verspätet um
+  days_left: Tage verfügbar
+  discount: Rabatt
+  discount_number: mit %{value} Rabatt
+  expected_to_close: Abschluss erwartet in %{time} am %{date}
+  from: von
+  no_closing_date: kein erwartetes Abschlussdatum
+  no_discount: ohne Rabatt
+  opportunities: Chancen
+  opportunities_options: Chance-Einstellungen
+  opportunities_small: Chancen
+  opportunity: Chancen
+  opportunity_small: Chancen
+  opportunity_stages: Chancen Abschnitte
+  opportunity_summary: Chancen auf einen Blick
+  opportunity_summary_text: ! '%{amount} mit %{discount} Rabatt und %{probability} Wahrscheinlichkeit'
+  past_due: überfällig, war vor %{value} fällig
+  probability: Wahrscheinlk.
+  probability_number: und %{value} Wahrscheinlichkeit
+  save_opportunity: Chance sichern
+  stage: Ebene
+  total_opportunities: Anzahl Chancen
+  weighted_amount: Gewichteter Betrag
+  # Views -> Tasks.
+  #----------------------------------------------------------------------------
+  task: Aufgaben
+  task_small: Aufgabe
+  tasks: Aufgabe
+  tasks_small: Aufgaben
+  assign_to: Ordne zu
+  assigned_tab: Zugeordnet
+  assigned_tasks: zugeordnete Aufgaben
+  category: Kategorie
+  completed_tab: Erledigt
+  completed_tasks: erledigte Aufgaben
+  create_task: Erstelle Aufgabe
+  create_task_small: erstellen Sie eine neue Aufgabe
+  due: Fällig
+  feel_free: Seien Sie so frei und
+  move_to: verschiebe auf
+  no_tasks: Sie haben keine Aufgaben, die %{value} sind
+  no_tasks_pending: wartend
+  no_tasks_assigned: zugeordnet
+  no_tasks_completed: vollständig
+  pending_tab: Wartend
+  pending_tasks: ausstehende Aufgaben
+  related: ! 're:'
+  save_task: Aufgabe sichern
+  task_assigned: Die Aufgabe wurde %{value} zugeordnet
+  task_assigned_to: und %{value} zugeordnet
   task_completed: erledigt
   task_uncomplete: Zurückkehren
-  google: Google IM
-  twitter: Twitter
-  back: Zurück
-  subject_email: Email zu
-  share_with: für folgende Personen sichtbar
-  first_name: Vorname
-  competitor: Mitbewerber
-  lead: Anfrage
-  contacts: Kontakte
-  advanced_search_add_group: Füge eine Filtergruppe hinzu
-  save_tag: Speichere Tag
-  conversion_label: Konversion (%)
-  no_tasks_assigned: zugeordnet
-  select_or_create_tags: Wähle einige Markierungen aus oder erstelle eine neue Markierung
-    durch Drücken der "enter"-Taste.
-  phone_small: Telefon
-  user_suspended: Gesperrt
-  added_by: hinzugefügt vor %{time_ago} durch %{user}
-  avatar: Avatar
-  campaign_targets: Kampagnen-Ziele
-  msg_asset_rejected: ! '%{value} wurde abgelehnt.'
-  pending_tasks: ausstehende Aufgaben
-  discount: Rabatt
-  tab_opportunities: Chancen
-  from: von
-  time_ago: vor %{value}
-  stage: Ebene
-  about: Über
-  actual: Aktuell
-  opportunity_summary_text: ! '%{amount} mit %{discount} Rabatt und %{probability}
-    Wahrscheinlichkeit'
-  close_form: Abschlussformular
-  option_starts_on: Startdatum
-  discard: Discard
-  or: oder
-  two_days: Zwei Tagen
-  subject_comment: Kommentar zu
-  could_not_find_matching: Konnte %{value} nicht finden - passend zu
-  action_won: gewonnen
-  accounts: Firmen
-  create_opp_for_contact: Optional können Sie eine Chance erstellen für %{value} unter
-    Angabe des Namen, aktueller Stand, geschätztes Abschlußdatum, Erfolgswahrscheinlichkeit,
-    Auftragswert und dem angebotenen Rabatt.
-  restrict_by_tag: Schränke anhand des Tags ein
-  reactivate: Reaktivieren
-  action_update: aktualisiert
-  notifications_tooltip: Wenn ein Kommentar hinzugefügt wird, werden alle Abonnenten
-    mittels e-Mail benachrichtigt
-  option_first_name: Vorname
-  msg_invalid_password: ^Bitte geben Sie Ihr gültiges Passwort ein.
-  user_confirm_delete: Ein Benutzer kann nur gelöscht werden, wenn ihm nichts mehr
-    zugeordnet ist.
-  select_lead: Wähle eine Anfrage aus
-  lead_permissions_intro_private: Standardmäßig werden die Zugriffsregeln aus der
-    Kampagne kopiert oder auf privat gesetzt. Dies kann auch später durchgeführt werden.
-  remember_me: Erinnere mich
-  edit_comment: Kommentar bearbeiten
-  no_tasks_pending: wartend
-  lead_summary: Anfrage-Zusammenfassung
-  task_small: Aufgabe
-  assign_to: Ordne zu
-  due_specific_date: An bestimmten Datum...
-  versions: History
-  tasks_small: Aufgaben
-  create_task: Erstelle Aufgabe
-  reset_password: Passwort zurücksetzen
+  task_completed_ago: vor %{value} erledigt
+  task_completed_by: vor %{time_ago} von %{user} erledigt
+  task_created: Die Aufgabe wurde angelegt
+  task_due_in: fällig in %{value}
+  task_due_later: demnächst fällig
+  task_due_now: jetzt fällig
+  task_due_today: heute fällig
+  task_from: Von %{value}
+  task_overdue: zu spät, war fällig am
+  task_pending: Aufgabe wurde in die Warteschlange bewegt
+  total_tasks: Anzahl %{value}
   view_assigned_tasks: zugeordnete Aufgaben anzeigen
+  view_pending_tasks: ausstehende Aufgaben anzeigen
+  # Views -> Team.
+  #----------------------------------------------------------------------------
+  unassigned_opportunities: Nicht zugeteilte Chancen
+  no_opportunities_found: Es gibt derzeit keine abgelaufenen Chancen
+  # Views -> Home.
+  #----------------------------------------------------------------------------
+  action_completed: erledigt
   action_create: erstellt
-  was_supposed_to_finish: angenommenes Ende am %{value}
-  subject_address: address on
-  msg_cant_delete_tag: ! 'Konnte ''%{value}'' nicht löschen, weil es mit Gruppen assoziiert
-    ist. '
-  no_start_date: kein Startdatum angegeben
-  delete: Löschen
-  website: Website
-  create_tag: Tag erstellen
-  save_contact: Kontakt sichern
-  word_of_mouth: Mundpropaganda
-  intro: Sie können die Informationen für %{value} später ändern.
-  at: bei
-  option_ends_on: Enddatum
+  action_destroy: gelöscht
+  action_reassigned: neu zugeordnet
+  action_rejected: abgelehnt
+  action_rescheduled: neu geplant
+  action_update: aktualisiert
+  action_view: gesehen
+  action_won: gewonnen
+  activities: Aktivitäten
+  no_activity_records: Keine Aktivitäten gefunden.
+  recent_activity: Letzte Aktivitäten
   recent_activity_options: Letzte Aktivitäten Einstellungen
-  trip: Trip
+  subject_account: account
+  subject_address: address on
+  subject_campaign: Kampagne
+  subject_comment: Kommentar zu
+  subject_contact: Kontakt
+  subject_email: Email zu
+  subject_lead: Anfrage
+  subject_opportunity: Chance
+  subject_task: Aufgabe
+  subject_user: Benutzer
+  tag_list: Tags
+  create_past_participle: Zuletzt erstellte Datensätze
+  view_past_participle: Ansichten
+  update_past_participle: Aktualisierungen
+  destroy_past_participle: Löschungen
+  all_events_past_participle: Aktivitäten
+  action_create_comment: ! '- &quot;%{comment}&quot;'
+  my_tasks: Meine Aufgaben
+  no_task_records: Sie haben keine Aufgaben
+  my_opportunities: Meine Chancen
+  no_opportunity_records: Sie haben keine Chancen
+  my_accounts: Meine Firmen
+  no_account_records: Sie haben keine Firmen
+  not_showing_hidden_entities: '%{count} versteckte %{entity} werden nicht angezeigt.'
+  # Views -> Common.
+  #----------------------------------------------------------------------------
+  add_note: Notiz anfügen
+  save_note: Notiz sichern
+  add_note_help: Neue Notiz hinzufügen...
+  edit_note: Notiz bearbeiten
+  added_ago: hinzugefügt vor %{value}
+  added_by: hinzugefügt vor %{time_ago} durch %{user}
+  back: Zurück
+  cancel: Abbrechen
+  close_form: Abschlussformular
+  comment_intro: Sie können Kommentare später hinzufügen.
+  confirm_delete: Sie wollen wirklich %{value} löschen?
+  copy_permissions: Kopiere %{value} Zugriffsregeln
+  could_not_find: Konnte %{value} nicht finden. Feel free to
+  could_not_find_matching: Konnte %{value} nicht finden - passend zu
+  create_new: erstelle neu(e)
+  create_a_new: neu erstellen
+  select_existing: wähle Vorhandene aus
+  delete: Löschen
+  discard: Discard
+  edit: Bearbeiten
+  items_total: ! '%{count} total.'
+  less: Weniger...
+  me: mir
+  more: Mehr...
+  n_a: N/A
+  name: Name
+  no_match: Kein %{value} Treffer
+  no_recent_items: Es gibt hier noch nichts zum Anzeigen.
+  options: Optionen
+  permissions: Zugriffsregeln
+  please_retry: Versuchen Sie eine andere Abfrage.
+  recent_items: Aktuelle Änderungen
+  select_contact: Wähle einen Kontakt aus
+  select_lead: Wähle eine Anfrage aus
+  select_task: Wähle Aufgabe aus
+  select_opportunity: Wähle eine Chance aus
+  search_assets: Suche %{value}
+  time_ago: ! 'vor %{value}'
+  background_info: Hintergrund-Informationen
+  address: Adresse
+  street1: Adresszeile 1
+  street2: Adresszeile 2
+  city: Stadt
+  zipcode: Postleitzahl
+  state: Bundesland
+  country: Land
+  select_a_country: Wähle ein Land aus
+  expand_all: Alles anzeigen
+  collapse_all: Alles ausblenden
+  expanded: Erweitert
+  collapsed: Ausgeblendet
+  # Views -> Layout.
+  #----------------------------------------------------------------------------
+  about: Über
+  about_dev_group: Diskussionsgruppe für Entwickler
+  about_features: Features und Fehler
+  about_ffc: Über Fat Free CRM
+  about_ffc_resources: Fat Free CRM Ressourcen (Links öffnen ein neues Fenster)
+  about_ffc_version: Fat Free CRM version
+  about_home_page: Home-Page
+  about_project_page: Projekt-Page
+  about_thank_you: Danke, dass Sie Fat Free CRM benutzen! Wir schätzen Ihre Hilfe und hoffen, Sie finden Gefallen an der Software.
+  about_twitter: Twitter updates
+  about_user_group: Diskussionsgruppe für Benutzer
+  admin: Admin
+  logout: Logout
+  quick_find: Suche
+  welcome: Willkommen
+  # Advanced search
+  accounts_advanced_search: Erweiterte Accountsuche
+  advanced_search: Erweiterte Suche
+  basic_search: Einfache Suche
+  search_results_count:
+    one: Suche ergab %{count} Treffer.
+    other: Suche ergab %{count} Treffer.
+  # Views -> Comments.
+  #----------------------------------------------------------------------------
+  comment: Kommentar
+  edit_comment: Kommentar bearbeiten
+  show: Zeige
+  update: Ändern
+  following_users_will_be_notified: Die folgenden Benutzer werden mittels e-Mail benachrichtigt
+  notifications_tooltip: Wenn ein Kommentar hinzugefügt wird, werden alle Abonnenten mittels e-Mail benachrichtigt
+  subscribe_via_email: Anmeldung via e-Mail
+  disable_email_subscriptions: Deaktiviere e-Mail Benachrichtigungen
+  added_note: added comment %{value}
+  # Views -> Emails.
+  #----------------------------------------------------------------------------
+  # Views -> Passwords.
+  #----------------------------------------------------------------------------
+  confirm_password_intro: Bitte geben Sie Ihr neues Passwort ein und bestätigen es.
+  password_intro: Bitte geben Sie Ihre E-Mailadresse an, wir senden Ihnen die Anleitung zum Zurücksetzen des Passwortes.
+  reset_password: Passwort zurücksetzen
+  update_password_and_login: Passwort ändern und Login
+  # Views -> Admin
+  #----------------------------------------------------------------------------
+  back_to_crm: Back to Fat Free CRM
+  crm_admin_page: Fat Free CRM Administration
+  # Views -> Admin -> Groups
+  #----------------------------------------------------------------------------
+  create_group: Erstelle Gruppe
+  save_group: Speichere Gruppe
+  group_members: Teilnehmer
+  groups: Gruppen
+  groups_small: Gruppen
+  group_small: Gruppe
+  # Views -> Admin -> Users
+  #----------------------------------------------------------------------------
+  confirm_group_delete: Wollen Sie wirklich diese Gruppe löschen? Sie wird noch von %{count} Einheiten referenziert.
+  approve: Genehmige
+  create_user: Erstelle Benutzer
+  last_logged_in: last logged in %{value}
+  personal_information: Persönliche Information
+  group_memberships: Gruppen Zugehörigkeit
+  reactivate: Reaktivieren
+  save_user: Benutzer sichern
+  suspend: Sperren
+  user_active: Aktiv
+  user_admin: Admin
+  user_awaits_approval: Genehmigung erforderlich
+  user_confirm_delete: Ein Benutzer kann nur gelöscht werden, wenn ihm nichts mehr zugeordnet ist.
   user_is_admin: Der Benutzer ist Administrator
-  days_left: Tage verfügbar
-  option_name: Name
-  no_tasks_completed: vollständig
-  other: Andere
-  advanced_search_group_rest: ! '...and where %{combinator} of the following match'
-  department: Abteilung
+  user_never_logged_in: hat sich bisher nicht eingeloggt
+  user_signed_up: Angemeldet
+  user_signed_up_on: Angemeldet am %{value}
+  user_since: Benutzer seit %{value}
+  user_suspended: Gesperrt
+  user_suspended_on: Gesperrt am %{value}
+  users: Benutzer
+  users_small: Benutzer
+  # Views -> Versions
+  #----------------------------------------------------------------------------
+  versions: History
+  version:
+    create: ! '%{item} erstellt von %{by}'
+    update: ! '%{item} geändert von %{by}'
+    destroy: ! '%{item} gelöscht von %{by}'
+    set_html: ! '%{attr} auf %{to} geändert'
+    unset_html: ! '%{attr} nicht definiert'
+    change_html: ! '%{attr} wurde von %{from} zu %{to} geändert'
+    anonymous: anonym
+  account_contact_id: Firmen id
+  account_contact_name: Firmen Name
+  user_id: Benutzer id
+  created_at: Erstellt am
+  updated_at: Geändert am
+  # Export.
+  #----------------------------------------------------------------------------
+  to_xls: Exportiere ins Excel
+  to_csv: Exportiere als Excel-kompatibles Dateiformat (.csv) inklusive gelöschte Datensätze
+  to_rss: RSS feed
+  to_atom: Atom feed
+  to_perm: Link
+  # Dropbox.
+  #----------------------------------------------------------------------------
+  dropbox_notification_subject: dropbox - Email hinzugefügt - %{subject}
+  dropbox_notification_intro: Die e-Mail wurde erfolgreich hinzugefügt, welche an die Dropbox geschickt wurde
+  dropbox_notification_to: Hinzugefügt zu
+  subject: Angelegenheit
+  body: Körper
+  # Comment Inbox
+  #----------------------------------------------------------------------------
+  comment_notification:
+    intro: ! '%{user_full_name} kommentierte %{entity_type}: %{entity_name}'
+    reply_instructions: Sie können auf dieses e-Mail antworten um ein Kommentar hinzuzufügen, oder zeigen Sie %{entity} in Ihrem Browser an.
+  # Lists
+  #----------------------------------------------------------------------------
+  global_lists: Global lists
+  personal_lists: My lists
+  list: Liste
+  no_saved_lists: Keine gespeicherten Listen
+  make_current_view_list: Erstelle Liste aus aktueller Ansicht
+  list_name_info: Wenn Du den Namen einer bestehenden Liste wählst, wird diese Liste mit deinen aktuellen Einstellungen überschrieben.
+  # Pluralizations.
+  #----------------------------------------------------------------------------
+  pluralize:
+    comment:
+      one: 1 Kommentar
+      other: ! '%{count} Kommentare'
+    contact:
+      one: 1 Kontakt
+      other: ! '%{count} Kontakte'
+    opportunity:
+      one: 1 Chance
+      other: ! '%{count} Chancen'
+    lead:
+      one: 1 Anfrage
+      other: ! '%{count} Anfragen'
+    day:
+      one: 1 Tag
+      other: ! '%{count} Tage'
+    login:
+      one: 1 Login
+      other: ! '%{count} logins'
+  # Custom date/time formats.
+  #----------------------------------------------------------------------------
+  date:
+    formats:
+      mmddyyyy: ! '%d %B %Y'
+      mmdd: ! ' %e. %b'
+      mmddyy: ! ' %e. %b %Y'
+  time:
+    formats:
+      mmddhhss: ! '%e %b %l:%M%p'
+      mmddyyyy_hhmm: ! '%d %B %Y %H:%M'
+  # will_paginate translations copied for 'en-US'
+  #----------------------------------------------------------------------------
+  will_paginate:
+    previous_label: ! '&#8592; Zurück'
+    next_label: 'Weiter &#8594;'
+    page_gap: ! '&hellip;'
+    page_entries_info:
+      single_page:
+        one: Zeigt 1 %{name} an
+        other: Zeigt alle %{count} %{plural}
+      multi_page: Es werden %{from} - %{to} %{plural} von insgesamt %{total} angezeigt
+  # Views -> Admin -> Custom Fields
+  #----------------------------------------------------------------------------
+  label: Beschriftung
+  custom_fields: Benutzerdefinierte Felder
+  custom_field_options: Passe die Feldoptionen an
+  create_field: Erstelle Feld
+  save_field: Speichere Feld
+  create_field_group: Erstelle Gruppe.
+  edit_field_group: Editiere Gruppe
+  save_field_group: Gruppe speichern
+  field_group_empty: Es gibt keine Felder in dieser Gruppe.
+  select_or_create_tags: Wähle einige Markierungen aus oder erstelle eine neue Markierung durch Drücken der "enter"-Taste.
+  restrict_by_tag: ! 'Schränke anhand des Tags ein'
+  restrict_by_tag_info: Nur markierte %{assets} zeigen
+  field_group_tag_restriction: Diese Gruppe gilt für %{assets} markiert mit "%{tag}
+  field_group_unrestricted: Diese Gruppe gilt für alle %{assets}
+  field_group_confirm_delete: Exportiere als Comma-separiertes Dateiformat (inklusive gelöschte Datensätze)
+  msg_cant_delete_field_group: Gruppe konnte nicht gelöscht werden.
+  admin_fields_info: ! 'Benutzerdefinierte Felder werden in Gruppen angezeigt. Erstelle eine neue Feldgruppe, oder füge Felder zu einer der unteren Gruppen hinzu. Du kannst die Reihenfolge per drag & drop ändern oder die Felder zwischen den Gruppen bewegen.'
+  # Views -> Admin -> Tags
+  #----------------------------------------------------------------------------
+  admin_fields_info2: ! 'Es wird empfohlen den Server neu zu starten, nachdem kundenspezifische Felder hinzugefügt oder entfernt wurden.'
+  tags: Tags
+  tag_small: markiere
+  tagged: Markiert
+  create_tag: Tag erstellen
+  save_tag: Speichere Tag
+  field_group_tags: Gruppen mit diesem Tag
+  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
+  ai_prompt_link: "Design Help"
+  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
+  # Views -> Admin -> Plugins
+  #----------------------------------------------------------------------------
+  tag_with_taggings_confirm_delete: Wenn dieser Tag gelöscht wird, wird er von %{value} Einträgen entfernt.
+  msg_cant_delete_tag: Konnte '%{value}' nicht löschen, weil es mit Gruppen assoziiert ist. 
+  views:
+    admin:
+      plugins:
+        author: Autor
+        version: Version
+        description: Beschreibung
+  # Simple Form translations
+  #----------------------------------------------------------------------------
+  simple_form:
+    yes: 'Yes'
+    no: 'No'
+    required:
+      text: notwendig
+      mark: ! '*'
+    # You can uncomment the line below if you need to overwrite the whole required html.
+    # When using html, text and mark won't be used.
+    # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: ! 'Es wurden ein paar Fehler gefunden. Bitte üperprüfen Sie Ihre Eingaben:'
+  # Form field types
+  #----------------------------------------------------------------------------
   field_types:
     string:
       title: Kurze Antwort
@@ -733,110 +867,9 @@ de:
       title: Nummer (Ganzzahl)
     float:
       title: Nummer (Gleitzahl)
-  save_field_group: Gruppe speichern
-  subject_account: account
-  create_a_new: neu erstellen
-  dropbox_notification_subject: dropbox - Email hinzugefügt - %{subject}
-  quick_find: Suche
-  users: Benutzer
-  task_pending: Aufgabe wurde in die Warteschlange bewegt
-  welcome: Willkommen
-  update: Ändern
-  will_paginate:
-    page_gap: ! '&hellip;'
-    page_entries_info:
-      single_page:
-        zero: Keine %{plural} gefunden
-        other: Zeigt alle %{count} %{plural}
-        one: Zeigt 1 %{name} an
-      multi_page: Es werden %{from} - %{to} %{plural} von insgesamt %{total} angezeigt
-    next_label: Weiter &#8594;
-    previous_label: ! '&#8592; Zurück'
-  added_ago: hinzugefügt vor %{value}
-  create_campaign: Erstelle Kampagne
-  field_group_empty: Es gibt keine Felder in dieser Gruppe.
-  msg_cant_delete_user: ^Kann den Benutzer nicht löschen, da %{value} noch aktive
-    Anlagen hat.
-  edit_note: Notiz bearbeiten
-  web_presence: Web-Präsenz
-  lead_small: Anfragen
-  time:
-    formats:
-      mmddhhss: ! '%e %b %l:%M%p'
-      mmddyyyy_hhmm: ! '%d %B %Y %H:%M'
-  starts_in: beginnt in %{value}
-  subject_contact: Kontakt
-  overdue: Verspätet, war fällig am
-  access: Zugang
-  born_on: Geboren am
-  reports_to: Berichtet an
-  my_tasks: Meine Aufgaben
-  my_opportunities: Meine Chancen
-  my_accounts: Meine Firmen
-  no_task_records: Sie haben keine Aufgaben
-  no_opportunity_records: Sie haben keine Chancen
-  no_account_records: Sie haben keine Firmen
-  target_revenue: Target revenue
-  target_conversion: Ziel Konversion
-  account_with_title_department: ! '%{title}, %{department} bei %{account}'
-  account_with_title: ! '%{title} bei %{account}'
-  lead_statuses: Anfragen Status
-  account_categories: Firmen Kategorien
-  opportunity_stages: Chancen Abschnitte
-  search_results_count:
-    one: Suche ergab %{count} Treffer.
-    other: Suche ergab %{count} Treffer.
-  entities_per_page: ! '%{entity} pro Seite:'
-  tab_team: Team
-  admin_tab_groups: Gruppen
-  contacts_index_long: Langes Format
-  contacts_index_brief: Kurzes Format
-  contacts_index_full: Ganzes Format
-  opportunities_index_normal: Normales Format
-  accounts_index_normal: Normales Format
-  leads_index_normal: Normales Format
-  campaigns_index_normal: Normales Format
-  account_id: Firma
-  campaign_statuses: Kampagne Status
-  unassigned: Nicht zugeordnet
-  general_info: Allgemeine Informationen
-  show_general_info_small: Zeige allgemeine Informationen zu diesem Kontakt
-  show_extra_info_small: Zeige zusätzliche Informationen zu diesem Kontakt
-  tag_details: ! '%{tag} Einzelheiten'
-  show_tag_info_small: Zeige %{tag} Informationen zu diesem Kontakt.
-  shared_with_everyone: Mit jedem teilen
-  title: Titel
-  subscriptions: Beitreten
-  show_status_info_small: Zeige Status Informationen zu dieser Anfrage.
-  show_contact_info_small: Zeige Kontakt Informationen zu dieser Anfrage.
-  closes_on: Geschlossen am
-  unassigned_opportunities: Nicht zugeteilte Chancen
-  no_opportunities_found: Es gibt derzeit keine abgelaufenen Chancen
-  tag_list: Tags
-  action_create_comment: ! '- &quot;%{comment}&quot;'
-  not_showing_hidden_entities: ! '%{count} versteckte %{entity} werden nicht angezeigt.'
-  comment_intro: Sie können Kommentare später hinzufügen.
-  create_group: Erstelle Gruppe
-  save_group: Speichere Gruppe
-  group_members: Teilnehmer
-  groups: Gruppen
-  groups_small: Gruppen
-  group_small: Gruppe
-  confirm_group_delete: Wollen Sie wirklich diese Gruppe löschen? Sie wird noch von
-    %{count} Einheiten referenziert.
-  group_memberships: Gruppen Zugehörigkeit
-  account_contact_id: Firmen id
-  account_contact_name: Firmen Name
-  user_id: Benutzer id
-  created_at: Erstellt am
-  updated_at: Geändert am
-  to_perm: Link
-  admin_fields_info2: Es wird empfohlen den Server neu zu starten, nachdem kundenspezifische
-    Felder hinzugefügt oder entfernt wurden.
   pair:
     start: Start
     end: Ende
     from_to: Von %{from} bis %{to}
     from_only: Von %{from}
     to_only: Bis %{to}
-  contact_summary: Kontakt-Zusammenfassung
