@@ -44,7 +44,7 @@ class Admin::SettingsController < Admin::ApplicationController
       Setting[key] = value
     end
 
-    redirect_to admin_settings_path
+    redirect_to admin_settings_path, notice: t('fat_free_crm.settings_updated')
   end
 
   private
