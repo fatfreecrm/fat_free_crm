@@ -1,0 +1,17 @@
+%h2 Two-Factor Authentication
+
+- if current_user.otp_required_for_login
+  %p
+    Two-factor authentication is currently
+    %strong enabled
+    for your account.
+  = link_to 'Disable Two-Factor Authentication', two_factor_path, method: :delete, class: 'btn btn-danger'
+- else
+  %p
+    Two-factor authentication is currently
+    %strong disabled
+    for your account.
+  %p
+    To enable it, scan the QR code below with your authenticator app.
+  = raw RQRCode::QRCode.new(current_user.otp_provisioning_uri(current_user.email, issuer: 'Fat Free CRM')).as_svg
+  = link_to 'Enable Two-Factor Authentication', two_factor_path, method: :post, class: 'btn btn-primary'
