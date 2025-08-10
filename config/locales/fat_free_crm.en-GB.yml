@@ -1,7 +1,6 @@
 ---
 en-GB:
   language: English (UK)
-
   # Generic terms.
   #----------------------------------------------------------------------------
   id: Id
@@ -11,11 +10,9 @@ en-GB:
   no_button: 'No'
   not_implemented: Not implemented yet.
   or: or
-  select_none: -- None --
-  select_blank: -- Select --
+  select_none: '-- None --'
+  select_blank: '-- Select --'
   yes_button: 'Yes'
-
-
   # Settings.
   #----------------------------------------------------------------------------
   tab_dashboard: Dashboard
@@ -32,6 +29,12 @@ en-GB:
   admin_tab_tags: Tags
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
+  ai_prompts: Describe your business
+  ai_prompts_description: Describe your business, the products or services you offer, and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
+  about_my_business: About my business
+  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare.
   affiliate: Affiliate
   competitor: Competitor
   customer: Customer
@@ -83,7 +86,6 @@ en-GB:
   completed_last_week: Last week
   completed_this_month: This month
   completed_last_month: Last month
-
   # Models/Activity.
   #----------------------------------------------------------------------------
   one_hour: One Hour
@@ -92,7 +94,6 @@ en-GB:
   one_week: One Week
   two_weeks: Two Weeks
   one_month: One Month
-
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
@@ -107,59 +108,58 @@ en-GB:
         account:
           attributes:
             name:
-              missing_account_name: ^Please specify account name.
+              missing_account_name: '^Please specify account name.'
             access:
-              share_account: ^Please specify users with whom to share the account.
+              share_account: '^Please specify users with whom to share the account.'
         campaign:
           attributes:
             name:
-              missing_campaign_name: ^Please specify campaign name.
+              missing_campaign_name: '^Please specify campaign name.'
             ends_on:
-              dates_not_in_sequence: ^Please make sure the campaign end date is after
-                the start date.
+              dates_not_in_sequence: '^Please make sure the campaign end date is after the start date.'
             access:
-              share_campaign: ^Please specify users with whom to share the campaign.
+              share_campaign: '^Please specify users with whom to share the campaign.'
         contact:
           attributes:
             first_name:
-              missing_first_name: ^Please specify first name.
+              missing_first_name: '^Please specify first name.'
             last_name:
-              missing_last_name: ^Please specify last name.
+              missing_last_name: '^Please specify last name.'
             access:
-              share_contact: ^Please specify users with whom to share the contact.
+              share_contact: '^Please specify users with whom to share the contact.'
         lead:
           attributes:
             first_name:
-              missing_first_name: ^Please specify first name.
+              missing_first_name: '^Please specify first name.'
             last_name:
-              missing_last_name: ^Please specify last name.
+              missing_last_name: '^Please specify last name.'
             access:
-              share_lead: ^Please specify users with whom to share the lead.
+              share_lead: '^Please specify users with whom to share the lead.'
         opportunity:
           attributes:
             name:
-              missing_opportunity_name: ^Please specify opportunity name.
+              missing_opportunity_name: '^Please specify opportunity name.'
             access:
-              share_opportunity: ^Please specify users with whom to share the opportunity.
+              share_opportunity: '^Please specify users with whom to share the opportunity.'
         task:
           attributes:
             name:
-              missing_task_name: ^Please specify task name.
+              missing_task_name: '^Please specify task name.'
             calendar:
-              invalid_date: ^Please specify valid date.
+              invalid_date: '^Please specify valid date.'
         user:
           attributes:
             username:
-              missing_username: ^Please specify username.
-              username_taken: ^This username is already taken.
+              missing_username: '^Please specify username.'
+              username_taken: '^This username is already taken.'
             email:
-              missing_email: ^Please specify email address.
-              email_in_use: ^There is another user with the same email.
+              missing_email: '^Please specify email address.'
+              email_in_use: '^There is another user with the same email.'
         custom_field:
-          required: ^%{field} is required.
-          minlength: ^%{field} is too short.
-          maxlength: ^%{field} is too long.
-          endbeforestart: ^%{field} cannot end before it begins.
+          required: '^%{field} is required.'
+          minlength: '^%{field} is too short.'
+          maxlength: '^%{field} is too long.'
+          endbeforestart: '^%{field} cannot end before it begins.'
     attribute_options:
       opportunity:
         stage:
@@ -179,30 +179,25 @@ en-GB:
           "3": "★★★"
           "4": "★★★★"
           "5": "★★★★★"
-
   msg_account_suspended: User account has been suspended.
   password_reset_instruction: password reset instructions
-
   # Controllers.
   #----------------------------------------------------------------------------
-  msg_account_created: Your account has been created and is awaiting approval by the
-    system administrator.
+  msg_account_created: Your account has been created and is awaiting approval by the system administrator.
   msg_account_not_approved: Your account has not been approved yet.
   msg_asset_deleted: ! '%{value} has been deleted.'
   msg_asset_not_available: This %{value} is no longer available.
   msg_not_authorized: You are not authorized to take this action.
   msg_assets_not_available: The %{value} are not available.
   msg_asset_rejected: ! '%{value} has been rejected.'
-  msg_bad_image_file: ^Could't upload or resize the image file you specified.
-  msg_cant_create_related: Can't create the %{asset} since the %{related} is no longer
-    available.
-  msg_cant_delete_user: ^Couldn't delete the user since %{value} has related assets
-    present.
+  msg_bad_image_file: '^Could''t upload or resize the image file you specified.'
+  msg_cant_create_related: Can't create the %{asset} since the %{related} is no longer available.
+  msg_cant_delete_user: '^Couldn''t delete the user since %{value} has related assets present.'
   msg_cant_do: Can't %{action} the %{asset} since it's no longer available.
   msg_email_not_found: No user was found with that email address.
   msg_enter_new_password: Please enter your new password.
   msg_goodbye: You have been logged out. Thank you for using Fat Free CRM!
-  msg_invalid_password: ^Please specify valid current password
+  msg_invalid_password: '^Please specify valid current password'
   msg_invalig_login: Invalid username or password.
   msg_last_login: Your last login was on %{value}.
   msg_login_needed: You must be logged in to access this page.
@@ -210,18 +205,15 @@ en-GB:
   msg_password_changed: Your password has been changed.
   msg_password_not_changed: Your password has not been changed.
   msg_password_updated: Password was successfully updated.
-  msg_pwd_instructions_sent: Instructions to reset your password have been sent to
-    you. Please check your email.
+  msg_pwd_instructions_sent: Instructions to reset your password have been sent to you. Please check your email.
   msg_require_admin: You must be Administrator to access this page.
   msg_successful_signup: Successful signup, welcome to Fat Free CRM!
   msg_welcome: Welcome to Fat Free CRM!
   msg_user_updated: Profile updated successfully.
-
   # Options.
   #----------------------------------------------------------------------------
   option_amount*probability: weighted amount
-  activity_options: Show %{models} %{action_type} performed by %{user} in the past
-    %{period}.
+  activity_options: Show %{models} %{action_type} performed by %{user} in the past %{period}.
   all_users: all users
   option_after: after
   option_all: all
@@ -247,8 +239,7 @@ en-GB:
   option_updated_at: date updated
   show_per_page: Show %{number} %{models} per page using %{fmt} format.
   sort_by: Sort by %{field}
-  sort_by_displaying: Sort %{models} by %{field} displaying first name %{position}
-    last name.
+  sort_by_displaying: Sort %{models} by %{field} displaying first name %{position} last name.
   entities_per_page: ! '%{entity} per page:'
   contacts_index_long: Long format
   contacts_index_brief: Brief format
@@ -257,9 +248,10 @@ en-GB:
   accounts_index_normal: Normal format
   leads_index_normal: Normal format
   campaigns_index_normal: Normal format
-
   # Views -> Profile.
   #----------------------------------------------------------------------------
+  subscribe_to_comment_replies: "Subscribe to comment replies by email"
+  receive_assigned_notifications: "Receive assigned notifications by email"
   aim: AOL IM
   already_signed_up: Already signed up?
   alt_email: Alternative email
@@ -273,8 +265,7 @@ en-GB:
   google: Google IM
   gravatar_help: Not familiar with Gravatars? Learn about Gravatars
   image_file: Image file
-  image_help: The image file you upload will be automatically resized to 180 x 180 pixels.
-    Supported formats are GIF, JPG, and PNG.
+  image_help: The image file you upload will be automatically resized to 180 x 180 pixels. Supported formats are GIF, JPG, and PNG.
   job_title: Title
   last_name: Last name
   login_now_link: Login Now!
@@ -298,7 +289,6 @@ en-GB:
   born_on: Born on
   reports_to: Reports to
   access: Access
-
   # Views -> Authenticate.
   #----------------------------------------------------------------------------
   forgot_password: Forgot Password
@@ -306,7 +296,6 @@ en-GB:
   no_account: Do not have an account?
   remember_me: Remember Me
   sign_up_now: Sign Up Now!
-
   # Views -> Accounts.
   #----------------------------------------------------------------------------
   account: Account
@@ -341,7 +330,6 @@ en-GB:
   website: Website
   account_with_title_department: ! '%{title}, %{department} at %{account}'
   account_with_title: ! '%{title} at %{account}'
-
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
   actual: Actual
@@ -368,9 +356,7 @@ en-GB:
   no_start_date: no start date specified
   number_of_leads: Number of leads
   objectives: Objectives
-  objectives_help: Please specify target number of leads, expected leads-to-opportunities
-    conversion ratio, target revenue, and campaign budget. These numbers will let
-    you track actual campaign performance.
+  objectives_help: Please specify target number of leads, expected leads-to-opportunities conversion ratio, target revenue, and campaign budget. These numbers will let you track actual campaign performance.
   objectives_small: campaign objectives
   revenue: Revenue
   revenue_label: Revenue (%{currency})
@@ -386,7 +372,6 @@ en-GB:
   was_supposed_to_start: was supposed to start %{time_ago} ago on %{start_date}
   was_supposed_to_start_in: was supposed to start in %{starts_in} on %{start_date}
   select_a_campaign: Select a campaign
-
   # Views -> Contacts.
   #----------------------------------------------------------------------------
   alt_email_small: Other
@@ -406,12 +391,9 @@ en-GB:
   facebook: Facebook
   linked_in: LinkedIn
   myself: Myself
-  permissions_intro_private: By default only you will have access to the %{value}.
-    You can change permissions later.
-  permissions_intro_public: By default all users will have access to the %{value}.
-    You can change permissions later.
-  permissions_intro_shared: By default only the selected users will have access to
-    the %{value}. You can change permissions later.
+  permissions_intro_private: By default only you will have access to the %{value}. You can change permissions later.
+  permissions_intro_public: By default all users will have access to the %{value}. You can change permissions later.
+  permissions_intro_shared: By default only the selected users will have access to the %{value}. You can change permissions later.
   referred_by: Referred by
   referred_by_small: referred by
   save_contact: Save Contact
@@ -428,28 +410,19 @@ en-GB:
   shared_with_everyone: Shared with everyone
   title: Title
   subscriptions: Subscriptions
-
   # Views -> Leads.
   #----------------------------------------------------------------------------
   convert: Convert
   convert_lead: Convert Lead
-  convert_lead_permissions_intro: Contact permissions will be copied from the lead
-    being converted. You can change contact permissions later.
-  convert_lead_text: By converting the lead %{value} will become a contact associated
-    with the existing or newly created account. Lead status will be automatically
-    set to converted.
+  convert_lead_permissions_intro: Contact permissions will be copied from the lead being converted. You can change contact permissions later.
+  convert_lead_text: By converting the lead %{value} will become a contact associated with the existing or newly created account. Lead status will be automatically set to converted.
   create_lead: Create Lead
-  create_opp_for_contact: You can optionally create an opportunity for the %{value}
-    contact by specifying the name, current stage, estimated closing date, sale probability,
-    amount of the deal, and the discount offered.
+  create_opp_for_contact: You can optionally create an opportunity for the %{value} contact by specifying the name, current stage, estimated closing date, sale probability, amount of the deal, and the discount offered.
   lead: Lead
   lead_info_small: lead contact
-  lead_permissions_intro_private: By default permissions will be copied from the campaign
-    or set to private. You can change lead permissions later.
-  lead_permissions_intro_public: By default permissions will be copied from the campaign
-    or set to public. You can change lead permissions later.
-  lead_permissions_intro_shared: By default permissions will be copied from the campaign
-    or shared with the specified users. You can change lead permissions later.
+  lead_permissions_intro_private: By default permissions will be copied from the campaign or set to private. You can change lead permissions later.
+  lead_permissions_intro_public: By default permissions will be copied from the campaign or set to public. You can change lead permissions later.
+  lead_permissions_intro_shared: By default permissions will be copied from the campaign or shared with the specified users. You can change lead permissions later.
   lead_small: lead
   lead_status_small: lead status
   lead_summary: Lead Summary
@@ -467,7 +440,6 @@ en-GB:
   total_leads: Total Leads
   show_status_info_small: Show status information for this lead.
   show_contact_info_small: Show contact information for this lead.
-
   # Views -> Opportunities.
   #----------------------------------------------------------------------------
   amount: Amount
@@ -493,8 +465,7 @@ en-GB:
   opportunity_small: opportunity
   opportunity_stages: Opportunity Stages
   opportunity_summary: Opportunity At a Glance
-  opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability}
-    probability'
+  opportunity_summary_text: ! '%{amount} with %{discount} discount and %{probability} probability'
   past_due: past due, was expected to close %{value} ago
   probability: Probability
   probability_number: and %{value} probability
@@ -502,7 +473,6 @@ en-GB:
   stage: Stage
   total_opportunities: Total Opportunities
   weighted_amount: Weighted amount
-
   # Views -> Tasks.
   #----------------------------------------------------------------------------
   task: Task
@@ -545,12 +515,10 @@ en-GB:
   total_tasks: Total %{value}
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
-
   # Views -> Team.
   #----------------------------------------------------------------------------
   unassigned_opportunities: Unassigned Opportunities
   no_opportunities_found: There are currently no outstanding opportunities.
-
   # Views -> Home.
   #----------------------------------------------------------------------------
   action_completed: completed
@@ -590,7 +558,6 @@ en-GB:
   my_accounts: My Accounts
   no_account_records: You have no accounts
   not_showing_hidden_entities: Not showing %{count} hidden %{entity}.
-
   # Views -> Common.
   #----------------------------------------------------------------------------
   add_note: Add Comment
@@ -644,7 +611,6 @@ en-GB:
   collapse_all: Collapse all
   expanded: Expanded
   collapsed: Collapsed
-
   # Views -> Layout.
   #----------------------------------------------------------------------------
   about: About
@@ -655,15 +621,13 @@ en-GB:
   about_ffc_version: Fat Free CRM version
   about_home_page: Home page
   about_project_page: Project page
-  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and
-    hope you enjoy using the software.
+  about_thank_you: Thank you for using Fat Free CRM! We appreciate your business and hope you enjoy using the software.
   about_twitter: Twitter commit updates
   about_user_group: Discussion group for users
   admin: Admin
   logout: Logout
   quick_find: Quick find
   welcome: Welcome
-
   # Advanced search
   accounts_advanced_search: Accounts Advanced search
   advanced_search: Advanced search
@@ -671,7 +635,6 @@ en-GB:
   search_results_count:
     one: Search found %{count} result.
     other: Search found %{count} results.
-
   # Views -> Comments.
   #----------------------------------------------------------------------------
   comment: Comment
@@ -683,23 +646,18 @@ en-GB:
   subscribe_via_email: Subscribe via email
   disable_email_subscriptions: Disable email subscription
   added_note: added comment %{value}
-
   # Views -> Emails.
   #----------------------------------------------------------------------------
-
   # Views -> Passwords.
   #----------------------------------------------------------------------------
   confirm_password_intro: Please type your new password and then confirm it.
-  password_intro: Please specify your email address, and the instructions to reset
-    your password will be sent to you.
+  password_intro: Please specify your email address, and the instructions to reset your password will be sent to you.
   reset_password: Reset Password
   update_password_and_login: Update Password and Login
-
   # Views -> Admin
   #----------------------------------------------------------------------------
   back_to_crm: Back to Fat Free CRM
   crm_admin_page: Fat Free CRM Administration
-
   # Views -> Admin -> Groups
   #----------------------------------------------------------------------------
   create_group: Create Group
@@ -708,11 +666,9 @@ en-GB:
   groups: Groups
   groups_small: groups
   group_small: group
-
   # Views -> Admin -> Users
   #----------------------------------------------------------------------------
-  confirm_group_delete: Are you sure you wish to delete this group? There are %{count}
-    items that still reference it.
+  confirm_group_delete: Are you sure you wish to delete this group? There are %{count} items that still reference it.
   approve: Approve
   create_user: Create User
   last_logged_in: last logged in %{value}
@@ -734,7 +690,6 @@ en-GB:
   user_suspended_on: suspended on %{value}
   users: Users
   users_small: users
-
   # Views -> Versions
   #----------------------------------------------------------------------------
   versions: History
@@ -751,7 +706,6 @@ en-GB:
   user_id: User id
   created_at: Created at
   updated_at: Updated at
-
   # Export.
   #----------------------------------------------------------------------------
   to_xls: Export to Excel
@@ -759,7 +713,6 @@ en-GB:
   to_rss: RSS feed
   to_atom: Atom feed
   to_perm: Permalink
-
   # Dropbox.
   #----------------------------------------------------------------------------
   dropbox_notification_subject: dropbox - Added email - %{subject}
@@ -767,14 +720,11 @@ en-GB:
   dropbox_notification_to: Added to
   subject: Subject
   body: Body
-
   # Comment Inbox
   #----------------------------------------------------------------------------
   comment_notification:
     intro: ! '%{user_full_name} commented on %{entity_type}: %{entity_name}'
-    reply_instructions: Reply to this email directly to add a new comment, or view
-      the %{entity} online
-
+    reply_instructions: Reply to this email directly to add a new comment, or view the %{entity} online
   # Lists
   #----------------------------------------------------------------------------
   global_lists: Global lists
@@ -782,9 +732,7 @@ en-GB:
   list: List
   no_saved_lists: No saved lists
   make_current_view_list: Make current view a list
-  list_name_info: If you use the name of an existing list, you will overwrite that
-    list with your current settings
-
+  list_name_info: If you use the name of an existing list, you will overwrite that list with your current settings
   # Pluralizations.
   #----------------------------------------------------------------------------
   pluralize:
@@ -806,7 +754,6 @@ en-GB:
     login:
       one: 1 login
       other: ! '%{count} logins'
-
   # Custom date/time formats.
   #----------------------------------------------------------------------------
   date:
@@ -818,20 +765,17 @@ en-GB:
     formats:
       mmddhhss: ! '%e %b at %l:%M%p'
       mmddyyyy_hhmm: ! '%e %b %Y at %l:%M%p'
-
   # will_paginate translations copied for 'en-US'
   #----------------------------------------------------------------------------
   will_paginate:
     previous_label: ! '&#8592; Previous'
-    next_label: Next &#8594;
+    next_label: 'Next &#8594;'
     page_gap: ! '&hellip;'
     page_entries_info:
       single_page:
-        zero: No %{plural} found
         one: Displaying 1 %{name}
         other: Displaying all %{count} %{plural}
       multi_page: Displaying %{plural} %{from} - %{to} of %{total} in total
-
   # Views -> Admin -> Custom Fields
   #----------------------------------------------------------------------------
   label: Label
@@ -848,30 +792,24 @@ en-GB:
   restrict_by_tag_info: (Only show fields for %{assets} that are tagged with the following)
   field_group_tag_restriction: This field group applies to %{assets} tagged with "%{tag}"
   field_group_unrestricted: This field group applies to all %{assets}
-  field_group_confirm_delete: If a field group is deleted, any fields will be moved
-    to the default field group.
+  field_group_confirm_delete: If a field group is deleted, any fields will be moved to the default field group.
   msg_cant_delete_field_group: Field Group could not be deleted.
-  admin_fields_info: ! 'Custom fields are displayed in groups.
-    Create a new field group, or add fields to one of the groups below.
-    You can drag and drop fields to change their display order or move them between
-    field groups.'
+  admin_fields_info: ! 'Custom fields are displayed in groups. Create a new field group, or add fields to one of the groups below. You can drag and drop fields to change their display order or move them between field groups.'
   # Views -> Admin -> Tags
   #----------------------------------------------------------------------------
-  admin_fields_info2: ! 'It is strongly recommended you restart your server after
-    adding or removing any custom field.
-
-'
+  admin_fields_info2: ! 'It is strongly recommended you restart your server after adding or removing any custom field. '
   tags: Tags
   tag_small: tag
   tagged: Tagged
   create_tag: Create Tag
   save_tag: Save Tag
   field_group_tags: Field Groups shown for this Tag
-
+  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
+  ai_prompt_link: "Design Help"
+  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
-  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from
-    %{value} records.
+  tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from %{value} records.
   msg_cant_delete_tag: Couldn't delete '%{value}' since it has associated Field Groups.
   views:
     admin:
@@ -879,7 +817,6 @@ en-GB:
         author: Author
         version: Version
         description: Description
-
   # Simple Form translations
   #----------------------------------------------------------------------------
   simple_form:
@@ -888,12 +825,11 @@ en-GB:
     required:
       text: required
       mark: ! '*'
-      # You can uncomment the line below if you need to overwrite the whole required html.
-      # When using html, text and mark won't be used.
-      # html: '<abbr title="required">*</abbr>'
+    # You can uncomment the line below if you need to overwrite the whole required html.
+    # When using html, text and mark won't be used.
+    # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: ! 'Some errors were found, please take a look:'
-
   # Form field types
   #----------------------------------------------------------------------------
   field_types:
