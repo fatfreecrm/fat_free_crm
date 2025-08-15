@@ -211,4 +211,11 @@ Rails.application.routes.draw do
     end
     resources :plugins, only: :index
   end
+
+  namespace :api do
+    namespace :v1 do
+      get 'pbx/lookup_contact', to: 'pbx#lookup_contact'
+      post 'pbx/journal_call', to: 'pbx#journal_call'
+    end
+  end
 end
