@@ -26,13 +26,13 @@
     %button{type: "submit"}
       Add passkey
 %script{type: "module"}
-  :cdata
+  :plain
     import {getReauthenticationToken} from 'passkey_reauthentication_handler'
     import {submitFormEvent} from 'registration_form'
     
-    let unlockFormEvent = async function(event){
-    let unlockButton = event.currentTarget
-    let form = unlockButton.closest('form')
+    let unlockFormEvent = async function(event) {
+      let unlockButton = event.currentTarget
+      let form = unlockButton.closest('form')
       await getReauthenticationToken(form)
       form.querySelector('#new-passkey-fields').removeAttribute("disabled")
     }
