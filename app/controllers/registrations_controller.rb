@@ -6,6 +6,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class RegistrationsController < Devise::RegistrationsController
+  include Devise::Passkeys::Controllers::RegistrationsControllerConcern
+
   respond_to :html
   append_view_path 'app/views/devise'
 
