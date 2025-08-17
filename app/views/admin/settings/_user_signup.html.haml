@@ -1,0 +1,13 @@
+%fieldset.panel.panel-default
+  .panel-heading
+    %h4= t('admin.settings.user_signup.title', default: 'User Signup')
+  .panel-body
+    .form-group
+      = f.label :user_signup
+      = f.select :user_signup, options_for_select([['Allowed', 'allowed'], ['Not Allowed', 'not_allowed'], ['Needs Approval', 'needs_approval']], Setting.user_signup.to_s), {}, class: 'form-control'
+      %span.help-block
+        Allowed: users can sign up and use the system immediately.
+        %br
+        Not Allowed: only admins can create users.
+        %br
+        Needs Approval: users can sign up, but admins must approve their accounts.

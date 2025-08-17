@@ -111,7 +111,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob'
 gem 'ransack_ui'
 gem 'vcardigan'
-gem 'bootstrap', '~>5.1.0'
+gem 'bootstrap', '~>5.2.0'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'jquery-ui-rails', git: 'https://github.com/jquery-ui-rails/jquery-ui-rails.git', tag: 'v7.0.0' # See https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
