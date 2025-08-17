@@ -21,11 +21,11 @@ Rails.application.routes.draw do
                                     confirmations: 'confirmations' }
 
   devise_scope :user do
-    post 'sign_up/new_challenge', to: 'users/registrations#new_challenge', as: :new_user_registration_challenge
-    post 'sign_in/new_challenge', to: 'users/sessions#new_challenge', as: :new_user_session_challenge
+    post 'sign_up/new_challenge', to: 'registrations#new_challenge', as: :new_user_registration_challenge
+    post 'sign_in/new_challenge', to: 'sessions#new_challenge', as: :new_user_session_challenge
 
-    post 'reauthenticate/new_challenge', to: 'users/reauthentication#new_challenge', as: :new_user_reauthentication_challenge
-    post 'reauthenticate', to: 'users/reauthentication#reauthenticate', as: :user_reauthentication
+    post 'reauthenticate/new_challenge', to: 'reauthentication#new_challenge', as: :new_user_reauthentication_challenge
+    post 'reauthenticate', to: 'reauthentication#reauthenticate', as: :user_reauthentication
 
     resources :users, only: %i[index show] do
       resources :passkeys, only: %i[index create destroy] do
