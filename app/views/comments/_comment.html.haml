@@ -1,5 +1,5 @@
-- truncated = simple_format(truncate(comment.comment.gsub("\n", " "), length: 125))
-- formatted = defined?(RedCloth) ? RedCloth.new(comment.comment).to_html : simple_format(comment.comment)
+- formatted = comment.comment
+- truncated = truncate(strip_tags(formatted), length: 125)
 - collapsible = formatted.size > 150
 - commentable = comment.commentable
 
@@ -22,8 +22,8 @@
     - if can?(:read, commentable)
       - if collapsible
         %dt{ hidden_if(comment.expanded?), id: dom_id(comment, :truncated) }
-          = truncated
+          = sanitize_comment(truncated)
         %dt.textile{ hidden_if(comment.collapsed?), id: dom_id(comment, :formatted) }
-          = sanitize auto_link(formatted)
+          = sanitize_comment(formatted)
       - else
-        %dt.textile= sanitize auto_link(formatted)
+        %dt.textile= sanitize_comment(formatted)
