@@ -25,6 +25,8 @@ en-US:
   tab_accounts: Accounts
   tab_contacts: Contacts
   tab_opportunities: Opportunities
+  tab_products: Products
+  tab_contracts: Contracts
   tab_team: Team
   admin_tab_groups: Groups
   admin_tab_users: Users
@@ -510,6 +512,25 @@ en-US:
   stage: Stage
   total_opportunities: Total Opportunities
   weighted_amount: Weighted amount
+
+ # Views -> Products.
+  #----------------------------------------------------------------------------
+  product: Product
+  product_id: Product
+  select_an_productt: Select an Product
+  product_small: product
+  product_summary: Product Summary
+  product_categories: Product Categories
+  products: Products
+  products_options: Products Options
+  products_small: products
+  create_product: Create Product
+  save_profile: Save Product
+  url: "URL"
+  gtin: "GTIN (Barcode/UPC)"
+  sku: "SKU (Stock Keeping Unit)"
+  brand: "Brand"
+  description: "Description"
 
   # Views -> Tasks.
   #----------------------------------------------------------------------------

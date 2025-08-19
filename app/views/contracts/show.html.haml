@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Start date:
+  = @contract.start_date
+%p
+  %b End date:
+  = @contract.end_date
+%p
+  %b Status:
+  = @contract.status
+%p
+  %b Contract original text:
+  = @contract.contract_original_text
+%p
+  %b Account:
+  = @contract.account
+
+= link_to 'Edit', edit_contract_path(@contract)
+\|
+= link_to 'Back', contracts_path

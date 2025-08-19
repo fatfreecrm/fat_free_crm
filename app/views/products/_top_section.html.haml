@@ -1,0 +1,46 @@
+= hook(:product_top_section, self, f: f) do
+  .section
+    %table
+      %tr
+        %td{class: (@product.errors['name'].present? ? 'fieldWithErrors' : nil)}
+          .label.req.top #{t :name}:
+          = f.text_field :name, autofocus: true, style: "width: 325px", required: "required"
+
+    %table{ border: 0, width: 500, cellpadding: 0, cellspacing: 0 }
+      %tr
+        %td
+          .label #{t :sku}:
+          = f.text_field :sku, value: f.object.sku
+        %td= spacer
+        %td
+          .label #{t :gtin}:
+          = f.text_field :gtin
+      %tr
+        %td
+          .label #{t :brand}:
+          = f.text_field :brand
+      %tr
+        %td
+          .label #{t :url}:
+          = f.url_field :url
+        %td= spacer
+        %td
+          .label #{t :image_url}:
+          = f.url_field :image_url
+      %tr
+        %td{ colspan: "3" }
+          .label #{t :description}:
+          = f.text_area :description, rows: 3, style: "width: 100%"
+
+
+    = fields_for(@products) do |a|
+      = a.hidden_field :user_id
+      = a.hidden_field :access
+      %td= spacer
+      %td
+        .label.req #{t :assigned_to}:
+        = user_select(:product, all_users, current_user)
+
+      = render partial: "/shared/tags", locals: {f: f, span: 3}
+
+      = hook(:product_top_section_bottom, self, f: f)
