@@ -1,0 +1,4 @@
+- if @research_tool.errors.empty?
+  $("#<%= dom_id(@research_tool) %>").replaceWith("<%= j render(@research_tool) %>");
+- else
+  $("#edit_research_tool_<%= @research_tool.id %>").html("<%= j render('form') %>");

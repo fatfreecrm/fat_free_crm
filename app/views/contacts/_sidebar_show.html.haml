@@ -49,4 +49,6 @@
     %dt
       .tags= tags_for_index(@contact)
 
+  = render "shared/research_tools", entity: @contact
+
   = hook(:show_contact_sidebar_bottom, self, contact: @contact)

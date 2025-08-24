@@ -185,6 +185,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :research_tools, except: [:show]
+
     resources :fields do
       collection do
         match :auto_complete, via: %i[get post]
