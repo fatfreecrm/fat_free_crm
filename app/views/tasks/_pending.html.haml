@@ -50,3 +50,8 @@
     - unless pending.background_info.blank?
       %div
         %dt= h(pending.background_info)
+
+    - if pending.field_groups.present?
+      .custom_fields
+        - pending.field_groups.each do |field_group|
+          = render partial: 'fields/group_view', locals: {f: pending, field_group: field_group}
