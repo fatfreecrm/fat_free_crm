@@ -1,0 +1,11 @@
+- path = new_admin_research_tool_path
+
+= form_for([:admin, @research_tool], html: one_submit_only, remote: true) do |f|
+  = link_to_close path
+  = f.error_messages
+  = render partial: "form", locals: { f: f }
+  .buttonbar
+    = f.submit t(:create_research_tool), id: :research_tool_submit
+    or
+    = link_to_cancel path
+

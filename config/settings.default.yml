@@ -262,6 +262,11 @@
   :url:
     :controller: admin/tags
 - :active: false
+  :text: :admin_tab_research_tools
+  :icon: :fa-search
+  :url:
+    :controller: admin/research_tools
+- :active: false
   :text: :admin_tab_settings
   :icon: :fa-cogs
   :url:

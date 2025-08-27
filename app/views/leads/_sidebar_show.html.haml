@@ -62,4 +62,6 @@
     %dt
       .tags= tags_for_index(@lead)
 
+  = render "shared/research_tools", entity: @lead
+
   = hook(:show_lead_sidebar_bottom, self, lead: @lead)
