@@ -113,7 +113,8 @@ class Admin::FieldsController < Admin::ApplicationController
   protected
 
   def field_params
-    params.require(:field).permit(:as, :collection_string, :disabled, :field_group_id, :hint, :label, :maxlength, :minlength, :name, :pair_id, :placeholder, :position, :required, :type, settings: {})
+    # TODO: Replace :option1, :option2, :option3 with actual permitted keys for settings
+    params.require(:field).permit(:as, :collection_string, :disabled, :field_group_id, :hint, :label, :maxlength, :minlength, :name, :pair_id, :placeholder, :position, :required, :type, settings: [:option1, :option2, :option3])
   end
 
   def pair_params
