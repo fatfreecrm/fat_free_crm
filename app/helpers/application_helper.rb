@@ -552,6 +552,8 @@ module ApplicationHelper
     when "accounts" then "fa-users"
     when "contacts" then "fa-user"
     when "opportunities" then "fa-money"
+    when "products" then "fa-cubes"
+    when "contracts" then "fa-money"
     when "team" then "fa-globe"
     end
   end

@@ -211,6 +211,32 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
   end
 
+  create_table "contracted_products", force: :cascade do |t|
+    t.integer "contract_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contract_id"], name: "index_contracted_products_on_contract_id"
+    t.index ["product_id"], name: "index_contracted_products_on_product_id"
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "assigned_to"
+    t.date "start_date"
+    t.date "end_date"
+    t.string "status"
+    t.text "contract_original_text"
+    t.integer "account_id", null: false
+    t.text "subscribed_users"
+    t.string "access", limit: 8, default: "Public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "\"user_id\", \"name\", \"deleted_at\"", name: "index_contracts_on_user_id_and_name_and_deleted_at", unique: true
+    t.index ["account_id"], name: "index_contracts_on_account_id"
+    t.index ["assigned_to"], name: "index_contracts_on_assigned_to"
+  end
+
   create_table "emails", force: :cascade do |t|
     t.string "imap_message_id", null: false
     t.integer "user_id"
@@ -366,6 +392,25 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
     t.index ["user_id", "name"], name: "index_preferences_on_user_id_and_name"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "assigned_to"
+    t.string "name"
+    t.string "sku"
+    t.text "description"
+    t.string "image_url"
+    t.string "url"
+    t.string "gtin"
+    t.string "brand"
+    t.datetime "deleted_at", precision: nil
+    t.text "subscribed_users"
+    t.string "access", limit: 8, default: "Public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assigned_to"], name: "index_products_on_assigned_to"
+    t.index ["user_id", "name", "deleted_at"], name: "index_products_on_user_id_and_name_and_deleted_at", unique: true
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -486,4 +531,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contracted_products", "contracts"
+  add_foreign_key "contracted_products", "products"
+  add_foreign_key "contracts", "accounts"
 end

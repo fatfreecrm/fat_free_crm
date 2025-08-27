@@ -22,6 +22,8 @@ en-GB:
   tab_accounts: Accounts
   tab_contacts: Contacts
   tab_opportunities: Opportunities
+  tab_products: Products
+  tab_contracts: Contracts
   tab_team: Team
   admin_tab_groups: Groups
   admin_tab_users: Users

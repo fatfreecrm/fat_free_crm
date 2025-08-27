@@ -213,7 +213,11 @@ class EntitiesController < ApplicationController
 
   #----------------------------------------------------------------------------
   def timeline(asset)
-    (asset.comments + asset.emails).sort { |x, y| y.created_at <=> x.created_at }
+    collection = asset.comments
+    if asset.respond_to?(:emails)
+      collection += asset.emails
+    end
+    collection.sort { |x, y| y.created_at <=> x.created_at }
   end
 
   # Sets the current template view for entities in this context

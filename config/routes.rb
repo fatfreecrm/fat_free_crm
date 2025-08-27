@@ -6,6 +6,19 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 Rails.application.routes.draw do
+  resources :contracts do
+    collection do
+      get :redraw
+      get :field_group
+    end
+  end
+
+  resources :products do
+    collection do
+      get :redraw
+      get :field_group
+    end
+  end
   resources :lists
 
   root to: 'home#index'

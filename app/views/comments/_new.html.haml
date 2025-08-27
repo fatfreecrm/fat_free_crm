@@ -11,7 +11,8 @@
   -# Two hidden fields store the IDs of notes and emails shown for the asset. These IDs are used
   -# by [Expand/Collapse All]. The contents gets updated by actions such as [Add] or [Delete].
   = hidden_field_tag :shown_notes, "#{commentable.comment_ids.join(',')}", id: "#{id_prefix}_shown_notes"
-  = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}", id: "#{id_prefix}_shown_emails"
+  - if commentable.respond_to?(:email_ids)
+    = hidden_field_tag :shown_emails, "#{commentable.email_ids.join(',')}", id: "#{id_prefix}_shown_emails"
 
   = link_to avatar_for(current_user, size: :small), user_path(current_user)
   .tools

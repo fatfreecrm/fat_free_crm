@@ -1,0 +1,21 @@
+.panel.collapsible
+  .panel-heading
+    %h3
+      Contracts
+  .panel-body
+    - if account.contracts.any?
+      %table.table
+        %thead
+          %tr
+            %th Start date
+            %th End date
+            %th Status
+        %tbody
+          - account.contracts.each do |contract|
+            %tr
+              %td= link_to contract.start_date, contract_path(contract)
+              %td= contract.end_date
+              %td= contract.status
+    - else
+      .empty
+        No contracts found.
