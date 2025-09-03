@@ -212,7 +212,7 @@ GEM
     factory_bot_rails (6.5.0)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    ffaker (2.24.0)
+    ffaker (2.25.0)
     ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
     font-awesome-rails (4.7.0.9)
