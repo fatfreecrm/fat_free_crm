@@ -201,9 +201,7 @@ GEM
       rails-i18n
     diff-lcs (1.6.2)
     drb (2.2.3)
-    dynamic_form (1.3.1)
-      actionview (> 5.2.0)
-      activemodel (> 5.2.0)
+    dynamic_form (1.2.0)
     email_reply_parser_ffcrm (0.5.0)
     erb (4.0.4)
       cgi (>= 0.3.3)
@@ -544,6 +542,8 @@ GEM
     tilt (2.6.1)
     timecop (0.9.10)
     timeout (0.4.3)
+    trix (0.10.1)
+      rails
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uglifier (4.2.1)
@@ -619,6 +619,7 @@ DEPENDENCIES
   jquery-migrate-rails
   jquery-rails
   jquery-ui-rails!
+  loofah
   mini_magick
   mini_racer
   mutex_m
@@ -660,6 +661,7 @@ DEPENDENCIES
   sqlite3 (~> 1.6.8)
   thor
   timecop
+  trix
   tzinfo-data
   uglifier
   vcardigan

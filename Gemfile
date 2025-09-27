@@ -115,6 +115,8 @@ gem 'bootstrap', '~>5.2.0'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'jquery-ui-rails', git: 'https://github.com/jquery-ui-rails/jquery-ui-rails.git', tag: 'v7.0.0' # See https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
+gem 'trix'
+gem 'loofah'
 
 # Ruby 3.4 explicit dependencies
 gem 'bigdecimal'
