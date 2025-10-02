@@ -366,6 +366,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_025815) do
     t.index ["user_id", "name"], name: "index_preferences_on_user_id_and_name"
   end
 
+  create_table "research_tools", force: :cascade do |t|
+    t.string "name"
+    t.string "url_template"
+    t.boolean "enabled", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"

@@ -317,17 +317,18 @@ Metrics/ClassLength:
 # Offense count: 26
 # Configuration parameters: AllowedMethods, AllowedPatterns.
 Metrics/CyclomaticComplexity:
-  Max: 17
+  Max: 18
 
 # Offense count: 102
 # Configuration parameters: CountComments, CountAsOne, AllowedMethods, AllowedPatterns.
 Metrics/MethodLength:
-  Max: 66
+  Max: 67
+
 
 # Offense count: 25
 # Configuration parameters: AllowedMethods, AllowedPatterns.
 Metrics/PerceivedComplexity:
-  Max: 18
+  Max: 19
 
 # Offense count: 11
 Naming/AccessorMethodName:
@@ -774,7 +775,7 @@ Rails/ApplicationMailer:
     - 'app/mailers/subscription_mailer.rb'
     - 'app/mailers/user_mailer.rb'
 
-# Offense count: 23
+# Offense count: 24
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ApplicationRecord:
   Enabled: false
@@ -1160,7 +1161,7 @@ Style/CaseEquality:
   Exclude:
     - 'app/models/fields/field.rb'
 
-# Offense count: 18
+# Offense count: 19
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, EnforcedStyleForClasses, EnforcedStyleForModules.
 # SupportedStyles: nested, compact

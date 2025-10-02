@@ -45,6 +45,8 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
 
     transaction do
       models.each do |model|
+        next unless model.table_exists?
+
         attachments = model.column_names.map do |c|
           ::Regexp.last_match(1) if c =~ /(.+)_file_name$/
         end.compact

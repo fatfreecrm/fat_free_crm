@@ -576,4 +576,13 @@ module ApplicationHelper
   def current_view_name
     current_user.pref[:"#{controller.controller_name}_#{show_or_index_action}_view"]
   end
+
+  def expand_research_tool_url(tool, entity)
+    template = Addressable::Template.new(tool.url_template)
+    mappings = {}
+    template.keys.each do |key| # rubocop:disable Style/HashEachMethods
+      mappings[key] = entity.send(key) if entity.respond_to?(key)
+    end
+    template.expand(mappings).to_s
+  end
 end

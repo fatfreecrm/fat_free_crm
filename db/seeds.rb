@@ -8,4 +8,5 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-# ~ require Rails.root.join('db/seeds/fields')
+require Rails.root.join('db/seeds/fields')
+require Rails.root.join('db/seeds/research_tools')
