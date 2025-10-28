@@ -241,7 +241,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    haml (6.3.0)
+    haml (6.4.0)
       temple (>= 0.8.2)
       thor
       tilt
@@ -540,7 +540,7 @@ GEM
       net-ssh (>= 2.8.0)
       ostruct
     stringio (3.1.7)
-    temple (0.10.3)
+    temple (0.10.4)
     thor (1.4.0)
     tilt (2.6.1)
     timecop (0.9.10)
