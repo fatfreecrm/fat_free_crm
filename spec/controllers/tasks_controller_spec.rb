@@ -464,15 +464,15 @@ describe TasksController do
   # PUT /tasks/1/complete
   # PUT /leads/1/complete.xml                                              AJAX
   #----------------------------------------------------------------------------
-  describe "responding to PUT uncomplete" do
+  describe "responding to PUT incomplete" do
     it "should change task status, expose task as @task, and render template" do
       @task = create(:task, completed_at: Time.now, user: current_user)
 
-      put :uncomplete, params: { id: @task.id }, xhr: true
+      put :incomplete, params: { id: @task.id }, xhr: true
       expect(@task.reload.completed_at).to eq(nil)
       expect(assigns[:task]).to eq(@task)
       expect(assigns[:task_total]).not_to eq(nil)
-      expect(response).to render_template("tasks/uncomplete")
+      expect(response).to render_template("tasks/incomplete")
     end
 
     describe "task got deleted" do
@@ -480,7 +480,7 @@ describe TasksController do
         @task = create(:task, user: create(:user), assignee: current_user, completed_at: Time.now)
         @task.destroy
 
-        put :uncomplete, params: { id: @task.id }, xhr: true
+        put :incomplete, params: { id: @task.id }, xhr: true
         expect(flash[:warning]).not_to eq(nil)
         expect(response.body).to eq("window.location.reload();")
       end
