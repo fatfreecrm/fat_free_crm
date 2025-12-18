@@ -1,0 +1,89 @@
+.sidebar-section
+  %h4 #{t :sample_details}
+
+  %table.fields
+    %tr
+      %td.label #{t :status}:
+      %td
+        %span.badge{class: "bg-#{@sample.status == 'available' ? 'success' : (@sample.status == 'checked_out' ? 'warning' : 'secondary')}"}
+          = t(@sample.status || 'available')
+
+    - if @sample.brand.present?
+      %tr
+        %td.label #{t :brand}:
+        %td= @sample.brand
+
+    - if @sample.location.present?
+      %tr
+        %td.label #{t :location}:
+        %td= @sample.location
+
+    - if @sample.qr_code.present?
+      %tr
+        %td.label #{t :qr_code}:
+        %td
+          %code= @sample.qr_code
+
+    - if @sample.sku.present?
+      %tr
+        %td.label #{t :sku}:
+        %td
+          %code= @sample.sku
+
+    - if @sample.bundle.present?
+      %tr
+        %td.label #{t :bundle}:
+        %td= link_to @sample.bundle.name, @sample.bundle
+
+.sidebar-section
+  %h4 #{t :pricing}
+
+  %table.fields
+    - if @sample.original_price.present?
+      %tr
+        %td.label #{t :original_price}:
+        %td
+          %del= number_to_currency(@sample.original_price)
+
+    - if @sample.best_price.present?
+      %tr
+        %td.label #{t :best_price}:
+        %td
+          %strong.text-success= number_to_currency(@sample.best_price)
+
+    - if @sample.discount_percentage
+      %tr
+        %td.label #{t :discount}:
+        %td
+          %span.badge.bg-success #{@sample.discount_percentage}% OFF
+
+    %tr
+      %td.label #{t :fire_sale}:
+      %td
+        - if @sample.has_fire_sale
+          %span.badge.bg-danger YES
+        - else
+          %span.badge.bg-secondary NO
+
+- if @sample.tiktok_affiliate_link.present?
+  .sidebar-section
+    %h4 #{t :tiktok}
+    = link_to @sample.tiktok_affiliate_link, @sample.tiktok_affiliate_link, target: "_blank", class: "btn btn-sm btn-outline-primary"
+      %i.fa.fa-external-link
+      View on TikTok
+
+- if @sample.status == 'checked_out'
+  .sidebar-section
+    %h4 #{t :checkout_info}
+    %table.fields
+      %tr
+        %td.label #{t :checked_out_at}:
+        %td= l(@sample.checked_out_at, format: :short) if @sample.checked_out_at
+      %tr
+        %td.label #{t :checked_out_by}:
+        %td= @sample.checked_out_user&.name
+
+- if @sample.picture.attached?
+  .sidebar-section
+    %h4 #{t :picture}
+    = image_tag @sample.picture, style: "max-width: 100%; border-radius: 8px;"

@@ -41,6 +41,55 @@ Rails.application.routes.draw do
   resources :comments,       except: %i[new show]
   resources :emails,         only: [:destroy]
 
+  # Inventory Management Routes
+  resources :samples, id: /\d+/ do
+    collection do
+      get :advanced_search
+      post :filter
+      get :options
+      get :field_group
+      match :auto_complete, via: %i[get post]
+      get :redraw
+      get :versions
+    end
+    member do
+      put :attach
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      put :checkout
+      put :checkin
+    end
+  end
+
+  resources :bundles, id: /\d+/ do
+    collection do
+      get :advanced_search
+      post :filter
+      get :options
+      get :field_group
+      match :auto_complete, via: %i[get post]
+      get :redraw
+      get :versions
+    end
+    member do
+      put :attach
+      post :discard
+      post :subscribe
+      post :unsubscribe
+      get :samples
+    end
+  end
+
+  # Inventory Checkout (Barcode Scanner)
+  namespace :inventory do
+    get 'checkout', to: 'checkout#index'
+    post 'checkout/scan', to: 'checkout#scan'
+    post 'checkout/process', to: 'checkout#process_checkout'
+    post 'checkout/return', to: 'checkout#process_return'
+    get 'checkout/lookup/:code', to: 'checkout#lookup', as: :checkout_lookup
+  end
+
   resources :accounts, id: /\d+/ do
     collection do
       get :advanced_search

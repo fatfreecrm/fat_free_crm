@@ -1,0 +1,46 @@
+= hook(:sample_top_section, self, f: f) do
+  .section
+    %table
+      %tr
+        %td{class: (@sample.errors['name'].present? ? 'fieldWithErrors' : nil)}(colspan="5")
+          .label.top.req #{t :name}:
+          = f.text_field :name, autofocus: true, style: "width:500px", required: "required"
+      %tr
+        %td
+          .label #{t :brand}:
+          = f.text_field :brand, style: "width:160px"
+        %td= spacer
+        %td
+          .label #{t :location}:
+          = f.text_field :location, style: "width:160px"
+        %td= spacer
+        %td
+          .label #{t :status}:
+          = f.select :status, [['Available', 'available'], ['Checked Out', 'checked_out'], ['Reserved', 'reserved'], ['Discontinued', 'discontinued']], { selected: (@sample.status || 'available') }, { style: "width:160px", class: 'select2' }
+      %tr
+        %td
+          .label #{t :qr_code}:
+          = f.text_field :qr_code, style: "width:160px"
+        %td= spacer
+        %td
+          .label #{t :sku}:
+          = f.text_field :sku, style: "width:160px"
+        %td= spacer
+        %td
+          .label #{t :bundle}:
+          = f.collection_select :bundle_id, @bundles || [], :id, :name, { include_blank: t(:select_bundle) }, { style: "width:160px", class: 'select2' }
+      %tr
+        %td(colspan="5")
+          .label #{t :picture}:
+          = f.file_field :picture, accept: "image/*", style: "width:500px"
+          - if @sample.picture.attached?
+            %br
+            = image_tag @sample.picture.variant(resize_to_limit: [100, 100]), class: "mt-2"
+      %tr
+        %td(colspan="5")
+          .label #{t :description}:
+          = f.text_area :description, style: "width:500px", rows: 3
+
+      = render partial: "/shared/tags", locals: {f: f, span: 3}
+
+      = hook(:sample_top_section_bottom, self, f: f)

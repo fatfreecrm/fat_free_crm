@@ -1,0 +1,4 @@
+.search-container
+  = form_tag samples_path, method: :get, remote: true, id: "search_form" do
+    = text_field_tag :query, params[:query], placeholder: t(:search_samples), class: "search-input form-control"
+    = submit_tag t(:search), class: "btn btn-primary"

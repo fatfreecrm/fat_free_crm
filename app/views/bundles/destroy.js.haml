@@ -1,0 +1,3 @@
+$('#bundle_' + "#{@bundle.id}").remove()
+$('#paginate').html("#{j render('shared/paginate_with_per_page')}")
+$('#sidebar').html("#{j render('bundles/sidebar_index')}")

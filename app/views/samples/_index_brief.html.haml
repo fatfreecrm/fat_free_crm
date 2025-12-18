@@ -1,0 +1,48 @@
+%li.highlight[sample]
+  - if sample.status
+    .strip{class: sample.status} #{t(sample.status)}
+  - else
+    .strip{style: "color: gray;"} #{t :available}
+
+  - if sample.has_fire_sale
+    %span.badge.bg-danger.ms-2 FIRE SALE
+
+  %ul.tools
+    = hook(:sample_tools_before, self, sample: sample)
+
+    - if can?(:update, sample)
+      %li= link_to_edit(sample)
+
+    - if can?(:destroy, sample)
+      %li= link_to_delete(sample)
+
+  .indent
+    - if sample.picture.attached?
+      = image_tag sample.picture.variant(resize_to_limit: [50, 50]), class: "me-2", style: "vertical-align: middle; border-radius: 4px;"
+    = link_to(sample.full_name, sample)
+    - if sample.best_price
+      %span.amount= number_to_currency(sample.best_price)
+      - if sample.discount_percentage
+        %span.badge.bg-success.ms-1 #{sample.discount_percentage}% OFF
+    &ndash;
+    %tt
+      - if sample.brand.present?
+        %strong= sample.brand
+        |
+      = sample.location + ", " unless sample.location.blank?
+      - if sample.bundle
+        = link_to sample.bundle.name, sample.bundle
+        |
+      - user_name = sample.user.try(:full_name)
+      - if user_name
+        = t(:added_by, time_ago: timeago(sample.created_at), user: h(user_name)).html_safe
+      - else
+        = t(:added_ago, value: timeago(sample.created_at)).html_safe
+
+    - if sample.tiktok_affiliate_link.present?
+      %br
+      %small
+        %i.fa.fa-external-link
+        = link_to "TikTok Affiliate", sample.tiktok_affiliate_link, target: "_blank", class: "text-primary"
+
+    = hook(:sample_bottom, self, sample: sample)

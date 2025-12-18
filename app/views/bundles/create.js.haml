@@ -1,0 +1,11 @@
+- if @bundle.errors.empty?
+  - if controller.controller_name == 'bundles'
+    crm.flip_form("create_bundle")
+    $('#bundles').prepend("#{j render(@bundle)}")
+    $('#paginate').html("#{j render('shared/paginate_with_per_page')}")
+    $('#sidebar').html("#{j render('bundles/sidebar_index')}")
+    crm.make_sortable("bundles")
+    crm.highlight('#bundle_' + "#{@bundle.id}")
+- else
+  $('#create_bundle').html("#{j render('bundles/new')}")
+  crm.init_form_data_type()

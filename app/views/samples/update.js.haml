@@ -1,0 +1,8 @@
+- if @sample.errors.empty?
+  crm.flip_form("edit_sample")
+  $('#sample_' + "#{@sample.id}").replaceWith("#{j render(@sample)}")
+  $('#sidebar').html("#{j render('samples/sidebar_index')}")
+  crm.highlight('#sample_' + "#{@sample.id}")
+- else
+  $('#edit_sample').html("#{j render('samples/edit')}")
+  crm.init_form_data_type()

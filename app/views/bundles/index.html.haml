@@ -1,0 +1,18 @@
+= styles_for :bundle
+
+= render 'entities/title_bar'
+
+.remote#create_bundle{ hidden }
+
+= render 'search'
+
+.remote#options{ hidden }
+
+.list#bundles
+  - if @bundles.any?
+    = render @bundles
+  - else
+    = render "shared/empty"
+
+#paginate= render "shared/paginate_with_per_page"
+#export= render "shared/export"

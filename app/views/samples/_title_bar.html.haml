@@ -1,0 +1,21 @@
+#confirm{ hidden }
+.title_tools#menu
+  = link_to_inline(:edit_sample, edit_sample_path(@sample), text: t(:edit)) + " | "
+  = link_to_function(t(:delete) + '?', confirm_delete(@sample))
+  - if @sample.status == 'available'
+    |
+    = link_to t(:checkout), checkout_sample_path(@sample), method: :put, class: 'text-success', data: { confirm: t(:confirm_checkout) }
+  - elsif @sample.status == 'checked_out'
+    |
+    = link_to t(:checkin), checkin_sample_path(@sample), method: :put, class: 'text-warning', data: { confirm: t(:confirm_checkin) }
+.title_tools#buttons
+  = view_buttons
+.title#edit_sample_title
+  - if @sample.picture.attached?
+    = image_tag @sample.picture.variant(resize_to_limit: [40, 40]), class: "me-2", style: "vertical-align: middle; border-radius: 4px;"
+  = h(@sample.full_name)
+  - if @sample.has_fire_sale
+    %span.badge.bg-danger.ms-2 FIRE SALE
+  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
+
+%div#edit_sample{ hidden }

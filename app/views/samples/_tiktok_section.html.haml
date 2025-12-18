@@ -1,0 +1,11 @@
+.section
+  %h4 #{t :tiktok_info}
+  %table
+    %tr
+      %td(colspan="5")
+        .label #{t :tiktok_affiliate_link}:
+        = f.text_field :tiktok_affiliate_link, style: "width:500px", placeholder: "https://www.tiktok.com/..."
+    %tr
+      %td(colspan="5")
+        .label #{t :notes}:
+        = f.text_area :notes, style: "width:500px", rows: 2

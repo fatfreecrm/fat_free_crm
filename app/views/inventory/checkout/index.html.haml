@@ -1,0 +1,497 @@
+- content_for :stylesheet_includes do
+  :css
+    .checkout-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .scanner-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 30px;
+      color: white;
+      text-align: center;
+    }
+    .scanner-input {
+      font-size: 24px;
+      padding: 20px 30px;
+      border: none;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .scanner-input:focus {
+      outline: none;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+    .scanner-hint {
+      margin-top: 15px;
+      opacity: 0.9;
+      font-size: 14px;
+    }
+    .sample-display {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+      margin-bottom: 30px;
+      display: none;
+    }
+    .sample-display.active {
+      display: block;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .sample-image {
+      max-width: 300px;
+      max-height: 300px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .sample-placeholder {
+      width: 300px;
+      height: 300px;
+      background: #f0f0f0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 60px;
+    }
+    .sample-info {
+      flex: 1;
+      padding-left: 30px;
+    }
+    .sample-name {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .sample-brand {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .fire-sale-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .price-section {
+      margin: 20px 0;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+    .best-price {
+      font-size: 36px;
+      font-weight: bold;
+      color: #28a745;
+    }
+    .original-price {
+      font-size: 18px;
+      color: #999;
+      text-decoration: line-through;
+      margin-left: 10px;
+    }
+    .discount-badge {
+      background: #28a745;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-left: 10px;
+    }
+    .tiktok-link {
+      display: inline-flex;
+      align-items: center;
+      background: #000;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 15px;
+      transition: transform 0.2s;
+    }
+    .tiktok-link:hover {
+      transform: scale(1.05);
+      color: white;
+    }
+    .tiktok-link i {
+      margin-right: 8px;
+    }
+    .action-buttons {
+      margin-top: 30px;
+      display: flex;
+      gap: 15px;
+    }
+    .action-buttons .btn {
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .status-available { background: #d4edda; color: #155724; }
+    .status-checked_out { background: #fff3cd; color: #856404; }
+    .status-reserved { background: #cce5ff; color: #004085; }
+    .recent-checkouts {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    .recent-checkouts h3 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .checkout-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    .checkout-item:last-child {
+      border-bottom: none;
+    }
+    .checkout-item img {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+    .error-message {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      display: none;
+    }
+    .error-message.active {
+      display: block;
+      animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    .loading-spinner {
+      display: none;
+      text-align: center;
+      padding: 40px;
+    }
+    .loading-spinner.active {
+      display: block;
+    }
+
+.checkout-container
+  .scanner-section
+    %h2
+      %i.fa.fa-barcode
+      Barcode Scanner Checkout
+    %p.mb-4 Scan a QR code or barcode to view sample details
+    %input#barcode-input.scanner-input{type: "text", placeholder: "Scan or type barcode...", autofocus: true, autocomplete: "off"}
+    %p.scanner-hint
+      %i.fa.fa-info-circle
+      Scanner will automatically detect input. Press Enter to search manually.
+
+  #loading-spinner.loading-spinner
+    %i.fa.fa-spinner.fa-spin.fa-3x
+    %p.mt-3 Loading sample data...
+
+  #error-display.error-message
+    %h4
+      %i.fa.fa-exclamation-triangle
+      Sample Not Found
+    %p#error-text The scanned code does not match any sample in the inventory.
+
+  #sample-display.sample-display
+    .d-flex
+      #sample-image-container
+        .sample-placeholder
+          %i.fa.fa-image
+      .sample-info
+        .d-flex.align-items-center.mb-2
+          %h2#sample-name.sample-name
+          #fire-sale-badge.fire-sale-badge.ms-3{style: "display: none;"}
+            %i.fa.fa-fire
+            FIRE SALE!
+        %p#sample-brand.sample-brand
+        %span#sample-status.status-badge.status-available Available
+
+        .price-section
+          %span#best-price.best-price
+          %span#original-price.original-price
+          %span#discount-badge.discount-badge
+
+        %p#sample-description
+
+        #tiktok-section{style: "display: none;"}
+          %a#tiktok-link.tiktok-link{href: "#", target: "_blank"}
+            %i.fa.fa-external-link
+            View on TikTok - Best Price
+
+        .action-buttons
+          %button#checkout-btn.btn.btn-success.btn-lg{style: "display: none;"}
+            %i.fa.fa-check
+            Check Out Sample
+          %button#return-btn.btn.btn-warning.btn-lg{style: "display: none;"}
+            %i.fa.fa-undo
+            Return Sample
+          %a#view-details-btn.btn.btn-outline-primary.btn-lg{href: "#"}
+            %i.fa.fa-info-circle
+            View Full Details
+
+  .recent-checkouts
+    %h3
+      %i.fa.fa-history
+      Your Recent Checkouts
+    - if @recent_checkouts.any?
+      - @recent_checkouts.each do |sample|
+        .checkout-item
+          - if sample.picture.attached?
+            = image_tag sample.picture.variant(resize_to_limit: [50, 50])
+          - else
+            .sample-placeholder{style: "width: 50px; height: 50px; font-size: 20px;"}
+              %i.fa.fa-image
+          .flex-grow-1
+            %strong= sample.full_name
+            %br
+            %small.text-muted
+              Checked out
+              = time_ago_in_words(sample.checked_out_at)
+              ago
+          = link_to "Return", process_return_inventory_checkout_path(code: sample.qr_code || sample.sku), method: :post, class: "btn btn-sm btn-outline-warning", data: { confirm: "Return this sample?" }
+    - else
+      %p.text-muted No recent checkouts
+
+- content_for :javascript do
+  :javascript
+    $(document).ready(function() {
+      var barcodeInput = $('#barcode-input');
+      var sampleDisplay = $('#sample-display');
+      var errorDisplay = $('#error-display');
+      var loadingSpinner = $('#loading-spinner');
+      var currentSample = null;
+      var inputBuffer = '';
+      var lastKeyTime = Date.now();
+
+      // Focus on input when page loads
+      barcodeInput.focus();
+
+      // Re-focus on input when clicking anywhere
+      $(document).on('click', function(e) {
+        if (!$(e.target).is('input, button, a, select')) {
+          barcodeInput.focus();
+        }
+      });
+
+      // Handle barcode scanner input (usually sends characters rapidly followed by Enter)
+      barcodeInput.on('keypress', function(e) {
+        if (e.which === 13) { // Enter key
+          e.preventDefault();
+          var code = barcodeInput.val().trim();
+          if (code.length > 0) {
+            lookupSample(code);
+          }
+        }
+      });
+
+      // Auto-submit after rapid input (barcode scanner behavior)
+      barcodeInput.on('input', function() {
+        var currentTime = Date.now();
+        var timeDiff = currentTime - lastKeyTime;
+        lastKeyTime = currentTime;
+
+        // If input is coming in very rapidly (< 50ms between chars), it's likely a scanner
+        if (timeDiff < 50) {
+          clearTimeout(window.scannerTimeout);
+          window.scannerTimeout = setTimeout(function() {
+            var code = barcodeInput.val().trim();
+            if (code.length > 3) {
+              lookupSample(code);
+            }
+          }, 100);
+        }
+      });
+
+      function lookupSample(code) {
+        hideAll();
+        loadingSpinner.addClass('active');
+
+        $.ajax({
+          url: '/inventory/checkout/scan',
+          method: 'POST',
+          data: { code: code },
+          dataType: 'json',
+          success: function(data) {
+            loadingSpinner.removeClass('active');
+            currentSample = data;
+            displaySample(data);
+            barcodeInput.val('').focus();
+          },
+          error: function(xhr) {
+            loadingSpinner.removeClass('active');
+            var response = xhr.responseJSON || {};
+            showError(response.error || 'Sample not found', code);
+            barcodeInput.val('').focus();
+          }
+        });
+      }
+
+      function hideAll() {
+        sampleDisplay.removeClass('active');
+        errorDisplay.removeClass('active');
+        loadingSpinner.removeClass('active');
+      }
+
+      function showError(message, code) {
+        errorDisplay.find('#error-text').text(message + ' (Code: ' + code + ')');
+        errorDisplay.addClass('active');
+      }
+
+      function displaySample(sample) {
+        // Set sample name and brand
+        $('#sample-name').text(sample.full_name || sample.name);
+        $('#sample-brand').text(sample.brand ? 'Brand: ' + sample.brand : '');
+
+        // Set image
+        var imageContainer = $('#sample-image-container');
+        if (sample.picture_url) {
+          imageContainer.html('<img src="' + sample.picture_url + '" class="sample-image" alt="' + sample.name + '">');
+        } else {
+          imageContainer.html('<div class="sample-placeholder"><i class="fa fa-image"></i></div>');
+        }
+
+        // Fire sale badge
+        if (sample.has_fire_sale) {
+          $('#fire-sale-badge').show();
+        } else {
+          $('#fire-sale-badge').hide();
+        }
+
+        // Status badge
+        var statusBadge = $('#sample-status');
+        statusBadge.removeClass('status-available status-checked_out status-reserved');
+        statusBadge.addClass('status-' + sample.status);
+        statusBadge.text(sample.status.charAt(0).toUpperCase() + sample.status.slice(1).replace('_', ' '));
+
+        // Pricing
+        if (sample.best_price) {
+          $('#best-price').text('$' + parseFloat(sample.best_price).toFixed(2));
+        } else {
+          $('#best-price').text('Price not set');
+        }
+
+        if (sample.original_price && sample.original_price > sample.best_price) {
+          $('#original-price').text('$' + parseFloat(sample.original_price).toFixed(2)).show();
+        } else {
+          $('#original-price').hide();
+        }
+
+        if (sample.discount_percentage) {
+          $('#discount-badge').text(sample.discount_percentage + '% OFF').show();
+        } else {
+          $('#discount-badge').hide();
+        }
+
+        // Description
+        $('#sample-description').text(sample.description || '');
+
+        // TikTok link
+        if (sample.tiktok_affiliate_link) {
+          $('#tiktok-link').attr('href', sample.tiktok_affiliate_link);
+          $('#tiktok-section').show();
+        } else {
+          $('#tiktok-section').hide();
+        }
+
+        // Action buttons based on status
+        if (sample.status === 'available') {
+          $('#checkout-btn').show();
+          $('#return-btn').hide();
+        } else if (sample.status === 'checked_out') {
+          $('#checkout-btn').hide();
+          $('#return-btn').show();
+        } else {
+          $('#checkout-btn').hide();
+          $('#return-btn').hide();
+        }
+
+        // View details link
+        $('#view-details-btn').attr('href', '/samples/' + sample.id);
+
+        sampleDisplay.addClass('active');
+      }
+
+      // Checkout button handler
+      $('#checkout-btn').on('click', function() {
+        if (!currentSample) return;
+
+        $.ajax({
+          url: '/inventory/checkout/process',
+          method: 'POST',
+          data: { code: currentSample.qr_code || currentSample.sku },
+          dataType: 'json',
+          success: function(data) {
+            currentSample.status = 'checked_out';
+            displaySample(currentSample);
+            alert('Sample checked out successfully!');
+            location.reload();
+          },
+          error: function(xhr) {
+            var response = xhr.responseJSON || {};
+            alert('Error: ' + (response.error || 'Could not check out sample'));
+          }
+        });
+      });
+
+      // Return button handler
+      $('#return-btn').on('click', function() {
+        if (!currentSample) return;
+
+        $.ajax({
+          url: '/inventory/checkout/return',
+          method: 'POST',
+          data: { code: currentSample.qr_code || currentSample.sku },
+          dataType: 'json',
+          success: function(data) {
+            currentSample.status = 'available';
+            displaySample(currentSample);
+            alert('Sample returned successfully!');
+            location.reload();
+          },
+          error: function(xhr) {
+            var response = xhr.responseJSON || {};
+            alert('Error: ' + (response.error || 'Could not return sample'));
+          }
+        });
+      });
+    });

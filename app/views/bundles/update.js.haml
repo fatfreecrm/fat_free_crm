@@ -1,0 +1,8 @@
+- if @bundle.errors.empty?
+  crm.flip_form("edit_bundle")
+  $('#bundle_' + "#{@bundle.id}").replaceWith("#{j render(@bundle)}")
+  $('#sidebar').html("#{j render('bundles/sidebar_index')}")
+  crm.highlight('#bundle_' + "#{@bundle.id}")
+- else
+  $('#edit_bundle').html("#{j render('bundles/edit')}")
+  crm.init_form_data_type()

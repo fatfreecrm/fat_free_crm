@@ -26,6 +26,9 @@ en-US:
   tab_contacts: Contacts
   tab_opportunities: Opportunities
   tab_team: Team
+  tab_samples: Samples
+  tab_bundles: Bundles
+  tab_checkout: Checkout
   admin_tab_groups: Groups
   admin_tab_users: Users
   admin_tab_fields: Custom Fields
@@ -158,6 +161,20 @@ en-US:
               missing_task_name: ^Please specify task name.
             calendar:
               invalid_date: ^Please specify valid date.
+        sample:
+          attributes:
+            name:
+              missing_sample_name: ^Please specify sample name.
+            access:
+              share_sample: ^Please specify users with whom to share the sample.
+        bundle:
+          attributes:
+            name:
+              missing_bundle_name: ^Please specify bundle name.
+            qr_code:
+              missing_bundle_qr_code: ^Please specify bundle QR code.
+            access:
+              share_bundle: ^Please specify users with whom to share the bundle.
         user:
           attributes:
             username:
@@ -951,3 +968,83 @@ en-US:
     from_to: From %{from} to %{to}
     from_only: From %{from}
     to_only: Until %{to}
+
+  # Inventory Management - Samples
+  #----------------------------------------------------------------------------
+  sample: Sample
+  samples: Samples
+  sample_small: sample
+  create_sample: Create Sample
+  save_sample: Save Sample
+  sample_details: Sample Details
+  sample_status: Sample Status
+  search_samples: Search samples...
+  total_samples: Total Samples
+  no_sample_records: No samples found.
+  create_sample_small: create sample
+
+  # Sample Fields
+  brand: Brand
+  location: Location
+  qr_code: QR Code
+  sku: SKU
+  picture: Picture
+  description: Description
+  notes: Notes
+
+  # Sample Status
+  available: Available
+  checked_out: Checked Out
+  reserved: Reserved
+  discontinued: Discontinued
+
+  # Pricing
+  pricing_info: Pricing Information
+  original_price: Original Price
+  best_price: Best Price on TikTok
+  fire_sale: Fire Sale
+  has_fire_sale: Has Fire Sale
+  discount: Discount
+
+  # TikTok Integration
+  tiktok_info: TikTok Information
+  tiktok_affiliate_link: TikTok Affiliate Link
+  tiktok: TikTok
+
+  # Checkout
+  checkout: Checkout
+  checkin: Check In
+  checkout_info: Checkout Information
+  checked_out_at: Checked Out At
+  checked_out_by: Checked Out By
+  sample_checked_out: Sample has been checked out successfully.
+  sample_checked_in: Sample has been checked in successfully.
+  confirm_checkout: Are you sure you want to check out this sample?
+  confirm_checkin: Are you sure you want to check in this sample?
+
+  # Inventory Management - Bundles
+  #----------------------------------------------------------------------------
+  bundle: Bundle
+  bundles: Bundles
+  bundle_small: bundle
+  create_bundle: Create Bundle
+  save_bundle: Save Bundle
+  bundle_details: Bundle Details
+  bundle_locations: Bundle Locations
+  search_bundles: Search bundles...
+  total_bundles: Total Bundles
+  no_bundle_records: No bundles found.
+  create_bundle_small: create bundle
+  select_bundle: "-- Select Bundle --"
+  samples_count: Samples Count
+  available_samples: Available Samples
+  total_value: Total Value
+  samples_in_bundle: Samples in Bundle
+  no_samples_in_bundle: No samples in this bundle.
+  no_location: No Location
+
+  # Pluralizations for inventory
+  pluralize:
+    sample:
+      one: 1 sample
+      other: ! '%{count} samples'

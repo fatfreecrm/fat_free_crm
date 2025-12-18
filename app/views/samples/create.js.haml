@@ -1,0 +1,11 @@
+- if @sample.errors.empty?
+  - if controller.controller_name == 'samples'
+    crm.flip_form("create_sample")
+    $('#samples').prepend("#{j render(@sample)}")
+    $('#paginate').html("#{j render('shared/paginate_with_per_page')}")
+    $('#sidebar').html("#{j render('samples/sidebar_index')}")
+    crm.make_sortable("samples")
+    crm.highlight('#sample_' + "#{@sample.id}")
+- else
+  $('#create_sample').html("#{j render('samples/new')}")
+  crm.init_form_data_type()

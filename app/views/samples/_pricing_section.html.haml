@@ -1,0 +1,16 @@
+.section
+  %h4 #{t :pricing_info}
+  %table
+    %tr
+      %td
+        .label #{t :original_price}:
+        = f.text_field :original_price, style: "width:120px", placeholder: "0.00"
+      %td= spacer
+      %td
+        .label #{t :best_price}:
+        = f.text_field :best_price, style: "width:120px", placeholder: "0.00"
+      %td= spacer
+      %td
+        .label #{t :fire_sale}:
+        = f.check_box :has_fire_sale, class: "form-check-input"
+        = f.label :has_fire_sale, t(:has_fire_sale), class: "form-check-label ms-2"

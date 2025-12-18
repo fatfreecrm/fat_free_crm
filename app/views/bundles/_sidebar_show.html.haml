@@ -1,0 +1,36 @@
+.sidebar-section
+  %h4 #{t :bundle_details}
+
+  %table.fields
+    %tr
+      %td.label #{t :qr_code}:
+      %td
+        %code= @bundle.qr_code
+
+    - if @bundle.location.present?
+      %tr
+        %td.label #{t :location}:
+        %td= @bundle.location
+
+    %tr
+      %td.label #{t :samples_count}:
+      %td= @bundle.samples.count
+
+    %tr
+      %td.label #{t :available_samples}:
+      %td= @bundle.available_samples_count
+
+    %tr
+      %td.label #{t :total_value}:
+      %td= number_to_currency(@bundle.total_value)
+
+    - if @bundle.fire_sale_samples_count > 0
+      %tr
+        %td.label #{t :fire_sale}:
+        %td
+          %span.badge.bg-danger #{@bundle.fire_sale_samples_count} items
+
+- if @bundle.description.present?
+  .sidebar-section
+    %h4 #{t :description}
+    %p= @bundle.description

@@ -1,0 +1,16 @@
+= simple_form_for(@bundle, html: one_submit_only, remote: true) do |f|
+  = link_to_close bundle_path(@bundle)
+  = f.hidden_field :user_id
+
+  = f.error_messages object_name: t('bundle')
+
+  = render "bundles/top_section", f: f
+  = render "fields/edit_custom_field_group", f: f
+  = render "fields/groups", f: f
+  = render "entities/permissions", f: f, entity: @bundle
+  = hook(:entity_form, self, {f: f, entity: @bundle})
+
+  .buttonbar
+    = f.submit t(:save_bundle), class: 'btn btn-primary'
+    #{t :or}
+    = link_to_cancel bundle_path(@bundle)

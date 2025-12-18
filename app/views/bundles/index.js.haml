@@ -1,0 +1,4 @@
+$('#bundles').html("#{j render(@bundles)}")
+$('#paginate').html("#{j render('shared/paginate_with_per_page')}")
+$('#sidebar').html("#{j render('bundles/sidebar_index')}")
+crm.make_sortable("bundles")

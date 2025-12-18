@@ -1,0 +1,4 @@
+$('#samples').html("#{j render(@samples)}")
+$('#paginate').html("#{j render('shared/paginate_with_per_page')}")
+$('#sidebar').html("#{j render('samples/sidebar_index')}")
+crm.make_sortable("samples")

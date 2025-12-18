@@ -1,0 +1,20 @@
+.filters#filters
+  .caption= t :bundle_locations
+  - (@bundle_location_total.keys - [:all, :other]).each do |loc|
+    .check_box
+      %div{style: "float:right;"}
+        = @bundle_location_total[loc] || 0
+      = bundle_location_checkbox(loc, @bundle_location_total[loc] || 0)
+      = label_tag(loc, loc)
+
+  .check_box
+    %div{style: "float:right;"}
+      = @bundle_location_total[:other] || 0
+    = bundle_location_checkbox("other", @bundle_location_total[:other] || 0)
+    = label_tag(:other, t(:other))
+
+  .check_box
+    %div{style: "float:right;"}
+      %b= @bundle_location_total[:all] || 0
+    %b #{t :total_bundles}
+  = hook(:index_bundle_sidebar_bottom, self)

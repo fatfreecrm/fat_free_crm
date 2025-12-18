@@ -1,0 +1,18 @@
+= styles_for :sample
+
+= render 'entities/title_bar'
+
+.remote#create_sample{ hidden }
+
+= render 'search'
+
+.remote#options{ hidden }
+
+.list#samples
+  - if @samples.any?
+    = render @samples
+  - else
+    = render "shared/empty"
+
+#paginate= render "shared/paginate_with_per_page"
+#export= render "shared/export"

@@ -1,0 +1,21 @@
+- if (template = template_for_current_view)
+  = render(template, sample: @sample)
+- else
+
+  -# default view
+
+  = styles_for :task, :sample
+
+  = render 'samples/title_bar', sample: @sample
+  = render 'samples/sidebar_show', sample: @sample
+
+  %div#edit_sample{ hidden }
+
+  = render "comments/new", commentable: @sample
+  = render partial: "shared/timeline", collection: @timeline
+
+  = hook(:show_sample_bottom, self, {entity: @sample}) do
+
+    = render partial: "tasks/tasks", locals: {object: @sample}
+
+    = render "versions/versions", object: @sample

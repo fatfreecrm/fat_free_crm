@@ -1,0 +1,20 @@
+.filters#filters
+  .caption= t :sample_status
+  - %w[available checked_out reserved discontinued].each do |status|
+    .check_box
+      %div{style: "float:right;"}
+        = @sample_status_total[status] || 0
+      = sample_status_checkbox(status, @sample_status_total[status] || 0)
+      = label_tag(status, t(status))
+
+  .check_box
+    %div{style: "float:right;"}
+      = @sample_status_total[:fire_sale] || 0
+    = sample_status_checkbox("fire_sale", @sample_status_total[:fire_sale] || 0)
+    = label_tag(:fire_sale, t(:fire_sale))
+
+  .check_box
+    %div{style: "float:right;"}
+      %b= @sample_status_total[:all] || 0
+    %b #{t :total_samples}
+  = hook(:index_sample_sidebar_bottom, self)

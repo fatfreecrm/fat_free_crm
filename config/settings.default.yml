@@ -239,6 +239,22 @@
   :url:
     :controller: users
     :action: opportunities_overview
+- :active: false
+  :text: :tab_samples
+  :icon: :fa-cube
+  :url:
+    :controller: samples
+- :active: false
+  :text: :tab_bundles
+  :icon: :fa-cubes
+  :url:
+    :controller: bundles
+- :active: false
+  :text: :tab_checkout
+  :icon: :fa-barcode
+  :url:
+    :controller: inventory/checkout
+    :action: index
 
 :admin_tabs:
 - :active: true

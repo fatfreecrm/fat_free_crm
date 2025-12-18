@@ -1,0 +1,34 @@
+%li.highlight[bundle]
+  - if bundle.location
+    .strip{class: bundle.location.parameterize} #{bundle.location}
+  - else
+    .strip{style: "color: gray;"} #{t :no_location}
+
+  %ul.tools
+    = hook(:bundle_tools_before, self, bundle: bundle)
+
+    - if can?(:update, bundle)
+      %li= link_to_edit(bundle)
+
+    - if can?(:destroy, bundle)
+      %li= link_to_delete(bundle)
+
+  .indent
+    = link_to(bundle.name, bundle)
+    - if bundle.total_value > 0
+      %span.amount= number_to_currency(bundle.total_value)
+    &ndash;
+    %tt
+      %code.me-2= bundle.qr_code
+      = t('pluralize.sample', bundle.samples_count || bundle.samples.count)
+      - if bundle.fire_sale_samples_count > 0
+        |
+        %span.badge.bg-danger #{bundle.fire_sale_samples_count} Fire Sale
+      |
+      - user_name = bundle.user.try(:full_name)
+      - if user_name
+        = t(:added_by, time_ago: timeago(bundle.created_at), user: h(user_name)).html_safe
+      - else
+        = t(:added_ago, value: timeago(bundle.created_at)).html_safe
+
+    = hook(:bundle_bottom, self, bundle: bundle)

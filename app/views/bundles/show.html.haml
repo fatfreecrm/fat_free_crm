@@ -1,0 +1,30 @@
+- if (template = template_for_current_view)
+  = render(template, bundle: @bundle)
+- else
+
+  -# default view
+
+  = styles_for :task, :sample, :bundle
+
+  = render 'bundles/title_bar', bundle: @bundle
+  = render 'bundles/sidebar_show', bundle: @bundle
+
+  %div#edit_bundle{ hidden }
+
+  = render "comments/new", commentable: @bundle
+  = render partial: "shared/timeline", collection: @timeline
+
+  = hook(:show_bundle_bottom, self, {entity: @bundle}) do
+
+    .title
+      %span#title #{t :samples_in_bundle}
+    %ul.list#samples
+      - if @samples.any?
+        - @samples.each do |sample|
+          = render 'samples/index_brief', sample: sample
+      - else
+        #{t :no_samples_in_bundle}
+
+    = render partial: "tasks/tasks", locals: {object: @bundle}
+
+    = render "versions/versions", object: @bundle

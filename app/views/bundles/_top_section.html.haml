@@ -1,0 +1,23 @@
+= hook(:bundle_top_section, self, f: f) do
+  .section
+    %table
+      %tr
+        %td{class: (@bundle.errors['name'].present? ? 'fieldWithErrors' : nil)}(colspan="3")
+          .label.top.req #{t :name}:
+          = f.text_field :name, autofocus: true, style: "width:500px", required: "required"
+      %tr
+        %td{class: (@bundle.errors['qr_code'].present? ? 'fieldWithErrors' : nil)}
+          .label.req #{t :qr_code}:
+          = f.text_field :qr_code, style: "width:200px", required: "required"
+        %td= spacer
+        %td
+          .label #{t :location}:
+          = f.text_field :location, style: "width:200px"
+      %tr
+        %td(colspan="3")
+          .label #{t :description}:
+          = f.text_area :description, style: "width:500px", rows: 3
+
+      = render partial: "/shared/tags", locals: {f: f, span: 3}
+
+      = hook(:bundle_top_section_bottom, self, f: f)

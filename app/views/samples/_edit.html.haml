@@ -1,0 +1,18 @@
+= simple_form_for(@sample, html: one_submit_only, remote: true) do |f|
+  = link_to_close sample_path(@sample)
+  = f.hidden_field :user_id
+
+  = f.error_messages object_name: t('sample')
+
+  = render "samples/top_section", f: f
+  = render "fields/edit_custom_field_group", f: f
+  = render "samples/pricing_section", f: f
+  = render "samples/tiktok_section", f: f
+  = render "fields/groups", f: f
+  = render "entities/permissions", f: f, entity: @sample
+  = hook(:entity_form, self, {f: f, entity: @sample})
+
+  .buttonbar
+    = f.submit t(:save_sample), class: 'btn btn-primary'
+    #{t :or}
+    = link_to_cancel sample_path(@sample)
