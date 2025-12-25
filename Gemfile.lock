@@ -125,7 +125,7 @@ GEM
     bcrypt (3.1.20)
     benchmark (0.5.0)
     bigdecimal (4.0.1)
-    bootsnap (1.19.0)
+    bootsnap (1.20.0)
       msgpack (~> 1.2)
     bootstrap (5.2.3)
       autoprefixer-rails (>= 9.1.0)
