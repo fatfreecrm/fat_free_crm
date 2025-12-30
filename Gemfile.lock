@@ -331,8 +331,8 @@ GEM
     parser (3.3.10.0)
       ast (~> 2.4.1)
       racc
-    pg (1.6.2-arm64-darwin)
-    pg (1.6.2-x86_64-linux)
+    pg (1.6.3-arm64-darwin)
+    pg (1.6.3-x86_64-linux)
     popper_js (2.11.8)
     pp (0.6.3)
       prettyprint
