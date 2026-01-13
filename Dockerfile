@@ -5,7 +5,7 @@
 # docker-compose exec web bundle exec rake db:create db:schema:load ffcrm:demo:load
 # docker-compose exec web bundle exec rails assets:precompile
 
-FROM ruby:3.3
+FROM ruby:3.4
 
 LABEL author="Steve Kenworthy"
 
