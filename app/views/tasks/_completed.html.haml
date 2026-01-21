@@ -23,3 +23,8 @@
     - unless completed.background_info.blank?
       %div
         %dt= completed.background_info
+
+    - if completed.field_groups.present?
+      .custom_fields
+        - completed.field_groups.each do |field_group|
+          = render partial: 'fields/group_view', locals: {f: completed, field_group: field_group}
