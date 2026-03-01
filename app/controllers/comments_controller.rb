@@ -6,6 +6,9 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CommentsController < ApplicationController
+  
+  load_and_authorize_resource
+
   # GET /comments
   # GET /comments.json
   # GET /comments.xml
@@ -49,7 +52,7 @@ class CommentsController < ApplicationController
     # Make sure commentable object exists and is accessible to the current user.
     model = find_class(@comment.commentable_type)
     id = @comment.commentable_id
-    if model.my(current_user).find_by_id(id)
+    if model.my(current_user).find_by_id(id) && authorize! :create, @comment
       @comment.save
       respond_with(@comment)
     else
@@ -63,7 +66,6 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @comment = Comment.find(params[:id])
-    authorize! :update, @comment.commentable
     respond_with(@comment)
   end
 
@@ -73,7 +75,6 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @comment = Comment.find(params[:id])
-    authorize! :destroy, @comment.commentable
     respond_with(@comment)
   end
 
