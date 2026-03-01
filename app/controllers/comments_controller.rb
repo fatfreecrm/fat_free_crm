@@ -6,7 +6,6 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CommentsController < ApplicationController
-  
   load_and_authorize_resource
 
   # GET /comments
