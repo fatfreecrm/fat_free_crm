@@ -52,7 +52,7 @@ class CommentsController < ApplicationController
     # Make sure commentable object exists and is accessible to the current user.
     model = find_class(@comment.commentable_type)
     id = @comment.commentable_id
-    if model.my(current_user).find_by_id(id) && authorize! :create, @comment
+    if model.my(current_user).find_by_id(id)
       @comment.save
       respond_with(@comment)
     else
