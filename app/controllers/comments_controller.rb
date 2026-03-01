@@ -6,6 +6,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class CommentsController < ApplicationController
+  load_and_authorize_resource
+
   # GET /comments
   # GET /comments.json
   # GET /comments.xml
@@ -62,7 +64,6 @@ class CommentsController < ApplicationController
   # PUT /comments/1.xml                                         not implemented
   #----------------------------------------------------------------------------
   def update
-    @comment = Comment.find(params[:id])
     @comment.update(comment_params)
     respond_with(@comment)
   end
@@ -72,7 +73,6 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.xml                                      not implemented
   #----------------------------------------------------------------------------
   def destroy
-    @comment = Comment.find(params[:id])
     @comment.destroy
     respond_with(@comment)
   end
