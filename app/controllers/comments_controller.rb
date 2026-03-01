@@ -63,7 +63,9 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @comment = Comment.find(params[:id])
-    @comment.update(comment_params)
+    if @comment.commentable.my(current_user)
+      @comment.update(comment_params)
+    end
     respond_with(@comment)
   end
 
@@ -73,7 +75,9 @@ class CommentsController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @comment = Comment.find(params[:id])
-    @comment.destroy
+    if @comment.commentable.my(current_user)
+      @comment.destroy
+    end
     respond_with(@comment)
   end
 
