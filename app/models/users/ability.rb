@@ -32,7 +32,7 @@ class Ability
       can :manage, entities + [Task], assigned_to: user.id
 
       can :create, Comment
-      can :manage, Comment, user: user.id
+      can :manage, Comment, user_id: user.id
 
       #
       # Due to an obscure bug (see https://github.com/ryanb/cancan/issues/213)
