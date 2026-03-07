@@ -1,12 +1,13 @@
 # Threat Model - Fat Free CRM
 
+
 ## Purpose and Scope
-This document provides a comprehensive threat model for Fat Free CRM, an open-source Ruby on Rails customer relationship management (CRM) platform. The goal is to identify potential security threats, analyze their impact, and propose mitigation strategies to protect the system and its data.
+This document is a high level threat model for Fat Free CRM. It is intended to be a starting point for individuals and organizations looking to deploy or extend the base functionality.
 
 ### Scope
 - **Application**: Fat Free CRM core application logic and features.
 - **Data**: Personally Identifiable Information (PII) of contacts and leads, user credentials, business opportunities, accounts, and internal communications.
-- **Deployment**: Standard Ruby on Rails deployment (e.g., Linux server, relational database like PostgreSQL/MySQL, web server like Puma).
+- **Deployment**: Assumes standard Ruby on Rails deployment (e.g., Linux server, relational database like PostgreSQL/MySQL, web server like Puma).
 
 ### Target Audience
 - **Developers**: To guide secure coding practices and feature implementation.
@@ -99,10 +100,10 @@ The `admin/` namespace provides powerful capabilities for managing users, groups
 
 ## Mitigation Strategies & Recommendations
 
-### General Security Best Practices
-- **Update Dependencies**: Regularly update gems (especially `rails`, `devise`, `cancan`) to patch known vulnerabilities.
-- **Environment Configuration**: Ensure `SECRET_KEY_BASE` and other sensitive environment variables are kept out of version control and are sufficiently complex.
-- **HTTPS**: Enforce HTTPS for all traffic to prevent session hijacking and credential sniffing.
+### General Security
+
+- **Update Dependencies**: Regularly update gems (especially `rails`, `devise`, `cancan`) to patch known vulnerabilities. The core team utilises dependabot and similar services to adopt updates, trailing the latest releases slightly to reduce the chance of supply chain attacks.
+- **HTTPS**: Enforce HTTPS for all traffic to reduce the chance of session hijacking and credential sniffing. Consider strongly your deployment model and network access.
 
 ### 1. Countering Spoofing & Identity Theft
 - **Multi-Factor Authentication (MFA)**: Implement MFA for all users, or at least for administrators.
