@@ -19,16 +19,33 @@ describe EmailsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     describe "AJAX request" do
-      describe "with valid params" do
+      context "authorized" do
+        describe "with valid params" do
+          MEDIATOR.each do |asset|
+            it "should destroy the requested email and render [destroy] template" do
+              @asset = create(asset)
+              @email = create(:email, mediator: @asset, user: current_user)
+              allow(Email).to receive(:new).and_return(@email)
+
+              delete :destroy, params: { id: @email.id }, xhr: true
+              expect { Email.find(@email.id) }.to raise_error(ActiveRecord::RecordNotFound)
+              expect(response).to render_template("emails/destroy")
+            end
+          end
+        end
+      end
+
+      context "unauthorized" do
         MEDIATOR.each do |asset|
           it "should destroy the requested email and render [destroy] template" do
             @asset = create(asset)
-            @email = create(:email, mediator: @asset, user: current_user)
+            @email = create(:email, mediator: @asset, user: create(:user))
             allow(Email).to receive(:new).and_return(@email)
 
             delete :destroy, params: { id: @email.id }, xhr: true
-            expect { Email.find(@email.id) }.to raise_error(ActiveRecord::RecordNotFound)
-            expect(response).to render_template("emails/destroy")
+
+            expect(flash[:warning]).not_to eq(nil)
+            expect(response.body).to eq("window.location.reload();")
           end
         end
       end

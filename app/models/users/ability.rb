@@ -34,6 +34,9 @@ class Ability
       can :create, Comment
       can :manage, Comment, user_id: user.id
 
+      can :create, Email
+      can :manage, Email, user_id: user.id
+
       #
       # Due to an obscure bug (see https://github.com/ryanb/cancan/issues/213)
       # we must switch on user.admin? here to avoid the nil constraints which
