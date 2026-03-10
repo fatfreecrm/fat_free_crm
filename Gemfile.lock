@@ -293,7 +293,6 @@ GEM
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
-    mini_portile2 (2.8.7)
     mini_racer (0.19.2)
       libv8-node (~> 24.12.0.1)
     minitest (6.0.2)
@@ -357,6 +356,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.5)
+    rack-attack (6.8.0)
+      rack (>= 1.0, < 4)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -538,8 +539,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.9)
-      mini_portile2 (~> 2.8.0)
+    sqlite3 (1.6.9-arm64-darwin)
+    sqlite3 (1.6.9-x86_64-linux)
     sshkit (1.25.0)
       base64
       logger
@@ -641,6 +642,7 @@ DEPENDENCIES
   premailer
   pry-rails
   puma
+  rack-attack
   rails (>= 7.1.0, < 7.3.0)
   rails-controller-testing
   rails-i18n
