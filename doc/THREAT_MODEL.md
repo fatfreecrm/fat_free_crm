@@ -41,13 +41,16 @@ Fat Free CRM follows a standard Ruby on Rails MVC (Model-View-Controller) archit
 3. **Application <-> External Services**: Interactions with email servers (SMTP), third-party APIs, or external storage (S3).
 4. **Internal User Roles**: Boundaries between regular users, managers, and administrators, enforced by CanCan authorization logic.
 
-## Attack Surface Analysis
+## Attack Surface
 
 ### 1. Web UI / API Endpoints
 All controllers and their respective actions (Index, Show, Create, Update, Delete) are entry points. Custom actions like `auto_complete`, `advanced_search`, and `filter` add to the complexity and potential for vulnerabilities like SQL Injection or IDOR.
 
 ### 2. Authentication & Session Management
-The login, registration, and password recovery pages are prime targets for spoofing and brute-force attacks. Session cookies must be handled securely (Secure, HttpOnly flags).
+The login, registration, and password recovery pages are prime targets for spoofing and brute-force attacks.
+
+Fat Free CRM uses [devise](https://github.com/heartcombo/devise) and [devise-security](https://github.com/devise-security/devise-security) out of the box.
+
 
 ### 3. File Uploads
 Avatars and attachments can be used for DoS attacks or to upload malicious files (e.g., shells if not properly validated and stored).
