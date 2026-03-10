@@ -47,7 +47,7 @@
 
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
-         :encryptable, :recoverable, :rememberable, :trackable
+         :encryptable, :recoverable, :rememberable, :trackable, :validatable
   before_create :suspend_if_needs_approval
 
   has_one :avatar, as: :entity, dependent: :destroy  # Personal avatar.
