@@ -69,9 +69,10 @@
   = hook(:show_account_sidebar_bottom, self, account: @account)
 
 - if @account.latitude.present? && @account.longitude.present?
-  :javascript
-    var map = L.map('map').setView([#{@account.latitude}, #{@account.longitude}], 18);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    L.marker([#{@account.latitude}, #{@account.longitude}]).addTo(map);
+  = javascript_tag nonce: true do
+    :plain
+      var map = L.map('map').setView([#{@account.latitude}, #{@account.longitude}], 18);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      L.marker([#{@account.latitude}, #{@account.longitude}]).addTo(map);
