@@ -52,11 +52,15 @@ The login, registration, and password recovery pages are prime targets for spoof
 ### 3. File Uploads
 Avatars and attachments can be used for DoS attacks or to upload malicious files (e.g., shells if not properly validated and stored).
 
+Fat Free CRM does not specify any specific file size limits, we recommend you configure this at the [webserver level](https://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size). All other defaults follow Rail's ActiveStorage norms.
+
 ### 4. Search and Filtering
 The `ransack` gem and custom search logic are used extensively. If not correctly configured, they could be exploited for information disclosure or DoS.
 
 ### 5. Administration Interface
-The `admin/` namespace provides powerful capabilities for managing users, groups, and settings. Compromise of an admin account is a catastrophic event.
+The `admin/` namespace provides capabilities for managing users, groups, and settings. Fat Free CRM defaults to a very open model for data access, compromise of an administrative account offers limited access over and above application defaults - lock out of users, wide access to records including those marked Private.
+
+Ensure your system administrators [utilise strong credentials](https://www.cyber.gov.au/protect-yourself/securing-your-accounts/passphrases/creating-strong-passphrases), or that you have extended the core authentication layer to your organisation's requirements (for example, extending the application and setting [strong minimums](https://github.com/fatfreecrm/fat_free_crm/blob/master/config/initializers/devise.rb#L170) with devise or utilising an MFA friendly layer).
 
 ## Threat Analysis (STRIDE)
 
