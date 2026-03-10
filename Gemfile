@@ -107,6 +107,7 @@ gem 'bootsnap', require: false
 gem 'devise', '~>4.6'
 gem 'devise-i18n'
 gem "devise-encryptable"
+gem "devise-security"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob'
 gem 'ransack_ui'
