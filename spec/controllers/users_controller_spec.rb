@@ -254,13 +254,13 @@ describe UsersController do
       @user = FactoryBot.create(:user, password: @old_password, password_confirmation: @old_password)
       perform_login(@user)
       @old_encrypted_password = @user.encrypted_password
-      @new_password = 'secret?!'
+      @new_password = 'VeryL0ngHorseStaplerSecret?!'
     end
 
     it "should set new user password" do
       put :change_password, params: { id: @user.id, current_password: @old_password, user: { password: @new_password, password_confirmation: @new_password } }, xhr: true
       expect(assigns[:user]).to eq(@user)
-      expect(assigns[:user].password).to eq('secret?!')
+      expect(assigns[:user].password).to eq(@new_password)
       expect(assigns[:user].errors).to be_empty
       expect(assigns[:user].reload.encrypted_password).to_not eq(@old_encrypted_password) # password change
       expect(response).to render_template("users/change_password")
@@ -294,7 +294,7 @@ describe UsersController do
 
     it "should require new password and password confirmation to match" do
       put :change_password, params: { id: @user.id, current_password: @old_password, user: { password: @new_password, password_confirmation: "none" } }, xhr: true
-      expect(assigns[:user].password).to eq('secret?!')
+      expect(assigns[:user].password).to eq(@new_password)
       expect(assigns[:user].errors.size).to eq(1) # .error_on(:current_password)
       expect(assigns[:user].reload.encrypted_password).to eq(@old_encrypted_password) # password stays the same
       expect(response).to render_template("users/change_password")
