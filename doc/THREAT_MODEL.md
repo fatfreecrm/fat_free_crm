@@ -20,7 +20,7 @@ Fat Free CRM follows a standard Ruby on Rails MVC (Model-View-Controller) archit
 - **Web Server**: Handles HTTP requests (e.g., Nginx/Apache reverse proxying to Puma/Unicorn).
 - **Application Layer**: Ruby on Rails handling business logic, routing, and rendering.
 - **Authentication**: Managed via the `Devise` gem, supporting password-based login, registration, and password recovery.
-- **Authorization**: Managed via the `CanCan` gem, defining permissions in `app/models/users/ability.rb`.
+- **Authorization**: Managed via the `CanCanCan` gem, defining permissions in `app/models/users/ability.rb`.
 - **Database**: A relational database (PostgreSQL, MySQL, or SQLite) storing all persistent records.
 - **Audit Trail**: The `PaperTrail` gem is used to track changes to models.
 - **Storage**: `ActiveStorage` or `Paperclip` (legacy) for handling file uploads (avatars, attachments).
