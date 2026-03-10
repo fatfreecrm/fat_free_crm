@@ -53,8 +53,8 @@ describe User do
     expect(User.new(
       username: "username",
       email:    "user@example.com",
-      password: "password",
-      password_confirmation: "password"
+      password: "lengthy_P@ssw0rd!",
+      password_confirmation: "lengthy_P@ssw0rd!"
     ).valid?).to eq true
   end
 
