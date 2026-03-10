@@ -201,6 +201,8 @@ GEM
     devise-i18n (1.15.0)
       devise (>= 4.9.0)
       rails-i18n
+    devise-security (0.18.0)
+      devise (>= 4.3.0)
     diff-lcs (1.6.2)
     drb (2.2.3)
     dynamic_form (1.2.0)
@@ -610,6 +612,7 @@ DEPENDENCIES
   devise (~> 4.6)
   devise-encryptable
   devise-i18n
+  devise-security
   drb
   dynamic_form
   email_reply_parser_ffcrm
