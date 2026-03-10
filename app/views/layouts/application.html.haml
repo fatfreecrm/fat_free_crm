@@ -9,10 +9,10 @@
     = stylesheet_link_tag :print, media: 'print'
     = hook(:stylesheet_includes, self) do
       #{yield :stylesheet_includes}
-    %style= yield :styles
+    = tag.style yield(:styles), nonce: true
 
     %link{ rel: "stylesheet", href: "https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" }
-    %script{ src: "https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" }
+    %script{ src: "https://unpkg.com/leaflet@1.7.1/dist/leaflet.js", nonce: content_security_policy_nonce }
 
     = javascript_include_tag :application
 
@@ -23,13 +23,13 @@
     = csrf_meta_tag
     = hook(:javascript_includes, self)
 
-    :javascript
-      crm.language = "#{I18n.locale}"
-      window.controller = "#{controller.controller_name}"
+    = javascript_tag nonce: true do
+      :plain
+        crm.language = "#{I18n.locale}";
+        window.controller = "#{controller.controller_name}";
 
     - if current_user.present?
-      :javascript
-        #{yield :javascript}
+      = yield :javascript
 
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -43,8 +43,9 @@
       = render "layouts/tabbed"
       = render "layouts/footer"
 
-    %script{type: "text/javascript"}
-      = "crm.base_url = '#{h Setting.base_url}';".html_safe unless Setting.base_url.blank?
-      = get_browser_timezone_offset
-      = content_for :javascript_epilogue
-      = hook(:javascript_epilogue, self)
+    = javascript_tag nonce: true do
+      :plain
+        #{ "crm.base_url = '#{h Setting.base_url}';".html_safe unless Setting.base_url.blank? }
+    = get_browser_timezone_offset
+    = yield :javascript_epilogue
+    = hook(:javascript_epilogue, self)

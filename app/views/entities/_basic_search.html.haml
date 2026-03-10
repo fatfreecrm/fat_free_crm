@@ -7,18 +7,19 @@
   %span.sorting_options
     = t(:sort_by, field: link_to(h(current_sort_by), "#", id: :sort_by)).html_safe
 
-:javascript
-  var searchTimeout;
+= javascript_tag nonce: true do
+  :plain
+    var searchTimeout;
 
-  $('#query').on('keydown', function(event) {
-    $el = $(event.target)
-    if (searchTimeout) clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(function () { crm.search($el.val(), '#{controller_name}'); }, 500);
-  });
+    $('#query').on('keydown', function(event) {
+      $el = $(event.target)
+      if (searchTimeout) clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(function () { crm.search($el.val(), '#{controller_name}'); }, 500);
+    });
 
-  new crm.Menu({
-    trigger   : "#sort_by",
-    fade      : 500,
-    appear    : 500,
-    menu_items: [ #{raw sort_by_menu_items.join(",")} ]
-  });
+    new crm.Menu({
+      trigger   : "#sort_by",
+      fade      : 500,
+      appear    : 500,
+      menu_items: [ #{raw sort_by_menu_items.join(",")} ]
+    });

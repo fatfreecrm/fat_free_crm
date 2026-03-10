@@ -30,4 +30,5 @@
     %td(valign="top" style="text-align: right")
       = avatar_for(@user)
 - if Setting.per_user_locale
-  %script= render "languages"
+  = javascript_tag nonce: true do
+    = render "languages"

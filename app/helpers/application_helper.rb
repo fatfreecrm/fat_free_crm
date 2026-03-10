@@ -66,7 +66,9 @@ module ApplicationHelper
   def load_select_popups_for(related, *assets)
     js = generate_js_for_popups(related, *assets)
     content_for(:javascript_epilogue) do
-      raw "$(function() { #{js} });"
+      javascript_tag nonce: true do
+        raw "$(function() { #{js} });"
+      end
     end
   end
 
@@ -330,7 +332,11 @@ module ApplicationHelper
   # Ajax helper to pass browser timezone offset to the server.
   #----------------------------------------------------------------------------
   def get_browser_timezone_offset
-    raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});" unless session[:timezone_offset]
+    return if session[:timezone_offset]
+
+    javascript_tag nonce: true do
+      raw "$.get('#{timezone_path}', {offset: (new Date()).getTimezoneOffset()});"
+    end
   end
 
   STYLES = { large: "180x180#", medium: "50x50#", small: "25x25#", thumb: "16x16#" }.freeze
