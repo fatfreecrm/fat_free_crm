@@ -13,8 +13,8 @@ feature 'Devise Sign-up' do
 
     fill_in "user[email]", with: "john@example.com"
     fill_in "user[username]", with: "john"
-    fill_in "user[password]", with: "password"
-    fill_in "user[password_confirmation]", with: "password"
+    fill_in "user[password]", with: "correct horse Batt3ry staple!"
+    fill_in "user[password_confirmation]", with: "correct horse Batt3ry staple!"
     click_button("Sign Up")
 
     expect(current_path).to eq "/users/sign_in"

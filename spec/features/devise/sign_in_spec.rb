@@ -12,28 +12,28 @@ feature 'Devise Sign-in' do
     Setting.user_signup = :needs_approval
     @user = create :user,
                    username: 'john',
-                   password: 'password',
-                   password_confirmation: 'password',
+                   password: 'correct horse Batt3ry staple!',
+                   password_confirmation: 'correct horse Batt3ry staple!',
                    email: 'john@example.com',
                    sign_in_count: 0,
                    confirmed_at: nil
   end
 
   scenario 'without confirmation' do
-    login_process('john', 'password')
+    login_process('john', 'correct horse Batt3ry staple!')
     expect(page).to have_content("You have to confirm your email address before continuing.")
   end
 
   scenario 'without approval' do
     @user.confirm
-    login_process('john', 'password')
+    login_process('john', 'correct horse Batt3ry staple!')
     expect(page).to have_content("Your account has not been approved yet.")
   end
 
   scenario 'with approved and confirmed account' do
     @user.confirm
     @user.update_attribute(:suspended_at, nil)
-    login_process('john', 'password')
+    login_process('john', 'correct horse Batt3ry staple!')
     expect(page).to have_content("Signed in successfully.")
   end
 
@@ -46,7 +46,7 @@ feature 'Devise Sign-in' do
   scenario 'login with email' do
     @user.confirm
     @user.update_attribute(:suspended_at, nil)
-    login_process('john@example.com', 'password')
+    login_process('john@example.com', 'correct horse Batt3ry staple!')
     expect(page).to have_content("Signed in successfully")
   end
 

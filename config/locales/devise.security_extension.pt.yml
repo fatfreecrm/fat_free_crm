@@ -1,0 +1,42 @@
+pt:
+  errors:
+    messages:
+      taken_in_past: 'foi usada anteriormente.'
+      equal_to_current_password: 'deve ser diferente da senha atual.'
+      equal_to_email: 'deve ser diferente do e-mail.'
+      password_complexity:
+        digit:
+          one: deve conter ao menos um dígito
+          other: deve conter ao menos %{count} dígitos
+        lower:
+          one: deve conter ao menos uma letra minúscula
+          other: deve conter ao menos %{count} letras minúsculas
+        symbol:
+          one: deve conter ao menos um símbolo
+          other: deve conter ao menos %{count} símbolos
+        upper:
+          one: deve conter ao menos uma letra maiúscula
+          other: deve conter ao menos %{count} letras maiúsculas
+  devise:
+    invalid_captcha: 'O captcha está errado.'
+    invalid_security_question: 'A resposta da pergunta de segurança está errada.'
+    paranoid_verify:
+      code_required: 'Por favor entre o código que a equipe de suporte enviou'
+    paranoid_verification_code:
+      updated: Código de verificação aceito
+      show:
+        submit_verification_code: Enviar código de verificação
+        verification_code: Código de verificação
+        submit: Enviar
+    password_expired:
+      updated: 'A nova senha foi salva.'
+      change_required: 'Sua senha expirou. Renove sua senha por favor.'
+      show:
+        renew_your_password: Renove sua senha
+        current_password: Senha atual
+        new_password: Senha nova
+        new_password_confirmation: Confirmar senha nova
+        change_my_password: Mudar minha senha
+    failure:
+      session_limited: 'Seu login foi utilizado em outro local. Faça o login novamente para continuar.'
+      expired: 'Sua conta expirou por inatividade. Por favor contate o administrador do site.'
