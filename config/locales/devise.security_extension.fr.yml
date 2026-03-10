@@ -1,0 +1,42 @@
+fr:
+  errors:
+    messages:
+      taken_in_past: a été utilisé trop récemment. Veuillez en choisir un autre
+      equal_to_current_password: doit être différent de l'actuel
+      equal_to_email: doit être différent de l'e-mail
+      password_complexity:
+        digit:
+          one: doit contenir au moins un chiffre
+          other: doit contenir au moins %{count} chiffres
+        lower:
+          one: doit contenir au moins une lettre minuscule
+          other: doit contenir au moins %{count} lettres minuscules
+        symbol:
+          one: doit contenir au moins un signe de ponctuation
+          other: doit contenir au moins %{count} signes de ponctuation
+        upper:
+          one: doit contenir au moins une lettre majuscule
+          other: doit contenir au moins %{count} lettres majuscules
+  devise:
+    invalid_captcha: Le captcha n'est pas valide
+    invalid_security_question: La réponse à la question de sécurité est invalide
+    paranoid_verify:
+      code_required: Veuillez entrer le code fourni par notre équipe de support
+    paranoid_verification_code:
+      updated: Code de vérification accepté
+      show:
+        submit_verification_code: Soumettre le code de vérification
+        verification_code: Code de vérification
+        submit: Soumettre
+    password_expired:
+      updated: Votre nouveau mot de passe est enregistré
+      change_required: Votre mot de passe a expiré. Veuillez en choisir un autre
+      show:
+        renew_your_password: Renouveler votre mot de passe
+        current_password: Mot de passe actuel
+        new_password: Nouveau mot de passe
+        new_password_confirmation: Confirmer le nouveau mot de passe
+        change_my_password: Changer mon mot de passe
+    failure:
+      session_limited: Vos identifiants de connexion ont été utilisés dans un autre navigateur. Veuillez vous reconnecter pour continuer dans ce navigateur
+      expired: Votre compte a expiré pour cause d'inactivité. Veuillez contacter l'administrateur du site

@@ -1,0 +1,42 @@
+it:
+  errors:
+    messages:
+      taken_in_past: "è stata gia' utilizzata in passato!"
+      equal_to_current_password: " deve essere differente dalla password corrente!"
+      equal_to_email: "deve essere differente dall'email"
+      password_complexity:
+        digit:
+          one: deve contenere almeno una cifra
+          other: deve contenere almeno %{count} cifre
+        lower:
+          one: deve contenere almeno una lettera minuscola
+          other: deve contenere almeno %{count} lettere minuscole
+        symbol:
+          one: deve contenere almeno un simbolo di punteggiatura o un simbolo speciale
+          other: deve contenere almeno %{count} tra simboli di punteggiatura e simboli speciali
+        upper:
+          one: deve contenere almeno una lettera maiuscola
+          other: deve contenere almeno %{count} lettere maiuscole
+  devise:
+    invalid_captcha: "Il captcha inserito non è valido!"
+    invalid_security_question: 'La risposta alla domanda di sicurezza non è valida.'
+    paranoid_verify:
+      code_required: 'Inserisci il codice fornito dal nostro team di supporto'
+    paranoid_verification_code:
+      updated: Codice di verifica accettato
+      show:
+        submit_verification_code: Invia codice di verifica
+        verification_code: Codice di verifica
+        submit: Invia
+    password_expired:
+      updated: "La tua nuova password è stata salvata."
+      change_required: "La tua password è scaduta. Si prega di rinnovarla!"
+      show:
+        renew_your_password: Rinnova la tua password
+        current_password: Password attuale
+        new_password: Nuova password
+        new_password_confirmation: Conferma nuova password
+        change_my_password: Cambia la mia password
+    failure:
+      session_limited: "Hai effettuato l accesso in un altro browser. Fai nuovamente l accesso per connetterti in questo."
+      expired: 'Il tuo account è stato bloccato per inattività. Contatta l amministratore del sito.'
