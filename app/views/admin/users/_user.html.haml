@@ -47,11 +47,13 @@
     %dt{ style: "padding: 2px 0px 0px 0px" }
       = link_to_email(user.email.to_s) + " | "
       - if user.phone?
-        = t(:phone_small) + ":"
-        = content_tag(:b, user.phone) + " | "
+        = (t(:phone_small) + ": ").html_safe
+        %b= link_to_phone(user.phone)
+        = " | ".html_safe
       - if user.mobile?
-        = t(:mobile_small) + ":"
-        = content_tag(:b, user.mobile) + " | "
+        = (t(:mobile_small) + ": ").html_safe
+        %b= link_to_phone(user.mobile)
+        = " | ".html_safe
 
       - if !user.suspended?
         %span #{t(:user_since, l(user.created_at.to_date, format: :mmddyy))}

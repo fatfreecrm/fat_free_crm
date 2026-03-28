@@ -47,11 +47,11 @@
           |
         - if lead.phone.present?
           == #{t :phone_small}:
-          %b= lead.phone
+          %b= link_to_phone(lead.phone)
           |
         - if lead.mobile.present?
           == #{t :mobile_small}:
-          %b= lead.mobile
+          %b= link_to_phone(lead.mobile)
           |
       = t(:added_ago, value: timeago(lead.created_at)).html_safe
 

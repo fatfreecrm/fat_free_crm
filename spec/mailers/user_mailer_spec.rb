@@ -29,11 +29,11 @@ describe UserMailer do
       end
 
       it "includes the name of the person who re-assigned the lead in the body" do
-        expect(mail.body.encoded).to match("Bob")
+        expect(mail.body.encoded).to include("Bob")
       end
 
       it "includes link to the lead in the body" do
-        expect(mail.body.encoded).to match("http://www.example.com/accounts/16")
+        expect(mail.body.encoded).to include("http://www.example.com/accounts/16")
       end
     end
 
@@ -54,11 +54,11 @@ describe UserMailer do
       end
 
       it "includes the name of the person who re-assigned the lead in the body" do
-        expect(mail.body.encoded).to match("Bob")
+        expect(mail.body.encoded).to include("Bob")
       end
 
       it "includes link to the lead in the body" do
-        expect(mail.body.encoded).to match("http://www.example.com/contacts/56")
+        expect(mail.body.encoded).to include("http://www.example.com/contacts/56")
       end
     end
 
@@ -79,11 +79,11 @@ describe UserMailer do
       end
 
       it "includes the name of the person who re-assigned the lead in the body" do
-        expect(mail.body.encoded).to match("Bob")
+        expect(mail.body.encoded).to include("Bob")
       end
 
       it "includes link to the lead in the body" do
-        expect(mail.body.encoded).to match("http://www.example.com/leads/42")
+        expect(mail.body.encoded).to include("http://www.example.com/leads/42")
       end
     end
 

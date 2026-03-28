@@ -1,5 +1,5 @@
 .panel#summary
-  %span{style: "float:right"}= avatar_for(@lead, size: "50x50")
+  %span{style: "float:right"}= avatar_for(@lead, size: "180x180")
   - if !@lead.title.blank? && !@lead.company.blank?
     -# works_at: "{{job_title}} at {{company}}"
     %div= t(:works_at, job_title: @lead.title, company: @lead.company)
@@ -11,9 +11,9 @@
 
   %div
     - if @lead.phone.present?
-      == #{t :phone}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : @lead.phone}</b><br />
+      == #{t :phone}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.phone) : link_to_phone(@lead.phone)}</b><br />
     - if @lead.mobile.present?
-      == #{t :mobile}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : @lead.mobile}</b><br />
+      == #{t :mobile}: <b>#{@lead.do_not_call ? content_tag(:strike, @lead.mobile) : link_to_phone(@lead.mobile)}</b><br />
     - if @lead.email.present?
       == #{t :email}: <b>#{link_to_email(@lead.email)}</b><br />
     - if @lead.alt_email.present?
@@ -61,5 +61,7 @@
   - if @lead.tags.present?
     %dt
       .tags= tags_for_index(@lead)
+
+  = render "shared/research_tools", entity: @lead
 
   = hook(:show_lead_sidebar_bottom, self, lead: @lead)

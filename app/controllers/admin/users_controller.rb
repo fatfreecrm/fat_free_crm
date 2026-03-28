@@ -122,7 +122,6 @@ class Admin::UsersController < Admin::ApplicationController
       :aim,
       :yahoo,
       :google,
-      :skype,
       :password,
       :password_confirmation,
       group_ids: []

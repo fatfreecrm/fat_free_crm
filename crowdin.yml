@@ -1,0 +1,3 @@
+files:
+  - source: /config/locales/fat_free_crm.en-US.yml
+    translation: /config/locales/fat_free_crm.%locale%.yml

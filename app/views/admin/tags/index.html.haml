@@ -14,4 +14,8 @@
   - else
     = render "shared/empty"
 
+- if Setting[:about_my_business].present? || Setting[:how_i_plan_to_use_ffcrm].present?
+  .col-md-6
+    = ai_prompt_link(t(:ai_prompt_tags))
+
 #export= render "shared/export"

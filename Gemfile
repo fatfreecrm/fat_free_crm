@@ -107,11 +107,12 @@ gem 'bootsnap', require: false
 gem 'devise', '~>4.6'
 gem 'devise-i18n'
 gem "devise-encryptable"
+gem "devise-security"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob'
 gem 'ransack_ui', git: 'https://github.com/fatfreecrm/ransack_ui.git', branch: 'bump-ransack'
 gem 'vcardigan'
-gem 'bootstrap', '~>5.0.0'
+gem 'bootstrap', '~>5.2.0'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'jquery-ui-rails', git: 'https://github.com/jquery-ui-rails/jquery-ui-rails.git', tag: 'v7.0.0' # See https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
@@ -125,3 +126,8 @@ gem 'base64'
 
 # Workaround problems from concurrent-ruby 1.3.5
 require "logger"
+
+# Pinning connection_pool until Rails 8.1.2+
+gem 'connection_pool', '< 3'
+
+gem "addressable", "~> 2.8"

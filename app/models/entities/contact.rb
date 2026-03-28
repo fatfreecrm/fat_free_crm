@@ -35,7 +35,6 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  background_info :string(255)
-#  skype           :string(128)
 #
 
 class Contact < ActiveRecord::Base
@@ -111,7 +110,6 @@ class Contact < ActiveRecord::Base
   validates_length_of :linkedin, maximum: 128
   validates_length_of :facebook, maximum: 128
   validates_length_of :twitter, maximum: 128
-  validates_length_of :skype, maximum: 128
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
@@ -177,7 +175,7 @@ class Contact < ActiveRecord::Base
       assigned_to: params[:account][:assigned_to],
       access:      params[:access]
     }
-    %w[first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter skype do_not_call background_info].each do |name|
+    %w[first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter do_not_call background_info].each do |name|
       attributes[name] = model.send(name.intern)
     end
 

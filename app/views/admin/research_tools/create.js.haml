@@ -1,0 +1,7 @@
+- if @research_tool.persisted?
+  $("#research_tools").prepend("<%= j render(@research_tool) %>");
+  $("#create_research_tool").slideUp(250, function() {
+    $(this).html("");
+  });
+- else
+  $("#create_research_tool").html("<%= j render('form') %>");
