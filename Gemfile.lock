@@ -16,12 +16,11 @@ GIT
 
 GIT
   remote: https://github.com/fatfreecrm/ransack_ui.git
-  revision: 243b37f820d9fab74cdd2755d6baa78b75295bcb
+  revision: 83e5be6e4bad23c625db22dd1e988a4b80a4333c
   branch: bump-ransack
   specs:
     ransack_ui (3.0.0)
       ransack
-      ransack_chronic (>= 1.1.0)
 
 GIT
   remote: https://github.com/jquery-ui-rails/jquery-ui-rails.git
@@ -124,8 +123,8 @@ GEM
       execjs (~> 2)
     base64 (0.3.0)
     bcrypt (3.1.20)
-    benchmark (0.4.1)
-    bigdecimal (3.2.2)
+    benchmark (0.5.0)
+    bigdecimal (4.1.0)
     bootsnap (1.18.6)
       msgpack (~> 1.2)
     bootstrap (5.0.2)
@@ -164,7 +163,6 @@ GEM
       launchy
     childprocess (5.1.0)
       logger (~> 1.5)
-    chronic (0.10.2)
     coderay (1.1.3)
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
@@ -173,8 +171,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.3.5)
-    connection_pool (2.5.3)
+    concurrent-ruby (1.3.6)
+    connection_pool (3.0.2)
     countries (7.1.0)
       unaccent (~> 0.3)
     country_select (10.0.1)
@@ -246,7 +244,7 @@ GEM
       tilt
     headless (3.0.0)
     htmlentities (4.3.4)
-    i18n (1.14.7)
+    i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     image_processing (1.14.0)
       mini_magick (>= 4.9.5, < 6)
@@ -292,7 +290,7 @@ GEM
     mini_portile2 (2.8.7)
     mini_racer (0.19.0)
       libv8-node (~> 24.1.0.0)
-    minitest (5.25.5)
+    minitest (5.27.0)
     msgpack (1.8.0)
     mutex_m (0.3.0)
     nenv (0.3.0)
@@ -409,12 +407,10 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.0)
-    ransack (3.2.1)
-      activerecord (>= 6.1.5)
-      activesupport (>= 6.1.5)
+    ransack (4.4.1)
+      activerecord (>= 7.2)
+      activesupport (>= 7.2)
       i18n
-    ransack_chronic (1.1.0)
-      chronic (>= 0.6.7)
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.11.2)
@@ -538,7 +534,7 @@ GEM
     thor (1.4.0)
     tilt (2.3.0)
     timecop (0.9.10)
-    timeout (0.4.3)
+    timeout (0.6.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uglifier (4.2.1)
@@ -632,7 +628,7 @@ DEPENDENCIES
   rails_12factor
   rails_autolink
   rainbow
-  ransack (< 4)
+  ransack (~> 4)
   ransack_ui!
   rb-fchange
   rb-fsevent
