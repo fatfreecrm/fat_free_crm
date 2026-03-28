@@ -8,11 +8,20 @@ GIT
 
 GIT
   remote: https://github.com/fatfreecrm/acts_as_commentable.git
-  revision: 1b9478c70914297021b79f489f032f1319e8dd6e
-  branch: main
+  revision: fa31f3d030ff05fdad17efc179d6a0822a60d1b5
+  tag: 7.2.0
   specs:
     acts_as_commentable (7.2.0)
       activerecord (~> 7.2.0)
+
+GIT
+  remote: https://github.com/fatfreecrm/ransack_ui.git
+  revision: 243b37f820d9fab74cdd2755d6baa78b75295bcb
+  branch: bump-ransack
+  specs:
+    ransack_ui (3.0.0)
+      ransack
+      ransack_chronic (>= 1.1.0)
 
 GIT
   remote: https://github.com/jquery-ui-rails/jquery-ui-rails.git
@@ -194,9 +203,7 @@ GEM
       rails-i18n
     diff-lcs (1.6.1)
     drb (2.2.3)
-    dynamic_form (1.3.1)
-      actionview (> 5.2.0)
-      activemodel (> 5.2.0)
+    dynamic_form (1.2.0)
     email_reply_parser_ffcrm (0.5.0)
     erb (5.0.2)
     erubi (1.13.1)
@@ -408,9 +415,6 @@ GEM
       i18n
     ransack_chronic (1.1.0)
       chronic (>= 0.6.7)
-    ransack_ui (2.0.1)
-      ransack (< 4)
-      ransack_chronic (>= 1.1.0)
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.11.2)
@@ -629,7 +633,7 @@ DEPENDENCIES
   rails_autolink
   rainbow
   ransack (< 4)
-  ransack_ui
+  ransack_ui!
   rb-fchange
   rb-fsevent
   rb-inotify
