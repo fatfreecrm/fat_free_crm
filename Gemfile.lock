@@ -126,7 +126,7 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.22)
     benchmark (0.5.0)
-    bigdecimal (4.1.0)
+    bigdecimal (4.1.1)
     bootsnap (1.18.6)
       msgpack (~> 1.2)
     bootstrap (5.2.3)
@@ -191,10 +191,10 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.5.1)
-    devise (4.9.4)
+    devise (5.0.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 4.1.0)
+      railties (>= 7.0)
       responders
       warden (~> 1.2.3)
     devise-encryptable (0.2.0)
@@ -294,7 +294,7 @@ GEM
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
-    mini_portile2 (2.8.7)
+    mini_portile2 (2.8.9)
     mini_racer (0.20.0)
       libv8-node (~> 24.12.0.1)
     minitest (5.27.0)
@@ -358,7 +358,7 @@ GEM
     rack (3.2.6)
     rack-attack (6.8.0)
       rack (>= 1.0, < 4)
-    rack-session (2.1.1)
+    rack-session (2.1.2)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
     rack-test (2.2.0)
@@ -534,8 +534,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.9-arm64-darwin)
-    sqlite3 (1.6.9-x86_64-linux)
+    sqlite3 (1.6.9)
+      mini_portile2 (~> 2.8.0)
     sshkit (1.25.0)
       base64
       logger
@@ -609,7 +609,7 @@ DEPENDENCIES
   country_select
   csv
   database_cleaner
-  devise (~> 4.6)
+  devise (~> 5.0)
   devise-encryptable
   devise-i18n
   devise-security
