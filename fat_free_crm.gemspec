@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 3.1'
   gem.license = 'MIT'
 
-  gem.add_dependency 'rails', '>= 7.1.0', '< 7.3.0'
+  gem.add_dependency 'rails', '~> 7.2.3.1'
   gem.add_dependency 'rails-i18n'
   gem.add_dependency 'rails-observers'
   gem.add_dependency 'activemodel-serializers-xml'
@@ -51,7 +51,7 @@ Gem::Specification.new do |gem|
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
-  gem.add_dependency 'ransack', '< 4'
+  gem.add_dependency 'ransack', '~> 4'
   gem.add_dependency 'ransack_ui'
   gem.add_dependency 'email_reply_parser_ffcrm'
 end

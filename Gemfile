@@ -94,7 +94,7 @@ group :heroku do
 end
 
 gem 'responds_to_parent', git: 'https://github.com/RedPatchTechnologies/responds_to_parent.git', branch: 'master' # Temporarily pointed at git until https://github.com/zendesk/responds_to_parent/pull/7 is released
-gem 'acts_as_commentable', git: 'https://github.com/fatfreecrm/acts_as_commentable.git', branch: 'main' # Our fork
+gem 'acts_as_commentable', git: 'https://github.com/fatfreecrm/acts_as_commentable.git', tag: '7.2.0' # Our fork
 gem 'sassc-rails'
 gem 'coffee-rails'
 gem 'uglifier'
@@ -110,7 +110,7 @@ gem "devise-encryptable"
 gem "devise-security"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob'
-gem 'ransack_ui'
+gem 'ransack_ui', git: 'https://github.com/fatfreecrm/ransack_ui.git', branch: 'bump-ransack'
 gem 'vcardigan'
 gem 'bootstrap', '~>5.2.0'
 gem 'mini_magick'
