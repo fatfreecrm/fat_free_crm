@@ -96,17 +96,6 @@ class User < ActiveRecord::Base
   validates :password,
             presence: { if: :password_required? },
             confirmation: true
-  validates_length_of :first_name, maximum: 32, allow_blank: true
-  validates_length_of :last_name, maximum: 32, allow_blank: true
-  validates_length_of :title, maximum: 64, allow_blank: true
-  validates_length_of :company, maximum: 64, allow_blank: true
-  validates_length_of :alt_email, maximum: 254, allow_blank: true
-  validates_length_of :phone, maximum: 32, allow_blank: true
-  validates_length_of :mobile, maximum: 32, allow_blank: true
-  validates_length_of :aim, maximum: 32, allow_blank: true
-  validates_length_of :yahoo, maximum: 32, allow_blank: true
-  validates_length_of :google, maximum: 32, allow_blank: true
-  validates_length_of :whatsapp, maximum: 128, allow_blank: true
 
   #----------------------------------------------------------------------------
   def name
