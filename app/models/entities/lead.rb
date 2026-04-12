@@ -132,6 +132,10 @@ class Lead < ActiveRecord::Base
     [account, opportunity, contact]
   end
 
+  def whatsapp
+    phone
+  end
+
   #----------------------------------------------------------------------------
   def convert
     update_attribute(:status, "converted")

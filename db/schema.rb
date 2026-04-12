@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_12_032757) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_06_025815) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -207,7 +207,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_12_032757) do
     t.datetime "updated_at", precision: nil
     t.string "background_info"
     t.text "subscribed_users"
-    t.string "whatsapp", limit: 128
     t.index ["assigned_to"], name: "index_contacts_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
   end
@@ -312,7 +311,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_12_032757) do
     t.datetime "updated_at", precision: nil
     t.string "background_info"
     t.text "subscribed_users"
-    t.string "whatsapp", limit: 128
+    t.string "cf_website"
     t.index ["assigned_to"], name: "index_leads_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "index_leads_on_user_id_and_last_name_and_deleted_at", unique: true
   end
@@ -428,6 +427,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_12_032757) do
     t.datetime "updated_at", precision: nil
     t.string "background_info"
     t.text "subscribed_users"
+    t.string "cf_world"
     t.index ["assigned_to"], name: "index_tasks_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_tasks_on_user_id_and_name_and_deleted_at", unique: true
   end
@@ -468,7 +468,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_12_032757) do
     t.datetime "confirmation_sent_at"
     t.boolean "subscribe_to_comment_replies", default: true, null: false
     t.boolean "receive_assigned_notifications", default: true, null: false
-    t.string "whatsapp", limit: 128
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"

@@ -110,7 +110,6 @@ class Contact < ActiveRecord::Base
   validates_length_of :linkedin, maximum: 128
   validates_length_of :facebook, maximum: 128
   validates_length_of :twitter, maximum: 128
-  validates_length_of :whatsapp, maximum: 128
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
@@ -167,6 +166,10 @@ class Contact < ActiveRecord::Base
     end
   end
 
+  def whatsapp
+    phone
+  end
+
   # Class methods.
   #----------------------------------------------------------------------------
   def self.create_for(model, account, opportunity, params)
@@ -176,7 +179,7 @@ class Contact < ActiveRecord::Base
       assigned_to: params[:account][:assigned_to],
       access:      params[:access]
     }
-    %w[first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter whatsapp do_not_call background_info].each do |name|
+    %w[first_name last_name title source email alt_email phone mobile blog linkedin facebook twitter do_not_call background_info].each do |name|
       attributes[name] = model.send(name.intern)
     end
 

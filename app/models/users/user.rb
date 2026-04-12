@@ -102,6 +102,10 @@ class User < ActiveRecord::Base
     first_name.blank? ? username : first_name
   end
 
+  def whatsapp
+    phone
+  end
+
   #----------------------------------------------------------------------------
   def full_name
     first_name.blank? && last_name.blank? ? email : "#{first_name} #{last_name}".strip
