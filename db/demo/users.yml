@@ -12,7 +12,6 @@
 #  alt_email           :string(64)
 #  phone               :string(32)
 #  mobile              :string(32)
-#  yahoo               :string(32)
 #  google              :string(32)
 #  encrypted_password       :string(255)     default(""), not null
 #  password_salt       :string(255)     default(""), not null

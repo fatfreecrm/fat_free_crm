@@ -141,7 +141,6 @@ class UsersController < ApplicationController
       :alt_email,
       :phone,
       :mobile,
-      :yahoo,
       :google,
       :blog,
       :facebook,

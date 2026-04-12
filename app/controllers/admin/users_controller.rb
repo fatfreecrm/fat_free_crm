@@ -119,7 +119,6 @@ class Admin::UsersController < Admin::ApplicationController
       :alt_email,
       :phone,
       :mobile,
-      :yahoo,
       :google,
       :password,
       :password_confirmation,
