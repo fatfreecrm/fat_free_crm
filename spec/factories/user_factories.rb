@@ -17,7 +17,6 @@ FactoryBot.define do
     phone               { FFaker::PhoneNumber.phone_number }
     mobile              { FFaker::PhoneNumber.phone_number }
     aim                 { nil }
-    yahoo               { nil }
     google              { nil }
     admin               { false }
     encrypted_password  { SecureRandom.hex(64) }

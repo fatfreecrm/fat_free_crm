@@ -20,7 +20,6 @@
 #  phone               :string(32)
 #  mobile              :string(32)
 #  aim                 :string(32)
-#  yahoo               :string(32)
 #  google              :string(32)
 #  skype               :string(32)
 #  encrypted_password  :string(255)     default(""), not null

@@ -142,7 +142,6 @@ class UsersController < ApplicationController
       :phone,
       :mobile,
       :aim,
-      :yahoo,
       :google,
       :subscribe_to_comment_replies,
       :receive_assigned_notifications

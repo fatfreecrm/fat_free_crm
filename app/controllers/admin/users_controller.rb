@@ -120,7 +120,6 @@ class Admin::UsersController < Admin::ApplicationController
       :phone,
       :mobile,
       :aim,
-      :yahoo,
       :google,
       :password,
       :password_confirmation,
