@@ -7,7 +7,7 @@ source 'https://rubygems.org'
 
 case ENV['CI'] && ENV['DB']
 when 'sqlite'
-  gem 'sqlite3', '~> 1.6.8'
+  gem 'sqlite3', '~> 2.0.0'
 when 'mysql'
   gem 'mysql2'
 when 'postgres'
@@ -84,7 +84,7 @@ group :test do
   gem 'database_cleaner'
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
-  gem 'sqlite3', '~> 1.6.8'
+  gem 'sqlite3', '~> 2.0.0'
   gem 'webrick'
 end
 

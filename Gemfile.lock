@@ -533,7 +533,7 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.9)
+    sqlite3 (2.0.4)
       mini_portile2 (~> 2.8.0)
     sshkit (1.25.0)
       base64
@@ -667,7 +667,7 @@ DEPENDENCIES
   selenium-webdriver
   simple_form
   sprockets-rails (>= 3.0.0)
-  sqlite3 (~> 1.6.8)
+  sqlite3 (~> 2.0.0)
   thor
   timecop
   tzinfo-data
