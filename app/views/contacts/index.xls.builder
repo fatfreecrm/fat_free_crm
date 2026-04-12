@@ -72,7 +72,6 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_contacts) do
                      contact.linkedin,
                      contact.facebook,
                      contact.twitter,
-                     contact.whatsapp,
                      contact.created_at,
                      contact.updated_at,
                      contact.assignee.try(:name),
