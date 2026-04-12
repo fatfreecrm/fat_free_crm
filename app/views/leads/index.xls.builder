@@ -69,7 +69,6 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_leads) do
                      lead.linkedin,
                      lead.facebook,
                      lead.twitter,
-                     lead.whatsapp,
                      lead.created_at,
                      lead.updated_at,
                      lead.assignee.try(:name),
