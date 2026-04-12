@@ -19,7 +19,7 @@ describe EmailsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     describe "AJAX request" do
-      context "authorized" do
+      context "when authorized" do
         describe "with valid params" do
           MEDIATOR.each do |asset|
             it "should destroy the requested email and render [destroy] template" do
@@ -35,7 +35,7 @@ describe EmailsController do
         end
       end
 
-      context "unauthorized" do
+      context "when unauthorized" do
         MEDIATOR.each do |asset|
           it "should destroy the requested email and render [destroy] template" do
             @asset = create(asset)

@@ -12,9 +12,7 @@ class Rack::Attack
   # If any single IP makes more than 5 requests/minute to the devise routes,
   # return a 429 Too Many Requests response.
   throttle('devise/ip', limit: 5, period: 1.minute) do |req|
-    if req.path.start_with?('/users') && req.post?
-      req.ip
-    end
+    req.ip if req.path.start_with?('/users') && req.post?
   end
 
   ### Custom Response ###
