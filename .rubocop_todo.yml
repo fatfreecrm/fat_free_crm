@@ -1113,7 +1113,6 @@ Rails/Validation:
     - 'app/models/entities/account_opportunity.rb'
     - 'app/models/entities/campaign.rb'
     - 'app/models/entities/contact_opportunity.rb'
-    - 'app/models/entities/lead.rb'
     - 'app/models/entities/opportunity.rb'
     - 'app/models/fields/field.rb'
     - 'app/models/fields/field_group.rb'
