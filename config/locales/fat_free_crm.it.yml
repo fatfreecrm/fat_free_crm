@@ -199,7 +199,6 @@ it:
   show_per_page: Mostra %{number} %{models} per pagina usando %{fmt} formato.
   sort_by: Ordina per %{field}.
   sort_by_displaying: Ordina %{models} per %{field} mostrando nome %{position} cognome
-  aim: AOL IM
   already_signed_up: Gia' iscritto?
   alt_email: Email alternativa
   avatar: Avatar

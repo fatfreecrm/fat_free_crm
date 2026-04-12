@@ -16,7 +16,6 @@ FactoryBot.define do
     alt_email           { FFaker::Internet.email }
     phone               { FFaker::PhoneNumber.phone_number }
     mobile              { FFaker::PhoneNumber.phone_number }
-    aim                 { nil }
     yahoo               { nil }
     google              { nil }
     admin               { false }

@@ -141,7 +141,6 @@ class UsersController < ApplicationController
       :alt_email,
       :phone,
       :mobile,
-      :aim,
       :yahoo,
       :google,
       :subscribe_to_comment_replies,
