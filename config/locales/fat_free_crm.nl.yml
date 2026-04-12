@@ -254,7 +254,6 @@ nl:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
   already_signed_up: Bent u al aangemeld?
   alt_email: Alternatief email adres
   avatar: Afbeelding
@@ -267,7 +266,7 @@ nl:
   google: Google IM
   gravatar_help: Niet bekend met Gravatars? Leer meer over Gravatars
   image_file: Afbeelding bestand
-  image_help: De afbeelding die u upload zal automatisch geschaald worden naar 75 x 75 pixels.
+  image_help: De afbeelding die u upload zal automatisch geschaald worden naar 180 x 180 pixels.
     Ondersteunde formaten zijn GIF, JPG, en PNG.
   job_title: Functie
   last_name: Achternaam
@@ -283,12 +282,10 @@ nl:
   save_profile: Sla profiel op
   sign_up: Registreer
   sign_up_button: Registreer
-  skype: Skype
   upload_picture: Upload afbeelding
   use_gravatar: Gebruik Gravatar
   user: Gebruiker
   username: Gebruiekrsnaam
-  yahoo: Yahoo IM
   born_on: Geboren op
   reports_to: Rapporteerd aan
   access: Toegang
@@ -341,7 +338,7 @@ nl:
   actual: Werkelijk
   actual_performance: Werkelijke prestaties
   budget: Budget
-  budget_label: Budget (€)
+  budget_label: Budget (%{currency})
   campaign: Campagne
   campaign_and_leads: campagne en zijn leads
   campaign_small: campagne
@@ -366,7 +363,7 @@ nl:
     conversie ratio, doel opbrengst, en het campagne budget. Deze getallen worden gebruikt om het succes van de campange te berekenen.
   objectives_small: campange doelen
   revenue: Opbrengst
-  revenue_label: Opbrengst (€)
+  revenue_label: Opbrengst (%{currency})
   revenue_number: ! '%{value} in opbrengst'
   save_campaign: Bewaar Campagne
   start_date: Start datum
@@ -465,7 +462,7 @@ nl:
   closes_today: zal naar verwachting vandaag afronden!
   closing_date: sluitdatum is %{value}
   create_opportunity: Maak Kans
-  currency: (€)
+  currency: "€"
   days_late: Te laat met
   days_left: Dagen over
   discount: Korting

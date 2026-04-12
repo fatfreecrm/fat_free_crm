@@ -199,7 +199,6 @@ it:
   show_per_page: Mostra %{number} %{models} per pagina usando %{fmt} formato.
   sort_by: Ordina per %{field}.
   sort_by_displaying: Ordina %{models} per %{field} mostrando nome %{position} cognome
-  aim: AOL IM
   already_signed_up: Gia' iscritto?
   alt_email: Email alternativa
   avatar: Avatar
@@ -212,7 +211,7 @@ it:
   google: Google IM
   gravatar_help: Non conosci Gravatars? Acquisisci informazioni riguardo Gravatars
   image_file: File immagine
-  image_help: Il file immagine che hai caricato sara' ridimensionato a 75 x 75 pixels.
+  image_help: Il file immagine che hai caricato sara' ridimensionato a 180 x 180 pixels.
     Formati supportati sono GIF, JPG e PNG.
   job_title: Titolo
   last_name: Cognome
@@ -228,12 +227,10 @@ it:
   save_profile: Salva Profilo
   sign_up: Iscriviti
   sign_up_button: Iscriviti
-  skype: Skype
   upload_picture: Carica una immagine
   use_gravatar: Usa Gravatar
   user: Utente
   username: Username
-  yahoo: Yahoo IM
   forgot_password: Password dimenticata
   login: Login
   no_account: Hai un account?
@@ -269,7 +266,7 @@ it:
   actual: Attuale
   actual_performance: Performance attuale
   budget: Budget
-  budget_label: Budget (€)
+  budget_label: Budget (%{currency})
   campaign: Campagna
   campaign_and_leads: campagna e suoi potenziali
   campaign_small: campagna
@@ -294,7 +291,7 @@ it:
     campagna.
   objectives_small: obiettivi campagna
   revenue: Gettito
-  revenue_label: Gettito (€)
+  revenue_label: Gettito (%{currency})
   revenue_number: ! '%{value} in gettito'
   save_campaign: Salva Campagna
   start_date: Data Iniziale
@@ -375,7 +372,7 @@ it:
   closes_today: conclusione prevista oggi!
   closing_date: data di chiusura e' %{value}
   create_opportunity: Crea Opportunita'
-  currency: ($)
+  currency: "€"
   days_late: Ritardo di
   days_left: Giorni rimasti
   discount: Sconto

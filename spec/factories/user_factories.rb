@@ -16,10 +16,7 @@ FactoryBot.define do
     alt_email           { FFaker::Internet.email }
     phone               { FFaker::PhoneNumber.phone_number }
     mobile              { FFaker::PhoneNumber.phone_number }
-    aim                 { nil }
-    yahoo               { nil }
     google              { nil }
-    skype               { nil }
     admin               { false }
     encrypted_password  { SecureRandom.hex(64) }
     password_salt       { SecureRandom.hex(64) }

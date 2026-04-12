@@ -196,7 +196,6 @@ pl:
   show_per_page: Pokaż %{number} %{models}/stronę w widoku %{fmt}.
   sort_by: Sortuj wg %{field}.
   sort_by_displaying: Sortuj %{models} wg %{field} wyświetlając imię %{position}.
-  aim: AOL IM
   already_signed_up: Już zarejestrowany?
   alt_email: Alternatywny email
   avatar: Obrazek
@@ -225,12 +224,10 @@ pl:
   save_profile: Zapisz profil
   sign_up: Zarejestruj się
   sign_up_button: Zarejestruj się
-  skype: Skype
   upload_picture: Dołącz zdjęcie/obrazek
   use_gravatar: użyj gravatara
   user: Użytkownik
   username: Nazwa użytkownika
-  yahoo: Yahoo IM
   forgot_password: Zapomniałem hasła
   login: Zaloguj
   no_account: Czy posiadasz konto?
@@ -264,7 +261,7 @@ pl:
   actual: Bieżące
   actual_performance: Bieżący postęp
   budget: Budżet
-  budget_label: Budżet (zł)
+  budget_label: Budżet (%{currency})
   campaign: Kampania
   campaign_and_leads: Kampania i jej leady
   campaign_small: kampania
@@ -288,7 +285,7 @@ pl:
     kampanii.
   objectives_small: cele kampanii
   revenue: Sprzedaż
-  revenue_label: Sprzedaż (zł)
+  revenue_label: Sprzedaż (%{currency})
   revenue_number: ! '%{value} sprzedaży'
   save_campaign: Zapisz kampanię
   start_date: Data rozpoczęcia
@@ -367,7 +364,7 @@ pl:
   closes_today: planowane zamknięcie - dziś!
   closing_date: ! 'data zamknięcia: %{value}'
   create_opportunity: Dodaj szansę
-  currency: (zł)
+  currency: "zł"
   days_late: Opóźniona o
   days_left: Pozostało dni
   discount: Rabat

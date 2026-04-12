@@ -1,7 +1,8 @@
 !!!5
-%html
+%html{ "lang" => I18n.locale.to_s }
   %head
     %meta{ "http-equiv" => "Content-Type", content: "text/html; charset=utf-8" }
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
     %title Fat Free CRM
     == <!-- #{controller.controller_name} : #{controller.action_name} -->
     = stylesheet_link_tag :application
@@ -9,6 +10,9 @@
     = hook(:stylesheet_includes, self) do
       #{yield :stylesheet_includes}
     %style= yield :styles
+
+    %link{ rel: "stylesheet", href: "https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" }
+    %script{ src: "https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" }
 
     = javascript_include_tag :application
 

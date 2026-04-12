@@ -83,4 +83,50 @@ describe ApplicationHelper do
       expect(helper.send(:current_view_name)).to eq('long')
     end
   end
+
+  describe "link_to_phone" do
+    it "should return a tel link for a given phone number" do
+      expect(helper.link_to_phone("123-456-7890")).to eq('<a href="tel:1234567890">123-456-7890</a>')
+    end
+
+    it "should handle phone numbers with a plus sign" do
+      expect(helper.link_to_phone("+1 (123) 456-7890")).to eq('<a href="tel:+11234567890">+1 (123) 456-7890</a>')
+    end
+
+    it "should return nil if the phone number is blank" do
+      expect(helper.link_to_phone("")).to be_nil
+      expect(helper.link_to_phone(nil)).to be_nil
+    end
+  end
+
+  describe "phone_field_with_pattern" do
+    let(:user) { create(:user) }
+    let(:form) { ActionView::Helpers::FormBuilder.new(:user, user, helper, {}) }
+
+    context "when enforce_international_phone_format is false" do
+      before { allow(Setting).to receive(:enforce_international_phone_format).and_return(false) }
+
+      it "should render a normal phone field" do
+        expect(helper.phone_field_with_pattern(form, :phone)).to include('type="tel"')
+        expect(helper.phone_field_with_pattern(form, :phone)).not_to include('pattern=')
+      end
+    end
+
+    context "when enforce_international_phone_format is true" do
+      before { allow(Setting).to receive(:enforce_international_phone_format).and_return(true) }
+
+      it "should render a phone field with pattern and placeholder" do
+        rendered_html = helper.phone_field_with_pattern(form, :phone)
+        expect(rendered_html).to include('type="tel"')
+        expect(rendered_html).to include('pattern="\\+[0-9]{1,3}\\s?[0-9]{1,14}"')
+        expect(rendered_html).to include('placeholder="+1 123 456 7890"')
+      end
+
+      it "should not override existing options" do
+        rendered_html = helper.phone_field_with_pattern(form, :phone, pattern: "custom", placeholder: "custom")
+        expect(rendered_html).to include('pattern="custom"')
+        expect(rendered_html).to include('placeholder="custom"')
+      end
+    end
+  end
 end

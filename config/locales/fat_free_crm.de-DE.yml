@@ -115,7 +115,6 @@ de:
   admin_tab_plugins: Plugins
   company: Firma
   to_rss: RSS feed
-  yahoo: Yahoo IM
   phone: Telefon
   one_day: Ein Tag
   personal_information: Persönliche Information
@@ -128,8 +127,8 @@ de:
   keep_private: nur für mich sichtbar
   select_none: -- Kein(e) --
   about_ffc_version: Fat Free CRM version
-  budget_label: Budget (€)
-  currency: (€)
+  budget_label: Budget (%{currency})
+  currency: "€"
   close_date: Abschlussdatum
   login_now_link: Login!
   user_signed_up_on: Angemeldet am %{value}
@@ -405,7 +404,7 @@ de:
   option_revenue: aktueller Umsatz
   total_opportunities: Anzahl Chancen
   mobile: Mobiltelefon
-  image_help: Das hochgeladene Bild wird automatisch auf eine Größe von 75 x 75 Pixels
+  image_help: Das hochgeladene Bild wird automatisch auf eine Größe von 180 x 180 Pixels
     berechnet. Unterstützte Formate sind GIF, JPG, und PNG.
   view_pending_tasks: ausstehende Aufgaben anzeigen
   about_features: Features und Fehler
@@ -453,7 +452,7 @@ de:
   select_contact: Wähle einen Kontakt aus
   create_field_group: Erstelle Gruppe.
   create_opportunity: Erstelle Chance
-  revenue_label: Umsatz (€)
+  revenue_label: Umsatz (%{currency})
   about_project_page: Projekt-Page
   tab_dashboard: Dashboard
   weighted_amount: Gewichteter Betrag
@@ -525,7 +524,6 @@ de:
   alt_email: Alternative Email
   create_past_participle: Zuletzt erstellte Datensätze
   sort_by: Sortiere nach %{field}
-  aim: AOL IM
   update_past_participle: Aktualisierungen
   called_off: Abgesagt
   task_due_today: heute fällig
@@ -536,7 +534,6 @@ de:
     die Dropbox geschickt wurde
   msg_successful_signup: Erfolgreiche Anmeldung. Willkommen bei Fat Free CRM!
   following_users_will_be_notified: Die folgenden Benutzer werden mittels e-Mail benachrichtigt
-  skype: Skype
   partner: Partner
   n_a: N/A
   extra_info: Zusatzinformation

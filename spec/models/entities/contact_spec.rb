@@ -35,7 +35,6 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  background_info :string(255)
-#  skype           :string(128)
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
@@ -241,8 +240,7 @@ describe Contact do
         fax: '+1 123 456 7891 123 456 7891 123 456 789 123 456 7891 123 456 789',
         blog: 'This is a test of how many characters before it throws an error message.This is a test of how many characters before it throws an error message.This is a test of how many characters before it throws an error message.',
         linkedin: 'This is my linkedin name and it is way to long. This is my linkedin name and it is way to long. This is my linkedin name and it is way to long.',
-        twitter: 'This is my twitter name and it is way to long. This is my twitter name and it is way to long. This is my twitter name and it is way to long.',
-        skype: 'This is my skype name and it is way to long. This is my skype name and it is way to long. This is my skype name and it is way to long.'
+        twitter: 'This is my twitter name and it is way to long. This is my twitter name and it is way to long. This is my twitter name and it is way to long.'
       )
     end
 
@@ -304,11 +302,6 @@ describe Contact do
     it "validate twitter max_length 128" do
       expect(new_record).to_not be_valid
       expect(new_record.errors.messages[:twitter]).to include("is too long (maximum is 128 characters)")
-    end
-
-    it "validate skype max_length 128" do
-      expect(new_record).to_not be_valid
-      expect(new_record.errors.messages[:skype]).to include("is too long (maximum is 128 characters)")
     end
   end
 end

@@ -40,7 +40,7 @@ feature 'Devise Sign-in' do
   scenario 'invalid credentials' do
     login_process('jo', 'pass')
     expect(current_path).to eq "/users/sign_in"
-    expect(page).to have_content("Invalid Email or password")
+    expect(page).to have_content("Invalid email or password")
   end
 
   scenario 'login with email' do

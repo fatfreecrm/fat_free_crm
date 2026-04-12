@@ -223,7 +223,6 @@ cs:
   sort_by: Setřiď %{field}.
   sort_by_displaying: Setřiď %{models} podle %{field} zobrazující jméno %{position}
     příjmení.
-  aim: AOL IM
   already_signed_up: Již registrováný?
   alt_email: Alternativní email
   avatar: Avatar
@@ -236,7 +235,7 @@ cs:
   google: Google IM
   gravatar_help: Neznáte Gravatars? Více o Gravatars
   image_file: Soubor obráku
-  image_help: Obrázek který nahrajete bude automaticky převeden na velikost 75 x 75
+  image_help: Obrázek který nahrajete bude automaticky převeden na velikost 180 x 180
     pixelů. Podporované formáty jsou GIF, JPG, and PNG.
   job_title: Popis
   last_name: Příjmení
@@ -252,12 +251,10 @@ cs:
   save_profile: Uložit profil
   sign_up: Registrovat
   sign_up_button: Registrovat
-  skype: Skype
   upload_picture: Nahrát obrázek
   use_gravatar: Použít Gravatar
   user: Uživatel
   username: Uživatelské jméno
-  yahoo: Yahoo IM
   forgot_password: Zapomenuté heslo
   login: Přihlásit
   no_account: Nemá účet?
@@ -293,7 +290,7 @@ cs:
   actual: Aktuální
   actual_performance: Aktuální výkonnost
   budget: Rozpočet
-  budget_label: Ropočet (CZK)
+  budget_label: Ropočet (%{currency})
   campaign: Kampaň
   campaign_and_leads: Kampaň a potenciální klienti
   campaign_small: kampaň
@@ -317,7 +314,7 @@ cs:
     pomohou určit výkonost kampaně.
   objectives_small: cíle kampaně
   revenue: tržba
-  revenue_label: Tržba (CZK)
+  revenue_label: Tržba (%{currency})
   revenue_number: ! '%{value} tržba'
   save_campaign: Uložit kampaň
   start_date: Počáteční datum
@@ -396,7 +393,7 @@ cs:
   closes_today: Očekávané uzavření dnes!
   closing_date: datum uzavření je %{value}
   create_opportunity: Vytvořit příležitost
-  currency: (CZK)
+  currency: "CZK"
   days_late: Spoždění
   days_left: Zbývá dnů
   discount: Rabat

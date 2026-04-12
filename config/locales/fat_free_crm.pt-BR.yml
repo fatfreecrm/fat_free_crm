@@ -261,7 +261,6 @@ pt-BR:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
   already_signed_up: Já é cadastrado?
   alt_email: Email alternativo
   avatar: Imagem
@@ -290,12 +289,10 @@ pt-BR:
   save_profile: Salvar perfil
   sign_up: Cadastrar-se
   sign_up_button: Cadastrar-se
-  skype: Skype
   upload_picture: Enviar foto
   use_gravatar: usar Gravatar
   user: Usuário
   username: Usuário
-  yahoo: Yahoo IM
   born_on: Nascido em
   reports_to: Reportar para
   access: Acesso
@@ -348,7 +345,7 @@ pt-BR:
   actual: Atual
   actual_performance: Performance atual
   budget: Orçamento
-  budget_label: Orçamento ($)
+  budget_label: Orçamento (%{currency})
   campaign: Campanha
   campaign_and_leads: campanha e seus leads
   campaign_small: campanha
@@ -372,7 +369,7 @@ pt-BR:
     you track actual campaign performance.
   objectives_small: objetivos da campanha
   revenue: Receita
-  revenue_label: Receita ($)
+  revenue_label: Receita (%{currency})
   revenue_number: ! '%{value} em receita'
   save_campaign: Salvar campanha
   start_date: Data de início
@@ -451,7 +448,7 @@ pt-BR:
   closes_today: esperado de fechar hoje!
   closing_date: data de fechar é %{value}
   create_opportunity: Cria oportunidade
-  currency: (R$)
+  currency: "R$"
   days_late: Atrasado
   days_left: Dias restante
   discount: Desconto

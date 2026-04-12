@@ -77,6 +77,8 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :deleted_at, if: -> { Setting.require_unique_account_names }
   validates :rating, inclusion: { in: 0..5 }, allow_blank: true
   validates :category, inclusion: { in: proc { Setting.unroll(:account_category).map { |s| s.last.to_s } } }, allow_blank: true
+  validates :latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90, allow_blank: true }
+  validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180, allow_blank: true }
   validate :users_for_shared_access
 
   before_save :nullify_blank_category

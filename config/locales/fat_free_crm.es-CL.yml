@@ -267,7 +267,6 @@ es-CL:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
   already_signed_up: ¿Ya se ha registrado?
   alt_email: Dirección de correo electrónico alternativa
   avatar: Imagen
@@ -296,12 +295,10 @@ es-CL:
   save_profile: Guardar Perfil
   sign_up: Registrarse
   sign_up_button: Registrarse
-  skype: Skype
   upload_picture: Cargar Foto
   use_gravatar: Usar Gravatar
   user: Usuario
   username: Nombre de usuario
-  yahoo: Yahoo IM
   born_on: Nacido en
   reports_to: Reports to
   access: Access
@@ -348,7 +345,7 @@ es-CL:
   actual: Real
   actual_performance: Rendimiento Real
   budget: Presupuesto
-  budget_label: Presupuesto ($)
+  budget_label: Presupuesto (%{currency})
   campaign: Campaña
   campaign_and_leads: campaña y sus iniciativas
   campaign_small: campaña
@@ -373,7 +370,7 @@ es-CL:
     al tanto de los resultados reales de la campaña.
   objectives_small: objetivos de la campaña
   revenue: Ingresos
-  revenue_label: Ingresos ($)
+  revenue_label: Ingresos (%{currency})
   revenue_number: ! '%{value} de ingresos'
   save_campaign: Guardar Campaña
   start_date: Fecha de inicio
@@ -475,7 +472,7 @@ es-CL:
   closes_today: ¡Cierre previsto hoy!
   closing_date: la fecha de cierre es el %{value}
   create_opportunity: Crear oportunidad
-  currency: ($)
+  currency: "$"
   days_late: Retraso de
   days_left: Días restantes
   discount: Descuento

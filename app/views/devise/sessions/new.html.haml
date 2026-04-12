@@ -25,7 +25,7 @@
 
     .section
       = f.input :remember_me, as: :boolean, inline_label: t('remember_me')
-      = f.submit t(:login), class: 'btn btn-primary'
+      = f.submit t(:login), class: 'btn btn-primary form-control'
 
     .section
       = link_to t(:forgot_password) + '?', new_password_path(resource_name)

@@ -8,7 +8,7 @@
         = col(t(:last_name), contact.last_name)
       %tr
         = col(t(:email), contact.email, false, true)
-        = col(t(:phone), contact.phone)
+        = col(t(:phone)) { link_to_phone(contact.phone) }
       %tr
         = col(t(:account)) do
           = account_with_url_for(contact)

@@ -12,15 +12,15 @@
             %tr
               %td
                 .label #{t :phone_toll_free}:
-                = f.phone_field :toll_free_phone, style: "width:154px"
+                = phone_field_with_pattern(f, :toll_free_phone, style: "width:154px")
               %td= spacer
               %td
                 .label #{t :phone}:
-                = f.phone_field :phone, style: "width:154px"
+                = phone_field_with_pattern(f, :phone, style: "width:154px")
               %td= spacer
               %td
                 .label #{t :fax}:
-                = f.phone_field :fax, style: "width:154px"
+                = phone_field_with_pattern(f, :fax, style: "width:154px")
       %tr
         %td
           .label.top #{t :website}:
@@ -29,6 +29,14 @@
         %td
           .label.top Email:
           = f.email_field :email
+      %tr
+        %td
+          .label.top Latitude:
+          = f.text_field :latitude, pattern: "^-?\\d+(\\.\\d+)?$"
+        %td= spacer
+        %td
+          .label.top Longitude:
+          = f.text_field :longitude, pattern: "^-?\\d+(\\.\\d+)?$"
       %tr
         %td
           = render "shared/address", f: f, asset: @account, type: :billing, title: :billing_address
