@@ -19,7 +19,6 @@ FactoryBot.define do
     aim                 { nil }
     yahoo               { nil }
     google              { nil }
-    skype               { nil }
     admin               { false }
     encrypted_password  { SecureRandom.hex(64) }
     password_salt       { SecureRandom.hex(64) }

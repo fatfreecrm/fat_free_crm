@@ -1,0 +1,43 @@
+%fieldset.panel.panel-default
+  .panel-heading
+    %h4= t('admin.settings.customization.title', default: 'Customization')
+  .panel-body
+    .row
+      .col-md-4
+        .form-group
+          = f.label :background_info
+          = f.select :background_info, options_for_select([:account, :campaign, :contact, :lead, :opportunity, :task], Setting.background_info), {}, { multiple: true, class: 'form-control' }
+          %span.help-block Select models that should have background information displayed.
+        .form-group
+          = f.label :priority_countries
+          = f.text_area :priority_countries, value: (Setting.priority_countries || []).join("\n"), class: 'form-control', rows: 4
+          %span.help-block One country code per line (e.g. US, GB).
+        .form-group
+          = f.label :opportunity_default_stage
+          = f.select :opportunity_default_stage, options_for_select(Setting.opportunity_stage.map{|s| [s.to_s.humanize, s]}, Setting.opportunity_default_stage), {}, class: 'form-control'
+      .col-md-4
+        .form-group
+          = f.label :account_category
+          = f.text_area :account_category, value: Setting.account_category.map { |v| v.is_a?(Symbol) ? t(v) : v }.join("\n"), class: 'form-control', rows: 5
+        .form-group
+          = f.label :campaign_status
+          = f.text_area :campaign_status, value: Setting.campaign_status.map { |v| v.is_a?(Symbol) ? t(v) : v }.join("\n"), class: 'form-control', rows: 5
+        .form-group
+          = f.label :lead_status
+          = f.text_area :lead_status, value: Setting.lead_status.map { |v| v.is_a?(Symbol) ? t(v) : v }.join("\n"), class: 'form-control', rows: 5
+        .form-group
+          = f.label :lead_source
+          = f.text_area :lead_source, value: Setting.lead_source.map { |v| v.is_a?(Symbol) ? t(v) : v }.join("\n"), class: 'form-control', rows: 5
+      .col-md-4
+        .form-group
+          = f.label :opportunity_stage
+          = f.text_area :opportunity_stage, value: Setting.opportunity_stage.map { |v| v.is_a?(Symbol) ? t(v) : v }.join("\n"), class: 'form-control', rows: 5
+        .form-group
+          = f.label :task_category
+          = f.text_area :task_category, value: Setting.task_category.map { |v| v.is_a?(Symbol) ? t(v) : v }.join("\n"), class: 'form-control', rows: 5
+        .form-group
+          = f.label :task_bucket
+          = f.text_area :task_bucket, value: Setting.task_bucket.map { |v| v.is_a?(Symbol) ? t(v) : v }.join("\n"), class: 'form-control', rows: 5
+        .form-group
+          = f.label :task_completed
+          = f.text_area :task_completed, value: Setting.task_completed.map { |v| v.is_a?(Symbol) ? t(v) : v }.join("\n"), class: 'form-control', rows: 5

@@ -2,10 +2,8 @@
   %div#options(style="float:right")
     #{t :profile_language}: #{link_to(language_for(current_user), "#", id: :locale)}
 
-%table(cellspacing="0" cellpadding="0")
+%table(cellspacing="0" cellpadding="0" width="100%")
   %tr
-    %td(valign="top")
-      = avatar_for(@user, style: "margin: 0px 10px 0px 0px")
     %td(valign="top")
       %h3= h(@user.full_name) + " (#{@user.username})"
       - if !@user.title.blank? && !@user.company.blank?
@@ -29,6 +27,7 @@
         - if @user.mobile.present?
           %div
             == #{t :mobile}: <b>#{link_to_phone(@user.mobile)}</b>
-
+    %td(valign="top" style="text-align: right")
+      = avatar_for(@user)
 - if Setting.per_user_locale
   %script= render "languages"

@@ -267,7 +267,7 @@ et:
   google: Google IM
   gravatar_help: Ei tea, mis on Gravatar? Vt järgi.
   image_file: Pildifail
-  image_help: Üleslaetava pildi suurus muudetakse automaatselt mõõtu 75 x 75 pikslit.
+  image_help: Üleslaetava pildi suurus muudetakse automaatselt mõõtu 180 x 180 pikslit.
     Toetatud formaadid on GIF, JPG, ja PNG.
   job_title: Ametikoht
   last_name: Perekonnanimi
@@ -283,7 +283,6 @@ et:
   save_profile: Salvesta profiil
   sign_up: Registreeri
   sign_up_button: Registreeri
-  skype: Skype
   upload_picture: Lae pilt
   use_gravatar: Kasuta Gravatar'i
   user: Kasutaja

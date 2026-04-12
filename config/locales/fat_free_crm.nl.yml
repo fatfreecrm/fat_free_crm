@@ -267,7 +267,7 @@ nl:
   google: Google IM
   gravatar_help: Niet bekend met Gravatars? Leer meer over Gravatars
   image_file: Afbeelding bestand
-  image_help: De afbeelding die u upload zal automatisch geschaald worden naar 75 x 75 pixels.
+  image_help: De afbeelding die u upload zal automatisch geschaald worden naar 180 x 180 pixels.
     Ondersteunde formaten zijn GIF, JPG, en PNG.
   job_title: Functie
   last_name: Achternaam
@@ -283,7 +283,6 @@ nl:
   save_profile: Sla profiel op
   sign_up: Registreer
   sign_up_button: Registreer
-  skype: Skype
   upload_picture: Upload afbeelding
   use_gravatar: Gebruik Gravatar
   user: Gebruiker

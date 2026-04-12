@@ -1,0 +1,19 @@
+.title_tools
+  = link_to_inline(:create_research_tool, new_admin_research_tool_path, text: t(:create_research_tool))
+
+.title
+  %span#create_research_tool_title #{t :research_tools}
+  = image_tag("loading.gif", size: :thumb, id: "loading", style: "display: none;")
+.remote#create_research_tool{ hidden }
+
+.list#research_tools
+  - if @research_tools.any?
+    = render partial: "admin/research_tools/research_tool", collection: @research_tools
+  - else
+    = render "shared/empty"
+
+
+= styles_for :research_tools
+
+
+#export= render "shared/export"

@@ -1,0 +1,112 @@
+%fieldset.panel.panel-default
+  .panel-heading
+    %h4= t('admin.settings.email.title', default: 'Email')
+  .panel-body
+    %ul.nav.nav-tabs{role: 'tablist'}
+      %li.active{role: 'presentation'}
+        %a{href: '#smtp', 'aria-controls' => 'smtp', role: 'tab', 'data-toggle' => 'tab'}= t('admin.settings.email.smtp', default: 'SMTP')
+      %li{role: 'presentation'}
+        %a{href: '#dropbox', 'aria-controls' => 'dropbox', role: 'tab', 'data-toggle' => 'tab'}= t('admin.settings.email.dropbox', default: 'Dropbox')
+      %li{role: 'presentation'}
+        %a{href: '#replies', 'aria-controls' => 'replies', role: 'tab', 'data-toggle' => 'tab'}= t('admin.settings.email.replies', default: 'Comment Replies')
+
+    .tab-content
+      .tab-pane.active#smtp{role: 'tabpanel'}
+        = f.fields_for :smtp, Setting.smtp do |smtp|
+          .row
+            .col-md-6
+              .form-group
+                = smtp.label :address
+                = smtp.text_field :address, class: 'form-control'
+              .form-group
+                = smtp.label :port
+                = smtp.text_field :port, class: 'form-control'
+              .form-group
+                = smtp.label :user_name
+                = smtp.text_field :user_name, class: 'form-control'
+            .col-md-6
+              .form-group
+                = smtp.label :from, "From Address"
+                = smtp.text_field :from, class: 'form-control'
+              .form-group
+                = smtp.label :authentication
+                = smtp.text_field :authentication, class: 'form-control'
+              .form-group
+                = smtp.label :password
+                = smtp.password_field :password, class: 'form-control'
+          .checkbox
+            = smtp.label :enable_starttls_auto do
+              = smtp.check_box :enable_starttls_auto
+              Enable STARTTLS Auto
+
+      .tab-pane#dropbox{role: 'tabpanel'}
+        = f.fields_for :email_dropbox, Setting.email_dropbox do |dropbox|
+          .row
+            .col-md-6
+              .form-group
+                = dropbox.label :server
+                = dropbox.text_field :server, class: 'form-control'
+              .form-group
+                = dropbox.label :port
+                = dropbox.text_field :port, class: 'form-control'
+              .form-group
+                = dropbox.label :user
+                = dropbox.text_field :user, class: 'form-control'
+              .form-group
+                = dropbox.label :password
+                = dropbox.password_field :password, class: 'form-control'
+            .col-md-6
+              .form-group
+                = dropbox.label :address
+                = dropbox.text_field :address, class: 'form-control'
+              .form-group
+                = dropbox.label :scan_folder
+                = dropbox.text_field :scan_folder, class: 'form-control'
+              .form-group
+                = dropbox.label :move_to_folder
+                = dropbox.text_field :move_to_folder, class: 'form-control'
+              .form-group
+                = dropbox.label :move_invalid_to_folder
+                = dropbox.text_field :move_invalid_to_folder, class: 'form-control'
+          .checkbox
+            = dropbox.label :ssl do
+              = dropbox.check_box :ssl
+              Use SSL
+          .checkbox
+            = dropbox.label :attach_to_account do
+              = dropbox.check_box :attach_to_account
+              Attach emails to contact's account
+
+      .tab-pane#replies{role: 'tabpanel'}
+        = f.fields_for :email_comment_replies, Setting.email_comment_replies do |replies|
+          .row
+            .col-md-6
+              .form-group
+                = replies.label :server
+                = replies.text_field :server, class: 'form-control'
+              .form-group
+                = replies.label :port
+                = replies.text_field :port, class: 'form-control'
+              .form-group
+                = replies.label :user
+                = replies.text_field :user, class: 'form-control'
+              .form-group
+                = replies.label :password
+                = replies.password_field :password, class: 'form-control'
+            .col-md-6
+              .form-group
+                = replies.label :address
+                = replies.text_field :address, class: 'form-control'
+              .form-group
+                = replies.label :scan_folder
+                = replies.text_field :scan_folder, class: 'form-control'
+              .form-group
+                = replies.label :move_to_folder
+                = replies.text_field :move_to_folder, class: 'form-control'
+              .form-group
+                = replies.label :move_invalid_to_folder
+                = replies.text_field :move_invalid_to_folder, class: 'form-control'
+          .checkbox
+            = replies.label :ssl do
+              = replies.check_box :ssl
+              Use SSL

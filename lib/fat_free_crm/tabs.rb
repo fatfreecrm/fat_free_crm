@@ -18,7 +18,8 @@ module FatFreeCRM
       end
 
       def admin
-        @@admin ||= Setting[:admin_tabs]&.dup
+        tabs = Setting[:admin_tabs]&.dup || []
+        @@admin ||= tabs
       end
     end
   end
