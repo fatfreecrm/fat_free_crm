@@ -93,30 +93,30 @@ class Contact < ActiveRecord::Base
   exportable
   sortable by: ["first_name ASC", "last_name ASC", "created_at DESC", "updated_at DESC"], default: "created_at DESC"
 
-  validates_presence_of :first_name, message: :missing_first_name, if: -> { Setting.require_first_names }
-  validates_presence_of :last_name,  message: :missing_last_name,  if: -> { Setting.require_last_names  }
+  validates :first_name, presence: { message: :missing_first_name, if: -> { Setting.require_first_names } }
+  validates :last_name,  presence: { message: :missing_last_name,  if: -> { Setting.require_last_names  } }
   validate :users_for_shared_access
 
-  validates_length_of :first_name, maximum: 64
-  validates_length_of :last_name, maximum: 64
-  validates_length_of :title, maximum: 64
-  validates_length_of :department, maximum: 64
-  validates_length_of :email, maximum: 254
-  validates_length_of :alt_email, maximum: 254
-  validates_length_of :phone, maximum: 32
-  validates_length_of :mobile, maximum: 32
-  validates_length_of :fax, maximum: 32
-  validates_length_of :blog, maximum: 128
-  validates_length_of :linkedin, maximum: 128
-  validates_length_of :facebook, maximum: 128
-  validates_length_of :twitter, maximum: 128
-  validates_length_of :zoom, maximum: 128
-  validates_length_of :teams, maximum: 128
-  validates_length_of :signal, maximum: 128
-  validates_length_of :instagram, maximum: 128
-  validates_length_of :mastodon, maximum: 128
-  validates_length_of :discord, maximum: 128
-  validates_length_of :bluesky, maximum: 128
+  validates :first_name, length: { maximum: 64 }
+  validates :last_name, length: { maximum: 64 }
+  validates :title, length: { maximum: 64 }
+  validates :department, length: { maximum: 64 }
+  validates :email, length: { maximum: 254 }
+  validates :alt_email, length: { maximum: 254 }
+  validates :phone, length: { maximum: 32 }
+  validates :mobile, length: { maximum: 32 }
+  validates :fax, length: { maximum: 32 }
+  validates :blog, length: { maximum: 128 }
+  validates :linkedin, length: { maximum: 128 }
+  validates :facebook, length: { maximum: 128 }
+  validates :twitter, length: { maximum: 128 }
+  validates :zoom, length: { maximum: 128 }
+  validates :teams, length: { maximum: 128 }
+  validates :signal, length: { maximum: 128 }
+  validates :instagram, length: { maximum: 128 }
+  validates :mastodon, length: { maximum: 128 }
+  validates :discord, length: { maximum: 128 }
+  validates :bluesky, length: { maximum: 128 }
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------

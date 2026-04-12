@@ -1112,7 +1112,6 @@ Rails/Validation:
     - 'app/models/entities/account_contact.rb'
     - 'app/models/entities/account_opportunity.rb'
     - 'app/models/entities/campaign.rb'
-    - 'app/models/entities/contact.rb'
     - 'app/models/entities/contact_opportunity.rb'
     - 'app/models/entities/lead.rb'
     - 'app/models/entities/opportunity.rb'
