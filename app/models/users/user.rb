@@ -92,8 +92,6 @@ class User < ActiveRecord::Base
             uniqueness: { message: :username_taken, case_sensitive: false },
             presence: { message: :missing_username },
             format: { with: /\A[a-z0-9_-]+\z/i }
-  validates_length_of :aim, maximum: 32
-  validates_length_of :yahoo, maximum: 32
   validates_length_of :google, maximum: 32
   validates_length_of :blog, maximum: 128
   validates_length_of :facebook, maximum: 128
