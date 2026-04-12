@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20260412062855) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_12_062855) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -272,6 +272,7 @@ ActiveRecord::Schema[7.1].define(version: 20260412062855) do
     t.string "autocomplete"
     t.string "list"
     t.string "multiple"
+    t.string "title"
     t.index ["field_group_id"], name: "index_fields_on_field_group_id"
     t.index ["name"], name: "index_fields_on_name"
   end
