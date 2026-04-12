@@ -276,7 +276,6 @@ GEM
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
-    mini_portile2 (2.8.9)
     mini_racer (0.20.0)
       libv8-node (~> 24.12.0.1)
     minitest (6.0.3)
@@ -525,8 +524,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.9)
-      mini_portile2 (~> 2.8.0)
+    sqlite3 (2.9.2-arm64-darwin)
+    sqlite3 (2.9.2-x86_64-linux-gnu)
     sshkit (1.25.0)
       base64
       logger
@@ -660,7 +659,7 @@ DEPENDENCIES
   selenium-webdriver
   simple_form
   sprockets-rails (>= 3.0.0)
-  sqlite3 (~> 1.6.8)
+  sqlite3 (>= 2.1)
   thor
   timecop
   tzinfo-data
