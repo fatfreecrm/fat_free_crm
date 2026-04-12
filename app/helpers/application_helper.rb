@@ -272,9 +272,10 @@ module ApplicationHelper
       facebook: "facebook",
       linkedin: "linkedin",
       twitter: "twitter",
+      whatsapp: "whatsapp",
       blog: "external-link"
     }
-    %i[blog linkedin facebook twitter].each do |site|
+    %i[blog linkedin facebook twitter whatsapp].each do |site|
       url = person.send(site)
       next if url.blank?
 
