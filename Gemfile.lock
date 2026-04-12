@@ -15,14 +15,6 @@ GIT
       activerecord (~> 7.2.0)
 
 GIT
-  remote: https://github.com/fatfreecrm/ransack_ui.git
-  revision: 83e5be6e4bad23c625db22dd1e988a4b80a4333c
-  branch: bump-ransack
-  specs:
-    ransack_ui (3.0.0)
-      ransack
-
-GIT
   remote: https://github.com/jquery-ui-rails/jquery-ui-rails.git
   revision: 413265e81f790f795239e07e7e25e01429b2f18d
   tag: v7.0.0
@@ -166,6 +158,7 @@ GEM
     cgi (0.5.1)
     childprocess (5.1.0)
       logger (~> 1.5)
+    chronic (0.10.2)
     coderay (1.1.3)
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
@@ -294,7 +287,7 @@ GEM
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
-    mini_portile2 (2.8.7)
+    mini_portile2 (2.8.9)
     mini_racer (0.20.0)
       libv8-node (~> 24.12.0.1)
     minitest (5.27.0)
@@ -422,6 +415,12 @@ GEM
       activerecord (>= 7.2)
       activesupport (>= 7.2)
       i18n
+    ransack_chronic (1.2.0)
+      chronic (~> 0.10.2, >= 0.10.2)
+      ransack (~> 4.0)
+    ransack_ui (3.0.0)
+      ransack (>= 4)
+      ransack_chronic (>= 1.2.0)
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.11.2)
@@ -534,8 +533,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.9-arm64-darwin)
-    sqlite3 (1.6.9-x86_64-linux)
+    sqlite3 (1.6.9)
+      mini_portile2 (~> 2.8.0)
     sshkit (1.25.0)
       base64
       logger
@@ -648,7 +647,7 @@ DEPENDENCIES
   rails_autolink
   rainbow
   ransack (~> 4)
-  ransack_ui!
+  ransack_ui (~> 3.0.0)
   rb-fchange
   rb-fsevent
   rb-inotify

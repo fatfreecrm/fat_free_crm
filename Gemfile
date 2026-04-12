@@ -110,7 +110,7 @@ gem "devise-encryptable"
 gem "devise-security"
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob'
-gem 'ransack_ui', git: 'https://github.com/fatfreecrm/ransack_ui.git', branch: 'bump-ransack'
+gem 'ransack_ui', '~> 3.0.0'
 gem 'vcardigan'
 gem 'bootstrap', '~>5.2.0'
 gem 'mini_magick'
