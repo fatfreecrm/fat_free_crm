@@ -212,7 +212,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_12_040913) do
     t.string "signal", limit: 128
     t.string "instagram", limit: 128
     t.string "mastodon", limit: 128
-    t.string "discord", limit: 128
     t.string "bluesky", limit: 128
     t.index ["assigned_to"], name: "index_contacts_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
@@ -323,7 +322,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_12_040913) do
     t.string "signal", limit: 128
     t.string "instagram", limit: 128
     t.string "mastodon", limit: 128
-    t.string "discord", limit: 128
     t.string "bluesky", limit: 128
     t.index ["assigned_to"], name: "index_leads_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "index_leads_on_user_id_and_last_name_and_deleted_at", unique: true
@@ -486,7 +484,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_12_040913) do
     t.string "instagram", limit: 128
     t.string "facebook", limit: 128
     t.string "mastodon", limit: 128
-    t.string "discord", limit: 128
     t.string "bluesky", limit: 128
     t.string "twitter", limit: 128
     t.string "linkedin", limit: 128

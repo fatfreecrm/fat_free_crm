@@ -278,10 +278,9 @@ module ApplicationHelper
       signal: "comment",
       instagram: "instagram",
       mastodon: "retweet",
-      discord: "comments",
       bluesky: "cloud"
     }
-    %i[blog linkedin facebook twitter zoom teams signal instagram mastodon discord bluesky].each do |site|
+    %i[blog linkedin facebook twitter zoom teams signal instagram mastodon bluesky].each do |site|
       url = person.send(site)
       next if url.blank?
 

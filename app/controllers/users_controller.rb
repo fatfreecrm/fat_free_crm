@@ -153,7 +153,6 @@ class UsersController < ApplicationController
       :signal,
       :instagram,
       :mastodon,
-      :discord,
       :bluesky,
       :subscribe_to_comment_replies,
       :receive_assigned_notifications

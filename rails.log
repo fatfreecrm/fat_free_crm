@@ -1,0 +1,217 @@
+=> Booting Puma
+=> Rails 8.0.5 application starting in development
+=> Run `bin/rails server --help` for more startup options
+Use 'before_worker_boot', 'on_worker_boot' is deprecated and will be removed in v8
+[266252] Puma starting in cluster mode...
+[266252] * Puma version: 7.1.0 ("Neon Witch")
+[266252] * Ruby version: ruby 3.2.3 (2024-01-18 revision 52bb2ac0a6) [x86_64-linux-gnu]
+[266252] *  Min threads: 5
+[266252] *  Max threads: 5
+[266252] *  Environment: development
+[266252] *   Master PID: 266252
+[266252] *      Workers: 2
+[266252] *     Restarts: (✔) hot (✖) phased (✖) refork
+[266252] * Preloading application
+[266252] * Listening on http://127.0.0.1:3000
+[266252] * Listening on http://[::1]:3000
+[266252] Use Ctrl-C to stop
+[266252] - Worker 0 (PID: 266258) booted in 0.01s, phase: 0
+[266252] - Worker 1 (PID: 266261) booted in 0.01s, phase: 0
+Started GET "/login" for ::1 at 2026-04-12 05:28:55 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Redirected to http://localhost:3000/users/sign_in
+Completed 301 Moved Permanently in 2ms
+
+
+Started GET "/users/sign_in" for ::1 at 2026-04-12 05:28:56 +0000
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.haml
+  Rendering devise/sessions/new.html.haml within layouts/application
+  [1m[36mSetting Load (0.3ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "user_signup"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  Rendered devise/sessions/new.html.haml within layouts/application (Duration: 55.7ms | GC: 1.9ms)
+autoprefixer: /app/app/assets/stylesheets/application.css.erb:12654:3: Gradient has outdated direction syntax. New syntax is like `to left` instead of `right`.
+autoprefixer: /app/app/assets/stylesheets/common.scss:1060:3: Gradient has outdated direction syntax. New syntax is like `to left` instead of `right`.
+  Rendered layouts/_header.html.haml (Duration: 6.5ms | GC: 0.3ms)
+  Rendered layouts/_about.html.haml (Duration: 7.5ms | GC: 0.1ms)
+  Rendered layouts/_footer.html.haml (Duration: 12.1ms | GC: 0.3ms)
+  Rendered layouts/_tabless.html.haml (Duration: 16.3ms | GC: 0.6ms)
+  [1m[36mSetting Load (0.2ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "base_url"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  Rendered layout layouts/application.html.haml (Duration: 6055.9ms | GC: 287.0ms)
+Completed 200 OK in 6783ms (Views: 6673.1ms | ActiveRecord: 5.6ms (2 queries, 0 cached) | GC: 721.8ms)
+
+
+Started GET "/home/timezone?offset=0" for ::1 at 2026-04-12 05:29:04 +0000
+Processing by HomeController#timezone as */*
+  Parameters: {"offset"=>"0"}
+  [1m[36mSetting Load (0.2ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "locale"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+Completed 200 OK in 308ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 9.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2026-04-12 05:29:05 +0000
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"admin", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Login"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE (lower(username) = ? OR lower(email) = ?) ORDER BY "users"."id" ASC LIMIT ?[0m  [[nil, "admin"], [nil, "admin"], ["LIMIT", 1]]
+  ↳ app/models/users/user.rb:222:in `find_for_database_authentication'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  [1m[36mUser Update (3.5ms)[0m  [1m[33mUPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["last_sign_in_at", "2026-04-12 05:29:06.070894"], ["current_sign_in_at", "2026-04-12 05:29:06.070894"], ["last_sign_in_ip", "::1"], ["current_sign_in_ip", "::1"], ["sign_in_count", 1], ["updated_at", "2026-04-12 05:29:06.072615"], ["id", 1]]
+  [1m[36mVersion Create (0.4ms)[0m  [1m[32mINSERT INTO "versions" ("item_type", "item_id", "event", "whodunnit", "object", "created_at", "object_changes", "related_id", "related_type", "transaction_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["item_type", "User"], ["item_id", 1], ["event", "update"], ["whodunnit", nil], ["object", "---\nlast_sign_in_at:\ncurrent_sign_in_at:\nlast_sign_in_ip:\ncurrent_sign_in_ip:\nsign_in_count: 0\nid: 1\nusername: admin\nemail: admin@example.com\nfirst_name:\nlast_name:\ntitle:\ncompany:\nalt_email:\nphone:\nmobile:\naim:\nyahoo:\ngoogle:\nencrypted_password: 537ba247603f788435605aee79eb1f5318f840de6026a09381485f3301c45670f285ab7d0417ea720937cba5233a26f88f14708c1b64d99d18d504ddb7f6468e\npassword_salt: Xo7jEyVnSjgdQvygacY4\ndeleted_at:\ncreated_at: !ruby/object:ActiveSupport::TimeWithZone\n  utc: 2026-04-12 05:28:48.010898000 Z\n  zone: &1 !ruby/object:ActiveSupport::TimeZone\n    name: Etc/UTC\n  time: 2026-04-12 05:28:48.010898000 Z\nupdated_at: !ruby/object:ActiveSupport::TimeWithZone\n  utc: 2026-04-12 05:28:48.010898000 Z\n  zone: *1\n  time: 2026-04-12 05:28:48.010898000 Z\nadmin: true\nsuspended_at:\nunconfirmed_email:\nreset_password_token:\nreset_password_sent_at:\nremember_token:\nremember_created_at:\nauthentication_token:\nconfirmation_token:\nconfirmed_at: !ruby/object:ActiveSupport::TimeWithZone\n  utc: 2026-04-12 05:28:47.978512000 Z\n  zone: *1\n  time: 2026-04-12 05:28:47.978512000 Z\nconfirmation_sent_at:\nsubscribe_to_comment_replies: true\nreceive_assigned_notifications: true\nzoom:\nteams:\nsignal:\ninstagram:\nfacebook:\nmastodon:\nbluesky:\ntwitter:\nlinkedin:\nblog:\n"], ["created_at", "2026-04-12 05:29:06.072615"], ["object_changes", "---\ncurrent_sign_in_at:\n-\n- !ruby/object:ActiveSupport::TimeWithZone\n  utc: 2026-04-12 05:29:06.070894612 Z\n  zone: &1 !ruby/object:ActiveSupport::TimeZone\n    name: Etc/UTC\n  time: 2026-04-12 05:29:06.070894612 Z\nlast_sign_in_ip:\n-\n- \"::1\"\ncurrent_sign_in_ip:\n-\n- \"::1\"\nsign_in_count:\n- 0\n- 1\nupdated_at:\n- !ruby/object:ActiveSupport::TimeWithZone\n  utc: 2026-04-12 05:28:48.010898000 Z\n  zone: *1\n  time: 2026-04-12 05:28:48.010898000 Z\n- !ruby/object:ActiveSupport::TimeWithZone\n  utc: 2026-04-12 05:29:06.072615436 Z\n  zone: *1\n  time: 2026-04-12 05:29:06.072615436 Z\n"], ["related_id", nil], ["related_type", nil], ["transaction_id", nil]]
+  [1m[36mTRANSACTION (3.4ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = ? AND "preferences"."user_id" = ? LIMIT ?[0m  [["name", "locale"], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/users/preference.rb:30:in `[]'
+Redirected to http://localhost:3000/
+Completed 302 Found in 829ms (ActiveRecord: 10.8ms (4 queries, 0 cached) | GC: 397.0ms)
+
+
+Started GET "/" for ::1 at 2026-04-12 05:29:06 +0000
+Processing by HomeController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = ? AND "preferences"."user_id" = ? LIMIT ?[0m  [["name", "locale"], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/users/preference.rb:30:in `[]'
+  [1m[36mSetting Load (0.1ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "locale"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = ? AND "preferences"."user_id" = ? LIMIT ?[0m  [["name", "activity_asset"], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/users/preference.rb:30:in `[]'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = ? AND "preferences"."user_id" = ? LIMIT ?[0m  [["name", "activity_event"], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/users/preference.rb:30:in `[]'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = ? AND "preferences"."user_id" = ? LIMIT ?[0m  [["name", "activity_user"], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/users/preference.rb:30:in `[]'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = ? AND "preferences"."user_id" = ? LIMIT ?[0m  [["name", "activity_duration"], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/users/preference.rb:30:in `[]'
+  [1m[36mVersion Load (0.2ms)[0m  [1m[34mSELECT "versions".* FROM "versions" WHERE (versions.created_at >= ?) ORDER BY created_at DESC LIMIT ?[0m  [[nil, "2026-04-10 05:29:06.857498"], ["LIMIT", 500]]
+  ↳ app/models/polymorphic/version.rb:66:in `visible_to'
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ?[0m  [["id", nil]]
+  ↳ app/models/polymorphic/version.rb:66:in `visible_to'
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ?[0m  [["id", 1]]
+  ↳ app/models/polymorphic/version.rb:66:in `visible_to'
+  Rendering layout layouts/application.html.haml
+  Rendering home/index.html.haml within layouts/application
+  Rendered shared/_inline_styles.html.haml (Duration: 2.2ms | GC: 0.0ms)
+  [1m[36mTask Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "tasks" WHERE ((user_id = ? AND assigned_to IS NULL) OR assigned_to = ?) AND (completed_at IS NULL) LIMIT ?[0m  [[nil, 1], [nil, 1], ["LIMIT", 1]]
+  ↳ app/views/home/index.html.haml:7
+  [1m[36mOpportunity Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "opportunities" WHERE ((user_id = ? AND assigned_to IS NULL) OR assigned_to = ?) AND (opportunities.stage != 'won') AND (opportunities.stage != 'lost') LIMIT ?[0m  [[nil, 1], [nil, 1], ["LIMIT", 1]]
+  ↳ app/views/home/index.html.haml:16
+  [1m[36mAccount Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "accounts" WHERE ((user_id = ? AND assigned_to IS NULL) OR assigned_to = ?) LIMIT ?[0m  [[nil, 1], [nil, 1], ["LIMIT", 1]]
+  ↳ app/views/home/index.html.haml:25
+  Rendered collection of home/_activity.html.haml [2 times] (Duration: 8.3ms | GC: 1.4ms)
+  Rendered shared/_export.html.haml (Duration: 3.0ms | GC: 0.4ms)
+  Rendered home/index.html.haml within layouts/application (Duration: 438.4ms | GC: 27.5ms)
+  Rendered layouts/_jumpbox.html.haml (Duration: 7.6ms | GC: 0.1ms)
+  Rendered layouts/_header.html.haml (Duration: 15.5ms | GC: 0.7ms)
+  [1m[36mSetting Load (0.2ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "tabs"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  [1m[36mList Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "lists" WHERE "lists"."user_id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/views/lists/_sidebar.html.haml:7
+  Rendered lists/_sidebar.html.haml (Duration: 28.2ms | GC: 0.0ms)
+  [1m[36mList Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "lists" WHERE "lists"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/lists/_sidebar.html.haml:7
+  Rendered lists/_sidebar.html.haml (Duration: 21.8ms | GC: 0.0ms)
+  Rendered lists/_lists.html.haml (Duration: 59.0ms | GC: 0.0ms)
+  [1m[36mVersion Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "versions" WHERE "versions"."whodunnit" = ? AND "versions"."item_type" IN (?, ?, ?, ?, ?) LIMIT ? OFFSET ?[0m  [["whodunnit", "1"], ["item_type", "Account"], ["item_type", "Campaign"], ["item_type", "Contact"], ["item_type", "Lead"], ["item_type", "Opportunity"], ["LIMIT", 1], ["OFFSET", 0]]
+  ↳ app/models/polymorphic/version.rb:37:in `recent_for_user'
+  Rendered shared/_recently.html.haml (Duration: 7.9ms | GC: 0.0ms)
+  Rendered layouts/_sidebar.html.haml (Duration: 74.7ms | GC: 0.0ms)
+  Rendered layouts/_tabbed.html.haml (Duration: 91.9ms | GC: 0.8ms)
+  Rendered layouts/_about.html.haml (Duration: 14.5ms | GC: 0.0ms)
+  Rendered layouts/_footer.html.haml (Duration: 22.0ms | GC: 0.0ms)
+  [1m[36mSetting Load (0.2ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "base_url"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  Rendered layout layouts/application.html.haml (Duration: 663.8ms | GC: 33.9ms)
+Completed 200 OK in 760ms (Views: 673.2ms | ActiveRecord: 4.7ms (18 queries, 0 cached) | GC: 37.1ms)
+
+
+Started GET "/profile" for ::1 at 2026-04-12 05:29:09 +0000
+Processing by UsersController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = ? AND "preferences"."user_id" = ? LIMIT ?[0m  [["name", "locale"], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/users/preference.rb:30:in `[]'
+  [1m[36mSetting Load (0.1ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "locale"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  [1m[36mSetting Load (0.1ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "user_signup"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  [1m[36mFieldGroup Load (0.2ms)[0m  [1m[34mSELECT "field_groups".* FROM "field_groups" WHERE "field_groups"."klass_name" = ? ORDER BY "field_groups"."position" ASC[0m  [["klass_name", "Campaign"]]
+  ↳ lib/fat_free_crm/fields.rb:37:in `map'
+  Rendering layout layouts/application.html.haml
+  Rendering users/show.html.haml within layouts/application
+  [1m[36mSetting Load (0.2ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "per_user_locale"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  [1m[36mAvatar Load (0.2ms)[0m  [1m[34mSELECT "avatars".* FROM "avatars" WHERE "avatars"."entity_id" = ? AND "avatars"."entity_type" = ? LIMIT ?[0m  [["entity_id", 1], ["entity_type", "User"], ["LIMIT", 1]]
+  ↳ app/helpers/application_helper.rb:366:in `avatar_for'
+  Rendered users/_user.html.haml (Duration: 26.7ms | GC: 0.0ms)
+  Rendered users/show.html.haml within layouts/application (Duration: 37.4ms | GC: 0.0ms)
+  Rendered layouts/_jumpbox.html.haml (Duration: 1.2ms | GC: 0.0ms)
+  Rendered layouts/_header.html.haml (Duration: 2.5ms | GC: 0.0ms)
+  [1m[36mList Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "lists" WHERE "lists"."user_id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/views/lists/_sidebar.html.haml:7
+  Rendered lists/_sidebar.html.haml (Duration: 3.0ms | GC: 0.0ms)
+  [1m[36mList Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "lists" WHERE "lists"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/lists/_sidebar.html.haml:7
+  Rendered lists/_sidebar.html.haml (Duration: 2.2ms | GC: 0.0ms)
+  Rendered lists/_lists.html.haml (Duration: 6.0ms | GC: 0.2ms)
+  [1m[36mVersion Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "versions" WHERE "versions"."whodunnit" = ? AND "versions"."item_type" IN (?, ?, ?, ?, ?) LIMIT ? OFFSET ?[0m  [["whodunnit", "1"], ["item_type", "Account"], ["item_type", "Campaign"], ["item_type", "Contact"], ["item_type", "Lead"], ["item_type", "Opportunity"], ["LIMIT", 1], ["OFFSET", 0]]
+  ↳ app/models/polymorphic/version.rb:37:in `recent_for_user'
+  Rendered shared/_recently.html.haml (Duration: 1.6ms | GC: 0.0ms)
+  Rendered layouts/_sidebar.html.haml (Duration: 7.8ms | GC: 0.2ms)
+  Rendered layouts/_tabbed.html.haml (Duration: 9.8ms | GC: 0.4ms)
+  Rendered layouts/_about.html.haml (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layouts/_footer.html.haml (Duration: 0.7ms | GC: 0.0ms)
+  [1m[36mSetting Load (0.1ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "base_url"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  Rendered layout layouts/application.html.haml (Duration: 123.3ms | GC: 18.7ms)
+Completed 200 OK in 166ms (Views: 125.3ms | ActiveRecord: 2.4ms (11 queries, 0 cached) | GC: 18.7ms)
+
+
+Started GET "/users/1/edit?cancel=false" for ::1 at 2026-04-12 05:29:11 +0000
+Processing by UsersController#edit as JS
+  Parameters: {"cancel"=>"false", "id"=>"1"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.3ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = ? AND "preferences"."user_id" = ? LIMIT ?[0m  [["name", "locale"], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/users/preference.rb:30:in `[]'
+  [1m[36mSetting Load (0.3ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "locale"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSetting Load (0.1ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "user_signup"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  Rendering users/edit.js.haml
+  [1m[36mSetting Load (0.2ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "enforce_international_phone_format"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  Rendered users/_profile.html.haml (Duration: 46.7ms | GC: 4.5ms)
+  Rendered users/edit.js.haml (Duration: 52.1ms | GC: 4.7ms)
+Completed 200 OK in 71ms (Views: 54.6ms | ActiveRecord: 1.8ms (6 queries, 0 cached) | GC: 5.3ms)
+
+
+Started PATCH "/users/1" for ::1 at 2026-04-12 05:29:12 +0000
+Processing by UsersController#update as JS
+  Parameters: {"user"=>{"first_name"=>"", "last_name"=>"", "title"=>"", "company"=>"", "blog"=>"https://example.com/blog", "email"=>"admin@example.com", "alt_email"=>"", "phone"=>"", "mobile"=>"", "aim"=>"", "yahoo"=>"", "google"=>"", "facebook"=>"https://facebook.com/test", "twitter"=>"https://twitter.com/test", "linkedin"=>"", "instagram"=>"https://instagram.com/test", "mastodon"=>"", "bluesky"=>"", "zoom"=>"https://zoom.us/j/123", "teams"=>"", "signal"=>"", "subscribe_to_comment_replies"=>"1", "receive_assigned_notifications"=>"1"}, "commit"=>"Save Profile", "id"=>"1"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = ? AND "preferences"."user_id" = ? LIMIT ?[0m  [["name", "locale"], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/users/preference.rb:30:in `[]'
+  [1m[36mSetting Load (0.1ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "locale"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSetting Load (0.1ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "user_signup"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  [1m[36mFieldGroup Load (0.2ms)[0m  [1m[34mSELECT "field_groups".* FROM "field_groups" WHERE "field_groups"."klass_name" = ? ORDER BY "field_groups"."position" ASC[0m  [["klass_name", "Campaign"]]
+  ↳ lib/fat_free_crm/fields.rb:37:in `map'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mBEGIN immediate TRANSACTION[0m
+  ↳ app/controllers/users_controller.rb:35:in `update'
+  [1m[36mUser Exists? (1.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "admin@example.com"], ["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:35:in `update'
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."username") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["username", "admin"], ["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:35:in `update'
+  [1m[36mUser Update (0.1ms)[0m  [1m[33mUPDATE "users" SET "first_name" = ?, "last_name" = ?, "title" = ?, "company" = ?, "alt_email" = ?, "phone" = ?, "mobile" = ?, "aim" = ?, "yahoo" = ?, "google" = ?, "updated_at" = ?, "zoom" = ?, "teams" = ?, "signal" = ?, "instagram" = ?, "facebook" = ?, "mastodon" = ?, "bluesky" = ?, "twitter" = ?, "linkedin" = ?, "blog" = ? WHERE "users"."id" = ?[0m  [["first_name", ""], ["last_name", ""], ["title", ""], ["company", ""], ["alt_email", ""], ["phone", ""], ["mobile", ""], ["aim", ""], ["yahoo", ""], ["google", ""], ["updated_at", "2026-04-12 05:29:12.956765"], ["zoom", "https://zoom.us/j/123"], ["teams", ""], ["signal", ""], ["instagram", "https://instagram.com/test"], ["facebook", "https://facebook.com/test"], ["mastodon", ""], ["bluesky", ""], ["twitter", "https://twitter.com/test"], ["linkedin", ""], ["blog", "https://example.com/blog"], ["id", 1]]
+  ↳ app/controllers/users_controller.rb:35:in `update'
+  [1m[36mVersion Create (0.3ms)[0m  [1m[32mINSERT INTO "versions" ("item_type", "item_id", "event", "whodunnit", "object", "created_at", "object_changes", "related_id", "related_type", "transaction_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "id"[0m  [["item_type", "User"], ["item_id", 1], ["event", "update"], ["whodunnit", "1"], ["object", "---\nemail: admin@example.com\nfirst_name:\nlast_name:\ntitle:\ncompany:\nalt_email:\nphone:\nmobile:\naim:\nyahoo:\ngoogle:\nblog:\nfacebook:\ntwitter:\nlinkedin:\nzoom:\nteams:\nsignal:\ninstagram:\nmastodon:\nbluesky:\nsubscribe_to_comment_replies: true\nreceive_assigned_notifications: true\nid: 1\nusername: admin\nencrypted_password: 537ba247603f788435605aee79eb1f5318f840de6026a09381485f3301c45670f285ab7d0417ea720937cba5233a26f88f14708c1b64d99d18d504ddb7f6468e\npassword_salt: Xo7jEyVnSjgdQvygacY4\nlast_sign_in_at: 2026-04-12 05:29:06.070894000 Z\ncurrent_sign_in_at: 2026-04-12 05:29:06.070894000 Z\nlast_sign_in_ip: \"::1\"\ncurrent_sign_in_ip: \"::1\"\nsign_in_count: 1\ndeleted_at:\ncreated_at: 2026-04-12 05:28:48.010898000 Z\nupdated_at: 2026-04-12 05:29:06.072615000 Z\nadmin: true\nsuspended_at:\nunconfirmed_email:\nreset_password_token:\nreset_password_sent_at:\nremember_token:\nremember_created_at:\nauthentication_token:\nconfirmation_token:\nconfirmed_at: 2026-04-12 05:28:47.978512000 Z\nconfirmation_sent_at:\n"], ["created_at", "2026-04-12 05:29:12.956765"], ["object_changes", "---\nfirst_name:\n-\n- ''\nlast_name:\n-\n- ''\ntitle:\n-\n- ''\ncompany:\n-\n- ''\nalt_email:\n-\n- ''\nphone:\n-\n- ''\nmobile:\n-\n- ''\naim:\n-\n- ''\nyahoo:\n-\n- ''\ngoogle:\n-\n- ''\nupdated_at:\n- 2026-04-12 05:29:06.072615000 Z\n- 2026-04-12 05:29:12.956765501 Z\nzoom:\n-\n- https://zoom.us/j/123\nteams:\n-\n- ''\nsignal:\n-\n- ''\ninstagram:\n-\n- https://instagram.com/test\nfacebook:\n-\n- https://facebook.com/test\nmastodon:\n-\n- ''\nbluesky:\n-\n- ''\ntwitter:\n-\n- https://twitter.com/test\nlinkedin:\n-\n- ''\nblog:\n-\n- https://example.com/blog\n"], ["related_id", nil], ["related_type", nil], ["transaction_id", nil]]
+  ↳ app/controllers/users_controller.rb:35:in `update'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mCOMMIT TRANSACTION[0m
+  ↳ app/controllers/users_controller.rb:35:in `update'
+  Rendering users/update.js.haml
+  [1m[36mSetting Load (0.2ms)[0m  [1m[34mSELECT "settings".* FROM "settings" WHERE "settings"."name" = ? LIMIT ?[0m  [["name", "per_user_locale"], ["LIMIT", 1]]
+  ↳ app/models/setting.rb:61:in `[]'
+  [1m[36mAvatar Load (0.2ms)[0m  [1m[34mSELECT "avatars".* FROM "avatars" WHERE "avatars"."entity_id" = ? AND "avatars"."entity_type" = ? LIMIT ?[0m  [["entity_id", 1], ["entity_type", "User"], ["LIMIT", 1]]
+  ↳ app/helpers/application_helper.rb:366:in `avatar_for'
+  Rendered users/_user.html.haml (Duration: 30.4ms | GC: 0.0ms)
+  Rendered users/update.js.haml (Duration: 35.1ms | GC: 0.0ms)
+Completed 200 OK in 123ms (Views: 37.2ms | ActiveRecord: 5.8ms (12 queries, 0 cached) | GC: 2.7ms)
