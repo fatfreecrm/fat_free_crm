@@ -11,7 +11,7 @@
 
   .indent
     = link_to(assigned.assignee.full_name, user_path(assigned.assignee)) + ": "
-    = auto_link h(assigned.name)
+    = link_to(h(assigned.name), task_path(assigned))
     - if assigned.asset_id?
       == #{t :related} #{link_to(h(assigned.asset.name), polymorphic_url(assigned.asset))}
     &ndash;
