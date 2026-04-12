@@ -22,7 +22,6 @@ xml.Worksheet 'ss:Name' => I18n.t(:tab_contacts) do
                  I18n.t('linked_in'),
                  I18n.t('facebook'),
                  I18n.t('twitter'),
-                 I18n.t('whatsapp'),
                  I18n.t('date_created'),
                  I18n.t('date_updated'),
                  I18n.t('assigned_to'),
