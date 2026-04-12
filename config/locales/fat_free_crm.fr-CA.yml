@@ -205,7 +205,6 @@ fr-CA:
   sort_by: Trier par %{field}.
   sort_by_displaying: Trier %{models} par %{field} afficher le prénom %{position}
     le nom.
-  aim: AOL IM
   already_signed_up: Déjà enregistré?
   alt_email: e-mail secondaire
   avatar: Image

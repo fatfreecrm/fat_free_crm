@@ -223,7 +223,6 @@ cs:
   sort_by: Setřiď %{field}.
   sort_by_displaying: Setřiď %{models} podle %{field} zobrazující jméno %{position}
     příjmení.
-  aim: AOL IM
   already_signed_up: Již registrováný?
   alt_email: Alternativní email
   avatar: Avatar

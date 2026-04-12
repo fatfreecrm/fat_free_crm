@@ -259,7 +259,6 @@ fr:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
   already_signed_up: Déjà inscrit?
   alt_email: e-mail secondaire
   avatar: Image(avatar)

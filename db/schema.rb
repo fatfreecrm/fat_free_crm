@@ -452,7 +452,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_12_040913) do
     t.string "alt_email", limit: 254
     t.string "phone", limit: 32
     t.string "mobile", limit: 32
-    t.string "aim", limit: 32
     t.string "yahoo", limit: 32
     t.string "google", limit: 32
     t.string "encrypted_password", default: "", null: false
