@@ -449,7 +449,7 @@ module ApplicationHelper
   end
 
   def list_of_entities
-    ENTITIES
+    ENTITIES + ['Task']
   end
 
   def entity_filter_checkbox(name, value, count)
