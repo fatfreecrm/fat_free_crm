@@ -27,6 +27,8 @@
         - if @user.mobile.present?
           %div
             == #{t :mobile}: <b>#{link_to_phone(@user.mobile)}</b>
+      %div
+        = web_presence_icons(@user)
     %td(valign="top" style="text-align: right")
       = avatar_for(@user)
 - if Setting.per_user_locale

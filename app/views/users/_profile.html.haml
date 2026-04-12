@@ -27,6 +27,12 @@
       %table
         %tr
           %td{ colspan: 3 }
+            .label.top #{t :blog}:
+            = f.text_field :blog
+          %td= spacer
+          %td{ colspan: 3 }
+        %tr
+          %td{ colspan: 3 }
             .label.top.req #{t :email}:
             = f.text_field :email
           %td= spacer
@@ -53,6 +59,50 @@
           %td
             .label #{t :google}:
             = f.text_field :google, style: "width:112px"
+        %tr
+          %td
+            .label #{t :facebook}:
+            = f.text_field :facebook, style: "width:112px"
+          %td= spacer
+          %td
+            .label #{t :twitter}:
+            = f.text_field :twitter, style: "width:112px"
+          %td= spacer
+          %td
+            .label #{t :linked_in}:
+            = f.text_field :linkedin, style: "width:112px"
+        %tr
+          %td
+            .label #{t :instagram}:
+            = f.text_field :instagram, style: "width:112px"
+          %td= spacer
+          %td
+            .label #{t :mastodon}:
+            = f.text_field :mastodon, style: "width:112px"
+          %td= spacer
+          %td
+            .label #{t :discord}:
+            = f.text_field :discord, style: "width:112px"
+        %tr
+          %td
+            .label #{t :bluesky}:
+            = f.text_field :bluesky, style: "width:112px"
+          %td= spacer
+          %td
+            .label #{t :zoom}:
+            = f.text_field :zoom, style: "width:112px"
+          %td= spacer
+          %td
+            .label #{t :teams}:
+            = f.text_field :teams, style: "width:112px"
+        %tr
+          %td
+            .label #{t :signal}:
+            = f.text_field :signal, style: "width:112px"
+          %td= spacer
+          %td
+          %td= spacer
+          %td
 
     .subtitle #{t :email_notifications}
     .section

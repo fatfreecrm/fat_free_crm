@@ -93,6 +93,20 @@ class User < ActiveRecord::Base
             uniqueness: { message: :username_taken, case_sensitive: false },
             presence: { message: :missing_username },
             format: { with: /\A[a-z0-9_-]+\z/i }
+  validates_length_of :aim, maximum: 32
+  validates_length_of :yahoo, maximum: 32
+  validates_length_of :google, maximum: 32
+  validates_length_of :blog, maximum: 128
+  validates_length_of :facebook, maximum: 128
+  validates_length_of :twitter, maximum: 128
+  validates_length_of :linkedin, maximum: 128
+  validates_length_of :zoom, maximum: 128
+  validates_length_of :teams, maximum: 128
+  validates_length_of :signal, maximum: 128
+  validates_length_of :instagram, maximum: 128
+  validates_length_of :mastodon, maximum: 128
+  validates_length_of :discord, maximum: 128
+  validates_length_of :bluesky, maximum: 128
   validates :password,
             presence: { if: :password_required? },
             confirmation: true

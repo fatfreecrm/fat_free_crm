@@ -272,9 +272,16 @@ module ApplicationHelper
       facebook: "facebook",
       linkedin: "linkedin",
       twitter: "twitter",
-      blog: "external-link"
+      blog: "external-link",
+      zoom: "video-camera",
+      teams: "users",
+      signal: "comment",
+      instagram: "instagram",
+      mastodon: "retweet",
+      discord: "comments",
+      bluesky: "cloud"
     }
-    %i[blog linkedin facebook twitter].each do |site|
+    %i[blog linkedin facebook twitter zoom teams signal instagram mastodon discord bluesky].each do |site|
       url = person.send(site)
       next if url.blank?
 

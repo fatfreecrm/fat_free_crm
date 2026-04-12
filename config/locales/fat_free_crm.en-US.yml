@@ -416,6 +416,13 @@ en-US:
   extra_info: Extra Information
   extra_info_small: extra contact
   facebook: Facebook
+  zoom: Zoom
+  teams: Teams
+  signal: Signal
+  instagram: Instagram
+  mastodon: Mastodon
+  discord: Discord
+  bluesky: Bluesky
   linked_in: LinkedIn
   myself: Myself
   permissions_intro_private: By default only you will have access to the %{value}.
