@@ -26,7 +26,6 @@ FactoryBot.define do
     facebook            { FactoryBot.generate(:website) }
     linkedin            { FactoryBot.generate(:website) }
     twitter             { FactoryBot.generate(:website) }
-    whatsapp            { FactoryBot.generate(:website) }
     do_not_call         { false }
     born_on             { "1992-10-10" }
     background_info     { FFaker::Lorem.paragraph[0, 255] }
