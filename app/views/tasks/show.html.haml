@@ -1,0 +1,15 @@
+- if (template = template_for_current_view)
+  = render(template, task: @task)
+- else
+
+  -# default view
+
+  = render 'tasks/title_bar', task: @task
+  - content_for :sidebar do
+    = render 'tasks/sidebar_show', task: @task
+  = render "comments/new", commentable: @task
+  = render partial: "shared/timeline", collection: @timeline
+
+  = hook(:show_task_bottom, self, {entity: @task}) do
+
+    = render partial: "versions/versions", locals: {object: @task}
