@@ -21,7 +21,7 @@
         %td= spacer
         %td
           .label #{t :mobile}:
-          = f.phone_field :mobile
+          = phone_field_with_pattern(f, :mobile)
       %tr
         %td
           = render "shared/address", f: f, asset: @lead, type: 'business', title: :address

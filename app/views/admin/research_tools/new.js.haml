@@ -1,0 +1,7 @@
+crm.flip_form('create_research_tool');
+
+- unless params[:cancel].true?
+  $('#create_research_tool').html('#{ j render(partial: "new") }');
+  crm.set_title('create_research_tool', '#{t(:create_research_tool)}');
+- else
+  crm.set_title('create_research_tool', '#{t(:research_tools)}');

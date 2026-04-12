@@ -1,5 +1,5 @@
 %li.highlight[contact]
-  = avatar_for(contact, size: "30x30")
+  = avatar_for(contact, size: "40x40")
 
   %ul.tools
     = hook(:contact_tools_before, self, contact: contact)
@@ -29,11 +29,11 @@
           |
         - if contact.phone.present?
           == #{t :phone_small}:
-          %b= contact.phone
+          %b= link_to_phone(contact.phone)
         |
         - if contact.mobile.present?
           == #{t :mobile_small}:
-          %b= contact.mobile
+          %b= link_to_phone(contact.mobile)
           |
       = t(:added_ago, value: timeago(contact.created_at)).html_safe
 

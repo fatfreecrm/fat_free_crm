@@ -25,6 +25,9 @@ module FatFreeCRM
     module SingletonMethods
       def field_groups
         # catches cases where this code runs before database has been created or migrated
+        return [] unless ActiveRecord::Base.connection.active?
+        return [] unless ActiveRecord::Base.connection.table_exists?(:field_groups)
+
         FieldGroup.where(klass_name: name).order(:position)
       rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
         []

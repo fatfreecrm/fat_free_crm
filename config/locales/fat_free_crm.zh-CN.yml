@@ -271,7 +271,7 @@ zh-CN:
   google: Google IM
   gravatar_help: 不熟悉 Gravatars? 了解 Gravatars
   image_file: 图片文件
-  image_help: 你上传的图片将会被自动改为 75 x 75 像素，支持 GIF, JPG, 和 PNG.
+  image_help: 你上传的图片将会被自动改为 180 x 180 像素，支持 GIF, JPG, 和 PNG.
 
   job_title: 职位
   last_name: 姓
@@ -287,7 +287,6 @@ zh-CN:
   save_profile: 保存个人设置
   sign_up: 申请
   sign_up_button: 申请
-  skype: Skype
   upload_picture: 上传图片
   use_gravatar: 使用 Gravatar
   user: 用户
@@ -345,7 +344,7 @@ zh-CN:
   actual: 实际
   actual_performance: 实际效益
   budget: 预算
-  budget_label: 预算(￥)
+  budget_label: 预算(%{currency})
   campaign: 促销
   campaign_and_leads: 促销与领导
   campaign_small: 促销
@@ -371,7 +370,7 @@ zh-CN:
 
   objectives_small: 战役目标
   revenue: 收入
-  revenue_label: 收入(￥)
+  revenue_label: 收入(%{currency})
   revenue_number: 收入%{value}
   save_campaign: 保存促销
   start_date: 开始日期
@@ -475,7 +474,7 @@ zh-CN:
   closes_today: 预计今天结束!
   closing_date: 结束日期是 %{value}
   create_opportunity: 创建商机
-  currency: (￥)
+  currency: "￥"
   days_late: 晚了
   days_left: 天剩余
   discount: 折扣

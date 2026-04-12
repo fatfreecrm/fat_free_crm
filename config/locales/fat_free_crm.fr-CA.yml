@@ -218,7 +218,7 @@ fr-CA:
   google: Google IM
   gravatar_help: Vous ne connaissez pas Gravatar? Informations sur Gravatar
   image_file: Fichier image
-  image_help: L'image que vous envoyez sera redimensionnée à 75 x 75 pixels. Les formats
+  image_help: L'image que vous envoyez sera redimensionnée à 180 x 180 pixels. Les formats
     supportés sont GIF, JPEG et PNG.
   job_title: Titre/Fonction
   last_name: Nom
@@ -234,7 +234,6 @@ fr-CA:
   save_profile: Enregistrer le profile
   sign_up: Enregistrement
   sign_up_button: Enregistrement
-  skype: Skype
   upload_picture: Envoyez une image
   use_gravatar: Utilisez Gravatar
   user: Utilisateur
@@ -271,7 +270,7 @@ fr-CA:
   actual: Actuel
   actual_performance: Performance Actuelle
   budget: Budget
-  budget_label: Budget ($)
+  budget_label: Budget (%{currency})
   campaign: Campagne
   campaign_and_leads: campagne et ses pistes
   campaign_small: campagne
@@ -295,7 +294,7 @@ fr-CA:
     de l'évaluation des performances de la campagne
   objectives_small: objectifs de la campagne
   revenue: Revenu
-  revenue_label: Revenu ($)
+  revenue_label: Revenu (%{currency})
   revenue_number: ! '%{value} pour revenu'
   save_campaign: Enregistrer la campagne
   start_date: Date de début
@@ -377,7 +376,7 @@ fr-CA:
   closes_today: doit être clôturé aujourd'hui!
   closing_date: la date de clôture est %{value}
   create_opportunity: Créer une opportunité
-  currency: ($)
+  currency: "$"
   days_late: En retard de
   days_left: Jours restant
   discount: Remise
