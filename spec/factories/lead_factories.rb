@@ -24,6 +24,7 @@ FactoryBot.define do
     linkedin            { FactoryBot.generate(:website) }
     facebook            { FactoryBot.generate(:website) }
     twitter             { FactoryBot.generate(:website) }
+    whatsapp            { FactoryBot.generate(:website) }
     email               { FFaker::Internet.email }
     alt_email           { FFaker::Internet.email }
     phone               { FFaker::PhoneNumber.phone_number }
