@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20260412045437) do
+ActiveRecord::Schema[7.1].define(version: 20260412062855) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -440,7 +440,6 @@ ActiveRecord::Schema[7.1].define(version: 20260412045437) do
     t.string "alt_email", limit: 254
     t.string "phone", limit: 32
     t.string "mobile", limit: 32
-    t.string "yahoo", limit: 32
     t.string "google", limit: 32
     t.string "encrypted_password", default: "", null: false
     t.string "password_salt", default: "", null: false
