@@ -193,6 +193,8 @@ GEM
     email_reply_parser_ffcrm (0.5.0)
     erb (6.0.2)
     erubi (1.13.1)
+    et-orbi (1.4.0)
+      tzinfo
     execjs (2.10.0)
     factory_bot (6.5.5)
       activesupport (>= 6.1.0)
@@ -205,6 +207,9 @@ GEM
     font-awesome-rails (4.7.0.9)
       railties (>= 3.2, < 9.0)
     formatador (1.1.0)
+    fugit (1.12.1)
+      et-orbi (~> 1.4)
+      raabro (~> 1.4)
     globalid (1.3.0)
       activesupport (>= 6.1)
     guard (2.19.1)
@@ -341,6 +346,7 @@ GEM
     public_suffix (7.0.5)
     puma (7.1.0)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.8.1)
     rack (3.2.6)
     rack-attack (6.8.0)
@@ -419,19 +425,13 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
-    rdf (3.3.4)
+    rdf (3.3.1)
       bcp47_spec (~> 0.2)
-      bigdecimal (~> 3.1, >= 3.1.5)
       link_header (~> 0.0, >= 0.0.8)
-      logger (~> 1.5)
-      ostruct (~> 0.6)
-      readline (~> 0.0)
     rdoc (7.2.0)
       erb
       psych (>= 4.0.0)
       tsort
-    readline (0.0.4)
-      reline
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
@@ -529,6 +529,13 @@ GEM
     simple_form (5.4.1)
       actionpack (>= 7.0)
       activemodel (>= 7.0)
+    solid_queue (1.4.0)
+      activejob (>= 7.1)
+      activerecord (>= 7.1)
+      concurrent-ruby (>= 1.3.1)
+      fugit (~> 1.11)
+      railties (>= 7.1)
+      thor (>= 1.3.1)
     sparql-client (3.3.0)
       net-http-persistent (~> 4.0, >= 4.0.2)
       rdf (~> 3.3)
@@ -674,6 +681,7 @@ DEPENDENCIES
   select2-rails
   selenium-webdriver
   simple_form
+  solid_queue
   sparql-client
   sprockets-rails (>= 3.0.0)
   sqlite3

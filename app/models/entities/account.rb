@@ -82,6 +82,7 @@ class Account < ActiveRecord::Base
   validate :users_for_shared_access
 
   before_save :nullify_blank_category
+  after_save_commit :enqueue_website_job, if: -> { website.present? && saved_change_to_website? }
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
@@ -146,6 +147,10 @@ class Account < ActiveRecord::Base
 
   def nullify_blank_category
     self.category = nil if category.blank?
+  end
+
+  def enqueue_website_job
+    AccountWebsiteJob.perform_later(self)
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_account, self)

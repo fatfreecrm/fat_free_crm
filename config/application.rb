@@ -103,3 +103,7 @@ end
 # Require fat_free_crm after FatFreeCRM::Application class is defined,
 # so that FatFreeCRM::Engine is skipped.
 require 'fat_free_crm'
+
+FatFreeCRM::Application.configure do
+  config.active_job.queue_adapter = :solid_queue
+end
