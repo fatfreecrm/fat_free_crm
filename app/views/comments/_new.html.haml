@@ -22,7 +22,7 @@
     = form_for(@comment, remote: true, html: {id: "#{id_prefix}_new_comment"}) do |f|
       = hidden_field_tag "comment[commentable_id]", commentable.id, id: "#{id_prefix}_comment_commentable_id"
       = hidden_field_tag "comment[commentable_type]", class_name.classify, id: "#{id_prefix}_comment_commentable_type"
-      = f.text_area :comment, id: "#{id_prefix}_comment_comment"
+      = f.trix_editor :comment, id: "#{id_prefix}_comment_comment"
       .buttons
         = image_tag("loading.gif", size: :thumb, class: "spinner", style: "display: none;")
         = f.submit t(:add_note), id: "#{id_prefix}_comment_submit", class: 'btn btn-primary'
