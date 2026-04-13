@@ -17,7 +17,7 @@ WORKDIR $HOME
 
 ADD . $HOME
 RUN apt-get update && \
-	apt-get install -y imagemagick tzdata && \
+	apt-get install -y imagemagick tzdata libvips && \
 	apt-get autoremove -y
 RUN cp config/database.postgres.docker.yml config/database.yml
 RUN gem install bundler && \
