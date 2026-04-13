@@ -20,22 +20,55 @@ class AccountWebsiteJob < ApplicationJob
     json_ld_scripts = doc.css('script[type="application/ld+json"]')
 
     json_ld_scripts.each do |script|
-      begin
-        data = JSON.parse(script.content)
-      rescue JSON::ParserError
-        next
+      process_json_ld(account, script.content)
+    end
+  end
+
+  private
+
+  def process_json_ld(account, content)
+    begin
+      data = JSON.parse(content)
+    rescue JSON::ParserError
+      return
+    end
+
+    return unless data
+
+    # Handle both single object and array of objects
+    objects = data.is_a?(Array) ? data : [data]
+
+    # Handle @graph
+    objects += data['@graph'] if data.is_a?(Hash) && data['@graph']
+    objects.compact!
+    objects.uniq!
+
+    objects.each do |obj|
+      next unless obj.is_a?(Hash)
+
+      type = obj['@type']
+      if (type == 'Organization' || Array(type).include?('Organization'))
+        update_account_from_org(account, obj)
       end
 
-      next unless data
+      about = obj['about']
+      if (type == 'WebPage' || Array(type).include?('WebPage')) && about
+        Array(about).each do |about_obj|
+          next unless about_obj.is_a?(Hash)
 
-      # Handle both single object and array of objects
-      objects = data.is_a?(Array) ? data : [data]
-
-      # Handle @graph
-      objects += data['@graph'] if data.is_a?(Hash) && data['@graph']
-
-      objects.each do |obj|
-        update_account_from_org(account, obj) if obj['@type'] == 'Organization'
+          about_type = about_obj['@type']
+          if about_type == 'Organization' || Array(about_type).include?('Organization')
+            update_account_from_org(account, about_obj)
+          elsif about_obj['@id']
+            # Look for the referenced object in the graph
+            referenced_org = objects.find do |o|
+              o.is_a?(Hash) &&
+                o['@id'] == about_obj['@id'] &&
+                (o['@type'] == 'Organization' || Array(o['@type']).include?('Organization'))
+            end
+            update_account_from_org(account, referenced_org) if referenced_org
+          end
+        end
       end
     end
   end
@@ -85,7 +118,7 @@ class AccountWebsiteJob < ApplicationJob
 
   def update_address(account, addr_data)
     address = account.billing_address || account.addresses.new(address_type: 'Billing')
-    return if address.present?
+    return if address.persisted?
 
     address.street1 = addr_data['streetAddress'] if addr_data['streetAddress'].present?
     address.city = addr_data['addressLocality'] if addr_data['addressLocality'].present?
