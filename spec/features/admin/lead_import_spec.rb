@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 require 'spec_helper'
 
-describe "Lead Import", type: :feature do
+describe "Lead Import" do
   before do
     do_login(admin: true)
   end

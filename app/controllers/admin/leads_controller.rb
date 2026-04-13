@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::LeadsController < Admin::ApplicationController
-  before_action :setup_current_tab, only: [:index, :import]
+  before_action :setup_current_tab, only: %i[index import]
 
   # GET /admin/leads
   #----------------------------------------------------------------------------
@@ -59,6 +59,7 @@ class Admin::LeadsController < Admin::ApplicationController
     mapped = {}
     attributes.each do |key, value|
       next if value.blank?
+
       attr_name = find_attribute_name(key)
       mapped[attr_name] = value if attr_name
     end

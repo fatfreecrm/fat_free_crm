@@ -39,9 +39,7 @@ describe Admin::LeadsController do
 
       uploaded_file = fixture_file_upload(file.path, 'text/csv')
 
-      expect {
-        post :import, params: { file: uploaded_file }
-      }.to change(Lead, :count).by(2)
+      expect { post :import, params: { file: uploaded_file } }.to change(Lead, :count).by(2)
 
       expect(flash[:notice]).to eq(I18n.t(:msg_imported_leads, count: 2))
       expect(response).to redirect_to(admin_leads_path)
@@ -60,9 +58,7 @@ describe Admin::LeadsController do
 
       uploaded_file = fixture_file_upload(file.path, 'text/csv')
 
-      expect {
-        post :import, params: { file: uploaded_file }
-      }.not_to change(Lead, :count)
+      expect { post :import, params: { file: uploaded_file } }.not_to change(Lead, :count)
 
       expect(flash[:warning]).to eq(I18n.t(:msg_imported_leads_with_errors, count: 0, errors: 1))
       expect(response).to redirect_to(admin_leads_path)
