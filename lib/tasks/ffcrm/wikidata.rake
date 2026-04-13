@@ -67,40 +67,28 @@ namespace :ffcrm do
       updates[:background_info] = result[:description].to_s if account.background_info.blank? && result[:description]
       updates[:website] = result[:website].to_s if account.website.blank? && result[:website]
 
-      if account.twitter.blank? && result[:twitter]
-        updates[:twitter] = "https://twitter.com/#{result[:twitter]}"
-      end
+      updates[:twitter] = "https://twitter.com/#{result[:twitter]}" if account.twitter.blank? && result[:twitter]
 
-      if account.linkedin.blank? && result[:linkedin]
-        updates[:linkedin] = "https://www.linkedin.com/company/#{result[:linkedin]}"
-      end
+      updates[:linkedin] = "https://www.linkedin.com/company/#{result[:linkedin]}" if account.linkedin.blank? && result[:linkedin]
 
-      if account.instagram.blank? && result[:instagram]
-        updates[:instagram] = "https://www.instagram.com/#{result[:instagram]}"
-      end
+      updates[:instagram] = "https://www.instagram.com/#{result[:instagram]}" if account.instagram.blank? && result[:instagram]
 
       if account.mastodon.blank? && result[:mastodon]
         m = result[:mastodon].to_s
         updates[:mastodon] = if m.start_with?("http")
                                m
                              elsif m =~ /^@?([^@]+)@(.+)$/
-                               "https://#{$2}/@#{$1}"
+                               "https://#{Regexp.last_match(2)}/@#{Regexp.last_match(1)}"
                              else
                                m
                              end
       end
 
-      if account.facebook.blank? && result[:facebook]
-        updates[:facebook] = "https://www.facebook.com/#{result[:facebook]}"
-      end
+      updates[:facebook] = "https://www.facebook.com/#{result[:facebook]}" if account.facebook.blank? && result[:facebook]
 
-      if account.bluesky.blank? && result[:bluesky]
-        updates[:bluesky] = "https://bsky.app/profile/#{result[:bluesky]}"
-      end
+      updates[:bluesky] = "https://bsky.app/profile/#{result[:bluesky]}" if account.bluesky.blank? && result[:bluesky]
 
-      if account.blog.blank? && result[:blog]
-        updates[:blog] = result[:blog].to_s
-      end
+      updates[:blog] = result[:blog].to_s if account.blog.blank? && result[:blog]
 
       account.update(updates) if updates.any?
 
