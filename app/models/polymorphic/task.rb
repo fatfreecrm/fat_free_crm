@@ -38,6 +38,7 @@ class Task < ActiveRecord::Base
   belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
   belongs_to :completor, class_name: "User", foreign_key: :completed_by, optional: true # TODO: Is this really optional?
   belongs_to :asset, polymorphic: true, optional: true # TODO: Is this really optional?
+  has_many :emails, as: :mediator
 
   serialize :subscribed_users, type: Array
 
