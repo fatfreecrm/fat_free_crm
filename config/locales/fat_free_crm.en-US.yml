@@ -532,8 +532,10 @@ en-US:
   assigned_tab: Assigned
   assigned_tasks: Assigned Tasks
   category: Category
+  completed_at: Completed at
   completed_tab: Completed
   completed_tasks: Completed Tasks
+  created_by: Created by
   create_task: Create Task
   create_task_small: create new task
   due: Due
@@ -545,6 +547,7 @@ en-US:
   no_tasks_completed: completed
   pending_tab: Pending
   pending_tasks: Pending Tasks
+  priority: Priority
   related: ! 're:'
   save_task: Save Task
   task_assigned: The task has been assigned to %{value}
