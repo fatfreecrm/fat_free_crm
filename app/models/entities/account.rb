@@ -151,14 +151,10 @@ class Account < ActiveRecord::Base
   def validate_logo
     return unless logo.attached?
 
-    if logo.blob.byte_size > 5.megabytes
-      errors.add(:logo, :too_big)
-    end
+    errors.add(:logo, :too_big) if logo.blob.byte_size > 5.megabytes
 
     acceptable_types = %w[image/png image/jpg image/jpeg image/gif]
-    unless acceptable_types.include?(logo.content_type)
-      errors.add(:logo, :unsupported_format)
-    end
+    errors.add(:logo, :unsupported_format) unless acceptable_types.include?(logo.content_type)
   end
 
   # Make sure at least one user has been selected if the account is being shared.
