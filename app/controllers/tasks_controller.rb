@@ -106,6 +106,9 @@ class TasksController < ApplicationController
           @empty_bucket = @task_before_update.bucket if Task.bucket_empty?(@task_before_update.bucket, current_user, @view)
           update_sidebar
         end
+      else
+        @bucket = Setting.unroll(:task_bucket)[1..-1] << [t(:due_specific_date, default: 'On Specific Date...'), :specific_time]
+        @category = Setting.unroll(:task_category)
       end
     end
   end

@@ -132,6 +132,8 @@ describe "tasks/update" do
   it "error: should re-disiplay [Edit Task] form" do
     assign(:task_before_update, build_stubbed(:task))
     assign(:task, @task = build_stubbed(:task))
+    assign(:bucket, Setting.unroll(:task_bucket)[1..-1] << [I18n.t(:due_specific_date, default: 'On Specific Date...'), :specific_time])
+    assign(:category, Setting.unroll(:task_category))
     @task.errors.add(:name)
 
     render
