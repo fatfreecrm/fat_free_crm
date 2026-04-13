@@ -249,6 +249,11 @@
   :icon: :fa-user
   :url:
     :controller: admin/users
+- :active: false
+  :text: :admin_tab_leads_import
+  :icon: :fa-upload
+  :url:
+    :controller: admin/leads
 - :active: true
   :text: :admin_tab_groups
   :icon: :fa-users

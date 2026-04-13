@@ -27,6 +27,7 @@ en-US:
   tab_opportunities: Opportunities
   tab_team: Team
   admin_tab_groups: Groups
+  admin_tab_leads_import: "Leads Import"
   admin_tab_users: Users
   admin_tab_fields: Custom Fields
   admin_tab_tags: Tags
@@ -201,6 +202,9 @@ en-US:
   msg_account_not_approved: Your account has not been approved yet.
   msg_asset_deleted: ! '%{value} has been deleted.'
   msg_asset_not_available: This %{value} is no longer available.
+  msg_no_file_chosen: "Please choose a file to upload."
+  msg_imported_leads: "Successfully imported %{count} leads."
+  msg_imported_leads_with_errors: "Imported %{count} leads, but %{errors} records failed."
   msg_not_authorized: You are not authorized to take this action.
   msg_assets_not_available: The %{value} are not available.
   msg_asset_rejected: ! '%{value} has been rejected.'
@@ -458,6 +462,8 @@ en-US:
     with the existing or newly created account. Lead status will be automatically
     set to converted.
   create_lead: Create Lead
+  import_leads: Import Leads
+  csv_file: CSV File
   create_opp_for_contact: You can optionally create an opportunity for the %{value}
     contact by specifying the name, current stage, estimated closing date, sale probability,
     amount of the deal, and the discount offered.

@@ -1,0 +1,13 @@
+.title
+  = t(:admin_tab_leads_import)
+
+.remote
+  = form_tag import_admin_leads_path, multipart: true do
+    .section
+      %table
+        %tr
+          %td
+            .label.top.req #{t(:csv_file)}:
+            = file_field_tag :file
+    .buttonbar
+      = submit_tag t(:import_leads), id: :import_leads_submit
