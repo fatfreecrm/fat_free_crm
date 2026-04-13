@@ -1,9 +1,12 @@
 - id = dom_id(@task)
 
 - if params[:cancel].true?     # <----------------- Hide [Edit Task]
-
-  - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
-  $('##{id}').html('#{ j render(partial: partial, collection: [ @task ], locals: { bucket: @task.bucket }) }');
+  - if called_from_landing_page?
+    crm.flip_form('edit_task');
+    crm.set_title('edit_task', '#{h @task.name}');
+  - else
+    - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
+    $('##{id}').html('#{ j render(partial: partial, collection: [ @task ], locals: { bucket: @task.bucket }) }');
 
 - else # <----------------------------------------  Show [Edit Task] form.
 
@@ -18,9 +21,15 @@
     - else
       crm.flick('task_#{@previous}', 'remove');
 
-  -# Disable onMouseOver for the list item.
-  crm.highlight_off('#{id}');
+  - if called_from_landing_page?
+    $('#edit_task').html('#{ j render(partial: "edit") }');
+    crm.flip_form('edit_task');
+    crm.set_title('edit_task', "#{t :edit} #{h @task.name}");
+  - else
+    -# Disable onMouseOver for the list item.
+    crm.highlight_off('#{id}');
 
-  -# Show [Edit Task] form.
-  $('##{id}').html('#{ j render(partial: "edit") }');
+    -# Show [Edit Task] form.
+    $('##{id}').html('#{ j render(partial: "edit") }');
+
   $('#task_name').focus();

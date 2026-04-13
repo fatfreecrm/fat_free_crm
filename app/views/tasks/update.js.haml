@@ -1,6 +1,10 @@
 - if @task.errors.empty?
-
-  - if !called_from_index_page?
+  - if called_from_landing_page?
+    crm.flip_form('edit_task');
+    crm.set_title('edit_task', '#{h @task.name}');
+    = refresh_sidebar(:show)
+    $('#summary').replaceWith('#{ j render(partial: "tasks/summary", locals: { task: @task }) }');
+  - elsif !called_from_index_page?
     -# If it's not Tasks tab then we just reload appropriate
     -# partial with the new task, and update recent items.
     = replace_content(@task)
@@ -14,5 +18,7 @@
       = replace_content(@task, @task.bucket)
 
 - else # Errors
+  - id = called_from_landing_page? ? "edit_task" : dom_id(@task)
+  $('##{id}').html('#{ j render(partial: "edit") }');
   $('#task_name').focus();
   $('#task_submit').enable();

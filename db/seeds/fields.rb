@@ -3,7 +3,7 @@
 {
   'Account' => [
     {
-      params: { label: 'General Information', tooltip: '' },
+      params: { label: 'General Information' },
       fields: [
         { field_type: '', name: '', label: '', required: '' },
         { field_type: '', name: '', label: '', required: '' },
@@ -11,13 +11,13 @@
       ]
     },
     {
-      params: { label: 'Contact Information', tooltip: '' },
+      params: { label: 'Contact Information' },
       fields: []
     }
   ],
   'Campaign' => [
     {
-      params: { label: 'General Information', tooltip: '' },
+      params: { label: 'General Information' },
       fields: [
         { field_type: '', name: '', label: '', required: '' },
         { field_type: '', name: '', label: '', required: '' },
@@ -25,27 +25,27 @@
       ]
     },
     {
-      params: { label: 'Contact Information', tooltip: '' },
+      params: { label: 'Contact Information' },
       fields: []
     }
   ],
   'Contact' => [
     {
-      params: { label: 'General Information', tooltip: '' },
+      params: { label: 'General Information' },
       fields: []
     },
     {
-      params: { label: 'Extra Information', tooltip: '' },
+      params: { label: 'Extra Information' },
       fields: []
     },
     {
-      params: { label: 'Web presence', tooltip: '' },
+      params: { label: 'Web presence' },
       fields: []
     }
   ],
   'Lead' => [
     {
-      params: { label: 'General Information', tooltip: '' },
+      params: { label: 'General Information' },
       fields: [
         { field_type: '', name: '', label: '', required: '' },
         { field_type: '', name: '', label: '', required: '' },
@@ -53,13 +53,13 @@
       ]
     },
     {
-      params: { label: 'Contact Information', tooltip: '' },
+      params: { label: 'Contact Information' },
       fields: []
     }
   ],
   'Opportunity' => [
     {
-      params: { label: 'General Information', tooltip: '' },
+      params: { label: 'General Information' },
       fields: [
         { field_type: '', name: '', label: '', required: '' },
         { field_type: '', name: '', label: '', required: '' },
@@ -67,7 +67,7 @@
       ]
     },
     {
-      params: { label: 'Contact Information', tooltip: '' },
+      params: { label: 'Contact Information' },
       fields: []
     }
   ]

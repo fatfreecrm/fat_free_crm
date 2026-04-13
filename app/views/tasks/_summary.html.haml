@@ -1,0 +1,28 @@
+.panel#summary
+  %dl
+    - if task.asset
+      %li
+        %dt= link_to(task.asset.name, polymorphic_url(task.asset))
+        %tt #{t :related_asset}:
+    %li
+      %dt= task.category.blank? ? t(:other) : t(task.category)
+      %tt #{t 'category'}:
+    %li
+      %dt= t(task.priority, default: :n_a)
+      %tt #{t 'priority'}:
+    %li
+      %dt= task.due_at ? l(task.due_at, format: :long) : t(:n_a)
+      %tt #{t 'due'}:
+    %li
+      %dt= task.completed_at ? l(task.completed_at, format: :long) : t(:n_a)
+      %tt #{t 'completed_at'}:
+    %li
+      %dt= task.user.full_name
+      %tt #{t 'created_by'}:
+    %li
+      %dt= task.assignee ? task.assignee.full_name : t(:unassigned)
+      %tt #{t 'assigned_to'}:
+
+- unless task.background_info.blank?
+  .caption #{t :background_info}
+  = auto_link(simple_format task.background_info)
