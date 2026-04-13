@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :configure_devise_parameters, if: :devise_controller?
-  before_action :authenticate_user!
+  before_action :doorkeeper_authorize!, if: -> { request.format.json? || request.format.xml? }
+  before_action :authenticate_user!, unless: -> { doorkeeper_token&.accessible? }
   before_action :set_paper_trail_whodunnit
   before_action :set_context
   before_action :clear_setting_cache
@@ -225,6 +226,14 @@ class ApplicationController < ActionController::Base
   end
 
   #----------------------------------------------------------------------------
+  def current_user
+    @current_user ||= if doorkeeper_token&.accessible?
+                        User.find_by(id: doorkeeper_token.resource_owner_id)
+                      else
+                        super
+                      end
+  end
+
   def redirection_url
     # Try to redirect somewhere sensible. Note: not all controllers have an index action
     if current_user.present?

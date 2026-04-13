@@ -135,3 +135,4 @@ gem "addressable", "~> 2.8"
 
 gem 'rack-attack'
 gem "solid_queue"
+gem 'doorkeeper'

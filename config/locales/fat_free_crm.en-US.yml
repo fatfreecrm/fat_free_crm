@@ -34,6 +34,15 @@ en-US:
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
   admin_tab_research_tools: Research Tools
+  admin_tab_oauth_applications: OAuth Applications
+
+  oauth_applications:
+    index:
+      title: "My OAuth Applications"
+      new: "New OAuth Application"
+      name: "Name"
+      callback_url: "Callback URL"
+      no_applications: "You have no OAuth applications yet."
   ai_prompts: Describe your business
   ai_prompts_description: Describe your business, the products or services you offer,
     and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.

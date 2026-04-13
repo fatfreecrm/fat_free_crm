@@ -188,6 +188,8 @@ GEM
     devise-security (0.18.0)
       devise (>= 4.3.0)
     diff-lcs (1.6.2)
+    doorkeeper (5.9.0)
+      railties (>= 5)
     drb (2.2.3)
     dynamic_form (1.2.0)
     email_reply_parser_ffcrm (0.5.0)
@@ -627,6 +629,7 @@ DEPENDENCIES
   devise-encryptable
   devise-i18n
   devise-security
+  doorkeeper
   drb
   dynamic_form
   email_reply_parser_ffcrm
