@@ -40,6 +40,8 @@ class AccountWebsiteJob < ApplicationJob
         end
       end
     end
+
+    WikidataJob.perform_later(account) if account.wikidata_id.present?
   end
 
   private
