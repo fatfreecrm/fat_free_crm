@@ -19,10 +19,7 @@
 #  alt_email           :string(64)
 #  phone               :string(32)
 #  mobile              :string(32)
-#  aim                 :string(32)
-#  yahoo               :string(32)
 #  google              :string(32)
-#  skype               :string(32)
 #  encrypted_password  :string(255)     default(""), not null
 #  password_salt       :string(255)     default(""), not null
 #  last_sign_in_at     :datetime
@@ -94,6 +91,17 @@ class User < ActiveRecord::Base
             uniqueness: { message: :username_taken, case_sensitive: false },
             presence: { message: :missing_username },
             format: { with: /\A[a-z0-9_-]+\z/i }
+  validates :google, length: { maximum: 32 }
+  validates :blog, length: { maximum: 128 }
+  validates :facebook, length: { maximum: 128 }
+  validates :twitter, length: { maximum: 128 }
+  validates :linkedin, length: { maximum: 128 }
+  validates :zoom, length: { maximum: 128 }
+  validates :teams, length: { maximum: 128 }
+  validates :signal, length: { maximum: 128 }
+  validates :instagram, length: { maximum: 128 }
+  validates :mastodon, length: { maximum: 128 }
+  validates :bluesky, length: { maximum: 128 }
   validates :password,
             presence: { if: :password_required? },
             confirmation: true

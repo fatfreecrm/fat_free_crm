@@ -1,0 +1,19 @@
+%fieldset.panel.panel-default
+  .panel-heading
+    %h4= t('admin.settings.validations.title', default: 'Validations')
+  .panel-body
+    .form-group
+      .checkbox
+        = f.label :require_first_names do
+          = f.check_box :require_first_names, checked: Setting.require_first_names
+          Require first names for Leads and Contacts
+    .form-group
+      .checkbox
+        = f.label :require_last_names do
+          = f.check_box :require_last_names, checked: Setting.require_last_names
+          Require last names for Leads and Contacts
+    .form-group
+      .checkbox
+        = f.label :require_unique_account_names do
+          = f.check_box :require_unique_account_names, checked: Setting.require_unique_account_names
+          Require unique names for Accounts

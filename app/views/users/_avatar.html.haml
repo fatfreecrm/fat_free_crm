@@ -8,7 +8,7 @@
 
     %div #{t :image_file}:
     = fields_for(Avatar) do |a|
-      %div= a.file_field :image
+      %div= a.file_field :image, accept: 'image/png,image/jpeg,image/gif'
 
     .buttonbar
       %small.cool{style: "float:right"}== #{t :gravatar_help} #{link_to(t(:here), "https://en.gravatar.com", :"data-popup" => true)}.

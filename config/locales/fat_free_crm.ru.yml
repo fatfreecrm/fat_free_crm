@@ -265,7 +265,6 @@ ru:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
   already_signed_up: Уже регистрировались?
   alt_email: Альтернативный E-mail
   avatar: Изображение
@@ -278,7 +277,7 @@ ru:
   google: Google IM
   gravatar_help: Не знаете что такое Gravatar? Почитать про Gravatar
   image_file: Файл с Изображением
-  image_help: ! 'Размер изображения будет автоматически изменен на 75 x 75 пикселей. Поддерживаются форматы: GIF, JPG и PNG.'
+  image_help: ! 'Размер изображения будет автоматически изменен на 180 x 180 пикселей. Поддерживаются форматы: GIF, JPG и PNG.'
   job_title: Должность
   last_name: Фамилия
   login_now_link: Войти!
@@ -293,12 +292,10 @@ ru:
   save_profile: Сохранить Профиль
   sign_up: Регистрация
   sign_up_button: Зарегистрироваться
-  skype: Skype
   upload_picture: Загрузить Изображение
   use_gravatar: Использовать Gravatar
   user: Пользователь
   username: Логин
-  yahoo: Yahoo IM
   born_on: Дата рождения
   reports_to: Отчеты
   access: Доступ

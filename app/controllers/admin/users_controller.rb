@@ -119,10 +119,7 @@ class Admin::UsersController < Admin::ApplicationController
       :alt_email,
       :phone,
       :mobile,
-      :aim,
-      :yahoo,
       :google,
-      :skype,
       :password,
       :password_confirmation,
       group_ids: []

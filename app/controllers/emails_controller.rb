@@ -6,12 +6,13 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class EmailsController < ApplicationController
+  load_and_authorize_resource
+
   # DELETE /emails/1
   # DELETE /emails/1.json
   # DELETE /emails/1.xml                                                   AJAX
   #----------------------------------------------------------------------------
   def destroy
-    @email = Email.find(params[:id])
     @email.destroy
     respond_with(@email)
   end

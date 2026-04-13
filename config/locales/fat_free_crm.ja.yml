@@ -250,7 +250,6 @@ ja:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
   already_signed_up: サインアップ済みですか？
   alt_email: その他のEメール
   avatar: アバター
@@ -263,7 +262,7 @@ ja:
   google: Google IM
   gravatar_help: Gravatarとは？
   image_file: 画像ファイル
-  image_help: アップロードされた画像ファイルは自動的に 75 x 75 ピクセルの大きさに調整されます。対応フォーマットは GIF, JPG, PNG
+  image_help: アップロードされた画像ファイルは自動的に 180 x 180 ピクセルの大きさに調整されます。対応フォーマットは GIF, JPG, PNG
   job_title: 役職
   last_name: 姓
   login_now_link: 今すぐログイン！
@@ -278,12 +277,10 @@ ja:
   save_profile: プロフィール保存
   sign_up: サインアップ
   sign_up_button: サインアップ
-  skype: Skype
   upload_picture: 画像アップロード
   use_gravatar: ユーザのGravatar
   user: ユーザ
   username: ユーザ名
-  yahoo: Yahoo IM
   born_on: 生年月日
   reports_to: マネージャー
   access: アクセス

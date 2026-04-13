@@ -32,6 +32,14 @@ en-US:
   admin_tab_tags: Tags
   admin_tab_settings: Settings
   admin_tab_plugins: Plugins
+  admin_tab_research_tools: Research Tools
+  ai_prompts: Describe your business
+  ai_prompts_description: Describe your business, the products or services you offer,
+    and your target audience. This will help us tailor the CRM to your needs, and act as system prompts for anywhere AI is used.
+  about_my_business: About my business
+  about_my_business_placeholder: ie Example Pty Ltd is a mid sized company that specializes in providing high-quality software solutions to small and medium-sized businesses. We focus on the healthcare industry, and sell our flagship product, Fizz Buzz Ultimate Pro.
+  how_i_plan_to_use_ffcrm: How I plan to use Fat Free CRM
+  how_i_plan_to_use_ffcrm_placeholder: ie A small sales team of 5 people will use Fat Free CRM.  We will use Mailchimp, Google Ads, Zapier, and Slack. We want to filter and categorise leads by specific areas they are interested in within healthcare. 
   affiliate: Affiliate
   competitor: Competitor
   customer: Customer
@@ -83,6 +91,9 @@ en-US:
   completed_last_week: Last week
   completed_this_month: This month
   completed_last_month: Last month
+  research_tools: Research Tools
+  research_tool_small: research tool
+  create_research_tool: Create Research Tool
 
   # Models/Activity.
   #----------------------------------------------------------------------------
@@ -260,7 +271,8 @@ en-US:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
+  subscribe_to_comment_replies: "Subscribe to comment replies by email"
+  receive_assigned_notifications: "Receive assigned notifications by email"
   already_signed_up: Already signed up?
   alt_email: Alternative email
   avatar: Avatar
@@ -273,8 +285,7 @@ en-US:
   google: Google IM
   gravatar_help: Not familiar with Gravatars? Learn about Gravatars
   image_file: Image file
-  image_help: The image file you upload will be automatically resized to 75 x 75 pixels.
-    Supported formats are GIF, JPG, and PNG.
+  image_help: The image will be resized to 180x180 pixels. Supported formats - PNG, JPG, GIF.
   job_title: Title
   last_name: Last name
   login_now_link: Login Now!
@@ -286,15 +297,14 @@ en-US:
   phone: Phone
   profile: Profile
   profile_language: Language
+  email_notifications: Email Notifications
   save_profile: Save Profile
   sign_up: Sign Up
   sign_up_button: Sign Up
-  skype: Skype
   upload_picture: Upload Picture
   use_gravatar: Use Gravatar
   user: User
   username: Username
-  yahoo: Yahoo IM
   born_on: Born on
   reports_to: Reports to
   access: Access
@@ -341,6 +351,9 @@ en-US:
   website: Website
   account_with_title_department: ! '%{title}, %{department} at %{account}'
   account_with_title: ! '%{title} at %{account}'
+  wikidata_id: Wikidata ID
+  wikidata_id_place: Wikidata ID
+  wikidata_id_title: "A Wikidata ID is a unique identifier for an entity in the Wikidata knowledge base. It can be used to link to additional information about the entity, such as its description, aliases, and related entities. Format is Q followed by a number, e.g. Q288523 for ACME corporation"
 
   # Views -> Campaigns.
   #----------------------------------------------------------------------------
@@ -404,6 +417,12 @@ en-US:
   extra_info: Extra Information
   extra_info_small: extra contact
   facebook: Facebook
+  zoom: Zoom
+  teams: Teams
+  signal: Signal
+  instagram: Instagram
+  mastodon: Mastodon
+  bluesky: Bluesky
   linked_in: LinkedIn
   myself: Myself
   permissions_intro_private: By default only you will have access to the %{value}.
@@ -867,7 +886,9 @@ en-US:
   create_tag: Create Tag
   save_tag: Save Tag
   field_group_tags: Field Groups shown for this Tag
-
+  ai_prompt_tags: Generate tags for potential leads, accounts, or campaigns, focused on the industry areas of specialisation
+  ai_prompt_link: "Design Help"
+  ai_prompt_link_tooltip: "OpenAI Chat with prompt"
   # Views -> Admin -> Plugins
   #----------------------------------------------------------------------------
   tag_with_taggings_confirm_delete: If this tag is deleted, it will be removed from

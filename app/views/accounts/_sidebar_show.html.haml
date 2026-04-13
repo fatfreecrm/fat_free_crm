@@ -3,25 +3,39 @@
 - pipeline = @account.opportunities.pipeline.map(&:weighted_amount).compact.sum
 
 .panel#summary
-  - if @account.website
+  - if @account.website.present?
     %div
       %b= link_to(truncate(@account.website, length: 30), @account.website.to_url, :"data-popup" => true, title: t(:open_in_window, @account.website))
   - if @account.email.present?
     %div
       %b= link_to_email(@account.email, 30)
 
+  = web_presence_icons(@account)
+
   %div
-    - if @account.toll_free_phone
+    - if @account.toll_free_phone.present?
       == #{t :phone_toll_free}: <b>#{link_to_phone(@account.toll_free_phone)}</b><br />
 
-    - if @account.phone
+    - if @account.phone.present?
       == #{t :phone}: <b>#{link_to_phone(@account.phone)}</b><br />
 
-    - if @account.fax
+    - if @account.fax.present?
       == #{t :fax}: <b>#{link_to_phone(@account.fax)}</b><br />
 
-  %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address
-  %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address
+    - if @account.wikidata_id.present?
+      %b= link_to t(:wikidata), "https://www.wikidata.org/wiki/#{@account.wikidata_id}", target: "_blank", rel: "noopener noreferrer"
+
+    %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address
+    %div= render "shared/address_show", asset: @account, type: 'shipping', title: :shipping_address
+
+  - if @account.latitude.present? && @account.longitude.present?
+    #map{style: "width: 100%; height: 150px;"}
+
+    %p.text-end
+      %small
+        %b= link_to "Google Maps", "https://www.google.com/maps/search/?api=1&query=#{@account.latitude},#{@account.longitude}", target: "_blank"
+        |
+        %b= link_to "Other", "geo:#{@account.latitude},#{@account.longitude}"
 
   .caption #{t :account_summary}
   %dl
@@ -54,4 +68,14 @@
     %dt
       .tags= tags_for_index(@account)
 
+  = render "shared/research_tools", entity: @account
+
   = hook(:show_account_sidebar_bottom, self, account: @account)
+
+- if @account.latitude.present? && @account.longitude.present?
+  :javascript
+    var map = L.map('map').setView([#{@account.latitude}, #{@account.longitude}], 18);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    L.marker([#{@account.latitude}, #{@account.longitude}]).addTo(map);

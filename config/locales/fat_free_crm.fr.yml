@@ -259,7 +259,6 @@ fr:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
   already_signed_up: Déjà inscrit?
   alt_email: e-mail secondaire
   avatar: Image(avatar)
@@ -272,7 +271,7 @@ fr:
   google: Google IM
   gravatar_help: Vous ne connaissez pas Gravatar? Informations sur Gravatar
   image_file: Fichier image
-  image_help: L'image que vous envoyez sera redimensionnée à 75 x 75 pixels. Les formats
+  image_help: L'image que vous envoyez sera redimensionnée à 180 x 180 pixels. Les formats
     supportés sont GIF, JPEG et PNG.
   job_title: Titre/Fonction
   last_name: Nom
@@ -288,12 +287,10 @@ fr:
   save_profile: Enregistrer le profil
   sign_up: Créer un compte
   sign_up_button: S'inscrire
-  skype: Skype
   upload_picture: Envoyez une image
   use_gravatar: Utilisez Gravatar
   user: Utilisateur
   username: Nom d'utilisateur
-  yahoo: Yahoo IM
   born_on: Né le
   reports_to: Rends compte à
   access: Accès

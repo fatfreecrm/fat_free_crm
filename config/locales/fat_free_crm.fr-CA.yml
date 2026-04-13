@@ -205,7 +205,6 @@ fr-CA:
   sort_by: Trier par %{field}.
   sort_by_displaying: Trier %{models} par %{field} afficher le prénom %{position}
     le nom.
-  aim: AOL IM
   already_signed_up: Déjà enregistré?
   alt_email: e-mail secondaire
   avatar: Image
@@ -218,7 +217,7 @@ fr-CA:
   google: Google IM
   gravatar_help: Vous ne connaissez pas Gravatar? Informations sur Gravatar
   image_file: Fichier image
-  image_help: L'image que vous envoyez sera redimensionnée à 75 x 75 pixels. Les formats
+  image_help: L'image que vous envoyez sera redimensionnée à 180 x 180 pixels. Les formats
     supportés sont GIF, JPEG et PNG.
   job_title: Titre/Fonction
   last_name: Nom
@@ -234,12 +233,10 @@ fr-CA:
   save_profile: Enregistrer le profile
   sign_up: Enregistrement
   sign_up_button: Enregistrement
-  skype: Skype
   upload_picture: Envoyez une image
   use_gravatar: Utilisez Gravatar
   user: Utilisateur
   username: Nom d'utilisateur
-  yahoo: Yahoo IM
   forgot_password: Mot de passe oublié
   login: Connection
   no_account: Vous ne possédez pas de compte?

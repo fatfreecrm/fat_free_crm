@@ -35,7 +35,6 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  background_info :string(255)
-#  skype           :string(128)
 #
 
 class Lead < ActiveRecord::Base
@@ -78,6 +77,16 @@ class Lead < ActiveRecord::Base
   validates_presence_of :last_name,  message: :missing_last_name,  if: -> { Setting.require_last_names  }
   validate :users_for_shared_access
   validates :status, inclusion: { in: proc { Setting.unroll(:lead_status).map { |s| s.last.to_s } } }, allow_blank: true
+  validates_length_of :blog, maximum: 128
+  validates_length_of :linkedin, maximum: 128
+  validates_length_of :facebook, maximum: 128
+  validates_length_of :twitter, maximum: 128
+  validates_length_of :zoom, maximum: 128
+  validates_length_of :teams, maximum: 128
+  validates_length_of :signal, maximum: 128
+  validates_length_of :instagram, maximum: 128
+  validates_length_of :mastodon, maximum: 128
+  validates_length_of :bluesky, maximum: 128
 
   after_create :increment_leads_count
   after_destroy :decrement_leads_count

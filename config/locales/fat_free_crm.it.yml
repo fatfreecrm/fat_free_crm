@@ -199,7 +199,6 @@ it:
   show_per_page: Mostra %{number} %{models} per pagina usando %{fmt} formato.
   sort_by: Ordina per %{field}.
   sort_by_displaying: Ordina %{models} per %{field} mostrando nome %{position} cognome
-  aim: AOL IM
   already_signed_up: Gia' iscritto?
   alt_email: Email alternativa
   avatar: Avatar
@@ -212,7 +211,7 @@ it:
   google: Google IM
   gravatar_help: Non conosci Gravatars? Acquisisci informazioni riguardo Gravatars
   image_file: File immagine
-  image_help: Il file immagine che hai caricato sara' ridimensionato a 75 x 75 pixels.
+  image_help: Il file immagine che hai caricato sara' ridimensionato a 180 x 180 pixels.
     Formati supportati sono GIF, JPG e PNG.
   job_title: Titolo
   last_name: Cognome
@@ -228,12 +227,10 @@ it:
   save_profile: Salva Profilo
   sign_up: Iscriviti
   sign_up_button: Iscriviti
-  skype: Skype
   upload_picture: Carica una immagine
   use_gravatar: Usa Gravatar
   user: Utente
   username: Username
-  yahoo: Yahoo IM
   forgot_password: Password dimenticata
   login: Login
   no_account: Hai un account?

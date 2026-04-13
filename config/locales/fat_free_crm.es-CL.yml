@@ -267,7 +267,6 @@ es-CL:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
   already_signed_up: ¿Ya se ha registrado?
   alt_email: Dirección de correo electrónico alternativa
   avatar: Imagen
@@ -296,12 +295,10 @@ es-CL:
   save_profile: Guardar Perfil
   sign_up: Registrarse
   sign_up_button: Registrarse
-  skype: Skype
   upload_picture: Cargar Foto
   use_gravatar: Usar Gravatar
   user: Usuario
   username: Nombre de usuario
-  yahoo: Yahoo IM
   born_on: Nacido en
   reports_to: Reports to
   access: Access

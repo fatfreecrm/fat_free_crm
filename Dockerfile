@@ -3,8 +3,9 @@
 # docker volume create gems
 # docker-compose up
 # docker-compose exec web bundle exec rake db:create db:schema:load ffcrm:demo:load
+# docker-compose exec web bundle exec rails assets:precompile
 
-FROM ruby:3.3
+FROM ruby:3.4
 
 LABEL author="Steve Kenworthy"
 
@@ -22,7 +23,6 @@ RUN cp config/database.postgres.docker.yml config/database.yml
 RUN gem install bundler && \
 	bundle config set --local deployment 'true' && \
 	bundle install
-RUN bundle exec rails assets:precompile
 
 CMD ["bundle","exec","rails","s"]
 

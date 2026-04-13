@@ -192,7 +192,6 @@ th:
   show_per_page: แสดง %{number} %{models} ต่อหนึ่งหน้า ในแบบ %{fmt}
   sort_by: เรียงลำดับ% โดย {field}.
   sort_by_displaying: เรียงลำดับ%{models} โดย %{field} แสดงชื่อจริง %{position} นามสกุล.
-  aim: AOL IM
   already_signed_up: เป็นสมาชิกอยู่แล้ว
   alt_email: อีเมล์ ทางเลือก
   avatar: Avatar
@@ -221,12 +220,10 @@ th:
   save_profile: บันทึกประวัติ
   sign_up: สมัครสมาชิก
   sign_up_button: สมัคร
-  skype: Skype
   upload_picture: อัปโหลดรูป
   use_gravatar: ใช้ Gravatar
   user: ผู้ใช้
   username: ชื่อผู้ใช้
-  yahoo: Yahoo IM
   forgot_password: ลืมรหัสผ่าน
   login: เข้าระบบ
   no_account: ไม่มีชื่อในรายการสมาชิก

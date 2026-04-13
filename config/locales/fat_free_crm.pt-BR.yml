@@ -261,7 +261,6 @@ pt-BR:
 
   # Views -> Profile.
   #----------------------------------------------------------------------------
-  aim: AOL IM
   already_signed_up: Já é cadastrado?
   alt_email: Email alternativo
   avatar: Imagem
@@ -290,12 +289,10 @@ pt-BR:
   save_profile: Salvar perfil
   sign_up: Cadastrar-se
   sign_up_button: Cadastrar-se
-  skype: Skype
   upload_picture: Enviar foto
   use_gravatar: usar Gravatar
   user: Usuário
   username: Usuário
-  yahoo: Yahoo IM
   born_on: Nascido em
   reports_to: Reportar para
   access: Acesso
