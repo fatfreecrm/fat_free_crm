@@ -26,7 +26,17 @@ class TasksController < ApplicationController
   #----------------------------------------------------------------------------
   def show
     @task = Task.tracked_by(current_user).find(params[:id])
+    @comment = Comment.new
+    @timeline = timeline(@task)
     respond_with(@task)
+  end
+
+  # GET /tasks/1/versions                                                  AJAX
+  #----------------------------------------------------------------------------
+  def versions
+    @task = Task.tracked_by(current_user).find(params[:id])
+    @versions = @task.versions.order('created_at DESC')
+    respond_with(@versions)
   end
 
   # GET /tasks/new
@@ -177,11 +187,16 @@ class TasksController < ApplicationController
       :completed_at,
       :deleted_at,
       :background_info,
-      :calendar
+      :calendar,
+      *Task.fields.map(&:name)
     )
   end
 
   private
+
+  def timeline(asset)
+    (asset.comments + (asset.respond_to?(:emails) ? asset.emails : [])).sort { |x, y| y.created_at <=> x.created_at }
+  end
 
   # Yields array of current filters and updates the session using new values.
   #----------------------------------------------------------------------------

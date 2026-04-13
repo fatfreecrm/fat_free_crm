@@ -121,6 +121,8 @@ describe TasksController do
     TASK_STATUSES.each do |view|
       it "should render the requested task as JSON for #{view} view" do
         allow(Task).to receive_message_chain(:tracked_by, :find).and_return(task = double("Task"))
+        allow(task).to receive(:comments).and_return([])
+        allow(task).to receive(:emails).and_return([])
         expect(task).to receive(:to_json).and_return("generated JSON")
 
         request.env["HTTP_ACCEPT"] = "application/json"
@@ -130,12 +132,29 @@ describe TasksController do
 
       it "should render the requested task as xml for #{view} view" do
         allow(Task).to receive_message_chain(:tracked_by, :find).and_return(task = double("Task"))
+        allow(task).to receive(:comments).and_return([])
+        allow(task).to receive(:emails).and_return([])
         expect(task).to receive(:to_xml).and_return("generated XML")
 
         request.env["HTTP_ACCEPT"] = "application/xml"
         get :show, params: { id: 42, view: "pending" }
         expect(response.body).to eq("generated XML")
       end
+    end
+
+    it "should render show template for HTML request" do
+      @task = create(:task, user: current_user)
+      get :show, params: { id: @task.id }
+      expect(response).to render_template("tasks/show")
+    end
+  end
+
+  describe "responding to GET versions" do
+    it "should expose versions of the requested task" do
+      @task = create(:task, user: current_user)
+      get :versions, params: { id: @task.id }, xhr: true
+      expect(assigns[:versions]).to eq(@task.versions)
+      expect(response).to render_template("tasks/versions")
     end
   end
 
