@@ -281,6 +281,8 @@ module ApplicationHelper
       bluesky: "cloud"
     }
     %i[blog linkedin facebook twitter zoom teams signal instagram mastodon bluesky].each do |site|
+      next unless person.respond_to?(site)
+
       url = person.send(site)
       next if url.blank?
 

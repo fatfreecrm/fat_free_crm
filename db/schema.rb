@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_12_062855) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_13_040024) do
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -51,6 +51,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_12_062855) do
     t.string "wikidata_id"
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
+    t.string "blog"
+    t.string "linkedin"
+    t.string "facebook"
+    t.string "twitter"
+    t.string "bluesky"
+    t.string "instagram"
+    t.string "mastodon"
     t.index ["assigned_to"], name: "index_accounts_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_accounts_on_user_id_and_name_and_deleted_at", unique: true
   end

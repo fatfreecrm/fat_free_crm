@@ -47,4 +47,11 @@ account<%= i %>:
   updated_at       : <%= (created_at + rand(36_000).seconds).to_fs(:db) %>
   latitude         : <%= FFaker::Geolocation.lat %>
   longitude        : <%= FFaker::Geolocation.lng %>
+  blog             : <%= %[http://#{company.downcase}.blogger.com] if rand(10) < 8 %>
+  linkedin         : <%= %[http://www.linkedin.com/#{company.downcase}] if rand(10) < 8 %>
+  facebook         : <%= %[http://www.facebook.com/#{company.downcase}] if rand(10) < 8 %>
+  instagram        : <%= %[https://www.instagram.com/#{company.downcase}/] if rand(10) < 8 %>
+  bluesky          : <%= %[https://bsky.app/profile/#{company.downcase}/] if rand(10) < 8 %>
+  mastodon         : <%= %[https://mastodon.social/@#{company.downcase}] if rand(10) < 8 %>
+  twitter          : <%= %[http://www.twitter.com/#{company.downcase}] if rand(10) < 8 %>
 <% end %>
