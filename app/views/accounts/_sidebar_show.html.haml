@@ -10,6 +10,8 @@
     %div
       %b= link_to_email(@account.email, 30)
 
+  = web_presence_icons(@account)
+
   %div
     - if @account.toll_free_phone
       == #{t :phone_toll_free}: <b>#{link_to_phone(@account.toll_free_phone)}</b><br />

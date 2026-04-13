@@ -1,0 +1,38 @@
+- edit ||= false
+- collapsed = session[:account_presence].nil?
+= subtitle :account_presence, collapsed, t(:web_presence)
+.section
+  %small#account_presence_intro{ hidden_if(!collapsed) }
+    = t(:intro, t(:web_presence_small)) unless edit
+  #account_presence{ hidden_if(collapsed) }
+    %table
+      %tr
+        %td
+          .label.top #{t :blog}:
+          = f.text_field :blog
+        %td= spacer
+        %td
+          .label.top #{t :twitter}:
+          = f.text_field :twitter
+      %tr
+        %td
+          .label #{t :linked_in}:
+          = f.text_field :linkedin
+        %td= spacer
+        %td
+          .label #{t :facebook}:
+          = f.text_field :facebook
+      %tr
+        %td
+          .label #{t :instagram}:
+          = f.text_field :instagram
+        %td= spacer
+        %td
+          .label #{t :mastodon}:
+          = f.text_field :mastodon
+      %tr
+        %td
+          .label #{t :bluesky}:
+          = f.text_field :bluesky
+        %td= spacer
+        %td
