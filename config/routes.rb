@@ -149,6 +149,7 @@ Rails.application.routes.draw do
     member do
       put :complete
       put :uncomplete
+      get :versions
     end
   end
 

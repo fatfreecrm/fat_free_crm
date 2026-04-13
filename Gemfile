@@ -134,3 +134,4 @@ gem 'connection_pool', '< 3'
 gem "addressable", "~> 2.8"
 
 gem 'rack-attack'
+gem "solid_queue"

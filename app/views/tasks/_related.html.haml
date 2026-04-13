@@ -8,7 +8,8 @@
       = link_to(related.assignee.full_name, user_path(related.assignee))
     - else
       = link_to(related.user.full_name, user_path(related.user))
-    = ": " + related.name
+    = ": "
+    = link_to(related.name, task_path(related))
     - if related.asset_id?
       == (#{t :related} #{link_to(related.asset.name, polymorphic_url(related.asset))})
     &ndash;

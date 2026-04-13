@@ -80,10 +80,18 @@ class Account < ActiveRecord::Base
   validates :category, inclusion: { in: proc { Setting.unroll(:account_category).map { |s| s.last.to_s } } }, allow_blank: true
   validates :latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90, allow_blank: true }
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180, allow_blank: true }
+  validates_length_of :blog, maximum: 128
+  validates_length_of :linkedin, maximum: 128
+  validates_length_of :facebook, maximum: 128
+  validates_length_of :twitter, maximum: 128
+  validates_length_of :instagram, maximum: 128
+  validates_length_of :mastodon, maximum: 128
+  validates_length_of :bluesky, maximum: 128
   validate :users_for_shared_access
   validate :validate_logo
 
   before_save :nullify_blank_category
+  after_save_commit :enqueue_website_job, if: -> { website.present? && saved_change_to_website? }
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
@@ -161,6 +169,10 @@ class Account < ActiveRecord::Base
 
   def nullify_blank_category
     self.category = nil if category.blank?
+  end
+
+  def enqueue_website_job
+    AccountWebsiteJob.perform_later(self)
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_account, self)

@@ -16,7 +16,8 @@
    *    @attr query {Function} will be called to query if there is any match for the user input
    */
   $.fn.areacomplete = function(obj){
-    if( typeof $.browser.msie != 'undefined' ) obj.mode = 'outter';
+    var isIE = /MSIE|Trident/.test(navigator.userAgent);
+    if( isIE ) obj.mode = 'outter';
     this.each(function(index,element){
       if( element.nodeName == 'TEXTAREA' ){
         makeAutoComplete(element,obj);
@@ -24,7 +25,7 @@
     });
   }
 
-  var browser =  {isChrome: $.browser.webkit };
+  var browser =  {isChrome: /AppleWebKit/.test(navigator.userAgent) };
 
   function getTextAreaSelectionEnd(ta) {
      var textArea = ta;//document.getElementById('textarea1');

@@ -11,7 +11,7 @@
 
   .indent
     = link_to(assigned.assignee.full_name, user_path(assigned.assignee)) + ": "
-    = auto_link h(assigned.name)
+    = link_to(h(assigned.name), task_path(assigned))
     - if assigned.asset_id?
       == #{t :related} #{link_to(h(assigned.asset.name), polymorphic_url(assigned.asset))}
     &ndash;
@@ -45,3 +45,11 @@
     - unless assigned.background_info.blank?
       %div
         %dt= h(assigned.background_info)
+
+    -# Show custom fields that are in the default field group
+    - custom_field_group = assigned.field_groups.select{|f| f.name == 'custom_fields'}.first
+    - if custom_field_group.present?
+      - fields = custom_field_group.fields.without_pairs
+      = render("fields/group_view", fields: fields, entity: assigned) unless fields.nil?
+
+    = render "entities/section_custom_fields", entity: assigned
