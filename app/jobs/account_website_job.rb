@@ -47,35 +47,31 @@ class AccountWebsiteJob < ApplicationJob
       next unless obj.is_a?(Hash)
 
       type = obj['@type']
-      if (type == 'Organization' || Array(type).include?('Organization'))
-        update_account_from_org(account, obj)
-      end
+      update_account_from_org(account, obj) if type == 'Organization' || Array(type).include?('Organization')
 
       about = obj['about']
-      if (type == 'WebPage' || Array(type).include?('WebPage')) && about
-        Array(about).each do |about_obj|
-          next unless about_obj.is_a?(Hash)
+      next unless (type == 'WebPage' || Array(type).include?('WebPage')) && about
 
-          about_type = about_obj['@type']
-          if about_type == 'Organization' || Array(about_type).include?('Organization')
-            update_account_from_org(account, about_obj)
-          elsif about_obj['@id']
-            # Look for the referenced object in the graph
-            referenced_org = objects.find do |o|
-              o.is_a?(Hash) &&
-                o['@id'] == about_obj['@id'] &&
-                (o['@type'] == 'Organization' || Array(o['@type']).include?('Organization'))
-            end
-            update_account_from_org(account, referenced_org) if referenced_org
+      Array(about).each do |about_obj|
+        next unless about_obj.is_a?(Hash)
+
+        about_type = about_obj['@type']
+        if about_type == 'Organization' || Array(about_type).include?('Organization')
+          update_account_from_org(account, about_obj)
+        elsif about_obj['@id']
+          # Look for the referenced object in the graph
+          referenced_org = objects.find do |o|
+            o.is_a?(Hash) &&
+              o['@id'] == about_obj['@id'] &&
+              (o['@type'] == 'Organization' || Array(o['@type']).include?('Organization'))
           end
+          update_account_from_org(account, referenced_org) if referenced_org
         end
       end
     end
 
     WikidataJob.perform_later(account) if account.wikidata_id.present?
   end
-
-  private
 
   def update_account_from_org(account, org)
     updates = {}
