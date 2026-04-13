@@ -121,6 +121,9 @@ en-US:
               missing_account_name: ^Please specify account name.
             access:
               share_account: ^Please specify users with whom to share the account.
+            logo:
+              too_big: "^Logo image is too large (max 5MB)."
+              unsupported_format: "^Logo image must be PNG, JPG, or GIF."
         campaign:
           attributes:
             name:

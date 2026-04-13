@@ -1,5 +1,7 @@
 - amount = account.pipeline_opportunities.map(&:weighted_amount).sum
 %li.highlight[account]
+  - if account.logo.attached?
+    = image_tag account.logo.variant(resize_to_limit: [40, 40]), class: 'gravatar'
   - if account.category
     .strip{class: account.category} #{t(account.category)}
   - else

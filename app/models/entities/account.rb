@@ -40,6 +40,7 @@ class Account < ActiveRecord::Base
   has_one :shipping_address, -> { where(address_type: "Shipping") }, dependent: :destroy, as: :addressable, class_name: "Address"
   has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
   has_many :emails, as: :mediator
+  has_one_attached :logo
 
   serialize :subscribed_users, type: Array
 
@@ -80,6 +81,7 @@ class Account < ActiveRecord::Base
   validates :latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90, allow_blank: true }
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180, allow_blank: true }
   validate :users_for_shared_access
+  validate :validate_logo
 
   before_save :nullify_blank_category
 
@@ -137,6 +139,19 @@ class Account < ActiveRecord::Base
   end
 
   private
+
+  def validate_logo
+    return unless logo.attached?
+
+    if logo.blob.byte_size > 5.megabytes
+      errors.add(:logo, :too_big)
+    end
+
+    acceptable_types = %w[image/png image/jpg image/jpeg image/gif]
+    unless acceptable_types.include?(logo.content_type)
+      errors.add(:logo, :unsupported_format)
+    end
+  end
 
   # Make sure at least one user has been selected if the account is being shared.
   #----------------------------------------------------------------------------

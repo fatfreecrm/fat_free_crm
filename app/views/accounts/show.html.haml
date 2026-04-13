@@ -25,3 +25,5 @@
     = render "versions/versions", object: @account
 
     = load_select_popups_for(@account, :tasks, :contacts, :opportunities)
+
+%iframe#uploading{ name: "uploading", style: "width:1px; height:1px; display: none;" }

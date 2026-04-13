@@ -3,6 +3,8 @@
 - pipeline = @account.opportunities.pipeline.map(&:weighted_amount).compact.sum
 
 .panel#summary
+  - if @account.logo.attached?
+    %span{style: "float:right"}= image_tag @account.logo.variant(resize_to_limit: [180, 180]), class: 'gravatar'
   - if @account.website
     %div
       %b= link_to(truncate(@account.website, length: 30), @account.website.to_url, :"data-popup" => true, title: t(:open_in_window, @account.website))

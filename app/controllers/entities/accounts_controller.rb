@@ -62,6 +62,7 @@ class AccountsController < EntitiesController
         @accounts = get_accounts
         get_data_for_sidebar
       end
+      responds_to_parent { render }
     end
   end
 
@@ -71,7 +72,10 @@ class AccountsController < EntitiesController
     respond_with(@account) do |_format|
       # Must set access before user_ids, because user_ids= method depends on access value.
       @account.access = params[:account][:access] if params[:account][:access]
-      get_data_for_sidebar if @account.update(resource_params)
+      if @account.update(resource_params)
+        get_data_for_sidebar
+      end
+      responds_to_parent { render }
     end
   end
 
