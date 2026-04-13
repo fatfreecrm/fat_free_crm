@@ -51,6 +51,26 @@ class AccountWebsiteJob < ApplicationJob
     updates[:email] = org['email'] if account.email.blank? && org['email'].present?
     updates[:fax] = org['faxNumber'] if account.fax.blank? && org['faxNumber'].present?
 
+    if org['sameAs'].present?
+      Array(org['sameAs']).each do |url|
+        next unless url.is_a?(String)
+
+        if url.match?(%r{facebook\.com/})
+          updates[:facebook] ||= url if account.facebook.blank?
+        elsif url.match?(%r{instagram\.com/})
+          updates[:instagram] ||= url if account.instagram.blank?
+        elsif url.match?(%r{(twitter\.com|x\.com)/})
+          updates[:twitter] ||= url if account.twitter.blank?
+        elsif url.match?(%r{linkedin\.com/})
+          updates[:linkedin] ||= url if account.linkedin.blank?
+        elsif url.match?(%r{bsky\.app/})
+          updates[:bluesky] ||= url if account.bluesky.blank?
+        elsif url.match?(%r{mastodon})
+          updates[:mastodon] ||= url if account.mastodon.blank?
+        end
+      end
+    end
+
     if org['geo'].present? && org['geo']['@type'] == 'GeoCoordinates'
       updates[:latitude] = org['geo']['latitude'].to_f if account.latitude.blank? && org['geo']['latitude'].present?
       updates[:longitude] = org['geo']['longitude'].to_f if account.longitude.blank? && org['geo']['longitude'].present?

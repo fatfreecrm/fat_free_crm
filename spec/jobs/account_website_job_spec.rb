@@ -67,6 +67,62 @@ RSpec.describe AccountWebsiteJob, type: :job do
     expect(address.country).to eq('US')
   end
 
+  it 'updates account social media fields from JSON-LD sameAs array' do
+    html = <<-HTML
+      <html>
+        <body>
+          <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "sameAs": [
+                "https://www.facebook.com/example",
+                "https://www.instagram.com/example",
+                "https://twitter.com/example",
+                "https://www.linkedin.com/company/example",
+                "https://bsky.app/profile/example.bsky.social",
+                "https://mastodon.social/@example"
+              ]
+            }
+          </script>
+        </body>
+      </html>
+    HTML
+    allow(@http_double).to receive(:get).and_return(double(is_a?: true, body: html))
+    allow(@http_double).to receive(:request_get).and_return(double(is_a?: true, body: html))
+
+    expect {
+      AccountWebsiteJob.perform_now(account)
+    }.to change { account.reload.facebook }.to('https://www.facebook.com/example')
+    .and change { account.instagram }.to('https://www.instagram.com/example')
+    .and change { account.twitter }.to('https://twitter.com/example')
+    .and change { account.linkedin }.to('https://www.linkedin.com/company/example')
+    .and change { account.bluesky }.to('https://bsky.app/profile/example.bsky.social')
+    .and change { account.mastodon }.to('https://mastodon.social/@example')
+  end
+
+  it 'updates account social media fields from JSON-LD sameAs string' do
+    html = <<-HTML
+      <html>
+        <body>
+          <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "sameAs": "https://www.facebook.com/example"
+            }
+          </script>
+        </body>
+      </html>
+    HTML
+    allow(@http_double).to receive(:get).and_return(double(is_a?: true, body: html))
+    allow(@http_double).to receive(:request_get).and_return(double(is_a?: true, body: html))
+
+    expect {
+      AccountWebsiteJob.perform_now(account)
+    }.to change { account.reload.facebook }.to('https://www.facebook.com/example')
+  end
+
   it 'does not overwrite existing fields' do
     account.update(phone: '555-5555')
     expect {
