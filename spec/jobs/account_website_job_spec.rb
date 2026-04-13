@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-RSpec.describe AccountWebsiteJob, type: :job do
+RSpec.describe AccountWebsiteJob do
   let(:account) { create(:account, website: 'http://example.com', phone: nil, email: nil, fax: nil) }
   let(:html_body) do
     <<-HTML
@@ -39,21 +41,20 @@ RSpec.describe AccountWebsiteJob, type: :job do
     allow(@http_double).to receive(:use_ssl=)
     allow(@http_double).to receive(:open_timeout=)
     allow(@http_double).to receive(:read_timeout=)
-    allow(@http_double).to receive(:get).and_return(double(is_a?: true, body: html_body))
     # Net::HTTP.get_response(uri) eventually calls start
     allow(@http_double).to receive(:start).and_yield(@http_double)
     # Mocking request_get because get_response uses it
-    allow(@http_double).to receive(:request_get).and_return(double(is_a?: true, body: html_body))
+    allow(@http_double).to receive_messages(get: double(is_a?: true, body: html_body), request_get: double(is_a?: true, body: html_body))
   end
 
   it 'updates account fields from JSON-LD Organization data' do
-    expect {
+    expect do
       AccountWebsiteJob.perform_now(account)
-    }.to change { account.reload.phone }.to('123-456-7890')
-    .and change { account.email }.to('info@example.com')
-    .and change { account.fax }.to('098-765-4321')
-    .and change { account.latitude }.to(40.7128)
-    .and change { account.longitude }.to(-74.0060)
+    end.to change { account.reload.phone }.to('123-456-7890')
+                                          .and change(account, :email).to('info@example.com')
+                                          .and change(account, :fax).to('098-765-4321')
+                                          .and change(account, :latitude).to(40.7128)
+                                          .and change(account, :longitude).to(-74.0060)
   end
 
   it 'updates account billing address from JSON-LD' do
@@ -88,17 +89,16 @@ RSpec.describe AccountWebsiteJob, type: :job do
         </body>
       </html>
     HTML
-    allow(@http_double).to receive(:get).and_return(double(is_a?: true, body: html))
-    allow(@http_double).to receive(:request_get).and_return(double(is_a?: true, body: html))
+    allow(@http_double).to receive_messages(get: double(is_a?: true, body: html), request_get: double(is_a?: true, body: html))
 
-    expect {
+    expect do
       AccountWebsiteJob.perform_now(account)
-    }.to change { account.reload.facebook }.to('https://www.facebook.com/example')
-    .and change { account.instagram }.to('https://www.instagram.com/example')
-    .and change { account.twitter }.to('https://twitter.com/example')
-    .and change { account.linkedin }.to('https://www.linkedin.com/company/example')
-    .and change { account.bluesky }.to('https://bsky.app/profile/example.bsky.social')
-    .and change { account.mastodon }.to('https://mastodon.social/@example')
+    end.to change { account.reload.facebook }.to('https://www.facebook.com/example')
+                                             .and change(account, :instagram).to('https://www.instagram.com/example')
+                                             .and change(account, :twitter).to('https://twitter.com/example')
+                                             .and change(account, :linkedin).to('https://www.linkedin.com/company/example')
+                                             .and change(account, :bluesky).to('https://bsky.app/profile/example.bsky.social')
+                                             .and change(account, :mastodon).to('https://mastodon.social/@example')
   end
 
   it 'updates account social media fields from JSON-LD sameAs string' do
@@ -115,28 +115,27 @@ RSpec.describe AccountWebsiteJob, type: :job do
         </body>
       </html>
     HTML
-    allow(@http_double).to receive(:get).and_return(double(is_a?: true, body: html))
-    allow(@http_double).to receive(:request_get).and_return(double(is_a?: true, body: html))
+    allow(@http_double).to receive_messages(get: double(is_a?: true, body: html), request_get: double(is_a?: true, body: html))
 
-    expect {
+    expect do
       AccountWebsiteJob.perform_now(account)
-    }.to change { account.reload.facebook }.to('https://www.facebook.com/example')
+    end.to change { account.reload.facebook }.to('https://www.facebook.com/example')
   end
 
   it 'does not overwrite existing fields' do
     account.update(phone: '555-5555')
-    expect {
+    expect do
       AccountWebsiteJob.perform_now(account)
-    }.not_to change { account.reload.phone }
+    end.not_to(change { account.reload.phone })
   end
 
   describe 'Error handling and safety' do
     it 'handles HTTP timeouts gracefully' do
       allow(@http_double).to receive(:get).and_raise(Net::OpenTimeout)
 
-      expect {
+      expect do
         AccountWebsiteJob.perform_now(account)
-      }.not_to raise_error
+      end.not_to raise_error
     end
 
     it 'rejects internal IP addresses (SSRF mitigation)' do
@@ -168,15 +167,15 @@ RSpec.describe 'Account Callback', type: :model do
 
   it 'enqueues AccountWebsiteJob when website is changed' do
     account = create(:account, website: nil)
-    expect {
+    expect do
       account.update(website: 'http://new-website.com')
-    }.to enqueue_job(AccountWebsiteJob).with(account)
+    end.to enqueue_job(AccountWebsiteJob).with(account)
   end
 
   it 'does not enqueue AccountWebsiteJob when website is not changed' do
     account = create(:account, website: 'http://old-website.com')
-    expect {
+    expect do
       account.update(name: 'New Name')
-    }.not_to enqueue_job(AccountWebsiteJob)
+    end.not_to enqueue_job(AccountWebsiteJob)
   end
 end
