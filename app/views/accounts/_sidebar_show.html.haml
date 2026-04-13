@@ -4,7 +4,7 @@
 
 .panel#summary
   - if @account.logo.attached?
-    %span{style: "float:right"}= image_tag @account.logo.variant(resize_to_limit: [180, 180]), class: 'gravatar'
+    %span{style: "float:right"}= image_tag @account.logo.variant(resize_to_limit: [180, 180])
 
   - if @account.website.present?
     %div

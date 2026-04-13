@@ -339,6 +339,7 @@ en-US:
   fax: Fax
   intro: You can add %{value} information later.
   keep_private: Keep it private, do not share with others
+  logo: Logo
   mail_to: Mail to %{value}
   make_public: Share it with everyone
   mobile_small: mobile
