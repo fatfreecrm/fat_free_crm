@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require File.expand_path('acceptance_helper.rb', __dir__)
 
@@ -10,7 +11,7 @@ feature 'Task Show Page Edit', '
     do_login_if_not_already(first_name: 'Bill', last_name: 'Murray')
   end
 
-  scenario 'should edit a task from show page', js: true do
+  scenario 'should edit a task from show page', :js do
     task = create(:task, name: 'Original Task', user: @user)
     visit task_path(task)
 
@@ -18,11 +19,11 @@ feature 'Task Show Page Edit', '
 
     click_link 'Edit'
 
-    expect(page).to have_selector('#edit_task', visible: true)
+    expect(page).to have_css('#edit_task', visible: true)
     fill_in 'task_name', with: 'Updated Task Name'
     click_button 'Save Task'
 
     expect(page).to have_content('Updated Task Name')
-    expect(page).not_to have_selector('#edit_task', visible: true)
+    expect(page).to have_no_css('#edit_task', visible: true)
   end
 end
