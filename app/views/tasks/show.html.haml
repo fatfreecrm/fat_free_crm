@@ -10,6 +10,8 @@
 
   = render "tasks/summary", task: @task
 
+  = render "entities/section_custom_fields", entity: @task
+
   = render "comments/new", commentable: @task
   = render partial: "shared/timeline", collection: @timeline
 
