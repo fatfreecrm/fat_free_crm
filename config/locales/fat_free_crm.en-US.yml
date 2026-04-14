@@ -108,6 +108,25 @@ en-US:
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
+    models:
+      account:
+        one: Account
+        other: Accounts
+      campaign:
+        one: Campaign
+        other: Campaigns
+      contact:
+        one: Contact
+        other: Contacts
+      lead:
+        one: Lead
+        other: Leads
+      opportunity:
+        one: Opportunity
+        other: Opportunities
+      task:
+        one: Task
+        other: Tasks
     errors:
       models:
         authentication:
@@ -834,9 +853,18 @@ en-US:
     opportunity:
       one: 1 opportunity
       other: ! '%{count} opportunities'
+    account:
+      one: 1 account
+      other: ! "%{count} accounts"
+    campaign:
+      one: 1 campaign
+      other: ! "%{count} campaigns"
     lead:
       one: 1 lead
       other: ! '%{count} leads'
+    task:
+      one: 1 task
+      other: ! "%{count} tasks"
     day:
       one: 1 day
       other: ! '%{count} days'

@@ -53,10 +53,13 @@ class Admin::ImportsController < Admin::ApplicationController
       end
     end
 
+    records_key = @imported_count == 1 ? klass.model_name.i18n_key : klass.model_name.i18n_key.to_s.pluralize.to_sym
+    records_name = t(records_key, default: klass.model_name.human(count: @imported_count)).downcase
+
     if @errors.empty?
-      flash[:notice] = t(:msg_imported_records, count: @imported_count, records: klass.model_name.human(count: @imported_count).downcase)
+      flash[:notice] = t(:msg_imported_records, count: @imported_count, records: records_name)
     else
-      flash[:warning] = t(:msg_imported_records_with_errors, count: @imported_count, records: klass.model_name.human(count: @imported_count).downcase, errors: @errors.size)
+      flash[:warning] = t(:msg_imported_records_with_errors, count: @imported_count, records: records_name, errors: @errors.size)
       flash[:error] = @errors.join("<br/>").html_safe
     end
   end
