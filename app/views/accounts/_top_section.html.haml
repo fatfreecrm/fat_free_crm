@@ -24,7 +24,7 @@
         %td= spacer
         %td
           .label #{t :logo}:
-          = f.file_field :logo, accept: "image/*"
+          = f.file_field :logo
 
       - if Setting.background_info && Setting.background_info.include?(:account)
         %tr

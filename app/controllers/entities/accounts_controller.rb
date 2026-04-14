@@ -54,29 +54,25 @@ class AccountsController < EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
-    respond_with(@account) do |_format|
-      if @account.save
-        @account.add_comment_by_user(@comment_body, current_user)
-        # None: account can only be created from the Accounts index page, so we
-        # don't have to check whether we're on the index page.
-        @accounts = get_accounts
-        get_data_for_sidebar
-      end
-      responds_to_parent { render }
+    if @account.save
+      @account.add_comment_by_user(@comment_body, current_user)
+      # None: account can only be created from the Accounts index page, so we
+      # don't have to check whether we're on the index page.
+      @accounts = get_accounts
+      get_data_for_sidebar
     end
+    responds_to_parent { render :create }
   end
 
   # PUT /accounts/1
   #----------------------------------------------------------------------------
   def update
-    respond_with(@account) do |_format|
-      # Must set access before user_ids, because user_ids= method depends on access value.
-      @account.access = params[:account][:access] if params[:account][:access]
-      if @account.update(resource_params)
-        get_data_for_sidebar
-      end
-      responds_to_parent { render }
+    # Must set access before user_ids, because user_ids= method depends on access value.
+    @account.access = params[:account][:access] if params[:account][:access]
+    if @account.update(resource_params)
+      get_data_for_sidebar
     end
+    responds_to_parent { render :update }
   end
 
   # DELETE /accounts/1

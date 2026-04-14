@@ -339,7 +339,6 @@ en-US:
   fax: Fax
   intro: You can add %{value} information later.
   keep_private: Keep it private, do not share with others
-  logo: Logo
   mail_to: Mail to %{value}
   make_public: Share it with everyone
   mobile_small: mobile
@@ -444,10 +443,10 @@ en-US:
   web_presence_small: web presence
   works_at: ! '%{job_title} at %{company}'
   general_info: General Information
-  show_general_info_small: Show general information.
-  show_extra_info_small: Show extra information.
+  show_general_info_small: Show general information for this contact.
+  show_extra_info_small: Show extra information for this contact.
   tag_details: ! '%{tag} Details'
-  show_tag_info_small: Show %{tag} information.
+  show_tag_info_small: Show %{tag} information for this contact.
   shared_with_everyone: Shared with everyone
   title: Title
   subscriptions: Subscriptions
@@ -536,10 +535,8 @@ en-US:
   assigned_tab: Assigned
   assigned_tasks: Assigned Tasks
   category: Category
-  completed_at: Completed at
   completed_tab: Completed
   completed_tasks: Completed Tasks
-  created_by: Created by
   create_task: Create Task
   create_task_small: create new task
   due: Due
@@ -551,7 +548,6 @@ en-US:
   no_tasks_completed: completed
   pending_tab: Pending
   pending_tasks: Pending Tasks
-  priority: Priority
   related: ! 're:'
   save_task: Save Task
   task_assigned: The task has been assigned to %{value}
@@ -571,7 +567,6 @@ en-US:
   total_tasks: Total %{value}
   view_assigned_tasks: view assigned tasks
   view_pending_tasks: view pending tasks
-  related_asset: Related
 
   # Views -> Team.
   #----------------------------------------------------------------------------

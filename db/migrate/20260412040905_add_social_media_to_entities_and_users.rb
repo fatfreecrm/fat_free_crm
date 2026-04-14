@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class AddSocialMediaToEntitiesAndUsers < ActiveRecord::Migration[7.1]
   def change
     %i[contacts leads].each do |table|

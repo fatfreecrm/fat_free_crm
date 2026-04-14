@@ -4,28 +4,25 @@
 
 .panel#summary
   - if @account.logo.attached?
-    %span{style: "float:right"}= image_tag @account.logo.variant(resize_to_limit: [180, 180])
-
-  - if @account.website.present?
+    %span{style: "float:right"}= image_tag @account.logo.variant(resize_to_limit: [180, 180]), class: 'gravatar'
+  - if @account.website
     %div
       %b= link_to(truncate(@account.website, length: 30), @account.website.to_url, :"data-popup" => true, title: t(:open_in_window, @account.website))
   - if @account.email.present?
     %div
       %b= link_to_email(@account.email, 30)
 
-  = web_presence_icons(@account)
-
   %div
-    - if @account.toll_free_phone.present?
+    - if @account.toll_free_phone
       == #{t :phone_toll_free}: <b>#{link_to_phone(@account.toll_free_phone)}</b><br />
 
-    - if @account.phone.present?
+    - if @account.phone
       == #{t :phone}: <b>#{link_to_phone(@account.phone)}</b><br />
 
-    - if @account.fax.present?
+    - if @account.fax
       == #{t :fax}: <b>#{link_to_phone(@account.fax)}</b><br />
 
-    - if @account.wikidata_id.present?
+    - if @account.wikidata_id
       %b= link_to t(:wikidata), "https://www.wikidata.org/wiki/#{@account.wikidata_id}", target: "_blank", rel: "noopener noreferrer"
 
     %div= render "shared/address_show", asset: @account, type: 'billing', title: :billing_address

@@ -1,4 +1,4 @@
-= simple_form_for(@account, html: one_submit_only.merge(multipart: true, target: 'uploading'), remote: true) do |f|
+= simple_form_for(@account, url: accounts_path(format: :js), html: one_submit_only.merge(multipart: true, target: 'uploading'), remote: true) do |f|
   = link_to_close new_account_path
   = f.hidden_field :user_id
 
@@ -8,7 +8,6 @@
   = render "fields/edit_custom_field_group", f: f
   = render "shared/add_comment", f: f
   = render "accounts/contact_info", f: f
-  = render "accounts/web", f: f
   = render "fields/groups",  f: f
   = render "entities/permissions",  f: f, entity: @account
   = hook(:entity_form, self, {f: f, entity: @account})
