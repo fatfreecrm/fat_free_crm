@@ -19,11 +19,11 @@ feature 'Task Show Page Edit', '
 
     click_link 'Edit'
 
-    expect(page).to have_css('#edit_task', visible: true)
+    expect(page).to have_css('#edit_task')
     fill_in 'task_name', with: 'Updated Task Name'
     click_button 'Save Task'
 
     expect(page).to have_content('Updated Task Name')
-    expect(page).to have_no_css('#edit_task', visible: true)
+    expect(page).to have_no_css('#edit_task')
   end
 end
