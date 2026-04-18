@@ -5,32 +5,26 @@
   %small#contact_extra_intro{ hidden_if(!collapsed) }
     = t(:intro, t(:extra_info_small)) unless edit
   #contact_extra{ hidden_if(collapsed) }
-    %table
+    .grid
       = hook(:contact_extra_details_form, self, f: f) do
-        %tr
-          %td
-            .label #{t :job_title}:
-            = f.text_field :title
-          %td= spacer
-          %td
-            .label #{t :department}:
-            = f.text_field :department
-        %tr
-          %td
-            .label #{t :alt_email}:
-            = f.email_field :alt_email
-          %td= spacer
-          %td
-            .label #{t :mobile}:
-            = phone_field_with_pattern(f, :mobile)
-        %tr
-          %td
-            = render "shared/address", f: f, asset: @contact, type: 'business', title: :address
-          %td= spacer
-          %td
-            .label #{t :fax}:
-            = phone_field_with_pattern(f, :fax)
-            %div{style: "margin-top:6px"}
-              .check_box
-                = f.check_box :do_not_call, {}, true
-                #{t :do_not_call}
+        %div
+          .label #{t :job_title}:
+          = f.text_field :title
+        %div
+          .label #{t :department}:
+          = f.text_field :department
+        %div
+          .label #{t :alt_email}:
+          = f.email_field :alt_email
+        %div
+          .label #{t :mobile}:
+          = phone_field_with_pattern(f, :mobile)
+        %div
+          = render "shared/address", f: f, asset: @contact, type: 'business', title: :address, grid: true
+        %div
+          .label #{t :fax}:
+          = phone_field_with_pattern(f, :fax)
+          %div{style: "margin-top:6px"}
+            .check_box
+              = f.check_box :do_not_call, {}, true
+              #{t :do_not_call}

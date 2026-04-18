@@ -1,45 +1,38 @@
 
 = hook(:contact_top_section, self, f: f) do
   .section
-    %table
-      %tr
-        %td{class: (@contact.errors['first_name'].present? ? 'fieldWithErrors' : nil)}
-          .label.top{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
-          = f.text_field :first_name, autofocus: true, required: (Setting.require_first_names ? "required" : nil)
-        %td= spacer
-        %td{class: (@contact.errors['last_name'].present? ? 'fieldWithErrors' : nil)}
-          .label.top{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
-          = f.text_field :last_name, required: (Setting.require_last_names ? "required" : nil)
-      %tr
-        %td
-          .label #{t :email}:
-          = f.email_field :email
-        %td= spacer
-        %td
-          .label #{t :phone}:
-          = f.phone_field :phone
+    .grid
+      %div{class: (@contact.errors['first_name'].present? ? 'fieldWithErrors' : nil)}
+        .label.top{ class: "#{Setting.require_first_names ? 'req' : nil}" } #{t :first_name}:
+        = f.text_field :first_name, autofocus: true, required: (Setting.require_first_names ? "required" : nil)
+      %div{class: (@contact.errors['last_name'].present? ? 'fieldWithErrors' : nil)}
+        .label.top{ class: "#{Setting.require_last_names ? 'req' : nil}" } #{t :last_name}:
+        = f.text_field :last_name, required: (Setting.require_last_names ? "required" : nil)
+      %div
+        .label #{t :email}:
+        = f.email_field :email
+      %div
+        .label #{t :phone}:
+        = f.phone_field :phone
 
-    %table
+    .grid
       = fields_for(@account) do |a|
         = a.hidden_field :user_id
         = a.hidden_field :assigned_to
         = a.hidden_field :access, value: Setting.default_access
-        %tr
-          %td
-            != account_select_or_create(a) do |options|
-              - # Add [-- None --] account choice when editing existing contact that has an account.
-              - options[:include_blank] = "" unless @contact.new_record? || @contact.account.blank?
-          %td= spacer
-          %td
-            .label #{t :assigned_to}:
-            = user_select(:contact, all_users, current_user)
+        %div
+          != account_select_or_create(a) do |options|
+            - # Add [-- None --] account choice when editing existing contact that has an account.
+            - options[:include_blank] = "" unless @contact.new_record? || @contact.account.blank?
+        %div
+          .label #{t :assigned_to}:
+          = user_select(:contact, all_users, current_user)
 
         - if Setting.background_info && Setting.background_info.include?(:contact)
-          %tr
-            %td(colspan="3")
-              .label= t(:background_info) + ':'
-              = f.text_area :background_info, style: "width:500px", rows: 3
+          .grid-span-2
+            .label= t(:background_info) + ':'
+            = f.text_area :background_info, style: "width:500px", rows: 3
 
-        = render partial: "/shared/tags", locals: {f: f, span: 3}
+        = render partial: "/shared/tags", locals: {f: f, span: 3, grid: true}
 
         = hook(:contact_top_section_bottom, self, f: f)

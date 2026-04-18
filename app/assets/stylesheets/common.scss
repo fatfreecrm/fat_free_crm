@@ -151,6 +151,17 @@ $sidebar_width: 210px;
   color: dimgray;
   padding-top: 5px; }
 
+.grid {
+  display: grid;
+  grid-template-columns: 240px 240px;
+  grid-column-gap: 20px;
+  width: 500px;
+}
+
+.grid-span-2 {
+  grid-column: span 2;
+}
+
 .section {
   background-color: whitesmoke;
   color: #3f3f3f;
