@@ -9,4 +9,4 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 require Rails.root.join('db/seeds/fields')
-# require Rails.root.join('db/seeds/research_tools')
+require Rails.root.join('db/seeds/research_tools')
