@@ -643,6 +643,7 @@ DEPENDENCIES
   jquery-migrate-rails
   jquery-rails
   jquery-ui-rails!
+  logger
   mini_magick
   mini_racer
   mutex_m
