@@ -611,7 +611,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_13_041448)
     t.string "instagram", limit: 128
     t.string "facebook", limit: 128
     t.string "mastodon", limit: 128
-    t.string "discord", limit: 128
     t.string "bluesky", limit: 128
     t.string "twitter", limit: 128
     t.string "linkedin", limit: 128
