@@ -9,7 +9,7 @@ FROM ruby:4.0
 
 LABEL author="Steve Kenworthy"
 
-ENV HOME /home/app
+ENV HOME=/home/app
 
 RUN mkdir -p $HOME
 
