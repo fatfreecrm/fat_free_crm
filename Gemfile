@@ -129,9 +129,6 @@ gem 'ostruct'
 
 gem 'sparql-client'
 
-# Workaround problems from concurrent-ruby 1.3.5
-require "logger"
-
 # Pinning connection_pool until Rails 8.1.2+
 gem 'connection_pool', '< 3'
 
