@@ -18,13 +18,13 @@ feature 'Checkbox Custom Fields', '
     field_name = 'cf_task_checkboxes'
     field = CustomField.find_by(name: field_name)
     unless field
-      field = CustomField.create!(
-                field_group: group,
-                label: 'Task Checkboxes',
-                name: field_name,
-                as: 'check_boxes',
-                collection: ['Option 1', 'Option 2', 'Option 3']
-              )
+      CustomField.create!(
+        field_group: group,
+        label: 'Task Checkboxes',
+        name: field_name,
+        as: 'check_boxes',
+        collection: ['Option 1', 'Option 2', 'Option 3']
+      )
     end
 
     # 2. Create a task
@@ -37,9 +37,7 @@ feature 'Checkbox Custom Fields', '
     expect(page).to have_css('#edit_task')
 
     within '#edit_task' do
-      if page.has_link?("Checkbox Info")
-          click_link "Checkbox Info"
-      end
+      click_link "Checkbox Info" if page.has_link?("Checkbox Info")
 
       check 'Option 1'
       check 'Option 3'
@@ -53,18 +51,14 @@ feature 'Checkbox Custom Fields', '
     visit task_path(task)
 
     section_id = "field_group_#{group.id}_task_show"
-    if page.has_css?("##{section_id}", visible: false)
-      find("a[data-id='#{section_id}']").click
-    end
+    find("a[data-id='#{section_id}']").click if page.has_css?("##{section_id}", visible: false)
 
     expect(page).to have_content('Option 1, Option 3')
 
     # 5. Update and uncheck some
     click_link 'Edit'
     within '#edit_task' do
-      if page.has_link?("Checkbox Info")
-          click_link "Checkbox Info"
-      end
+      click_link "Checkbox Info" if page.has_link?("Checkbox Info")
       uncheck 'Option 1'
       check 'Option 2'
       click_button 'Save Task'
@@ -73,10 +67,8 @@ feature 'Checkbox Custom Fields', '
     expect(page).to have_no_css('#edit_task')
     visit task_path(task)
 
-    if page.has_css?("##{section_id}", visible: false)
-      find("a[data-id='#{section_id}']").click
-    end
+    find("a[data-id='#{section_id}']").click if page.has_css?("##{section_id}", visible: false)
     expect(page).to have_content('Option 2, Option 3')
-    expect(page).not_to have_content('Option 1')
+    expect(page).to have_no_content('Option 1')
   end
 end
