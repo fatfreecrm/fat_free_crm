@@ -108,7 +108,7 @@ gem 'devise', '~> 5.0'
 gem 'devise-i18n'
 gem "devise-encryptable"
 gem "devise-security"
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'activejob'
 gem 'ransack_ui', '~> 3.0.0'
 gem 'vcardigan'
@@ -118,6 +118,7 @@ gem 'image_processing', '~> 1.2'
 gem 'jquery-ui-rails', git: 'https://github.com/jquery-ui-rails/jquery-ui-rails.git', tag: 'v7.0.0' # See https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
 
 # Ruby 3.4 explicit dependencies
+gem 'logger'
 gem 'bigdecimal'
 gem 'mutex_m'
 gem 'drb'
@@ -128,9 +129,6 @@ gem 'base64'
 gem 'ostruct'
 
 gem 'sparql-client'
-
-# Workaround problems from concurrent-ruby 1.3.5
-require "logger"
 
 # Pinning connection_pool until Rails 8.1.2+
 gem 'connection_pool', '< 3'
