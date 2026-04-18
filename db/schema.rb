@@ -48,6 +48,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_13_041448) do
     t.text "subscribed_users"
     t.integer "contacts_count", default: 0
     t.integer "opportunities_count", default: 0
+    t.string "wikidata_id"
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
     t.string "blog"
