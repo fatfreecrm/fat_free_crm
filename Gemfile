@@ -123,6 +123,10 @@ gem 'mutex_m'
 gem 'drb'
 gem 'csv'
 gem 'base64'
+
+# Ruby 4.0 explicit dependencies
+gem 'ostruct'
+
 gem 'sparql-client'
 
 # Workaround problems from concurrent-ruby 1.3.5
