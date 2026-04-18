@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_13_110645) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_13_041448)
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
     t.integer "contact_id"
@@ -50,7 +50,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_13_110645) do
     t.integer "opportunities_count", default: 0
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
-    t.string "wikidata_id"
     t.string "blog"
     t.string "linkedin"
     t.string "facebook"
@@ -220,7 +219,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_13_110645) do
     t.string "signal", limit: 128
     t.string "instagram", limit: 128
     t.string "mastodon", limit: 128
-    t.string "discord", limit: 128
     t.string "bluesky", limit: 128
     t.index ["assigned_to"], name: "index_contacts_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "id_last_name_deleted", unique: true
@@ -332,7 +330,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_13_110645) do
     t.string "signal", limit: 128
     t.string "instagram", limit: 128
     t.string "mastodon", limit: 128
-    t.string "discord", limit: 128
     t.string "bluesky", limit: 128
     t.index ["assigned_to"], name: "index_leads_on_assigned_to"
     t.index ["user_id", "last_name", "deleted_at"], name: "index_leads_on_user_id_and_last_name_and_deleted_at", unique: true
