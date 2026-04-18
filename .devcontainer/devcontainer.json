@@ -1,5 +1,5 @@
 {
-	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-26.04",
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-25.10",
 	"features": {
 		"ghcr.io/devcontainers/features/ruby:1": {}
 	},
