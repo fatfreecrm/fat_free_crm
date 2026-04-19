@@ -1,14 +1,21 @@
-%table
-  %tr
-    %td
-      .label.top Hint:
-      = f.text_field :hint
-    %td= spacer
-    %td
-      .label.top
-        %span Required:
-        = f.check_box :required
-        %br
-        %span Disabled:
-        = f.check_box :disabled
-        %div{style: 'width: 240px;'}
+.grid
+  %div
+    %label.check_box
+      = f.check_box :required
+      %span #{t :required}
+    %br
+    %label.check_box
+      = f.check_box :disabled
+      %span #{t :disabled}
+
+  %div
+    .label.top #{t :hint}
+    = f.text_field :hint
+
+  %div
+    .label.top #{t :title}
+    = f.text_field :title
+
+  %div
+    .label.top #{t :placeholder}
+    = f.text_field :placeholder

@@ -1,25 +1,27 @@
-%div
-  .label.top.req
-    = "Select Options (pipe separated):"
-= f.text_field :collection_string, class: 'field_collection_string', size: 78
+.grid
+  .row-full-width
+    .label.top.req
+      = "Select Options (pipe separated):"
+    = f.text_field :collection_string, class: 'field_collection_string', required: true
 
-%table
-  %tr
-    %td
-      
-    %td= spacer
-    %td
-      .label.top
-        %span Required:
+  %div
+    .label.top
+      %label.check_box
         = f.check_box :required
-        %br
-        %span Disabled:
+        %span #{t :required}
+
+      %br
+      %label.check_box
         = f.check_box :disabled
-  %tr
-    %td
-      .label.top Hint:
-      = f.text_field :hint
-    %td= spacer
-    %td
-      .label.top Placeholder:
-      = f.text_field :placeholder
+        %span #{t :disabled}
+  %div
+    .label.top #{t :hint}
+    = f.text_field :hint
+
+  %div
+    .label.top #{t :placeholder}
+    = f.text_field :placeholder
+
+  %div
+    .label.top #{t :title}
+    = f.text_field :title

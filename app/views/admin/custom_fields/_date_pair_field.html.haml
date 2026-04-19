@@ -1,21 +1,28 @@
 - field1 = f.object || CustomFieldPair.new
 - field2 = (field1.pair || CustomFieldPair.new)
 
-%table{class: :pairs}
+.grid{class: :pairs}
   = fields_for("pair[0]", field1) do |first|
     = fields_for("pair[1]", field2) do |second|
-      %tr
-        %td
-          .label.top Hint:
-          = first.text_field :hint
-        %td= spacer
-        %td
-          .label.top
-            %span Required:
+      %div
+        .label.top #{t :hint}
+        = first.text_field :hint
+      %div
+        .label.top #{t :title}
+        = first.text_field :title
+      %div
+        .label.top #{t :placeholder}}
+        = first.text_field :placeholder
+      %div
+        .label.top
+          %label.check_box
             = first.check_box :required
-            %br
-            %span Disabled:
+            %span #{t :required}
+
+          %br
+          %label.check_box
             = first.check_box :disabled
-            = first.hidden_field :id
-            = second.hidden_field :id
-            %div{style: 'width: 240px;'}
+            %span #{t :disabled}
+
+          = first.hidden_field :id
+          = second.hidden_field :id
