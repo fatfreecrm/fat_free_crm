@@ -153,9 +153,20 @@ $sidebar_width: 210px;
 
 .grid {
   display: grid;
-  grid-template-columns: 240px 240px;
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 20px;
-  width: 500px;
+
+  .label.req {
+    display: inherit;
+  }
+
+  input, select, textarea {
+    width: 100%;
+  }
+  .check_box input {
+    width: auto;
+  }
+  .select2-container { width: 100% !important; }
 }
 
 .grid-span-2 {

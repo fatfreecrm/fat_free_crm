@@ -31,7 +31,7 @@
         - if Setting.background_info && Setting.background_info.include?(:contact)
           .grid-span-2
             .label= t(:background_info) + ':'
-            = f.text_area :background_info, style: "width:500px", rows: 3
+            = f.text_area :background_info, rows: 3
 
         = render partial: "/shared/tags", locals: {f: f, span: 3, grid: true}
 

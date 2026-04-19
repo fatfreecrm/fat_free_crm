@@ -647,6 +647,7 @@ DEPENDENCIES
   mini_racer
   mutex_m
   nokogiri (>= 1.8.1)
+  ostruct
   paper_trail (~> 16.0.0)
   pg
   premailer
