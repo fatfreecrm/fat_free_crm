@@ -1,54 +1,52 @@
 - edit ||= false
 .section
-  %table
-    %tr
-      %td
-        .label.top.req #{t :username}:
-        = f.text_field :username
-      %td= spacer
-      %td
-        .label.top.req #{t :email}:
-        = f.text_field :email
-    %tr
-      %td
-        .label #{t :password}:
-        = f.password_field :password
-      %td= spacer
-      %td
-        .label #{t :password_confirmation}:
-        = f.password_field :password_confirmation
-    %tr
-      %td(colspan=3)
-        .check_box(style="margin-top:6px")
-          -# Sorry, you can't revoke Admin rights from yourself.
-          = f.check_box(:admin, { disabled: edit && @user == current_user })
-          %label{for: 'user_admin'}
-            = t(:user_is_admin)
+  .grid
+
+    %div
+      .label.top.req #{t :username}:
+      = f.text_field :username
+
+    %div
+      .label.top.req #{t :email}:
+      = f.email_field :email
+
+    %div
+      .label #{t :password}:
+      = f.password_field :password
+
+    %div
+      .label #{t :password_confirmation}:
+      = f.password_field :password_confirmation
+
+    %div
+      .check_box(style="margin-top:6px")
+        -# Sorry, you can't revoke Admin rights from yourself.
+        = f.check_box(:admin, { disabled: edit && @user == current_user })
+        %label{for: 'user_admin'}
+          = t(:user_is_admin)
 
 .subtitle #{t :personal_information}
 .section
-  %table
-    %tr
-      %td
-        .label #{t :first_name}:
-        = f.text_field :first_name
-      %td= spacer
-      %td
-        .label #{t :last_name}:
-        = f.text_field :last_name
-    %tr
-      %td
-        .label #{t :job_title}:
-        = f.text_field :title
-      %td= spacer
-      %td
-        .label #{t :company}:
-        = f.text_field :company
+  .grid
+    %div
+      .label #{t :first_name}:
+      = f.text_field :first_name
+
+    %div
+      .label #{t :last_name}:
+      = f.text_field :last_name
+
+    %div
+      .label #{t :job_title}:
+      = f.text_field :title
+
+    %div
+      .label #{t :company}:
+      = f.text_field :company
 
 .subtitle #{t :group_memberships}
 .section
-  %table
-    %tr
-      %td
-        .label #{t :groups}:
-        = f.select :group_ids, Group.all.map {|g| [g.name, g.id]}, {}, multiple: true, class: 'select2'
+  .grid
+    %div
+      .label #{t :groups}:
+      = f.select :group_ids, Group.all.map {|g| [g.name, g.id]}, {}, multiple: true, class: 'select2'
