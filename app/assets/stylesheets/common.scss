@@ -172,11 +172,19 @@ $sidebar_width: 210px;
     grid-column: 1 / -1;
   }
 }
+.grid.grid-4-columns {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
 
 /** Mobile grid */
 @media (max-width: 768px) {
   .grid {
     display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .grid.grid-4-columns {
     grid-template-columns: 1fr;
   }
 }
