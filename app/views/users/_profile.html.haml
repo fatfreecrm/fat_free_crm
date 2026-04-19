@@ -27,15 +27,15 @@
       .grid
         %div
           .label.top #{t :blog}:
-          = f.text_field :blog
+          = f.url_field :blog
 
         %div
           .label.top.req #{t :email}:
-          = f.text_field :email
+          = f.email_field :email
 
         %div
           .label.top #{t :alt_email}:
-          = f.text_field :alt_email
+          = f.email_field :alt_email
 
         %div
           .label #{t :phone}:
