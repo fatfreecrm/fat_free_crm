@@ -3,7 +3,7 @@
     .grid
       %div{class: (@campaign.errors['name'].present? ? 'fieldWithErrors' : nil)}
         .label.top.req #{t :name}:
-        = f.text_field :name, autofocus: true, style: "width:500px", required: "required"
+        = f.text_field :name, autofocus: true, required: "required"
 
       %div
         .label #{t :status}:
