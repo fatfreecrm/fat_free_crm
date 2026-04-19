@@ -169,8 +169,12 @@ $sidebar_width: 210px;
   .select2-container { width: 100% !important; }
 }
 
-.grid-span-2 {
-  grid-column: span 2;
+/** Mobile grid */
+@media (max-width: 768px) {
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
 
 .section {

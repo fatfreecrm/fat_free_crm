@@ -29,7 +29,7 @@
           = user_select(:contact, all_users, current_user)
 
         - if Setting.background_info && Setting.background_info.include?(:contact)
-          .grid-span-2
+          .grid
             .label= t(:background_info) + ':'
             = f.text_area :background_info, rows: 3
 
