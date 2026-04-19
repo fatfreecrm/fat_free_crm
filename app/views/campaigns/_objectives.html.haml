@@ -18,11 +18,11 @@
         = f.text_field :target_conversion
 
       %div
-        .label #{t :revenue_label}:
+        .label #{t :revenue_label, currency: t(:currency)}:
         = f.text_field :target_revenue, value: @campaign.target_revenue ? @campaign.target_revenue.to_i : ""
 
       %div
-        .label #{t :budget_label}:
+        .label #{t :budget_label, currency: t(:currency)}:
         = f.text_field :budget, value: @campaign.budget ? @campaign.budget.to_i : ""
 
       .row-full-width
