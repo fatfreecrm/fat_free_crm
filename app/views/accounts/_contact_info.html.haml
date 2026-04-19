@@ -5,41 +5,37 @@
   %small#account_contact_intro{ hidden_if(!collapsed) }
     = t(:intro, t(:account_small)) unless edit
   #account_contact{ hidden_if(collapsed) }
-    %table
-      %tr
-        %td{ colspan: 3 }
-          %table{ width: "100%", cellpadding: 0, cellspacing: 0 }
-            %tr
-              %td
-                .label #{t :phone_toll_free}:
-                = phone_field_with_pattern(f, :toll_free_phone, style: "width:154px")
-              %td= spacer
-              %td
-                .label #{t :phone}:
-                = phone_field_with_pattern(f, :phone, style: "width:154px")
-              %td= spacer
-              %td
-                .label #{t :fax}:
-                = phone_field_with_pattern(f, :fax, style: "width:154px")
-      %tr
-        %td
-          .label.top #{t :website}:
-          = f.url_field :website
-        %td= spacer
-        %td
-          .label.top Email:
-          = f.email_field :email
-      %tr
-        %td
-          .label.top Latitude:
-          = f.text_field :latitude, pattern: "^-?\\d+(\\.\\d+)?$"
-        %td= spacer
-        %td
-          .label.top Longitude:
-          = f.text_field :longitude, pattern: "^-?\\d+(\\.\\d+)?$"
-      %tr
-        %td
-          = render "shared/address", f: f, asset: @account, type: :billing, title: :billing_address
-        %td= spacer
-        %td
-          = render "shared/address", f: f, asset: @account, type: :shipping, title: :shipping_address, same_as_billing: true
+    .grid
+      %div
+        .label #{t :phone_toll_free}:
+        = phone_field_with_pattern(f, :toll_free_phone)
+      %div
+        .label #{t :phone}:
+        = phone_field_with_pattern(f, :phone)
+      %div
+        .label #{t :fax}:
+        = phone_field_with_pattern(f, :fax)
+      
+      %div
+        .label.top #{t :website}:
+        = f.url_field :website
+
+      %div
+        .label.top Email:
+        = f.email_field :email
+
+    .grid
+      %div
+        = render "shared/address", f: f, asset: @account, type: :billing, title: :billing_address
+
+      %div
+        = render "shared/address", f: f, asset: @account, type: :shipping, title: :shipping_address, same_as_billing: true
+
+    .grid
+      %div
+        .label.top Latitude:
+        = f.text_field :latitude, pattern: "^-?\\d+(\\.\\d+)?$"
+
+      %div
+        .label.top Longitude:
+        = f.text_field :longitude, pattern: "^-?\\d+(\\.\\d+)?$"
