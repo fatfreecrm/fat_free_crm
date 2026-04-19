@@ -48,6 +48,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rails_autolink'
   gem.add_dependency 'coffee-script-source', '~> 1.8', '>= 1.8.0' # pegged until https://github.com/jashkenas/coffeescript/issues/3829 is resolved
   gem.add_dependency 'country_select'
+  gem.add_dependency 'sparql-client'
 
   # FatFreeCRM has released it's own versions of the following gems:
   #-----------------------------------------------------------------
