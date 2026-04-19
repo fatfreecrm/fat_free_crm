@@ -338,6 +338,13 @@ en-US:
   date_created: Date Created
   date_updated: Date Updated
   fax: Fax
+  hint: Hint
+  title: Title
+  required: Required
+  placeholder: Placeholder
+  maxlength: Maxlength
+  minlength: Minlength
+  disabled: Disabled
   intro: You can add %{value} information later.
   keep_private: Keep it private, do not share with others
   mail_to: Mail to %{value}
@@ -449,7 +456,6 @@ en-US:
   tag_details: ! '%{tag} Details'
   show_tag_info_small: Show %{tag} information.
   shared_with_everyone: Shared with everyone
-  title: Title
   subscriptions: Subscriptions
 
   # Views -> Leads.
