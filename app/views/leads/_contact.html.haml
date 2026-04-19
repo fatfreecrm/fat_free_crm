@@ -5,31 +5,31 @@
   %small#lead_contact_intro{ hidden_if(!collapsed) }
     = t(:intro, t(:lead_info_small)) unless edit
   #lead_contact{ hidden_if(collapsed) }
-    %table
-      %tr
-        %td
-          .label.top #{t :job_title}:
-          = f.text_field :title
-        %td= spacer
-        %td
-          .label.top #{t :company}:
-          = f.autocomplete_field :company, autocomplete_account_name_leads_path
-      %tr
-        %td
-          .label #{t :alt_email}:
-          = f.email_field :alt_email
-        %td= spacer
-        %td
-          .label #{t :mobile}:
-          = phone_field_with_pattern(f, :mobile)
-      %tr
-        %td
-          = render "shared/address", f: f, asset: @lead, type: 'business', title: :address
-        %td= spacer
-        %td
-          .label #{t :referred_by}:
-          = f.text_field :referred_by
-          %div{style: "margin-top:6px"}
-            .check_box
-              = f.check_box :do_not_call, {}, true
-              #{t :do_not_call}
+    .grid
+      %div
+        .label.top #{t :job_title}:
+        = f.text_field :title
+
+      %div
+        .label.top #{t :company}:
+        = f.autocomplete_field :company, autocomplete_account_name_leads_path
+
+      %div
+        .label #{t :alt_email}:
+        = f.email_field :alt_email
+
+      %div
+        .label #{t :mobile}:
+        = phone_field_with_pattern(f, :mobile)
+
+      %div
+        = render "shared/address", f: f, asset: @lead, type: 'business', title: :address
+
+      %div
+        .label #{t :referred_by}:
+        = f.text_field :referred_by
+
+        %div{style: "margin-top:6px"}
+          .check_box
+            = f.check_box :do_not_call, {}, true
+            #{t :do_not_call}
