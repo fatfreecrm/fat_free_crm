@@ -28,10 +28,10 @@
           .label #{t :assigned_to}:
           = user_select(:contact, all_users, current_user)
 
-        - if Setting.background_info && Setting.background_info.include?(:contact)
-          .grid
-            .label= t(:background_info) + ':'
-            = f.text_area :background_info, rows: 3
+      - if Setting.background_info && Setting.background_info.include?(:contact)
+        .row-full-width
+          .label= t(:background_info) + ':'
+          = f.text_area :background_info, rows: 3
 
         = render partial: "/shared/tags", locals: {f: f, span: 3, grid: true}
 

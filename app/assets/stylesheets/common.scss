@@ -167,6 +167,10 @@ $sidebar_width: 210px;
     width: auto;
   }
   .select2-container { width: 100% !important; }
+
+  .row-full-width {
+    grid-column: 1 / -1;
+  }
 }
 
 /** Mobile grid */
