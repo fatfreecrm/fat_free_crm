@@ -3,10 +3,10 @@
     %table
       %tr
         %td
-          .label.top.req Name:
+          .label.top.req #{t :name}
           = f.text_field :name, placeholder: 'e.g. Google Scholar', required: true
       %tr
         %td
-          .label.top.req URL Template:
+          .label.top.req #{t :url_template}
           = f.text_field :url_template, placeholder: 'e.g. https://example.com/search?q={query}', required: true
 

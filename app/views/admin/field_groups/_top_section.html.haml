@@ -1,14 +1,13 @@
 .section
   = f.hidden_field :klass_name
 
-  %table{style: 'width:auto;'}
-    %tr
-      %td
-        .label.top.req= t(:label) + ":"
-        = f.text_field :label
-      %td= spacer
-      %td
-        .label.top
-          =t(:restrict_by_tag)
-          %small= t(:restrict_by_tag_info, assets: f.object.klass_name.downcase.pluralize)
-        = f.select :tag_id, Tag.all.map { |tag| [tag.name, tag.id] }, include_blank: true, class: 'select2'
+  .grid
+    %div
+      .label.top.req= t(:label) + ":"
+      = f.text_field :label, required: true
+
+    %div
+      .label.top
+        =t(:restrict_by_tag)
+      = f.select :tag_id, Tag.all.map { |tag| [tag.name, tag.id] }, include_blank: true, class: 'select2'
+      %small= t(:restrict_by_tag_info, assets: f.object.klass_name.downcase.pluralize)
