@@ -68,23 +68,58 @@ describe User do
     end
   end
 
-  context "Tag creation" do
+  context "Tag management" do
     let(:user) { create :user, admin: false }
+    let(:group) { create :group }
 
-    it "allows tag creation by default" do
-      allow(Setting).to receive(:admin_only_tag_creation).and_return(false)
-      is_expected.to be_able_to(:create, Tag)
+    context "Creation" do
+      it "allows tag creation by default" do
+        allow(Setting).to receive(:admin_only_tag_creation).and_return(false)
+        is_expected.to be_able_to(:create, Tag)
+      end
+
+      it "disallows tag creation for non-admins when admin_only_tag_creation is enabled" do
+        allow(Setting).to receive(:admin_only_tag_creation).and_return(true)
+        is_expected.not_to be_able_to(:create, Tag)
+      end
+
+      it "allows tag creation for non-admins in an authorized group when admin_only_tag_creation is enabled" do
+        allow(Setting).to receive(:admin_only_tag_creation).and_return(true)
+        allow(Setting).to receive(:tag_creation_allowed_groups).and_return([group.id])
+        user.groups << group
+        is_expected.to be_able_to(:create, Tag)
+      end
+
+      it "allows tag creation for admins even when admin_only_tag_creation is enabled" do
+        user.update(admin: true)
+        allow(Setting).to receive(:admin_only_tag_creation).and_return(true)
+        is_expected.to be_able_to(:create, Tag)
+      end
     end
 
-    it "disallows tag creation for non-admins when admin_only_tag_creation is enabled" do
-      allow(Setting).to receive(:admin_only_tag_creation).and_return(true)
-      is_expected.not_to be_able_to(:create, Tag)
-    end
+    context "Deletion" do
+      it "allows tag deletion by default" do
+        allow(Setting).to receive(:admin_only_tag_deletion).and_return(false)
+        is_expected.to be_able_to(:destroy, Tag)
+      end
 
-    it "allows tag creation for admins even when admin_only_tag_creation is enabled" do
-      user.update(admin: true)
-      allow(Setting).to receive(:admin_only_tag_creation).and_return(true)
-      is_expected.to be_able_to(:create, Tag)
+      it "disallows tag deletion for non-admins when admin_only_tag_deletion is enabled" do
+        allow(Setting).to receive(:admin_only_tag_deletion).and_return(true)
+        is_expected.not_to be_able_to(:destroy, Tag)
+      end
+
+      it "allows tag deletion for non-admins in an authorized group when admin_only_tag_deletion is enabled" do
+        allow(Setting).to receive(:admin_only_tag_deletion).and_return(true)
+        allow(Setting).to receive(:tag_deletion_allowed_groups).and_return([group.id])
+        user.groups << group
+        is_expected.to be_able_to(:destroy, Tag)
+      end
+
+      it "allows tag deletion for admins even when admin_only_tag_deletion is enabled" do
+        user.update(admin: true)
+        allow(Setting).to receive(:admin_only_tag_deletion).and_return(true)
+        is_expected.to be_able_to(:destroy, Tag)
+      end
     end
   end
 end

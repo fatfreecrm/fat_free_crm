@@ -137,11 +137,23 @@
 :user_signup: :not_allowed
 
 
-# Admin only tag creation
+# Tag management settings
 #------------------------------------------------------------------------------
 # When set to true, only administrators can create new tags.
 #
 :admin_only_tag_creation: false
+
+# When set to true, only administrators can delete tags.
+#
+:admin_only_tag_deletion: false
+
+# List of group IDs that are allowed to create tags even if admin_only_tag_creation is true.
+#
+:tag_creation_allowed_groups: []
+
+# List of group IDs that are allowed to delete tags even if admin_only_tag_deletion is true.
+#
+:tag_deletion_allowed_groups: []
 
 
 # Address format

@@ -6,6 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::UsersController < Admin::ApplicationController
+  before_action :require_admin_user, except: :index
   before_action :setup_current_tab, only: %i[index show]
 
   load_resource except: [:create]
@@ -14,8 +15,14 @@ class Admin::UsersController < Admin::ApplicationController
   # GET /admin/users.xml                                                   HTML
   #----------------------------------------------------------------------------
   def index
-    @users = get_users(page: params[:page])
-    respond_with(@users)
+    if current_user.admin?
+      @users = get_users(page: params[:page])
+      respond_with(@users)
+    elsif can?(:manage, Tag)
+      redirect_to admin_tags_path
+    else
+      redirect_to root_path
+    end
   end
 
   # GET /admin/users/1

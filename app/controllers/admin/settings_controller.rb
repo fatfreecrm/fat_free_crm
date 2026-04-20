@@ -23,7 +23,7 @@ class Admin::SettingsController < Admin::ApplicationController
     # We need to convert them to their correct types before saving.
 
     # Booleans
-    %w[per_user_locale compound_address task_calendar_with_time require_first_names require_last_names require_unique_account_names comments_visible_on_dashboard enforce_international_phone_format admin_only_tag_creation].each do |key|
+    %w[per_user_locale compound_address task_calendar_with_time require_first_names require_last_names require_unique_account_names comments_visible_on_dashboard enforce_international_phone_format admin_only_tag_creation admin_only_tag_deletion].each do |key|
       settings[key] = (settings[key] == '1') if settings.key?(key)
     end
 
@@ -38,6 +38,11 @@ class Admin::SettingsController < Admin::ApplicationController
 
     # Symbols
     settings[:user_signup] = settings[:user_signup].to_sym if settings[:user_signup].is_a?(String)
+
+    # Group IDs to integers
+    %w[tag_creation_allowed_groups tag_deletion_allowed_groups].each do |key|
+      settings[key] = settings[key].map(&:to_i).reject(&:zero?) if settings.key?(key) && settings[key].is_a?(Array)
+    end
 
     # Save all settings
     settings.each do |key, value|
@@ -55,9 +60,11 @@ class Admin::SettingsController < Admin::ApplicationController
       :compound_address, :task_calendar_with_time, :require_first_names,
       :require_last_names, :require_unique_account_names,
       :comments_visible_on_dashboard, :enforce_international_phone_format,
-      :admin_only_tag_creation, :opportunity_default_stage,
+      :admin_only_tag_creation, :admin_only_tag_deletion, :opportunity_default_stage,
       background_info: [],
       priority_countries: [],
+      tag_creation_allowed_groups: [],
+      tag_deletion_allowed_groups: [],
       account_category: [],
       campaign_status: [],
       lead_status: [],

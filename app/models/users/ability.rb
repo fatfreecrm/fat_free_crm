@@ -37,7 +37,19 @@ class Ability
       can :create, Email
       can :manage, Email, user_id: user.id
 
-      can :create, Tag unless Setting.admin_only_tag_creation
+      if Setting.admin_only_tag_creation
+        can :create, Tag if (user.group_ids & (Setting.tag_creation_allowed_groups || [])).any?
+      else
+        can :create, Tag
+      end
+
+      if Setting.admin_only_tag_deletion
+        can :destroy, Tag if (user.group_ids & (Setting.tag_deletion_allowed_groups || [])).any?
+      else
+        can :destroy, Tag
+      end
+
+      can :manage, Tag if can?(:create, Tag) && can?(:destroy, Tag)
 
       #
       # Due to an obscure bug (see https://github.com/ryanb/cancan/issues/213)

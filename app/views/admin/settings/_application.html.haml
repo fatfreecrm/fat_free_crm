@@ -47,3 +47,14 @@
             = f.label :admin_only_tag_creation do
               = f.check_box :admin_only_tag_creation, checked: Setting.admin_only_tag_creation
               Only admins can create tags
+        .form-group
+          .checkbox
+            = f.label :admin_only_tag_deletion do
+              = f.check_box :admin_only_tag_deletion, checked: Setting.admin_only_tag_deletion
+              Only admins can delete tags
+        .form-group
+          = f.label :tag_creation_allowed_groups, "Groups allowed to create tags"
+          = f.select :tag_creation_allowed_groups, options_from_collection_for_select(Group.all, :id, :name, Setting.tag_creation_allowed_groups), {}, { multiple: true, class: 'form-control select2' }
+        .form-group
+          = f.label :tag_deletion_allowed_groups, "Groups allowed to delete tags"
+          = f.select :tag_deletion_allowed_groups, options_from_collection_for_select(Group.all, :id, :name, Setting.tag_deletion_allowed_groups), {}, { multiple: true, class: 'form-control select2' }

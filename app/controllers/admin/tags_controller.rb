@@ -6,6 +6,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 class Admin::TagsController < Admin::ApplicationController
+  skip_before_action :require_admin_user
+  before_action :require_tag_manager
   before_action :setup_current_tab, only: %i[index show]
 
   load_resource
@@ -64,6 +66,10 @@ class Admin::TagsController < Admin::ApplicationController
   end
 
   protected
+
+  def require_tag_manager
+    authorize! :manage, Tag
+  end
 
   def tag_params
     params.require(:tag).permit(:name, :taggings_count)

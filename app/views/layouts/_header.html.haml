@@ -8,7 +8,7 @@
 
       = link_to(t(:quick_find), "#", id: "jumper") << " |"
       = link_to(t(:profile), profile_path) << " |"
-      - if current_user.admin?
+      - if current_user.admin? || can?(:manage, Tag)
         = link_to(t(:admin), admin_path) << " |"
       = link_to(t(:logout), destroy_user_session_path, method: :delete)
       = render "/layouts/jumpbox"
