@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   before_action :set_context
   before_action :clear_setting_cache
+  before_action :filter_tag_list, only: %i[create update]
   before_action :cors_preflight_check
   before_action { hook(:app_before_filter, self) }
   after_action { hook(:app_after_filter, self) }
@@ -278,5 +279,16 @@ class ApplicationController < ActionController::Base
 
     params[:previous].to_i
   end
+
+  def filter_tag_list
+    return if can?(:create, Tag)
+
+    asset = controller_name.singularize
+    if params[asset] && params[asset][:tag_list]
+      existing_tags = Tag.where(name: params[asset][:tag_list]).pluck(:name)
+      params[asset][:tag_list] = existing_tags
+    end
+  end
+
   ActiveSupport.run_load_hooks(:fat_free_crm_application_controller, self)
 end

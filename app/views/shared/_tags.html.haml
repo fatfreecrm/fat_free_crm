@@ -1,13 +1,15 @@
 - asset = controller_name.singularize
 - grid ||= false
+- allow_tag_creation = can?(:create, Tag)
+- placeholder = allow_tag_creation ? t(:select_or_create_tags) : t(:select_tags)
 - if grid
   .row-full-width
     .label= t(:tags) + ":"
 
-    = f.select :tag_list, Tag.all.map{|t| t.name}, {}, {class: "select2_tag", data: {tags: true, url: url_for(action: 'field_group'), placeholder: t(:select_or_create_tags), multiple: true, asset_id: f.object.try(:id)}, multiple: true}
+    = f.select :tag_list, Tag.all.map{|t| t.name}, {}, {class: "select2_tag", data: {tags: allow_tag_creation, url: url_for(action: 'field_group'), placeholder: placeholder, multiple: true, asset_id: f.object.try(:id)}, multiple: true}
 - else
   %tr
     %td{ valign: :top, colspan: span }
       .label= t(:tags) + ":"
 
-      = f.select :tag_list, Tag.all.map{|t| t.name}, {}, {class: "select2_tag", data: {tags: true, url: url_for(action: 'field_group'), placeholder: t(:select_or_create_tags), multiple: true, asset_id: f.object.try(:id)}, multiple: true}
+      = f.select :tag_list, Tag.all.map{|t| t.name}, {}, {class: "select2_tag", data: {tags: allow_tag_creation, url: url_for(action: 'field_group'), placeholder: placeholder, multiple: true, asset_id: f.object.try(:id)}, multiple: true}

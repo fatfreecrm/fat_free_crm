@@ -37,6 +37,8 @@ class Ability
       can :create, Email
       can :manage, Email, user_id: user.id
 
+      can :create, Tag unless Setting.admin_only_tag_creation
+
       #
       # Due to an obscure bug (see https://github.com/ryanb/cancan/issues/213)
       # we must switch on user.admin? here to avoid the nil constraints which

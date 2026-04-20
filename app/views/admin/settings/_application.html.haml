@@ -42,3 +42,8 @@
             = f.label :enforce_international_phone_format do
               = f.check_box :enforce_international_phone_format, checked: Setting.enforce_international_phone_format
               Enforce international phone number format
+        .form-group
+          .checkbox
+            = f.label :admin_only_tag_creation do
+              = f.check_box :admin_only_tag_creation, checked: Setting.admin_only_tag_creation
+              Only admins can create tags

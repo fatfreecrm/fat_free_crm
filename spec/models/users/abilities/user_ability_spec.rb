@@ -67,4 +67,24 @@ describe User do
       is_expected.to be_able_to(:create, User)
     end
   end
+
+  context "Tag creation" do
+    let(:user) { create :user, admin: false }
+
+    it "allows tag creation by default" do
+      allow(Setting).to receive(:admin_only_tag_creation).and_return(false)
+      is_expected.to be_able_to(:create, Tag)
+    end
+
+    it "disallows tag creation for non-admins when admin_only_tag_creation is enabled" do
+      allow(Setting).to receive(:admin_only_tag_creation).and_return(true)
+      is_expected.not_to be_able_to(:create, Tag)
+    end
+
+    it "allows tag creation for admins even when admin_only_tag_creation is enabled" do
+      user.update(admin: true)
+      allow(Setting).to receive(:admin_only_tag_creation).and_return(true)
+      is_expected.to be_able_to(:create, Tag)
+    end
+  end
 end

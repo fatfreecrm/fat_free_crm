@@ -137,6 +137,13 @@
 :user_signup: :not_allowed
 
 
+# Admin only tag creation
+#------------------------------------------------------------------------------
+# When set to true, only administrators can create new tags.
+#
+:admin_only_tag_creation: false
+
+
 # Address format
 #------------------------------------------------------------------------------
 # Sets the address format for Accounts, Contacts, and Leads.
