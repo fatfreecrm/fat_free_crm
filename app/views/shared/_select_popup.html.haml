@@ -1,19 +1,20 @@
 - singular = popup.to_s.singularize
 
-:plain
-  new crm.Popup({
-    trigger     : "#select_#{singular}",
-    target      : "#jumpbox",
-    under       : "#select_#{singular}",
-    appear      : 300,
-    fade        : 300,
-    before_show : function() {
-      $("#jumpbox_menu").hide();
-      $("#jumpbox_label").html("#{t(popup)}:");
-      $("#jumpbox_label").show();
-      crm.auto_complete("#{popup}", "#{related.class.to_s.downcase.pluralize}/#{related.id}");
-    },
-    after_show  : function() {
-      $("#auto_complete_query").focus();
-    }
-  });
+= javascript_tag nonce: true do
+  :plain
+    new crm.Popup({
+      trigger     : "#select_#{singular}",
+      target      : "#jumpbox",
+      under       : "#select_#{singular}",
+      appear      : 300,
+      fade        : 300,
+      before_show : function() {
+        $("#jumpbox_menu").hide();
+        $("#jumpbox_label").html("#{t(popup)}:");
+        $("#jumpbox_label").show();
+        crm.auto_complete("#{popup}", "#{related.class.to_s.downcase.pluralize}/#{related.id}");
+      },
+      after_show  : function() {
+        $("#auto_complete_query").focus();
+      }
+    });
