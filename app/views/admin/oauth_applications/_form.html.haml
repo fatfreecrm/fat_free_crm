@@ -1,0 +1,33 @@
+= form_for [:admin, application] do |f|
+  - if application.errors.any?
+    .error_message
+      %h2= t('doorkeeper.applications.help.error')
+      %ul
+        - application.errors.full_messages.each do |message|
+          %li= message
+
+  .section
+    %table
+      %tr
+        %td
+          .label.top.req= f.label :name
+          = f.text_field :name, size: 80
+      %tr
+        %td
+          .label.req= f.label :redirect_uri
+          = f.text_area :redirect_uri, cols: 80, rows: 3
+          .hint= t('doorkeeper.applications.help.redirect_uri')
+      %tr
+        %td
+          .label= f.label :scopes
+          = f.text_field :scopes, size: 80
+          .hint= t('doorkeeper.applications.help.scopes')
+      %tr
+        %td
+          .label= f.label :confidential
+          = f.check_box :confidential
+          .hint= t('doorkeeper.applications.help.confidential')
+
+  .button_bar
+    = f.submit t('doorkeeper.applications.buttons.submit'), class: 'btn btn-primary'
+    = link_to t('doorkeeper.applications.buttons.cancel'), admin_oauth_applications_path
