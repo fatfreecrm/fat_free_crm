@@ -13,7 +13,7 @@ describe "Lead Import" do
   end
 
   it "should allow admin to import leads from CSV" do
-    visit admin_leads_path
+    visit admin_imports_path
 
     expect(page).to have_content("Leads Import")
 

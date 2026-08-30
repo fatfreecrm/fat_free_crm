@@ -1,0 +1,27 @@
+.title
+  = t(:admin_tab_import)
+
+.remote
+  = form_tag import_admin_imports_path, multipart: true do
+    .section
+      .subtitle
+        = t(:import_help)
+      %p
+        = t(:import_supported_headers)
+      %p
+        %strong= t(:import_example_header)
+        %pre
+          = t(:import_example_content)
+      %p
+        %em= t(:import_note)
+      %table
+        %tr
+          %td
+            .label.top.req #{t(:import_type)}:
+            = select_tag :klass, options_for_select([[t(:lead), 'Lead'], [t(:account), 'Account'], [t(:campaign), 'Campaign'], [t(:opportunity), 'Opportunity'], [t(:contact), 'Contact'], [t(:task), 'Task']])
+        %tr
+          %td
+            .label.top.req #{t(:csv_file)}:
+            = file_field_tag :file
+    .buttonbar
+      = submit_tag t(:import_records_button), id: :import_submit
