@@ -1,0 +1,42 @@
+tr:
+  errors:
+    messages:
+      taken_in_past: "daha önce kullanıldı."
+      equal_to_current_password: "mevcut paroladan farklı olmalı."
+      equal_to_email: "e-postadan farklı olmalı."
+      password_complexity:
+        digit:
+          one: en az bir rakam içermelidir
+          other: en az %{count} basamak içermelidir
+        lower:
+          one: en az bir küçük harf içermelidir
+          other: en az %{count} küçük harf içermelidir
+        symbol:
+          one: en az bir noktalama işareti veya sembolü içermelidir
+          other: en az %{count} noktalama işareti veya sembolü içermelidir
+        upper:
+          one: en az bir büyük harf içermelidir
+          other: en az %{count} büyük harf içermelidir
+  devise:
+    invalid_captcha: "Captcha hatalı."
+    invalid_security_question: "Güvenlik sorusunun cevabı yanlış."
+    paranoid_verify:
+      code_required: "Destek ekibimizden aldığınız kodu girin."
+    paranoid_verification_code:
+      updated: Doğrulama kodu kabul edildi
+      show:
+        submit_verification_code: Doğrulama kodunu gönder
+        verification_code: Doğrulama kodu
+        submit: Gönder
+    password_expired:
+      updated: "Yeni parolanız kaydedildi."
+      change_required: "Parolanızın geçerlilik süresi dolmuş. Lütfen parolanızı yenileyin."
+      show:
+        renew_your_password: Şifrenizi yenileyin
+        current_password: Mevcut Şifre
+        new_password: Yeni Şifre
+        new_password_confirmation: Yeni şifreyi onayla
+        change_my_password: Şifremi Değiştir
+    failure:
+      session_limited: 'Hesabınıza başka bir tarayıcıdan giriş yapılmış. Lütfen devam etmek için yeniden giriş yapın.'
+      expired: 'Hesabınız aktif olarak kullanılmadığı için artık geçerli değil. Lütfen yönetici ile irtibata geçin.'

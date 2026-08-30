@@ -1,0 +1,42 @@
+zh_TW:
+  errors:
+    messages:
+      taken_in_past: '曾被使用過。'
+      equal_to_current_password: '必須與目前密碼不同。'
+      equal_to_email: '必須與電子郵件地址不同。'
+      password_complexity:
+        digit:
+          one: 必須包含至少一個數字
+          other: 必須包含至少 %{count} 個數字
+        lower:
+          one: 必須包含至少一個小寫字母
+          other: 必須包含至少 %{count} 個小寫字母
+        symbol:
+          one: 必須包含至少一個特殊符號
+          other: 必須包含至少 %{count} 個特殊符號
+        upper:
+          one: 必須包含至少一個大寫字母
+          other: 必須包含至少 %{count} 個大寫字母
+  devise:
+    invalid_captcha: '輸入的驗證碼無效。'
+    invalid_security_question: '安全問題答案無效。'
+    paranoid_verify:
+      code_required: '請輸入由我們客服團隊提供的代碼'
+    paranoid_verification_code:
+      updated: 接受驗證碼
+      show:
+        submit_verification_code: 送出驗證碼
+        verification_code: 驗證碼
+        submit: 送出
+    password_expired:
+      updated: '你的新密碼已儲存'
+      change_required: '你的密碼已經過期，請更新密碼。'
+      show:
+        renew_your_password: 更新你的密碼
+        current_password: 目前密碼
+        new_password: 新密碼
+        new_password_confirmation: 確認新密碼
+        change_my_password: 更改我的密碼
+    failure:
+      session_limited: '你的登入憑證已在另一個瀏覽器上被使用，請重新登入以在此瀏覽器繼續使用。'
+      expired: '你的帳號因過久沒使用而已經過期，請洽網站管理員。'

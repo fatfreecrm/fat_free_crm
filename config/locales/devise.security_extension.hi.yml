@@ -1,0 +1,43 @@
+
+hi:
+  errors:
+    messages:
+      taken_in_past: यह पासवर्ड, आपके द्वारा पूर्व मे प्रयोग किया जा चुका है
+      equal_to_current_password: नया पासवर्ड, वर्तमान पासवर्ड से भिन्न होना चाहिए
+      equal_to_email: ईमेल से अलग होना चाहिए
+      password_complexity:
+        digit:
+          one: एक अंक होना चाहिए
+          other: कम से कम %{count} अंक होने चाहिए
+        lower:
+          one: एक लोअर-केस अक्षर होना चाहिए
+          other: कम से कम %{count} अक्षर होने चाहिए
+        symbol:
+          one: एक चिन्ह होना चाहिए
+          other: कम से कम %{count} चिन्ह होने चाहिए
+        upper:
+          one: एक अपर-केस अक्षर होना चाहिए
+          other: कम से कम %{count} अपर-केस अक्षर होने चाहिए
+  devise:
+    invalid_captcha: अमान्य कॅप्टचा
+    invalid_security_question: अमान्य सुरक्षा उत्तर
+    paranoid_verify:
+      code_required: सपोर्ट टीम द्वारा दिया गया कोड डाले
+    paranoid_verification_code:
+      updated: सत्यापन कोड स्वीकार किया गया
+      show:
+        submit_verification_code: वेरिफिकेशन कोड डाले
+        verification_code: वेरिफिकेशन कोड
+        submit: सबमिट
+    password_expired:
+      updated: पासवर्ड अद्यतन किया गया
+      change_required: पासवर्ड अमान्य हो चुका, पासवर्ड बदले
+      show:
+        renew_your_password: पासवर्ड बदले
+        current_password: वर्तमान पासवर्ड
+        new_password: नया पासवर्ड
+        new_password_confirmation: नए पासवर्ड की पुष्टि करें
+        change_my_password: पासवर्ड बदले
+    failure:
+      session_limited: जानकारी, दूसरे ब्राउज़र में उपयोग की गयी थी जारी रखने फिर से साइन-इन करे
+      expired: कोई गतिविधि न होने के कारण खाता बंद हो गया, सिस्टम व्यवस्थापक से संपर्क करें

@@ -1,0 +1,42 @@
+fa:
+  errors:
+    messages:
+      taken_in_past: 'قبلا استفاده شده است'
+      equal_to_current_password: 'باید متفاوت با رمز عبور فعلی باشد'
+      equal_to_email: 'باید متفاوت از ایمیل باشد'
+      password_complexity:
+        digit:
+          one: باید حداقل یک رقم داشته باشد
+          other: باید حداقل %{count} عدد داشته باشد
+        lower:
+          one: باید حداقل شامل یک حرف کوچک باشد
+          other: باید حداقل %{count} حروف کوچک داشته باشد
+        symbol:
+          one: باید حداقل دارای یک علامت یا کارکتر خاص باشد
+          other: باید حداقل دارای %{count} علائم یا کارکتر های خاص باشد
+        upper:
+          one: باید حداقل یک حرف بزرگ داشته باشد
+          other: باید حداقل %{count} حروف بزرگ داشته باشد
+  devise:
+    invalid_captcha: 'اطلاعات وارد شده در کپچا نامعتبر بود'
+    invalid_security_question: 'پاسخ سوال امنیتی نامعتبر بود'
+    paranoid_verify:
+      code_required: 'لطفاً کدی را که تیم پشتیبانی ما ارائه کرده است وارد کنید'
+    paranoid_verification_code:
+      updated: کد تأیید پذیرفته شد
+      show:
+        submit_verification_code: ارسال کد تاییدیه
+        verification_code: کد تاییدیه
+        submit: ارسال
+    password_expired:
+      updated: 'رمز جدید شما ذخیره شده است'
+      change_required: 'رمز عبور شما منقضی شده است ،لطفاً رمز خود را تمدید کنید'
+      show:
+        renew_your_password: ساختن رمز عبور جدید
+        current_password: رمز عبور جاری
+        new_password: رمز عبور جدید
+        new_password_confirmation: تکرار رمز جدید
+        change_my_password: تغییر رمز عبور
+    failure:
+      session_limited: 'از اطلاعات ورود شما در مرورگر دیگری استفاده شده است، برای ادامه در این مرورگر لطفاً دوباره وارد سیستم شوید'
+      expired: 'حساب شما به دلیل عدم فعالیت منقضی شده است، لطفاً با مدیر سایت تماس بگیرید.'
