@@ -39,7 +39,7 @@ module FatFreeCRM
 
       def serialize_custom_fields!
         fields.each do |field|
-          serialize(field.name.to_sym, Array) if field.as == 'check_boxes'
+          serialize(field.name.to_sym, type: Array) if field.as == 'check_boxes'
         end
       end
 
@@ -73,17 +73,20 @@ module FatFreeCRM
       # Refresh columns and try again.
       rescue ActiveRecord::UnknownAttributeError
         self.class.reset_column_information
+        self.class.serialize_custom_fields!
         super
       end
 
       def method_missing(method_id, *args, &block)
-        if method_id.to_s.match?(/\Acf_.*[^=]\Z/)
+        if method_id.to_s.match?(/\Acf_/)
           # Refresh columns and try again.
           self.class.reset_column_information
-          # If new record, create new object from class, else reload class
-          object = new_record? ? self.class.new : (reload && self)
           # ensure serialization is setup if needed
           self.class.serialize_custom_fields!
+
+          # If new record, create new object from class, else reload class
+          object = new_record? ? self.class.new : (reload && self)
+
           # Try again if object now responds to method, else return nil
           object.respond_to?(method_id) ? object.send(method_id, *args) : nil
         else

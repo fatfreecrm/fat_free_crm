@@ -75,7 +75,10 @@
   groups.each do |group|
     field_group = FieldGroup.create group[:params].merge(klass_name: klass_name, position: group_position)
     group[:fields].each_with_index do |params, field_position|
-      Field.create params.merge(field_group: field_group, position: field_position)
+      # In the Field model, the attribute for field type is 'as', not 'field_type'
+      field_params = params.dup
+      field_params[:as] = field_params.delete(:field_type) if field_params.key?(:field_type)
+      Field.create field_params.merge(field_group: field_group, position: field_position)
     end
   end
 end
