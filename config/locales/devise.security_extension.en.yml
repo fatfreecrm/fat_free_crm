@@ -1,0 +1,42 @@
+en:
+  errors:
+    messages:
+      taken_in_past: 'was used previously.'
+      equal_to_current_password: 'must be different than the current password.'
+      equal_to_email: 'must be different than the email.'
+      password_complexity:
+        digit:
+          one: must contain at least one digit
+          other: must contain at least %{count} digits
+        lower:
+          one: must contain at least one lower-case letter
+          other: must contain at least %{count} lower-case letters
+        symbol:
+          one: must contain at least one punctuation mark or symbol
+          other: must contain at least %{count} punctuation marks or symbols
+        upper:
+          one: must contain at least one upper-case letter
+          other: must contain at least %{count} upper-case letters
+  devise:
+    invalid_captcha: 'The captcha input was invalid.'
+    invalid_security_question: 'The security question answer was invalid.'
+    paranoid_verify:
+      code_required: 'Please enter the code our support team provided'
+    paranoid_verification_code:
+      updated: Verification code accepted
+      show:
+        submit_verification_code: Submit verification code
+        verification_code: Verification code
+        submit: Submit
+    password_expired:
+      updated: 'Your new password is saved.'
+      change_required: 'Your password is expired. Please renew your password.'
+      show:
+        renew_your_password: Renew your password
+        current_password: Current password
+        new_password: New password
+        new_password_confirmation: Confirm new password
+        change_my_password: Change my password
+    failure:
+      session_limited: 'Your login credentials were used in another browser. Please sign in again to continue in this browser.'
+      expired: 'Your account has expired due to inactivity. Please contact the site administrator.'
