@@ -1,0 +1,7 @@
+.title
+  = link_to t('admin_tab_oauth_applications'), admin_oauth_applications_path
+  &raquo;
+  = t('doorkeeper.applications.new.title')
+
+.list
+  = render 'form', application: @application

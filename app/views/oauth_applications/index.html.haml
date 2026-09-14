@@ -1,0 +1,23 @@
+.title_tools
+  = link_to t('.new'), new_oauth_application_path, class: 'btn btn-primary'
+
+.title= t('.title')
+
+.list
+  - if @applications.any?
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= t('.name')
+          %th= t('.callback_url')
+          %th
+          %th
+      %tbody
+        - @applications.each do |application|
+          %tr{ id: "application_#{application.id}" }
+            %td= link_to application.name, oauth_application_path(application)
+            %td= application.redirect_uri
+            %td= link_to t('doorkeeper.applications.buttons.edit'), edit_oauth_application_path(application)
+            %td= link_to t('doorkeeper.applications.buttons.destroy'), oauth_application_path(application), data: { confirm: t('doorkeeper.applications.confirmations.destroy'), method: :delete }
+  - else
+    %p= t('.no_applications')

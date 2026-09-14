@@ -6,6 +6,10 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 Rails.application.routes.draw do
+  use_doorkeeper do
+    controllers applications: 'oauth_applications'
+    as applications: 'oauth_applications'
+  end
   resources :lists
 
   root to: 'home#index'
@@ -164,6 +168,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :oauth_applications, controller: 'oauth_applications'
     resources :leads, only: [:index] do
       collection do
         post :import
