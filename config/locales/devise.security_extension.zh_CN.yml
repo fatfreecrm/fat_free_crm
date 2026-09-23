@@ -1,0 +1,42 @@
+zh_CN:
+  errors:
+    messages:
+      taken_in_past: '曾被使用过。'
+      equal_to_current_password: '必须与当前密码不同。'
+      equal_to_email: '必须与电子邮件地址不同。'
+      password_complexity:
+        digit:
+          one: 必须包含至少1个数字
+          other: 必须包含至少%{count}个数字
+        lower:
+          one: 必须包含至少1个小写字母
+          other: 必须包含至少%{count}个小写字母
+        symbol:
+          one: 必须包含至少1个特殊符号（!"#$%&'()*+,-./:;<=>?@[\]^_‘{|}~)
+          other: 必须包含至少%{count}个特殊符号（!"#$%&'()*+,-./:;<=>?@[\]^_‘{|}~）
+        upper:
+          one: 必须包含至少1个大写字母
+          other: 必须包含至少%{count}个大写字母
+  devise:
+    invalid_captcha: '验证码无效。'
+    invalid_security_question: '安全问题答案无效。'
+    paranoid_verify:
+      code_required: '请输入我们支持团队提供的代码'
+    paranoid_verification_code:
+      updated: 接受验证码
+      show:
+        submit_verification_code: 提交验证码
+        verification_code: 验证码
+        submit: 提交
+    password_expired:
+      updated: '你的新密码已保存。'
+      change_required: '你的密码已过期，请更新密码。'
+      show:
+        renew_your_password: 更新你的密码
+        current_password: 当前密码
+        new_password: 新密码
+        new_password_confirmation: 确认新密码
+        change_my_password: 更改密码
+    failure:
+      session_limited: '你的登录凭据已在另一个浏览器上被使用。请重新登录以在此浏览器继续。'
+      expired: '由于不活跃，你的账户已过期。请联系站点管理员。'

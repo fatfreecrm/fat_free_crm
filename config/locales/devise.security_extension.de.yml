@@ -1,0 +1,42 @@
+de:
+  errors:
+    messages:
+      taken_in_past: 'wurde bereits in der Vergangenheit verwendet.'
+      equal_to_current_password: 'darf nicht dem aktuellen Passwort entsprechen.'
+      equal_to_email: 'darf nicht dem E-mail entsprechen.'
+      password_complexity:
+        digit:
+          one: muss mindestens eine Ziffer enthalten
+          other: muss mindestens %{count} Ziffern enthalten
+        lower:
+          one: muss mindestens einen Kleinbuchstaben enthalten
+          other: muss mindestens %{count} Kleinbuchstaben enthalten
+        symbol:
+          one: muss mindestens ein Sonderzeichen enthalten
+          other: muss mindestens %{count} Sonderzeichen enthalten
+        upper:
+          one: muss mindestens einen Großbuchstaben enthalten
+          other: muss mindestens %{count} Großbuchstaben enthalten
+  devise:
+    invalid_captcha: 'Die Captcha-Eingabe ist nicht gültig.'
+    invalid_security_question: 'Die Antwort auf die Sicherheitsfrage war ungültig.'
+    paranoid_verify:
+      code_required: 'Bitte geben Sie den Code ein, den unser Support-Team zur Verfügung gestellt hat.'
+    paranoid_verification_code:
+      updated: Bestätigungscode akzeptiert
+      show:
+        submit_verification_code: Bestätigungscode eingeben
+        verification_code: Bestätigungscode
+        submit: Bestätigen
+    password_expired:
+      updated: 'Das neue Passwort wurde übernommen.'
+      change_required: 'Ihr Passwort ist abgelaufen. Bitte vergeben Sie ein neues Passwort.'
+      show:
+        renew_your_password: Vergeben Sie ein neues Passwort
+        current_password: Aktuelles Passwort
+        new_password: Neues Passwort
+        new_password_confirmation: Passwort bestätigen
+        change_my_password: Passwort ändern
+    failure:
+      session_limited: 'Ihre Anmeldedaten wurden in einem anderen Browser genutzt. Bitte melden Sie sich erneut an, um in diesem Browser fortzufahren.'
+      expired: 'Ihr Account ist aufgrund zu langer Inaktivität abgelaufen. Bitte kontaktieren Sie den Administrator.'
