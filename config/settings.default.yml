@@ -275,6 +275,11 @@
   :url:
     :controller: admin/research_tools
 - :active: false
+  :text: :admin_tab_oauth_applications
+  :icon: :fa-key
+  :url:
+    :controller: admin/oauth_applications
+- :active: false
   :text: :admin_tab_settings
   :icon: :fa-cogs
   :url:
