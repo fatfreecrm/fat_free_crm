@@ -29,8 +29,8 @@ module CampaignsHelper
   # Quick campaign summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def campaign_summary(campaign)
-    status  = render file: "campaigns/_status.html.haml",  locals: { campaign: campaign }
-    metrics = render file: "campaigns/_metrics.html.haml", locals: { campaign: campaign }
+    status  = render partial: "campaigns/status",  formats: [:html], locals: { campaign: campaign }
+    metrics = render partial: "campaigns/metrics", formats: [:html], locals: { campaign: campaign }
     "#{t(campaign.status)}, " + [status, metrics].map { |str| strip_tags(str) }.join(' ').delete("\n")
   end
 end
