@@ -176,6 +176,12 @@ class TasksController < ApplicationController
   def task_params
     return {} unless params[:task]
 
+    # Permit all field names, but permit check_boxes as an array.
+    # [ :name, { cf_checkboxes: [] } ]
+    permitted_fields = Task.fields.map do |field|
+      field.as == 'check_boxes' ? { field.name.to_sym => [] } : field.name.to_sym
+    end
+
     params.require(:task).permit(
       :user_id,
       :assigned_to,
@@ -191,7 +197,7 @@ class TasksController < ApplicationController
       :deleted_at,
       :background_info,
       :calendar,
-      *Task.fields.map(&:name)
+      *permitted_fields
     )
   end
 
