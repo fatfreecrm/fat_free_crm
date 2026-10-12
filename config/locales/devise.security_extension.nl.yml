@@ -1,0 +1,42 @@
+nl:
+  errors:
+    messages:
+      taken_in_past: is eerder gebruikt.
+      equal_to_current_password: moet verschillen van het huidige wachtwoord.
+      equal_to_email: moet anders zijn dan de e-mail
+      password_complexity:
+        digit:
+          one: moet minimaal 1 cijfer bevatten
+          other: moet minimaal %{count} cijfers bevatten
+        lower:
+          one: moet minimaal 1 kleine letter bevatten
+          other: moet minimaal %{count} kleine letters bevatten
+        symbol:
+          one: moet minimaal 1 leesteken of symbool bevatten
+          other: moet minimaal %{count} leestekens of symbolen bevatten
+        upper:
+          one: moet minimaal 1 hoofdletter bevatten
+          other: moet minimaal %{count} hoofdletters bevatten
+  devise:
+    invalid_captcha: De captcha invoer was ongeldig.
+    invalid_security_question: Het antwoord op de beveiligingsvraag was niet correct.
+    paranoid_verify:
+      code_required: Voer de aangeleverde code in
+    paranoid_verification_code:
+      updated: Verificatiecode geaccepteerd
+      show:
+        submit_verification_code: Verstuur verificatie code
+        verification_code: Verificatie code
+        submit: Verstuur
+    password_expired:
+      updated: Het nieuwe wachtwoord is opgeslagen.
+      change_required: Het wachtwoord is verlopen. Vernieuw je wachtwoord.
+      show:
+        renew_your_password: Vernieuw je wachtwoord
+        current_password: Huidig wachtwoord
+        new_password: Nieuw wachtwoord
+        new_password_confirmation: Bevestig het nieuwe wachtwoord
+        change_my_password: Verander mijn wachtwoord
+    failure:
+      session_limited: Je login is in een andere browser gebruikt. Log hier opnieuw in.
+      expired: Je account is verlopen. Neem contact op met de site beheerder.

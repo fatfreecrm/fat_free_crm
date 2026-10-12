@@ -1,0 +1,46 @@
+cs:
+  errors:
+    messages:
+      taken_in_past: bylo již použito v minulosti.
+      equal_to_current_password: se musí lišit od aktuálního hesla.
+      equal_to_email: musí být jiný než e-mail.
+      password_complexity:
+        digit:
+          one: musí obsahovat alespoň jednu číslici
+          few: musí obsahovat alespoň %{count} číslice
+          other: musí obsahovat alespoň %{count} číslice
+        lower:
+          one: musí obsahovat alespoň jedno malé písmeno
+          few: musí obsahovat alespoň %{count} malé písmena
+          other: musí obsahovat alespoň %{count} malé písmena
+        symbol:
+          one: musí obsahovat alespoň jedno interpunkční znaménko nebo symbol
+          few: musí obsahovat alespoň %{count} interpunkční znaménka nebo symboly
+          other: musí obsahovat alespoň %{count} interpunkční znaménka nebo symboly
+        upper:
+          one: musí obsahovat alespoň jedno velké písmeno
+          few: musí obsahovat alespoň %{count} velké písmena
+          other: musí obsahovat alespoň %{count} velké písmena
+  devise:
+    invalid_captcha: Chybná captcha.
+    invalid_security_question: Chybná odpověď na bezpečnostní otázku.
+    paranoid_verify:
+      code_required: Zadejte kód, který poskytla naše podpora
+    paranoid_verification_code:
+      updated: Ověřovací kód přijat
+      show:
+        submit_verification_code: Odeslat ověřovací kód
+        verification_code: Ověřovací kód
+        submit: Odeslat
+    password_expired:
+      updated: Vaše nové heslo bylo uloženo.
+      change_required: Platnost Vašeho hesla vypršela. Prosím, obnovte si jej.
+      show:
+        renew_your_password: Obnovit heslo
+        current_password: Současné heslo
+        new_password: Nové heslo
+        new_password_confirmation: Potvrďte nové heslo
+        change_my_password: Změnit moje heslo
+    failure:
+      session_limited: Vaše přihlašovací údaje byly použity v jiném prohlížeči. Chcete-li pokračovat v tomto prohlížeči, znovu se přihlaste.
+      expired: Platnost Vašeho účtu vypršela z důvodu nečinnosti. Obraťte se na správce webu.

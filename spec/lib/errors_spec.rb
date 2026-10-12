@@ -13,7 +13,7 @@ describe 'ActiveModel Validation Errors' do
       validates_presence_of :title, message: '^Missing title'
     end
 
-    adam = Adam.create(username: 'adam', email: 'adam@example.com', password: 'ouchmyrib')
+    adam = Adam.create(username: 'adam', email: 'adam@example.com', password: '0uchmYrib!!!11!!')
     expect(adam.valid?).to eq(false)
     expect(adam.errors[:title]).to eq(['^Missing title'])
     expect(adam.errors.full_messages[0]).to eq('Missing title')
@@ -24,7 +24,7 @@ describe 'ActiveModel Validation Errors' do
       validates_presence_of :title, message: 'missing'
     end
 
-    eve = Eve.create(username: 'eve', email: 'eve@example.com', password: 'doyoulikeapples')
+    eve = Eve.create(username: 'eve', email: 'eve@example.com', password: 'doyouLikeapplesDFFD111!')
     expect(eve.valid?).to eq(false)
     expect(eve.errors[:title]).to eq(['missing'])
     expect(eve.errors.full_messages[0]).to eq('Title missing')
