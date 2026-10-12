@@ -1,7 +1,8 @@
 - current_auto_complete = session[:auto_complete] || :leads
 = content_for(:javascript_epilogue) do
-  :plain
-    (function ($) {
+  = javascript_tag nonce: true do
+    :plain
+      (function ($) {
       $(function() {
         new crm.Popup({
           trigger     : "#jumper",
@@ -23,8 +24,8 @@
             $("#jumper").removeClass("selected");
           }
         });
-      });
-  })($);
+        });
+      })($);
 
 #jumpbox{ hidden }
   %span#jumpbox_menu= jumpbox(current_auto_complete)
