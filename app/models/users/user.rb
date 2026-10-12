@@ -60,6 +60,7 @@ class User < ActiveRecord::Base
   has_many :permissions, dependent: :destroy
   has_many :preferences, class_name: 'Preference', dependent: :destroy
   has_many :lists
+  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner
   has_and_belongs_to_many :groups
 
   has_paper_trail versions: { class_name: 'Version' }, ignore: [:last_sign_in_at]

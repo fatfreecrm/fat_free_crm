@@ -1,0 +1,26 @@
+.title_tools
+  = link_to t('doorkeeper.applications.buttons.edit'), edit_oauth_application_path(@application), class: 'btn btn-primary'
+  |
+  = link_to t('doorkeeper.applications.buttons.destroy'), oauth_application_path(@application), data: { confirm: t('doorkeeper.applications.confirmations.destroy'), method: :delete }, class: 'btn btn-danger'
+
+.title
+  = link_to t('doorkeeper.applications.index.title'), oauth_applications_path
+  &raquo;
+  = @application.name
+
+.list
+  %table.table.table-striped
+    %tr
+      %th= t('doorkeeper.applications.show.application_id')
+      %td
+        %code= @application.uid
+    %tr
+      %th= t('doorkeeper.applications.show.secret')
+      %td
+        %code= @application.secret
+    %tr
+      %th= t('doorkeeper.applications.show.scopes')
+      %td= @application.scopes
+    %tr
+      %th= t('doorkeeper.applications.show.callback_url')
+      %td= @application.redirect_uri
