@@ -164,7 +164,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :leads, only: [:index] do
+    resources :imports, only: [:index] do
       collection do
         post :import
       end

@@ -27,7 +27,7 @@ en-US:
   tab_opportunities: Opportunities
   tab_team: Team
   admin_tab_groups: Groups
-  admin_tab_leads_import: "Leads Import"
+  admin_tab_import: "Import"
   admin_tab_users: Users
   admin_tab_fields: Custom Fields
   admin_tab_tags: Tags
@@ -108,6 +108,25 @@ en-US:
   # Model Validations.
   #----------------------------------------------------------------------------
   activerecord:
+    models:
+      account:
+        one: Account
+        other: Accounts
+      campaign:
+        one: Campaign
+        other: Campaigns
+      contact:
+        one: Contact
+        other: Contacts
+      lead:
+        one: Lead
+        other: Leads
+      opportunity:
+        one: Opportunity
+        other: Opportunities
+      task:
+        one: Task
+        other: Tasks
     errors:
       models:
         authentication:
@@ -203,8 +222,9 @@ en-US:
   msg_asset_deleted: ! '%{value} has been deleted.'
   msg_asset_not_available: This %{value} is no longer available.
   msg_no_file_chosen: "Please choose a file to upload."
-  msg_imported_leads: "Successfully imported %{count} leads."
-  msg_imported_leads_with_errors: "Imported %{count} leads, but %{errors} records failed."
+  msg_invalid_class: "Invalid record type selected for import."
+  msg_imported_records: "Successfully imported %{count} %{records}."
+  msg_imported_records_with_errors: "Imported %{count} %{records}, but %{errors} records failed."
   msg_not_authorized: You are not authorized to take this action.
   msg_assets_not_available: The %{value} are not available.
   msg_asset_rejected: ! '%{value} has been rejected.'
@@ -470,11 +490,13 @@ en-US:
   create_lead: Create Lead
   import_leads: Import Leads
   csv_file: CSV File
-  leads_import_help: "Upload a CSV file to import leads. The first row should contain the headers. The importer will automatically map headers to lead attributes."
-  leads_import_supported_headers: "Supported headers include: First Name, Last Name, Email, Company, Title, Phone, Mobile, Source, Status, Referred By, Rating, Do Not Call, and Background Info."
-  leads_import_example_header: "Example CSV format:"
-  leads_import_example_content: "First Name,Last Name,Email,Company\nJohn,Doe,john.doe@example.com,ACME Corp\nJane,Smith,jane.smith@example.com,Global Industries"
-  leads_import_note: "Note: Custom fields can also be imported using their labels or column names (e.g., cf_custom_field)."
+  import_help: "Upload a CSV file to import leads. The first row should contain the headers. The importer will automatically map headers to lead attributes."
+  import_supported_headers: "Supported headers include: First Name, Last Name, Email, Company, Title, Phone, Mobile, Source, Status, Referred By, Rating, Do Not Call, and Background Info."
+  import_example_header: "Example CSV format:"
+  import_example_content: "First Name,Last Name,Email,Company\nJohn,Doe,john.doe@example.com,ACME Corp\nJane,Smith,jane.smith@example.com,Global Industries"
+  import_note: "Note: Custom fields can also be imported using their labels or column names (e.g., cf_custom_field)."
+  import_type: "Import Type"
+  import_records_button: "Import Records"
   create_opp_for_contact: You can optionally create an opportunity for the %{value}
     contact by specifying the name, current stage, estimated closing date, sale probability,
     amount of the deal, and the discount offered.
@@ -837,9 +859,18 @@ en-US:
     opportunity:
       one: 1 opportunity
       other: ! '%{count} opportunities'
+    account:
+      one: 1 account
+      other: ! "%{count} accounts"
+    campaign:
+      one: 1 campaign
+      other: ! "%{count} campaigns"
     lead:
       one: 1 lead
       other: ! '%{count} leads'
+    task:
+      one: 1 task
+      other: ! "%{count} tasks"
     day:
       one: 1 day
       other: ! '%{count} days'
