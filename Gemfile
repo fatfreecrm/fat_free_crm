@@ -134,3 +134,5 @@ gem 'connection_pool', '< 3'
 gem "addressable", "~> 2.8"
 
 gem "solid_queue"
+
+gem "rexml", "~> 3.4"
