@@ -205,15 +205,15 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def hidden
-    { style: "display:none;"       }
+    { style: "display:none;" }
   end
 
   def exposed
-    { style: "display:block;"      }
+    { style: "display:block;" }
   end
 
   def invisible
-    { style: "visibility:hidden;"  }
+    { style: "visibility:hidden;" }
   end
 
   def visible
