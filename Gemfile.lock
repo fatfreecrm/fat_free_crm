@@ -164,8 +164,10 @@ GEM
     country_select (10.0.1)
       countries (> 5.0, < 8.0)
     crass (1.0.8)
-    css_parser (1.19.0)
+    css_parser (3.3.0)
       addressable
+      base64
+      ssrf_filter (~> 1.5)
     csv (3.3.5)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
@@ -592,6 +594,7 @@ GEM
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
       ostruct
+    ssrf_filter (1.6.0)
     temple (0.10.4)
     thor (1.5.0)
     tilt (2.6.1)
