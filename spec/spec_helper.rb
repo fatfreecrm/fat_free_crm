@@ -16,7 +16,6 @@ require 'paper_trail/frameworks/rspec'
 require 'factory_bot_rails'
 require 'ffaker'
 require 'timecop'
-require 'webdrivers'
 require 'capybara-screenshot/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
