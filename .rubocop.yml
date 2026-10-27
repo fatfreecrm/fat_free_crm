@@ -87,6 +87,7 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/views/**/*_spec.rb'
     - 'spec/lib/errors_spec.rb'
+    - 'spec/features/**/*'
 
 # Arguably these should be fixed at a later point, but would require depreciation, aliases, etc.
 Naming/PredicatePrefix:
