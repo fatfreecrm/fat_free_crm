@@ -475,6 +475,7 @@ GEM
       railties (>= 7.0)
     responds_to_parent2 (2.2.0)
       actionpack (>= 3.2.22, < 8.1)
+    rexml (3.4.4)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -714,6 +715,7 @@ DEPENDENCIES
   rb-inotify
   responders (~> 3.0)
   responds_to_parent2
+  rexml (~> 3.4)
   rspec-activemodel-mocks
   rspec-rails
   rubocop
