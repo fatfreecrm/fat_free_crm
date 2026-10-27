@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.email = ['mike@fatfreecrm.com', 'steveyken@gmail.com', 'daniel.oconnor@gmail.com']
   gem.files = Dir["{app,config,db,lib,public,bin,log/script}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "config.ru", "CHANGELOG.md", "CONTRIBUTING.md"]
   gem.version = FatFreeCRM::VERSION::STRING
-  gem.required_ruby_version = '>= 3.1'
+  gem.required_ruby_version = '>= 3.4'
   gem.license = 'MIT'
 
   gem.add_dependency 'rails', '~> 8.0.0'
