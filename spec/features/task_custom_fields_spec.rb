@@ -66,15 +66,12 @@ feature 'Task Custom Fields', '
     expect(page).to have_no_css('#edit_task')
 
     # Expand the section if it is collapsed (it might be after AJAX update)
-    if page.has_css?("a[data-id='#{section_id}']")
-      find("a[data-id='#{section_id}']").click if page.has_css?("##{section_id}", visible: false)
-      expect(page).to have_content('UpdatedValue')
-    else
+    unless page.has_css?("a[data-id='#{section_id}']")
       # If it's not there, reload and try again
       visit current_path
-      find("a[data-id='#{section_id}']").click if page.has_css?("##{section_id}", visible: false)
-      expect(page).to have_content('UpdatedValue')
     end
+    find("a[data-id='#{section_id}']").click if page.has_css?("##{section_id}", visible: false)
+    expect(page).to have_content('UpdatedValue')
 
     expect(page).to have_no_content('InitialValue')
   end
