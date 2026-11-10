@@ -80,7 +80,6 @@ end
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem 'webdrivers'
   gem 'database_cleaner'
   gem 'zeus', platform: :ruby unless ENV["CI"]
   gem 'timecop'
@@ -133,3 +132,5 @@ gem 'connection_pool', '< 3'
 gem "addressable", "~> 2.8"
 
 gem "solid_queue"
+
+gem "rexml", "~> 3.4"

@@ -29,6 +29,8 @@ jobs:
 
     - name: Install dependencies
       run: bundle install
+    - name: Run RuboCop
+      run: bundle exec rubocop
     - name: Prepare DB
       run: DB=sqlite RAILS_ENV=test bundle exec rake spec:preparedb
     - name: Run model tests
