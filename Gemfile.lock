@@ -297,7 +297,7 @@ GEM
     marcel (1.2.1)
     matrix (0.4.2)
     method_source (1.1.0)
-    mini_magick (5.3.1)
+    mini_magick (5.4.0)
       logger
     mini_mime (1.1.5)
     mini_racer (0.20.0)
