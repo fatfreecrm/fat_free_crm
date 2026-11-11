@@ -45,14 +45,14 @@ feature 'Opportunities Overview', "
 
     within "#user_#{user1.id}" do
       expect(page).to have_selector('.title', text: 'Brian Doyle-Murray')
-      expect(page).to have_content('Acting')
-      expect(page).not_to have_content('Directing')
+      expect(page).to have_text('Acting')
+      expect(page).not_to have_text('Directing')
     end
 
     within "#user_#{user2.id}" do
       expect(page).to have_selector('.title', text: 'Dean Stockwell')
-      expect(page).to have_content('Leaping from Quantum Leap')
-      expect(page).to have_content('Return Home from Quantum Leap')
+      expect(page).to have_text('Leaping from Quantum Leap')
+      expect(page).to have_text('Return Home from Quantum Leap')
     end
 
     expect(page).not_to have_selector("#user_#{user3.id}")
@@ -68,8 +68,8 @@ feature 'Opportunities Overview', "
 
     within "#unassigned" do
       expect(page).to have_selector('.title', text: 'Unassigned Opportunities')
-      expect(page).to have_content('Acting')
-      expect(page).not_to have_content('Presenting')
+      expect(page).to have_text('Acting')
+      expect(page).not_to have_text('Presenting')
     end
   end
 
@@ -79,10 +79,10 @@ feature 'Opportunities Overview', "
 
     visit opportunity_overview_page
 
-    expect(page).to have_content('There are currently no outstanding opportunities.')
+    expect(page).to have_text('There are currently no outstanding opportunities.')
     within "#main" do
-      expect(page).not_to have_content("Presenting")
-      expect(page).not_to have_content("Eating")
+      expect(page).not_to have_text("Presenting")
+      expect(page).not_to have_text("Eating")
     end
   end
 end

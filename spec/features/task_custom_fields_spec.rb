@@ -39,14 +39,14 @@ feature 'Task Custom Fields', '
     visit task_path(task)
 
     # 4. Verify the custom field value is visible
-    expect(page).to have_content('Task with Custom Field')
+    expect(page).to have_text('Task with Custom Field')
 
     # Expand the section if it is collapsed
     section_id = "field_group_#{group.id}_task_show"
-    if page.has_css?("##{section_id}", visible: false)
+    if page.has_css?("##{section_id}", visible: :hidden)
       find("a[data-id='#{section_id}']").click
     end
-    expect(page).to have_content('InitialValue')
+    expect(page).to have_text('InitialValue')
 
     # 5. Edit the task
     click_link 'Edit'
@@ -71,19 +71,19 @@ feature 'Task Custom Fields', '
 
     # Expand the section if it is collapsed (it might be after AJAX update)
     if page.has_css?("a[data-id='#{section_id}']")
-        if page.has_css?("##{section_id}", visible: false)
+        if page.has_css?("##{section_id}", visible: :hidden)
           find("a[data-id='#{section_id}']").click
         end
-        expect(page).to have_content('UpdatedValue')
+        expect(page).to have_text('UpdatedValue')
     else
         # If it's not there, reload and try again
         visit current_path
-        if page.has_css?("##{section_id}", visible: false)
+        if page.has_css?("##{section_id}", visible: :hidden)
           find("a[data-id='#{section_id}']").click
         end
-        expect(page).to have_content('UpdatedValue')
+        expect(page).to have_text('UpdatedValue')
     end
 
-    expect(page).not_to have_content('InitialValue')
+    expect(page).not_to have_text('InitialValue')
   end
 end

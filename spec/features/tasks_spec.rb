@@ -19,17 +19,17 @@ feature 'Tasks', '
   scenario 'should view a list of tasks which are assigned to the logged in user' do
     4.times { |i| create(:task, name: "Task #{i}", user: @user) }
     visit tasks_page
-    expect(page).to have_content('Task 0')
-    expect(page).to have_content('Task 1')
-    expect(page).to have_content('Task 2')
-    expect(page).to have_content('Task 3')
-    expect(page).to have_content('Create Task')
+    expect(page).to have_text('Task 0')
+    expect(page).to have_text('Task 1')
+    expect(page).to have_text('Task 2')
+    expect(page).to have_text('Task 3')
+    expect(page).to have_text('Create Task')
   end
 
   scenario 'should create a new task', js: true do
     with_versioning do
       visit tasks_page
-      expect(page).to have_content('Create Task')
+      expect(page).to have_text('Create Task')
       click_link 'Create Task'
       expect(page).to have_selector('#task_name', visible: true)
       fill_in 'task_name', with: 'Task I Need To Do'
@@ -37,10 +37,10 @@ feature 'Tasks', '
       select2 'Myself', from: 'Assign to:'
       select2 'Call', from: 'Category:'
       click_button 'Create Task'
-      expect(page).to have_content('Task I Need To Do')
+      expect(page).to have_text('Task I Need To Do')
 
       click_link 'Dashboard'
-      expect(page).to have_content('Bill Murray created task Task I Need To Do')
+      expect(page).to have_text('Bill Murray created task Task I Need To Do')
     end
   end
 
@@ -55,19 +55,19 @@ feature 'Tasks', '
       select2 'Another User', from: 'Assign to:'
       select2 'Call', from: 'Category:'
       click_button 'Create Task'
-      expect(page).to have_content('The task has been created and assigned to Another User')
+      expect(page).to have_text('The task has been created and assigned to Another User')
 
       click_link 'Tasks'
       page.uncheck('filters_due_tomorrow')
-      expect(page).not_to have_content('Task For Someone Else')
+      expect(page).not_to have_text('Task For Someone Else')
 
       click_filter_tab('Assigned')
       page.check('filters_due_tomorrow')
-      expect(find('#main')).to have_content('Task For Someone Else')
-      expect(find('#main')).to have_content('Another User')
+      expect(find('#main')).to have_text('Task For Someone Else')
+      expect(find('#main')).to have_text('Another User')
 
       click_link 'Dashboard'
-      expect(page).to have_content('Bill Murray created task Task For Someone Else')
+      expect(page).to have_text('Bill Murray created task Task For Someone Else')
     end
   end
 
@@ -78,9 +78,9 @@ feature 'Tasks', '
       click_edit_for_task_id(42)
       fill_in 'task_name', with: 'Updated Task'
       click_button 'Save Task'
-      expect(page).to have_content('Updated Task')
+      expect(page).to have_text('Updated Task')
       click_link 'Dashboard'
-      expect(page).to have_content('Bill Murray updated task Updated Task')
+      expect(page).to have_text('Bill Murray updated task Updated Task')
     end
   end
 
@@ -89,6 +89,6 @@ feature 'Tasks', '
     visit tasks_page
     click_delete_for_task_id(42)
     click_link 'Tasks'
-    expect(page).not_to have_content('Outdated Task')
+    expect(page).not_to have_text('Outdated Task')
   end
 end

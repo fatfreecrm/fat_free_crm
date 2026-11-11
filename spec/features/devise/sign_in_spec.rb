@@ -21,33 +21,33 @@ feature 'Devise Sign-in' do
 
   scenario 'without confirmation' do
     login_process('john', 'password')
-    expect(page).to have_content("You have to confirm your email address before continuing.")
+    expect(page).to have_text("You have to confirm your email address before continuing.")
   end
 
   scenario 'without approval' do
     @user.confirm
     login_process('john', 'password')
-    expect(page).to have_content("Your account has not been approved yet.")
+    expect(page).to have_text("Your account has not been approved yet.")
   end
 
   scenario 'with approved and confirmed account' do
     @user.confirm
     @user.update_attribute(:suspended_at, nil)
     login_process('john', 'password')
-    expect(page).to have_content("Signed in successfully.")
+    expect(page).to have_text("Signed in successfully.")
   end
 
   scenario 'invalid credentials' do
     login_process('jo', 'pass')
     expect(current_path).to eq "/users/sign_in"
-    expect(page).to have_content("Invalid email or password")
+    expect(page).to have_text("Invalid email or password")
   end
 
   scenario 'login with email' do
     @user.confirm
     @user.update_attribute(:suspended_at, nil)
     login_process('john@example.com', 'password')
-    expect(page).to have_content("Signed in successfully")
+    expect(page).to have_text("Signed in successfully")
   end
 
   def login_process(username, password)

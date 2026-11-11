@@ -15,7 +15,7 @@ describe "Lead Import" do
   it "should allow admin to import leads from CSV" do
     visit admin_leads_path
 
-    expect(page).to have_content("Leads Import")
+    expect(page).to have_text("Leads Import")
 
     csv_content = "First Name,Last Name,Email\nImported,Lead,imported@lead.com"
     file = Tempfile.new(['leads', '.csv'])
@@ -25,9 +25,9 @@ describe "Lead Import" do
     attach_file("file", file.path)
     click_button "Import Leads"
 
-    expect(page).to have_content("Successfully imported 1 leads.")
+    expect(page).to have_text("Successfully imported 1 leads.")
 
     visit leads_path
-    expect(page).to have_content("Imported Lead")
+    expect(page).to have_text("Imported Lead")
   end
 end

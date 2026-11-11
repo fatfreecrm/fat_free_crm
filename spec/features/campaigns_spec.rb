@@ -19,10 +19,10 @@ feature 'Campaigns', '
   scenario 'should view a list of campaigns' do
     3.times { |i| create(:campaign, name: "Campaign #{i}") }
     visit campaigns_page
-    expect(page).to have_content('Campaign 0')
-    expect(page).to have_content('Campaign 1')
-    expect(page).to have_content('Campaign 2')
-    expect(page).to have_content('Create Campaign')
+    expect(page).to have_text('Campaign 0')
+    expect(page).to have_text('Campaign 1')
+    expect(page).to have_text('Campaign 2')
+    expect(page).to have_text('Create Campaign')
   end
 
   scenario 'should create a campaign', js: true do
@@ -36,15 +36,15 @@ feature 'Campaigns', '
       fill_in 'comment_body', with: 'This campaign is very important'
       click_button 'Create Campaign'
 
-      expect(page).to have_content('Cool Campaign')
-      expect(page).to have_content('On Hold')
+      expect(page).to have_text('Cool Campaign')
+      expect(page).to have_text('On Hold')
 
       find('div#campaigns').click_link 'Cool Campaign'
-      expect(page).to have_content('This campaign is very important')
+      expect(page).to have_text('This campaign is very important')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray created campaign Cool Campaign")
-      expect(page).to have_content("Bill Murray created comment on Cool Campaign")
+      expect(page).to have_text("Bill Murray created campaign Cool Campaign")
+      expect(page).to have_text("Bill Murray created comment on Cool Campaign")
     end
   end
 
@@ -67,10 +67,10 @@ feature 'Campaigns', '
       fill_in 'campaign_name', with: 'My Even Cooler Campaign'
       select2 'Started', from: 'Status:'
       click_button 'Save Campaign'
-      expect(page).to have_content('My Even Cooler Campaign')
-      expect(page).to have_content('My Even Cooler Campaign')
+      expect(page).to have_text('My Even Cooler Campaign')
+      expect(page).to have_text('My Even Cooler Campaign')
       click_link 'Dashboard'
-      expect(page).to have_content("Bill Murray updated campaign My Even Cooler Campaign")
+      expect(page).to have_text("Bill Murray updated campaign My Even Cooler Campaign")
     end
   end
 
@@ -79,25 +79,25 @@ feature 'Campaigns', '
     visit campaigns_page
     click_link 'Old Campaign'
     click_link 'Delete?'
-    expect(page).to have_content('Are you sure you want to delete this campaign?')
+    expect(page).to have_text('Are you sure you want to delete this campaign?')
     click_link 'Yes'
-    expect(page).to have_content('Old Campaign has been deleted.')
-    expect(find('div#campaigns')).not_to have_content('Old Campaign')
+    expect(page).to have_text('Old Campaign has been deleted.')
+    expect(find('div#campaigns')).not_to have_text('Old Campaign')
   end
 
   scenario 'should search for a campaign', js: true do
     2.times { |i| create(:campaign, name: "Campaign #{i}") }
     visit campaigns_page
-    expect(find('#campaigns')).to have_content("Campaign 0")
-    expect(find('#campaigns')).to have_content("Campaign 1")
+    expect(find('#campaigns')).to have_text("Campaign 0")
+    expect(find('#campaigns')).to have_text("Campaign 1")
     fill_in 'query', with: "Campaign 0"
-    expect(find('#campaigns')).to have_content("Campaign 0")
-    expect(find('#campaigns')).not_to have_content("Campaign 1")
+    expect(find('#campaigns')).to have_text("Campaign 0")
+    expect(find('#campaigns')).not_to have_text("Campaign 1")
     fill_in 'query', with: "Campaign"
-    expect(find('#campaigns')).to have_content("Campaign 0")
-    expect(find('#campaigns')).to have_content("Campaign 1")
+    expect(find('#campaigns')).to have_text("Campaign 0")
+    expect(find('#campaigns')).to have_text("Campaign 1")
     fill_in 'query', with: "False"
-    expect(find('#campaigns')).not_to have_content("Campaign 0")
-    expect(find('#campaigns')).not_to have_content("Campaign 1")
+    expect(find('#campaigns')).not_to have_text("Campaign 0")
+    expect(find('#campaigns')).not_to have_text("Campaign 1")
   end
 end

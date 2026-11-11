@@ -32,9 +32,9 @@ feature 'Users tab', '
     select2 'Superheroes', from: 'Groups:'
 
     click_button 'Create User'
-    expect(find('#users')).to have_content('Captain Thunder')
-    expect(find('#users')).to have_content('Weather Inc.')
-    expect(find('#users')).to have_content('Superheroes')
-    expect(find('#users')).to have_content('lightning@example.com')
+    expect(find('#users')).to have_text('Captain Thunder')
+    expect(find('#users')).to have_text('Weather Inc.')
+    expect(find('#users')).to have_text('Superheroes')
+    expect(find('#users')).to have_text('lightning@example.com')
   end
 end

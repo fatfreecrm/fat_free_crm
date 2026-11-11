@@ -19,13 +19,13 @@ feature 'Groups tab', '
   scenario 'should create a new group', js: true do
     create(:user, first_name: "Mr", last_name: "Spock")
     visit admin_groups_path
-    expect(page).to have_content("Couldn't find any Groups.")
+    expect(page).to have_text("Couldn't find any Groups.")
     click_link 'create a new group'
     expect(page).to have_selector('#group_name', visible: true)
     fill_in 'group_name', with: 'The Enterprise Bridge'
     select2 'Mr Spock', from: 'Users'
     click_button 'Create Group'
-    expect(page).to have_content('The Enterprise Bridge')
-    expect(page).to have_content('members: Mr Spock')
+    expect(page).to have_text('The Enterprise Bridge')
+    expect(page).to have_text('members: Mr Spock')
   end
 end

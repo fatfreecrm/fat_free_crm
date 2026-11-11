@@ -19,15 +19,15 @@ feature 'Accounts', '
   scenario 'should view a list of accounts' do
     2.times { |i| create(:account, name: "Account #{i}") }
     visit accounts_page
-    expect(page).to have_content('Account 0')
-    expect(page).to have_content('Account 1')
-    expect(page).to have_content('Create Account')
+    expect(page).to have_text('Account 0')
+    expect(page).to have_text('Account 1')
+    expect(page).to have_text('Create Account')
   end
 
   scenario 'should create a new account', js: true do
     with_versioning do
       visit accounts_page
-      expect(page).to have_content('Create Account')
+      expect(page).to have_text('Create Account')
       click_link 'Create Account'
       expect(page).to have_selector('#account_name', visible: true)
       fill_in 'account_name', with: 'My new account'
@@ -41,22 +41,22 @@ feature 'Accounts', '
       fill_in 'comment_body', with: 'This account is very important'
       click_button 'Create Account'
 
-      expect(find('div#accounts')).to have_content('My new account')
+      expect(find('div#accounts')).to have_text('My new account')
       find('div#accounts').click_link('My new account') # avoid recent items link
-      expect(page).to have_content('+1 2345 6789')
-      expect(page).to have_content('http://www.example.com')
-      expect(page).to have_content('This account is very important')
-      expect(page).to have_content('Affiliate')
+      expect(page).to have_text('+1 2345 6789')
+      expect(page).to have_text('http://www.example.com')
+      expect(page).to have_text('This account is very important')
+      expect(page).to have_text('Affiliate')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray created account My new account")
-      expect(page).to have_content("Bill Murray created comment on My new account")
+      expect(page).to have_text("Bill Murray created account My new account")
+      expect(page).to have_text("Bill Murray created comment on My new account")
     end
   end
 
   scenario "remembers the comment field when the creation was unsuccessful", js: true do
     visit accounts_page
-    expect(page).to have_content('Create Account')
+    expect(page).to have_text('Create Account')
     click_link 'Create Account'
 
     expect(page).to have_link 'Contact Information'
@@ -75,16 +75,16 @@ feature 'Accounts', '
     with_versioning do
       visit accounts_page
       find('div#accounts').click_link('A new account')
-      expect(page).to have_content('A new account')
+      expect(page).to have_text('A new account')
       click_link 'Edit'
       fill_in 'account_name', with: 'A new account *edited!*'
       click_button 'Save Account'
 
       wait_for_ajax
-      expect(page).to have_content('A new account *edited!*')
+      expect(page).to have_text('A new account *edited!*')
 
       click_link "Dashboard"
-      expect(page).to have_content("Bill Murray updated account A new account *edited!*")
+      expect(page).to have_text("Bill Murray updated account A new account *edited!*")
     end
   end
 
@@ -93,25 +93,25 @@ feature 'Accounts', '
     visit accounts_page
     find('div#accounts').click_link('My new account')
     click_link 'Delete?'
-    expect(page).to have_content('Are you sure you want to delete this account?')
+    expect(page).to have_text('Are you sure you want to delete this account?')
     click_link 'Yes'
-    expect(page).to have_content('My new account has been deleted')
+    expect(page).to have_text('My new account has been deleted')
   end
 
   scenario 'should search for an account', js: true do
     2.times { |i| create(:account, name: "Account #{i}") }
     visit accounts_page
-    expect(find('#accounts')).to have_content("Account 0")
-    expect(find('#accounts')).to have_content("Account 1")
+    expect(find('#accounts')).to have_text("Account 0")
+    expect(find('#accounts')).to have_text("Account 1")
     fill_in 'query', with: "Account 0"
-    expect(find('#accounts')).to have_content("Account 0")
-    expect(find('#accounts')).not_to have_content("Account 1")
+    expect(find('#accounts')).to have_text("Account 0")
+    expect(find('#accounts')).not_to have_text("Account 1")
     fill_in 'query', with: "Account"
-    expect(find('#accounts')).to have_content("Account 0")
-    expect(find('#accounts')).to have_content("Account 1")
+    expect(find('#accounts')).to have_text("Account 0")
+    expect(find('#accounts')).to have_text("Account 1")
     fill_in 'query', with: "Contact"
-    expect(find('#accounts')).not_to have_content("Account 0")
-    expect(find('#accounts')).not_to have_content("Account 1")
+    expect(find('#accounts')).not_to have_text("Account 0")
+    expect(find('#accounts')).not_to have_text("Account 1")
   end
 
   scenario 'should attach task to account', js: true, versioning: true do
@@ -119,11 +119,11 @@ feature 'Accounts', '
     create(:account, name: 'Account')
     with_versioning do
       visit accounts_page
-      expect(find('#accounts')).to have_content("Account")
+      expect(find('#accounts')).to have_text("Account")
       click_link 'Account'
       click_link 'Select Task'
       fill_autocomplete('auto_complete_query', with: 'Ta')
-      expect(find('#tasks')).to have_content('Task re: Account')
+      expect(find('#tasks')).to have_text('Task re: Account')
     end
   end
 end

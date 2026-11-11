@@ -15,7 +15,7 @@ feature 'Task Show Page Edit', '
     task = create(:task, name: 'Original Task', user: @user)
     visit task_path(task)
 
-    expect(page).to have_content('Original Task')
+    expect(page).to have_text('Original Task')
 
     click_link 'Edit'
 
@@ -23,7 +23,7 @@ feature 'Task Show Page Edit', '
     fill_in 'task_name', with: 'Updated Task Name'
     click_button 'Save Task'
 
-    expect(page).to have_content('Updated Task Name')
+    expect(page).to have_text('Updated Task Name')
     expect(page).to have_no_css('#edit_task')
   end
 end
