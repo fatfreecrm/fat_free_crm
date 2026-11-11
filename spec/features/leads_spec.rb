@@ -19,11 +19,11 @@ feature 'Leads', '
   scenario 'should view a list of leads' do
     4.times { |i| create(:lead, first_name: "L", last_name: "Ead #{i}") }
     visit leads_page
-    expect(leads_element).to have_content('L Ead 0')
-    expect(leads_element).to have_content('L Ead 1')
-    expect(leads_element).to have_content('L Ead 2')
-    expect(leads_element).to have_content('L Ead 3')
-    expect(page).to have_content('Create Lead')
+    expect(leads_element).to have_text('L Ead 0')
+    expect(leads_element).to have_text('L Ead 1')
+    expect(leads_element).to have_text('L Ead 2')
+    expect(leads_element).to have_text('L Ead 3')
+    expect(page).to have_text('Create Lead')
   end
 
   scenario 'should create a new lead', js: true do
@@ -47,17 +47,17 @@ feature 'Leads', '
       # click_link 'Status'
       select2 'Contacted', from: 'Status:'
       click_button 'Create Lead'
-      expect(leads_element).to have_content('Mr Lead')
+      expect(leads_element).to have_text('Mr Lead')
 
       leads_element.click_link('Mr Lead')
-      expect(summary_element).to have_content('Contacted')
-      expect(summary_element).to have_content('mr_lead@example.com')
-      expect(summary_element).to have_content('+44 1234 567890')
-      expect(main_element).to have_content('This is an important lead.')
+      expect(summary_element).to have_text('Contacted')
+      expect(summary_element).to have_text('mr_lead@example.com')
+      expect(summary_element).to have_text('+44 1234 567890')
+      expect(main_element).to have_text('This is an important lead.')
 
       click_link "Dashboard"
-      expect(activities_element).to have_content("Bill Murray created lead Mr Lead")
-      expect(activities_element).to have_content("Bill Murray created comment on Mr Lead")
+      expect(activities_element).to have_text("Bill Murray created lead Mr Lead")
+      expect(activities_element).to have_text("Bill Murray created comment on Mr Lead")
     end
   end
 
@@ -77,7 +77,7 @@ feature 'Leads', '
     with_versioning do
       visit leads_page
       click_link 'Mr Lead'
-      expect(page).to have_content('Mr Lead')
+      expect(page).to have_text('Mr Lead')
       click_link('Edit')
       fill_in 'lead_first_name', with: 'Mrs'
       fill_in 'lead_phone', with: '+44 0987 654321'
@@ -86,10 +86,10 @@ feature 'Leads', '
       select2 'Rejected', from: 'Status:'
       click_button 'Save Lead'
       sleep(3) # TODO: A better AJAX observing call, or just a redirect on save.
-      expect(find('#title')).to have_content('Mrs Lead')
+      expect(find('#title')).to have_text('Mrs Lead')
 
       click_link "Dashboard"
-      expect(activities_element).to have_content("Bill Murray updated lead Mrs Lead")
+      expect(activities_element).to have_text("Bill Murray updated lead Mrs Lead")
     end
   end
 
@@ -98,27 +98,27 @@ feature 'Leads', '
     visit leads_page
     click_link 'Mr Lead'
     click_link 'Delete?'
-    expect(page).to have_content('Are you sure you want to delete this lead?')
+    expect(page).to have_text('Are you sure you want to delete this lead?')
     click_link 'Yes'
-    expect(page).to have_content('Mr Lead has been deleted.')
-    expect(page).not_to have_content('Mr Lead')
-    expect(page).not_to have_content('mr_lead@example.com')
+    expect(page).to have_text('Mr Lead has been deleted.')
+    expect(page).not_to have_text('Mr Lead')
+    expect(page).not_to have_text('mr_lead@example.com')
   end
 
   scenario 'should search for a lead', js: true do
     2.times { |i| create(:lead, first_name: "Lead", last_name: "\##{i}", email: "lead#{i}@example.com") }
     visit leads_page
-    expect(leads_element).to have_content('Lead #0')
-    expect(leads_element).to have_content('Lead #1')
+    expect(leads_element).to have_text('Lead #0')
+    expect(leads_element).to have_text('Lead #1')
     fill_in 'query', with: 'Lead #0'
-    expect(leads_element).to have_content('Lead #0')
-    expect(leads_element).not_to have_content('Lead #1')
+    expect(leads_element).to have_text('Lead #0')
+    expect(leads_element).not_to have_text('Lead #1')
     fill_in 'query', with: 'Lead'
-    expect(leads_element).to have_content('Lead #0')
-    expect(leads_element).to have_content('Lead #1')
+    expect(leads_element).to have_text('Lead #0')
+    expect(leads_element).to have_text('Lead #1')
     fill_in 'query', with: 'Non-existant lead'
-    expect(leads_element).not_to have_content('Lead #0')
-    expect(leads_element).not_to have_content('Lead #1')
+    expect(leads_element).not_to have_text('Lead #0')
+    expect(leads_element).not_to have_text('Lead #1')
   end
 
   def main_element

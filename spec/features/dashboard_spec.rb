@@ -26,17 +26,17 @@ feature 'Dashboard', '
 
     # My Tasks
     within "#tasks" do
-      expect(page).to have_content("Do your homework!")
+      expect(page).to have_text("Do your homework!")
     end
 
     # My Opportunities
     within "#opportunities" do
-      expect(page).to have_content("Work with the Dolphins")
+      expect(page).to have_text("Work with the Dolphins")
     end
 
     # My Accounts
     within "#accounts" do
-      expect(page).to have_content("Dolphin Manufacturer")
+      expect(page).to have_text("Dolphin Manufacturer")
     end
   end
 
@@ -51,17 +51,17 @@ feature 'Dashboard', '
 
     # My Tasks
     within "#tasks" do
-      expect(page).to have_content("Not showing 1 hidden task.")
+      expect(page).to have_text("Not showing 1 hidden task.")
     end
 
     # My Opportunities
     within "#opportunities" do
-      expect(page).to have_content("Not showing 1 hidden opportunity.")
+      expect(page).to have_text("Not showing 1 hidden opportunity.")
     end
 
     # My Accounts
     within "#accounts" do
-      expect(page).to have_content("Not showing 1 hidden account.")
+      expect(page).to have_text("Not showing 1 hidden account.")
     end
   end
 end

@@ -18,19 +18,19 @@ feature 'Devise Sign-up' do
     click_button("Sign Up")
 
     expect(current_path).to eq "/users/sign_in"
-    expect(page).to have_content("A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.")
+    expect(page).to have_text("A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.")
   end
 
   scenario 'without credentials' do
     visit "/users/sign_up"
     click_button("Sign Up")
 
-    expect(page).to have_content("6 errors prohibited this User from being saved")
-    expect(page).to have_content("Please specify email address")
-    expect(page).to have_content("Email is too short (minimum is 3 characters)")
-    expect(page).to have_content("Email is invalid")
-    expect(page).to have_content("Please specify username")
-    expect(page).to have_content("Username is invalid")
-    expect(page).to have_content("Password can't be blank")
+    expect(page).to have_text("6 errors prohibited this User from being saved")
+    expect(page).to have_text("Please specify email address")
+    expect(page).to have_text("Email is too short (minimum is 3 characters)")
+    expect(page).to have_text("Email is invalid")
+    expect(page).to have_text("Please specify username")
+    expect(page).to have_text("Username is invalid")
+    expect(page).to have_text("Password can't be blank")
   end
 end

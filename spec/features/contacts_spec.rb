@@ -19,18 +19,18 @@ feature 'Contacts', '
   scenario 'should view a list of contacts' do
     4.times { |i| create(:contact, first_name: "Test", last_name: "Subject \##{i}") }
     visit contacts_page
-    expect(contacts_element).to have_content('Test Subject #0')
-    expect(contacts_element).to have_content('Test Subject #1')
-    expect(contacts_element).to have_content('Test Subject #2')
-    expect(contacts_element).to have_content('Test Subject #3')
-    expect(page).to have_content('Create Contact')
+    expect(contacts_element).to have_text('Test Subject #0')
+    expect(contacts_element).to have_text('Test Subject #1')
+    expect(contacts_element).to have_text('Test Subject #2')
+    expect(contacts_element).to have_text('Test Subject #3')
+    expect(page).to have_text('Create Contact')
   end
 
   scenario 'should create a contact', js: true do
     with_versioning do
       visit contacts_page
       click_link 'Create Contact'
-      select = find('#account_name', visible: true)
+      select = find('#account_name', visible: :visible)
       expect(select).to have_text("")
       expect(page).to have_selector('#select2-account_id-container', visible: false)
       expect(page).to have_selector('#contact_first_name', visible: true)
@@ -41,15 +41,15 @@ feature 'Contacts', '
       click_link 'Comment'
       fill_in 'comment_body', with: 'This is a very important person.'
       click_button 'Create Contact'
-      expect(contacts_element).to have_content('Testy McTest')
+      expect(contacts_element).to have_text('Testy McTest')
 
       contacts_element.click_link 'Testy McTest'
       sleep(1) # avoid CI failure
-      expect(main_element).to have_content('This is a very important person.')
+      expect(main_element).to have_text('This is a very important person.')
 
       click_link "Dashboard"
-      expect(activities_element).to have_content('Bill Murray created contact Testy McTest')
-      expect(activities_element).to have_content('Bill Murray created comment on Testy McTest')
+      expect(activities_element).to have_text('Bill Murray created contact Testy McTest')
+      expect(activities_element).to have_text('Bill Murray created comment on Testy McTest')
     end
   end
 
@@ -70,7 +70,7 @@ feature 'Contacts', '
       visit contacts_page
       click_link 'Testy McTest'
       click_link 'Edit'
-      select = find('#select2-account_id-container', visible: true)
+      select = find('#select2-account_id-container', visible: :visible)
       expect(select).to have_text("Toast")
       expect(page).to have_selector('#account_name', visible: false)
       fill_in 'contact_first_name', with: 'Test'
@@ -78,10 +78,10 @@ feature 'Contacts', '
       fill_in 'contact_email', with: "test.subject@example.com"
       click_button 'Save Contact'
       sleep(3) # TODO: A better ajax wait, or redirect on save
-      expect(find('#edit_contact_title')).to have_content('Test Subject')
+      expect(find('#edit_contact_title')).to have_text('Test Subject')
 
       click_link 'Dashboard'
-      expect(activities_element).to have_content("Bill Murray updated contact Test Subject")
+      expect(activities_element).to have_text("Bill Murray updated contact Test Subject")
     end
   end
 
@@ -90,26 +90,26 @@ feature 'Contacts', '
     visit contacts_page
     click_link 'Test Subject'
     click_link 'Delete?'
-    expect(menu_element).to have_content('Are you sure you want to delete this contact?')
+    expect(menu_element).to have_text('Are you sure you want to delete this contact?')
     click_link 'Yes'
-    expect(flash_element).to have_content('Test Subject has been deleted.')
-    expect(contacts_element).not_to have_content('Test Subject')
+    expect(flash_element).to have_text('Test Subject has been deleted.')
+    expect(contacts_element).not_to have_text('Test Subject')
   end
 
   scenario 'should search for a contact', js: true do
     2.times { |i| create(:contact, first_name: "Test", last_name: "Subject \##{i}") }
     visit contacts_page
-    expect(contacts_element).to have_content('Test Subject #0')
-    expect(contacts_element).to have_content('Test Subject #1')
+    expect(contacts_element).to have_text('Test Subject #0')
+    expect(contacts_element).to have_text('Test Subject #1')
     fill_in 'query', with: 'Test Subject #1'
-    expect(contacts_element).to have_content('Test Subject #1')
-    expect(contacts_element).not_to have_content('Test Subject #0')
+    expect(contacts_element).to have_text('Test Subject #1')
+    expect(contacts_element).not_to have_text('Test Subject #0')
     fill_in 'query', with: 'Test Subject'
-    expect(contacts_element).to have_content('Test Subject #0')
-    expect(contacts_element).to have_content('Test Subject #1')
+    expect(contacts_element).to have_text('Test Subject #0')
+    expect(contacts_element).to have_text('Test Subject #1')
     fill_in 'query', with: "Fake contact"
-    expect(contacts_element).not_to have_content('Test Subject #0')
-    expect(contacts_element).not_to have_content('Test Subject #1')
+    expect(contacts_element).not_to have_text('Test Subject #0')
+    expect(contacts_element).not_to have_text('Test Subject #1')
   end
 
   def main_element
