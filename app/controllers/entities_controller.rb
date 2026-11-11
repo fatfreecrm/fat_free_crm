@@ -136,8 +136,8 @@ class EntitiesController < ApplicationController
   # Get list of records for a given model class.
   #----------------------------------------------------------------------------
   def get_list_of_records(options = {})
-    options[:query]  ||= params[:query]                        if params[:query]
-    self.current_page  = options[:page]                        if options[:page]
+    options[:query]  ||= params[:query] if params[:query]
+    self.current_page  = options[:page] if options[:page]
     query, tags        = parse_query_and_tags(options[:query])
     self.current_query = query
     advanced_search = params[:q].present?
