@@ -273,8 +273,8 @@ describe Opportunity do
     end
 
     context "by_amount" do
-      let(:o1) { create(:opportunity, amount:  50_000) }
-      let(:o2) { create(:opportunity, amount:  10_000) }
+      let(:o1) { create(:opportunity, amount: 50_000) }
+      let(:o2) { create(:opportunity, amount: 10_000) }
       let(:o3) { create(:opportunity, amount: 750_000) }
 
       it "should show opportunities ordered by amount" do
