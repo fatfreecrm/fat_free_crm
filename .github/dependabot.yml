@@ -7,9 +7,19 @@ updates:
     time: "07:00"
   open-pull-requests-limit: 10
   versioning-strategy: lockfile-only
+  groups:
+    minor-and-patch:
+      update-types:
+      - minor
+      - patch
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: daily
     time: "07:00"
   open-pull-requests-limit: 10
+  groups:
+    minor-and-patch:
+      update-types:
+      - minor
+      - patch
