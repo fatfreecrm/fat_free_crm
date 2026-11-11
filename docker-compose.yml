@@ -17,7 +17,7 @@ services:
       DB_HOST: 'db'
       DB_PORT: 5432
   db:
-    image: postgres:16
+    image: postgres:17
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
