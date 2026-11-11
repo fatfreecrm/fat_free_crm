@@ -17,8 +17,8 @@ class TaskObserver < ActiveRecord::Observer
   def after_update(item)
     original = @@tasks.delete(item.id)
     if original
-      return log_activity(item, :complete)   if item.completed_at && original.completed_at.nil?
-      return log_activity(item, :reassign)   if item.assigned_to != original.assigned_to
+      return log_activity(item, :complete) if item.completed_at && original.completed_at.nil?
+      return log_activity(item, :reassign) if item.assigned_to != original.assigned_to
 
       log_activity(item, :reschedule) if item.bucket != original.bucket
     end

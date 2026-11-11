@@ -85,15 +85,15 @@ module FatFreeCRM
         end
 
         def insert_before(hook, &block)
-          add_view_hook(hook, block,        :before)
+          add_view_hook(hook, block, :before)
         end
 
         def insert_after(hook, &block)
-          add_view_hook(hook, block,        :after)
+          add_view_hook(hook, block, :after)
         end
 
         def replace(hook, &block)
-          add_view_hook(hook, block,        :replace)
+          add_view_hook(hook, block, :replace)
         end
 
         def remove(hook)
