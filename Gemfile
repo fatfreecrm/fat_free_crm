@@ -136,3 +136,4 @@ gem "addressable", "~> 2.8"
 gem "solid_queue"
 
 gem "rexml", "~> 3.4"
+gem "json", "< 3" # Temporarily pinned
