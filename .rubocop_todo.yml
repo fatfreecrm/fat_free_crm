@@ -109,11 +109,6 @@ Gemspec/RequireMFA:
     - 'fat_free_crm.gemspec'
 
 # Offense count: 1
-Gemspec/RequiredRubyVersion:
-  Exclude:
-    - 'fat_free_crm.gemspec'
-
-# Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLineAfterGuardClause:
   Exclude:

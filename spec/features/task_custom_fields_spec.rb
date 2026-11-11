@@ -19,15 +19,15 @@ feature 'Task Custom Fields', '
     field = CustomField.find_by(name: field_name)
     unless field
       if Task.column_names.include?(field_name)
-         ActiveRecord::Base.connection.execute("INSERT INTO fields (type, field_group_id, name, label, \"as\", created_at, updated_at) VALUES ('CustomField', #{group.id}, '#{field_name}', 'Test Field', 'string', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)")
-         field = CustomField.find_by(name: field_name)
+        ActiveRecord::Base.connection.execute("INSERT INTO fields (type, field_group_id, name, label, \"as\", created_at, updated_at) VALUES ('CustomField', #{group.id}, '#{field_name}', 'Test Field', 'string', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)")
+        CustomField.find_by(name: field_name)
       else
-        field = CustomField.create!(
-                  field_group: group,
-                  label: 'Test Field',
-                  name: field_name,
-                  as: 'string'
-                )
+        CustomField.create!(
+          field_group: group,
+          label: 'Test Field',
+          name: field_name,
+          as: 'string'
+        )
       end
     end
 
@@ -43,9 +43,7 @@ feature 'Task Custom Fields', '
 
     # Expand the section if it is collapsed
     section_id = "field_group_#{group.id}_task_show"
-    if page.has_css?("##{section_id}", visible: false)
-      find("a[data-id='#{section_id}']").click
-    end
+    find("a[data-id='#{section_id}']").click if page.has_css?("##{section_id}", visible: false)
     expect(page).to have_content('InitialValue')
 
     # 5. Edit the task
@@ -55,9 +53,7 @@ feature 'Task Custom Fields', '
     # Wait for the edit form to be visible
     within '#edit_task' do
       # Expand the custom fields section in the edit form if it's collapsed
-      if page.has_link?("More Task Info")
-          click_link "More Task Info"
-      end
+      click_link "More Task Info" if page.has_link?("More Task Info")
 
       # Use a broader find for the input
       find("input[name*='#{field_name}']").set('UpdatedValue')
@@ -70,20 +66,13 @@ feature 'Task Custom Fields', '
     expect(page).to have_no_css('#edit_task')
 
     # Expand the section if it is collapsed (it might be after AJAX update)
-    if page.has_css?("a[data-id='#{section_id}']")
-        if page.has_css?("##{section_id}", visible: false)
-          find("a[data-id='#{section_id}']").click
-        end
-        expect(page).to have_content('UpdatedValue')
-    else
-        # If it's not there, reload and try again
-        visit current_path
-        if page.has_css?("##{section_id}", visible: false)
-          find("a[data-id='#{section_id}']").click
-        end
-        expect(page).to have_content('UpdatedValue')
+    unless page.has_css?("a[data-id='#{section_id}']")
+      # If it's not there, reload and try again
+      visit current_path
     end
+    find("a[data-id='#{section_id}']").click if page.has_css?("##{section_id}", visible: false)
+    expect(page).to have_content('UpdatedValue')
 
-    expect(page).not_to have_content('InitialValue')
+    expect(page).to have_no_content('InitialValue')
   end
 end

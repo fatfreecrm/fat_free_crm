@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.4'] # 4.0 temporarily commented out
+        ruby-version: ['4.0']
 
     steps:
     - uses: actions/checkout@v7
@@ -25,7 +25,7 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby-version }}
-        # bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
     - name: Install dependencies
       run: bundle install
