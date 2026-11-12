@@ -13,7 +13,7 @@ Bundler/DuplicatedGem:
 
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
-Capybara/CurrentPathExpectation:
+Capybara/RSpec/CurrentPathExpectation:
   Exclude:
     - 'spec/features/devise/sign_in_spec.rb'
     - 'spec/features/devise/sign_up_spec.rb'
@@ -23,7 +23,7 @@ Capybara/CurrentPathExpectation:
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: have_no, not_to
-Capybara/NegationMatcher:
+Capybara/RSpec/NegationMatcher:
   Exclude:
     - 'spec/features/accounts_spec.rb'
     - 'spec/features/campaigns_spec.rb'
@@ -63,7 +63,7 @@ Capybara/SpecificFinders:
     - 'spec/features/tasks_spec.rb'
 
 # Offense count: 11
-Capybara/VisibilityMatcher:
+Capybara/RSpec/VisibilityMatcher:
   Exclude:
     - 'spec/features/accounts_spec.rb'
     - 'spec/features/admin/groups_spec.rb'

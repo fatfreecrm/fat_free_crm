@@ -3,7 +3,7 @@ updates:
 - package-ecosystem: bundler
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
     time: "07:00"
   open-pull-requests-limit: 10
   versioning-strategy: lockfile-only
@@ -12,10 +12,12 @@ updates:
       update-types:
       - minor
       - patch
+      exclude-patterns:
+        - "rubocop*"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
     time: "07:00"
   open-pull-requests-limit: 10
   groups:
